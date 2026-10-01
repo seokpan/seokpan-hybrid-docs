@@ -2,7 +2,7 @@
 
 이 폴더는 석판 2차 프로젝트의 **지금 공유해서 쓰는 작업 안내와 공동 진행 기록**입니다. 05 최종 완료를 기다리지 않고 각자 준비·구현·인계를 진행합니다. 정태훈이 모든 결과를 받아 대필하는 방식으로 운영하지 않습니다.
 
-> 공유 반영 상태는 [PR #5](https://github.com/seokpan/seokpan-hybrid-docs/pull/5)에서 확인합니다. 변경은 Branch/PR로 검토합니다. 기존 작업·부분 보고와 접근 권한의 확인 범위는 [진행표](WORK_TRACKER.md), 남은 계정/현재 작업·입력 인계는 [Issue #8](https://github.com/seokpan/seokpan-hybrid-docs/issues/8)에서 이어갑니다. 담당자는 자기 근거와 확인 시각을 직접 연결합니다.
+> PR #3·#5·#7의 설계·실행·발표 문서는 main에 반영됐습니다. 변경은 Branch/PR로 검토합니다. 네 사람의 계정 매핑과 네 저장소 Repo 권한 확인은 완료됐고, 개인 본인환경의 실제 사용·현재 작업·입력 인계는 [진행표](WORK_TRACKER.md)와 [Issue #8](https://github.com/seokpan/seokpan-hybrid-docs/issues/8)에서 이어갑니다. 담당자는 자기 근거와 확인 시각을 직접 연결합니다.
 
 ## Start Here
 
@@ -10,6 +10,8 @@
 2. [공통 진행표](WORK_TRACKER.md)의 자기 작업/입력 행에 **기존 Issue·PR와 확인한 입력**을 연결합니다. 필요한 입력이 없으면 해당 실행만 대기로 남기고 독립 준비를 계속합니다.
 3. 자기 Issue/PR에 진행·차단·검사 결과를 기록하고 [인계 양식](HANDOFF_TEMPLATE.md)으로 결과 수신자에게 직접 넘깁니다. 수신자는 받은 개정과 수락/보완 범위를 기록합니다.
 4. 실제 실행은 [Evidence 안내](../evidence/README.md)에 따라 새 Run으로 남기고 Index와 진행표에 링크를 연결합니다. 코드 Merge와 최종 시험 PASS를 구분합니다.
+
+지금 할 첫 인계는 [진행표의 Next Handover](WORK_TRACKER.md#next-handover)입니다. 자기 현재 Source·완료 범위·없는 입력을 작업 Issue에 연결하면서 독립 준비를 진행합니다. 팀원의 개인 비밀번호는 이 인계에 필요하지 않습니다.
 
 ## Role Entry Points
 
@@ -35,12 +37,12 @@
 
 ## Approved References
 
-설계 등록 [PR #3](https://github.com/seokpan/seokpan-hybrid-docs/pull/3)는 조회 시 main 미병합입니다. 아래 고정 Commit의 원문5개는 첨부와 바이트 동일성을 확인했습니다. 이 공유 PR에서는 원문을 중복 등록하거나 다이어그램 계획을 변경하지 않습니다.
+설계 등록 [PR #3](https://github.com/seokpan/seokpan-hybrid-docs/pull/3)은 2026-10-02 03:40:08 KST, 발표 등록 [PR #7](https://github.com/seokpan/seokpan-hybrid-docs/pull/7)은 03:49:30 KST에 병합됐습니다. 승인 원문5개의 첨부 동일성은 공유 검토 이력으로 유지하며, 아래는 main의 기준 경로입니다.
 
-- [00 출발점](https://github.com/seokpan/seokpan-hybrid-docs/blob/5d6c917b0b39ca1d132b1ae6a9d6c9adfd428b0d/design/00_PROJECT_STARTING_POINT.md)
-- [01 기획/성공 기준](https://github.com/seokpan/seokpan-hybrid-docs/blob/5d6c917b0b39ca1d132b1ae6a9d6c9adfd428b0d/design/01_PROJECT_CHARTER.md)
-- [02 목표 아키텍처](https://github.com/seokpan/seokpan-hybrid-docs/blob/5d6c917b0b39ca1d132b1ae6a9d6c9adfd428b0d/design/02_TARGET_ARCHITECTURE.md)
-- [03 상세설계·시험·WBS/비용](https://github.com/seokpan/seokpan-hybrid-docs/blob/5d6c917b0b39ca1d132b1ae6a9d6c9adfd428b0d/design/03_DETAILED_DESIGN.md)
-- [04 배정·I01~I07·인계/Run 양식](https://github.com/seokpan/seokpan-hybrid-docs/blob/5d6c917b0b39ca1d132b1ae6a9d6c9adfd428b0d/design/04_IMPLEMENTATION_READINESS.md)
+- [00 출발점](../design/00_PROJECT_STARTING_POINT.md)
+- [01 기획/성공 기준](../design/01_PROJECT_CHARTER.md)
+- [02 목표 아키텍처](../design/02_TARGET_ARCHITECTURE.md)
+- [03 상세설계·시험·WBS/비용](../design/03_DETAILED_DESIGN.md)
+- [04 배정·I01~I07·인계/Run 양식](../design/04_IMPLEMENTATION_READINESS.md)
 
 구조와 시험 목표는 승인03/04, 최신 사용자 결정과 등록 프로젝트 지침을 따릅니다. 팀원이 모든 원문을 처음부터 다시 읽어야 작업을 시작하는 조건은 아닙니다. 공통 안내·본인 작업·관련 근거/인계부터 확인합니다.

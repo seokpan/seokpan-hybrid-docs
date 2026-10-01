@@ -12,6 +12,8 @@
 
 2026-10-02 02:32 KST 조회 시 승인00~04의 [설계 등록 PR #3](https://github.com/seokpan/seokpan-hybrid-docs/pull/3)는 main 미병합이었다. 이번 공유 작업에서 그 고정 Commit의 원문5개와 첨부의 Git blob 바이트 동일성을 확인했다. 설계 파일을 이 PR에서 중복 등록하지 않는다. 프로젝트 지침은 사용자 등록본을 따르며 이 PR의 새 사본으로 대체하지 않는다.
 
+현재는 설계 PR #3·실행 PR #5·발표 PR #7 모두 병합돼 main에 있다. 이전 조회는 이력으로 보존하고 현재 계정/Source와 다음 인계는 §0.18·[진행표](WORK_TRACKER.md#next-handover)를 따른다.
+
 현재 진행 현황:
 
 - [x] 03 상세설계와 04 운영 결정·구현 인계 완료
@@ -21,7 +23,8 @@
 - [x] 네 사람의 첫 작업·기록 책임·수신자 확인·공유 실행 충돌 처리 보강
 - [x] 3회 연쇄 검토·보완 후 재검증 수렴 — 최종 추가 보완 0건
 - [x] 공통 문서/진행표 경로와 기존 작업·입력 보고 연결 — 현재 확인 범위는 진행표
-- [ ] A/C/D 계정 매핑·개인별 실제 접근/기록·미반영 작업과 실행 입력 인계
+- [x] 네 사람의 명시 GitHub 계정 매핑·네 저장소 권한 API 16건 확인 — 모두 admin
+- [ ] 개인 본인환경의 실제 사용·현재 미반영 작업과 실행 입력 인계
 - [x] 앞선 B App 연결·GitOps 로컬 초안과 수행 가능한 검사 — 해당 범위 24건 PASS
 - [ ] 실제 이관 Seed·실습 Overlay·Image/Secret 입력 확정과 저장소 반영
 - [ ] AWS 생성·Cloud 통합 — 실제 Plan·비용·담당 실행 조건 확인 후
@@ -161,7 +164,7 @@ OCP에서 확인 가능한 해당 Case는 먼저 수행해 유료 시간의 문�
 
 판정은 NOT RUN/PASS/PARTIAL/FAIL/N/A다. PASS에는 해당 조건의 증거가 필요하고 N/A에는 이유/제외 범위가 필요하다. Must 실패/누락은 해결하거나 명시적 범위 결정을 받아 최종 판정에 반영한다. Rollback·Warm DR·추가 Scaling/관측 등 Should/Could는 Must와 비용·기간을 침해하지 않는 범위에서 수행한다. 기존 CI Build/Test/Scan의 결과 추적은 유지하며 새 취약점 Severity 0건 기준을 임의 Must로 추가하지 않는다.
 
-**발표 후보 연결:** 공식 Test/Acceptance는 승인 [03 상세설계](https://github.com/seokpan/seokpan-hybrid-docs/blob/5d6c917b0b39ca1d132b1ae6a9d6c9adfd428b0d/design/03_DETAILED_DESIGN.md)를 따른다. Actual과 원본 증거는 이05와 `evidence/<test-id>/<run-id>/`에 기록한다. 발표 후보 선별·1차 Baseline 비교 여부·기본기능/일반절차 과장 방지 기준은 별도 [Presentation Baseline](https://github.com/seokpan/seokpan-hybrid-docs/blob/25f04b7a1104948bff259d2e85163d267acb38af/presentation/PRESENTATION_BASELINE.md)을 참조하며 내용을 이05에 복제하지 않는다. 이 발표 문서는 Test 조건·성공기준·실제 결과를 발표에 유리하게 변경하거나 재해석하는 근거가 아니다. 조회 시 Baseline은 [Draft PR #7](https://github.com/seokpan/seokpan-hybrid-docs/pull/7)에서 추가 중이며 main 반영 전이므로 고정 Head 참조를 사용한다.
+**발표 후보 연결:** 공식 Test/Acceptance는 승인 [03 상세설계](../design/03_DETAILED_DESIGN.md)를 따른다. Actual과 원본 증거는 이05와 `evidence/<test-id>/<run-id>/`에 기록한다. 발표 후보 선별·1차 Baseline 비교 여부·기본기능/일반절차 과장 방지 기준은 별도 [Presentation Baseline](../presentation/PRESENTATION_BASELINE.md)을 참조하며 내용을 이05에 복제하지 않는다. 이 발표 문서는 Test 조건·성공기준·실제 결과를 발표에 유리하게 변경하거나 재해석하는 근거가 아니다. [PR #7](https://github.com/seokpan/seokpan-hybrid-docs/pull/7)은 `2026-10-01T18:49:30Z` / `2026-10-02T03:49:30+09:00`에 병합됐으므로 main의 기준 경로를 사용한다. 이전 고정 Head 검토는 §0.17 이력이다.
 
 실제 Run 중 발표 가치가 있는 결과는 [Issue #6](https://github.com/seokpan/seokpan-hybrid-docs/issues/6)에 원본 Run 링크와 간략한 후보 판정·비교 분류·주장 범위/한계를 연결한다. 수치·로그·시간선을 중복 전사하지 않는다. 1차 재측정은 2차 Harness·측정 정의가 충분히 고정된 뒤 동일/대응 조건의 재현 가능성과 비교 가치를 판단해 필요한 항목만 검토하며, 지금05 작업의 선행조건으로 삼지 않는다.
 
@@ -330,7 +333,7 @@ ROSA Window 진입/추가·재시험은 최신 전체 비용·남은 시험·정
 | 판단 대상 | 이번 문서 상태 | 실제로 남은 확인 |
 |---|---|---|
 | 협업 작업 안내 | 공통 기준·네 역할별 첫 작업·기록/인계·공유 실행 방법 보강과 문서 검토 수렴 | 공유 가능한 진행본. 실제 공유/접근은 다음 행 |
-| 실제 팀 공유와 기록 연결 | 공유 반영 PR #5, 기존 작업/입력 보고와 Docs B 권한을 진행표에 연결 | A/C/D 계정 매핑·개인별 실제 접근/기록·미반영 Source·실제 팀 도입/가용시간 |
+| 실제 팀 공유와 기록 연결 | 설계/실행/발표 main 반영, 기존 작업/입력 보고와 네 사람·네 Repo 권한을 진행표에 연결 | 개인 본인환경의 실제 사용·미반영 Source·실제 팀 도입/가용시간·입력 수신 |
 | 작업별 실행 준비 | 해당 입력/도구·리뷰 Gate별 판정 | I01~I07과 실제 코드/검사·계정·자산·보호 자료 |
 | Full Apply/최종 Acceptance | 실제 준비/검증 완료를 주장하지 않음 | Plan·가격/Credit·Window·실제 Runtime/증거 |
 | 05 최종 종료 | 미완료 | 구현·통합·Must 판정·발표/보고·보존·불필요 유료 자원 정리와 잔존 책임 |
@@ -374,6 +377,16 @@ AI는 이 협업 기준 안에서 정태훈의 후보 코드·검사·문서 연
 발표 PR #7의 고정 Head·Issue #6을 승인03/04·기존05에 대조했다. §0.7에 별도 선별 기준의 참조·공식 Test/Actual 우선·조건/결과 재해석 금지·원본 Run 링크/후보 판정·1차 재측정 시점을 연결했고, 실행/Evidence 안내에는 기록 위치만 추가했다. 발표 원문·정량 목표·역할·WBS·Gate·Run 양식은 변경하지 않는다. PR #7 미병합 상태는 고정 Head와 PR 링크로 구분하며 Issue #6은 지속 추적용으로 닫지 않는다.
 
 후속 작업으로 기존 Issue/보고·Source 개정과 Docs 권한 API의 확인 범위를 진행표에 연결했다. I02는 임시 Probe 결과와 실제 서비스 Root를 구분하고 보고에 남은 세션 실패 처리 후속을 보존한다. 다른 세 계정·개인별 실제 접근·새 Source/입력·가격/시간은 미확인으로 남겨 Issue #8에서 이어간다. PR #5 변경은 `execution/`·`evidence/`에만 두고 다른 브랜치나 main을 강제로 덮어쓰지 않는다.
+
+위 §0.17은 PR #5 병합 전의 연결 검토 이력이다. 현재 계정/병합 상태는 다음 갱신을 따른다.
+
+### 0.18 계정·권한 확인과 다음 실무 인계
+
+사용자가 첨부의 위→아래를 최유준·이유빈·김상희로 명시해 계정 매핑을 확인했다. 권한 API 관측은 `2026-10-01T18:52:11.308Z` / `2026-10-02T03:52:11.308+09:00`이며 네 사람 모두 네 저장소에서 admin이었다. 상세 계정/권한은 [진행표](WORK_TRACKER.md#team-access)에 둔다. 개인 비밀번호·PAT 공유 없이 조회했고 Repo 권한 등급과 본인 환경 사용·CI 정책·AWS/Cluster 인증·Runtime 판정은 구분한다.
+
+후속 Source 조회 `2026-10-01T18:52:45.552Z` / `2026-10-02T03:52:45.552+09:00`에서 Infra/App/GitOps main·기존 Issue/보고 상태는 이전과 같았다. 새 세션 실패 처리 PR·실제 검증 Seed 인계는 이번 목록에서 미확인이다. 계정/권한 확인을 더 기다리는 단계는 끝났고 각자는 [첫 입력 인계](WORK_TRACKER.md#next-handover)를 자기 기존 작업 Issue에 기록하면서 독립 준비를 진행한다. 수신자는 받은 개정과 사용할 범위를 확인한다. 본인 사용 확인이나 I01~I07 전체 제출을 모든 작업의 착수 조건으로 삼지 않는다.
+
+권한 API가 실패한 경우에도 공개 Source 대조·로컬 후보/검사·인계 준비는 계속할 수 있다. 실제 쓰기/접속이 막힌 대상은 허용된 기록 경로로 결과를 연결하고 해당 접근을 해결한다. 공유 Apply·배포·Restore·장애/부하는 필요한 입력·리뷰·Caller/Context·Plan·Cost/시간 조건을 확인해 조율한다. [Issue #8](https://github.com/seokpan/seokpan-hybrid-docs/issues/8)은 실제 사용·현재 Source·입력 인계를 위해 계속 유지한다.
 
 ## 1 05의 범위와 설계 완료의 의미
 
@@ -488,6 +501,7 @@ PR 본문은 fmt/validate 통과와 personal MFA Plan `9 add/1 change/0 destroy`
 | ACT05-05 협업 보완 | 사용자 질문에 따라 협업 사용본/최종본·역할별 첫 작업·직접 기록·인계 확인·공유 실행·동시05 편집과 변경 영향을 연결 | 3회 연쇄 검토/보완 후 추가 보완 0건으로 수렴. 실제 팀 공유/Repo 반영·Runtime 완료는 별도 미확인 |
 | ACT05-06 저장소 공유 준비 | execution/05·읽기 안내·진행표·인계 양식과 evidence/Run 양식을 공유용 변경으로 연결 | PR에서 검토할 문서 반영 범위. main 병합·개인별 접근/기록·실제 팀 도입은 확인 후 갱신 |
 | ACT05-07 발표·현행 인계 연결 | PR #7/Issue #6을 확인해 §0.7 최소 참조를 추가하고 기존 작업/부분 보고·Docs B 권한·남은 입력을 진행표/Issue #8에 연결 | 공식 Test/실제 결과/발표 선별 경계 유지. 공유 반영은 PR #5 Metadata, 개인 접근·입력·Runtime 판정은 별도 |
+| ACT05-08 계정/인계 갱신 | 사용자 계정 매핑·네 사람/네 Repo 권한 16건 확인, Source 재조회, main 기준 링크와 첫 입력 인계 연결 | 계정/Repo 권한 확인 완료. 본인 환경 사용·미반영 Source·실제 입력/공유 실행은 해당 근거로 확인 |
 
 새 입력/실행은 `확인 시각·Source/입력 개정·배정 Owner·actual operator·관측 Principal 논리 참조·Reviewer·결과/제한·Evidence·Blocker·다음 인계`를 남긴다. 실패 Run을 보존하고 후속 Run을 연결하며 코드/조건 변경의 영향 시험을 다시 확인한다.
 
@@ -561,7 +575,8 @@ App의 Hybrid DB Runtime/Migration 경로와 Redis에는 공급 CA·Hostname/인
 - [x] 역할별 첫 작업·직접 기록·인계 수신 확인·공유 실행·동시 문서 편집 보강
 - [x] 연쇄 추적과 보완 후 재검증에서 추가 보완 0건으로 수렴
 - [x] 협업 사용본의 저장소 경로·기존 Issue/부분 보고·별도 발표 참조 연결
-- [ ] A/C/D 계정 매핑·개인별 실제 접근/기록·현재 미반영 Source·실제 입력 인계 — Issue #8
+- [x] 네 사람 계정 매핑·네 저장소 권한 API 조회 완료 — 16건 모두 admin
+- [ ] 개인 본인환경의 실제 사용·현재 미반영 Source·실제 입력 인계 — Issue #8
 - [x] 앞선 B 고정 Source의 Path/Port/Client 계약과 App 연결·GitOps 로컬 초안 검사 — 실제 배포 준비 완료와 구분
 - [ ] I01~I07의 현 Source·실제 입력/결과·미반영 작업·담당별 가용시간/비용 인계
 - [ ] 검증 Seed·원 lab Overlay 인계 후 실제 이력 이관·Build/Scan·base 실습
