@@ -44,6 +44,8 @@ Seokpan 2차 - 하이브리드 클라우드 기획·아키텍처·검증 문서
 
 ## Implementation & Validation
 
+[팀 작업·환경 전환·입력 인계 안내](execution/TEAM_WORK_AND_HANDOFF_GUIDE.md)에서 공통 안내·OCP/ROSA 전환 조건·목표 일정과 [개인별 담당](execution/TEAM_WORK_AND_HANDOFF_GUIDE.md#role-navigation)을 확인합니다. 실제 진행과 수신 확인은 아래 공동 기록으로 연결합니다.
+
 [실행 안내](execution/README.md)에서 역할별 시작점과 공동 기록 방법을 확인합니다. [05 구현·검증 문서](execution/05_IMPLEMENTATION_AND_VALIDATION.md)는 실제 입력 확인·코드·통합·Migration·시험·Evidence·정리를 기록합니다.
 
 [공동 진행표](execution/WORK_TRACKER.md)와 [인계 양식](execution/HANDOFF_TEMPLATE.md)으로 담당자의 입력·진행·수신 확인을 연결하고, 실제 시험은 [Evidence 안내](evidence/README.md)에 따라 Run별로 기록합니다. 설계문서 원문은 보존하며 문서 공유·코드 Merge와 실제 시험 PASS를 구분합니다.
@@ -56,3 +58,4 @@ Seokpan 2차 - 하이브리드 클라우드 기획·아키텍처·검증 문서
 Presentation Baseline은 새로운 Test Plan이 아닙니다. 공식 Test/Acceptance는 03을 따르고 실제 구현·검증 결과는 05와 [Evidence Index](evidence/README.md)에 남깁니다. 발표에서는 해당 원본 Evidence 중 의미 있는 결과만 선별하며 제품 기본기능·일반 구축 절차와 팀의 설계 판단·직접 구현·검증·Troubleshooting을 구분합니다.
 
 05 진행 중 발표 후보의 상태는 [Tracking Issue #6](https://github.com/seokpan/seokpan-hybrid-docs/issues/6)에서 추적합니다. 실제 Metric·Log·Timeline은 Issue나 `presentation/`에 중복 저장하지 않고 `evidence/<test-id>/<run-id>/`를 정본으로 사용합니다.
+
