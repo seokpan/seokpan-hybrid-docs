@@ -9,31 +9,37 @@
       "path": "design/00_PROJECT_STARTING_POINT.md",
       "uploaded_name": "00_PROJECT_STARTING_POINT.md",
       "bytes": 46853,
-      "sha256": "fba515600ce0e935fbf35ac2f4b3916fb0cdc63ee0a3f198fc3a6ca6ae7580f4"
+      "sha256": "fba515600ce0e935fbf35ac2f4b3916fb0cdc63ee0a3f198fc3a6ca6ae7580f4",
+      "source_header_date": "2026-09-30 KST"
     },
     {
       "path": "design/01_PROJECT_CHARTER.md",
       "uploaded_name": "01_PROJECT_CHARTER.md",
       "bytes": 18716,
-      "sha256": "b9f23e17dc701f16e334fd603b7872a9bf016198fc3ac3b66279745ee9131b65"
+      "sha256": "b9f23e17dc701f16e334fd603b7872a9bf016198fc3ac3b66279745ee9131b65",
+      "source_header_date": "2026-09-30 KST"
     },
     {
       "path": "design/02_TARGET_ARCHITECTURE.md",
       "uploaded_name": "02_TARGET_ARCHITECTURE.md",
       "bytes": 43047,
-      "sha256": "ee3b7cb9b3607b22a3f2209f61f5217146296b31ae83446295e628840f3efd95"
+      "sha256": "ee3b7cb9b3607b22a3f2209f61f5217146296b31ae83446295e628840f3efd95",
+      "source_header_date": "2026-10-01 KST"
     },
     {
       "path": "design/03_DETAILED_DESIGN.md",
       "uploaded_name": "03_DETAILED_DESIGN.md",
       "bytes": 450468,
-      "sha256": "99b8b3c5cc2ed99971e26c053b2897970bfe67e519a19ada47b519b7a7cdf34a"
+      "sha256": "99b8b3c5cc2ed99971e26c053b2897970bfe67e519a19ada47b519b7a7cdf34a",
+      "source_header_date": "2026-10-01 KST"
     },
     {
       "path": "design/04_IMPLEMENTATION_READINESS.md",
       "uploaded_name": "04_IMPLEMENTATION_READINESS.md",
       "bytes": 108901,
-      "sha256": "8b0d425fbfae02bfccac2834c1fd33e8a7d8081d00b99ef5ae78e3f1a08127a2"
+      "sha256": "8b0d425fbfae02bfccac2834c1fd33e8a7d8081d00b99ef5ae78e3f1a08127a2",
+      "source_header_date": "2026-10-01 KST"
     }
-  ]
+  ],
+  "source_basis_meaning": "latest decision date of this source set; each original document retains its own header date"
 }

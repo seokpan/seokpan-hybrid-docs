@@ -22,6 +22,8 @@
 
 05는 `05_IMPLEMENTATION_AND_VALIDATION.md`로, 실제 입력·Source·코드·통합·시험 결과를 기록합니다. 이번 첨부에는 05 본문이 없어 실제 최신 구축 상황을 확인하지 않았습니다.
 
+이 문서의 **그림 01~12**와 **프로젝트 문서 00~05**는 별도 번호입니다. 예를 들어 그림 05는 상태 책임·재접속 그림이며 문서 05의 구현 진행 단계와 동일한 항목이 아닙니다. 이후 `그림`과 `문서`를 함께 표기해 구분합니다.
+
 | 산출물 | 시작 시점 | 표시 기준 |
 | --- | --- | --- |
 | 전체 논리 구조·통신·배포·복구 등 설계 그림 | 제작 계획 사용자 검토 후 | 승인된 설계 목표, 구현/시험 미확인 |
@@ -34,6 +36,8 @@
 ## 2. 설계 다이어그램 12장 제안
 
 12장은 미리 정한 목표 숫자가 아니라 다음 설명 목적을 분리한 결과입니다. 전체 구조 2장, 연결/런타임 3장, 운영/자동화 4장, 복구/장애/이전 3장입니다. 페이지 수를 맞추기 위해 구조를 중복하거나 시험 성공 그림을 추가하지 않습니다.
+
+**장수의 범위:** 지금 제안하는 수는 설계판 12장입니다. 후속 전체 논리·물리의 구축 결과판 2장을 작성하면 12개 주제의 최소 14개 판본이 됩니다. SVG/PNG는 같은 그림의 파일 형식이며 장수에 중복 합산하지 않습니다. 추가 결과 그림은 증거와 설명 목적에 따라 정합니다. 12장은 최종 확정 수나 최대 장수가 아니며 시안의 가독성 때문에 분할/통합이 필요하면 이유와 변경 장수를 기록합니다.
 
 | ID | 제목 | 이 그림이 답할 질문 | 주요 포함 내용 | 형식 |
 | --- | --- | --- | --- | --- |
@@ -67,7 +71,16 @@
 ### 02 전체 물리 아키텍처
 
 - **목적:** AWS 목표 배치와 On-Prem 역할 배치, 관리형/직접 관리 경계를 보여줍니다.
-- **확정 주소 계획:** VPC `192.168.64.0/20`; AZ-A/B/C의 Public `.64/.65/.66`, ROSA Private `.67/.68/.69`, Data Private `.70/.71/.72` 각각 `/24`. `.73`~`.79`는 예비 주소 블록입니다.
+- **확정 주소 계획:** VPC `192.168.64.0/20`. 아래 AZ-A/B/C는 설계상의 역할 이름이며 실제 AZ 이름/ID로 치환하기 전의 값입니다.
+
+| Subnet 역할 | AZ-A | AZ-B | AZ-C |
+| --- | --- | --- | --- |
+| Public | `192.168.64.0/24` | `192.168.65.0/24` | `192.168.66.0/24` |
+| ROSA Private | `192.168.67.0/24` | `192.168.68.0/24` | `192.168.69.0/24` |
+| Data Private | `192.168.70.0/24` | `192.168.71.0/24` | `192.168.72.0/24` |
+
+- **예비 주소:** `192.168.73.0/24`~`192.168.79.0/24`의 7개 블록. 생성 Subnet 수는 9개이며 예비 블록을 더하지 않습니다.
+- **네트워크 자원:** VPC/IGW, AZ별 NAT-A/B/C 3개, S3 Gateway Endpoint, 단일 VPN EC2/EIP와 사설 Data 경로를 표시합니다. Public API/Ingress의 플랫폼 관리 자원과 팀 소유 Network 자원을 구분합니다. ROSA Private는 같은 AZ의 NAT 경로, Data Private는 기본 인터넷 Route 없이 필요한 사설 왕복 경로를 갖는 승인 목표입니다.
 - **규모 표현:** ROSA Classic 최소 Control Plane 3 + Infra 3 + Worker 3, Worker `m5.xlarge`·FE/BE 각 3 Replica는 초기 후보. 나머지 Node 사양을 Worker 사양으로 복제하지 않습니다.
 - **Data 표현:** RDS Multi-AZ DB instance는 Primary + 동기 Standby, Redis는 Single Shard/cluster mode disabled의 Primary 1 + Replica 1. Data Subnet 3개를 각 서비스 인스턴스 3개로 세지 않습니다. 실제 서비스 배치 AZ는 구현 확인 전 임의 지정하지 않습니다.
 - **On-Prem 표현:** 기존 Jenkins/Harbor/Cluster/Recovery Storage와 새 전용 VPN Gateway VM·Data 작업 VM·복구 DB VM을 역할로 구분합니다. 새 VM의 Host·이름·IP·용량·Hypervisor/Storage 장애 영역은 확인 대기입니다.
@@ -104,7 +117,7 @@
 ### 06 CI/CD와 Release 전달
 
 - **목적:** Source, Image, Desired State, 실제 배포·검증의 연결을 설명합니다.
-- **포함:** App Source→On-Prem Jenkins Test/Build/Scan→ECR Push·Harbor Recovery 보존→GitOps Promotion PR→사람 Review/Merge→OpenShift GitOps Sync→Cloud Runtime. Recovery는 사전 보존 Bundle/Pull로 연결합니다.
+- **포함:** App Source→On-Prem Jenkins Test/Build/Scan→ECR Push·Release 후보 기록→GitOps Promotion PR→사람 Review/Merge→OpenShift GitOps Sync→Cloud Runtime. 검토·승인된 Recovery Image의 Harbor 사전 보존과 ECR/Harbor Mapping·Bundle 준비를 별도 분기로 연결하고 PR 검토에서 복구 준비 상태를 확인합니다. 모든 Build가 곧 승인 Release이거나 Cloud 배포 성공만으로 Recovery 준비 완료라는 흐름은 만들지 않습니다.
 - **필수 구분:** CI Push Principal, Node Runtime Pull, GitOps Writer와 Argo Reader; Release ID·Source SHA·FE/BE Digest·Schema/설정/Secret 개정·실제 Run 연결.
 - **주의:** Jenkins의 Cloud 직접 Apply/자동 Merge/TF Apply 선을 추가하지 않습니다. ECR/Harbor Digest가 무조건 동일하다고 쓰지 않고 Mapping을 확인합니다. 최초 App 수동 Sync와 이후 자동 Sync·SelfHeal, 자동 Prune 보류를 구분합니다.
 - **근거:** 03 §3-A.8·§3-F.16~17, 04 §5.2·§5.4.
@@ -134,7 +147,7 @@
 - **포함:** OpenShift Native Monitoring·UWM, 기존 App 구조화 Log, RDS/ElastiCache AWS Metric, 연결/게임/Backup 상태, 알림→담당 판단→Run/Evidence Index.
 - **보존 경계:** Release/Run JSON, Summary/Index Markdown, Metric/Timeline CSV와 보호된 대용량 원본. ROSA 삭제 전에 필요한 결과를 외부에 보존합니다.
 - **주의:** 기존 On-Prem Stack 보존과 Cloud Stack을 구분합니다. 새 Cloud Grafana/Loki/외부 APM·알림 제품을 기본 구성에 추가하지 않습니다. AWS Metric을 UWM이 직접 모두 수집한다고 단정하지 않습니다.
-- **근거:** 02 Observability 기준, 03 §3-G.8~9, 04 §5.4·§8.5.
+- **근거:** 02 §13, 03 §3-G.8~9, 04 §5.4·§8.5.
 - **남은 입력:** 실제 Metric/Exporter/수집 경로·receiver·알림/Log·보존 위치와 Run. 처음에는 승인된 관측 역할을 표시합니다.
 
 ### 10 백업과 On-Prem 오프라인 복구
@@ -213,9 +226,9 @@ PNG는 같은 이름의 `architecture/exports/*.png`로 출력하는 안입니�
 3. **03/04/06/10 제작:** Hybrid·사용자 통신·CI/CD·백업/복구 경로를 전체 그림과 대조합니다.
 4. **05/07/08/09/11/12 제작:** 상태·Owner·인증/Secret·관측·장애·Migration을 보완합니다.
 5. **전체 12장 검증:** 문서와 그림, 그림끼리, SVG와 PNG의 일치와 가독성을 확인하고 목차를 연결합니다.
-6. **구축 결과판 작성:** 05의 관련 증거를 확인해 실제 전체 논리·물리 아키텍처를 별도 파일로 작성합니다. 설계 목표판은 보존합니다.
+6. **구축 결과판 작성:** 문서 05의 관련 증거를 확인해 실제 전체 논리·물리 아키텍처를 별도 파일로 작성합니다. 설계 목표판은 보존합니다.
 
-02의 실제 Host/VM 배치판은 실제 입력을 기다립니다. 05 전체 종료까지 기다릴 필요는 없으며 해당 그림의 입력·증거가 확보된 시점에 작성합니다. 장애/복구 시간선·측정 그래프·Troubleshooting 그림은 해당 Run에 설명 가치가 있을 때 추가합니다. 지금 가상의 측정 그림이나 추가 장수를 정하지 않습니다.
+그림 02의 실제 Host/VM 배치판은 실제 입력을 기다립니다. 문서 05 전체 종료까지 기다릴 필요는 없으며 해당 그림의 입력·증거가 확보된 시점에 작성합니다. 장애/복구 시간선·측정 그래프·Troubleshooting 그림은 해당 Run에 설명 가치가 있을 때 추가합니다. 지금 가상의 측정 그림이나 추가 장수를 정하지 않습니다.
 
 ## 6. 검증과 변경 처리
 
@@ -229,7 +242,9 @@ PNG는 같은 이름의 `architecture/exports/*.png`로 출력하는 안입니�
 - [ ] Source·결정이 바뀌면 의존하는 그림을 재검증
 - [ ] 제작과 검증, 설계 승인과 Runtime/시험 PASS를 구분
 
-설계 목표 그림의 완성을 실제 환경의 HA/무중단/DR 달성이나 예산 충족의 증거로 사용하지 않습니다. 05에서 실질적인 설계 변경이 필요하면 결정·영향을 기록하고 그림을 개정해 이전 목표와 실제 결과를 추적할 수 있게 합니다.
+설계 목표 그림의 완성을 실제 환경의 HA/무중단/DR 달성이나 예산 충족의 증거로 사용하지 않습니다. 문서 05에서 실질적인 설계 변경이 필요하면 결정·영향을 기록하고 그림을 개정해 이전 목표와 실제 결과를 추적할 수 있게 합니다.
+
+원문·설계 판단·계획 보완의 연쇄 재검증은 [검토 기록](REVIEW_RECORD.md)에서 확인합니다. 이 검토는 아직 생성하지 않은 그림의 시각 QA나 Runtime 시험을 대신하지 않습니다.
 
 ## 남은 작업과 다음 단계
 
@@ -238,4 +253,4 @@ PNG는 같은 이름의 `architecture/exports/*.png`로 출력하는 안입니�
 - [ ] 나머지 10장 제작·전체 검증·저장
 - [ ] 실제 입력/Run 확인 후 구축 결과판·추가 결과 그림 작성
 
-이 계획을 확인한 후 실제 이미지·다이어그램 제작으로 진행합니다. 05의 입력을 기다리는 부분은 실제 환경값·검증 결과를 사용하는 곳입니다. 설계 목표 그림 12장의 계획·제작 자체는 지금 진행할 수 있습니다.
+이 계획을 확인한 후 실제 이미지·다이어그램 제작으로 진행합니다. 문서 05의 입력을 기다리는 부분은 실제 환경값·검증 결과를 사용하는 곳입니다. 설계 목표 그림 12장의 계획·제작 자체는 지금 진행할 수 있습니다.
