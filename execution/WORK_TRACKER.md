@@ -4,7 +4,7 @@
 
 ## Current Observation
 
-Source 조회는 `2026-10-01T18:07:38Z` / `2026-10-02 03:07:38+09:00`입니다. 아래 세 main SHA는 이전 관측과 같고 조회 가능한 Branch는 main 하나씩, 열린 PR은 없었습니다. 개인 로컬 작업·미인계 실행의 부재를 뜻하지 않습니다. 연결한 결과는 팀의 보고이며 AI가 Runtime을 재실행한 결과가 아닙니다. 배정 담당과 원본 기록의 실제 작성·수행자는 구분합니다.
+최신 Source 조회는 `2026-10-01T18:52:45.552Z` / `2026-10-02T03:52:45.552+09:00`입니다. 아래 세 main SHA·조회 가능한 Branch main 하나씩·열린 PR 없음은 이전 03:07:38 KST 관측과 같았습니다. 새 세션 실패 처리 PR이나 검증 Seed 인계는 이번 목록에서 미확인입니다. 개인 로컬 작업·미인계 실행의 부재를 뜻하지 않습니다. 연결한 결과는 팀의 보고이며 AI가 Runtime을 재실행한 결과가 아닙니다. 배정 담당과 원본 기록의 실제 작성·수행자는 구분합니다.
 
 | 저장소 | 관측 main 전체 SHA | 연결 범위 |
 | --- | --- | --- |
@@ -16,16 +16,35 @@ Source 조회는 `2026-10-01T18:07:38Z` / `2026-10-02 03:07:38+09:00`입니다. 
 
 Docs는 공개 저장소입니다. 공개 읽기 경로 제공과 개인이 실제 열람·기록에 성공한 확인은 구분합니다. 후속 인계는 [Issue #8](https://github.com/seokpan/seokpan-hybrid-docs/issues/8)에서 이어갑니다.
 
-| 배정 담당 | 명시 GitHub 계정 | Docs 권한 API 확인 | 실제 열람·기록 확인 / 다음 입력 |
-| --- | --- | --- | --- |
-| 이유빈 | 미확인 | 계정 매핑 전 미조회 | 본인 ID·현재 작업/입력 인계 |
-| 정태훈 | `tjung03` | admin — Repo 권한 등급 | AI 연결로 Docs 쓰기 확인. 본인 환경의 열람·기록 경로는 확인 필요 |
-| 김상희 | 미확인 | 계정 매핑 전 미조회 | 본인 ID·현재 Data/Recovery 입력 인계 |
-| 최유준 | 미확인 | 계정 매핑 전 미조회 | 본인 ID·현재 lab/CI/시간·비용 입력 인계 |
+사용자가 첨부의 위→아래 순서를 최유준·이유빈·김상희로 명시해 계정을 연결했습니다. 네 계정에 대해 네 저장소 권한 API 조회 16건이 모두 성공했습니다.
+
+| 배정 담당 | 명시 GitHub 계정 | Docs | Infra | App | GitOps |
+| --- | --- | --- | --- | --- | --- |
+| 이유빈 | `ggbun2` | admin | admin | admin | admin |
+| 정태훈 | `tjung03` | admin | admin | admin | admin |
+| 김상희 | `kshi1313-gif` | admin | admin | admin | admin |
+| 최유준 | `cyj200115-prog` | admin | admin | admin | admin |
 
 GitHub ID·권한은 명시 매핑과 API 결과로 연결하고 Commit/Caller만으로 실제 사람을 단정하지 않습니다. 권한을 변경하거나 팀원에게 자동 메시지·초대를 보내지 않았습니다. main 보호 상세 조회는 현재 연결의 권한 제한으로 확인하지 못했으며 보호가 없다고 판정하지 않습니다. 기존 규칙을 변경하지 않고 PR 병합 시 GitHub의 검사 결과를 확인합니다.
 
-위 B 권한 API 관측 시각은 `2026-10-01T18:12:47.529Z` / `2026-10-02T03:12:47.529+09:00`입니다. 공개 읽기·Repo 권한 등급·본인 환경의 실제 사용 확인은 서로 다른 상태입니다.
+최신 권한 API 관측 시각은 `2026-10-01T18:52:11.308Z` / `2026-10-02T03:52:11.308+09:00`입니다. 이전 B 단독 조회는 03:12:47.529 KST 이력입니다. 개인 본인 환경의 실제 열람·Issue/PR 기록은 각자가 자기 작업 기록으로 확인합니다. Repo admin 등급은 Branch 보호·CI PAT/Job 정책·AWS/Cluster 인증·Runtime 판정을 대신하지 않습니다. 계정/권한 확인에 팀원의 개인 비밀번호나 PAT 공유는 필요하지 않습니다.
+
+## Next Handover
+
+계정 매핑/Repo 권한 확인은 완료됐습니다. 각자는 아래 입력 정리와 독립 코드·검사 준비를 병행합니다. 다른 사람의 사용 확인이나 I01~I07 전체 제출을 모든 작업의 시작 조건으로 삼지 않습니다.
+
+| 담당 | 지금 연결할 첫 입력/Source | 직접 수신자 |
+| --- | --- | --- |
+| 이유빈 | 현재 foundation 작업 Issue/Branch/전체 SHA, Bootstrap 세션 실패 처리 후속 상태와 기반 Output 계약. 미구현은 미구현으로 기록 | B ROSA, C Data, D Registry/비용 |
+| 정태훈 | 실제 검증 Seed의 전체 SHA·검증 근거·미반영 변경, 현재 App/base/Overlay Source. 관측 main을 검증 Seed로 자동 채택하지 않음 | D Build/lab, C Data, A 기반 |
+| 김상희 | Host 용량/복구 공간, 비민감 Schema/GRANT·CA 및 Backup/복호화 수단의 보호 논리 참조. 미확인 항목과 제공 시점 | A foundation/Host, B App/Recovery, D 증거 |
+| 최유준 | 원 lab Overlay/Manifest Source, CI Job/Agent·Image/Digest 인계 상태, 실제 가용시간과 비용 입력의 확인 상태 | B base/Image, A Registry/CI, C Recovery |
+
+1. 자기 기존 작업 Issue에 [인계 양식](HANDOFF_TEMPLATE.md)으로 현재 개정·완료 범위·없는 입력·직접 Blocker·다음 수신자를 기록하고 이 표에 링크합니다. 개인 본인환경의 기록 성공도 같은 작업에서 확인합니다.
+2. 수신자는 받은 개정과 사용할 범위/보완을 확인합니다. 전체 팀의 결과를 한 사람이 받아 대필할 때까지 기다리지 않습니다.
+3. 공유 Apply·배포·Restore·장애/부하는 해당 작업의 입력·리뷰·Caller/Context·Plan·비용/시간 조건을 확인한 뒤 조율합니다. 독립 준비는 병행합니다.
+
+권한 API가 실패했다면 조회 미확인으로만 남기고 공개 Source 점검·로컬 후보/검사·인계 준비를 계속합니다. 실제 쓰기/접속이 막힌 작업은 허용된 기록 경로로 결과를 제공하고 해당 대상의 접근을 해결합니다. 기록 반영자와 실제 작성/수행자는 구분합니다.
 
 ## Work Links
 
@@ -33,10 +52,10 @@ GitHub ID·권한은 명시 매핑과 API 결과로 연결하고 Commit/Caller�
 
 | 담당 | 대표 Issue/관련 PR | 현재 Source·산출물 | 지금 준비할 일 | 직접 Blocker·해결 담당 | 다음 인계·수신자 | 마지막 확인 |
 | --- | --- | --- | --- | --- | --- | --- |
-| 이유빈 | 기존 Bootstrap [Infra #10](https://github.com/seokpan/seokpan-hybrid-infra/issues/10)·[PR #11](https://github.com/seokpan/seokpan-hybrid-infra/pull/11)·[PR #12](https://github.com/seokpan/seokpan-hybrid-infra/pull/12). foundation 작업은 담당자가 연결 | 기존 Bootstrap main/팀 보고 연결, foundation 실제 산출물 인계 필요 | foundation 통합·제한 Output | I02와 세션 실패 후속 확인 | B/C/D 기반 인계 | Source 03:07:38 KST / 담당자 인계 미확인 |
-| 정태훈 | 실제 App/base/rosa 대표 작업은 이번 목록에서 미확인. [GitOps #1](https://github.com/seokpan/seokpan-hybrid-gitops/issues/1)은 lab 참고 | 앞선 B 로컬 초안은05 §7, 실제 이관/Build는 별도 | App/base·ROSA 입력 계약 | I01/I02/I06 등 확인 | D Build/lab, C Data, A 기반 | Source 03:07:38 KST / 실제 Seed 인계 미확인 |
-| 김상희 | 실제 Data/Backup/Recovery 대표 작업은 이번 목록에서 미확인. [대역 DB lab 보고](https://github.com/seokpan/seokpan-hybrid-gitops/issues/1#issuecomment-5926003372)는 참고 | 현재 Data/복구 입력 인계 필요 | Data/TLS·Backup·격리 Restore 준비 | I03/범위별 I05 확인 | A/B/D Data 인계 | Source 03:07:38 KST / 담당자 인계 미확인 |
-| 최유준 | 기존 [GitOps #1](https://github.com/seokpan/seokpan-hybrid-gitops/issues/1)·[#2](https://github.com/seokpan/seokpan-hybrid-gitops/issues/2)·[#3](https://github.com/seokpan/seokpan-hybrid-gitops/issues/3)·[#4](https://github.com/seokpan/seokpan-hybrid-gitops/issues/4). 실제 CI/시험 작업은 담당자가 연결 | 기존 lab 보고는 그 범위, 현재 조합 인계 필요 | CI·실제 base lab·Harness·Index | I04/I07 등 확인 | A/B/C, 전원 시험/비용 | Source 03:07:38 KST / 실제 조합 인계 미확인 |
+| 이유빈 | 기존 Bootstrap [Infra #10](https://github.com/seokpan/seokpan-hybrid-infra/issues/10)·[PR #11](https://github.com/seokpan/seokpan-hybrid-infra/pull/11)·[PR #12](https://github.com/seokpan/seokpan-hybrid-infra/pull/12). foundation 작업은 담당자가 연결 | 기존 Bootstrap main/팀 보고 연결, foundation 실제 산출물 인계 필요 | foundation 통합·제한 Output | I02와 세션 실패 후속 확인 | B/C/D 기반 인계 | Source 03:52:45.552 KST / 담당자 인계 미확인 |
+| 정태훈 | 실제 App/base/rosa 대표 작업은 이번 목록에서 미확인. [GitOps #1](https://github.com/seokpan/seokpan-hybrid-gitops/issues/1)은 lab 참고 | 앞선 B 로컬 초안은05 §7, 실제 이관/Build는 별도 | App/base·ROSA 입력 계약 | I01/I02/I06 등 확인 | D Build/lab, C Data, A 기반 | Source 03:52:45.552 KST / 실제 Seed 인계 미확인 |
+| 김상희 | 실제 Data/Backup/Recovery 대표 작업은 이번 목록에서 미확인. [대역 DB lab 보고](https://github.com/seokpan/seokpan-hybrid-gitops/issues/1#issuecomment-5926003372)는 참고 | 현재 Data/복구 입력 인계 필요 | Data/TLS·Backup·격리 Restore 준비 | I03/범위별 I05 확인 | A/B/D Data 인계 | Source 03:52:45.552 KST / 담당자 인계 미확인 |
+| 최유준 | 기존 [GitOps #1](https://github.com/seokpan/seokpan-hybrid-gitops/issues/1)·[#2](https://github.com/seokpan/seokpan-hybrid-gitops/issues/2)·[#3](https://github.com/seokpan/seokpan-hybrid-gitops/issues/3)·[#4](https://github.com/seokpan/seokpan-hybrid-gitops/issues/4). 실제 CI/시험 작업은 담당자가 연결 | 기존 lab 보고는 그 범위, 현재 조합 인계 필요 | CI·실제 base lab·Harness·Index | I04/I07 등 확인 | A/B/C, 전원 시험/비용 | Source 03:52:45.552 KST / 실제 조합 인계 미확인 |
 
 ## Input Handover
 
@@ -47,7 +66,7 @@ GitHub ID·권한은 명시 매핑과 API 결과로 연결하고 Commit/Caller�
 | I01 | 정태훈, 최유준 lab | 실제 Seed·미반영 변경·원 Overlay·전체 Commit/Digest·실습 조건. 이관/lab 전 | [lab #1](https://github.com/seokpan/seokpan-hybrid-gitops/issues/1#issuecomment-5926003372)·[#2 Manifest 인계 계획](https://github.com/seokpan/seokpan-hybrid-gitops/issues/2#issuecomment-5927202120)·[#3 예제](https://github.com/seokpan/seokpan-hybrid-gitops/issues/3#issuecomment-5927423295)·[#4 관측](https://github.com/seokpan/seokpan-hybrid-gitops/issues/4#issuecomment-5928589042) | 과거 lab 참고 접수, 실제 base 수신 수락 미확인 | 검증 Seed 전체 SHA·미반영 변경·원 Overlay/Manifest/Raw 인계 |
 | I02 | 이유빈, 정태훈 rosa | Controller·Tool/Lock·Caller/Role·정본 Backend·지원/Quota. 해당 Plan 전 | [State 정리 보고](https://github.com/seokpan/seokpan-hybrid-infra/issues/10#issuecomment-5928992867)·[Bootstrap Apply/임시 Probe 결과](https://github.com/seokpan/seokpan-hybrid-infra/pull/12#issuecomment-5930110859) | 팀 보고 부분 접수. 실제 foundation/rosa 서비스 Root 완료와 다름 | 개인 MFA/Caller·세션 실패 차단·Root 도구/지원·실제 Plan/제한 Output |
 | I03 | 김상희, 이유빈 자산 | Host CPU/RAM/공간·격리 Storage·DB/CA·Dump/GRANT. 배치/Import 전 | [대역 DB/TLS lab](https://github.com/seokpan/seokpan-hybrid-gitops/issues/1#issuecomment-5926003372) 참고 | 실제 Recovery 자산/입력 수신 수락 미확인 | Host/공간·목적 GRANT/CA/Schema·Dump·독립 사본·격리 Restore |
-| I04 | 최유준, 정태훈 리뷰 | PAT 정책·Repo 보호·Job/Agent/Binding·Registry/Scan. 발급/CI 변경 전 | Docs B 권한 조회는 Team Access, 실제 CI 입력 인계 미확인 | 정책/Job/Registry 수신 수락 미확인 | 실제 PAT 정책·Build/Test/Scan·Digest Mapping·Push/PR/Pull |
+| I04 | 최유준, 정태훈 리뷰 | PAT 정책·Repo 보호·Job/Agent/Binding·Registry/Scan. 발급/CI 변경 전 | 네 사람 Repo 권한 조회는 Team Access, 실제 CI 입력 인계 미확인 | 정책/Job/Registry 수신 수락 미확인 | 실제 PAT 정책·Build/Test/Scan·Digest Mapping·Push/PR/Pull |
 | I05 | 승인된 범위별 주/예비 보관자 | 보호 원본·독립 사본·오프라인 Key/해제·증거 접근/보존. 공급/Offline 전 | 이번 조회 범위에서 완료 근거 미확인 | 범위별 수신 수락 미확인 | 범위별 공급/접근·복호화/복원·보존 책임 확인 |
 | I06 | 정태훈, 이유빈 리뷰, 최유준 lab | 개인 IDP/RBAC·Argo·비상 경로·초기 인증/세션 회수. 초기 관리자 종료 전 | [Argo 예제 동작/정리](https://github.com/seokpan/seokpan-hybrid-gitops/issues/3#issuecomment-5927423295)·[UWM 원복 보고](https://github.com/seokpan/seokpan-hybrid-gitops/issues/4#issuecomment-5928589042) | 해당 lab 참고 접수, 실제 관리 인계 수락 미확인 | 개인 IDP/SSO/RBAC·유지 비상·초기 인증/기존 세션 회수·잔존 확인 |
 | I07 | 최유준 집계, 네 담당자 | 실제 가용시간·가격/Credit·누적/잔존·Plan·Window/재시험/정리. Full Apply 전 | 이번 조회 범위에서 Gate 충족 근거 미확인 | 실제 실행 조건 수신 수락 미확인 | $450 계획선/$500 한도·현재 Plan/가격·가용시간·실행 창 연결 |
