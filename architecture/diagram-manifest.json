@@ -1,0 +1,352 @@
+{
+  "schema_version": 1,
+  "created_date": "2026-10-02 KST",
+  "design_basis_date": "2026-10-01 KST",
+  "status": "DESIGN_TARGET",
+  "runtime_validation": "NOT_ASSESSED",
+  "source_files": [
+    {
+      "path": "design/00_PROJECT_STARTING_POINT.md",
+      "sha256": "fba515600ce0e935fbf35ac2f4b3916fb0cdc63ee0a3f198fc3a6ca6ae7580f4"
+    },
+    {
+      "path": "design/01_PROJECT_CHARTER.md",
+      "sha256": "b9f23e17dc701f16e334fd603b7872a9bf016198fc3ac3b66279745ee9131b65"
+    },
+    {
+      "path": "design/02_TARGET_ARCHITECTURE.md",
+      "sha256": "ee3b7cb9b3607b22a3f2209f61f5217146296b31ae83446295e628840f3efd95"
+    },
+    {
+      "path": "design/03_DETAILED_DESIGN.md",
+      "sha256": "99b8b3c5cc2ed99971e26c053b2897970bfe67e519a19ada47b519b7a7cdf34a"
+    },
+    {
+      "path": "design/04_IMPLEMENTATION_READINESS.md",
+      "sha256": "8b0d425fbfae02bfccac2834c1fd33e8a7d8081d00b99ef5ae78e3f1a08127a2"
+    }
+  ],
+  "checks": {
+    "svg_xml": 12,
+    "png_decode": 12,
+    "embedded_font_glyphs": 12,
+    "declared_geometry": 12,
+    "approved_subnet_cidrs": 9,
+    "source_identity": 5,
+    "high_risk_text_pattern_matches": 0
+  },
+  "diagrams": [
+    {
+      "id": "01",
+      "title": "전체 논리 아키텍처",
+      "status": "DESIGN_TARGET",
+      "source_refs": "02 §3~4 · 03 §3-A.1~5 · 04 §1 / §5.5",
+      "pending": "실제 운영 상태·복구 준비 완료 여부는 문서 05의 증거로 확인",
+      "svg": {
+        "path": "architecture/diagrams/01-logical-architecture.svg",
+        "bytes": 39141,
+        "sha256": "04fc1324b4f0053cf942b82c56c899819345786277cc9310b5f1bc9885d637f6"
+      },
+      "png": {
+        "path": "architecture/exports/01-logical-architecture.png",
+        "bytes": 669687,
+        "sha256": "4647b0099f2a12375340dea621c4d75a910f34c4de68858ebb8a7c9ac9997897"
+      },
+      "svg_size": [
+        1800,
+        1200
+      ],
+      "png_size": [
+        3600,
+        2400
+      ],
+      "embedded_font_glyphs_checked": true
+    },
+    {
+      "id": "02",
+      "title": "전체 물리 아키텍처",
+      "status": "DESIGN_TARGET",
+      "source_refs": "03 §3-B.3~6 / §3-B.8~9 / §3-D.10 / §3-F.18 · 04 §5.5",
+      "pending": "실제 AZ 이름·Host·VM 주소/용량·서비스 배치 AZ는 확인 대기",
+      "svg": {
+        "path": "architecture/diagrams/02-physical-architecture.svg",
+        "bytes": 38862,
+        "sha256": "f2b507dd9223e4c86c838d24aa601e723a3e88fc16f6be632b9e3a8f2f5b2e4a"
+      },
+      "png": {
+        "path": "architecture/exports/02-physical-architecture.png",
+        "bytes": 744293,
+        "sha256": "8fa9a7d6876851483ff04a6edb0c091458aee8dacc07a1f918512c8f73aa7380"
+      },
+      "svg_size": [
+        1800,
+        1400
+      ],
+      "png_size": [
+        3600,
+        2800
+      ],
+      "embedded_font_glyphs_checked": true
+    },
+    {
+      "id": "03",
+      "title": "Hybrid 네트워크와 경로",
+      "status": "DESIGN_TARGET",
+      "source_refs": "03 §3-B.1 / §3-B.5 / §3-B.8~9 / §3-D.9.3 · 04 §1",
+      "pending": "실제 Host /32·Gateway·ENI·SG·DNS와 수신 Source IP 확인 필요",
+      "svg": {
+        "path": "architecture/diagrams/03-hybrid-network.svg",
+        "bytes": 31801,
+        "sha256": "375f78e473e8a8c225e4ba7dad047f21ee4837b5f61cc01eda4a7fb6f3a9af4e"
+      },
+      "png": {
+        "path": "architecture/exports/03-hybrid-network.png",
+        "bytes": 553740,
+        "sha256": "118e99e54ee559dd9548011465f9075e1aac59e768d2ddd158e3b6346e41d969"
+      },
+      "svg_size": [
+        1800,
+        1200
+      ],
+      "png_size": [
+        3600,
+        2400
+      ],
+      "embedded_font_glyphs_checked": true
+    },
+    {
+      "id": "04",
+      "title": "사용자 트래픽과 TLS",
+      "status": "DESIGN_TARGET",
+      "source_refs": "03 §3-B.8.3 / §3-E.3~7 · 04 §1",
+      "pending": "실제 Host·Path·Port·Route·Probe·Timeout은 Source 확인 후 반영",
+      "svg": {
+        "path": "architecture/diagrams/04-service-traffic-tls.svg",
+        "bytes": 33726,
+        "sha256": "a53283c5e591834196d004777979faa1b65c575f11f41a18851f9425c9c543f8"
+      },
+      "png": {
+        "path": "architecture/exports/04-service-traffic-tls.png",
+        "bytes": 459464,
+        "sha256": "c120927ac08e5d0014fbb1968e1af4961b087d78a0d6bc175ca821504049e193"
+      },
+      "svg_size": [
+        1800,
+        1200
+      ],
+      "png_size": [
+        3600,
+        2400
+      ],
+      "embedded_font_glyphs_checked": true
+    },
+    {
+      "id": "05",
+      "title": "상태 책임과 재접속·업무 확정",
+      "status": "DESIGN_TARGET",
+      "source_refs": "03 §3-D.5 / §3-D.10.7 / §3-E.10~14",
+      "pending": "인증·Schema·요청 식별·원자성·재접속의 실제 구현은 확인 대기",
+      "svg": {
+        "path": "architecture/diagrams/05-state-reconnect-consistency.svg",
+        "bytes": 36916,
+        "sha256": "b6122cae385bc196518127d0c20ced384b8a959d685e7a84b96906805c434caf"
+      },
+      "png": {
+        "path": "architecture/exports/05-state-reconnect-consistency.png",
+        "bytes": 611723,
+        "sha256": "7d02010ba512cff79a83ed529d2b5b683dda93fefed1e47c7538498a778111ed"
+      },
+      "svg_size": [
+        1800,
+        1200
+      ],
+      "png_size": [
+        3600,
+        2400
+      ],
+      "embedded_font_glyphs_checked": true
+    },
+    {
+      "id": "06",
+      "title": "CI/CD와 Release 전달",
+      "status": "DESIGN_TARGET",
+      "source_refs": "03 §3-A.8 / §3-F.16~17 · 04 §5.2 / §5.4",
+      "pending": "실제 Job·Scan·Digest·PR·Runtime Pull·보존본의 연결 확인 필요",
+      "svg": {
+        "path": "architecture/diagrams/06-cicd-release-flow.svg",
+        "bytes": 33213,
+        "sha256": "6fd21d77dc521b6f625900b515cf56a8d5d138ab0879eb4feed7f0aa7e868e77"
+      },
+      "png": {
+        "path": "architecture/exports/06-cicd-release-flow.png",
+        "bytes": 618751,
+        "sha256": "a3aaf2d1cf6928074dbc35bf28297394009da7154f870f43a3e4562689c22aae"
+      },
+      "svg_size": [
+        1800,
+        1200
+      ],
+      "png_size": [
+        3600,
+        2400
+      ],
+      "embedded_font_glyphs_checked": true
+    },
+    {
+      "id": "07",
+      "title": "Terraform·Ansible·GitOps 소유권과 수명",
+      "status": "DESIGN_TARGET",
+      "source_refs": "02 §15~19 · 03 §3-A.7 / §3-F.3~9 / §3-F.17.3 / §3-F.19 · 04 §2",
+      "pending": "실제 Plan·Role·Lock·State 연결·삭제 보호 동작은 구현 Gate",
+      "svg": {
+        "path": "architecture/diagrams/07-iac-gitops-ownership.svg",
+        "bytes": 36571,
+        "sha256": "779026c534ac9fd0b935d0aed482283d95cffd87abb5edc3ffe0a43827880800"
+      },
+      "png": {
+        "path": "architecture/exports/07-iac-gitops-ownership.png",
+        "bytes": 637080,
+        "sha256": "bf544817a9ed03241de8501b35ea7727d68bf49320f68b686f2ea8629cab5560"
+      },
+      "svg_size": [
+        1800,
+        1200
+      ],
+      "png_size": [
+        3600,
+        2400
+      ],
+      "embedded_font_glyphs_checked": true
+    },
+    {
+      "id": "08",
+      "title": "관리 인증과 Secret 공급",
+      "status": "DESIGN_TARGET",
+      "source_refs": "03 §3-C / §3-F.6 · 04 §5.2~3 / §5.6",
+      "pending": "실제 발급·MFA·Policy·공급·로그인/회수·오프라인 복원은 확인 대기",
+      "svg": {
+        "path": "architecture/diagrams/08-identity-secret-supply.svg",
+        "bytes": 34617,
+        "sha256": "1d99a25f31aa20fb169ee5403eaaf6bca041a3d1090dde870bbe56e802e9d7b1"
+      },
+      "png": {
+        "path": "architecture/exports/08-identity-secret-supply.png",
+        "bytes": 559585,
+        "sha256": "48e34e6714779c1384a972328a6d4be44a48889289619a11439291c7034484c1"
+      },
+      "svg_size": [
+        1800,
+        1200
+      ],
+      "png_size": [
+        3600,
+        2400
+      ],
+      "embedded_font_glyphs_checked": true
+    },
+    {
+      "id": "09",
+      "title": "관측과 Evidence",
+      "status": "DESIGN_TARGET",
+      "source_refs": "02 §13 · 03 §3-G.8~9 · 04 §5.4 / §8.5",
+      "pending": "실제 수집 경로·Exporter·receiver·보존 위치·Run은 확인 대기",
+      "svg": {
+        "path": "architecture/diagrams/09-observability-evidence.svg",
+        "bytes": 37109,
+        "sha256": "6505009f2f3fad80c3f3952e4de3f261ac052e30ac1375b78bc19cdfda6f1bed"
+      },
+      "png": {
+        "path": "architecture/exports/09-observability-evidence.png",
+        "bytes": 573473,
+        "sha256": "1601631407cdba55d76ff2338396331d841e5bc1db9b1c75fc415b7ada0cacde"
+      },
+      "svg_size": [
+        1800,
+        1200
+      ],
+      "png_size": [
+        3600,
+        2400
+      ],
+      "embedded_font_glyphs_checked": true
+    },
+    {
+      "id": "10",
+      "title": "백업과 On-Prem 오프라인 복구",
+      "status": "DESIGN_TARGET",
+      "source_refs": "03 §3-C.12.7 / §3-D.9.3~9.8 / §3-F.17.3 / §3-G.7 · 04 §5.1 / §5.5",
+      "pending": "실제 Backup·독립 Storage/Key·도구 호환·복원 결과는 확인 대기",
+      "svg": {
+        "path": "architecture/diagrams/10-backup-offline-recovery.svg",
+        "bytes": 37413,
+        "sha256": "6471d1e7bbd449f913ee8f5438d87b2b9c0cdd5953d8c5441dbd40c289918709"
+      },
+      "png": {
+        "path": "architecture/exports/10-backup-offline-recovery.png",
+        "bytes": 592907,
+        "sha256": "077eeaace988f64132f7e1baacba34bddff9b29a5998eccf2160a9f3ef00f261"
+      },
+      "svg_size": [
+        1800,
+        1200
+      ],
+      "png_size": [
+        3600,
+        2400
+      ],
+      "embedded_font_glyphs_checked": true
+    },
+    {
+      "id": "11",
+      "title": "HA와 장애 영향 범위",
+      "status": "DESIGN_TARGET",
+      "source_refs": "02 §25~27 · 03 §3-B.9.8 / §3-E.14 / §3-F.18 / §3-G · 04 §10.2",
+      "pending": "장애 주입·서비스 영향·MTTR/RTO/RPO·재시험은 아직 미실행",
+      "svg": {
+        "path": "architecture/diagrams/11-ha-failure-domains.svg",
+        "bytes": 36123,
+        "sha256": "0ce3c8520eb04e094ba207c4bcc6cba2e3491b3b23d949b18387a7e046f9614b"
+      },
+      "png": {
+        "path": "architecture/exports/11-ha-failure-domains.png",
+        "bytes": 605070,
+        "sha256": "c4dcbb4dfb3b22d9fc64cb02d3568a951ef2abf62bc9d34caf20345c3ddd67a8"
+      },
+      "svg_size": [
+        1800,
+        1200
+      ],
+      "png_size": [
+        3600,
+        2400
+      ],
+      "embedded_font_glyphs_checked": true
+    },
+    {
+      "id": "12",
+      "title": "1차에서 2차로의 책임 이전",
+      "status": "DESIGN_TARGET",
+      "source_refs": "00 §6 / §8 / §12 · 02 §2.3 · 03 §3-A.6 / §3-D.2~7",
+      "pending": "Seed SHA·실제 Migration/전환·개별 자원의 최종 판정은 확인 대기",
+      "svg": {
+        "path": "architecture/diagrams/12-migration-responsibility.svg",
+        "bytes": 36021,
+        "sha256": "c78095875a80d512e5a2d924ee3ba94dd909f19f9264b64921c57f9552163d3d"
+      },
+      "png": {
+        "path": "architecture/exports/12-migration-responsibility.png",
+        "bytes": 604354,
+        "sha256": "8b968e0c9256c145e75f8e0ba56b5b105cdab4ca4bbdb69f851c67d68d670494"
+      },
+      "svg_size": [
+        1800,
+        1200
+      ],
+      "png_size": [
+        3600,
+        2400
+      ],
+      "embedded_font_glyphs_checked": true
+    }
+  ]
+}
