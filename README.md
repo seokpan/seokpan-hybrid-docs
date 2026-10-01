@@ -3,6 +3,16 @@ Seokpan 2차 - 하이브리드 클라우드 기획·아키텍처·검증 문서
 
 1차 온프레미스 프로젝트를 기반으로 AWS 하이브리드 환경으로 이전하는 2차 프로젝트의 문서 저장소입니다. 승인된 목표는 **Cloud Primary + On-Prem Restore-based Recovery**입니다. 설계 승인과 실제 구축·시험 결과를 구분합니다.
 
+현재 진행 현황:
+
+- [x] 설계 원문 00~04 보존과 출처 확인
+- [x] 설계 그림 12장 제작 및 자체 검증
+- [x] SVG/PNG·목차·제작 검토 기록 연결
+- [ ] 사용자 그림 검토 및 PR Merge
+- [ ] 실제 구현 증거로 구축 결과판 작성
+
+현재 등록 내용은 [PR #3](https://github.com/seokpan/seokpan-hybrid-docs/pull/3) 작업 브랜치 기준이며 Merge 대기입니다.
+
 ## Planning & Design
 
 [설계문서 목차](design/README.md)에서 프로젝트 소스 00~04의 원문과 문서별 역할을 확인합니다.
@@ -19,11 +29,17 @@ Seokpan 2차 - 하이브리드 클라우드 기획·아키텍처·검증 문서
 
 ## Architecture
 
-[다이어그램 제작 계획](architecture/DIAGRAM_PLAN.md)에 설계 주제 12장의 목적·내용·참조 문서·제작 순서를 정리했습니다. 장수와 표현 방식은 사용자 검토 전 제안이며, 이미지는 아직 제작하지 않았습니다. 후속 전체 논리·물리의 실제 구축 결과판은 이 12장의 설계판과 별도 판본으로 관리합니다.
+[아키텍처 목차](architecture/README.md)에 전체 구조 2장과 상세 10장을 연결했습니다. 편집 가능한 SVG 12개와 폭 3600px PNG 12개는 같은 12장의 그림입니다. 모두 승인된 설계 목표이며 실제 구축·시험 결과와 구분합니다.
 
-전체 논리·물리 아키텍처는 지금 목표 설계로 제작할 수 있습니다. 실제 구축 구조와 시험 결과를 보여주는 그림은 구현·검증 기록을 확인한 뒤 작성합니다.
+![전체 논리 아키텍처 — 설계 목표](architecture/exports/01-logical-architecture.png)
 
-[제작 계획 검토 기록](architecture/REVIEW_RECORD.md)에서 원문·설계 근거·등록 상태와 계획 보완의 검증 범위를 확인합니다.
+[논리 SVG 원본](architecture/diagrams/01-logical-architecture.svg) · [논리 PNG](architecture/exports/01-logical-architecture.png)
+
+![전체 물리 아키텍처 — 목표 배치도](architecture/exports/02-physical-architecture.png)
+
+[물리 SVG 원본](architecture/diagrams/02-physical-architecture.svg) · [물리 PNG](architecture/exports/02-physical-architecture.png)
+
+[제작 계획](architecture/DIAGRAM_PLAN.md), [계획 검토 이력](architecture/REVIEW_RECORD.md), [제작 검토 기록](architecture/PRODUCTION_REVIEW.md)에서 목적·근거·보완·검증 범위를 확인합니다. 관련 구현 증거가 확보되면 실제 전체 논리·물리 구축 결과판을 별도 판본으로 작성합니다.
 
 ## Implementation & Validation
 
