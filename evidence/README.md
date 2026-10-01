@@ -10,6 +10,8 @@
 4. checksums.txt에는 공유 가능한 실제 파일의 SHA-256을 생성해 넣습니다. 보호 Raw·SQL/Backup·State/Plan·Credential은 Git에 올리지 않고 논리 참조/보관·접근 책임으로 연결합니다.
 5. 아래 Index와 관련 작업 Issue·[공통 진행표](../execution/WORK_TRACKER.md)에 링크를 연결합니다. 실패 Run을 보존하고 수정/재시험과 연결합니다.
 
+발표 후보로 선별한 실제 Run은 [05 §0.7](../execution/05_IMPLEMENTATION_AND_VALIDATION.md#07-발표와-보고에-사용할-측정과-증거)의 별도 기준에 따라 [Issue #6](https://github.com/seokpan/seokpan-hybrid-docs/issues/6)에 원본 Run 링크와 간략한 후보 판정을 연결합니다. 실제 수치·로그·시간선의 정본은 이 Run이며 Issue에 복사하지 않습니다.
+
 GitOps의 `releases/<release-id>.json`은 후보/선언이며 Docs의 Run과 구분합니다. 후보 안에 후보 자신을 포함한 GitOps SHA를 넣지 않습니다. 실제 Run은 Commit 후 실제 사용 GitOps SHA를 기록합니다. 이번 release.json은 승인 필드의 빈 Run 양식이며 새 Validator/파이프라인 구현이나 최종 검증을 의미하지 않습니다.
 
 ## Run Index

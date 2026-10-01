@@ -2,7 +2,7 @@
 
 이 폴더는 석판 2차 프로젝트의 **지금 공유해서 쓰는 작업 안내와 공동 진행 기록**입니다. 05 최종 완료를 기다리지 않고 각자 준비·구현·인계를 진행합니다. 정태훈이 모든 결과를 받아 대필하는 방식으로 운영하지 않습니다.
 
-> 공유용 PR의 진행본입니다. main 병합·팀원별 읽기/쓰기·실제 사용 확인은 별도입니다. 현재 역할별 실적은 담당자가 자기 근거와 확인 시각을 연결해야 합니다.
+> 공유 반영 상태는 [PR #5](https://github.com/seokpan/seokpan-hybrid-docs/pull/5)에서 확인합니다. 변경은 Branch/PR로 검토합니다. 기존 작업·부분 보고와 접근 권한의 확인 범위는 [진행표](WORK_TRACKER.md), 남은 계정/현재 작업·입력 인계는 [Issue #8](https://github.com/seokpan/seokpan-hybrid-docs/issues/8)에서 이어갑니다. 담당자는 자기 근거와 확인 시각을 직접 연결합니다.
 
 ## Start Here
 
@@ -29,6 +29,7 @@
 | 코드·검사·리뷰 | 해당 Branch/PR |
 | 실제 실행·수치·실패·시간선 | Docs의 evidence/&lt;test-id&gt;/&lt;run-id&gt;/ — [빈 양식](../evidence/_template/summary.md)에서 시작 |
 | 전체 인계·통합 Gate | [공통 진행표](WORK_TRACKER.md), [단일05](05_IMPLEMENTATION_AND_VALIDATION.md)에는 링크와 집계 시각 |
+| 발표 후보 | [05 §0.7의 별도 발표 기준 참조](05_IMPLEMENTATION_AND_VALIDATION.md#07-발표와-보고에-사용할-측정과-증거)를 읽고 [Issue #6](https://github.com/seokpan/seokpan-hybrid-docs/issues/6)에 원본 Run 링크와 후보 판정만 연결 |
 
 새 Issue 번호·수행자·실제 시각·성공값을 미리 만들어 채우지 않습니다. 기존 Issue가 범위를 담으면 이어 쓰고 별도 산출물/종료 조건이 필요할 때만 나눕니다. 같은05 편집은 최신 정본과 타 담당 기록을 대조하며, 독립 작업/직접 인계는 문서 Merge를 기다리지 않습니다.
 

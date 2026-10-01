@@ -1,11 +1,11 @@
 # 石나가는 판단 2차 프로젝트 05 구현·통합·검증 진행 기록
 
-> **현재 단계:** 05 협업 사용본의 저장소 공유용 진행본 — 역할별 입력/구현 인계 연결
-> **기준일:** 2026-10-02 KST. 저장소 Source는 이전 01:27 KST 관측을 유지하며 이번 협업 검토 시각·실제 Runtime 관측과 구분
+> **현재 단계:** 05 협업 진행본 — 저장소 공유와 현행 작업·입력 인계 연결
+> **기준일:** 2026-10-02 KST. 이전 01:27 KST Source 관측은 보존하며 후속 Source/권한 관측과 팀 보고는 공통 진행표에 별도 연결
 > **상태:** 사용자 04·개정 지침 등록 완료 확인. 네 저장소 main/Tree/Branch/PR/Issue 읽기 점검과 팀 전체 진행 안내 보강. 앞선 B 로컬 초안은 보존. 팀의 Infra 병합·OCP 보고와 AI의 Source 관측·로컬 검사·미실행 Runtime을 구분
 > **기준:** 승인된 01/02/03, 닫힌 `04_IMPLEMENTATION_READINESS.md`, 최종 개정 `PROJECT_INSTRUCTIONS.md`, 사용자 최신 명시적 결정
 > **기간/한도:** 2026-09-28~2026-10-26, 10/16 Technical Freeze, $450 계획선+$50 여유=$500 한도
-> **공유와 종료:** 이 진행본은 공유용 브랜치/PR에서 검토한다. main 반영은 PR 병합 결과를 따르며 개인별 읽기/쓰기 접근·실제 팀 도입은 별도 확인한다. 05 최종 종료는 구현·검증·정리 후다.
+> **공유와 종료:** 공유 반영은 [PR #5](https://github.com/seokpan/seokpan-hybrid-docs/pull/5)의 병합 Metadata로 확인한다. 변경은 Branch/PR에서 검토하고 개인별 읽기/쓰기 접근·실제 팀 도입은 별도 확인한다. 05 최종 종료는 구현·검증·정리 후다.
 
 
 **팀원이 시작할 위치:** [실행 안내](README.md)에서 읽는 순서를 확인하고, [공통 진행표](WORK_TRACKER.md)에 자기 작업과 입력 인계를 연결한다. [인계 양식](HANDOFF_TEMPLATE.md)은 해당 작업 Issue의 제출/확인 기록으로 사용한다. 실제 실행 결과는 [Evidence 안내](../evidence/README.md)의 Run별 양식으로 남긴다.
@@ -20,7 +20,8 @@
 - [x] 팀 전체 05 범위·역할·작업 인계·OCP/ROSA 구분·증거/비용 종료 안내 연결
 - [x] 네 사람의 첫 작업·기록 책임·수신자 확인·공유 실행 충돌 처리 보강
 - [x] 3회 연쇄 검토·보완 후 재검증 수렴 — 최종 추가 보완 0건
-- [ ] 실제 공통 문서 위치/개정·팀 접근·기록 경로와 현재 작업 Issue 연결
+- [x] 공통 문서/진행표 경로와 기존 작업·입력 보고 연결 — 현재 확인 범위는 진행표
+- [ ] A/C/D 계정 매핑·개인별 실제 접근/기록·미반영 작업과 실행 입력 인계
 - [x] 앞선 B App 연결·GitOps 로컬 초안과 수행 가능한 검사 — 해당 범위 24건 PASS
 - [ ] 실제 이관 Seed·실습 Overlay·Image/Secret 입력 확정과 저장소 반영
 - [ ] AWS 생성·Cloud 통합 — 실제 Plan·비용·담당 실행 조건 확인 후
@@ -76,6 +77,8 @@ PR #12의 Metadata 병합 시각은 2026-10-01T11:02:14Z이다. 이번 점검은
 팀 OCP Issue의 닫힘은 해당 lab 범위의 종료 보고다. #1의 9항목, #2의 UWM, #3의 공개 Argo 예제, #4의 Ingress 정책/웹훅 결과를 실제 hybrid base·ROSA·실제 메일 수신·전체 Egress 검증으로 확대하지 않는다. 상세 Source/조건과 Runtime 원본은 지정 담당자의 인계에서 확인한다. #1의 옛 짧은 SHA/임시 넓은 DB 권한·미커밋 Overlay와 #3의 lab GitOps 버전·예제 경로는 최종 검증 조합과 구분한다.
 
 이번 main 하위 README에도 foundation/rosa Key가 `foundation/terraform.tfstate`·`rosa/terraform.tfstate`로 남고 상세설계 뒤 CIDR/Sizing/API를 결정한다는 옛 표현이 있다. 루트 README와 승인03/04는 `phase2/foundation/terraform.tfstate`·`phase2/rosa/terraform.tfstate`와 이미 승인된 구조를 따른다. 이는 담당 구현 PR에서 문서/HCL/Backend 예시를 정합화할 Source 항목이며, 실제 State 재이전이나 설계 재선택을 지시하는 것이 아니다. 이전 §3.2 S05-01의 관측이 이번 SHA에서도 남아 있다.
+
+후속 Source 관측은 `2026-10-01T18:07:38Z` / `2026-10-02 03:07:38+09:00`다. Infra/App/GitOps main SHA는 위와 같았고 기존 Bootstrap 실행 보고·OCP lab 보고를 [진행표](WORK_TRACKER.md#current-observation)에 연결했다. Docs에서는 설계 PR #3·실행 PR #5·발표 PR #7이 병렬 진행 중이었다. 현재 역할별 작업·I01~I07 부분 보고·권한 조회와 남은 인계는 [진행표](WORK_TRACKER.md)와 [Issue #8](https://github.com/seokpan/seokpan-hybrid-docs/issues/8)을 정본으로 확인한다. 기존 표를 새 Runtime 판정으로 덮어쓰지 않는다.
 
 ### 0.3 네 사람의 작업과 인계
 
@@ -157,6 +160,10 @@ OCP에서 확인 가능한 해당 Case는 먼저 수행해 유료 시간의 문�
 `summary.md`는 결과/원인/해석, `metrics.csv`는 수치/단위/집계, `timeline.csv`는 장애/탐지/조치/재개, `release.json`은 조합, 공유 가능한 `checksums.txt`는 무결성 참조다. 대용량 Raw Log/영상·Credential/State/Plan·SQL/Backup 원본은 보호 경로에서 보관하고 문서에는 논리 참조·보관자·접근/보존 책임을 둔다. 실패 Run도 보존해 수정/재시험과 연결한다. 각자가 자기 증거를 작성하고 최유준이 Index를 연결한다.
 
 판정은 NOT RUN/PASS/PARTIAL/FAIL/N/A다. PASS에는 해당 조건의 증거가 필요하고 N/A에는 이유/제외 범위가 필요하다. Must 실패/누락은 해결하거나 명시적 범위 결정을 받아 최종 판정에 반영한다. Rollback·Warm DR·추가 Scaling/관측 등 Should/Could는 Must와 비용·기간을 침해하지 않는 범위에서 수행한다. 기존 CI Build/Test/Scan의 결과 추적은 유지하며 새 취약점 Severity 0건 기준을 임의 Must로 추가하지 않는다.
+
+**발표 후보 연결:** 공식 Test/Acceptance는 승인 [03 상세설계](https://github.com/seokpan/seokpan-hybrid-docs/blob/5d6c917b0b39ca1d132b1ae6a9d6c9adfd428b0d/design/03_DETAILED_DESIGN.md)를 따른다. Actual과 원본 증거는 이05와 `evidence/<test-id>/<run-id>/`에 기록한다. 발표 후보 선별·1차 Baseline 비교 여부·기본기능/일반절차 과장 방지 기준은 별도 [Presentation Baseline](https://github.com/seokpan/seokpan-hybrid-docs/blob/25f04b7a1104948bff259d2e85163d267acb38af/presentation/PRESENTATION_BASELINE.md)을 참조하며 내용을 이05에 복제하지 않는다. 이 발표 문서는 Test 조건·성공기준·실제 결과를 발표에 유리하게 변경하거나 재해석하는 근거가 아니다. 조회 시 Baseline은 [Draft PR #7](https://github.com/seokpan/seokpan-hybrid-docs/pull/7)에서 추가 중이며 main 반영 전이므로 고정 Head 참조를 사용한다.
+
+실제 Run 중 발표 가치가 있는 결과는 [Issue #6](https://github.com/seokpan/seokpan-hybrid-docs/issues/6)에 원본 Run 링크와 간략한 후보 판정·비교 분류·주장 범위/한계를 연결한다. 수치·로그·시간선을 중복 전사하지 않는다. 1차 재측정은 2차 Harness·측정 정의가 충분히 고정된 뒤 동일/대응 조건의 재현 가능성과 비교 가치를 판단해 필요한 항목만 검토하며, 지금05 작업의 선행조건으로 삼지 않는다.
 
 ### 0.8 유료 자원 정리와 05 종료
 
@@ -323,7 +330,7 @@ ROSA Window 진입/추가·재시험은 최신 전체 비용·남은 시험·정
 | 판단 대상 | 이번 문서 상태 | 실제로 남은 확인 |
 |---|---|---|
 | 협업 작업 안내 | 공통 기준·네 역할별 첫 작업·기록/인계·공유 실행 방법 보강과 문서 검토 수렴 | 공유 가능한 진행본. 실제 공유/접근은 다음 행 |
-| 실제 팀 공유와 기록 연결 | 공유용 브랜치/PR에서 안내·입력/결과 양식 검토 | main 병합·개인별 읽기/쓰기·현재 Issue 연결·실제 팀 도입/가용시간 |
+| 실제 팀 공유와 기록 연결 | 공유 반영 PR #5, 기존 작업/입력 보고와 Docs B 권한을 진행표에 연결 | A/C/D 계정 매핑·개인별 실제 접근/기록·미반영 Source·실제 팀 도입/가용시간 |
 | 작업별 실행 준비 | 해당 입력/도구·리뷰 Gate별 판정 | I01~I07과 실제 코드/검사·계정·자산·보호 자료 |
 | Full Apply/최종 Acceptance | 실제 준비/검증 완료를 주장하지 않음 | Plan·가격/Credit·Window·실제 Runtime/증거 |
 | 05 최종 종료 | 미완료 | 구현·통합·Must 판정·발표/보고·보존·불필요 유료 자원 정리와 잔존 책임 |
@@ -361,6 +368,12 @@ AI는 이 협업 기준 안에서 정태훈의 후보 코드·검사·문서 연
 공유할 10개 파일을 승인04와 기존05에 대조하고 읽는 순서→역할별 입력→직접 인계→실제 Run→통합 기록을 검토했다. 확인하지 않은 팀 일정의 부재를 단정하던 표현은 이 진행표의 확인 범위로 한정했고, Run 경로 자리표시자는 코드 표기로 보완했다. 보완 후 상대 파일/절 링크20개와 빈 Run 양식을 재확인했으며 추가 정합 보완은 발견하지 못했다. 승인 기준6개는 변경하지 않았다. 이 검토는 문서 공유 준비이며 Cloud/lab 실행·개인별 접근·실제 팀 도입의 성공을 의미하지 않는다.
 
 공유 변경은 `execution/`과 `evidence/`에 한정한다. 조회된 설계 등록 PR #3의 브랜치·원문·다이어그램 계획과 루트 README는 변경하지 않는다. main 반영은 이 공유 변경의 PR 병합 결과로 확인하고 현재 작업 Issue·실제 입력·실행 일정은 각 담당자가 진행표에 연결한다.
+
+### 0.17 발표 참조와 현행 인계의 연결 검토
+
+발표 PR #7의 고정 Head·Issue #6을 승인03/04·기존05에 대조했다. §0.7에 별도 선별 기준의 참조·공식 Test/Actual 우선·조건/결과 재해석 금지·원본 Run 링크/후보 판정·1차 재측정 시점을 연결했고, 실행/Evidence 안내에는 기록 위치만 추가했다. 발표 원문·정량 목표·역할·WBS·Gate·Run 양식은 변경하지 않는다. PR #7 미병합 상태는 고정 Head와 PR 링크로 구분하며 Issue #6은 지속 추적용으로 닫지 않는다.
+
+후속 작업으로 기존 Issue/보고·Source 개정과 Docs 권한 API의 확인 범위를 진행표에 연결했다. I02는 임시 Probe 결과와 실제 서비스 Root를 구분하고 보고에 남은 세션 실패 처리 후속을 보존한다. 다른 세 계정·개인별 실제 접근·새 Source/입력·가격/시간은 미확인으로 남겨 Issue #8에서 이어간다. PR #5 변경은 `execution/`·`evidence/`에만 두고 다른 브랜치나 main을 강제로 덮어쓰지 않는다.
 
 ## 1 05의 범위와 설계 완료의 의미
 
@@ -474,6 +487,7 @@ PR 본문은 fmt/validate 통과와 personal MFA Plan `9 add/1 change/0 destroy`
 | ACT05-04 진입 정리 | 2026-10-02 KST 네 Repo 현행 조회와 §0 팀 전체 진행 방법·역할·검증·증거·비용 종료 연결 | Source 읽기·진행 안내 보강 완료. 팀 Runtime 보고와 AI 관측을 구분하며 외부 변경 없음 |
 | ACT05-05 협업 보완 | 사용자 질문에 따라 협업 사용본/최종본·역할별 첫 작업·직접 기록·인계 확인·공유 실행·동시05 편집과 변경 영향을 연결 | 3회 연쇄 검토/보완 후 추가 보완 0건으로 수렴. 실제 팀 공유/Repo 반영·Runtime 완료는 별도 미확인 |
 | ACT05-06 저장소 공유 준비 | execution/05·읽기 안내·진행표·인계 양식과 evidence/Run 양식을 공유용 변경으로 연결 | PR에서 검토할 문서 반영 범위. main 병합·개인별 접근/기록·실제 팀 도입은 확인 후 갱신 |
+| ACT05-07 발표·현행 인계 연결 | PR #7/Issue #6을 확인해 §0.7 최소 참조를 추가하고 기존 작업/부분 보고·Docs B 권한·남은 입력을 진행표/Issue #8에 연결 | 공식 Test/실제 결과/발표 선별 경계 유지. 공유 반영은 PR #5 Metadata, 개인 접근·입력·Runtime 판정은 별도 |
 
 새 입력/실행은 `확인 시각·Source/입력 개정·배정 Owner·actual operator·관측 Principal 논리 참조·Reviewer·결과/제한·Evidence·Blocker·다음 인계`를 남긴다. 실패 Run을 보존하고 후속 Run을 연결하며 코드/조건 변경의 영향 시험을 다시 확인한다.
 
@@ -546,7 +560,8 @@ App의 Hybrid DB Runtime/Migration 경로와 Redis에는 공급 CA·Hostname/인
 - [x] 01:27 KST 기준 팀 전체 main/Tree·Branch·PR/Issue 관측과 05 진입 안내 연결
 - [x] 역할별 첫 작업·직접 기록·인계 수신 확인·공유 실행·동시 문서 편집 보강
 - [x] 연쇄 추적과 보완 후 재검증에서 추가 보완 0건으로 수렴
-- [ ] 협업 사용본의 실제 팀 공유 위치/개정·기록 권한·현재 작업 Issue 연결
+- [x] 협업 사용본의 저장소 경로·기존 Issue/부분 보고·별도 발표 참조 연결
+- [ ] A/C/D 계정 매핑·개인별 실제 접근/기록·현재 미반영 Source·실제 입력 인계 — Issue #8
 - [x] 앞선 B 고정 Source의 Path/Port/Client 계약과 App 연결·GitOps 로컬 초안 검사 — 실제 배포 준비 완료와 구분
 - [ ] I01~I07의 현 Source·실제 입력/결과·미반영 작업·담당별 가용시간/비용 인계
 - [ ] 검증 Seed·원 lab Overlay 인계 후 실제 이력 이관·Build/Scan·base 실습
