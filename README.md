@@ -8,10 +8,11 @@ Seokpan 2차 - 하이브리드 클라우드 기획·아키텍처·검증 문서
 - [x] 설계 원문 00~04 보존과 출처 확인
 - [x] 설계 그림 12장 제작 및 자체 검증
 - [x] SVG/PNG·목차·제작 검토 기록 연결
+- [x] 발표 준비 Baseline·Evidence 선별 기준 및 Tracking Issue 연결
 - [ ] 사용자 그림 검토 의견 반영
 - [ ] 실제 구현 증거로 구축 결과판 작성
 
-설계·그림 등록과 병합 이력은 [PR #3](https://github.com/seokpan/seokpan-hybrid-docs/pull/3), 실행·Evidence 공유 이력은 [PR #5](https://github.com/seokpan/seokpan-hybrid-docs/pull/5)에서 확인합니다.
+설계·그림 등록과 병합 이력은 [PR #3](https://github.com/seokpan/seokpan-hybrid-docs/pull/3), 실행·Evidence 공유 이력은 [PR #5](https://github.com/seokpan/seokpan-hybrid-docs/pull/5), 발표 준비 기준 등록 이력은 [PR #7](https://github.com/seokpan/seokpan-hybrid-docs/pull/7)에서 확인합니다.
 
 ## Planning & Design
 
@@ -46,3 +47,12 @@ Seokpan 2차 - 하이브리드 클라우드 기획·아키텍처·검증 문서
 [실행 안내](execution/README.md)에서 역할별 시작점과 공동 기록 방법을 확인합니다. [05 구현·검증 문서](execution/05_IMPLEMENTATION_AND_VALIDATION.md)는 실제 입력 확인·코드·통합·Migration·시험·Evidence·정리를 기록합니다.
 
 [공동 진행표](execution/WORK_TRACKER.md)와 [인계 양식](execution/HANDOFF_TEMPLATE.md)으로 담당자의 입력·진행·수신 확인을 연결하고, 실제 시험은 [Evidence 안내](evidence/README.md)에 따라 Run별로 기록합니다. 설계문서 원문은 보존하며 문서 공유·코드 Merge와 실제 시험 PASS를 구분합니다.
+
+
+## Presentation
+
+[발표 준비 안내](presentation/README.md)와 [Presentation Baseline](presentation/PRESENTATION_BASELINE.md)에서 최종 발표의 Narrative, 과장 방지, 1차 비교, Troubleshooting 및 Evidence 선별 기준을 확인합니다.
+
+Presentation Baseline은 새로운 Test Plan이 아닙니다. 공식 Test/Acceptance는 03을 따르고 실제 구현·검증 결과는 05와 [Evidence Index](evidence/README.md)에 남깁니다. 발표에서는 해당 원본 Evidence 중 의미 있는 결과만 선별하며 제품 기본기능·일반 구축 절차와 팀의 설계 판단·직접 구현·검증·Troubleshooting을 구분합니다.
+
+05 진행 중 발표 후보의 상태는 [Tracking Issue #6](https://github.com/seokpan/seokpan-hybrid-docs/issues/6)에서 추적합니다. 실제 Metric·Log·Timeline은 Issue나 `presentation/`에 중복 저장하지 않고 `evidence/<test-id>/<run-id>/`를 정본으로 사용합니다.
