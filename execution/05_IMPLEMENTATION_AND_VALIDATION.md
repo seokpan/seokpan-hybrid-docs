@@ -656,6 +656,34 @@ ZIP의 2026-09-29 기록은 승인00 §30.1/03 §3-B의 기존 PoC를 설명하�
 
 공식 Test/Acceptance는03, Actual과 원본 참조는05/`evidence/`, 발표 후보·비교·과장 방지는 [Presentation Baseline](../presentation/PRESENTATION_BASELINE.md)을 따른다. 발표 가치가 있는 실제 Run은 원본 링크와 간략한 후보 판정만 [Docs Issue #6](https://github.com/seokpan/seokpan-hybrid-docs/issues/6)에 연결한다. 자료 접수·과거 PoC만으로 새 발표 후보 PASS를 만들거나1차 재측정을 먼저 실행하지 않는다. Source/입력의 수신과 미반영 작업은 [Docs Issue #8](https://github.com/seokpan/seokpan-hybrid-docs/issues/8)과 진행표로 이어간다.
 
+### 8.7 1차 MariaDB 사전 점검과 데이터 이관 범위
+
+김상희가 2026-10-02 12:02~12:12 KST(03:02~03:12Z)에 1차 MariaDB를 읽기 전용으로 점검했다. 대상은 `read_only = 1`인 Replica 노드이고, 세션도 읽기 전용으로 고정해 `SELECT`·`SHOW`만 실행했다. 1차 DB 변경·덤프·이관은 하지 않았다. 상세 결과와 행 수 기준값은 [Infra #17](https://github.com/seokpan/seokpan-hybrid-infra/issues/17)에 있다.
+
+| 항목 | 확인 결과 | 2차에 주는 영향 |
+| --- | --- | --- |
+| 버전 | MariaDB 11.8.9 | AWS 공식 버전 문서에서 RDS for MariaDB 11.8.9 제공을 확인했다(2026-10-02). 이 문서 8.3절(RDS TLS·목적별 권한의 구현 인계)에서 남겨 둔 Engine 확인 중 1차 원본 쪽은 끝났다. 서울 리전에서 실제로 만들 수 있는지는 Plan 때 확인한다 |
+| 대상 DB | `stone_game` 1개, 테이블 8개, 약 0.36MB | 덤프·전송·복원 부담이 거의 없다 |
+| 문자셋 | DB·테이블 모두 utf8mb4 / utf8mb4_unicode_ci, 예외 컬럼 없음 | 덤프에 그대로 담겨 옮겨진다 |
+| 시간대 | 1차 서버 KST, 날짜 컬럼 8개 전부 `DATETIME` | 아래 "시간대" 참고 |
+| 객체 | View·Routine·Trigger·Event 없음, PK 없는 테이블 없음, 외래 키 7개 | DEFINER 문제가 없다. 외래 키는 복원 후 관계 검증 기준으로 쓴다 |
+| 스키마 관리 | Alembic, 현재 리비전 `20260902_0002` | 이 문서 8.2절(비민감 DB 권한 계약과 I03 부분 접수)의 lab 보고에 나온 Migration 리비전과 같다 |
+| 권한 | 점검 계정 `db_admin`의 GRANT가 8.2절의 표와 일치. `mysql.user` 조회는 거부됨 | 1차 최소권한 설계대로 동작한 것이며 실패가 아니다 |
+| 민감 컬럼 | `member.login_id`, `member.password_hash`. **실사용자 계정 포함** | 아래 "결정" 참고 |
+
+**결정.** 1차 실제 데이터를 논리 덤프로 RDS에 옮긴다(Schema + 데이터). 03 상세설계 문서 3-D.6절에 적힌 논리 덤프 우선 방식과 같다. 팀이 이전에 비용을 이유로 "실제 데이터는 옮기지 않는다"고 했던 방향은, 실제 크기가 0.36MB로 비용 영향이 없다는 확인에 따라 이 결정으로 바꾼다. 이관 → 백업 → 온프렘 복원을 같은 데이터로 이어서 검증할 수 있다는 점이 이유다.
+
+실사용자 계정이 있으므로 덤프 파일과 행 내용은 저장소·Issue·PR·Evidence에 넣지 않고, 기록에는 행 수·관계·SHA-256만 남긴다. 덤프는 만들자마자 age로 암호화하고, 프로젝트가 끝나면 RDS·백업 S3·복구 VM의 이관 데이터를 지운다. 실사용자에게 안내나 동의가 필요한지는 팀과 강사님께 확인한다. 확인 결과 반출이 어렵다면 `member.login_id`를 가명으로 바꿔 옮기는 대안으로 전환한다. 대안의 방법과 전환 기준은 Infra #17에 적어 두었다.
+
+**시간대.** 기존 행은 KST로 기록돼 있다. `DATETIME`은 덤프·복원 과정에서 값이 바뀌지 않는다. 문제는 이관 이후 새로 쌓이는 값이다. RDS 기본 시간대(UTC)나 UTC로 동작하는 컨테이너가 새 값을 쓰면, 같은 컬럼에 KST와 UTC가 9시간 차이로 섞인다.
+
+| 원인 | 대응 | 담당 |
+| --- | --- | --- |
+| 기본값이 `current_timestamp(3)`인 컬럼 4개는 DB 세션 시간대를 따름 | RDS 파라미터 그룹 `time_zone = Asia/Seoul`, 복구 DB도 KST로 고정 | 김상희 작성, 이유빈 foundation 통합 |
+| `started_at`·`ended_at`·`confirmed_at`은 앱이 직접 넣는 값 | 앱의 시간 생성 방식과 Pod `TZ` 확인 | 정태훈 (App #1과 함께 확인) |
+
+**아직 하지 않은 것.** 덤프 실행 계정과 위치, Backup·Restore 목적 계정, 복구 VM Host 실측, 실사용자 데이터 안내·동의 확인이 남아 있다. 이번 점검은 이관 준비를 위한 조회이며 이관·백업·복원 시험의 결과가 아니다.
+
 
 ## 남은 작업과 다음 단계
 
@@ -668,6 +696,8 @@ ZIP의 2026-09-29 기록은 승인00 §30.1/03 §3-B의 기존 PoC를 설명하�
 - [ ] 개인 본인환경의 실제 사용·현재 미반영 Source·실제 입력 인계 — Issue #8
 - [x] 앞선 B 고정 Source의 Path/Port/Client 계약과 App 연결·GitOps 로컬 초안 검사 — 실제 배포 준비 완료와 구분
 - [x] 2026-10-02 추가 자료 분류·비민감 GRANT/I03 부분 접수·최신 Issue/Source 연결 — §8
+- [x] 1차 MariaDB 읽기 전용 사전 점검과 데이터 이관 범위 결정(실제 데이터 논리 덤프) — 8.7절(1차 MariaDB 사전 점검과 데이터 이관 범위), Infra #17
+- [ ] 실사용자 데이터 안내·동의 확인 → 결정 유지 또는 `login_id` 가명화 대안으로 전환 — Infra #17
 - [ ] I01~I07의 현 Source·실제 입력/결과·미반영 작업·담당별 가용시간/비용 인계
 - [ ] 검증 Seed·원 lab Overlay 인계 후 실제 이력 이관·Build/Scan·base 실습
 - [ ] 병행하는 foundation/Data/CI 구현과 B의 ROSA 코드 연결·실제 Plan 준비
