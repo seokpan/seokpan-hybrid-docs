@@ -684,6 +684,27 @@ ZIP의 2026-09-29 기록은 승인00 §30.1/03 §3-B의 기존 PoC를 설명하�
 
 **아직 하지 않은 것.** 덤프 실행 계정과 위치, Backup·Restore 목적 계정, 복구 VM Host 실측, 실사용자 데이터 안내·동의 확인이 남아 있다. 이번 점검은 이관 준비를 위한 조회이며 이관·백업·복원 시험의 결과가 아니다.
 
+### 8.8 foundation Data 코드 초안과 Data 권한 요청
+
+김상희가 2026-10-02 foundation Data 영역 코드를 [Infra #19](https://github.com/seokpan/seokpan-hybrid-infra/issues/19)의 브랜치 `infra/19-foundation-data`에 작성했다. 04 문서 2.2절(작성과 실행과 리뷰 배정)대로 코드 작성은 김상희, foundation 통합과 apply는 이유빈이다. 아직 main에 반영하지 않았고, AWS에 만든 자원도 없다.
+
+**코드 배치.** Network 코드가 아직 없어 Data 코드를 `terraform/modules/data/` 모듈로 먼저 만들고 단독으로 검증했다. Network 코드가 합쳐지면 **첫 plan·apply 전에** foundation Root에 직접 두는 구조로 바꾸고 PR을 한 번만 올린다(이유빈 합의). apply 뒤에 바꾸면 Terraform이 리소스 주소가 바뀐 것을 삭제 후 재생성으로 판단하기 때문이다. 03 문서 3-F.3절(저장소와 디렉터리 대응)은 모듈을 나누는 기준만 두고 Data 배치는 정하지 않았다.
+
+| 대상 | 초안 내용 | 근거 |
+| --- | --- | --- |
+| Data SG | RDS·Redis SG 분리. 규칙은 모두 별도 Rule 리소스, ROSA Worker → Data SG 규칙은 rosa State가 추가. 온프렘 → RDS는 Data VM `/32` 확정 전 규칙 없음 | 03 3-B.9.6~9.7절 |
+| RDS | MariaDB 11.8.9 Multi-AZ, db.t4g.small, gp3 20GiB(자동 확장 끔). 파라미터 그룹 `time_zone = Asia/Seoul`·`sql_mode` 1차 동일·`require_secure_transport = 1`·utf8mb4_unicode_ci | 03 3-D.10.3절, 이 문서 8.7절 |
+| Redis | Redis OSS 7.1, cache.t4g.small 2개(Primary+Replica, Multi-AZ), `noeviction`, TLS + AUTH | 03 3-D.9.7절, 3-D.10.4절 |
+| Backup S3 | `hourly/` 7일 후 삭제, `protected/` 자동 삭제 없음, 버전 관리·HTTPS 강제 | 03 3-D.9.5~9.6절 |
+| Backup User | 업로드·다운로드·목록만, 삭제 권한 없음. Access Key는 Terraform 밖에서 발급 | 03 3-C.13절 |
+
+**비밀값과 State.** RDS 마스터 비밀번호는 RDS가 만들어 Secrets Manager에 보관하는 방식, Redis Token은 State에 저장되지 않는 write-only 인자를 쓴다. Backup User Access Key는 Terraform으로 만들지 않는다. 세 가지 모두 비밀값이 Terraform State에 남지 않게 하려는 선택이며, RDS 방식은 이유빈 확인을 기다린다.
+
+**확인한 것.** 저장소 밖 검증용 Root(AWS provider 6.67.0 고정)에서 모듈 8개 파일의 `terraform validate`가 통과했고, 입력 검사 2개(서브넷 3개, 온프렘 주소 `/32`)가 잘못된 값을 막는 것을 확인했다. 서울 리전 조회로 RDS 11.8.9 + db.t4g.small + Multi-AZ + gp3, Redis 7.1 조합이 생성 가능함을 확인했다.
+
+**권한 요청.** foundation 실행 Role에 붙일 Data 권한을 [#19 코멘트](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-5947207348)로 이유빈에게 전달했다. 리소스 이름을 `seokpan-` 접두사로 제한했고, 백업 객체 읽기·쓰기, 마스터 비밀번호 열람, Access Key 발급, 복구·장애 시험 권한은 일부러 뺐다.
+
+**아직 하지 않은 것.** 구조 전환과 PR, bootstrap 권한 반영, 실제 plan·apply, Redis 7.1과 App Driver 호환 확인(정태훈)이 남아 있다. validate와 조회는 코드와 생성 가능 조합의 확인이며, 권한·생성·접속 시험의 결과가 아니다.
 
 ## 남은 작업과 다음 단계
 
@@ -698,6 +719,8 @@ ZIP의 2026-09-29 기록은 승인00 §30.1/03 §3-B의 기존 PoC를 설명하�
 - [x] 2026-10-02 추가 자료 분류·비민감 GRANT/I03 부분 접수·최신 Issue/Source 연결 — §8
 - [x] 1차 MariaDB 읽기 전용 사전 점검과 데이터 이관 범위 결정(실제 데이터 논리 덤프) — 8.7절(1차 MariaDB 사전 점검과 데이터 이관 범위), Infra #17
 - [ ] 실사용자 데이터 안내·동의 확인 → 결정 유지 또는 `login_id` 가명화 대안으로 전환 — Infra #17
+- [x] foundation Data 코드 초안·정적 검증과 foundation Role Data 권한 요청 — 8.8절(foundation Data 코드 초안과 Data 권한 요청), Infra #19
+- [ ] Data 코드의 foundation Root 직접 배치 전환·PR과 첫 plan 확인 — Infra #19, 이유빈 Network 코드 merge 후
 - [ ] I01~I07의 현 Source·실제 입력/결과·미반영 작업·담당별 가용시간/비용 인계
 - [ ] 검증 Seed·원 lab Overlay 인계 후 실제 이력 이관·Build/Scan·base 실습
 - [ ] 병행하는 foundation/Data/CI 구현과 B의 ROSA 코드 연결·실제 Plan 준비
