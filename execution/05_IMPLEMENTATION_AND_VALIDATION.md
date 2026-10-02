@@ -682,7 +682,7 @@ ZIP의 2026-09-29 기록은 승인00 §30.1/03 §3-B의 기존 PoC를 설명하�
 | 기본값이 `current_timestamp(3)`인 컬럼 4개는 DB 세션 시간대를 따름 | RDS 파라미터 그룹 `time_zone = Asia/Seoul`, 복구 DB도 KST로 고정 | 김상희 작성, 이유빈 foundation 통합 |
 | `started_at`·`ended_at`·`confirmed_at`은 앱이 직접 넣는 값 | 앱의 시간 생성 방식과 Pod `TZ` 확인 | 정태훈 (App #1과 함께 확인) |
 
-**아직 하지 않은 것.** 덤프 실행 계정과 위치, Backup·Restore 목적 계정, 복구 VM Host 실측, 실사용자 데이터 안내·동의 확인이 남아 있다. 이번 점검은 이관 준비를 위한 조회이며 이관·백업·복원 시험의 결과가 아니다.
+**아직 하지 않은 것.** 덤프 실행 계정과 위치, Backup·Restore 목적 계정, 복구 VM Host 실측이 남아 있다. 실사용자 데이터는 2026-10-02에 그대로 이관하기로 결정했고(가명화 대안 사용 안 함, 취급 조건 유지), 근거는 Infra #17 결정 코멘트에 있다. 이번 점검은 이관 준비를 위한 조회이며 이관·백업·복원 시험의 결과가 아니다.
 
 ### 8.8 foundation Data 코드 초안과 Data 권한 요청
 
@@ -718,7 +718,7 @@ ZIP의 2026-09-29 기록은 승인00 §30.1/03 §3-B의 기존 PoC를 설명하�
 - [x] 앞선 B 고정 Source의 Path/Port/Client 계약과 App 연결·GitOps 로컬 초안 검사 — 실제 배포 준비 완료와 구분
 - [x] 2026-10-02 추가 자료 분류·비민감 GRANT/I03 부분 접수·최신 Issue/Source 연결 — §8
 - [x] 1차 MariaDB 읽기 전용 사전 점검과 데이터 이관 범위 결정(실제 데이터 논리 덤프) — 8.7절(1차 MariaDB 사전 점검과 데이터 이관 범위), Infra #17
-- [ ] 실사용자 데이터 안내·동의 확인 → 결정 유지 또는 `login_id` 가명화 대안으로 전환 — Infra #17
+- [x] 실사용자 데이터 이관 여부 결정 — 그대로 이관, `login_id` 가명화 대안 사용 안 함, 취급 조건 유지 — Infra #17
 - [x] foundation Data 코드 초안·정적 검증과 foundation Role Data 권한 요청 — 8.8절(foundation Data 코드 초안과 Data 권한 요청), Infra #19
 - [ ] Data 코드의 foundation Root 직접 배치 전환·PR과 첫 plan 확인 — Infra #19, 이유빈 Network 코드 merge 후
 - [ ] I01~I07의 현 Source·실제 입력/결과·미반영 작업·담당별 가용시간/비용 인계
