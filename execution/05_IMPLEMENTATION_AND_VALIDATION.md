@@ -18,7 +18,7 @@
 
 **복구 목표 피드백 후속:** [§9 복구 예행과 목표 재검토](#recovery-objective-review-20261002)는 현 구조에서 가능한 개선·사용자 영향·팀 부담을 확인하는 실행 준비다. 승인된 RTO 30분·영속 DB RPO 90분·운영 중 1시간 백업은 변경 결정 전까지 유지한다.
 
-**정태훈 전체 실행·등록 후속:** [§9.11 전체 작업 등록과 ROSA 입력 준비](#tjung03-registration-rosa-input-20261002)에서 실제 상위/실행 Issue, TH-01~19·81개 세부 식별자의 기존 연결과 ROSA 후속 HCL 수신계약·Registry/CI Source 수신 조건을 확인한다. 기존 §9.9/9.10의 구현·검사/미실행 경계는 보존한다.
+**정태훈 전체 실행·등록 후속:** [§9.11 전체 작업 등록과 ROSA 입력 준비](#tjung03-registration-rosa-input-20261002)에 실제 상위/실행 Issue와 TH-01~19·81개 세부 식별자를 연결했다. 최신 PR 승인/병합·Cloud/ROSA Source와 남은 실행 Gate는 [§9.12 최신 Source 후속](#tjung03-latest-source-20261002)을 우선한다. 기존 §9.9/9.10 및 §9.11의 개별 관측·검사/미실행 이력은 보존한다.
 
 현재 진행 현황:
 
@@ -944,6 +944,38 @@ T19는 삭제 전 기존 Binding의 foundation 재실행 중 유지, Binding 해
 등록과 문서 준비는 실제 실행 결과가 아니므로 **새 Run 디렉터리·빈 Run·Run Index·Shared Execution 실제 행을 추가하지 않았다.** 본인 작업·코드·인계·실행·시험의 다섯 축을 분리한다. 상세 원본은 해당 Issue/PR에, 실제 시험/재시험은 새 Run에, 05/WORK_TRACKER와 상위 Issue에는 링크·상태·영향을 연결한다. 수신 개정/범위·보완·Reviewer와 배정 담당/실제 수행자·Caller를 구분하고 보호 원본 경로/접근/보존 책임은 보호 운영 대장에 기록한다.
 
 다음은 개인 미반영 변경/인증 Push와 실제 입력 확인, D 새 Image/검증 인계, PR #9/문서 준비 PR의 리뷰·수신, PR #24 정합 Source의 A 재리뷰·통합 Plan/Preview/E2E, A 제한 출력/Worker Role 소비 리뷰다. 다중 Pod 위험 조사는 TH-04/06부터 앞당기며 실제 Runtime 시험은 환경/정상 Baseline을 확보한 뒤 진행한다. Docs PR 반영 대기 때문에 직접 인계·독립 준비를 멈추지 않는다. 현재 연결은 [WORK_TRACKER 등록 후속](WORK_TRACKER.md#tjung03-registered-work-20261002)을 따른다.
+
+<a id="tjung03-latest-source-20261002"></a>
+
+### 9.12 최신 Source 후속과 남은 실행 Gate
+
+후속 Repo 목록 Snapshot은 `2026-10-02T12:23:42.653Z` / `2026-10-02T21:23:42.653+09:00`, 특정 PR·리뷰·댓글의 관측 종료는 `2026-10-02T12:24:34.213Z` / `2026-10-02T21:24:34.213+09:00`다. **아래 최신 상태를 현재 안내에 우선 적용**한다. §9.11의 11:39·12:12 관측 당시 A 재리뷰/병합 대기·Cloud 선언/HCL 미게시 상태는 그 시점의 이력으로 유지한다. 이번 후속은 Source·검사 보고와 Repo 승인/병합 확인이며, 전체 객체의 동일 순간 Snapshot이나 Cloud/Runtime 재실행 결과가 아니다.
+
+| 원본 / 개정 | 최신 확인 범위 | 별도로 남은 조건 |
+| --- | --- | --- |
+| [Infra PR #24](https://github.com/seokpan/seokpan-hybrid-infra/pull/24), HEAD `4fcbab4acc3e851f9a20a9affc4e4f4c29526add` | [A APPROVED 리뷰](https://github.com/seokpan/seokpan-hybrid-infra/pull/24#pullrequestreview-5391630107) `2026-10-02T12:19:02Z`, closed·merged 확인. Infra main `b3e6572ff3ddf7e068258102c2a7fa079acb4a7e`에 연결. untagged 만료/변수·GetDownloadUrlForLayer Action 제외, N 임시·Harbor A1 설명 및 같은 HEAD fmt/validate 성공 보고의 Source 정합은 유지 | A 승인·Merge는 완료한 Repo 행위다. 공통 Provider/Lock·실제 Boundary/통합 foundation Plan/Cost·Lifecycle Preview/E2E·최종 N·실제 CI/Pull 성공까지 완료한 뜻은 아님 |
+| [GitOps PR #11](https://github.com/seokpan/seokpan-hybrid-gitops/pull/11), HEAD `ce0ce5af9866428d7734db0bb8cce1d425ec20a2` | open·non-draft, 13파일 Cloud 선언 후보. 기본 FE/BE 각 0으로 기동 보류, 별도 `activation-target`은 각 3·PDB minAvailable 2·soft AZ spread/Host preferred Preview. 고정 Kustomize 5.7.1의 기존 11+Cloud 8=19 Source 검사와 독립 재실행 성공 보고 접수 | base는 PR #9 branch `implementation/app-lab-recovery-20261002`. #9 사람 Merge 후 main으로 retarget. 실제 Cloud Apply/Sync·Image Pull/TLS·1/3 Pod·업무 안전은 미실시. 정적 Preview를 자동 활성화하거나 목표 변경으로 판정하지 않음 |
+| [Infra Draft PR #28](https://github.com/seokpan/seokpan-hybrid-infra/pull/28), HEAD `9a8410ab92e8a3283a41b90f913773d85ef30963` | 14파일 ROSA HCL/입력·삭제 단계 후보. Core 1.16.4 / AWS 6.67.0 / RHCS 1.7.7 정확 제약·설치된 Provider Lock, Core checksum/Provider 설치·서명·fmt·diff/예시 JSON·정적 공식 Source Schema 대조 보고 접수 | base는 PR #27 branch `feature/25-rosa-input-contract`, 최신 계약 HEAD `5eaef969723e29becbb1e0611d04660ddcbdb28d`를 이력으로 소비. #27 사람 Merge 후 main으로 retarget. `terraform validate`/`providers schema` 실행은 Provider RPC Unix socket 생성 `operation not permitted`로 **BLOCKED**, 실행된 Schema/validate PASS가 아님 |
+
+Cloud Source 원본은 [GitOps #10 후속](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10#issuecomment-5952044630), ROSA Source 원본은 [Infra #25 후속](https://github.com/seokpan/seokpan-hybrid-infra/issues/25#issuecomment-5952123857)에 연결한다. #26 중복 종료와 #25 정본 유지도 보존한다. PR #27의 두 계약 문서는 자체의 과거 관측 시각을 유지하며, 최신 HCL/검사 상태는 PR #28과 이 후속에서 확인한다. PR #11/#28의 main 병합·실제 Cloud API 조회/Plan/Apply·유료 작업은 확인한 완료 범위에 없다.
+
+#### Source Review 진입과 실행 조건
+
+PR #28의 직접 Draft 해소 조건은 **Controller에서 같은 Source/Lock의 fmt·validate·실행 Provider Schema 재검증, 실제 제한 foundation Output/Account·Role/서비스 권한/지원 조합 대조와 첫 Plan 준비 리뷰**다. A/C/D와 공급/소비 개정·실재 자원·Caller/정본 Backend를 확인하고 Source Review 단계로 전환한다. 전체 업무·Offline·T19 완료를 Source Draft 해제 조건으로 추가하지 않는다. PR #9 역시 원격 App Source/새 Image·Registry Mapping, lab·Recovery 목적 대상/CA·Secret·Schema/진입 조합과 D #5/#6의 같은 개정 실제 검증이 직접 조건이며, Cloud 전체 구축/최종 Offline T18 완료를 더 붙이지 않는다.
+
+PR #24 A 승인·Merge를 다시 대기로 돌리거나 당시 코드 지적을 재요구하지 않는다. 실제 권한/Boundary·통합 Plan·Preview/E2E·Worker Pull은 해당 실행의 남은 Gate다. ROSA HCL의 정적 입력 검사는 실제 Output 최신성·Account/서비스 Role 적합성·Worker SG/ENI 소속·GA patch/Quota·IAM/OIDC 전파를 증명하지 않는다. Worker ECR Pull Policy/실제 Worker Role Attachment·Account-wide Role/정책·Data SG 본체/기반 Rule은 **foundation Owner**, Cluster 종속 OIDC/Operator Role·Worker→Data Binding은 **rosa State/Owner**를 유지한다. Worker Pull 구현/실측은 아직 완료로 올리지 않는다.
+
+실제 Plan/Apply는 기존 Root 전체 보호 Plan·A 리뷰·지원/권한·Backend/Lock·최신 입력·단일 실행자·Cost/Window 조건을 따른다. 누적+잔여 기반/Data+ROSA Window+전송/관측+재시험/정리 지연을 포함해 **$450 계획선 초과 시 신규 가동 보류·조정, $500 전체 한도**를 유지한다. 실제 단가·입력·시간 없이 Cost PASS/Cloud 가동을 확정하지 않는다.
+
+#### 삭제 후보와 T19/최종 종료
+
+PR #28은 RHCS 1.7.7 Delete Source의 timeout 뒤 State 제거 가능성을 보고했다. 후보 순서는 **Binding 해제 → `cluster_enabled=false`로 Cluster만 삭제하고 IAM/OIDC 유지 → 실제 서비스 삭제 확인 → 별도 전체 rosa cleanup**이다. Terraform State에서 사라졌다는 사실만으로 서비스 삭제/안전을 판정하지 않는다. 전체 Destroy graph와 부분 Replace는 구분하고, 실제 Worker SG/ENI·Provider timeout·부분 실패·고아 자원·Plan/잔존 비용을 후속 검증한다. 이 Source 관측은 안전한 삭제 PASS·T19 완료가 아니다.
+
+기존 T19 선행 조건을 유지한다. 삭제 전 foundation 재실행에서 기존 Binding 유지·덮어쓰기/영구 Diff 없음, App 쓰기 제한·진행 상태/최신 로컬 Backup·Data/Network 보호를 확인한다. Binding 해제 뒤 **foundation의 기반 Rule/Data/Network와 bootstrap 소유 Backend 보존**을 확인하며 새 Worker SG·Role/OIDC/Host/Context·이전 SG 참조 제거·양쪽 정상 Plan과 GitOps/Secret/Pull/업무 재현을 검증한다. 선택적 RDS Stop/Start는 C의 실행·인계와 재개 조건을 따른다.
+
+최종 삭제는 재생성 시험과 별도이며 App/Data 보호, Image/Render/도구·독립 사본·복호화 수단/보존 Key의 마지막 접근·복원 가능성, 주/예비 보관자·실제 삭제/잔존 비용·불필요 인증 폐기까지 원래 TH-19 조건을 유지한다. 기본 삭제 범위는 rosa이며 foundation/bootstrap 전체 Destroy는 별도 명시적 승인 조건이다. 발표/팀 Must 판정·보존/정리 결과와 연결된 상위 Issue 종료 조건을 Source 제출/PR 병합만으로 충족시키지 않는다.
+
+이후 개인 미반영 변경·인증된 App Push/새 Build, PR #9/#11 및 #27/#28의 사람 리뷰/수신·retarget, Controller 재검증·A 실제 제한 출력/Worker Role·Plan 준비를 병행한다. 실제 입력·정상 Baseline 뒤 Runtime/재생성/복구 시험을 수행하고 해당 Run에 결과를 남긴다. **이번 Source 후속으로 체크·새 Run/Run Index·Shared Execution 실제 행을 변경하지 않았다.** 현재 담당/Blocker는 [WORK_TRACKER 최신 후속](WORK_TRACKER.md#tjung03-latest-source-20261002)에 연결한다.
 
 ## 남은 작업과 다음 단계
 
