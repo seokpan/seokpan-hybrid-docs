@@ -12,7 +12,9 @@
 
 2026-10-02 02:32 KST 조회 시 승인00~04의 [설계 등록 PR #3](https://github.com/seokpan/seokpan-hybrid-docs/pull/3)는 main 미병합이었다. 이번 공유 작업에서 그 고정 Commit의 원문5개와 첨부의 Git blob 바이트 동일성을 확인했다. 설계 파일을 이 PR에서 중복 등록하지 않는다. 프로젝트 지침은 사용자 등록본을 따르며 이 PR의 새 사본으로 대체하지 않는다.
 
-현재는 설계 PR #3·실행 PR #5·발표 PR #7 모두 병합돼 main에 있다. 이전 조회는 이력으로 보존하고 현재 계정/Source와 다음 인계는 §0.18·[진행표](WORK_TRACKER.md#next-handover)를 따른다.
+현재는 설계 PR #3·실행 PR #5·발표 PR #7 모두 병합돼 main에 있다. 이전 조회는 이력으로 보존하고 현재 계정/Source와 다음 인계는 §0.18·§8·[진행표](WORK_TRACKER.md#next-handover)를 따른다.
+
+**추가 자료와 최신 후속:** [2026-10-02 자료 수용·권한 계약·현재 작업](#supplement-20261002)에서 I03 부분 접수, GitOps #7 종료 범위, App #1·GitOps #5/#6 및 Infra #14/#15를 확인한다. 과거 관측은 유지하고 현재 상태는 진행표에 연결한다.
 
 현재 진행 현황:
 
@@ -568,6 +570,93 @@ App의 Hybrid DB Runtime/Migration 경로와 Redis에는 공급 CA·Hostname/인
 
 필요 자료는 비밀값 대신 Commit·비민감 설정·논리 참조와 결과로 인계한다. 서로 독립적인 코드 준비는 병행하며, 위 입력이 없는 실제 연결·배포·유료 가동을 완료로 표시하지 않는다.
 
+<a id="supplement-20261002"></a>
+
+## 8 2026-10-02 추가 자료 수용과 현재 작업 연결
+
+### 8.1 처리 기준과 자료별 판정
+
+이 절은 사용자가 2026-10-02 제공한 참고 자료에서 실행에 필요한 사실·권한 계약·제약만 추출한 기록이다. 자료 분류는 개정 프로젝트 지침 §29를 따른다. 승인03·04와 공식 Test/Acceptance는 유지한다. 작성자가 보고한 Runtime 관측, AI가 읽은 Source, 구현 권장안, 아직 실행하지 않은 검증을 구분한다. 자료 원문을 새 Project Source나 최종 Run으로 일괄 등록하지 않는다.
+
+| 제공 자료 | 분류·수용 내용 | 제외하거나 제한하는 내용 |
+| --- | --- | --- |
+| 사용자 제공 세 계정의 `SHOW GRANTS` 출력 | OBSERVED EVIDENCE / PROVIDED CONDITION. §8.2의 비민감 계정·DB·테이블·컬럼 권한 계약으로 I03에 부분 접수 | 비밀번호 해시는 저장·재인용하지 않음. 원본 서버·조회 시각·RDS 검증 결과가 자동 확정되지 않음 |
+| 김상희, `RDS_SSL_권한_검토.md`, 2026-10-02 | TEAM DRAFT. TLS 서버 통제와 클라이언트 검증의 구분, Migration 목적별 권한, 실제 Engine/Parameter Group·CA 확인을 §8.3에 연결 | 예제 Engine `mariadb11.8`·Host `%`·SQL을 확정 구현으로 채택하지 않음. 전역 권한의 역사적 추가 사유와 모든 버전에서의 부여 가능 여부는 미확인. 기존 CloudWatch/Native/UWM 기준을 다시 선택할 과제로 만들지 않음 |
+| 최유준, `OCP실습_ROSA이전_검토.docx`, 2026-10-02 | TEAM DRAFT. [GitOps #6](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6)·[#7](https://github.com/seokpan/seokpan-hybrid-gitops/issues/7)의 관측과 App/base/CI 수정 의존성을 §8.4에 연결 | lab 우회·예제 설정을 Cloud 설정이나 전체 SCC/UWM 보장으로 승계하지 않음. 1 Replica의 업무 확인을 Multi-Pod·Failover·부하·RDS DDL PASS로 확대하지 않음 |
+| `OCP 실습 서버(demo2) 2차 사전 검증 작업 보고 - 2026 10 01 (2).md` | 기존 제공 보고와 바이트 동일한 중복. 기존04 §8.5와 GitOps #1~4 원본 참조 유지 | 새 Run·새 실적·추가 Project Source로 중복 등록하지 않음. 후속 상태는 새 Issue #5~7로 확인 |
+| 김상희, `vpn-report.zip`, 2026-09-29 기록 | OBSERVED EVIDENCE와 TEAM DRAFT가 혼재. README·시험 절차·도식에서 WireGuard PoC 관측과 한계만 §8.5에 추출 | 구 On-Prem 정상 DB/Harbor 의존·복제안, Gateway 선택 초안, 예제 주소/규칙/크기, 일괄 중지·영구 EIP 보존 가정 등은 승인03·04와 충돌하거나 대체돼 구현 기준에서 제외. 도식·절차 전체를 Evidence에 복사하지 않음 |
+
+제외는 이 문서의 기준·작업·공개 증거로 채택하지 않는다는 뜻이다. 제공 원본을 물리 삭제한 기록이 아니다. 보호 접속정보·Key·Credential·비밀번호 해시는 Docs/Evidence에 옮기지 않는다. 새 최종 Run은 실제 Source/전체 Digest/환경/측정 조건·원본 참조를 갖춘 뒤 `evidence/<test-id>/<run-id>/`에 기록한다. 이번 자료 접수 자체는 Test PASS가 아니다.
+
+### 8.2 비민감 DB 권한 계약과 I03 부분 접수
+
+아래는 사용자 제공 GRANT의 권한 범위를 추출한 것이다. 세 계정의 원본 Host 패턴은 `%`였으며 이는 관측값이다. 실제 Cloud/Recovery Host 조건·SG·Secret 공급을 대체하지 않는다. `USAGE`는 데이터나 관리 권한 부여를 뜻하지 않는다.
+
+| 계정 | 관측 대상 | 관측 권한 | 2차에서 확인할 목적 |
+| --- | --- | --- | --- |
+| `db_admin` | `*.*` | `BINLOG MONITOR`, `SLAVE MONITOR` | 1차 관측으로만 보존. RDS Migration에 무조건 복사하지 않음 |
+| `db_admin` | `stone_game.*` | SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, REFERENCES, INDEX, ALTER, CREATE VIEW | 별도 Migration 실행과 실제 변경 DDL에 필요한 범위 대조 |
+| `identity_svc` | `stone_game.member` | SELECT, INSERT, UPDATE, DELETE | 회원·인증 Runtime의 허용/거부 범위 |
+| `game_svc` | `stone_game.game`, `game_result`, `game_participant`, `member_stats`, `move`, `rating_history` | 각 테이블 SELECT, INSERT, UPDATE, DELETE | 게임 Runtime의 허용/거부 범위 |
+| `game_svc` | `stone_game.member` | SELECT(`nickname`, `member_id`, `rating`), UPDATE(`rating`) | 허용 컬럼 유지와 로그인 등 다른 컬럼 접근 거부 |
+
+사용자 출력에는 계정별 `REQUIRE SSL`이 표시되지 않았다. 이것을 TLS 미사용으로 판정하지 않는다. 1차 Proxy TLS와 실습 DB 직접 TLS는 다른 경로다. [GitOps #7 실행 보고](https://github.com/seokpan/seokpan-hybrid-gitops/issues/7#issuecomment-5944080811)는 실습 MariaDB 10.5.29의 `REQUIRE SSL`을 유지한 채 C가 제공한 권한으로 교체하고 D가 재검증했다고 보고한다. B의 [검토](https://github.com/seokpan/seokpan-hybrid-gitops/issues/7#issuecomment-5945336163)와 [종료 기록](https://github.com/seokpan/seokpan-hybrid-gitops/issues/7#issuecomment-5945477442)을 연결하며 Issue #7은 종료됐다.
+
+보고의 완료 범위는 GRANT 대조·허용 질의·다른 테이블/컬럼/DB 접근 거부·backend Ready·게임 완료/Rating 저장·관련 오류 30분 관측이다. Migration은 `current`로 이미 적용된 `20260902_0002`를 조회했으므로 **새 DDL 실행 권한을 시험한 결과가 아니다**. 실습 DB 재시작이나 계정 재생성을 요구하는 후속 작업을 이 자료 처리로 만들지 않는다.
+
+I03은 비민감 GRANT 입력과 해당 lab 보고가 부분 접수됐다. 실제 Recovery Host/용량·격리 Storage·Schema/Dump/Import 공간·Cloud Engine/CA·Backup/Restore 목적 계정·독립 사본과 수신 확인은 남아 있다. 세 계정의 GRANT만으로 Backup·Restore 권한까지 완료됐다고 표시하지 않는다.
+
+### 8.3 RDS TLS·목적별 권한의 구현 인계
+
+김상희가 Data 계약을 작성하고 이유빈이 foundation에 통합하며, 정태훈은 App/Migration Client와 GitOps 공급 계약을 맞춘다. 다음은 승인 TLS·최소권한 기준을 구현하는 권장안과 확인 항목이다. 실제 RDS에 적용하거나 성공을 확인한 기록이 아니다.
+
+- 실제 서울 지원 Engine/버전과 Parameter Group family를 먼저 확인한다. AWS 문서상 MariaDB 10.5 이상은 `require_secure_transport`를 지원하며 기본값은 11.4 이하 OFF, 11.8 이상 ON이다. 지원 Engine에서 ON을 명시하는 서버 통제와 계정별 `REQUIRE SSL`을 함께 검토한다. RDS Parameter Group은 Recovery DB에 자동 이관되지 않으므로 그 서버/계정의 TLS 통제도 별도로 확인한다.
+- 서버의 평문 접속 거부와 Client의 CA·Hostname 검증은 각각 확인한다. App·Migration·Data VM의 DB/Dump 도구에 실제 대상의 CA와 검증 설정을 공급하고 정상 연결, 평문 거부, 잘못된 CA·Hostname 거부를 기록한다. `Ssl_cipher` 확인만으로 Hostname 검증까지 PASS로 표시하지 않는다. 오류1045만으로 TLS 문제를 단정하지 않는다.
+- RDS의 Migration 계정에는 실제 Schema 변경에 필요한 권한만 둔다. 1차 `*.*` 모니터 권한은 복사 기본값에서 제외하는 권장안이다. 읽은 1차 `migration_gate.py`에는 binlog/복제 상태 조회가 없으며 RDS Multi-AZ라는 이유만으로 App Migration에 전역 모니터 권한을 추가하지 않는다. 실제 요구가 발견되면 그 목적과 실행 계정을 별도로 대조한다.
+- AWS master 공식 권한 목록에는 `REPLICATION CLIENT`가 있고 `SLAVE MONITOR`는 명시돼 있지 않다. 이 목록만으로 모든 버전의 부여 성공/실패를 확정하지 않는다. 실제 Engine의 비민감 master GRANT·필요 권한 지원을 확인한다. 쓰지 않을 권한의 과거 추가 사유 조사나 시험을 정상 App 구현의 필수 선행 Gate로 두지 않는다.
+- Runtime의 테이블·컬럼 경계를 유지하되 실제 Schema와 계정 생성 순서·Host 조건을 검토한다. 격리 DB에서 초기/변경 Migration을 실제로 실행해 필요한 DDL과 Runtime의 DDL/비허용 데이터 거부를 확인한다. 운영·1차 DB에 권한 시험용 DDL을 실행하지 않는다.
+
+공식 근거: [AWS MariaDB TLS 강제](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/mariadb-ssl-connections.require-ssl.html), [AWS master 권한](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.MasterAccounts.html), [AWS CA 공급/검증](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/ssl-certificate-rotation-mariadb.html), [MariaDB GRANT](https://mariadb.com/docs/server/reference/sql-statements/account-management-sql-statements/grant). 예제 SQL/HCL을 실행 완료로 복사하지 않으며 새로운 Test Plan을 만들지 않는다.
+
+### 8.4 OCP 후속 Issue와 실제 Source 의존성
+
+현재 [Hybrid App #1](https://github.com/seokpan/seokpan-hybrid-app/issues/1)은 열려 있고 B·D가 배정돼 있다. 이는 [GitOps #6 재현](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6#issuecomment-5944604370)의 접속 대상 검사 블로커에 대응한다. DB/Redis URL은 이미 환경변수로 받지만 읽은 1차 main `a75867b7b579de08b14fe93f80b1a7b05cc85890`의 DB 검사는 고정 Host/Port/DB만 허용하고 Migration도 이를 재사용한다. Redis 검사는 고정 평문·무인증 대상만 허용한다. **URL 환경변수 추가만으로 해결되는 문제가 아니다.** 이 SHA는 관측 Source이며 최신 검증 Seed 수락을 대신하지 않는다. 실습 이미지의 단축 Commit `6fb8b75`도 전체 SHA/Digest 인계가 필요하다.
+
+| 현재 연결 작업 | 완료/대기 범위 | 다음 행동과 인계 |
+| --- | --- | --- |
+| B App #1 / C DB·TLS 리뷰 / D Build | Issue 접수, 실제 2차 코드·Build는 이번 관측에서 미확인 | 검증 Seed·미반영 변경 확인 → 이력 보존 이관 → 환경별 정확한 허용 대상과 Redis TLS·별도 AUTH Secret·CA 검증 구현 → 단위/Build 검증 |
+| D GitOps #6 | 고정 대상 블로커 재현 보고 접수, 수정 이미지 후속은 대기 | 전체 Commit/Digest와 원 Manifest를 고정하고 `hostAliases` 없이 대상 Service DNS·CA/Hostname·Ready·Migration/대표 업무를 재검증. 대역 TLS Redis 시험도 실제 ElastiCache 판정과 구분 |
+| B base/Overlay → D [GitOps #5](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5) | 실제 hybrid base Branch/PR 인계 대기 | 완성 Kustomize Build와 환경별 Registry/Secret·SCC·Probe·Resource·Replica/PDB/AZ 계약을 인계하고 실제 base의 Argo Sync/Health·정리를 검증 |
+| C Data / A foundation / D CI·Harness | 서로 독립적인 준비는 병행 | Engine/CA/Schema/Backup·Host, Network/제한 Output, CI/Registry·측정 정의 준비. 최종 공유 실행은 각각 해당 입력·리뷰·비용 Gate 준수 |
+
+`runAsUser` 제거의 해당 lab SCC 통과, 해당 UWM의 ServiceMonitor/Label 관측은 유용한 참고다. 모든 환경에서 같은 삭제만으로 성공한다고 일반화하지 않는다. 실제 Operator·Namespace Selector와 승인 Security Context를 대조한다. CA SAN과 선택한 DNS 이름도 맞춰야 한다. lab 인증서의 보고된 만료일은 2026-10-31이며, 이를 Cloud CA나 장기 Recovery 신뢰 재료로 승계하지 않는다.
+
+ROSA 진입은 05 §0.5와 [팀 작업 안내](TEAM_WORK_AND_HANDOFF_GUIDE.md)의 환경 전환 Gate를 따른다. 이번 lab 결과는 Multi-Pod WS/세션·재접속·중복 처리, RDS/Redis Failover, ECR 최초/장시간 후/재생성 Pull, 목표 부하·지연, 실제 새 DDL을 보장하지 않는다. 준비 작업과 비용 확인은 병행하지만 이 한계를 최종 Acceptance에서 생략하지 않는다.
+
+### 8.5 WireGuard PoC 기록의 활용과 배제
+
+ZIP의 2026-09-29 기록은 승인00 §30.1/03 §3-B의 기존 PoC를 설명하는 근거로만 접수한다. 기존 vRouter 한 대와 임시 Default VPC EC2의 실측은 최종 전용 Gateway·프로젝트 VPC·ROSA/RDS 구성의 시험과 다르다.
+
+| 보고된 관측 | 사용할 수 있는 범위와 한계 |
+| --- | --- |
+| Outbound WireGuard handshake·양방향 Ping/TCP3306·한 경로의 원본 IP 보존 | 해당 PoC 경로 성립. TCP3306 통과는 DB 인증·TLS·이관·복제·Restore 성공이 아님 |
+| 네 vRouter의 UDP51820 통과, 한 Gateway에서 네 Source Port 전환 시 249 Ping 중 누락0, 한 번의 출구 IP 변경 시 누락0 | 해당 조건의 포트/로밍 관측. 네 Gateway의 전체 WireGuard·장애 복구·모든 출구 변화 검증으로 확대하지 않음 |
+| 약1시간50분/~6400 Ping 누락0, TCP Idle 50분24초 유지 | 제공된 관측 시간/연결만 사용. 영구 안정성이나 모든 NAT Idle 정책 보장 아님 |
+| 터널 MTU1420 설정에서1420 통과·1421 로컬 거부 | 해당 설정 검증. 최종 경로 최대 MTU나 MSS/ROSA 패킷 시험을 대체하지 않음 |
+| 15초 iperf receiver: 업443Mbps·다운388Mbps | 절차 원시 출력 기준. README 요약의 다운389Mbps와 차이는 SOURCE CONFLICT로 남김. 반올림 원인이나 최종 처리량/용량을 추정하지 않음 |
+| 임시 EC2·SG·Key Pair 정리 보고 | 그 자원의 정리 보고. 일부 목록의 빈 출력은 AWS 전체 자원/잔존 비용0 증거가 아님 |
+
+구 정상 서비스의 On-Prem DB/Harbor 의존, MariaDB 복제안, 기존 Router와 전용 VM 사이의 미결정 비교, 폭넓은 Forward/주소 예제는 재채택하지 않는다. 승인된 Cloud Primary·RDS/Redis·ECR, 새 전용 On-Prem Gateway·최소 Host `/32`/왕복 Route/NAT 예외, SOPS+age와 A/B Window·자원 삭제/보존 기준을 유지한다. 최종 MTU/MSS·허용/거부 경로·Gateway 복구·VPN 중단 시 Cloud 정상 비의존은 A/B/D의 실제 실행으로 검증한다. 이 자료에서 새 비용·고정 IP·Instance 크기를 확정하지 않는다.
+
+### 8.6 최신 진행표와 검토 결과
+
+2026-10-02 후속 Source/Issue 확인은 [진행표](WORK_TRACKER.md#current-observation)에 기록한다. Infra [PR #14](https://github.com/seokpan/seokpan-hybrid-infra/pull/14)는 새 유효 모드의 세션 발급 전 이전 세션 해제와 실패 시 Caller 표시를 반영했고 [PR #15](https://github.com/seokpan/seokpan-hybrid-infra/pull/15)는 MFA/처음 설정/실행자 안내를 보완해 병합됐다. 인자 오타는 이전 세션을 유지하므로 모든 실패가 같은 동작이라고 요약하지 않는다. 이 Source 수정을 전원 실제 세션·Caller/Backend/Provider 일치나 오류 시 Plan/Apply 차단 완료로 확대하지 않는다. A/B의 실제 실행 확인은 I02에 남긴다. Bootstrap 재구축이나 State 이전 반복은 요구하지 않는다.
+
+검토에서는 자료→승인03/04→계정/TLS/Client→Source/Build→base lab→ROSA→Evidence/발표→비용/정리의 영향을 대조했다. 중복 보고의 새 Run 오인, lab 권한 교체 재요구, 미시험 DDL의 PASS 오인, 예제 Engine/Host 고정, 전역 모니터 권한 복사, 전체팀 직렬 대기, 최신 Infra 수정 누락을 보완하고 그 영향을 다시 대조했다. 이번 문서 반영 범위에서 추가 보완은 없다. 실제 Runtime/Acceptance가 완료됐다는 뜻은 아니다.
+
+공식 Test/Acceptance는03, Actual과 원본 참조는05/`evidence/`, 발표 후보·비교·과장 방지는 [Presentation Baseline](../presentation/PRESENTATION_BASELINE.md)을 따른다. 발표 가치가 있는 실제 Run은 원본 링크와 간략한 후보 판정만 [Docs Issue #6](https://github.com/seokpan/seokpan-hybrid-docs/issues/6)에 연결한다. 자료 접수·과거 PoC만으로 새 발표 후보 PASS를 만들거나1차 재측정을 먼저 실행하지 않는다. Source/입력의 수신과 미반영 작업은 [Docs Issue #8](https://github.com/seokpan/seokpan-hybrid-docs/issues/8)과 진행표로 이어간다.
+
+
 ## 남은 작업과 다음 단계
 
 - [x] 최종 04·지침 등록 확인과 전체 설계 완료 상태 유지
@@ -578,6 +667,7 @@ App의 Hybrid DB Runtime/Migration 경로와 Redis에는 공급 CA·Hostname/인
 - [x] 네 사람 계정 매핑·네 저장소 권한 API 조회 완료 — 16건 모두 admin
 - [ ] 개인 본인환경의 실제 사용·현재 미반영 Source·실제 입력 인계 — Issue #8
 - [x] 앞선 B 고정 Source의 Path/Port/Client 계약과 App 연결·GitOps 로컬 초안 검사 — 실제 배포 준비 완료와 구분
+- [x] 2026-10-02 추가 자료 분류·비민감 GRANT/I03 부분 접수·최신 Issue/Source 연결 — §8
 - [ ] I01~I07의 현 Source·실제 입력/결과·미반영 작업·담당별 가용시간/비용 인계
 - [ ] 검증 Seed·원 lab Overlay 인계 후 실제 이력 이관·Build/Scan·base 실습
 - [ ] 병행하는 foundation/Data/CI 구현과 B의 ROSA 코드 연결·실제 Plan 준비
@@ -586,3 +676,4 @@ App의 Hybrid DB Runtime/Migration 경로와 Redis에는 공급 CA·Hostname/인
 - [ ] 결과·시연·발표·자원 정리와 보존 책임 완료
 
 다음은 **공유 가능한 협업 사용본·기록 위치를 팀에 연결하고, 각 담당자가 현행/실제 입력을 직접 갱신하며 독립 구현과 인계를 병행**하는 것이다. B에서는 실제 Seed/실습 인계→저장소 반영·전체 테스트/Build→완성 Kustomize Build와 실습을 연결한다. 05 전체는 실제 구현·최종 검증 완료 전이며, 03·04의 설계 종료는 유지한다.
+
