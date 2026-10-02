@@ -17,6 +17,26 @@
 
 복구 목표 피드백의 후속 준비는 [05 §9](05_IMPLEMENTATION_AND_VALIDATION.md#recovery-objective-review-20261002)와 아래 [Recovery Review Preparation](#recovery-review-preparation)에 연결합니다. 후속 읽기 기준은 `2026-10-02T09:29:49Z` / `2026-10-02T18:29:49+09:00`이며 Docs main `a2bfa4e299602ba00e481830b7109acb1f1ee930`의 05/Tracker·Evidence 양식과 관련 Infra Issue 목록·#19 댓글·#23을 대조했습니다. 이전 표의 관측 시각과 별개이며 네 저장소 전체 Runtime을 새로 확인했다는 의미가 아닙니다. 공식 수치는 아직 RTO 30분·영속 DB RPO 90분·운영 중 1시간 백업입니다.
 
+
+<a id="follow-up-observation-20261002"></a>
+### Follow-up Observation — PR #18 병합 후
+
+읽기 조회 묶음의 기록 시각은 `2026-10-02T10:30:39.878Z` / `2026-10-02T19:30:39.878+09:00`이다. 아래는 최신 main·Branch/Tree·PR/Issue의 변경 관측이며 위의 13:21:55 KST 표는 과거 관측으로 보존한다. 실제 개인 작업·Runtime·수신 수락은 새로 확인한 것으로 표시하지 않는다.
+
+| 저장소 | 관측 main 전체 SHA | 변경 원문 / 현재 경계 |
+| --- | --- | --- |
+| Docs | `516ccf5d6eed465f3cbf552d7389a88ec410af1b` | [PR #18](https://github.com/seokpan/seokpan-hybrid-docs/pull/18) 병합·해당 Branch 삭제 확인. 공식 목표 유지, 실제 Run 디렉터리/Index 연결 없음 |
+| Infra | `44470359c4e6de366db428adcb7831bac38a690e` | [PR #21](https://github.com/seokpan/seokpan-hybrid-infra/pull/21) ECR/CI 권한·[#22](https://github.com/seokpan/seokpan-hybrid-infra/pull/22) 안내 병합. [#20 보고](https://github.com/seokpan/seokpan-hybrid-infra/issues/20#issuecomment-5949198590)는 Apply 완료, 실제 foundation Plan 권한 확인은 대기. [#23 Data 통합 질문](https://github.com/seokpan/seokpan-hybrid-infra/issues/23#issuecomment-5949221314)·[#19](https://github.com/seokpan/seokpan-hybrid-infra/issues/19) 기존 Branch 작업을 유지 |
+| App | `cef46c4e7b0cbd0cf6ebab487ee92c32d800ccdc` | [PR #3](https://github.com/seokpan/seokpan-hybrid-app/pull/3) README 병합. main의 실제 App 이관 코드는 미확인; [#1](https://github.com/seokpan/seokpan-hybrid-app/issues/1)·[#2](https://github.com/seokpan/seokpan-hybrid-app/issues/2) 계속 |
+| GitOps | `888833312384496eac1c04876ce0183496e15053` | [PR #8](https://github.com/seokpan/seokpan-hybrid-gitops/pull/8) README 병합. [원 lab 인계](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5#issuecomment-5950121508)의 참고 Branch `reference/ocp-lab-original`, SHA `259e73b0fac1af40f7bb7b43bd1982410d1df150` Tree 확인. main 병합·ROSA base 수락/검증과 구분 |
+
+I01 원 Manifest 제공은 위 [#5 인계 원문](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5#issuecomment-5950121508)에 부분 연결한다. 최유준의 제공 기록과 정태훈의 수신/사용 확인은 다르며, 기존 Next Handover·Work Links·I01의 원 Manifest 대기는 이 제공 범위만 갱신된다. lab CA/Route/hostAliases·Redis StatefulSet·NetworkPolicy를 Cloud 설정으로 자동 채택하지 않는다. 검증 Seed/Image·base 작성/수신·Recovery Manifest는 계속 확인해야 한다.
+
+I07에는 [#16 Network/Hybrid 비용 입력](https://github.com/seokpan/seokpan-hybrid-infra/issues/16#issuecomment-5947011620)과 [추가 계약/기간 대기](https://github.com/seokpan/seokpan-hybrid-infra/issues/16#issuecomment-5947189192)가 부분 제공됐다. 이전 표의 미확인은 이 범위에서 갱신되며 실제 시간·전체 가격/Plan/Credit·Cost Gate는 대기한다. 입력 원문을 복사하거나 후보를 확정값으로 승격하지 않는다.
+
+[05 §9.8](05_IMPLEMENTATION_AND_VALIDATION.md#recovery-time-helper-20261002)의 계산 도구·[사용 안내](../evidence/README.md#recovery-time-calculation)는 로컬 합성 입력 검사 완료·PR 리뷰 대상이다. 담당자의 실제 사용/수신·Run·목표 결정은 별도다.
+
+
 ## Team Access
 
 Docs는 공개 저장소입니다. 공개 읽기 경로 제공과 개인이 실제 열람·기록에 성공한 확인은 구분합니다. 후속 인계는 [Issue #8](https://github.com/seokpan/seokpan-hybrid-docs/issues/8)에서 이어갑니다.
