@@ -828,6 +828,8 @@ PR #18 병합 후 [현재 Source 관측](WORK_TRACKER.md#follow-up-observation-2
 <a id="recovery-app-source-20261002"></a>
 ### 9.9 App 연결 구현·GitOps 선언과 실제 예행의 인계
 
+아래 §9.9는 최초 인계 시점 기록이다. 최신 수정 Source와 재검증은 [§9.10](#recursive-source-review-20261002)에 이어 기록한다.
+
 PR #19 병합 이후 목적을 다시 대조했다. 결과물은 실제 예행의 시간선·영속 데이터 손실/Backup 최신성·접속 범위·팀 부담과 그에 따른 변경 판단이다. 계측 도구 준비만 늘리지 않고 T17/T18을 막는 App/Image/Manifest 입력을 구현한다. 작업 Owner는 정태훈, Source 작성·로컬 검사 지원은 Codex이며 실제 서버·Image·Restore 수행과 구분한다.
 
 | 산출물 | 현재 Source / 완료 범위 | 남은 직접 의존 |
@@ -857,6 +859,42 @@ Git 읽기는 가능하지만 Git Push 인증이 없어 App 전체 이력을 현
 - [ ] 기존 실제 Run의 복구 예행·Backup Data 시각/로컬 최신성·손실/팀 부담 측정
 - [ ] 업무 영향/실현 가능성 대조와 필요한 변경 결정·실제 최종 Acceptance/발표 연결
 
+
+<a id="recursive-source-review-20261002"></a>
+
+### 9.10 직전 구현·인계 전체의 재귀 검토와 수정
+
+사용자 요청에 따라 직전 답변의 완료 표현부터 Source·실제 Driver·GitOps·이관 명령·계측·원본 Issue·PR·기록까지 연쇄 검토했다. §9.9의 추가 보완 없음 판단 뒤 이번 독립 재현에서 아래 결함/문구 불일치가 확인되어 수정했다. 검토는 코드·선언·전송본·기록 범위이며 실제 배포·복구 성공을 뜻하지 않는다.
+
+| 발견 / 후속 영향 | 수정과 최종 확인 |
+| --- | --- |
+| DB 빈 Fragment가 URL 검사를 통과하지만 Driver에는 `charset=utf8mb4#`로 전달됨 | DB/hybrid Redis의 raw Fragment를 거부. 정상 인코딩 비밀번호 `%23` 유지. 전체 pytest 1,728개·hybrid 58개·관련 155개, 전체 ruff/format·mypy 119 Source 통과 |
+| SAN 필수 문구가 현재 Python 기본 Hostname 검증(CN fallback 포함)의 강제 범위보다 강함 | 승인 Host 유효성 검증과 lab/Recovery 인증서의 SAN·CA 수명 공급/실제 검증을 구분. TLS/Hostname 검증 정책을 새로 바꾸지 않음 |
+| 초기 2차 main 대비 `diff --check`가 원본 Seed의 공백 9건으로 정상 이관을 중단함 | 고정 Seed 대비 새 변경 검사로 수정. Seed 대비 17개 수정과 초기 hybrid main 대비 전체 이관 386개 파일을 각각 기록. 최종 ZIP 명령은 인증 Push 직전까지 새 Clone에서 확인 |
+| App 이관 Tree에서 초기 hybrid main의 `.gitignore` 보호 규칙이 없어짐 | 초기 main의 Terraform State/tfvars/override/CLI 설정 제외 규칙을 기존 App 규칙과 보존. 대표 보호 경로의 `git check-ignore` 확인 |
+| `runtime.env` 변경 후 ConfigMap만 바뀌고 기존 Backend PodTemplate은 같음 | base/Overlay를 내용 Hash Generator로 연결해 실제 Kustomize의 이름·envFrom 참조가 함께 변경됨. 세 환경 Build·11개 검사, lab 변경의 환경 격리와 공통 값 전파 확인 |
+| 외부 Secret/CA 값 변경만으로 재기동/연결 갱신이 완료된 것으로 오인할 수 있음 | 값/Object 공급 Owner가 새 개정·검증 조합을 인계하고 승인 Backend 재기동·재접속/업무·회수 검증을 수행하도록 명시. 자동 Prune/실제 실행은 추가하지 않음 |
+| UTC 경계 입력의 정규화가 traceback/exit 1 발생 | 안전한 입력 오류/exit 2, 표준 출력/원본 보존을 실제 CLI로 검증 |
+| 선택 Dump 완성 전 Import/업무 완료를 허용하고 중간 시각 누락이 역순을 숨김 | 기존 순서의 존재하는 시각 쌍 18개를 검사. 정상 사전 Backup과 미측정값은 유지. 최종 도구 16 unittest와 독립 역순 18개·정상/동일/누락 72개 입력 검사 통과 |
+
+App 최종 Commit은 `8828ed22295c27c6f3b419e762b865d17eb50b8c`, Tree `751e18a7154f7fbedfad4b50a5aae736e60991bd`다. 초기 두 부모 이관 Commit `c7a452d514742f77abd2c49c5836566df7386550`을 부모로 이어 원본 Seed와 초기 2차 main을 포함한 77개 이력을 보존했다. 수정 묶음 `seokpan-hybrid-app-connection-reviewed-20261002.zip`의 Bundle SHA256은 `a25ab40d6e784d8861dcc5fba6866b03443befdafa427a33f018de932914530c`이다. 이전 ZIP은 최초 기록으로 보존하고 새 묶음을 사용한다. App 원격 Branch/PR/새 Build는 아직 없다.
+
+[GitOps Draft PR #9](https://github.com/seokpan/seokpan-hybrid-gitops/pull/9)의 최신 HEAD는 `f1e959d2f3ec5207cc42f0523cbd391930b247d7`이다. 고정 Kustomize v5.7.1 실제 Source 17개 파일을 대조하며 일반 ConfigMap 원문은 Generator로 교체해 삭제했다. replicas0·미해결 입력·Release 파일 생성 거부를 유지한다. Hash/PodTemplate 변화는 Source 검사 결과이며 실제 Rolling Update나 업무 성공은 아니다.
+
+Merged PR #19의 도구 보완은 이 Docs PR #20의 후속 Commit으로 제공한다. 기존 설계·Run 양식·Evidence Index·공식 RTO30분/RPO90분/1시간 Backup·예산/Freeze는 유지한다. 도구는 여전히 읽기 전용 시각 계산이며 Acceptance/Backup 무결성·실제 Data 손실을 판정하지 않는다.
+
+CI #2는 B 최신 리뷰·D 수락의 A~F 구현 방향을 유지한다. 다만 현재 D 작성 본문에는 옛 N30/비용 단정, Scan용 `GetDownloadUrlForLayer` 확정 표현, 선택형 `BatchDeleteImage`, F 유한 만료 문구가 남아 있다. 원래 [B 후속 정합 기록](https://github.com/seokpan/seokpan-hybrid-app/issues/2#issuecomment-5951015819)에 최신 Infra #18·승인04와의 차이를 연결하며, D 구현 명세/실제 E2E 후속으로 남긴다. 새 CI 진입점과 `promote_gitops.py`의 hybrid 대상/Job·Folder·권한은 구현 전환 범위이고, 상속된 1차 Helper를 직접 실행하지 않는다. Issue 전체 본문 정합/CI 구현을 완료로 표시하지 않는다.
+
+최초 독립 검토 → 재현·수정 → 작성자가 아닌 검토자의 교차 검토에서 계측 중간값 누락 경로를 추가 보완 → 최종 Code/계약·묶음 명령·원격 Tree/기록 대조 순서로 진행했다. 마지막 대조에서 현재 확인 가능한 Source/인계 범위의 추가 필수 보완을 발견하지 않아 재귀를 종료한다. 새 Runtime 입력·리뷰·실제 실패가 생기면 해당 범위를 다시 검토한다.
+
+- [x] 직전 답변의 완료 범위·최신 원격 Source/리뷰·후속 영향 대조
+- [x] 재현한 결함/문구 보완·관련/전체 검사·독립 교차 검증
+- [x] 수정 묶음·열린 PR·원본 Issue/진행 기록 연결
+- [ ] App Branch Push/PR·Source 리뷰/사람 Merge, Docs/GitOps PR 검토·병합
+- [ ] D CI 본문/구현·새 Image/Registry별 Digest·lab 실제 검증
+- [ ] Foundation/Data/ROSA 실제 입력·Plan/Cost Gate·각 Owner 통합 실행
+- [ ] 격리 DB·Backup/새 Redis·접속·Offline Bundle 수신/실제 Run
+- [ ] 실제 시간/손실/최신성/팀 부담 판단·필요 변경·최종 Acceptance·발표/정리
 
 ## 남은 작업과 다음 단계
 
