@@ -14,6 +14,34 @@
 
 GitOps의 `releases/<release-id>.json`은 후보/선언이며 Docs의 Run과 구분합니다. 후보 안에 후보 자신을 포함한 GitOps SHA를 넣지 않습니다. 실제 Run은 Commit 후 실제 사용 GitOps SHA를 기록합니다. 이번 release.json은 승인 필드의 빈 Run 양식이며 새 Validator/파이프라인 구현이나 최종 검증을 의미하지 않습니다.
 
+## Recovery time calculation
+
+복구 예행 후 기존 Run의 시각 계산에는 Python 3.9 이상과 표준 라이브러리만 사용하는 [계산 보조 도구](../tools/recovery_metrics.py)를 선택해서 쓸 수 있습니다. 저장소 루트에서 실행합니다.
+
+```bash
+python3 tools/recovery_metrics.py evidence/<test-id>/<run-id>/release.json
+```
+
+도구는 파일을 읽고 JSON 결과를 표준 출력에 표시합니다. 원본 다섯 파일·판정·checksum을 수정하거나 새 Run을 만들지 않습니다. 종료 코드 0은 계산 처리 완료(미측정 포함), 2는 입력/읽기 오류이며 시험 PASS/FAIL이 아닙니다. 빈 양식은 `UNMEASURED`와 null을 출력합니다.
+
+| 출력 | 의미 / 사용 조건 |
+| --- | --- |
+| `rto_seconds` | 사고부터 `business_resumed_at_utc`까지의 시간 차이. 실제 업무/Data 확인 완료를 시간선·Raw 근거로 확인해야 함. Import 시간과 구분 |
+| `data_time_difference_seconds` | 입력된 Data 기준 시각과 사고 시각의 차이. 확인 전에는 정확한 RPO나 보장 상한으로 사용하지 않음 |
+| `rpo_seconds` | 기본 null. 선택한 Backup의 실제 Data 시각과 `data_reference_level`·Marker/복원 근거를 Reviewer가 확인했을 때만 아래 옵션으로 계산. 보수적 경계/시계 불확실성이 남으면 옵션을 쓰지 않고 summary에 범위·제한 기록 |
+| `dump_seconds`, `import_seconds` | 입력된 단계 시작/종료 간 차이. 전체 RTO와 합산하지 않음 |
+
+```bash
+# 실제 Data 시각의 정확성을 근거로 확인한 경우에만 사용
+python3 tools/recovery_metrics.py evidence/<test-id>/<run-id>/release.json --confirmed-data-time
+```
+
+옵션은 Reviewer의 확인을 명시하며 도구 자체의 증명이나 새 `data_reference_level` Enum이 아닙니다. Backup ID·확인 수준·관련 시각이 없으면 거부합니다. ISO 시각의 시간대가 없거나 시각이 역전되거나 기존 `rto_seconds`/`rpo_seconds`와 계산이 다르면 오류를 표시합니다. 오프셋 있는 시각은 UTC로 정규화해 계산하지만 Run의 UTC/KST 기록 규칙은 유지합니다. 도구는 timeline.csv·metrics.csv·Raw·Backup 무결성·시계 동기화·데이터 손실을 검사하지 않으며 전체 Run Validator가 아닙니다.
+
+검토한 수치만 기존 metrics.csv의 적절한 `metric_id`/`actual`/`unit`/`condition_ref`/`raw_artifact_ref`에 기록하고, 계산 근거·불확실성·미달은 summary.md에 남깁니다. 파일을 바꿨으면 기존 지침대로 checksums.txt를 갱신합니다. 목표 비교·Acceptance는 승인 기준과 실제 증거로 별도 검토하며, 한 Run의 차이로 운영 RPO 상한이나 전체 서비스 복구를 보장하지 않습니다.
+
+도구 자체의 검사는 `python3 -m unittest discover -s tools -p 'test_recovery_metrics.py' -v`로 실행합니다. 합성 시각으로 수행한 코드 검사이며 실제 T17/T18 실행이나 발표용 실측 근거가 아닙니다.
+
 ## Run Index
 
 | Test/Case·Requirement | Run·환경 | 실행자·Reviewer | 실제 Source/Release | Render/Deployment/Acceptance | 증거 링크 | 실패/후속 Run·제한 |
