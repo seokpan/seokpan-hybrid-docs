@@ -6,6 +6,8 @@
 
 ## Start Here
 
+공유용 [팀 작업·환경 전환·입력 인계 안내](TEAM_WORK_AND_HANDOFF_GUIDE.md)에서 공통 안내, OCP·ROSA 전환 조건과 본인 담당을 한 번에 확인합니다. [담당별 바로가기](TEAM_WORK_AND_HANDOFF_GUIDE.md#role-navigation)로 이동한 뒤 아래 작업/인계 기록을 이어갑니다. 이 안내는 기존 역할 배정의 참조 기록이며 실제 Run Evidence와 구분합니다.
+
 1. [05 공통 안내](05_IMPLEMENTATION_AND_VALIDATION.md#09-문서와-진행표-운영)와 아래 본인 역할을 읽습니다.
 2. [공통 진행표](WORK_TRACKER.md)의 자기 작업/입력 행에 **기존 Issue·PR와 확인한 입력**을 연결합니다. 필요한 입력이 없으면 해당 실행만 대기로 남기고 독립 준비를 계속합니다.
 3. 자기 Issue/PR에 진행·차단·검사 결과를 기록하고 [인계 양식](HANDOFF_TEMPLATE.md)으로 결과 수신자에게 직접 넘깁니다. 수신자는 받은 개정과 수락/보완 범위를 기록합니다.
@@ -46,3 +48,4 @@
 - [04 배정·I01~I07·인계/Run 양식](../design/04_IMPLEMENTATION_READINESS.md)
 
 구조와 시험 목표는 승인03/04, 최신 사용자 결정과 등록 프로젝트 지침을 따릅니다. 팀원이 모든 원문을 처음부터 다시 읽어야 작업을 시작하는 조건은 아닙니다. 공통 안내·본인 작업·관련 근거/인계부터 확인합니다.
+
