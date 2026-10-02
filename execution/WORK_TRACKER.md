@@ -15,6 +15,8 @@
 
 추가 자료의 판정과 비민감 권한 계약은 [05 §8](05_IMPLEMENTATION_AND_VALIDATION.md#supplement-20261002)에만 기록합니다. 원문/민감정보를 중복 보관하지 않습니다. 1차 App main `a75867b7b579de08b14fe93f80b1a7b05cc85890`은 읽은 Source이며 검증 Seed로 자동 수락하지 않습니다.
 
+복구 목표 피드백의 후속 준비는 [05 §9](05_IMPLEMENTATION_AND_VALIDATION.md#recovery-objective-review-20261002)와 아래 [Recovery Review Preparation](#recovery-review-preparation)에 연결합니다. 후속 읽기 기준은 `2026-10-02T09:29:49Z` / `2026-10-02T18:29:49+09:00`이며 Docs main `a2bfa4e299602ba00e481830b7109acb1f1ee930`의 05/Tracker·Evidence 양식과 관련 Infra Issue 목록·#19 댓글·#23을 대조했습니다. 이전 표의 관측 시각과 별개이며 네 저장소 전체 Runtime을 새로 확인했다는 의미가 아닙니다. 공식 수치는 아직 RTO 30분·영속 DB RPO 90분·운영 중 1시간 백업입니다.
+
 ## Team Access
 
 Docs는 공개 저장소입니다. 공개 읽기 경로 제공과 개인이 실제 열람·기록에 성공한 확인은 구분합니다. 후속 인계는 [Issue #8](https://github.com/seokpan/seokpan-hybrid-docs/issues/8)에서 이어갑니다.
@@ -79,6 +81,21 @@ GitHub ID·권한은 명시 매핑과 API 결과로 연결하고 Commit/Caller�
 I02의 PR #12 보고는 Bootstrap Apply 및 foundation/rosa 접두사의 **임시 Probe Root** 시험이다. 실제 foundation/rosa 서비스 구현·생성·최종 권한 판정으로 확대하지 않는다. 당시 남은 세션 처리의 후속 Source는 PR #14(2026-10-02 10:13:35 KST 병합), 안내는 PR #15(11:39:58 KST 병합)로 연결한다. 읽은 diff에서 유효 모드 발급 전 이전 세션을 해제하고 실패 시 Caller를 표시한다. 인자 오타는 기존 세션을 유지한다. 모든 실패·만료·Caller 불일치 때 Plan/Apply가 차단되는지와 실제 Principal 일치는 실행 담당자가 확인한다. 기본 자격증명으로 남는 것을 안전한 실행 허가로 해석하지 않는다. 이 기록은 Source 읽기이며 실제 세션/Root를 실행한 결과가 아니다. Bootstrap 재구축·State 이전 반복은 요구하지 않는다.
 
 인계가 일부 수락이면 사용 가능한 범위와 막히는 후속 실행을 적습니다. 값이 없으면 해당 작업만 대기하고 독립 준비는 계속합니다.
+
+## Recovery Review Preparation
+
+강사 피드백과 사용자의 일정·비용·팀 부담 고려 요청을 기존 W04/T17/T18 준비에 연결합니다. 새 목표나 지속 복제·Warm Standby 도입을 확정한 기록이 아닙니다. 현재 실제 RTO/RPO Run·담당자 수신 확인·실행 창은 이 후속 조회 범위에서 미확인입니다.
+
+| 담당 / 기존 작업 | 다음 확인·인계 | 현재 범위 / 남은 실행 |
+| --- | --- | --- |
+| 김상희 — Infra #17/#19, I03/I05 | Dump/Import·Backup Data 시각/로컬 확보 지연·격리 DB/공간·목적 계정·CA/Key → B App, D 시간선, A 자산 | 사전 점검·Data 초안 보고와 실제 Backup/Restore를 구분. 예행 입력·Run 연결 필요 |
+| 정태훈 — App #1·GitOps #5/#6, I01/I05 | Recovery Image/Manifest·새 Redis/Secret·상태 정리·로그인/대표 업무·클라이언트 접속 범위 → C/D | 기존 Seed/Image/base 인계를 우선 진행. App 기동부터 업무 재개까지 실측 필요 |
+| 이유빈 — [Infra #23 foundation 공통 틀](https://github.com/seokpan/seokpan-hybrid-infra/issues/23)·[#16 Hybrid VPN](https://github.com/seokpan/seokpan-hybrid-infra/issues/16), I03 자산 협업 | Host/플랫폼·Storage 여유·로컬 DNS/Harbor/도구 가용 조건 → C/B/D | #23의 공통/Network·Data/Registry/VPN 통합 준비 Issue 접수. VPN 전용 VM 준비와 복구 DB/독립 Storage 확보를 구분; 실제 복구 자산은 별도 확인 |
+| 최유준 — 기존 CI/lab/시험, I04/I07 | 기존 Run 양식의 전체 시간선·백업 경계/실패 조건, 네 사람의 추가 작업/학습/재시험·가용시간·비용 → 각 담당/변경 검토 | 계측·비용 준비 병행. 모든 주기/DR 구조를 구현하는 비교 시험을 추가하지 않음 |
+
+상세 측정/판정·부담 비교·변경 영향은 05 §9에 둡니다. 코드/입력/Blocker는 기존 작업 Issue·PR, 실제 값은 `evidence/<test-id>/<run-id>/`, 이 표에는 원문 링크와 수신 범위만 남깁니다. Docs Issue #8은 Source/입력 인계, Issue #6은 실제 Run의 발표 후보에 사용합니다. 담당자에게 전달·수락됐다고 미리 표시하거나 빈 Run을 만들지 않습니다.
+
+공유 예행 시간은 실제 입력·리뷰·담당자 가용시간을 확인한 뒤 아래 Shared Execution에 연결합니다. 목표 변경은 업무 영향·실측·팀 부담·$450 계획선/$500 한도·Freeze를 함께 대조하고 새 Acceptance 적용 전에 결정합니다. 실측을 통과시키기 위한 사후 목표 완화나 전체 독립 작업의 대기를 요구하지 않습니다.
 
 ## Shared Execution
 
