@@ -819,8 +819,43 @@ PR #18 병합 후 [현재 Source 관측](WORK_TRACKER.md#follow-up-observation-2
 로컬 코드 검사: `python3 -m unittest discover -s tools -p 'test_recovery_metrics.py' -v` — 합성 입력 11개 테스트 통과. 빈 양식은 UNMEASURED/null이며 CLI의 원본 미변경·신규 파일 미생성도 확인했다. 재검토에서 중간 시각 누락 시 단계 역전 탐지와 비정상 수치·중복 키 처리를 보완하고 다시 검사했다. 실제 Run이나 T17/T18 PASS·새 목표 달성의 Evidence가 아니며 Run Index에 추가하지 않는다.
 
 - [x] 기존 양식으로 선택 사용 가능한 계산 코드·사용 안내·합성 입력 검사
-- [ ] PR 리뷰/병합과 담당자의 실제 Run 적용·근거 확인
+- [x] PR #19 사용자 승인·병합·브랜치 삭제 확인 — 2026-10-02
+- [ ] 담당자의 실제 Run 적용·근거 확인
 - [ ] §9.7의 실제 예행·병목/백업 최신성·부담 검토와 필요 변경 결정
+
+
+
+<a id="recovery-app-source-20261002"></a>
+### 9.9 App 연결 구현·GitOps 선언과 실제 예행의 인계
+
+PR #19 병합 이후 목적을 다시 대조했다. 결과물은 실제 예행의 시간선·영속 데이터 손실/Backup 최신성·접속 범위·팀 부담과 그에 따른 변경 판단이다. 계측 도구 준비만 늘리지 않고 T17/T18을 막는 App/Image/Manifest 입력을 구현한다. 작업 Owner는 정태훈, Source 작성·로컬 검사 지원은 Codex이며 실제 서버·Image·Restore 수행과 구분한다.
+
+| 산출물 | 현재 Source / 완료 범위 | 남은 직접 의존 |
+| --- | --- | --- |
+| App #1 | [원본 인계 기록](https://github.com/seokpan/seokpan-hybrid-app/issues/1#issuecomment-5950971722). 고정 Seed `7fce757f963ba59cc81c03028c043be5b45719b2`와 기존 hybrid-app main `cef46c4e7b0cbd0cf6ebab487ee92c32d800ccdc`를 두 부모로 보존한 로컬 Commit `c7a452d514742f77abd2c49c5836566df7386550`. 76개 전체 이력 Bundle·새 clone/두 부모/Tree/16개 변경 파일 동일성 확인 | 인증된 개인 작업환경의 Branch Push·별도 PR/리뷰/사람 Merge, 개인 PC/Controller 미커밋 변경 대조. 원격 main에는 아직 코드 없음 |
+| 연결 계약 | legacy 기본 동작 유지. cloud/lab/recovery의 정확한 DB/Redis 대상, Runtime·Migration·Alembic 동일 검증, rediss·별도 AUTH·명시적 CA/Hostname, 안전한 구성 오류/repr·Client/Pool 정리. Dependency/Lock·Schema·Lifecycle·FE Source는 변경 없음 | C/D의 실제 대상/CA/AUTH·Schema/계정과 새로운 TLS Redis 시험. 현재 원 lab 평문 Redis는 새 비legacy 계약과 맞지 않음 |
+| GitOps #5/#6 | [Draft PR #9](https://github.com/seokpan/seokpan-hybrid-gitops/pull/9), HEAD `113d24597fbe2f699d48d4e20c731ccb28b2cddb`. 실제 Kustomize base/lab/Recovery Source 후보. [B의 원 lab 참고 범위 수신·인계](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5#issuecomment-5950971514). 원 lab `259e73b0fac1af40f7bb7b43bd1982410d1df150`은 참고 Branch 보존 | D 새 Image/Registry Digest·Pull·실제 Sync/Health·업무, C/A 격리 Recovery 플랫폼/Namespace·직접 DB·새 Redis·접속, 자원·임의 UID 파일 권한 |
+| 실행 보류 | 미해결 INPUT_REQUIRED/.invalid와 replicas0 후보. Kustomize 출력의 입력 검사는 보류 값이 있으면 Release 파일 생성 거부, 통과해도 기존 파일/Symlink 덮어쓰기 거부 | 완전한 배포 준비 검사나 Runtime PASS 아님. 실제 입력 개정·검증 조합을 검토한 별도 변경 전 Apply/Sync 금지 |
+
+App Source 선택 시 동일 Seed의 GitHub Jenkins Image Pipeline #39 상태가 success였고 별도 Check Run은 0건이었다. 원본 성공 Image를 수정 Source의 새 Image로 간주하지 않는다. 개인 미반영 작업과 실제 Build/Scan/Digest 원문·서버 검증은 별도 입력이다. 처음 사용한 B ZIP의 URL 인증·`.yaml.in` 프로토타입은 현재 완료본으로 승격하지 않는다.
+
+App 검사는 정확한 Python3.13.15/uv0.12.5/frozen lock에서 전체 pytest1724개·신규 hybrid54개를 통과했다. 독립 검토에서 DB CA 경로 repr 노출을 보완한 뒤 관련132개를 다시 확인했고 전체 ruff check/format·mypy119 Source·diff 검사를 통과했다. 실제 redis-py8.1.0의 loopback TLS/합성 RESP peer로 AUTH/PING 정상·잘못된 AUTH/CA/Hostname 거부를 확인했으며 MemoryBIO·종료/취소 검사도 연결했다. 이는 로컬 Driver/회귀 검사이고 실제 RDS/ElastiCache·lab·Recovery Runtime/업무 PASS가 아니다.
+
+GitOps는 공식 고정 Kustomize v5.7.1 바이너리 공개 Checksum을 대조하고 base/lab/Recovery Build와 선언·출력 보존 검사10개를 통과했다. CA/AUTH/환경변수는 App Source와 대조했다. 공통 base에 고정 UID/GID·lab Host/CA/hostAliases·Registry 자격·기존 Redis를 넣지 않는다. Secret 값/Object는 별도 공급 Owner, Migration은 별도 승인 단일 실행이다. 새 Recovery Redis의 실제 배치·공급은 C 입력/작업으로 남는다. Cloud Overlay·Policy/UWM·관리 인증·실제 자원 조정은 이번 부분 구현에 포함되지 않는다. timeout/Probe/종료 유예는 실제 환경 실측 전 후보다.
+
+Git 읽기는 가능하지만 Git Push 인증이 없어 App 전체 이력을 현재 연결로 전송하지 못했다. 파일 Snapshot만 API로 올려 승인된 이력 보존 방식을 바꾸지 않았다. `seokpan-hybrid-app-connection-20261002.zip` 안의 검토용 Bundle·Source/Hash·정확한 Branch 전송 절차를 준비했다. Bundle SHA256은 `49d46ca94856647d3d8f9df816768a11a20fa44e4162528eb7ea945da3fa4539`이다. 현재 코드의 원격 공개·팀 수신 완료로 기록하지 않는다. 기존 1차 Image Pipeline 원문은 reference에 보존하고 이관본 Image 진입점은 CI #2 전환 전 즉시 중단하도록 했으며 기존 1차 Job·공유 Template은 변경하지 않았다.
+
+[App #2의 B 리뷰](https://github.com/seokpan/seokpan-hybrid-app/issues/2#issuecomment-5950294428)와 [D의 반영 수락](https://github.com/seokpan/seokpan-hybrid-app/issues/2#issuecomment-5950470901)을 읽었으므로 A~F를 다시 승인 대기로 돌리지 않는다. F 수명 문구는 사용자 채택04의 무기한 허용 시 우선/제한 시 허용 최대 수명·Org 정책 유지 기준으로 정합한다. Registry별 Digest/Platform/Release Mapping·Lifecycle Preview·승인 Harbor 보존·Worker Pull foundation Owner·실제 AUTH 공급 Gate는 기존 승인 경계의 구현 확인이다.
+
+연쇄 재대조에서 실제 Code→App/Secret/CA→GitOps→Image/lab→Recovery 자산/예행→기록/목표 판단을 추적했다. CA repr 불일치와 성공 출력의 기존 파일 덮어쓰기 문제를 보완하고 관련 검사·Source/전송본 동일성을 확인했다. 현재 검토 범위에서 남은 중대한 Code/계약 충돌을 발견하지 않았다. 준비·Source 검토를 Runtime PASS로 확대하지 않고 빈 Run/가짜 Actual을 만들지 않았다. RTO30분/RPO90분/1시간 Backup·복원 구조·예산/Freeze·설계 그림은 유지한다.
+
+- [x] PR #19 병합 후 Source/인계·목적·직접 의존 재확인
+- [x] App 연결 코드·로컬 실제 Driver/전체 회귀 및 최종 관련 재검증, 이력 보존 이관 묶음
+- [x] Kustomize 실제 Source 후보·입력/출력 보존 검사·Draft PR #9와 원본 Issue 기록
+- [ ] 인증된 App Branch 전송·PR, GitOps Source 리뷰와 C/D 실제 입력 수신
+- [ ] 새 Build/Scan/Digest·lab #6/#5, 격리 DB/Backup/새 Redis·Bundle/접속과 담당 실행 시간
+- [ ] 기존 실제 Run의 복구 예행·Backup Data 시각/로컬 최신성·손실/팀 부담 측정
+- [ ] 업무 영향/실현 가능성 대조와 필요한 변경 결정·실제 최종 Acceptance/발표 연결
 
 
 ## 남은 작업과 다음 단계
@@ -842,7 +877,8 @@ PR #18 병합 후 [현재 Source 관측](WORK_TRACKER.md#follow-up-observation-2
 - [ ] 실제 복구 예행·백업 최신성·팀 부담 확인과 필요 목표 변경 결정 — §9, I03/I05/I07
 - [ ] Data 코드의 foundation Root 직접 배치 전환·PR과 첫 plan 확인 — Infra #19, 이유빈 Network 코드 merge 후
 - [ ] I01~I07의 현 Source·실제 입력/결과·미반영 작업·담당별 가용시간/비용 인계
-- [ ] 검증 Seed·원 lab Overlay 인계 후 실제 이력 이관·Build/Scan·base 실습
+- [x] 고정 Seed Source·원 lab 참고 범위 수신, App 연결 코드·이력 보존 묶음·실제 Kustomize 후보 구현 — §9.9
+- [ ] 인증된 App 원격 이관/PR·새 Build/Scan·실제 lab/완성 Bundle — §9.9
 - [ ] 병행하는 foundation/Data/CI 구현과 B의 ROSA 코드 연결·실제 Plan 준비
 - [ ] 비용 확인 후 Cloud 생성·App/Data/Secret·GitOps 통합
 - [ ] 장애·재생성·복구·부하 시험과 Must 결과 판정

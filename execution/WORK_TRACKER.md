@@ -117,6 +117,22 @@ I02의 PR #12 보고는 Bootstrap Apply 및 foundation/rosa 접두사의 **임�
 
 공유 예행 시간은 실제 입력·리뷰·담당자 가용시간을 확인한 뒤 아래 Shared Execution에 연결합니다. 목표 변경은 업무 영향·실측·팀 부담·$450 계획선/$500 한도·Freeze를 함께 대조하고 새 Acceptance 적용 전에 결정합니다. 실측을 통과시키기 위한 사후 목표 완화나 전체 독립 작업의 대기를 요구하지 않습니다.
 
+
+## 2026-10-02 후속 — App/Manifest Source 구현과 인계
+
+PR #19 병합·브랜치 삭제를 확인했다. 이번 목적은 계측 도구 준비 뒤 실제 예행을 막는 App/Image/Manifest 입력을 해소해 시간·손실·접속·팀 부담의 근거를 얻는 것이다. [05 §9.9](05_IMPLEMENTATION_AND_VALIDATION.md#recovery-app-source-20261002)에 코드·검사/제한을 연결한다.
+
+| 결과 / 원본 기록 | 현재 범위 | 다음 실행 / 수신 |
+| --- | --- | --- |
+| [App #1 인계](https://github.com/seokpan/seokpan-hybrid-app/issues/1#issuecomment-5950971722) | 정확한 DB/Redis 대상·TLS/별도 AUTH·Runtime/Migration 계약 코드. Python3.13.15/frozen lock 전체1724·신규54, 마지막 repr 보완 후 관련132 검사. Seed `7fce757f963ba59cc81c03028c043be5b45719b2` + hybrid main `cef46c4e7b0cbd0cf6ebab487ee92c32d800ccdc` 두 부모 Commit `c7a452d514742f77abd2c49c5836566df7386550`, 완전 이력 Bundle 준비 | 인증된 개인 환경의 Branch Push/PR·기존 미커밋 코드 대조, D 새 Build/Scan/Digest와 C/D 대상/CA/Secret. 원격 main·팀 수신 미완료 |
+| [GitOps Draft PR #9](https://github.com/seokpan/seokpan-hybrid-gitops/pull/9)·[#5 수신/인계](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5#issuecomment-5950971514) | HEAD `113d24597fbe2f699d48d4e20c731ccb28b2cddb`, 실제 Kustomize base/lab/Recovery Build·선언/출력 보존10검사. D 원 lab SHA `259e73b0fac1af40f7bb7b43bd1982410d1df150`의 참고 범위 수락. replicas0/미해결 입력 후보이며 Apply/Sync 보류 | Source 리뷰·새 Image, lab TLS Redis/DB/CA/Secret·자원/UID, Recovery 플랫폼/Namespace·새 Redis·직접 DB·진입 입력. D 실제 #5/#6·C Bundle 수신/예행 필요 |
+| [CI A~F B 리뷰](https://github.com/seokpan/seokpan-hybrid-app/issues/2#issuecomment-5950294428)·[D 수락](https://github.com/seokpan/seokpan-hybrid-app/issues/2#issuecomment-5950470901) | 승인/조건부 구현 경계 접수. A~F 재승인 질문 없음. F 수명은 승인04 무기한 허용 시 우선/제한 시 최대 허용 기준 유지 | D 실제 CI/보존/Preview·PAT/등록 재현, A foundation Worker Pull Owner. Source 후보와 실제 자격 발급/Push 성공을 구분 |
+
+Owner 정태훈, 작성·로컬 검사 지원 Codex이며 실제 서버/Image·Restore 수행은 별도다. App Git Push 인증이 없어 승인된 전체 이력 이관은 사용자 전달용 묶음으로 준비하고 Snapshot 전송으로 바꾸지 않았다. 기존 팀원 기록과 Source 개별 관측 시각을 보존한다. Shared Execution/Cost Gate·Cloud Apply·Restore·장애 주입을 실행하지 않았고 실제 Run Index도 추가하지 않았다.
+
+남은 흐름: 인증된 App 원격 Source → 새 Image/정확한 환경 입력 → lab·Recovery Bundle/자산 수신 → 실제 Run의 탐지부터 업무 재개 및 Backup Data 최신성/손실·팀 부담 → 필요 변경 판단/채택 후 설계·코드·그림·발표 반영. 공식 목표·복원 구조·1차 경계·예산/Freeze는 유지한다.
+
+
 ## Shared Execution
 
 같은 State/공유 Context/Restore/장애·부하의 충돌 실행을 조율할 때 새 행을 추가합니다. 이 표에 연결·확인된 실제 실행은 아직 없습니다. 팀의 별도 일정이나 미인계 실행이 없다는 뜻은 아닙니다.
