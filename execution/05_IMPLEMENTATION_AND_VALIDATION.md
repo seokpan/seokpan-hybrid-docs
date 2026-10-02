@@ -18,6 +18,8 @@
 
 **복구 목표 피드백 후속:** [§9 복구 예행과 목표 재검토](#recovery-objective-review-20261002)는 현 구조에서 가능한 개선·사용자 영향·팀 부담을 확인하는 실행 준비다. 승인된 RTO 30분·영속 DB RPO 90분·운영 중 1시간 백업은 변경 결정 전까지 유지한다.
 
+**정태훈 전체 실행·등록 후속:** [§9.11 전체 작업 등록과 ROSA 입력 준비](#tjung03-registration-rosa-input-20261002)에서 실제 상위/실행 Issue, TH-01~19·81개 세부 식별자의 기존 연결과 ROSA 후속 HCL 수신계약·Registry/CI Source 수신 조건을 확인한다. 기존 §9.9/9.10의 구현·검사/미실행 경계는 보존한다.
+
 현재 진행 현황:
 
 - [x] 03 상세설계와 04 운영 결정·구현 인계 완료
@@ -152,507 +154,7 @@ OCP에서 확인 가능한 해당 Case는 먼저 수행해 유료 시간의 문�
 | 항목 | 승인된 목표와 측정 경계 |
 |---|---|
 | 부하 | Smoke 10명/5분, Baseline 30명/15분, Target 60명/30분. 모두 Warm-up 이후이며 실제 Room 인원·행동/HTTP/WS 비율을 기록 |
-| 정상 HTTP/WS | 대표 HTTP 업무 p95 ≤1초, Client가 업무 결과를 확인하는 WS p95 ≤1초 |
-| 오류/정확성 | 예기치 않은 업무 첫 시도 오류율 <1%. 시험에서 중복 효과·무권한 성공·확정 데이터 불일치 0건, 시도 수/경쟁 조건 보존 |
-| WS 재접속 | 정상 의존 서비스 가용 후 상태 수렴 ≤30초. 장애 시작 이후 시간도 별도 기록 |
-| Offline RTO | 장애 발생/접속 불가 시작부터 판단·DB/새 Redis/App·Host 안내·대표 업무/Data 확인까지 ≤30분 |
-| Offline RPO | 사고 시각−사용한 검증 Backup의 Data 기준 시각 ≤90분. 파일 수정/덤프 종료 시각으로 대체하지 않음 |
-| Backup | 운영 중 1시간 기준, 7일 및 최종/마지막 검증본 보호. 실제 전송/무결성/복원·실패를 기록 |
-| 비용 | 계획 ≤$450, $50 여유 포함 총 $500. 생성·삭제 대기·실패/재시험·비Window·잔존을 포함 |
-
-수치는 운영 SLA/제품 보장이 아닌 승인된 프로젝트 시험 목표다. Worker 1대 장애를 AZ 전체 장애로, Restore 기반 Recovery를 자동 Failover/Warm DR로, 새 Redis를 진행 게임 상태의 완전 복구로 표현하지 않는다. 1차와 조건이 다르거나 Baseline이 없으면 개선률을 만들지 않는다.
-
-각 Run은 실제 App/Infra/GitOps 전체 SHA·Image Digest/플랫폼·Schema/Config/Secret/도구/Backup 개정·환경·부하/장애 조건·실행자/Reviewer/협업·UTC와 KST 시각을 연결한다. 후보 Release는 실행 결과와 구분하고 후보 자기 Commit SHA를 넣지 않는다. 실제 Run에서 Commit 후 GitOps SHA를 연결한다.
-
-`summary.md`는 결과/원인/해석, `metrics.csv`는 수치/단위/집계, `timeline.csv`는 장애/탐지/조치/재개, `release.json`은 조합, 공유 가능한 `checksums.txt`는 무결성 참조다. 대용량 Raw Log/영상·Credential/State/Plan·SQL/Backup 원본은 보호 경로에서 보관하고 문서에는 논리 참조·보관자·접근/보존 책임을 둔다. 실패 Run도 보존해 수정/재시험과 연결한다. 각자가 자기 증거를 작성하고 최유준이 Index를 연결한다.
-
-판정은 NOT RUN/PASS/PARTIAL/FAIL/N/A다. PASS에는 해당 조건의 증거가 필요하고 N/A에는 이유/제외 범위가 필요하다. Must 실패/누락은 해결하거나 명시적 범위 결정을 받아 최종 판정에 반영한다. Rollback·Warm DR·추가 Scaling/관측 등 Should/Could는 Must와 비용·기간을 침해하지 않는 범위에서 수행한다. 기존 CI Build/Test/Scan의 결과 추적은 유지하며 새 취약점 Severity 0건 기준을 임의 Must로 추가하지 않는다.
-
-**발표 후보 연결:** 공식 Test/Acceptance는 승인 [03 상세설계](../design/03_DETAILED_DESIGN.md)를 따른다. Actual과 원본 증거는 이05와 `evidence/<test-id>/<run-id>/`에 기록한다. 발표 후보 선별·1차 Baseline 비교 여부·기본기능/일반절차 과장 방지 기준은 별도 [Presentation Baseline](../presentation/PRESENTATION_BASELINE.md)을 참조하며 내용을 이05에 복제하지 않는다. 이 발표 문서는 Test 조건·성공기준·실제 결과를 발표에 유리하게 변경하거나 재해석하는 근거가 아니다. [PR #7](https://github.com/seokpan/seokpan-hybrid-docs/pull/7)은 `2026-10-01T18:49:30Z` / `2026-10-02T03:49:30+09:00`에 병합됐으므로 main의 기준 경로를 사용한다. 이전 고정 Head 검토는 §0.17 이력이다.
-
-실제 Run 중 발표 가치가 있는 결과는 [Issue #6](https://github.com/seokpan/seokpan-hybrid-docs/issues/6)에 원본 Run 링크와 간략한 후보 판정·비교 분류·주장 범위/한계를 연결한다. 수치·로그·시간선을 중복 전사하지 않는다. 1차 재측정은 2차 Harness·측정 정의가 충분히 고정된 뒤 동일/대응 조건의 재현 가능성과 비교 가치를 판단해 필요한 항목만 검토하며, 지금05 작업의 선행조건으로 삼지 않는다.
-
-### 0.8 유료 자원 정리와 05 종료
-
-검증·영상·질의 근거를 확보하고 실제 재시험 필요가 없으면 발표일까지 모든 유료 서비스를 유지할 이유는 없다. 최종 삭제 시점은 자료 완결·복구 가능한 보존본·필요한 Live Demo와 비용을 함께 판단한다. Window 사이 ROSA 삭제와 모든 자원의 최종 종료는 범위가 다르다.
-
-1. 남은 Must Case·목표 미달·재시험과 Live Demo 필요를 확인한다.
-2. 최종 Release/Source·원본 증거/영상·비용/시간선·Runbook과 비교 기준을 export하고 보관본을 실제 열어 확인한다.
-3. 마지막 검증 DB Backup·Harbor Image·Render/도구·필요한 복호화 Key를 독립적으로 보존하고 복원 가능성을 확인한다.
-4. 자원별 Owner·삭제/보존 대상·의존 순서·실행 범위·Data/State 보호와 남길 비용을 기록한다. 기본 비용절감 Destroy는 rosa State이며 foundation/bootstrap 전체 Destroy는 기존 별도 명시적 승인 조건을 유지한다.
-5. 승인 범위의 정리를 수행하고 삭제 완료·LB/EBS/EIP·DB/Redis·NAT·S3/ECR/Backup 등 잔존을 실제 목록과 비용 대장으로 확인한다. 삭제 요청 접수와 완료를 구분한다.
-6. 불필요 Credential/Token·시험 Secret/CA/Key를 정리하고 보존 데이터 해독에 필요한 Key와 구분한다. 남길 자료/자원의 담당·보존 기간·비용·후속 청구 확인을 남긴다.
-
-ROSA 삭제만으로 foundation 비용이 끝났다고 판정하지 않는다. RDS Stop은 Storage/Backup 비용을 없애지 않고 최대 7일 후 자동 재시작 조건이 있다. ElastiCache는 Stop을 전제로 계획하지 않고 유지 비용 또는 승인된 삭제·재생성 계획으로 처리한다. NAT 삭제는 EIP를 계정에서 자동 해제하지 않으며 Route는 blackhole로 남을 수 있다. 실제 구성에 맞춰 확인한다. 2026-10-02 KST 공식 자료 확인: [RDS Stop](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_StopInstance.html), [RDS Stop API](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_StopDBInstance.html), [NAT 관리/삭제](https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-working-with.html). 이번에 단가/계정 비용/삭제를 실제 조회·실행한 것은 아니다.
-
-05 전체 종료는 코드 작성 완료 하나로 판단하지 않는다. 핵심 Must의 실제 판정·미달/제한 처리, 재생성/복구 가능한 조합과 자료, 발표/보고/시연 준비, 네 사람의 실제 기여, 불필요 유료 자원 정리·잔존/보존·후속 청구 책임이 연결돼야 한다. 삭제 뒤 청구 반영이 늦으면 미확정 관측과 후속 확인 책임을 남기며 당일 0달러를 추정하지 않는다.
-
-### 0.9 문서와 진행표 운영
-
-05에는 **먼저 공유할 작업 안내**와 **작업하면서 채우는 결과 기록**이 함께 있다. 작업 안내의 검토 완료와 05 전체 결과의 최종 종료를 구분한다. 작업 안내를 팀이 함께 보는 위치에서 공유한 뒤 구현·배포·검증을 수행하고, 마지막에 결과·발표·비용/자원 정리를 닫는다. 05의 마지막 완료를 모든 작업의 시작 조건으로 삼지 않는다.
-
-주 문서는 단일 05_IMPLEMENTATION_AND_VALIDATION.md이며 공통 기준·전체 의존·통합 Gate를 연결한다. §0.10의 네 역할별 보기는 각자가 먼저 읽을 작업·입력·인계 안내다. 상세 명령과 영역별 Runbook은 관련 App/Infra/GitOps Repo, 실제 실행 증거는 Docs에 둔다. 사람별 별도 05 최종본이나 새로운 설계 승인을 만들지 않는다. 발표 슬라이드/보고서는 목적별 산출물이며 제출 요구에 맞춘다.
-
-**어느 사실을 판단하는지에 따라 정본을 구분한다.** 지침 §6의 사용자 최신 결정·승인 기준 우선순위와 Runtime Evidence 우선순위를 유지한다. 아래는 그 우선순위 안에서 일상 기록의 중복을 줄이는 협업 규칙이며, Issue의 체크 표시가 실제 Runtime 증거를 대신하지 않는다.
-
-| 기록 위치 | 여기서 직접 갱신할 내용 | 다른 위치와의 연결 |
-|---|---|---|
-| 승인01~04·결정 기록 | 목표·구조·책임·시험·비용 기준과 실질 변경 결정 | 각 작업은 해당 기준 절을 참조 |
-| 관련 Repo의 작업 Issue | 작업 범위·담당/Reviewer·입력·현재 상태·Blocker·인계 제출/확인 | 실제 코드 PR·Run·의존 작업 링크를 연결 |
-| Branch/PR와 관련 Repo | 실제 코드·전체 Commit·검사·리뷰·Merge, 영역 Runbook | Merge와 실제 배포/Acceptance를 구분 |
-| Docs의 Run·증거 Index | 실제 조합·환경·수행자·결과·수치·시간선·원본 참조 | 각 담당자가 자기 Run 작성, 최유준은 Index 연결 |
-| 단일05와 통합 진행표 | 작업/인계 링크·공유 실행 Gate·통합 상태·집계 시각·다음 행동 | Issue/PR/Raw 원문을 반복 복사하지 않음 |
-
-각 담당자는 자기 작업 Issue와 증거를 직접 갱신한다. 인계 수신자는 받은 개정·수락 범위·남은 제약을 기록하고 자기 후속 작업을 연결한다. 이유빈은 foundation, 정태훈은 ROSA/App, 김상희는 Data 전환/Restore, 최유준은 시험/증거 Index의 승인 책임을 유지한다. 최유준을 전체05 대필자나 전체 작업 승인자로 확대하지 않는다. 전체05 취합/Merge 전담자를 새로 임의 지정하지 않으며 관련 부분의 작성/리뷰·실제 Repo Merge 권한은 해당 변경에 기록한다.
-
-05를 함께 편집할 때도 기존 Repo의 Branch/PR·권한 규칙을 따른다. 변경 절과 근거 Issue/Run을 명시하고 Merge 전에 최신 정본의 다른 사람 변경을 반영해 대조한다. 충돌은 근거의 대상·개정·확인 시각으로 조정하며 새 기록을 과거 사본으로 덮어쓰지 않는다. 오래된 Run도 역사적 결과로 보존한다. 독립 코드 작성·증거 기록과 직접 인계는05 문서 Merge를 기다리지 않으며 다음 공유 실행 전에는 관련 통합 Gate의 최신 상태를 확인한다.
-
-작업 시작/차단/리뷰 요청/인계/실행 종료와 Source·입력 변경 때 상태를 갱신한다. 짧은 공동 점검에서는 다음 공유 실행·직접 Blocker·인계·시간/비용을 확인하고 결정은 Issue/진행표에 남긴다. 정태훈에게 구두 보고한 뒤 대필될 때까지 기다리는 방식으로 운영하지 않는다.
-
-**협업 사용본을 실제 공유할 때 확인할 것:** 공통 문서 위치와 개정, 네 사람의 읽기 접근, 각자의 기록/Repo 쓰기 경로, §0.10 첫 작업과 기존 Issue 연결, 공유 실행 대상/담당, 보호 원본 접근 책임을 확인한다. 설계 파일을 프로젝트 소스로 등록하거나 이 파일을 제공한 사실만으로 GitHub 등록·팀 배포·접근 성공을 주장하지 않는다. 이 저장소 공유용 진행본은 execution/ 안내·공통 진행표·인계 양식과 연결한다. main 병합·개인별 접근·실제 팀 도입은 별도 상태다.
-
-쓰기 권한이 없는 사람도 자기 결과와 원본 참조를 지정 기록 경로로 제공할 수 있다. 기록을 반영하는 사람은 실제 작성/수행자와 구분한다. 개인별 권한 입력은 I01/I04 등 해당 Gate에서 확인하며 이 때문에 관계없는 독립 준비를 멈추지 않는다. Credential·State/Plan·SQL/Backup·개인정보와 상세 보호 접속정보는 공개 작업표에 넣지 않는다.
-
-### 0.10 네 사람이 먼저 시작할 작업
-
-다음은 04 §2·§9·§10.1~2와 03 W02~W04를 **첫 작업 단위로 구체화한 협업 안내**다. 실제 착수·완료·실행 READY를 선언하는 표가 아니다. 담당자가 이미 진행한 작업은 그 결과/개정을 연결하고 반복하지 않는다. 기존 Issue가 범위를 담고 있으면 이어 쓰며, 별도 산출물과 완료 조건이 필요할 때만 작업을 나눈다. 여러 Repo를 건드리는 일은 대표 작업 하나에서 관련 Issue/PR를 연결한다.
-
-#### 이유빈
-
-**이유빈의 첫 작업은 기반 입력과 foundation 통합 준비다.** 먼저 04 §2.2~3·I02와 03의 Network/Root/제한 Output 기준, 기존 bootstrap의 실제 인계 결과를 읽는다. 이미 처리한 bootstrap을 재구축하거나 State 이전을 반복하지 않는다.
-
-- 독립 준비: Network/공통 IAM 선언과 C의 Data·D의 Registry/CI 선언을 같은 foundation Root로 통합한다. Output 항목·자료형·Account/Region/출처 개정 검사와 실행/실패 인계 절차를 준비한다. A/C/D가 같은 공통 파일을 바꿔야 하면 수정 범위를 먼저 나누고 Branch/PR에서 통합한다.
-- 실제 실행 전 입력: Controller·정확 도구/Lock·Caller/MFA/Role·정본 Backend·실제 Network/지원·Quota, 검토된 전체 Plan과 비용/실행 조건을 확인한다.
-- 검토/완료 증거: 정태훈이 ROSA 소비 입력, 김상희가 Data, 최유준이 Registry/CI 영역을 검토한다. 코드/정적 검사와 전체 Root 검토를 연결하고 실제 실행 뒤 생성/접근 결과·제한 Output 개정·잔존 상태를 남긴다.
-- 인계 수신자: 정태훈에게 ROSA 기반 입력, 김상희에게 Data 연결, 최유준에게 Registry/비용 자원 목록을 직접 넘긴다. 코드 준비와 실제 자원 생성의 완료를 따로 표시한다.
-
-#### 정태훈
-
-**정태훈의 첫 작업은 App 계약과 base/Overlay, ROSA 입력 소비를 준비하는 것이다.** 먼저 04 §3·I01/I02/I06과 03의 App 계약·Kustomize/Secret·Replica 기준을 읽고 최신 검증 Seed·미반영 변경·원 lab Overlay를 연결한다.
-
-- 독립 준비: Path/Port·환경변수·TLS·Probe/종료·SCC·Session/WS·다중 Pod 계약을 대조하고 App 변경·공통 base·Cloud/Recovery Overlay·시험 Case를 준비한다. 아직 없는 Cloud Endpoint는 필수 입력으로 남긴다. ROSA 코드/입력 Schema 확인은 확보된 범위에서 준비한다.
-- 실제 실행 전 입력: 이관은 실제 Seed/이력·미반영 변경·대상 Repo 권한, Build/lab은 전체 Source·Image·Context/Namespace·Secret 공급과 실행 범위, ROSA Plan은 최신 foundation 제한 Output·지원/인증·Backend가 필요하다.
-- 검토/완료 증거: 최유준이 Image/Pull/CI·lab, 김상희가 DB/TLS/Migration, 이유빈이 기반 연결을 검토한다. 전체 Commit·실제 Build/Render 결과·설정 차이·Secret 참조·업무 Case·Pool/자원 확인 수준을 남긴다.
-- 인계 수신자: 최유준에게 Build/lab 대상 Source와 base, 김상희에게 DB/Recovery 계약, 이유빈에게 ROSA가 필요한 기반 입력을 직접 연결한다. §7의 24건 로컬 PASS는 그 범위의 부분 결과로 보존한다.
-
-#### 김상희
-
-**김상희의 첫 작업은 목적별 Data 계약과 복구 자료·격리 Restore 준비다.** 먼저 04 I03/I05와 03의 Data/TLS/Backup/새 전용 Recovery DB·새 Redis 기준을 읽는다.
-
-- 독립 준비: Runtime/Migration/Backup 권한·CA 공급·이관/Backup/복원 절차, Dump 규모/공간 산정, 완성본 Hash·Data 기준 시각·독립 사본과 부분 파일 실패 처리를 준비한다. foundation Data 코드는 이유빈에게 통합한다.
-- 실제 실행 전 입력: Host CPU/RAM/디스크와 격리 Data Directory·보존 공간, 실제 Schema/비민감 GRANT·DB/Client/CA·Backup/복호화 수단·목적 대상과 실행자가 필요하다. Cloud 이관은 실제 RDS/권한과 전환 조건을 확인한다.
-- 검토/완료 증거: 정태훈이 App 연결/업무 재개, 이유빈이 Host/기반을 협업 검토한다. TLS/권한 결과·Backup ID/Hash/Data 기준 시각·보호 참조와 격리 import 후 Schema/Row/관계/대표 업무 비교를 남긴다.
-- 인계 수신자: 정태훈에게 App/Recovery Data 입력, 최유준에게 Release/관측/RPO·Index 근거, 이유빈에게 foundation Data 변경을 직접 넘긴다. Restore Exit Code만으로 업무/Offline PASS를 기록하지 않는다.
-
-#### 최유준
-
-**최유준의 첫 작업은 CI 후보와 실제 base의 lab·관측·증거 준비다.** 먼저 04 I04/I07·Release/Run 양식과 03 CI/Pull/Native/UWM/시험 기준, 기존 실습 원본을 읽는다.
-
-- 독립 준비: 기존 Jenkins Job/Agent/Binding 영향, ECR Push/Harbor 보존·Build/Test/Scan·Digest Mapping·사람 Merge 흐름, base용 lab Case·관측/부하 Harness·Index·비용 입력표를 준비한다. 실제 Source가 오기 전에도 조건/검사 형식과 원 실습 자료 정리는 가능하다.
-- 실제 실행 전 입력: Build는 정태훈의 실제 App Commit·기존 도구/Job/Registry/Secret, base 실습은 실제 Manifest Commit·Context/Namespace와 공급/실행 조건, PAT는 Org 정책/권한·Repo 보호, Cost 판정은 실제 가격/Credit/누적/Plan·Window가 필요하다.
-- 검토/완료 증거: 정태훈이 App/Pull/Release를 검토하고 Registry/CI foundation 변경은 이유빈이 Root 전체에 통합한다. Test/Scan과 연결된 Source·Image/플랫폼·ECR/Harbor Digest·Push/PR/Pull 결과, lab Case·수집/측정 원본과 Index를 남긴다.
-- 인계 수신자: 정태훈에게 배포 Image/측정·lab 결과, 김상희에게 Recovery Image/Bundle 연결, 이유빈에게 Registry/CI 선언, 전원에게 시험·비용·증거 Index를 직접 연결한다. 예제 Argo/실습 UWM 결과를 실제 base/Cloud PASS로 바꾸지 않는다.
-
-**병렬 준비의 예:** A가 기반 코드를 통합하는 동안 B는 App/base, C는 Backup/격리 Restore, D는 CI/Harness·실습 원본을 준비한다. A의 실제 Endpoint가 없으면 B의 실제 연결·ROSA Plan만 해당 입력 대기로 남는다. C/D의 모든 후속 업무가 끝나야 A/B를 시작하는 조건도 아니다. 아래 흐름의 화살표는 필요한 산출물의 인계이며 각 사람의 전체 업무 종료를 뜻하지 않는다.
-
-```mermaid
-flowchart TD
-    S["공통 기준과 첫 작업 공유"] --> A["이유빈 기반 코드"]
-    S --> B["정태훈 App·배포 코드"]
-    S --> C["김상희 Data·복구 준비"]
-    S --> D["최유준 CI·관측·시험 준비"]
-    A --> F["foundation 통합·실행"]
-    C --> F
-    D --> F
-    F --> R["정태훈 ROSA 생성"]
-    B --> I["Cloud 정상 통합"]
-    C --> I
-    D --> I
-    R --> I
-    I --> V["재생성·장애·부하·Offline 검증"]
-    V --> E["증거·발표·유료 자원 정리"]
-```
-
-foundation/ROSA 실제 생성에는 각 Root 실행·Cost Gate가 필요하다. B와 D의 실제 base OCP 검증, C의 격리 Restore 예행은 Cloud 생성 전 병행한다. Offline 본 검증은 승인된 격리 복구 환경에서 수행한다.
-
-### 0.11 작업 카드와 진행표를 직접 갱신하는 법
-
-각 작업 Issue에는 다음 양식을 사용한다. 값이 없으면 미확인과 확인 담당/시점을 남기며 가짜 ID·시간·완료값을 넣지 않는다. 새 양식 자동화나 GitHub 보드가 구현됐다는 의미는 아니다.
-
-| 항목 | 담당자가 적을 내용 |
-|---|---|
-| 작업과 범위 | 대표 Issue/관련 PR·Run, 승인 근거 절, 이번 산출물과 실제 실행 포함 여부 |
-| 사람과 대상 | 작성 담당·공유 실행 책임자·실제 수행자·Reviewer·결과 수신자, Repo/Root/Context/Namespace의 비민감 참조 |
-| 시작 입력 | 필요한 전체 SHA·입력/도구/설정 개정·보호 참조와 제공자, 현재 확인 수준 |
-| 지금 가능한 일 | 바로 진행할 독립 준비와 입력을 기다리는 실제 실행을 나눔 |
-| 현재 상태 | 작업 진행·코드 반영·인계·실행·최종 판정을 별도 기록 |
-| 완료 증거 | 검사/리뷰·실제 실행/업무 결과·원본 참조·실패/제한·측정 시간/비용 |
-| Blocker와 다음 행동 | 직접 막는 입력/영향, 해결 담당·다음 확인 시점·계속할 독립 작업 |
-| 결과 인계 | 보낸 개정·수신자·필요 시점·수락 범위/보완 요청·다음 의존 작업 |
-
-상태는 한 줄의 완료로 합치지 않는다.
-
-| 상태 축 | 기록 방식 |
-|---|---|
-| 작업 진행 | 미착수·준비/작업 중·검토 요청·보완 중·해당 산출물 완료. 차단 사유는 Blocker 필드 |
-| 코드 반영 | 미반영·PR 검토 중·Merge된 전체 SHA. 문서/입력 작업 등 대상외는 이유 |
-| 인계 | 미제출·제출/확인 대기·범위를 명시한 수락·보완 요청·보류 |
-| 실행 상태 | 미실행·실행 중·실행 종료, 대상/시각과 현재 잔존 상태 |
-| 시험 결과 | 승인된 NOT RUN/PASS/PARTIAL/FAIL/N/A. N/A는 이유, 미실행 차단은 NOT RUN과 Blocker로 표시 |
-
-코드만 작성하는 Issue는 그 완료 조건을 충족하면 닫을 수 있으나 남은 Runtime 시험·인계 Gate는 05/T Matrix와 후속 작업에서 유지한다. Runtime/통합까지 포함한 Issue는 Merge만으로 닫지 않는다. 실패 Run과 부분 자원은 삭제하거나 성공으로 덮어쓰지 않는다. AI Source 조회·팀 보고·독립 Runtime 관측은 근거 유형/시점을 함께 기록한다.
-
-### 0.12 인계 수신자의 확인과 변경 영향
-
-인계는 제공자가 보냈다고 끝나지 않는다. 제공자는 대상·개정·확인 범위·증거/보호 참조·남은 실패/제약·수신자·필요 시점을 남기고, 수신자는 후속 실행 전에 확인한다. 실제 필요 날짜/확인 시각은 팀 가용시간으로 정하며 아직 없는 시각을 임의 확정하지 않는다.
-
-| 수신 판단 | 처리 |
-|---|---|
-| 수락 | 필요한 대상/개정·접근·범위가 맞음을 기록하고 그 개정으로 후속 작업을 진행. 수락은 후속 시험 PASS와 구분 |
-| 범위 일부 수락 | 사용할 부분과 사용할 수 없는 부분·막히는 작업을 명시. 전체 실행 READY로 승격하지 않음 |
-| 보완 요청/보류 | 누락·오래된 값·대상/환경 차이·원본 접근 실패·민감값 노출·미정리 상태·Owner 충돌 등의 이유, 해결 담당·재제출 조건을 기록 |
-
-받는 사람은 해당 분야 통합 담당이다. A↔B의 기반/ROSA, B↔C의 App/Data, B↔D의 Source/Image/base/lab, C↔D의 Backup/Image/증거가 직접 이어진다. 모든 인계를 정태훈을 통해 중계하는 조건은 없다. 정태훈의 리뷰가 필요한 경계는 개정 묶음으로 검토하고 모든 독립 명령의 사전 허가로 확대하지 않는다. 지정 Reviewer가 부재하면 해당 리뷰/공유 실행을 기다리고 관계없는 준비를 계속한다.
-
-Endpoint·CA·Schema·Digest·Secret·Pool·도구 버전 등을 바꾸는 사람은 변경 이유·새 개정·받는 사람·직접/후속 영향·시험·시간/비용을 기록한다. 수신자는 자기 소비 입력·Manifest/CI/Backup/Bundle·기존 Plan/Release의 영향 여부를 확인한다. 과거 Run은 원래 조합의 결과로 보존하고 새 조합은 영향받는 시험을 재검증한다. 새 Plan/가격 확인이 필요한 변경은 공유 실행 전에 반영한다.
-
-승인 구조·범위·권한·성공 기준·기간/예산을 실질적으로 바꾸는 제약만 기존 변경 결정 절차로 연결한다. 단순 입력 확인·코드 보완마다 전체 설계 재승인이나 모든 트랙 중단을 요구하지 않는다. Freeze 이후에도 핵심 Must 결함·필요 재시험은 추적하며 범위 확대는 기존 기준을 따른다.
-
-### 0.13 공유 자원의 실행과 인계
-
-코드 작성의 병렬성과 공유 자원 실행을 구분한다. 하나의 공유 작업 기록에 작업 링크·Root/State 또는 Context/Namespace·실행 책임자/실제 수행자·Source/입력 개정·예정 구간·중단 기준·비용/정리·결과 수신자를 남긴다. 일정은 실제 가용시간으로 채운다. 새 예약 서비스·자동 Lock 시스템을 추가하는 것이 아니다.
-
-1. 실행자는 필요한 리뷰·Owner 인계·Caller/Backend·현재 상태·Plan·Cost/범위 조건을 확인하고 같은 대상의 충돌 작업이 없는지 확인한다.
-2. 기존 작업의 실행 종료·Lock/부분 변경·자원 상태가 인계되기 전에는 충돌하는 다음 실행을 시작하지 않는다. 다른 Root여도 공유 Network/Data 의존이 있으면 순서를 지킨다.
-3. 실행 중 단일 책임자와 조율된 실제 수행자를 유지하고, Reviewer·관측 참여자는 구분해 기록한다. 계정 차용 시 04 §2.4 기록을 따른다.
-4. 실패 시 실패 Run·부분 State/자원·잔존 비용·복구/정리 담당·마지막 정상 상태를 남긴다. 다음 실행자가 이 상태를 확인하기 전에는 실행 구간이 끝났다는 이유만으로 넘기지 않는다.
-5. 성공/실패 후 정상 Baseline·잔존/Lock·정리 결과와 다음 인계를 확인한다. 검토되지 않은 대안 Apply나 파괴적 정리를 자동으로 수행하지 않는다.
-
-foundation 공유 쓰기는 이유빈, rosa는 정태훈, Data Restore/Cutover는 김상희, 공유 시험 순서는 최유준 조율이며 장애 주입자는 각 Case에 기록한다. App 배포 변경은 정태훈이 조율한다. 다른 팀과 공유하는 OCP Operator/UWM·Cluster 범위 변경은 기존 공지/인계와 허용 대상 범위를 확인한다. 로컬 독립 환경의 예행과 공유 Cluster 장애·부하를 혼동하지 않는다.
-
-ROSA Window 진입/추가·재시험은 최신 전체 비용·남은 시험·정리 시간을 확인한다. 공유 실행을 잡았다는 사실만으로 $450 계획선/$500 한도나 실행 승인이 생기지 않는다. Window 종료/최종 삭제는 §0.8과 승인된 Data/State 보호·삭제 범위를 따른다. 누가 삭제·보존·후속 청구 확인을 맡는지 자원별로 기록한다.
-
-### 0.14 협업 사용과 최종 종료의 현재 상태
-
-| 판단 대상 | 이번 문서 상태 | 실제로 남은 확인 |
-|---|---|---|
-| 협업 작업 안내 | 공통 기준·네 역할별 첫 작업·기록/인계·공유 실행 방법 보강과 문서 검토 수렴 | 공유 가능한 진행본. 실제 공유/접근은 다음 행 |
-| 실제 팀 공유와 기록 연결 | 설계/실행/발표 main 반영, 기존 작업/입력 보고와 네 사람·네 Repo 권한을 진행표에 연결 | 개인 본인환경의 실제 사용·미반영 Source·실제 팀 도입/가용시간·입력 수신 |
-| 작업별 실행 준비 | 해당 입력/도구·리뷰 Gate별 판정 | I01~I07과 실제 코드/검사·계정·자산·보호 자료 |
-| Full Apply/최종 Acceptance | 실제 준비/검증 완료를 주장하지 않음 | Plan·가격/Credit·Window·실제 Runtime/증거 |
-| 05 최종 종료 | 미완료 | 구현·통합·Must 판정·발표/보고·보존·불필요 유료 자원 정리와 잔존 책임 |
-
-AI는 이 협업 기준 안에서 정태훈의 후보 코드·검사·문서 연결을 지원하며 팀원의 실제 실행·인계와 구분한다. 앞선 24건 로컬 PASS는 §7 범위로 유지한다. 이번 보완은 작업 안내와 기록의 정합 검토이며 새 Cloud/lab/DB 실행 결과가 아니다. 이전 협업 검토에서 외부 Repo 변경·팀 메시지 전송·실제 팀 공유는 미실행이었다. 이번 Docs 공유용 변경은 실행 안내/양식의 저장소 반영 범위이며 개인별 접근·도입과 Runtime 결과를 구분한다.
-
-### 0.15 협업 보완의 연쇄 검토 기록
-
-이번 사용자 질문을 기준으로 직전 설명과05를 승인01~04·지침에 연결해 추적했다. 검토 범위는 공유 시점→첫 작업→기록 정본→작성/리뷰→수신자 인계→공유 실행→변경 영향/재시험→Freeze/비용→증거/발표→삭제·보존/종료다. 2026-10-02 01:27 Source 관측과 과거 실습/로컬 검사 범위는 유지하며 실제 Runtime 결과로 확대하지 않는다.
-
-| 회차 | 발견과 보완 | 재검증 상태 |
-|---|---|---|
-| 1 직전 설명·05 추적 | 협업 사용본/최종본 구분, B 중앙 배정/대필 오해, 정본/직접 갱신, 역할별 첫 작업, 인계 확인, 공유 실행 충돌·변경 개정 연결의 공백을 확인 | §0.9~0.14와 Header/진행/후속 연결 보완 |
-| 2 보완 후 전체 대조 | 승인04 역할/I01~I07·03 W/T·Source/Runtime·Secret·비용/Freeze·종료까지 대조. 동시05 편집 시 최신 인계/Run 기록 보존 규칙 1건 추가 확인 | §0.9에 최신 정본·다른 담당 변경·원본 개정/시각 대조와 독립 작업의 지속 반영 |
-| 3 동시 편집 보완 후 재검증 | 수정 규칙→직접 인계→공유 실행 Gate→변경/재시험→시간/비용→증거/삭제/최종 종료를 다시 대조. 세 검토 관점과 아래 시나리오에서 기존 승인/미확인 상태를 확인 | 추가 보완 0건으로 문서 검토 수렴. 승인 기준6개와 기존 범위·일정·측정·비용·구현 이력 보존, Markdown 구조 확인 |
-
-| 문서상 시나리오 | 확인한 처리 |
-|---|---|
-| B가 실제 Endpoint를 받지 못함 | App/base·입력 계약 준비는 진행, 실제 연결·해당 Plan/배포만 대기 |
-| C/D가 foundation을 함께 작성 | 독립 Branch/PR와 파일 범위 협업, 이유빈의 단일 Root 통합/실행 |
-| 공개 Argo 예제·옛 lab 결과를 실제 base에 사용 | 원 결과/조건 보존, 실제 조합의 별도 검증과 승인 Prune 경계 유지 |
-| Backup/예비 보호 자료 접근 실패 | 인계 보완/보류, 실제 접근·복원 전 Recovery 준비 통과로 처리하지 않음 |
-| 공유 Apply/시험 실패·Lock/부분 자원 잔존 | 실패·상태·비용 보존, 다음 충돌 실행 전에 복구/상태 인계 |
-| 같은05를 서로 다른 사본에서 편집 | 최신 정본·근거 대상/개정/시각 대조, 새 기록 보호·과거 Run 보존 |
-| 팀원이 안내/기록 위치에 접근하지 못함 | 실제 공유 미확인 유지, 접근/기록 경로 해결. 관계없는 독립 준비 지속 |
-| CA/Schema/Digest 변경 뒤 기존 Run 사용 | 소비 입력·Plan/Release/Backup/Bundle·영향 시험을 확인하고 새 개정 재검증 |
-| B 또는 지정 Reviewer가 부재 | 해당 리뷰/공유 실행만 대기, 직접 인계와 독립 준비 지속. 책임/리뷰를 임의 우회하지 않음 |
-
-**최종 판단:** 확인 가능한 승인 문서·기존 Source 관측·협업 안내의 범위에서 연쇄 추적→보완→재검증을 마쳤고 추가 보완 0건으로 재귀 검토를 종료했다. 위 시나리오는 문서 규칙 검토이며 실제 환경 시험 PASS가 아니다. 협업 안내는 공유할 수 있지만 실제 팀 도입/접근·입력·Plan/비용·Runtime·05 최종 결과 종료는 해당 증거를 받아 갱신한다.
-
-새 협업 표현은 기존 역할·서비스·State·권한·시험 목표를 바꾸지 않는다. 세부 작업/시간/접근과 팀 도입은 실제 입력/인계이며 문서 검토만으로 완료시키지 않는다.
-
-### 0.16 저장소 공유본의 검토
-
-공유할 10개 파일을 승인04와 기존05에 대조하고 읽는 순서→역할별 입력→직접 인계→실제 Run→통합 기록을 검토했다. 확인하지 않은 팀 일정의 부재를 단정하던 표현은 이 진행표의 확인 범위로 한정했고, Run 경로 자리표시자는 코드 표기로 보완했다. 보완 후 상대 파일/절 링크20개와 빈 Run 양식을 재확인했으며 추가 정합 보완은 발견하지 못했다. 승인 기준6개는 변경하지 않았다. 이 검토는 문서 공유 준비이며 Cloud/lab 실행·개인별 접근·실제 팀 도입의 성공을 의미하지 않는다.
-
-공유 변경은 `execution/`과 `evidence/`에 한정한다. 조회된 설계 등록 PR #3의 브랜치·원문·다이어그램 계획과 루트 README는 변경하지 않는다. main 반영은 이 공유 변경의 PR 병합 결과로 확인하고 현재 작업 Issue·실제 입력·실행 일정은 각 담당자가 진행표에 연결한다.
-
-### 0.17 발표 참조와 현행 인계의 연결 검토
-
-발표 PR #7의 고정 Head·Issue #6을 승인03/04·기존05에 대조했다. §0.7에 별도 선별 기준의 참조·공식 Test/Actual 우선·조건/결과 재해석 금지·원본 Run 링크/후보 판정·1차 재측정 시점을 연결했고, 실행/Evidence 안내에는 기록 위치만 추가했다. 발표 원문·정량 목표·역할·WBS·Gate·Run 양식은 변경하지 않는다. PR #7 미병합 상태는 고정 Head와 PR 링크로 구분하며 Issue #6은 지속 추적용으로 닫지 않는다.
-
-후속 작업으로 기존 Issue/보고·Source 개정과 Docs 권한 API의 확인 범위를 진행표에 연결했다. I02는 임시 Probe 결과와 실제 서비스 Root를 구분하고 보고에 남은 세션 실패 처리 후속을 보존한다. 다른 세 계정·개인별 실제 접근·새 Source/입력·가격/시간은 미확인으로 남겨 Issue #8에서 이어간다. PR #5 변경은 `execution/`·`evidence/`에만 두고 다른 브랜치나 main을 강제로 덮어쓰지 않는다.
-
-위 §0.17은 PR #5 병합 전의 연결 검토 이력이다. 현재 계정/병합 상태는 다음 갱신을 따른다.
-
-### 0.18 계정·권한 확인과 다음 실무 인계
-
-사용자가 첨부의 위→아래를 최유준·이유빈·김상희로 명시해 계정 매핑을 확인했다. 권한 API 관측은 `2026-10-01T18:52:11.308Z` / `2026-10-02T03:52:11.308+09:00`이며 네 사람 모두 네 저장소에서 admin이었다. 상세 계정/권한은 [진행표](WORK_TRACKER.md#team-access)에 둔다. 개인 비밀번호·PAT 공유 없이 조회했고 Repo 권한 등급과 본인 환경 사용·CI 정책·AWS/Cluster 인증·Runtime 판정은 구분한다.
-
-후속 Source 조회 `2026-10-01T18:52:45.552Z` / `2026-10-02T03:52:45.552+09:00`에서 Infra/App/GitOps main·기존 Issue/보고 상태는 이전과 같았다. 새 세션 실패 처리 PR·실제 검증 Seed 인계는 이번 목록에서 미확인이다. 계정/권한 확인을 더 기다리는 단계는 끝났고 각자는 [첫 입력 인계](WORK_TRACKER.md#next-handover)를 자기 기존 작업 Issue에 기록하면서 독립 준비를 진행한다. 수신자는 받은 개정과 사용할 범위를 확인한다. 본인 사용 확인이나 I01~I07 전체 제출을 모든 작업의 착수 조건으로 삼지 않는다.
-
-권한 API가 실패한 경우에도 공개 Source 대조·로컬 후보/검사·인계 준비는 계속할 수 있다. 실제 쓰기/접속이 막힌 대상은 허용된 기록 경로로 결과를 연결하고 해당 접근을 해결한다. 공유 Apply·배포·Restore·장애/부하는 필요한 입력·리뷰·Caller/Context·Plan·Cost/시간 조건을 확인해 조율한다. [Issue #8](https://github.com/seokpan/seokpan-hybrid-docs/issues/8)은 실제 사용·현재 Source·입력 인계를 위해 계속 유지한다.
-
-## 1 05의 범위와 설계 완료의 의미
-
-03은 Network·Data·App·Platform·CI·IAM/Ownership·시험·Runbook·WBS/Cost의 상세 설계 기준이다. 04는 사람별 책임, 복구 전용 VM·관리 인증 등 운영 결정, 실제 입력의 담당/확인 시점/Gate·실행 인계와 문서 전체 검토를 끝낸 단계다. **기본 구조 설계와 실행 인계는 04 종료까지 완료됐고, 05부터 실제 구현·통합·검증을 진행한다.**
-
-05는 다음 설계 승인 문서를 계속 만드는 단계가 아니다. W02 입력 확보, W03 코드/정적 확인, W04 로컬 예행, W05 첫 Full Apply Cost Gate, W06/W07 통합·수정, W08 검증, W09/W10 Evidence·시연·발표·정리를 실행 기록에 연결한다. 문서 번호 05는 00 §25의 GATE 5(Migration)나 WBS W05(Cost Gate)와 별개다.
-
-병행은 승인된 독립 영역의 입력 확보·코드/정적 확인·로컬 예행을 함께 진행한다는 뜻이다. 모든 사람의 입력을 한꺼번에 기다리지 않는다. 같은 State 쓰기, DB Restore/Cutover, 공유 장애 주입, Cloud 생성/삭제는 Owner·인계·Cost Gate와 의존 순서를 지킨다. 새 실제 제약이 승인 기준을 실질적으로 바꾸면 문제·영향·대안·결정을 기록한다. 설계 종료는 미래의 모든 측정값이나 제약을 이미 안다는 의미가 아니다.
-
-## 2 이미 확정된 구조와 나중에 채우는 값
-
-| 항목 | 승인 기준 | 구현 때 확인할 실제 입력/결과 |
-|---|---|---|
-| Region/VPC/AZ | 서울 `ap-northeast-2`, VPC 1개, 3 AZ. VPC/Machine `192.168.64.0/20` | 실제 AZ 이름/ID와 역할 A/B/C 매핑, 자원 IDs·Tag·Quota |
-| Subnet | 9개: Public 3 + ROSA Private 3 + Data Private 3. Public `.64/.65/.66`, ROSA `.67/.68/.69`, Data `.70/.71/.72`의 /24 | AZ별 생성/연결과 Route·SG·실제 통신. `.73`~`.79`는 예비 주소 블록이며 생성 Subnet이 아님 |
-| Network 연결 | AZ별 NAT 3·IGW·S3 Gateway Endpoint, 명시 관리 Route Table 5+별도 Main. ROSA 설치 전달 Subnet은 Public/ROSA Private 6개 | 실제 지원 Schema·Route/SG·Worker Binding·Job Host /32·왕복 원본 IP·가격 |
-| Cloud Platform | ROSA Classic Multi-AZ, Public API·non-PrivateLink, Public Ingress/HTTPS Route. CP/Infra/Worker 각 3과 Worker `m5.xlarge` 초기 후보 | 실제 지원 버전/필수 Role·Quota·OCM 인증·Node/관측/App 자원·Plan·가격. CP/Infra 사양을 Worker와 동일하게 계산하지 않음 |
-| Cloud Data | RDS MariaDB Multi-AZ DB instance `db.t4g.small`/gp3 20 GiB, Redis OSS `cache.t4g.small` Primary 1+Replica 1 초기 후보 | 실제 엔진/드라이버/Schema/CA·지원/가격·연결/Failover/Backup·부하. Data Subnet 3개는 DB/Redis 3대를 뜻하지 않음 |
-| Recovery | Data 작업 VM과 별도의 새 전용 VM MariaDB, 직접 TLS, 새 Redis, 사전 Backup/Image/Render/Secret/도구 | Host 실측·VM 크기/IP/디스크·독립 사본/Key·DB/CA·Offline 복구/업무·RTO/RPO. Data VM 2 vCPU/4 GiB/40 GiB 후보를 DB 사양으로 복제하지 않음 |
-| 책임/공급 | 04의 Root 실행·보관자·PAT/Reader·Release/Evidence·비상 인증/초기 회수 결정 | 실제 권한/정책·발급/등록·주/예비 접근/복원·정상/거부/회수 시험·실제 Run 수행자 |
-
-근거는 03 §3-B.3~9·§3-D.10·§3-F.18 및 04 §2·5·10이다. 승인된 초기 크기/버전 후보는 Source와 Runtime 검증을 통과한 확정 조합으로 확대하지 않는다.
-
-## 3 05 첫 Source 점검
-
-### 3.1 조회 범위와 시점
-
-2026-10-01T10:41:29Z(19:41:29 KST) 읽기 점검에서 네 Repo의 main Branch Metadata, 그 전체 SHA의 recursive Tree, 열린 PR 목록을 조회했다. Tree는 모두 truncated=false였다. foundation/rosa/App/GitOps README는 아래 고정 SHA로 읽었다. Code/Branch/PR 존재와 Runtime 검증을 구분하며 열린 PR 목록은 시점 관측이다. 비공개 Branch·미커밋 Controller/개인 작업 사본의 부재까지 주장하지 않는다.
-
-| Repo | 조회 main 전체 SHA | main Tree에서 확인한 범위 | 열린 PR |
-|---|---|---|---|
-| [App](https://github.com/seokpan/seokpan-hybrid-app) | `6902f3a184b4f1f07ade782536335a88d72612fc` | README·.gitignore만 존재. 실제 App Source/빌드/테스트 이관은 main에서 확인되지 않음 | 없음 |
-| [Infra](https://github.com/seokpan/seokpan-hybrid-infra) | `fbc502d3b2de7b6794d7b9d2fd5bbcd376fb9041` | bootstrap main/backend/Lock, foundation/rosa/ansible README. foundation/rosa HCL·Ansible 실행 코드는 main에 없음 | #12, non-draft, main 대상 |
-| [GitOps](https://github.com/seokpan/seokpan-hybrid-gitops) | `523e9206dd6398adc6776855573890063b837a85` | README·.gitignore만 존재. 실제 base/Overlay/Release는 main에 없음 | 없음 |
-| [Docs](https://github.com/seokpan/seokpan-hybrid-docs) | `eb36bf10499d29b414a9e02c3f2569dde4d9ef1e` | README만 존재. AI 산출물의 Repo 등록/실제 Evidence 구현은 확인되지 않음 | 없음 |
-
-App/Infra/GitOps의 Branch protected marker는 true, Docs는 false로 조회됐다. 이 marker만으로 Review/Required Check·Push/Bypass 제한이 원하는 수준으로 실효 적용됐다고 판정하지 않는다. 실제 Ruleset/권한은 I01/I04에서 확인한다. 메타데이터의 계정/Commit만으로 실제 수행자·전원 기여를 소급 배정하지 않는다.
-
-### 3.2 새로 확인한 Source 차이
-
-| ID | 관측한 차이/진행 | 기준/보완 책임과 Gate |
-|---|---|---|
-| S05-01 | main의 foundation/rosa 하위 README에는 여전히 `foundation/terraform.tfstate`·`rosa/terraform.tfstate`와 상세설계 후 CIDR/Sizing/API 확정 문구가 있음 | 03 §3-F.4.1의 `phase2/foundation/terraform.tfstate`·`phase2/rosa/terraform.tfstate`, 이미 승인된 §3-B/3-D/3-F 값을 문서/HCL/정책에 정합화. 이유빈 통합·정태훈 rosa, 해당 Root Backend 작성/실제 init/Plan 전 확인. 새로운 State 이전을 지시하지 않음 |
-| S05-02 | Infra [PR #12](https://github.com/seokpan/seokpan-hybrid-infra/pull/12) `feat(bootstrap): Root별 TF 실행 Role + State key 접근 제한 (#10)`, Head `b5b154bd751531be320bbbd111c977c06351c4b8`가 열림 | 당시 읽기 관측. 이후 담당자가 작성·처리했다는 사용자 설명을 접수했고 현재 후속 과제/Blocker에서 제외한다(§3.3). 당시 관측을 현재 Merge/Apply 상태로 확대하지 않음 |
-| S05-03 | foundation/rosa README는 역할 경계를 설명하나 실제 선언/입력 추출·소비/검사는 아직 main에 없음 | §4 구현 대응표로 연결. 독립 선언/Schema 확인은 실제 계정/가격 전체 확보를 기다리지 않음. 실제 Plan/Apply는 해당 Gate 후 |
-
-S05-01은 Source를 승인 설계에 맞추는 보완이며 VPC/Subnet 구조를 다시 선택하는 문제가 아니다. 04 §8.6의 root README/bootstrap 정합과 당시 제한된 조회는 유지한다. 이번 새 하위 README 관측/열린 PR은 05의 후속 기록으로 다룬다.
-
-### 3.3 이전 PR 12 읽기 이력
-
-**이 절은 이전 시점의 읽기 이력이다.** 사용자가 다른 담당자가 작성·처리했다고 설명했고, AI가 요청 범위를 넓힌 점을 인정했다. 아래 옛 Head 판정은 현재 PR 상태나 미해결 작업 판정으로 사용하지 않는다. 재검토·댓글·변경·병합을 이번 작업에 포함하지 않고, 필요한 Backend·Role·foundation 결과만 지정 담당자의 인계로 연결한다.
-
-PR #12는 지정 Head `b5b154bd751531be320bbbd111c977c06351c4b8`, Base `fbc502d3b2de7b6794d7b9d2fd5bbcd376fb9041`로 본문·전체 diff·변경 파일 4개(README·tf-session.sh·bootstrap iam/main)를 읽기 대조했다. 후속 PR Metadata도 같은 Head/open/merged=false였다. `mergeable=true` 또는 API의 임시 merge SHA는 실제 병합 완료의 증거가 아니다.
-
-**당시 판정은 Source 보완 필요였다. 이 옛 Head 검토를 현재 Merge/Apply 또는 권한 시험의 판정으로 사용하지 않는다.** MFA Trust·자동화 User 제외·세 Role의 bootstrap 소유·비밀값 없는 ARN Output·기존 Backend Key 유지 방향은 승인 기준과 연결된다. 다음 차이는 새 운영 모델을 채택하는 대신 승인 경계에 맞춰 구현을 보완할 항목이다.
-
-| 검토 ID | 지정 Head의 근거와 영향 | 보완 책임/재검증 Gate |
-|---|---|---|
-| R12-01 목적별 서비스 권한 | `iam.tf` 104~109: foundation/rosa 양쪽에 동일 PowerUserAccess. Source 정책상 ROSA Role도 RDS/Network 등 기반 변경 권한을 얻어 03 §3-C.4/9의 목적 범위·무관 작업 거부와 다름. 이름 접두사 IAM 제한만으로 서비스 권한까지 분리되지 않음 | 이유빈 bootstrap 통합, 정태훈 rosa·C/D 해당 영역 리뷰. 필요한 Action/대상과 ROSA 필수 정책을 대조해 목적별 권한 보완→T03 필요한 작업 성공/무관 작업 거부. 개인 Admin 직접 접근의 승인 예외와 별개 |
-| R12-02 State 삭제 보호 | `main.tf` 113~130: 자기 접두사 객체의 Action을 제한하지 않아 광역 Allow와 결합하면 own State DeleteObject/DeleteObjectVersion도 허용. `.tflock` 삭제 권한과 영속 State 삭제 권한이 구분되지 않음 | 이유빈, 정태훈 리뷰. State Get/Put·Lock Get/Put/Delete를 구분하고 일상 State 삭제를 제한. bootstrap 관리/보호 복구·정리 범위는 별도 리뷰. 알려진 State/Version 보존과 Lock 성공/충돌·삭제 거부 T02/T03 |
-| R12-03 제한된 목록 | 같은 정책: Bucket ARN을 객체 Deny에서 제외하고 ListBucket/ListBucketVersions 예외에 s3:prefix 조건이 없어 다른 Root Key/Version 목록도 조회 가능. 타 Root GetObject 거부와 목록 제한은 다름 | 이유빈. Backend의 실제 요청 Prefix/Default Workspace 조건을 확인해 제한된 List/Version 범위 구현→자기 Root init/Plan·타 Prefix/무Prefix 조회 거부. Allow만 추가하고 기존 광역 Allow가 남는 우회도 확인 |
-| R12-04 세션/예제 실패 처리 | README 77~80: source 실패와 Plan이 조건으로 연결되지 않아 이전 세션/기본 자격증명으로 계속할 수 있고, Root 디렉터리 이동 후 scripts 상대경로 clear가 잘못됨. script 87의 Caller 조회 실패도 echo가 성공 반환을 남김 | 이유빈 구현, 정태훈 리뷰. 저장소 루트의 source 성공→`terraform -chdir=terraform/foundation` 실행을 조건 연결, 해제 경로/Caller 오류 반환·세션 상태 검사. 실제 잘못된/MFA 실패/만료/Caller 불일치 시 Plan 차단, Backend/Provider의 실제 Principal 일치 확인. 예시만으로 인증 강제 PASS 아님 |
-| R12-05 IAM/전달 범위 | `iam.tf` 115~149: Role ARN 접두사에 AttachRolePolicy/PutRolePolicy/Trust 변경/PassRole이 있고 연결할 정책 내용/PolicyARN·전달 서비스 제한은 없음. OIDC 관리도 account 내 wildcard여서 필요한 Cluster 범위를 실제 대조해야 함 | 이유빈·정태훈. 필요한 Role/Policy/Cluster OIDC·서비스 경계와 실제 ROSA 지원을 확인. PolicyARN·PassRole 대상/서비스 및 정책/Trust 관리 권한의 실효 범위를 함께 검토→지정 작업/무관 Role·정책·서비스의 T03 결과. 접두사만으로 최소권한 달성을 주장하지 않음 |
-
-공식 근거를 2026-10-01 확인했다: [AWS PowerUserAccess](https://docs.aws.amazon.com/aws-managed-policy/latest/reference/PowerUserAccess.html)는 광역 서비스 권한과 일부 Service-linked Role 관리 예외를 포함하므로 “IAM 전체 제외” 주석도 보완한다. [HashiCorp S3 Backend](https://developer.hashicorp.com/terraform/language/backend/s3)는 기본 State Get/Put와 Lock Get/Put/Delete를 구분하고 State DeleteObject는 요구하지 않는다. [AWS S3 Prefix 조건](https://docs.aws.amazon.com/AmazonS3/latest/userguide/amazon-s3-policy-keys.html)은 List/Version 목록 범위를 조건으로 제한한다. [AWS IAM 정책 연결 제어](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_controlling.html)와 [PassRole](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_passrole.html)을 실제 정책/서비스 검토에 연결한다. 위 영향은 Source와 공식 정책 의미의 대조 결과이며 실제 AWS에서 거부/허용을 실행한 관측이 아니다.
-
-PR 본문은 fmt/validate 통과와 personal MFA Plan `9 add/1 change/0 destroy`를 팀 결과로 보고한다. AI가 그 Controller·Plan 보호 원본·Caller/세션을 재실행 확인하지 않았다. PR의 Apply 예정 계정 표기는 실제 수행자와 승인된 bootstrap 책임자를 바꾸는 근거가 아니다. 이유빈의 실행 책임을 유지하며 담당/actual operator/Principal·계정 관리 책임/협업·차용 인계를 04 §2.4대로 기록한다. 해당 권한/Policy 변경 자체의 영향과 현재 main Plan을 리뷰하기 전 실행 READY로 승격하지 않는다.
-
-당시 읽기 검토 이후 PR 코멘트 작성·승인/Merge·Apply는 수행하지 않았다. 이 기록은 현재 후속 검토 요청이나 담당자에게 보내는 지시가 아니다.
-
-## 4 승인 설계→구현 대응표
-
-아래 파일/작업 단위는 승인된 기존 Repo/Root 경계 안에서 구현할 대상으로 정리한 것이다. 이 대응표 자체는 구현 완료 증거가 아니다. 이번 로컬 코드 작성과 검사 결과는 §7에 별도로 기록한다. 세부 파일 분할은 구현 편의이며 Resource/State Owner는 바꾸지 않는다.
-
-| 구현 단위·책임 | 확보된 기준과 지금 가능한 준비 | 실제 입력/증거 Gate |
-|---|---|---|
-| bootstrap·이유빈, 정태훈 입력 연결 | 지정 담당자가 제공하는 Root/정본/정확 버전·Role/Key·현재 실행 결과를 후속 Root 입력으로 연결 | I02 Caller/MFA/STS·보호 State/이전 기록·Lock·실제 Plan. 현 정본에서 최초 migration 반복 금지 |
-| foundation Network·이유빈 | VPC1/3 AZ/Subnet9/NAT3/S3 Endpoint·Route/SG 역할·Hybrid 방향을 선언/변수/검사로 대응. 실제 AZ IDs는 입력으로 분리 | I02 실제 AZ/주소/Host /32/지원·Schema/Lock·Backend/Caller·Plan. SG Binding/경로와 T14/T19 실효 검증 |
-| foundation Data·김상희 작성, 이유빈 통합 | 승인 RDS/Redis/Backup S3·수명/목적 인증·암호화 Backup 경계·제한 입력 정의 | I03 엔진/Schema/CA·Dump/Storage, I02 지원/권한, 실제 Backup/Restore·Failover·Plan/Cost |
-| foundation Registry/CI·최유준 작성, 이유빈 통합 | 지정 FE/BE ECR·Pull/Push 구분·Backup와 CI 주체 분리·Artifact Mapping/Scan 요구 정리 | I04 실제 Agent/Job·정책/권한·Image/Digest/플랫폼·Push/Pull/거부 시험. Worker Pull의 실제 Role 확인 |
-| rosa·정태훈 | Public Classic Multi-AZ·제한 foundation 입력·Cluster/Pool/OIDC/Operator Role 경계·GitOps 최초 인계·삭제/Recreate 순서 | I02 실제 RHCS/ROSA/OCM/Quota/Role/Tool·Plan, I05/06 Secret/정상/비상/초기 인증 회수, I07 Cost Gate |
-| App/base/Overlay·정태훈, 최유준 lab·김상희 Data 리뷰 | 1차 최신 Seed/미반영 변경 요구·실제 Client/Probe/인증 계약·공통/환경 설정과 실제 base lab Case 준비 | I01 Source/Seed/원 Overlay·전체 SHA/Digest·Repo/Branch, I03 TLS/Migration, I05 Secret·삭제 보호. 예제 lab PASS를 실제 base로 승계하지 않음 |
-| CI/Release/Evidence·최유준, 정태훈 리뷰 | 04 §10.3/4 JSON/Run·CSV 검사 계약, PAT Push/PR와 사람 Merge·별도 Reader·실제 수행자/기여 기록 | I04 정책/발급/Binding/Repo Rule·실제 Pipeline, I05 보호 원본 위치·보관/접근·실제 Run. 빈 양식은 실행 결과가 아님 |
-| Hybrid/SG Binding·이유빈 foundation/Host, 정태훈 rosa | foundation의 Gateway EC2/EIP/Route/팀 SG와 Ansible Host 설정을 분리. rosa는 실제 Worker SG→Data SG Binding Rule만 소유하고 Cluster 삭제 전에 해제 | 실제 AMI/인터페이스/Job Host /32·Peer Key 보호 공급·Worker Source SG/공유 범위·Provider Rule Schema. inline Rule 혼용/Owner 중복 금지, T14/IM-03/T19 검증 |
-| Root 제한 입력·이유빈 공급/정태훈 소비 | 비밀값 아닌 Output allowlist·자료형·Account/Region·Source/입력 개정/확인 시각·오래된 입력 차단 계약 | 실제 추출/소비/검사 코드·대상 자원 존재·Tool/Lock/Caller 확인. 전체 State/전체 Output 덤프와 광역 terraform_remote_state를 기본 경로로 사용하지 않음 |
-| Offline Recovery·김상희, 이유빈 Host·정태훈 App·최유준 시간선 | Data와 별도 VM·직접 TLS·새 Redis·사전 Backup/Image/Render/Key·AWS/GitHub/Cloud IDP/ECR/KMS 신규 조회 비의존 Case | I03 실측/독립 사본/DB·I05 Key/Secret/Harbor·도구, 실제 RTO30분/RPO90분·업무/Data. 로컬 DNS/Harbor까지 차단하는 시험으로 확대하지 않음 |
-
-## 5 실제 입력 인계와 첫 실행 순서
-
-04 §10.1의 원래 담당·확인 시점·Blocker·필요 증거·실패 영향을 유지한다. 여기서는 현재 진행 상태와 다음 인계만 갱신한다. 보호 원본/접속정보/Secret 값은 공개 파일에 넣지 않는다.
-
-| 인계 | 현재 확인과 다음 확인 | 직접 막는 실행 |
-|---|---|---|
-| I01 정태훈/최유준 lab | 최신 main 고정 Source와 실제 연결·경로 계약 확인. 최종 검증 Seed·미반영 변경·원 lab Overlay·실제 Branch/권한은 인계 필요 | 원격 이력 이관·실제 Build/base lab. 로컬 초안은 고정 Source 기반으로 준비 |
-| I02 이유빈/정태훈 rosa | PR #12는 담당자가 처리했다는 사용자 설명 접수. 현재 담당 인계의 Controller/도구/Caller/MFA/Role·Backend·foundation Output·Quota 확인 필요 | 실제 Root init/Plan/Apply. 비의존 선언 준비/Source 검토 가능 |
-| I03 김상희/이유빈 | 전용 VM 모델·생성 가능 사용자 확인. Host 실측·DB/CA/GRANT/크기/독립 사본 대기 | VM 생성/Import·TLS·Restore·Data 이전 |
-| I04 최유준/정태훈 | PAT 방식/수명 기준·Repo marker 확인. 실제 정책/권한/Bypass·발급자·Agent/Job/Scan 대기 | 발급·등록·Build/Push/PR·Cloud Pull |
-| I05 범위별 보관자 | 04 배정 유지. 실제 Key/암호문/독립 오프라인 사본·해제·대용량 원본 위치/읽기/복원 대기 | Secret 공급/회수·Offline 예행 |
-| I06 정태훈/이유빈/최유준 lab | 정상/유지 비상/초기 회수 모델 확정. 실제 지원/SSO/권한·기존 Token/세션·demo2 잔존/정리 대기 | 정상 관리 인계·비상 전환·초기 인증 종료 |
-| I07 최유준 집계/네 담당자 | 승인 일정/수량·비용 산식 유지. 실제 가격/Credit/누적/시간/Plan/잔존 대기 | 첫 Full Apply Cost Gate/Window 확정 |
-
-다음 공유 실행의 순서는 해당 입력 확보→검토된 코드/Tool/Root 조합→정본/Caller/Lock 확인→실제 Plan 리뷰→해당 Cost/실행 Gate→지정 Owner 실행→제한 Output/결과 인계다. 첫 Full Apply는 NOT READY다. 정상 Cloud Runtime 기준선 전에 결함/장애 시험을 무리하게 먼저 시작하지 않는다.
-
-## 6 이번 실행 기록과 검증 경계
-
-| 작업 ID | 실제 수행/산출 | 상태와 다음 인계 |
-|---|---|---|
-| ACT05-01 최초 관측 | AI가 지정 네 Repo의 공개 main/Tree·열린 PR·지정 README를 읽어 §3에 고정 SHA/범위를 기록 | 당시 읽기 점검 완료. 최신 관측은 §0.2 |
-| ACT05-02 과거 이력 | Infra PR #12 옛 Head를 읽기 검토함 | 사용자 범위 정정으로 현재 과제 제외. 담당자가 처리했다는 설명 접수. 당시 관측을 현재 미해결 과제로 승계하지 않음 |
-| ACT05-03 착수 당시 | 승인03/04→구현 단위·입력·시험/Cost Gate 대응표 작성 | 당시 준비 기록 완료. 이후 B 로컬 코드 초안은 §7, 최신 팀 Source는 §0.2 |
-| ACT05-04 진입 정리 | 2026-10-02 KST 네 Repo 현행 조회와 §0 팀 전체 진행 방법·역할·검증·증거·비용 종료 연결 | Source 읽기·진행 안내 보강 완료. 팀 Runtime 보고와 AI 관측을 구분하며 외부 변경 없음 |
-| ACT05-05 협업 보완 | 사용자 질문에 따라 협업 사용본/최종본·역할별 첫 작업·직접 기록·인계 확인·공유 실행·동시05 편집과 변경 영향을 연결 | 3회 연쇄 검토/보완 후 추가 보완 0건으로 수렴. 실제 팀 공유/Repo 반영·Runtime 완료는 별도 미확인 |
-| ACT05-06 저장소 공유 준비 | execution/05·읽기 안내·진행표·인계 양식과 evidence/Run 양식을 공유용 변경으로 연결 | PR에서 검토할 문서 반영 범위. main 병합·개인별 접근/기록·실제 팀 도입은 확인 후 갱신 |
-| ACT05-07 발표·현행 인계 연결 | PR #7/Issue #6을 확인해 §0.7 최소 참조를 추가하고 기존 작업/부분 보고·Docs B 권한·남은 입력을 진행표/Issue #8에 연결 | 공식 Test/실제 결과/발표 선별 경계 유지. 공유 반영은 PR #5 Metadata, 개인 접근·입력·Runtime 판정은 별도 |
-| ACT05-08 계정/인계 갱신 | 사용자 계정 매핑·네 사람/네 Repo 권한 16건 확인, Source 재조회, main 기준 링크와 첫 입력 인계 연결 | 계정/Repo 권한 확인 완료. 본인 환경 사용·미반영 Source·실제 입력/공유 실행은 해당 근거로 확인 |
-
-새 입력/실행은 `확인 시각·Source/입력 개정·배정 Owner·actual operator·관측 Principal 논리 참조·Reviewer·결과/제한·Evidence·Blocker·다음 인계`를 남긴다. 실패 Run을 보존하고 후속 Run을 연결하며 코드/조건 변경의 영향 시험을 다시 확인한다.
-
-현재 가능한 검증은 문서/Source 범위다. AWS/controller/Host/DB/Cluster 접속, Terraform init/validate/plan/apply/destroy, 실제 Build/Pipeline/PR Push, VM 생성·Backup/Restore·Token 발급/회수는 AI가 실행하지 않았다. 실습 팀 보고와 미커밋 자료는 제공된 범위를 넘겨 PASS 처리하지 않는다.
-
-## 7 등록 완료 후 재개한 구현 작업
-
-### 7.1 이번 Source 확인
-
-2026-10-01 KST 재개 작업에서 아래 main Commit과 recursive Tree를 읽었다. Tree는 모두 truncated=false였다. App/GitOps 중 이번 수정에 필요한 파일만 고정 Commit으로 읽었다. 최신 main이라는 사실만으로 검증 완료 Seed라고 채택하지 않는다. 실제 이관 직전의 검증 근거·미반영 Maintenance 확인은 남아 있다.
-
-| 대상 | 이번 고정 Source | 확인 범위 |
-|---|---|---|
-| 1차 App | `a75867b7b579de08b14fe93f80b1a7b05cc85890` | 최신 Tree, 설정·DB/Redis Client·Production 구성·HTTP/WS·Health·Image 실행 자산 |
-| 1차 GitOps | `8a7ccdbeab24f67978dff8c0763cc8175a86e9a2` | 최신 Tree, FE/BE 배포·Service·PDB·Config·Migration·기존 진입 경로 |
-| 2차 App | `6902f3a184b4f1f07ade782536335a88d72612fc` | main은 README/.gitignore. 이 시점 main의 실제 App 이관은 확인되지 않음 |
-| 2차 GitOps | `523e9206dd6398adc6776855573890063b837a85` | main은 README/.gitignore. 이 시점 main의 base/Overlay는 확인되지 않음 |
-
-개인 작업 사본·미커밋 Overlay·다른 Branch가 없다는 주장은 하지 않는다. 다른 담당자의 Infra PR는 이번 재개 조회 대상에 포함하지 않았다.
-
-### 7.2 Source에서 확인한 실제 연결 계약
-
-| 확인한 부분 | 실제 Source 계약과 구현 영향 |
-|---|---|
-| FE와 브라우저 | FE Port 8080, `/health/live`. HTTP는 같은 Origin 상대 경로를 사용해 외부 API 주소를 Build에 넣는 변경은 현재 확인 범위에서 필요하지 않음 |
-| HTTP와 WSS | HTTP `/api/v1`, WebSocket `/ws/v1` 아래. FE/API/WS는 승인된 같은 Host Route에 연결. API/WS 오류가 FE HTML로 처리되지 않는지 실습에서 확인 |
-| BE 시작과 상태 | Port 8000, `/health/startup`, `/health/live`, `/health/ready`; `SEOKPAN_ENVIRONMENT=production`과 Pod별 `SEOKPAN_INSTANCE_ID` 유지 |
-| DB | `mysql+asyncmy` Driver, Runtime identity/game 계정과 Migration 계정 분리, CA·인증서 Host 검증 유지. 기존 고정 Host만 허용하므로 Cloud/Recovery 대상 검사 수정 필요 |
-| Redis | 기존 Client가 기존 서비스의 평문·무인증 URL만 허용. Cloud TLS+AUTH를 위해 Endpoint 검사·CA·인증 계약 수정 필요. URL 비밀값은 Secret 참조 |
-| OpenShift 배포 | 기존 Manifest의 고정 UID/GID·기존 Pull 참조·Replica2·강제 Host 분산을 그대로 이전하지 않음. 승인된 Cloud/Recovery 차이를 배포 초안에 반영 |
-| Cloud 배치 | FE/BE 각 3, PDB minAvailable2, Rolling maxUnavailable0/maxSurge1, AZ soft spread. Requests/Limits·종료 중 Pod 포함 Pool 합계는 실측 인계 필요 |
-
-### 7.3 이번 코드와 검증 결과
-
-로컬 구현 초안과 검사 결과는 이 절에 누적한다. 실제 Seed 이력 이관·저장소 Push·Build/Scan·Cluster 배포·AWS 실행이 완료됐다는 의미가 아니다.
-
-| 이번 산출물 | 완료한 범위 | 확인되지 않은 범위 |
-|---|---|---|
-| App 수정 초안 | 고정 Source 기준 7개 Python Source와 Helper 시험, FE Nginx 경로 수정. 기본 legacy 보존과 명시적 hybrid 대상/TLS·인증 연결 | 실제 Seed 이력 이관, 전체 기존 테스트·Driver/서버·TLS handshake, Image Build/Scan |
-| GitOps 첫 초안 | 공통 Base·Cloud/Recovery·Argo/Kustomize 미완성 템플릿, 비밀값 없는 입력·Manifest 계약 검사 프로토타입 | 실제 값으로 채운 Kustomize Resource/Patch와 Build, Platform/RBAC/NetworkPolicy/UWM 전체, 실제 Sync/배포 |
-| Release 후보 | 승인된 후보 JSON과 필수 Commit/Digest·개정/검토 검사 코드 | 실제 Release/Run 조합과 CI 연결. 후보를 실제 배포/Acceptance 기록으로 사용하지 않음 |
-| 로컬 시험 | 신규 App Helper 12건, 합성 Manifest 계약 6건, Release 후보 검사 6건: 총 24건 PASS·0 skip. Python 컴파일 PASS | Python 3.12.14에서 실행. Source의 Runtime 3.13.15/전체 Lock 조합 시험과 mypy/ruff/pytest는 미실행 |
-| Patch | 변경 9개 파일의 Patch를 고정 원문 사본에 `git apply --check` 후 적용하고 결과 바이트 일치 확인 | 실제 대상 저장소의 이력/Branch/권한·현재 다른 작업과 충돌 확인, 원격 반영 |
-| 미확인 입력 차단 | null Cloud/Recovery 입력은 Exit 2로 출력 차단, 빈 Release는 INCOMPLETE | Endpoint/Secret/CA/Image 실제 존재·권한/통신·검토된 Release를 검사한 결과가 아님 |
-| 기준 문서 보존 | 이번 첨부 00~04·지침의 SHA-256 불변 확인 | 지침 개정이나 새 구조 선택이 필요하다고 판단한 사항 없음 |
-
-App의 Hybrid DB Runtime/Migration 경로와 Redis에는 공급 CA·Hostname/인증서 검증을 연결했다. Redis 연결 구현은 고정 redis-py 8.1.0의 공식 Source와 대조했고 실제 라이브러리 생성·연결·종료 검증은 남아 있다. FE 오류 경로의 Nginx 설정/실행 검사는 미실행이다. DB/Redis 장애 중 readiness, 다중 Pod 업무·재접속·중복 처리와 Pool/자원 실측도 별도 통합 시험이다.
-
-승인된 배포 Renderer는 **Kustomize**다. Python 도구는 입력·Manifest 계약 확인용 로컬 프로토타입이며 새 CD Renderer/Argo Plugin으로 채택하지 않았다. Kustomize Build나 완성 Overlay를 이번 결과로 주장하지 않는다. `.yaml.in`과 null 입력은 배포 가능한 완성 Manifest가 아니다.
-
-앞선 B 작업은 별도로 제공한 `05_B_FIRST_IMPLEMENTATION_DRAFT.zip`에 코드 초안·Patch·출처/검사 기록으로 묶었다. 이 ZIP과 실제 App/GitOps 이관은 이번 Docs 공유 PR에 포함되지 않는다. 05는 진행본이며 최종 설계 Source 재등록이나 지금 다운로드를 요구하지 않는다. 원격 Git 변경, 계정/Host/Cluster 변경, Terraform 실행, VM 생성, Backup/Restore, Token 발급/회수, Cloud/Recovery 최종 시험은 실행하지 않았다.
-
-검토에서는 승인된 Rolling 값·Kustomize 경계·Pod Instance ID를 대조하고, DB/Redis의 Hybrid TLS 연결과 기록의 검증 범위를 정합화했다. 과거 PR #12 읽기 지시가 현재 과제로 남지 않도록 수정했고, 그 정정 뒤 현재 작업·책임·입력·검증 상태를 다시 확인했다.
-
-
-### 7.4 바로 다음 실행에 필요한 입력
-
-| 다음 작업 | 필요한 입력 | 담당과 완료 증거 |
-|---|---|---|
-| App 실제 이관과 코드 반영 | 최신 검증 Seed와 미반영 변경, 대상 Branch·기존 초기 이력의 결합·권한 | 정태훈. 원본 Seed까지 이력 보존과 2차 변경 Commit |
-| 실제 base 실습 | 팀원의 원 lab Overlay/Commit·수행자, Build/Scan 결과와 FE/BE Digest, 대상 Namespace/Context·Secret 공급 | 정태훈 통합, 최유준 실습, 김상희 Data 리뷰. 실제 Image/Render와 실습 결과 |
-| ROSA Root 작성·Plan | 최신 foundation 제한 Output, 실행 Controller·정확 도구/Lock·ROSA 지원/Quota·Role/Backend | 정태훈, 이유빈 인계. 실제 Schema/정적 확인·Plan 리뷰 |
-| Cloud 생성 | 실제 Plan·가격/Credit/누적·Window·정리/재시험 비용 | 각 실행 담당, 최유준 비용 집계. $450 계획선/$500 한도 확인 |
-
-필요 자료는 비밀값 대신 Commit·비민감 설정·논리 참조와 결과로 인계한다. 서로 독립적인 코드 준비는 병행하며, 위 입력이 없는 실제 연결·배포·유료 가동을 완료로 표시하지 않는다.
-
-<a id="supplement-20261002"></a>
-
-## 8 2026-10-02 추가 자료 수용과 현재 작업 연결
-
-### 8.1 처리 기준과 자료별 판정
-
-이 절은 사용자가 2026-10-02 제공한 참고 자료에서 실행에 필요한 사실·권한 계약·제약만 추출한 기록이다. 자료 분류는 개정 프로젝트 지침 §29를 따른다. 승인03·04와 공식 Test/Acceptance는 유지한다. 작성자가 보고한 Runtime 관측, AI가 읽은 Source, 구현 권장안, 아직 실행하지 않은 검증을 구분한다. 자료 원문을 새 Project Source나 최종 Run으로 일괄 등록하지 않는다.
-
-| 제공 자료 | 분류·수용 내용 | 제외하거나 제한하는 내용 |
-| --- | --- | --- |
-| 사용자 제공 세 계정의 `SHOW GRANTS` 출력 | OBSERVED EVIDENCE / PROVIDED CONDITION. §8.2의 비민감 계정·DB·테이블·컬럼 권한 계약으로 I03에 부분 접수 | 비밀번호 해시는 저장·재인용하지 않음. 원본 서버·조회 시각·RDS 검증 결과가 자동 확정되지 않음 |
-| 김상희, `RDS_SSL_권한_검토.md`, 2026-10-02 | TEAM DRAFT. TLS 서버 통제와 클라이언트 검증의 구분, Migration 목적별 권한, 실제 Engine/Parameter Group·CA 확인을 §8.3에 연결 | 예제 Engine `mariadb11.8`·Host `%`·SQL을 확정 구현으로 채택하지 않음. 전역 권한의 역사적 추가 사유와 모든 버전에서의 부여 가능 여부는 미확인. 기존 CloudWatch/Native/UWM 기준을 다시 선택할 과제로 만들지 않음 |
-| 최유준, `OCP실습_ROSA이전_검토.docx`, 2026-10-02 | TEAM DRAFT. [GitOps #6](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6)·[#7](https://github.com/seokpan/seokpan-hybrid-gitops/issues/7)의 관측과 App/base/CI 수정 의존성을 §8.4에 연결 | lab 우회·예제 설정을 Cloud 설정이나 전체 SCC/UWM 보장으로 승계하지 않음. 1 Replica의 업무 확인을 Multi-Pod·Failover·부하·RDS DDL PASS로 확대하지 않음 |
-| `OCP 실습 서버(demo2) 2차 사전 검증 작업 보고 - 2026 10 01 (2).md` | 기존 제공 보고와 바이트 동일한 중복. 기존04 §8.5와 GitOps #1~4 원본 참조 유지 | 새 Run·새 실적·추가 Project Source로 중복 등록하지 않음. 후속 상태는 새 Issue #5~7로 확인 |
-| 김상희, `vpn-report.zip`, 2026-09-29 기록 | OBSERVED EVIDENCE와 TEAM DRAFT가 혼재. README·시험 절차·도식에서 WireGuard PoC 관측과 한계만 §8.5에 추출 | 구 On-Prem 정상 DB/Harbor 의존·복제안, Gateway 선택 초안, 예제 주소/규칙/크기, 일괄 중지·영구 EIP 보존 가정 등은 승인03·04와 충돌하거나 대체돼 구현 기준에서 제외. 도식·절차 전체를 Evidence에 복사하지 않음 |
-
-제외는 이 문서의 기준·작업·공개 증거로 채택하지 않는다는 뜻이다. 제공 원본을 물리 삭제한 기록이 아니다. 보호 접속정보·Key·Credential·비밀번호 해시는 Docs/Evidence에 옮기지 않는다. 새 최종 Run은 실제 Source/전체 Digest/환경/측정 조건·원본 참조를 갖춘 뒤 `evidence/<test-id>/<run-id>/`에 기록한다. 이번 자료 접수 자체는 Test PASS가 아니다.
-
-### 8.2 비민감 DB 권한 계약과 I03 부분 접수
-
-아래는 사용자 제공 GRANT의 권한 범위를 추출한 것이다. 세 계정의 원본 Host 패턴은 `%`였으며 이는 관측값이다. 실제 Cloud/Recovery Host 조건·SG·Secret 공급을 대체하지 않는다. `USAGE`는 데이터나 관리 권한 부여를 뜻하지 않는다.
-
-| 계정 | 관측 대상 | 관측 권한 | 2차에서 확인할 목적 |
-| --- | --- | --- | --- |
-| `db_admin` | `*.*` | `BINLOG MONITOR`, `SLAVE MONITOR` | 1차 관측으로만 보존. RDS Migration에 무조건 복사하지 않음 |
-| `db_admin` | `stone_game.*` | SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, REFERENCES, INDEX, ALTER, CREATE VIEW | 별도 Migration 실행과 실제 변경 DDL에 필요한 범위 대조 |
-| `identity_svc` | `stone_game.member` | SELECT, INSERT, UPDATE, DELETE | 회원·인증 Runtime의 허용/거부 범위 |
-| `game_svc` | `stone_game.game`, `game_result`, `game_participant`, `member_stats`, `move`, `rating_history` | 각 테이블 SELECT, INSERT, UPDATE, DELETE | 게임 Runtime의 허용/거부 범위 |
-| `game_svc` | `stone_game.member` | SELECT(`nickname`, `member_id`, `rating`), UPDATE(`rating`) | 허용 컬럼 유지와 로그인 등 다른 컬럼 접근 거부 |
-
-사용자 출력에는 계정별 `REQUIRE SSL`이 표시되지 않았다. 이것을 TLS 미사용으로 판정하지 않는다. 1차 Proxy TLS와 실습 DB 직접 TLS는 다른 경로다. [GitOps #7 실행 보고](https://github.com/seokpan/seokpan-hybrid-gitops/issues/7#issuecomment-5944080811)는 실습 MariaDB 10.5.29의 `REQUIRE SSL`을 유지한 채 C가 제공한 권한으로 교체하고 D가 재검증했다고 보고한다. B의 [검토](https://github.com/seokpan/seokpan-hybrid-gitops/issues/7#issuecomment-5945336163)와 [종료 기록](https://github.com/seokpan/seokpan-hybrid-gitops/issues/7#issuecomment-5945477442)을 연결하며 Issue #7은 종료됐다.
-
-보고의 완료 범위는 GRANT 대조·허용 질의·다른 테이블/컬럼/DB 접근 거부·backend Ready·게임 완료/Rating 저장·관련 오류 30분 관측이다. Migration은 `current`로 이미 적용된 `20260902_0002`를 조회했으므로 **새 DDL 실행 권한을 시험한 결과가 아니다**. 실습 DB 재시작이나 계정 재생성을 요구하는 후속 작업을 이 자료 처리로 만들지 않는다.
-
-I03은 비민감 GRANT 입력과 해당 lab 보고가 부분 접수됐다. 실제 Recovery Host/용량·격리 Storage·Schema/Dump/Import 공간·Cloud Engine/CA·Backup/Restore 목적 계정·독립 사본과 수신 확인은 남아 있다. 세 계정의 GRANT만으로 Backup·Restore 권한까지 완료됐다고 표시하지 않는다.
-
-### 8.3 RDS TLS·목적별 권한의 구현 인계
-
-김상희가 Data 계약을 작성하고 이유빈이 foundation에 통합하며, 정태훈은 App/Migration Client와 GitOps 공급 계약을 맞춘다. 다음은 승인 TLS·최소권한 기준을 구현하는 권장안과 확인 항목이다. 실제 RDS에 적용하거나 성공을 확인한 기록이 아니다.
-
-- 실제 서울 지원 Engine/버전과 Parameter Group family를 먼저 확인한다. AWS 문서상 MariaDB 10.5 이상은 `require_secure_transport`를 지원하며 기본값은 11.4 이하 OFF, 11.8 이상 ON이다. 지원 Engine에서 ON을 명시하는 서버 통제와 계정별 `REQUIRE SSL`을 함께 검토한다. RDS Parameter Group은 Recovery DB에 자동 이관되지 않으므로 그 서버/계정의 TLS 통제도 별도로 확인한다.
-- 서버의 평문 접속 거부와 Client의 CA·Hostname 검증은 각각 확인한다. App·Migration·Data VM의 DB/Dump 도구에 실제 대상의 CA와 검증 설정을 공급하고 정상 연결, 평문 거부, 잘못된 CA·Hostname 거부를 기록한다. `Ssl_cipher` 확인만으로 Hostname 검증까지 PASS로 표시하지 않는다. 오류1045만으로 TLS 문제를 단정하지 않는다.
-- RDS의 Migration 계정에는 실제 Schema 변경에 필요한 권한만 둔다. 1차 `*.*` 모니터 권한은 복사 기본값에서 제외하는 권장안이다. 읽은 1차 `migration_gate.py`에는 binlog/복제 상태 조회가 없으며 RDS Multi-AZ라는 이유만으로 App Migration에 전역 모니터 권한을 추가하지 않는다. 실제 요구가 발견되면 그 목적과 실행 계정을 별도로 대조한다.
-- AWS master 공식 권한 목록에는 `REPLICATION CLIENT`가 있고 `SLAVE MONITOR`는 명시돼 있지 않다. 이 목록만으로 모든 버전의 부여 성공/실패를 확정하지 않는다. 실제 Engine의 비민감 master GRANT·필요 권한 지원을 확인한다. 쓰지 않을 권한의 과거 추가 사유 조사나 시험을 정상 App 구현의 필수 선행 Gate로 두지 않는다.
-- Runtime의 테이블·컬럼 경계를 유지하되 실제 Schema와 계정 생성 순서·Host 조건을 검토한다. 격리 DB에서 초기/변경 Migration을 실제로 실행해 필요한 DDL과 Runtime의 DDL/비허용 데이터 거부를 확인한다. 운영·1차 DB에 권한 시험용 DDL을 실행하지 않는다.
-
-공식 근거: [AWS MariaDB TLS 강제](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/mariadb-ssl-connections.require-ssl.html), [AWS master 권한](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.MasterAccounts.html), [AWS CA 공급/검증](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/ssl-certificate-rotation-mariadb.html), [MariaDB GRANT](https://mariadb.com/docs/server/reference/sql-statements/account-management-sql-statements/grant). 예제 SQL/HCL을 실행 완료로 복사하지 않으며 새로운 Test Plan을 만들지 않는다.
-
-### 8.4 OCP 후속 Issue와 실제 Source 의존성
-
-현재 [Hybrid App #1](https://github.com/seokpan/seokpan-hybrid-app/issues/1)은 열려 있고 B·D가 배정돼 있다. 이는 [GitOps #6 재현](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6#issuecomment-5944604370)의 접속 대상 검사 블로커에 대응한다. DB/Redis URL은 이미 환경변수로 받지만 읽은 1차 main `a75867b7b579de08b14fe93f80b1a7b05cc85890`의 DB 검사는 고정 Host/Port/DB만 허용하고 Migration도 이를 재사용한다. Redis 검사는 고정 평문·무인증 대상만 허용한다. **URL 환경변수 추가만으로 해결되는 문제가 아니다.** 이 SHA는 관측 Source이며 최신 검증 Seed 수락을 대신하지 않는다. 실습 이미지의 단축 Commit `6fb8b75`도 전체 SHA/Digest 인계가 필요하다.
-
-| 현재 연결 작업 | 완료/대기 범위 | 다음 행동과 인계 |
-| --- | --- | --- |
-| B App #1 / C DB·TLS 리뷰 / D Build | Issue 접수, 실제 2차 코드·Build는 이번 관측에서 미확인 | 검증 Seed·미반영 변경 확인 → 이력 보존 이관 → 환경별 정확한 허용 대상과 Redis TLS·별도 AUTH Secret·CA 검증 구현 → 단위/Build 검증 |
-| D GitOps #6 | 고정 대상 블로커 재현 보고 접수, 수정 이미지 후속은 대기 | 전체 Commit/Digest와 원 Manifest를 고정하고 `hostAliases` 없이 대상 Service DNS·CA/Hostname·Ready·Migration/대표 업무를 재검증. 대역 TLS Redis 시험도 실제 ElastiCache 판정과 구분 |
-| B base/Overlay → D [GitOps #5](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5) | 실제 hybrid base Branch/PR 인계 대기 | 완성 Kustomize Build와 환경별 Registry/Secret·SCC·Probe·Resource·Replica/PDB/AZ 계약을 인계하고 실제 base의 Argo Sync/Health·정리를 검증 |
-| C Data / A foundation / D CI·Harness | 서로 독립적인 준비는 병행 | Engine/CA/Schema/Backup·Host, Network/제한 Output, CI/Registry·측정 정의 준비. 최종 공유 실행은 각각 해당 입력·리뷰·비용 Gate 준수 |
-
-`runAsUser` 제거의 해당 lab SCC 통과, 해당 UWM의 ServiceMonitor/Label 관측은 유용한 참고다. 모든 환경에서 같은 삭제만으로 성공한다고 일반화하지 않는다. 실제 Operator·Namespace Selector와 승인 Security Context를 대조한다. CA SAN과 선택한 DNS 이름도 맞춰야 한다. lab 인증서의 보고된 만료일은 2026-10-31이며, 이를 Cloud CA나 장기 Recovery 신뢰 재료로 승계하지 않는다.
-
-ROSA 진입은 05 §0.5와 [팀 작업 안내](TEAM_WORK_AND_HANDOFF_GUIDE.md)의 환경 전환 Gate를 따른다. 이번 lab 결과는 Multi-Pod WS/세션·재접속·중복 처리, RDS/Redis Failover, ECR 최초/장시간 후/재생성 Pull, 목표 부하·지연, 실제 새 DDL을 보장하지 않는다. 준비 작업과 비용 확인은 병행하지만 이 한계를 최종 Acceptance에서 생략하지 않는다.
-
-### 8.5 WireGuard PoC 기록의 활용과 배제
-
-ZIP의 2026-09-29 기록은 승인00 §30.1/03 §3-B의 기존 PoC를 설명하는 근거로만 접수한다. 기존 vRouter 한 대와 임시 Default VPC EC2의 실측은 최종 전용 Gateway·프로젝트 VPC·ROSA/RDS 구성의 시험과 다르다.
-
-| 보고된 관측 | 사용할 수 있는 범위와 한계 |
-| --- | --- |
-| Outbound WireGuard handshake·양방향 Ping/TCP3306·한 경로의 원본 IP 보존 | 해당 PoC 경로 성립. TCP3306 통과는 DB 인증·TLS·이관·복제·Restore 성공이 아님 |
-| 네 vRouter의 UDP51820 통과, 한 Gateway에서 네 Source Port 전환 시 249 Ping 중 누락0, 한 번의 출구 IP 변경 시 누락0 | 해당 조건의 포트/로밍 관측. 네 Gateway의 전체 WireGuard·장애 복구·모든 출구 변화 검증으로 확대하지 않음 |
-| 약1시간50분/~6400 Ping 누락0, TCP Idle 50분24초 유지 | 제공된 관측 시간/연결만 사용. 영구 안정성이나 모든 NAT Idle 정책 보장 아님 |
-| 터널 MTU1420 설정에서1420 통과·1421 로컬 거부 | 해당 설정 검증. 최종 경로 최대 MTU나 MSS/ROSA 패킷 시험을 대체하지 않음 |
-| 15초 iperf receiver: 업443Mbps·다운388Mbps | 절차 원시 출력 기준. README 요약의 다운389Mbps와 차이는 SOURCE CONFLICT로 남김. 반올림 원인이나 최종 처리량/용량을 추정하지 않음 |
-| 임시 EC2·SG·Key Pair 정리 보고 | 그 자원의 정리 보고. 일부 목록의 빈 출력은 AWS 전체 자원/잔존 비용0 증거가 아님 |
-
-구 정상 서비스의 On-Prem DB/Harbor 의존, MariaDB 복제안, 기존 Router와 전용 VM 사이의 미결정 비교, 폭넓은 Forward/주소 예제는 재채택하지 않는다. 승인된 Cloud Primary·RDS/Redis·ECR, 새 전용 On-Prem Gateway·최소 Host `/32`/왕복 Route/NAT 예외, SOPS+age와 A/B Window·자원 삭제/보존 기준을 유지한다. 최종 MTU/MSS·허용/거부 경로·Gateway 복구·VPN 중단 시 Cloud 정상 비의존은 A/B/D의 실제 실행으로 검증한다. 이 자료에서 새 비용·고정 IP·Instance 크기를 확정하지 않는다.
-
-### 8.6 최신 진행표와 검토 결과
-
-2026-10-02 후속 Source/Issue 확인은 [진행표](WORK_TRACKER.md#current-observation)에 기록한다. Infra [PR #14](https://github.com/seokpan/seokpan-hybrid-infra/pull/14)는 새 유효 모드의 세션 발급 전 이전 세션 해제와 실패 시 Caller 표시를 반영했고 [PR #15](https://github.com/seokpan/seokpan-hybrid-infra/pull/15)는 MFA/처음 설정/실행자 안내를 보완해 병합됐다. 인자 오타는 이전 세션을 유지하므로 모든 실패가 같은 동작이라고 요약하지 않는다. 이 Source 수정을 전원 실제 세션·Caller/Backend/Provider 일치나 오류 시 Plan/Apply 차단 완료로 확대하지 않는다. A/B의 실제 실행 확인은 I02에 남긴다. Bootstrap 재구축이나 State 이전 반복은 요구하지 않는다.
+| 정상 HTTP/WS | 대표 HTTP 업무 p95 ≤1초, Client가 업무 결과를 …19809 tokens truncated…urrent-observation)에 기록한다. Infra [PR #14](https://github.com/seokpan/seokpan-hybrid-infra/pull/14)는 새 유효 모드의 세션 발급 전 이전 세션 해제와 실패 시 Caller 표시를 반영했고 [PR #15](https://github.com/seokpan/seokpan-hybrid-infra/pull/15)는 MFA/처음 설정/실행자 안내를 보완해 병합됐다. 인자 오타는 이전 세션을 유지하므로 모든 실패가 같은 동작이라고 요약하지 않는다. 이 Source 수정을 전원 실제 세션·Caller/Backend/Provider 일치나 오류 시 Plan/Apply 차단 완료로 확대하지 않는다. A/B의 실제 실행 확인은 I02에 남긴다. Bootstrap 재구축이나 State 이전 반복은 요구하지 않는다.
 
 검토에서는 자료→승인03/04→계정/TLS/Client→Source/Build→base lab→ROSA→Evidence/발표→비용/정리의 영향을 대조했다. 중복 보고의 새 Run 오인, lab 권한 교체 재요구, 미시험 DDL의 PASS 오인, 예제 Engine/Host 고정, 전역 모니터 권한 복사, 전체팀 직렬 대기, 최신 Infra 수정 누락을 보완하고 그 영향을 다시 대조했다. 이번 문서 반영 범위에서 추가 보완은 없다. 실제 Runtime/Acceptance가 완료됐다는 뜻은 아니다.
 
@@ -896,6 +398,49 @@ CI #2는 B 최신 리뷰·D 수락의 A~F 구현 방향을 유지한다. 다만 
 - [ ] 격리 DB·Backup/새 Redis·접속·Offline Bundle 수신/실제 Run
 - [ ] 실제 시간/손실/최신성/팀 부담 판단·필요 변경·최종 Acceptance·발표/정리
 
+<a id="tjung03-registration-rosa-input-20261002"></a>
+
+### 9.11 정태훈 전체 작업 등록과 ROSA 입력 준비
+
+사용자의 연결 구조 확정·등록·후속 독립 준비 지시에 따라 전체 관리 Issue 1개와 별도 완료 조건을 가진 실행 Issue 3개를 등록했다. 등록 결과 기록 시각은 `2026-10-02T11:53:47.771Z` / `2026-10-02T20:53:47.771+09:00`이다. **기존 개인계획 TH-01~19·81개 세부 식별자를 유지**하고 실제 결과는 원래 작업 Issue·PR·Run에 남긴다. 개인 계획·승인03/04·지침을 새 설계로 대체하거나 공식 T01~T23·목표/Freeze/예산을 바꾸는 작업이 아니다.
+
+| 실제 기록 위치 | 담당 범위와 기존 연결 |
+| --- | --- |
+| [Docs #21 상위](https://github.com/seokpan/seokpan-hybrid-docs/issues/21) | 전체 TH·완료 기준·현재/다음/Blocker·학습/발표·최종 종료의 원본 링크. 팀원 상세 결과를 대필하거나 모든 TH 완료로 표시하지 않음 |
+| [App #4 실행](https://github.com/seokpan/seokpan-hybrid-app/issues/4) | TH-02·06·07·14의 이력 보존 이관·사용자 경로/생명주기·검사/Release 인계·다중 Pod 안전. 기존 [App #1](https://github.com/seokpan/seokpan-hybrid-app/issues/1) Client/시간대·[App #2](https://github.com/seokpan/seokpan-hybrid-app/issues/2) CI·D [GitOps #6](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6) 검증 유지 |
+| [GitOps #10 실행](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10) | TH-08·09·15의 base/lab·Cloud/Recovery 선언·App 복구 인계. [Draft PR #9](https://github.com/seokpan/seokpan-hybrid-gitops/pull/9) 후속 작성과 D의 [#5](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5)·[#6](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6) 실제 검증을 구분 |
+| [Infra #25 실행](https://github.com/seokpan/seokpan-hybrid-infra/issues/25) | TH-10~13·16·19의 ROSA 입력/Root·관리/Secret·Plan/Cost·통합·재생성·최종 보존/정리. A [#23](https://github.com/seokpan/seokpan-hybrid-infra/issues/23)·D [#18](https://github.com/seokpan/seokpan-hybrid-infra/issues/18)·C [#19](https://github.com/seokpan/seokpan-hybrid-infra/issues/19)의 Owner/인계는 유지 |
+
+#### Source와 실제 접수 범위
+
+네 Repo Source 조회 기준은 `2026-10-02T11:39:14.141Z` / `2026-10-02T20:39:14.141+09:00`이고, 이후 새 Infra PR #24 HEAD와 등록 객체를 추가 연결했다. Docs 기록 기반은 열려 있는 [PR #20](https://github.com/seokpan/seokpan-hybrid-docs/pull/20) HEAD `006d374b08d8c19fa1f047c8658a9c479dfe64f4`다. main 병합·실제 Runtime 재실행을 뜻하지 않으며, 모든 객체가 같은 순간에 조회된 Snapshot도 아니다. 과거 관측·다른 담당자의 행·§9.9/9.10은 그대로 보존한다.
+
+- **I01:** §9.10의 고정 Seed와 App 최종 `8828ed22295c27c6f3b419e762b865d17eb50b8c`·77개 이력 Bundle/로컬 검사 보고, [B 원 lab 참고 범위 수신](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5#issuecomment-5950971514), GitOps PR #9 HEAD `f1e959d2f3ec5207cc42f0523cbd391930b247d7`의 Kustomize 후보를 연결했다. App 인증 Push/PR·개인 미반영 코드 대조, D 새 Build/Scan/Registry별 Digest·실제 lab, C/D 새로운 대상/CA/AUTH·Recovery Bundle 수신은 별도다. PR #9의 입력 대기·replicas0를 실행 준비 완료로 바꾸지 않는다.
+- **I02:** [A의 #23 답변](https://github.com/seokpan/seokpan-hybrid-infra/issues/23#issuecomment-5951505800)을 Source로 접수했다. A는 공통 Backend/Provider/변수/출력·foundation 전체 통합/Plan/Apply, D는 Registry/CI 전용 파일을 같은 Root에 작성한다. 네 사람 personal/Bootstrap 완료 보고는 보존하며 rosa 서비스 Role 권한·실제 입력/지원·Plan 증거로 확대하지 않는다. 필요한 제한 출력의 실제 개정·공급/수신 합의와 A 리뷰는 대기한다.
+- **I04:** [B CI A~F 리뷰](https://github.com/seokpan/seokpan-hybrid-app/issues/2#issuecomment-5950294428)·[D 방향 수신](https://github.com/seokpan/seokpan-hybrid-app/issues/2#issuecomment-5950470901)은 완료한 범위로 유지한다. [후속 정합 기록](https://github.com/seokpan/seokpan-hybrid-app/issues/2#issuecomment-5951015819)과 새 Infra PR #24의 코드/설명 차이는 사용할 개정의 준비 수신 조건이다. 실제 Job/PAT 정책·재현 등록·Push/Scan/Preview/Pull·A 통합 Plan을 완료로 표기하지 않는다.
+
+#### ROSA 독립 문서 준비와 실제 Gate
+
+[ROSA 문서 준비 PR #27](https://github.com/seokpan/seokpan-hybrid-infra/pull/27), Commit `cfcf10d8c64a1eac6bdd4ade335569c2d7d00a55`는 `terraform/rosa/README.md`·`INPUT_CONTRACT.md` 두 문서를 준비한다. Public Classic Multi-AZ, 정본 Key `phase2/rosa/terraform.tfstate`, 설치 Subnet Public3+ROSA Private3, 제한된 출력의 필드 의미·Account/Region·출처/개정/실재 자원 대조·오류 차단·A 리뷰·T19·최종 보존/정리 조건을 연결한다. 정확한 공급 필드명/형태·소비 HCL Schema·실제 수신 개정은 **후속 HCL 수신계약**으로 대조한다. HCL/Root Lock·Cloud 객체·Role 정책·Secret·Plan/Apply를 구현/실행한 PR이나 전체 TH-10 완료가 아니다. PR의 준비 Commit 게시와 리뷰·병합·A의 수신 결과는 각각 구분한다.
+
+Data SG 본체/기반 Rule은 foundation, Worker→Data의 종속 Binding은 rosa, ECR Worker Pull Policy/실제 Classic Worker Role Attachment는 foundation Owner를 유지한다. [A #23](https://github.com/seokpan/seokpan-hybrid-infra/issues/23#issuecomment-5951505800)과 새 PR #24 모두 Worker Pull을 미완료로 남겼다. 실제 Role/공유 범위·지원 연결과 서비스/기반 조회 권한은 A/B 후속 PR·검증으로 확인한다. Bootstrap의 Backend 권한 또는 ECR/CI 권한 Apply 보고를 ROSA 서비스/Runtime Pull 성공으로 바꾸지 않는다.
+
+실제 Plan은 해당 Root Code/Lock·입력·Caller/MFA/목적 Role·Backend/Lock·지원/Quota·보호 Plan 경로를 확인한 뒤 수행한다. Apply는 Root 전체 실제 Plan/A 리뷰, 최신 기반 인계·Secret/Pull·Cost/Window·단일 지정 실행자를 확인한다. 전체 누적+잔여 기반/Data+ROSA Window+전송/관측+재시험/정리 지연 비용에서 **$450 계획선 초과 시 신규 가동 보류·조정, $500 전체 한도**를 유지한다. 실제 단가/시간/입력 없이 Cost PASS·Window 개시를 확정하지 않는다.
+
+T19는 삭제 전 기존 Binding의 foundation 재실행 중 유지, Binding 해제 뒤 기반 Rule/Data/Network와 bootstrap Backend 보존, 새 Worker SG·Host/Context 연결·양쪽 정상 Plan·GitOps/Secret/Pull/업무 재현을 구분해 검증한다. 최종 삭제는 T19와 별도이며 App 쓰기/진행 상태·최신 로컬 Backup·Image/Render/도구/독립 사본/복호화 수단 접근·복원 가능성을 확인한다. 기본 Destroy는 rosa, foundation/bootstrap 전체 Destroy는 별도 명시적 승인 조건을 유지한다. 실제 삭제·잔존/후속 비용·보관 책임과 불필요 인증 폐기/보존 Key 유지는 해당 Owner의 결과로 기록한다.
+
+#### 새 Registry/CI PR의 수신 조건
+
+[Infra PR #24](https://github.com/seokpan/seokpan-hybrid-infra/pull/24) HEAD `33432eecc6cae81f7725c9d39f8a7730ca9ce815`는 담당 4파일 Source 제출이며 미승인·실제 통합 Plan/Apply 전이다. [B의 후속 리뷰](https://github.com/seokpan/seokpan-hybrid-infra/pull/24#issuecomment-5951869578)에 부분 Source 수신과 최종 Preview/E2E Gate를 분리해 연결했다. `registry.tf`의 N50·untagged7일을 확정 입력으로 수락하지 않는다. [Infra #18](https://github.com/seokpan/seokpan-hybrid-infra/issues/18)/[App #2 방향 수신](https://github.com/seokpan/seokpan-hybrid-app/issues/2#issuecomment-5950470901)의 **Preview 전 untagged 만료 제외·N 보류**와 코드가 정합돼야 한다. A1의 Harbor 사본 Scan/Smoke와 PR 본문의 ECR Pull 설명, `GetDownloadUrlForLayer`의 실제 E2E 필요 범위도 후속 정합 대상으로 유지한다.
+
+담당자가 코드/설명을 정합한 개정의 준비 범위는 부분 수신할 수 있다. 최종 N·Lifecycle/CI 권한·Worker Pull의 확정/PASS는 실제 Preview/E2E·Role 검증에 연결하며, A~F 방향 전체를 다시 승인 대기로 돌리지 않는다. 입력 대기는 해당 실행에만 적용하고 ROSA 입력계약/HCL·App/base·학습/기록의 독립 준비는 계속한다.
+
+#### 다음 작업과 기록
+
+등록과 문서 준비는 실제 실행 결과가 아니므로 **새 Run 디렉터리·빈 Run·Run Index·Shared Execution 실제 행을 추가하지 않았다.** 본인 작업·코드·인계·실행·시험의 다섯 축을 분리한다. 상세 원본은 해당 Issue/PR에, 실제 시험/재시험은 새 Run에, 05/WORK_TRACKER와 상위 Issue에는 링크·상태·영향을 연결한다. 수신 개정/범위·보완·Reviewer와 배정 담당/실제 수행자·Caller를 구분하고 보호 원본 경로/접근/보존 책임은 보호 운영 대장에 기록한다.
+
+다음은 개인 미반영 변경/인증 Push와 실제 입력 확인, D 새 Image/검증 인계, PR #9/문서 준비 PR의 리뷰·수신, PR #24 정합 개정·A 제한 출력/Worker Role 소비 리뷰다. 다중 Pod 위험 조사는 TH-04/06부터 앞당기며 실제 Runtime 시험은 환경/정상 Baseline을 확보한 뒤 진행한다. Docs PR 반영 대기 때문에 직접 인계·독립 준비를 멈추지 않는다. 현재 연결은 [WORK_TRACKER 등록 후속](WORK_TRACKER.md#tjung03-registered-work-20261002)을 따른다.
+
 ## 남은 작업과 다음 단계
 
 - [x] 최종 04·지침 등록 확인과 전체 설계 완료 상태 유지
@@ -923,4 +468,5 @@ CI #2는 B 최신 리뷰·D 수락의 A~F 구현 방향을 유지한다. 다만 
 - [ ] 결과·시연·발표·자원 정리와 보존 책임 완료
 
 다음은 **공유 가능한 협업 사용본·기록 위치를 팀에 연결하고, 각 담당자가 현행/실제 입력을 직접 갱신하며 독립 구현과 인계를 병행**하는 것이다. B에서는 실제 Seed/실습 인계→저장소 반영·전체 테스트/Build→완성 Kustomize Build와 실습을 연결한다. 05 전체는 실제 구현·최종 검증 완료 전이며, 03·04의 설계 종료는 유지한다.
+
 
