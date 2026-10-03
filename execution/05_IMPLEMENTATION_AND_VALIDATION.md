@@ -685,12 +685,14 @@ ZIP의 2026-09-29 기록은 승인00 §30.1/03 §3-B의 기존 PoC를 설명하�
 
 실사용자 계정이 있으므로 덤프 파일과 행 내용은 저장소·Issue·PR·Evidence에 넣지 않고, 기록에는 행 수·관계·SHA-256만 남긴다. 덤프는 만들자마자 age로 암호화하고, 프로젝트가 끝나면 RDS·백업 S3·복구 VM의 이관 데이터를 지운다. 실사용자에게 안내나 동의가 필요한지는 팀과 강사님께 확인한다. 확인 결과 반출이 어렵다면 `member.login_id`를 가명으로 바꿔 옮기는 대안으로 전환한다. 대안의 방법과 전환 기준은 Infra #17에 적어 두었다.
 
-**시간대.** 기존 행은 KST로 기록돼 있다. `DATETIME`은 덤프·복원 과정에서 값이 바뀌지 않는다. 문제는 이관 이후 새로 쌓이는 값이다. RDS 기본 시간대(UTC)나 UTC로 동작하는 컨테이너가 새 값을 쓰면, 같은 컬럼에 KST와 UTC가 9시간 차이로 섞인다.
+**시간대 — 2026-10-03 Source 대조 정정.** #17의 서버 KST·날짜 컬럼 8개 `DATETIME` 보고는 유지하지만, 그 보고만으로 모든 기존 행이 KST라고 단정할 수 없다. 고정 Seed `7fce757f963ba59cc81c03028c043be5b45719b2`와 최종 App Source `c837120c25c34b88bf6c6ee8e122ff50cbff062d`의 정상 게임 경로는 UTC epoch·명시적 UTC datetime을 생성한다. `game_adapter.py`의 `_to_db_datetime`은 UTC-naive를 저장하고 `_from_db_datetime`은 UTC로 읽는다. 이 변환은 Seed부터 같으며 Pod `TZ` 변경으로 달라지지 않는다. 기존 문구의 “UTC 컨테이너로 바꾸면 게임 시각이 새로 UTC가 된다”는 설명을 정정한다.
 
-| 원인 | 대응 | 담당 |
+| 작성 경로 / 컬럼 | 확인한 Source / 유지·확인할 내용 | 담당 |
 | --- | --- | --- |
-| 기본값이 `current_timestamp(3)`인 컬럼 4개는 DB 세션 시간대를 따름 | RDS 파라미터 그룹 `time_zone = Asia/Seoul`, 복구 DB도 KST로 고정 | 김상희 작성, 이유빈 foundation 통합 |
-| `started_at`·`ended_at`·`confirmed_at`은 앱이 직접 넣는 값 | 앱의 시간 생성 방식과 Pod `TZ` 확인 | 정태훈 (App #1과 함께 확인) |
+| DB 기본값: `member.created_at/updated_at`, `member_stats.updated_at`, `rating_history.recorded_at` | `CURRENT_TIMESTAMP(3)` 계열은 실제 DB 세션 시간대를 따름. 기존 Data의 `time_zone = Asia/Seoul` 후보·복구 DB 조건은 변경하지 않으며 연결 세션·새 행 동작 확인은 남음 | 김상희 작성, 이유빈 foundation 통합; B 소비 |
+| App 게임 시각: `game.started_at/ended_at`, `move.confirmed_at`, `game_result.ended_at` | 정상 Source의 UTC 생성·저장/읽기 계약 확인. Pod `TZ`를 KST로 맞추는 것을 이 시각의 변환 수단으로 쓰지 않음 | 정태훈 Source 확인; 김상희·최유준 실제 행/쓰기 경로 대조 |
+
+`DATETIME` 값에는 시간대 식별정보가 없으며 DB 시간대 설정이나 Dump의 `--tz-utc`가 이미 저장된 이 컬럼을 KST↔UTC로 자동 변환한다는 뜻은 아니다. 공식 [DATETIME](https://mariadb.com/docs/server/reference/data-types/date-and-time-data-types/datetime)·[NOW/CURRENT_TIMESTAMP](https://mariadb.com/docs/server/reference/sql-functions/date-time-functions/now)·[Dump 옵션](https://mariadb.com/docs/server/clients-and-utilities/backup-restore-and-import-clients/mariadb-dump)과 대조했다(2026-10-03). 실제 과거 행의 작성 Image·수동 입력·세션·로그 시각은 미확인이다. `_to_db_datetime`의 naive 입력은 그대로 통과하므로 모든 기존 행을 UTC로 확정하지도 않는다. 열별 근거 확인 없이 전역 ±9시간 치환하거나 데이터/Schema/시간대 정책을 바꾸지 않는다. 좁은 Source 확인과 RPO 해석의 연결은 [§9.14](#recovery-timezone-handoff-20261003)에 기록한다.
 
 **아직 하지 않은 것.** 덤프 실행 계정과 위치, Backup·Restore 목적 계정, 복구 VM Host 실측이 남아 있다. 실사용자 데이터는 2026-10-02에 그대로 이관하기로 결정했고(가명화 대안 사용 안 함, 취급 조건 유지), 근거는 Infra #17 결정 코멘트에 있다. 이번 점검은 이관 준비를 위한 조회이며 이관·백업·복원 시험의 결과가 아니다.
 
@@ -1023,6 +1025,25 @@ Lua Source는 기존 v8에서 v9로 바뀌므로 같은 환경에 구/신 Image�
 현재 연결은 전체 Git 이력 Push 인증을 제공하지 않아 원격 App main은 `cef46c4e7b0cbd0cf6ebab487ee92c32d800ccdc`이며 새 Branch/PR 반영은 미완료다. 승인된 이력을 잃는 Snapshot 등록으로 대체하지 않는다. 인증된 개인 작업환경에서 기존 미반영 코드와 대조하고 Bundle의 기존 main ancestry를 확인한 뒤 작업 Branch를 Push/별도 PR로 인계한다. 1차 저장소와 2차 main의 직접 Push·사람 Merge는 수행하지 않았다.
 
 Source·테스트·문서와 기존 기록의 연결을 다시 검토해 **현재 확인한 Source 범위의 필수 추가 보완 0건**에서 재귀 검토를 멈췄다. 실제 Cloud/lab/Recovery 생성·Apply/Sync·3 Pod·영속 DB 경합·Backup/Offline Acceptance는 미실시다. Source 후보·로컬 회귀로 새 실제 Run·빈 Evidence·Run Index·Shared Execution 행이나 TH 전체 완료를 만들지 않았다. 다음은 인증된 App Source → D 새 Image와 정확한 환경 입력 → lab/Recovery 자산·Bundle 수신 → 기존 Run 양식의 탐지~업무 재개/Backup Data 최신성·손실/팀 부담 → 필요 변경·최종 검증이다. 현재 연결은 [WORK_TRACKER 후속](WORK_TRACKER.md#cloud-rosa-app-progress-20261002)을 따른다.
+
+<a id="recovery-timezone-handoff-20261003"></a>
+### 9.14 최소 Recovery 예행의 App 시각 확인·기록 인계 — 2026-10-03
+
+원래 목표 재검토의 직접 입력을 다시 읽었으며 #17/#19·GitOps #5/#6에서 새 전체 Dump/Restore·로컬 완성 지연·업무 재개 Run은 확인하지 못했다. 외부 비공개 시험 부재를 단정하지 않는다. 입력 없이 처리 가능한 B의 App 시간대 요청부터 확인해 §8.7의 근거 없는 기존 행 KST 단정을 정정했다. 이는 새 목표/주기/구조 선택이 아니라 DB 이관·Backup Data 시각 해석의 독립 준비다.
+
+검토 Source는 기존 최종 Bundle의 `c837120c25c34b88bf6c6ee8e122ff50cbff062d`와 동결 Seed `7fce757f963ba59cc81c03028c043be5b45719b2`다. `backend/src/seokpan/clock.py`·`game/application/service.py`·`persistence/mariadb/models.py`는 두 Commit에서 동일하고 `game_adapter.py`의 세 시간 변환 함수도 동일하다. Seed의 [게임 시각 변환 Source](https://github.com/seokpan/seokpan-app/blob/7fce757f963ba59cc81c03028c043be5b45719b2/backend/src/seokpan/persistence/mariadb/game_adapter.py)와 최종 Bundle의 clean Tree를 대조했다. 실제 적용 Image와 과거 행의 작성 경로는 별도 입력이다.
+
+검증은 실제 함수 두 개를 Source에서 추출해 표준 라이브러리로 실행한 보조 확인이다(Python 3.12.14). 합성 시각 `2026-10-03T17:00:00.123456+09:00`은 OS `TZ=UTC`와 `Asia/Seoul` 모두 DB 값 `08:00:00.123`으로 정규화되고 `08:00:00.123Z`로 해석됐다. 각 조건 4개 assertion 통과와 독립 Source 대조를 확인했다. 기존 UTC 계약을 바꾸는 App 코드·Dependency 수정은 없으며 전체 Backend 회귀·실제 DB/Pod 연결·행 검증·Recovery Run을 새로 실행한 결과가 아니다.
+
+Backup의 `data_reference_time_utc`는 확인한 일관된 Data 시점/경계와 비민감 Marker·쓰기 시각/복원 존재 여부에 연결한다. 게임/회원 컬럼의 naive 최댓값·파일 수정 시각·Dump 종료를 Data 시점으로 대신하지 않는다. 실제 작성 경로/시계·시점 불확실성이 남으면 정확 RPO를 만들지 않고 기존 계산 규칙의 null/범위·제한을 유지한다. [h-app Issue #1](https://github.com/seokpan/seokpan-hybrid-app/issues/1)의 B 확인은 Source 범위의 제출이며 C/D 실제 수신·행 판정 완료가 아니다.
+
+[Evidence 안내](../evidence/README.md#recovery-design-review-inputs)는 기존 CSV에 성공 사본 Data 시각·로컬 완성 시각/지연·사본 간격을 기록하는 연결을 보강한다. 팀 부담·가용시간·예상/실측/미측정 비용은 기존 HANDOFF·I07/담당 원본을 사용한다. 새 Run 양식·시험 ID·자동 비교기나 모든 후보 구현은 추가하지 않는다.
+
+- [x] 서버 시간대 보고·실제 Source 작성/읽기 경로 구분과 §8.7 정정
+- [x] UTC/KST OS 조건의 함수 보조 확인·기존 CSV/HANDOFF 연결 준비
+- [ ] C/D의 실제 작성 Image·열별 시각/쓰기 경로·Backup Data 근거 수신
+- [ ] §9.2의 직접 자산/입력으로 기존 최소 예행, 전체 시간·손실·접속·부담 비교
+- [ ] 03 §3-I.14의 목표/주기/구조 선택과 채택 변경 반영
 
 ## 남은 작업과 다음 단계
 
