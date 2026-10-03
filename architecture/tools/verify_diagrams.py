@@ -68,12 +68,14 @@ def main():
         assert f'192.168.{i}.0/24' in physical
     assert len(list((ROOT/'diagrams').glob('*.svg')))==12
     assert len(list((ROOT/'exports').glob('*.png')))==12
-    result={'schema_version':1,'created_date':'2026-10-02 KST','design_basis_date':'2026-10-01 KST',
+    result={'schema_version':1,'created_date':baseline['recorded_date'],'design_basis_date':baseline['source_basis_date'],
             'status':'DESIGN_TARGET','runtime_validation':'NOT_ASSESSED',
             'source_files':[{'path':f['path'],'sha256':f['sha256']} for f in baseline['files']],
             'checks':{'svg_xml':12,'png_decode':12,'embedded_font_glyphs':12,'declared_geometry':12,
                       'approved_subnet_cidrs':9,'source_identity':5,'high_risk_text_pattern_matches':0},
             'diagrams':assets}
+    if 'review' in baseline:
+        result['source_review']=baseline['review']
     (ROOT/'diagram-manifest.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
     print(json.dumps(result['checks'],ensure_ascii=False))
 
