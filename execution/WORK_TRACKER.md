@@ -206,7 +206,7 @@ App 최신 전달 Source는 `c837120c25c34b88bf6c6ee8e122ff50cbff062d`이며 고
 <a id="recovery-minimum-handoff-20261003"></a>
 ## 2026-10-03 최소 Recovery 예행의 시각 근거·후속 준비
 
-관측 `2026-10-03T08:39:33.333Z`: h-docs main `9017bcffa3ced2763382c5d1f112780d159ba15b`과 관련 원본을 읽었다. 사용자가 h-docs PR #20/#22·#7의 병합 후 언급된 브랜치를 직접 삭제했다고 알렸고, 원격 Branch 목록에서 해당 두 Branch 부재를 확인했다. h-infra PR #27은 필수 리뷰 0건으로 승인 대기, h-gitops PR #9/#11·h-infra PR #28의 직접 Draft 조건은 유지한다.
+관측 `2026-10-03T08:39:33.333Z`: h-docs main `9017bcffa3ced2763382c5d1f112780d159ba15b`과 관련 원본을 읽었다. 사용자가 [h-docs PR #20](https://github.com/seokpan/seokpan-hybrid-docs/pull/20)·[h-docs PR #22](https://github.com/seokpan/seokpan-hybrid-docs/pull/22)의 `docs/recovery-app-source-handoff-20261002`와 [h-docs PR #7](https://github.com/seokpan/seokpan-hybrid-docs/pull/7)의 `docs/presentation-baseline`을 직접 삭제했다고 알렸고, 원격 목록에서 두 Branch 부재를 확인했다. h-infra PR #27은 필수 리뷰 0건으로 승인 대기, h-gitops PR #9/#11·h-infra PR #28의 직접 Draft 조건은 유지한다.
 
 원래 목표 선택을 지원하는 이번 독립 준비는 [05 §9.14](05_IMPLEMENTATION_AND_VALIDATION.md#recovery-timezone-handoff-20261003)의 App 시각 요청 확인이다. B의 작성/로컬 보조 확인을 제출하며 C/D가 실제 행·Data 시점까지 수락했다고 기록하지 않는다. 기존 c837 Bundle/검사·Cloud/ROSA 전달 이력과 다른 담당자의 관측 시각·Shared Execution은 유지한다.
 
