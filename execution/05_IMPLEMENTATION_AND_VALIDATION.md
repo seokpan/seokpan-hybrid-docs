@@ -20,6 +20,8 @@
 
 **2026-10-03 이번 요청의 우선 작업:** [03 §3-I.14 복구 설계 재검토](../design/03_DETAILED_DESIGN.md#recovery-design-review-20261003)를 중심으로 필요한 02/04 정합 보완과 사용자 영향·구조 대안을 먼저 대조한다. 05는 [§9의 기존 최소 예행](#recovery-objective-review-20261002)으로 부족한 시간·손실·접속·팀 부담/비용 근거를 확보한다. 전체 Cloud/ROSA 구현이나 05 최종 종료는 이 판단의 선행조건이 아니다.
 
+**App 원격 게시 후속:** [§9.15](#app-source-published-20261003)에 인증 Push·h-app PR #5와 고정 이력 보존을 연결한다. 현재 Source PR 리뷰/병합과 새 Image·실제 최소 예행 입력이 남아 있으며 기존 관측과 구분한다.
+
 **별도 프로젝트 구현 이력:** [§9.13 Cloud·ROSA 구현과 App 경쟁 결함 후속](#cloud-rosa-app-followup-20261002), [§9.12](#tjung03-latest-source-20261002)의 승인/병합 관측과 [§9.11](#tjung03-registration-rosa-input-20261002)의 TH-01~19·81개 식별자는 보존한다. 기존 유효 코드/검사는 취소하지 않으며 이번 복구 목표 판단의 증거나 우선 완료 조건으로 확대하지 않는다.
 
 현재 진행 현황:
@@ -1045,6 +1047,23 @@ Backup의 `data_reference_time_utc`는 확인한 일관된 Data 시점/경계와
 - [ ] §9.2의 직접 자산/입력으로 기존 최소 예행, 전체 시간·손실·접속·부담 비교
 - [ ] 03 §3-I.14의 목표/주기/구조 선택과 채택 변경 반영
 
+<a id="app-source-published-20261003"></a>
+### 9.15 App 원격 게시·Source PR·이력 보존 인계 — 2026-10-03
+
+사용자 정태훈의 Windows/Git Bash 전송 로그를 접수하고 원격을 대조했다. 확인 시각 `2026-10-03T10:12:32.212Z`의 [h-app PR #5](https://github.com/seokpan/seokpan-hybrid-app/pull/5), 원본 [h-app Issue #1](https://github.com/seokpan/seokpan-hybrid-app/issues/1)·[h-app Issue #4](https://github.com/seokpan/seokpan-hybrid-app/issues/4)에 제출·검사·실제 실행의 범위를 연결했다. 기존 §9.9~9.13의 Push/PR 미완료는 당시 관측으로 보존하며 현재는 **인증된 작업 브랜치 전송·Source PR 게시 완료**다. main은 아직 `cef46c4e7b0cbd0cf6ebab487ee92c32d800ccdc`이며 사람 승인/병합은 대기한다.
+
+게시한 App 코드 기준은 `c837120c25c34b88bf6c6ee8e122ff50cbff062d`이다. 원격 Tree `43ab0a7415a6df3b4825e61cac91fa70bc4252b2`의 390개 Path/Mode/Blob과 전체 78개 이력을 로컬 검증본에 대조했다. 사용자 로그의 Hash 5개 OK·완전 Bundle·HEAD/작업 폴더·main 조상·Seed diff check·Push/원격 SHA도 확인했다. PR HEAD `51321ec1087cc02dbd5b55272594ec49efc9dbce`는 이력 보존 안내 두 문서만 추가하며 나머지 388개 Blob/Mode는 동일하다. 기존 c837 Source 검사 결과를 유지하고 새 전체 검사·GitHub CI PASS로 기록하지 않는다.
+
+main은 승인 1명·Squash 정책이다. [reference/app-migration-history-20261002](https://github.com/seokpan/seokpan-hybrid-app/tree/reference/app-migration-history-20261002)를 c837에 고정해 초기 두 부모·1차 Seed와 2차 보완까지 전체 78개 이력을 같은 저장소에 보존했다. 이 reference는 이동/일괄 삭제에서 제외한다. 일반 작업 브랜치의 향후 병합/정리와 별도이며 main의 Squash 로그에 원본 계보가 합쳐졌다고 설명하지 않는다.
+
+[h-gitops PR #9](https://github.com/seokpan/seokpan-hybrid-gitops/pull/9)·[h-gitops Issue #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10)의 직접 Source 조건을 갱신했다. D의 새 Build/Scan/Digest, C/D의 대상·CA/Secret·TLS Redis/lab/Recovery 및 같은 조합 #5/#6 검증이 남아 Draft는 유지한다. 개인 미반영 변경·실제 Data 시각/행 판정·격리 Backup/Restore·업무 재개 근거도 별도다. Source 게시로 실제 Recovery Run/Index·Shared Execution·TH 전체 완료를 추가하지 않는다.
+
+- [x] 본인 환경 App 작업 브랜치 전송과 원격 Source/전체 이력 대조
+- [x] Source PR Ready·담당 연결, 고정 이력 보존과 GitOps 직접 인계 갱신
+- [ ] 사람 승인/main 병합·새 Image/환경 입력·같은 조합 lab/Recovery 수락
+- [ ] 03 §3-I.14의 최소 예행 근거 비교와 목표/주기/구조 최종 선택
+
+
 ## 남은 작업과 다음 단계
 
 - [x] 최종 04·지침 등록 확인과 전체 설계 완료 상태 유지
@@ -1065,7 +1084,8 @@ Backup의 `data_reference_time_utc`는 확인한 일관된 Data 시점/경계와
 - [ ] Data 코드의 foundation Root 직접 배치 전환·PR과 첫 plan 확인 — Infra #19, 이유빈 Network 코드 merge 후
 - [ ] I01~I07의 현 Source·실제 입력/결과·미반영 작업·담당별 가용시간/비용 인계
 - [x] 고정 Seed Source·원 lab 참고 범위 수신, App 연결 코드·이력 보존 묶음·실제 Kustomize 후보 구현 — §9.9
-- [ ] 인증된 App 원격 이관/PR·새 Build/Scan·실제 lab/완성 Bundle — §9.9
+- [x] 인증된 App 원격 이관·Source PR 게시와 고정 reference 이력 보존 — §9.15
+- [ ] App 사람 승인/main 병합·새 Build/Scan/Digest·실제 lab/완성 Recovery Bundle — §9.15
 - [ ] 병행하는 foundation/Data/CI 구현과 B의 ROSA 코드 연결·실제 Plan 준비
 - [ ] 비용 확인 후 Cloud 생성·App/Data/Secret·GitOps 통합
 - [ ] 장애·재생성·복구·부하 시험과 Must 결과 판정
