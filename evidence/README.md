@@ -42,6 +42,24 @@ python3 tools/recovery_metrics.py evidence/<test-id>/<run-id>/release.json --con
 
 도구 자체의 검사는 `python3 -m unittest discover -s tools -p 'test_recovery_metrics.py' -v`로 실행합니다. 합성 시각으로 수행한 코드 검사이며 실제 T17/T18 실행이나 발표용 실측 근거가 아닙니다.
 
+<a id="recovery-design-review-inputs"></a>
+## Recovery design review inputs
+
+복구 목표의 설계 판단은 [03 §3-I.14](../design/03_DETAILED_DESIGN.md#recovery-design-review-20261003), 최소 예행의 입력·측정은 [05 §9.2~9.6](../execution/05_IMPLEMENTATION_AND_VALIDATION.md#recovery-objective-review-20261002)를 따른다. 기존 Run 다섯 파일과 [HANDOFF](../execution/HANDOFF_TEMPLATE.md)를 사용하며 새 스키마·시험 ID·상시 자동화를 추가하지 않는다.
+
+기존 CSV의 식별자는 다음처럼 사용할 수 있다. 아래는 기입 안내이며 실제 이벤트·측정값이 아니다. 시각/Actual을 측정하지 못했으면 빈 값을 유지하고 summary에 이유·범위·불확실성을 남긴다.
+
+| 기존 파일 / 기입 예 | 입력할 실제 근거와 조건 |
+| --- | --- |
+| timeline.csv: `backup_data_reference:<backup-id>` | 사본별 Data 시각/경계·확인 수준과 보호 원본 참조. 게임/회원 naive 시각의 최댓값이나 Dump 종료로 대체하지 않음 |
+| timeline.csv: `backup_local_complete:<backup-id>` | 로컬 사용 가능한 완성본 확보 시각과 무결성/가용성 근거. S3 업로드 완료와 구분 |
+| metrics.csv: `backup_local_delay_seconds` | 같은 사본의 Data 시각→로컬 완성 차이, 단위 seconds. Data 시점이 불확실하면 정확한 값으로 취급하지 않고 범위/제한을 기록 |
+| metrics.csv: `successful_backup_data_gap_seconds` | 인접한 사용 가능한 성공 사본들의 Data 시각 차이. 보호 로그 참조·관측 기간·표본 수·누락/실패·집계 조건을 함께 기록 |
+
+선택 사본 한 개의 RPO와 정상 경로의 성공 사본 간격/확보 지연은 별개다. 관측 최대값을 운영 보장으로 확대하지 않으며 중단·이전 사본 선택·복원 실패는 실제 사용 Data 시각으로 별도 판단한다. App 작성/DB 기본값 시각의 Source 해석과 실제 행 미확인은 [05 §9.14](../execution/05_IMPLEMENTATION_AND_VALIDATION.md#recovery-timezone-handoff-20261003)에 연결한다.
+
+지정 클라이언트 위치·접속·로그인/업무·처리 범위는 summary의 조건에 기록한다. 네 사람의 추가 구현/학습/운영/인계/재시험·문서/발표와 실제 가용시간, 암호문 크기/보관/전송·DB 부하/추가 가동 비용은 기존 HANDOFF·I07과 담당 Issue 원본을 연결하고 예상/실측/미측정을 구분한다. 숫자를 모르는데 0 또는 완료로 채우지 않는다.
+
 ## Run Index
 
 | Test/Case·Requirement | Run·환경 | 실행자·Reviewer | 실제 Source/Release | Render/Deployment/Acceptance | 증거 링크 | 실패/후속 Run·제한 |
