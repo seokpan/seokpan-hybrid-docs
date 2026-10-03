@@ -5,6 +5,8 @@ from copy import deepcopy
 import io
 import json
 from pathlib import Path
+import subprocess
+import sys
 import tempfile
 import unittest
 
@@ -51,6 +53,27 @@ class RecoveryMetricsTests(unittest.TestCase):
             "business_resumed_at_utc": "2026-10-03T09:00:05+09:00",
         }
         self.assertEqual(calculate(record)["rto_seconds"], 10)
+
+    def test_utc_normalization_out_of_range_is_input_error(self):
+        for value in ("0001-01-01T00:00:00+00:01", "9999-12-31T23:59:59-00:01"):
+            with self.subTest(value=value):
+                record = sample()
+                record["recovery"]["incident_at_utc"] = value
+                with self.assertRaisesRegex(ValueError, "supported UTC range"):
+                    calculate(record)
+                with tempfile.TemporaryDirectory() as directory:
+                    path = Path(directory) / "release.json"
+                    path.write_text(json.dumps(record))
+                    original = path.read_bytes()
+                    result = subprocess.run(
+                        [sys.executable, str(Path(__file__).with_name("recovery_metrics.py")), str(path)],
+                        text=True, capture_output=True, check=False,
+                    )
+                    self.assertEqual(result.returncode, 2)
+                    self.assertIn("supported UTC range", result.stderr)
+                    self.assertNotIn("Traceback", result.stderr)
+                    self.assertEqual(result.stdout, "")
+                    self.assertEqual(path.read_bytes(), original)
 
     def test_template_is_unmeasured_and_unchanged(self):
         path = Path(__file__).resolve().parents[1] / "evidence/_template/release.json"
@@ -99,6 +122,55 @@ class RecoveryMetricsTests(unittest.TestCase):
         record["recovery"]["business_resumed_at_utc"] = "2026-10-02T10:01:00Z"
         with self.assertRaises(ValueError):
             calculate(record)
+
+    def test_selected_dump_must_finish_before_present_recovery_stages(self):
+        for missing_fields in ((), ("import_started_at_utc",),
+                               ("import_started_at_utc", "import_finished_at_utc")):
+            with self.subTest(missing_fields=missing_fields):
+                record = sample()
+                record["recovery"]["dump_finished_at_utc"] = "2026-10-02T12:00:00Z"
+                for field in missing_fields:
+                    record["recovery"][field] = None
+                with self.assertRaisesRegex(ValueError, "precedes dump_finished_at_utc"):
+                    calculate(record, True)
+
+    def test_missing_dump_finish_does_not_hide_dump_start_after_recovery(self):
+        for missing_fields in ((), ("import_started_at_utc",),
+                               ("import_started_at_utc", "import_finished_at_utc")):
+            with self.subTest(missing_fields=missing_fields):
+                record = sample()
+                record["recovery"]["dump_finished_at_utc"] = None
+                record["recovery"]["dump_started_at_utc"] = "2026-10-02T12:00:00Z"
+                for field in missing_fields:
+                    record["recovery"][field] = None
+                with self.assertRaisesRegex(ValueError, "precedes dump_started_at_utc"):
+                    calculate(record, True)
+
+    def test_preincident_dump_with_missing_stage_remains_valid(self):
+        for missing_fields in (("dump_started_at_utc",), ("dump_finished_at_utc",),
+                               ("import_started_at_utc",), ("import_finished_at_utc",),
+                               ("incident_at_utc", "dump_finished_at_utc")):
+            with self.subTest(missing_fields=missing_fields):
+                record = sample()
+                for field in missing_fields:
+                    record["recovery"][field] = None
+                has_incident = "incident_at_utc" not in missing_fields
+                result = calculate(record, has_incident)
+                self.assertEqual(result["rto_seconds"], 480.25 if has_incident else None)
+                self.assertEqual(result["rpo_seconds"], 3600 if has_incident else None)
+
+    def test_missing_incident_and_dump_finish_do_not_hide_data_after_recovery(self):
+        for missing_fields in ((), ("import_started_at_utc",),
+                               ("import_started_at_utc", "import_finished_at_utc")):
+            with self.subTest(missing_fields=missing_fields):
+                record = sample()
+                record["recovery"]["incident_at_utc"] = None
+                record["recovery"]["dump_finished_at_utc"] = None
+                record["recovery"]["data_reference_time_utc"] = "2026-10-02T12:00:00Z"
+                for field in missing_fields:
+                    record["recovery"][field] = None
+                with self.assertRaisesRegex(ValueError, "precedes data_reference_time_utc"):
+                    calculate(record)
 
     def test_recorded_numbers_must_match_present_times(self):
         record = sample()

@@ -1,10 +1,48 @@
 {
   "schema_version": 1,
   "source_basis_date": "2026-10-01 KST",
-  "recorded_date": "2026-10-02 KST",
-  "source_type": "user-provided Project Source copies",
-  "copy_policy": "byte-for-byte; historical and approval status retained",
+  "recorded_date": "2026-10-03 KST",
+  "source_type": "approved Project Source with scoped DR review corrections",
+  "copy_policy": "00/01 unchanged; original upload identities and approval history retained; current 02/03/04 include scoped review corrections",
   "files": [
+    {
+      "path": "design/00_PROJECT_STARTING_POINT.md",
+      "uploaded_name": "00_PROJECT_STARTING_POINT.md",
+      "bytes": 46853,
+      "sha256": "fba515600ce0e935fbf35ac2f4b3916fb0cdc63ee0a3f198fc3a6ca6ae7580f4",
+      "source_header_date": "2026-09-30 KST"
+    },
+    {
+      "path": "design/01_PROJECT_CHARTER.md",
+      "uploaded_name": "01_PROJECT_CHARTER.md",
+      "bytes": 18716,
+      "sha256": "b9f23e17dc701f16e334fd603b7872a9bf016198fc3ac3b66279745ee9131b65",
+      "source_header_date": "2026-09-30 KST"
+    },
+    {
+      "path": "design/02_TARGET_ARCHITECTURE.md",
+      "uploaded_name": "02_TARGET_ARCHITECTURE.md",
+      "bytes": 44482,
+      "sha256": "fbfd8adfdb57fce12fa0692633aaf012663bd8974947712a6f5c1d4cedefd45c",
+      "source_header_date": "2026-10-01 KST"
+    },
+    {
+      "path": "design/03_DETAILED_DESIGN.md",
+      "uploaded_name": "03_DETAILED_DESIGN.md",
+      "bytes": 460483,
+      "sha256": "caca6cd19bd459aab1b3569295078850f75b241e8faaab758a50ce961f99f4fc",
+      "source_header_date": "2026-10-01 KST"
+    },
+    {
+      "path": "design/04_IMPLEMENTATION_READINESS.md",
+      "uploaded_name": "04_IMPLEMENTATION_READINESS.md",
+      "bytes": 110164,
+      "sha256": "750c84d0a43a25f1941867f012247e37f0ce7ed0649ab77fd809d6b42255d222",
+      "source_header_date": "2026-10-01 KST"
+    }
+  ],
+  "source_basis_meaning": "latest decision date of this source set; each original document retains its own header date",
+  "original_upload_files": [
     {
       "path": "design/00_PROJECT_STARTING_POINT.md",
       "uploaded_name": "00_PROJECT_STARTING_POINT.md",
@@ -41,5 +79,18 @@
       "source_header_date": "2026-10-01 KST"
     }
   ],
-  "source_basis_meaning": "latest decision date of this source set; each original document retains its own header date"
+  "original_source_commit": "d374bb5989a90a6aaaebe9005ef1942ec0386518",
+  "review": {
+    "date": "2026-10-03 KST",
+    "status": "DR_DESIGN_REVIEW_PR_CANDIDATE",
+    "reference": "design/03_DETAILED_DESIGN.md#recovery-design-review-20261003",
+    "changed_design_documents": [
+      "02_TARGET_ARCHITECTURE.md",
+      "03_DETAILED_DESIGN.md",
+      "04_IMPLEMENTATION_READINESS.md"
+    ],
+    "new_recovery_targets": "NOT_DECIDED",
+    "runtime_validation": "NOT_ASSESSED",
+    "svg_png_content": "UNCHANGED"
+  }
 }

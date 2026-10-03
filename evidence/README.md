@@ -36,7 +36,7 @@ python3 tools/recovery_metrics.py evidence/<test-id>/<run-id>/release.json
 python3 tools/recovery_metrics.py evidence/<test-id>/<run-id>/release.json --confirmed-data-time
 ```
 
-옵션은 Reviewer의 확인을 명시하며 도구 자체의 증명이나 새 `data_reference_level` Enum이 아닙니다. Backup ID·확인 수준·관련 시각이 없으면 거부합니다. ISO 시각의 시간대가 없거나 시각이 역전되거나 기존 `rto_seconds`/`rpo_seconds`와 계산이 다르면 오류를 표시합니다. 오프셋 있는 시각은 UTC로 정규화해 계산하지만 Run의 UTC/KST 기록 규칙은 유지합니다. 도구는 timeline.csv·metrics.csv·Raw·Backup 무결성·시계 동기화·데이터 손실을 검사하지 않으며 전체 Run Validator가 아닙니다.
+옵션은 Reviewer의 확인을 명시하며 도구 자체의 증명이나 새 `data_reference_level` Enum이 아닙니다. Backup ID·확인 수준·관련 시각이 없으면 거부합니다. ISO 시각의 시간대가 없거나 시각이 역전되거나 기존 `rto_seconds`/`rpo_seconds`와 계산이 다르면 오류를 표시합니다. 오프셋 있는 시각은 UTC로 정규화해 계산하지만 Run의 UTC/KST 기록 규칙은 유지합니다. UTC 표현 범위를 벗어난 시각도 입력 오류(exit 2)로 거부합니다. 선택 Backup의 Data 기준·Dump 시작/종료가 존재하는 Import·업무 복귀 시각보다 뒤인 경우는 중간 시각이 누락돼도 거부합니다. 사전에 만든 Backup을 허용하며 사고 이후에 Dump가 시작돼야 한다거나 Data 기준이 Dump 시작 이전이어야 한다는 새 제약은 두지 않습니다. 도구는 timeline.csv·metrics.csv·Raw·Backup 무결성·시계 동기화·데이터 손실을 검사하지 않으며 전체 Run Validator가 아닙니다.
 
 검토한 수치만 기존 metrics.csv의 적절한 `metric_id`/`actual`/`unit`/`condition_ref`/`raw_artifact_ref`에 기록하고, 계산 근거·불확실성·미달은 summary.md에 남깁니다. 파일을 바꿨으면 기존 지침대로 checksums.txt를 갱신합니다. 목표 비교·Acceptance는 승인 기준과 실제 증거로 별도 검토하며, 한 Run의 차이로 운영 RPO 상한이나 전체 서비스 복구를 보장하지 않습니다.
 

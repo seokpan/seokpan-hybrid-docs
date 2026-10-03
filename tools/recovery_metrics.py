@@ -29,7 +29,10 @@ def timestamp(value, field):
         raise ValueError(f"{field}: invalid ISO timestamp") from exc
     if parsed.utcoffset() is None:
         raise ValueError(f"{field}: timezone is required")
-    return parsed.astimezone(timezone.utc)
+    try:
+        return parsed.astimezone(timezone.utc)
+    except (ValueError, OverflowError) as exc:
+        raise ValueError(f"{field}: timestamp is outside the supported UTC range") from exc
 
 
 def calculate(record, confirmed_data_time=False):
@@ -47,6 +50,11 @@ def calculate(record, confirmed_data_time=False):
     )
     pairs += tuple(combinations(("incident_at_utc", "import_started_at_utc",
                                  "import_finished_at_utc", "business_resumed_at_utc"), 2))
+    pairs += tuple((first, last)
+                   for first in ("data_reference_time_utc", "dump_started_at_utc",
+                                 "dump_finished_at_utc")
+                   for last in ("import_started_at_utc", "import_finished_at_utc",
+                                "business_resumed_at_utc"))
     for first, last in pairs:
         if times[first] is not None and times[last] is not None:
             if times[last] < times[first]:

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "created_date": "2026-10-02 KST",
+  "created_date": "2026-10-03 KST",
   "design_basis_date": "2026-10-01 KST",
   "status": "DESIGN_TARGET",
   "runtime_validation": "NOT_ASSESSED",
@@ -15,15 +15,15 @@
     },
     {
       "path": "design/02_TARGET_ARCHITECTURE.md",
-      "sha256": "ee3b7cb9b3607b22a3f2209f61f5217146296b31ae83446295e628840f3efd95"
+      "sha256": "fbfd8adfdb57fce12fa0692633aaf012663bd8974947712a6f5c1d4cedefd45c"
     },
     {
       "path": "design/03_DETAILED_DESIGN.md",
-      "sha256": "99b8b3c5cc2ed99971e26c053b2897970bfe67e519a19ada47b519b7a7cdf34a"
+      "sha256": "caca6cd19bd459aab1b3569295078850f75b241e8faaab758a50ce961f99f4fc"
     },
     {
       "path": "design/04_IMPLEMENTATION_READINESS.md",
-      "sha256": "8b0d425fbfae02bfccac2834c1fd33e8a7d8081d00b99ef5ae78e3f1a08127a2"
+      "sha256": "750c84d0a43a25f1941867f012247e37f0ce7ed0649ab77fd809d6b42255d222"
     }
   ],
   "checks": {
@@ -348,5 +348,18 @@
       ],
       "embedded_font_glyphs_checked": true
     }
-  ]
+  ],
+  "source_review": {
+    "date": "2026-10-03 KST",
+    "status": "DR_DESIGN_REVIEW_PR_CANDIDATE",
+    "reference": "design/03_DETAILED_DESIGN.md#recovery-design-review-20261003",
+    "changed_design_documents": [
+      "02_TARGET_ARCHITECTURE.md",
+      "03_DETAILED_DESIGN.md",
+      "04_IMPLEMENTATION_READINESS.md"
+    ],
+    "new_recovery_targets": "NOT_DECIDED",
+    "runtime_validation": "NOT_ASSESSED",
+    "svg_png_content": "UNCHANGED"
+  }
 }

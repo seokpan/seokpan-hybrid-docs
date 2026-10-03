@@ -9,6 +9,8 @@
 > **Architecture 상태:** CONFIRMED — 상세 Network/IAM/Migration/Test 설계 전 단계  
 > **상위 원칙:** 정상 사용자 요청은 AWS Cloud Primary 내부에서 처리하고, On-Prem은 Restore-based Recovery·CI·Recovery Artifact 역할을 수행한다.
 
+> **2026-10-03 DR 재검토:** 강사 피드백과 사용자 후속 요청에 따른 검토·변경 근거는 [03 §3-I.14](03_DETAILED_DESIGN.md#recovery-design-review-20261003)에 연결한다. 승인된 복원 구조와 목표는 유지 중이며 적절성과 달성 가능성은 재검토 대상이다. 이번 보완은 이미 승인된 새 Recovery Redis·전체 업무 재개 경계를 정합화하며 새 목표나 Warm Standby를 확정하지 않는다.
+
 ---
 
 # 1. 문서 목적
@@ -448,12 +450,14 @@ Recovery Validation용 Redis Runtime 준비
         ↓
 Application Backend 연결
         ↓
-서비스 동작 확인
+Host 안내·지정 복구 클라이언트 접속/재로그인
+        ↓
+대표 업무·영속 Data·새 게임 동작 확인
         ↓
 RTO / RPO 측정
 ```
 
-Application Backend가 Redis를 필수 Runtime Dependency로 사용한다면 Recovery Test에서는 **1차 On-Prem Redis 또는 신규 초기화 Redis**를 Recovery Validation Runtime으로 사용할 수 있다.
+Application Backend가 Redis를 필수 Runtime Dependency로 사용하므로 Recovery Test에서는 **기존 1차 Redis와 분리된 새 2차 Recovery Redis Runtime**을 사용한다. 승인된 03 §3-D.9와 후속 04 §5.5의 격리·1차 보존 기준을 적용한다. 기존 1차 Redis를 초기화하거나 복구 대상으로 재사용하지 않는다.
 
 이 Redis는 Application을 실행하기 위한 새 Runtime State이며, AWS ElastiCache의 Session·Room·Game State를 On-Prem으로 복제하거나 무중단 복원한다는 의미가 아니다. ElastiCache Runtime State의 Cloud→On-Prem DR은 B1 Must 범위에 포함하지 않는다.
 
@@ -466,6 +470,8 @@ Application Backend가 Redis를 필수 Runtime Dependency로 사용한다면 Rec
 - 무중단 User Traffic 전환
 - Production 수준 Active-Active
 - 사용자 Traffic 전체를 On-Prem으로 자동 Cutover
+
+자동 전환 제외는 실제 복구 클라이언트의 접속 검증을 제외한다는 뜻이 아니다. 클라이언트 위치·도달 가능한 주소·HTTPS/WSS·안내 방식·복구 기능과 처리 규모를 예행 전에 기록하고 실제 로그인·대표 업무까지 확인한다. 현재 Must는 격리 복원과 지정 클라이언트의 업무 재개 검증이며, 모든 인터넷 사용자의 기존 주소 복구나 24시간 운영 보장으로 확대하지 않는다. 인터넷 접근 자체가 불가능하다는 단정도 하지 않는다. 실제 트래픽 전환을 추가하려면 진입 경로·Cloud/로컬 동시 쓰기 방지·복귀 절차와 팀 부담을 별도 변경으로 비교한다.
 
 ## 9.3 Warm DR — Should
 
