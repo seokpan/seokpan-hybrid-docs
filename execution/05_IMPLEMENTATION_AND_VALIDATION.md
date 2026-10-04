@@ -24,6 +24,8 @@
 
 **ROSA Source 검사 최신 후속:** [§9.17](#rosa-linux-source-validation-20261004)의 h-infra PR #28 고정 HEAD에서 Linux CI의 fmt·원 Root validate·Provider Schema/선언 비교가 통과했다. 과거 환경의 RPC socket BLOCKED는 당시 이력으로 보존한다. 실제 Cloud Controller의 Caller/Backend/Tool 사전 확인, A/C/D 실제 제한 입력·IAM/지원 조합·첫 Plan 준비 리뷰와 DR 최소 예행은 남는다.
 
+**GitOps Source 검사 최신 후속:** [§9.18](#gitops-linux-source-validation-20261004)에 h-gitops PR #9의 App 계약 11개와 PR #11의 App 11개+Cloud 8개 Linux CI 검사를 연결한다. 정확한 제출 HEAD에서 모두 통과했고 배포 선언은 유지됐다. 새 Image·실제 lab/Recovery 같은 조합 검증·수신/리뷰가 남아 #9/#11은 Draft를 유지한다. 무료 Source 검사와 실제 유료 자원 실행을 구분한다.
+
 **별도 프로젝트 구현 이력:** [§9.13 Cloud·ROSA 구현과 App 경쟁 결함 후속](#cloud-rosa-app-followup-20261002), [§9.12](#tjung03-latest-source-20261002)의 승인/병합 관측과 [§9.11](#tjung03-registration-rosa-input-20261002)의 TH-01~19·81개 식별자는 보존한다. 기존 유효 코드/검사는 취소하지 않으며 이번 복구 목표 판단의 증거나 우선 완료 조건으로 확대하지 않는다.
 
 현재 진행 현황:
@@ -38,7 +40,9 @@
 - [x] 네 사람의 명시 GitHub 계정 매핑·네 저장소 권한 API 16건 확인 — 모두 admin
 - [ ] 개인 본인환경의 실제 사용·현재 미반영 작업과 실행 입력 인계
 - [x] 앞선 B App 연결·GitOps 로컬 초안과 수행 가능한 검사 — 해당 범위 24건 PASS
-- [ ] 실제 이관 Seed·실습 Overlay·Image/Secret 입력 확정과 저장소 반영
+- [x] h-gitops PR #9/#11 고정 HEAD의 무료 Linux Source CI — App 11개/전체 19개, skip·예상 실패 없이 PASS, §9.18
+- [x] 실제 App 승인 Seed Source·원본 이력 보존·2차 main 이관 병합 — §9.15~9.16, 실제 Runtime과 구분
+- [ ] 실제 lab/Recovery Image·설정/Secret 입력과 같은 조합 검증·수신 — §9.18
 - [ ] AWS 생성·Cloud 통합 — 실제 Plan·비용·담당 실행 조건 확인 후
 - [ ] 장애·복구·부하 시험과 결과·시연·정리
 
@@ -49,8 +53,8 @@
 | 작업 순서 | 현재 상태 | 무엇을 하면 끝나는가 |
 |---|---|---|
 | 1 설계와 운영 책임 | 완료 | 승인된 03·04·지침 등록과 종료 확인 |
-| 2 App·GitOps 코드 준비 | 첫 로컬 묶음 완료, 실제 이관·Build/Kustomize·실습은 남음 | 연결 설정·배포 선언 작성, 로컬 검사, 실제 이관/실습 인계 준비 |
-| 3 AWS·ROSA 코드와 실행 입력 | 담당별 진행 상태 인계 필요 | foundation 인계·ROSA 코드·실제 도구/계정/Backend·검토된 Plan |
+| 2 App·GitOps 코드 준비 | App Source main 병합·현재 Overlay 후보 Linux Source CI 완료, Root/정책 등 미완료 Source·새 Image·실제 lab/Recovery 입력·리뷰는 남음 | 기존 Owner/Gate의 Source 구현과 실제 Image·실습 같은 조합의 인계·검증 |
+| 3 AWS·ROSA 코드와 실행 입력 | ROSA Source 후보·Linux 검사 완료, 실제 기반 입력·지원·실행 리뷰 대기 | foundation 인계·ROSA 후보 코드·실제 도구/계정/Backend·검토된 Plan |
 | 4 Cloud 생성과 통합 | 이 기록에서 실행 전 | 비용 확인 후 생성, Image/Secret·Data 연결·로그인/게임/WS·Backup 정상 시험 |
 | 5 장애와 복구와 부하 | 최종 시험 전 | 검증 조합으로 장애·재생성·Offline 복구·부하의 실제 결과 확보 |
 | 6 결과와 시연과 정리 | 실행 결과 확보 후 | Must 판정, Runbook·기여·시연·잔존 비용과 보존 책임 정리 |
@@ -1094,6 +1098,21 @@ Provider Schema는 별도 임시 디렉터리에 전체 `*.tf`와 같은 Lock을
 
 이번 DR 목표 판단은 [03 §3-I.14](../design/03_DETAILED_DESIGN.md#recovery-design-review-20261003)의 기존 최소 예행을 따른다. C의 백업 Data 시각/로컬 확보 지연·Dump·격리 Import 부분 측정은 각 단계의 직접 입력으로 진행하며 새 App Image를 모든 단계의 선행조건으로 묶지 않는다. App을 포함한 전체 업무 복구에는 D의 새 Image와 C/A의 복구환경 입력이 필요하다. 00–04의 기존 설계 정합 보완 완료와 RTO 30분·영속 DB RPO 90분·운영 중 1시간 백업·복원 구조는 유지하며 새 목표/주기/구조의 최종 선택은 실제 근거 대기다.
 
+<a id="gitops-linux-source-validation-20261004"></a>
+### 9.18 GitOps Linux Source 검사 완료와 Draft 직접 조건 — 2026-10-04
+
+정본 [h-gitops Issue #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10)의 [h-gitops Draft PR #9](https://github.com/seokpan/seokpan-hybrid-gitops/pull/9) HEAD `80f4364a3f490d675aa60ff6439a30de7de4e8e7`는 [h-gitops 검사 Run](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37203477329)·[검사 Job](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37203477329/job/111439730766)에서 App 계약 11개가 통과했다. [h-gitops Draft PR #11](https://github.com/seokpan/seokpan-hybrid-gitops/pull/11) HEAD `44d5ec0f6652110d8b5cece852dcc1f250918b04`는 [h-gitops 검사 Run](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37203478853)·[검사 Job](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37203478853/job/111439734034)에서 App 11개+Cloud 8개, 총 19개가 통과했다. 둘 다 skip·예상 실패가 없으며 실제 checkout SHA와 검사 전후 Source 불변 단계가 통과했다. 기존 로컬 Source 보고와 새 GitHub Linux 실행을 각각의 범위로 보존한다.
+
+공통 Source 검사 Workflow만 추가했다. Workflow Blob은 `97e16eb7bc191d4cb12d839c999f32dee133298e`이며 #9의 나머지 17개·#11의 나머지 26개 Blob을 유지했다. #11은 기존 `ce0ce5af9866428d7734db0bb8cce1d425ec20a2`에 새 #9 HEAD를 두 부모 Merge로 소비하고 base를 현재 #9 Branch로 유지했다. 기존 Cloud 추가분 13파일의 diff를 보존했으며 배포 선언·검사 코드·목표 Replica·Secret 계약을 이번 Workflow 추가로 바꾸지 않았다.
+
+공개 저장소 표준 `ubuntu-24.04`에서 `contents: read`·정확한 제출 HEAD를 사용한다. Kustomize v5.7.1은 공식 배포본 SHA256을 확인하고 Python 3.12·PyYAML 6.0.2로 기존 Source 검사를 실행한다. 저장소가 비공개이면 Job을 차단하는 조건을 두었다. Cloud 자격 증명·Apply·Argo Sync·Registry 작업·유료 자원 실행·cache/artifact upload는 포함하지 않는다. 이는 B의 선언/Source 검사이며 D의 Jenkins App Build·Scan·Promotion을 대체하지 않는다. 실제 유료 자원 실행은 자원·기간·예상 비용·삭제 계획을 구체화하고 해당 실행에 명시적 동의를 받은 뒤 진행한다.
+
+이번 검사는 현재 App/Cloud Overlay·계약 검사 후보의 범위다. Root/Application/AppProject·NetworkPolicy/UWM·Migration·새 Recovery Redis/Bundle 구현은 기존 Owner·입력/실행 Gate에 따라 남으며 TH-08/09 전체 Source 완료를 뜻하지 않는다. 실제 Root/AppProject bootstrap 순서와 승인된 Namespace·CRD·Owner 입력도 Cloud 생성 없이 확인할 수 있는 별도 준비 항목이다. 새 설계 선택이나 모든 무료 Source 작업의 완료를 선언하지 않는다.
+
+#9의 직접 미충족 조건은 D 새 Image/Build·Scan·Digest, C/D 실제 DB·새 Redis·TLS/CA/Secret·접속/lab·Recovery 입력과 D의 [h-gitops Issue #5](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5)·[h-gitops Issue #6](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6) 같은 조합 검증·수신/승인이다. Source CI 성공만으로 Ready·Merge·업무/DR PASS를 판정하지 않는다. #11은 #9 위의 별도 Draft Stack으로 유지하고 #9 병합 후 main으로 retarget할 때 Cloud diff 보존을 다시 확인한다. Cloud 전체·최종 Offline T18 완료를 #9의 추가 Draft 조건으로 붙이지 않는다.
+
+이번 GitHub 실행은 Source CI 증거이며 새 Runtime T01~T23 Run/Run Index·Shared Execution 행·TH 전체 완료를 만들지 않았다. 이번 DR 피드백은 [03 §3-I.14](../design/03_DETAILED_DESIGN.md#recovery-design-review-20261003)의 최소 예행으로 이어간다. C의 백업 Data 시각/로컬 확보 지연·Dump·격리 Import 부분 측정은 각 단계의 직접 입력으로 시작하며 새 Image나 전체 ROSA 생성을 선행조건으로 요구하지 않는다. App을 포함한 전체 RTO는 D 새 Image·새 Recovery Redis·지정 클라이언트 접속 경로 준비 후 실제 업무 재개까지 측정한다. 기존 00–04 정합 보완 완료와 RTO 30분·영속 DB RPO 90분·운영 중 1시간 백업·Backup/Restore 구조는 유지하며 새 목표/주기/구조의 최종 선택은 실제 시간·손실·접속·작업량/비용 근거 대기다.
+
 ## 남은 작업과 다음 단계
 
 - [x] 최종 04·지침 등록 확인과 전체 설계 완료 상태 유지
@@ -1117,10 +1136,12 @@ Provider Schema는 별도 임시 디렉터리에 전체 `*.tf`와 같은 Lock을
 - [x] 인증된 App 원격 이관·Source PR 게시와 고정 reference 이력 보존 — §9.15
 - [x] h-app PR #5·h-infra PR #27 승인/main 병합과 h-infra PR #28 main 기준 정합 — §9.16
 - [x] h-infra PR #28 Linux fmt·원 Root validate·Provider Schema/13개 Type·Source/Lock 불변 검사 — §9.17
-- [ ] D 새 Build/Scan/Digest·실제 lab/완성 Recovery Bundle 및 실제 Cloud Controller Caller/Backend/Tool·제한 입력/IAM/지원·첫 Plan 준비 리뷰 — §9.16~9.17
+- [x] h-gitops PR #9/#11 정확한 HEAD·Source 불변·App 11개/전체 19개 Linux Source CI — §9.18
+- [ ] Root/Application/AppProject·NP/UWM·Migration·새 Recovery Redis/Bundle 구현과 bootstrap 순서·승인 Namespace/CRD/Owner 입력 — 기존 Owner/Gate, TH-08/09 전체 Source 미완료
+- [ ] D 새 Build/Scan/Digest·C/D 실제 lab/Recovery 입력·#5/#6 같은 조합 검증/수신·#9/#11 리뷰 및 실제 Cloud Controller Caller/Backend/Tool·제한 입력/IAM/지원·첫 Plan 준비 리뷰 — §9.16~9.18
 - [ ] 병행하는 foundation/Data/CI 구현과 B의 ROSA 코드 연결·실제 Plan 준비
 - [ ] 비용 확인 후 Cloud 생성·App/Data/Secret·GitOps 통합
 - [ ] 장애·재생성·복구·부하 시험과 Must 결과 판정
 - [ ] 결과·시연·발표·자원 정리와 보존 책임 완료
 
-**이번 요청의 다음 작업은 [03 §3-I.14](../design/03_DETAILED_DESIGN.md#recovery-design-review-20261003)의 설계 보완과 최소 Recovery 입력 확인을 기준으로, 부족한 실제 시간·Backup 최신성/손실·접속·팀 부담/비용 근거를 기존 예행에서 확보하고 목표/변경 범위를 비교하는 것이다.** 전체 프로젝트의 Source 이관·Build·Cloud/ROSA 구현과 인계는 별도 작업으로 보존하며 필요한 독립 준비는 병행한다. 기존 03·04 승인/종료 이력을 유지하되 이번 설계 보완을 막는 조건으로 사용하지 않는다. ROSA Source 검사는 §9.17에서 완료됐고 실제 Cloud 입력/Caller/Backend·첫 Plan 준비는 별도로 남는다. C의 부분 측정은 단계별 직접 입력으로 시작한다. 05 전체와 이번 목표 선택은 모두 실제 결과를 확보하기 전 완료로 표시하지 않는다.
+**이번 요청의 다음 작업은 [03 §3-I.14](../design/03_DETAILED_DESIGN.md#recovery-design-review-20261003)의 설계 보완과 최소 Recovery 입력 확인을 기준으로, 부족한 실제 시간·Backup 최신성/손실·접속·팀 부담/비용 근거를 기존 예행에서 확보하고 목표/변경 범위를 비교하는 것이다.** 전체 프로젝트의 Source 이관·Build·Cloud/ROSA 구현과 인계는 별도 작업으로 보존하며 필요한 독립 준비는 병행한다. 기존 03·04 승인/종료 이력을 유지하되 이번 설계 보완을 막는 조건으로 사용하지 않는다. ROSA Source 검사는 §9.17, GitOps Source 검사는 §9.18에서 완료됐으며 실제 Cloud 입력/Caller/Backend·첫 Plan 준비와 Image·lab/Recovery 같은 조합 검증은 별도로 남는다. C의 부분 측정은 단계별 직접 입력으로 시작한다. 유료 실행은 구체화된 실행의 명시적 동의 전 진행하지 않는다. 05 전체와 이번 목표 선택은 모두 실제 결과를 확보하기 전 완료로 표시하지 않는다.
