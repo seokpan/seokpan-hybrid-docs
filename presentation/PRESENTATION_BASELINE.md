@@ -155,14 +155,16 @@ Requirement
 
 ### Recovery
 
-| Metric | 승인 기준 |
+[03 §3-I.14.5](../design/03_DETAILED_DESIGN.md#recovery-design-decision-20261005)의 2026-10-05 설계 개정안을 참조한다. 아래 새 목표는 변경안의 리뷰·병합 후 적용하며, 그 전 공식 기준은 기존 RTO 30분·영속 DB RPO 90분·1시간 Backup이다. 이전 승인·실제 Run의 목표/판정은 새 수치로 덮어쓰지 않는다.
+
+| Metric | 설계 개정안의 목표 — 리뷰·병합 후 적용 |
 | --- | --- |
-| Offline Recovery RTO | 30분 이내 |
-| Offline Recovery RPO | 90분 이내 |
-| 운영 중 Portable Backup | 1시간 기준 |
+| Offline Recovery RTO | 10분 이내 |
+| 영속 DB Offline Recovery RPO | 30분 이내 |
+| 운영 중 Portable Backup | 15분 주기 |
 | 일반 Backup 보관 | 7일, 최종/마지막 검증 사본 별도 보호 |
 
-위 값은 현재 **Target**이다. 05의 실제 Run 전에는 Actual이나 PASS로 표현하지 않는다.
+위 값은 **Target**이며 실제 달성값이 아니다. 기존 Backup/Restore 구조를 유지하고, 부분 합성 예행과 운영 경로·클라이언트 전체 업무 재개·최종 T18 Acceptance를 구분한다. 조건이 맞는 실제 Run의 증거 전에는 Actual이나 PASS로 표현하지 않는다.
 
 p50, 세부 자원 사용량, 단계별 소요시간 등 추가 관측값을 수집할 수 있으나 공식 Acceptance Metric과 구분한다.
 
@@ -406,3 +408,4 @@ Issue에는 원본 수치·로그를 복사하지 않고 다음만 관리한다.
 - 최종 발표 후보로 유지할 것인가
 
 최종 Outline, Demo Scenario, Q&A 문서는 Actual이 충분히 확보된 뒤 `presentation/` 아래에 별도로 추가한다.
+

@@ -152,7 +152,9 @@ class Canvas:
 
     def finish(self):
         self.rect(64,self.h-122,1672,1,'#CED9E3',radius=0)
-        self.text(64,self.h-89,'기준: 승인 Project Source 00~04 · 2026-10-01  |  제작: 2026-10-02 KST',18,MUTED)
+        provenance = ('기준: Project Source 00~04 · DR 개정 2026-10-05  |  제작·개정: 2026-10-05 KST'
+                      if self.number == 10 else '기준: 승인 Project Source 00~04 · 2026-10-01  |  제작: 2026-10-02 KST')
+        self.text(64,self.h-89,provenance,18,MUTED)
         self.text(64,self.h-58,'근거: '+self.meta[3],18,MUTED)
         self.text(64,self.h-27,'확인 대기: '+self.meta[4],18,MUTED)
         for t in self.audit:
@@ -384,7 +386,7 @@ def observability(c):
 
 
 def recovery(c):
-    c.panel(64,206,1672,355,'정상 시 / 운영 중 1시간 Backup · 일반 7일 보존 · 마지막 검증본 보호','local')
+    c.panel(64,206,1672,355,'정상 시 / 운영 중 15분 Backup · 일반 7일 보존 · 마지막 검증본 보호','local')
     nodes=[(88,358,'Data 작업 VM',['VPN/TLS → RDS 논리 덤프','압축 → age 암호화']),
            (536,500,'S3 / Public HTTPS',['제한된 전송 인증으로 업로드','로컬 다운로드·Hash/완성본 확인']),
            (1126,586,'로컬 검증 Backup',['장애 전 동기화 · 시점/무결성/완성본','Recovery Storage 장애 영역 확인'])]
@@ -402,7 +404,7 @@ def recovery(c):
     c.arrow([(552,753),(668,753)],color='#B97428')
     c.arrow([(1132,753),(1248,753)],color='#B97428')
     c.para(88,900,'대표 업무/영속 데이터 확인 · 재로그인/새 게임 · 진행 상태 중단 · 사용자 Host 안내/재접속도 복구 시간에 포함',1624,21)
-    c.note(980,'시험 목표 / 아직 달성값 아님','RTO 30분 · RPO 90분  |  장애 후 AWS/S3/GitHub/Cloud IDP/ECR/KMS 신규 조회를 필수 단계로 두지 않음 · 1차 DB/MaxScale/Redis 보존',h=94)
+    c.note(980,'시험 목표 / 아직 달성값 아님','RTO 10분 · 영속 DB RPO 30분  |  장애 후 AWS/S3/GitHub/Cloud IDP/ECR/KMS 신규 조회를 필수 단계로 두지 않음 · 1차 DB/MaxScale/Redis 보존',h=94)
 
 
 def failure(c):

@@ -1,0 +1,14 @@
+event_id,timestamp_utc,timestamp_kst,actor_ref,event,result,evidence_ref
+isolated_source_prepare_start,2026-10-04T16:41:15.587058Z,2026-10-05T01:41:15.587058+09:00,Codex for tjung03,isolated_source_prepare_start,OK,summary.md#results
+quiescent_synthetic_members_committed,2026-10-04T16:41:17.358385Z,2026-10-05T01:41:17.358385+09:00,Codex for tjung03,quiescent_synthetic_members_committed,OK,summary.md#results
+backup_prepared_locally,2026-10-04T16:41:17.401232Z,2026-10-05T01:41:17.401232+09:00,Codex for tjung03,backup_prepared_locally,OK,summary.md#results
+scripted_continuation_start_not_incident,2026-10-04T16:41:17.401261Z,2026-10-05T01:41:17.401261+09:00,Codex for tjung03,scripted_continuation_start_not_incident,OK,summary.md#results
+decrypt_verified,2026-10-04T16:41:17.404741Z,2026-10-05T01:41:17.404741+09:00,Codex for tjung03,decrypt_verified,OK,summary.md#results
+new_isolated_database_restored_verified,2026-10-04T16:41:19.143879Z,2026-10-05T01:41:19.143879+09:00,Codex for tjung03,new_isolated_database_restored_verified,OK,summary.md#results
+fixture_ssl_required_role_accounts_ready,2026-10-04T16:41:19.181670Z,2026-10-05T01:41:19.181670+09:00,Codex for tjung03,fixture_ssl_required_role_accounts_ready,OK,summary.md#results
+new_redis_tls_auth_empty_verified,2026-10-04T16:41:19.368758Z,2026-10-05T01:41:19.368758+09:00,Codex for tjung03,new_redis_tls_auth_empty_verified,OK,summary.md#results
+production_backend_https_ready,2026-10-04T16:41:21.382436Z,2026-10-05T01:41:21.382436+09:00,Codex for tjung03,production_backend_https_ready,OK,summary.md#results
+partial_backend_business_verified,2026-10-04T16:41:23.214862Z,2026-10-05T01:41:23.214862+09:00,Codex for tjung03,partial_backend_business_verified,OK,summary.md#results
+owned_app_redis_stopped,2026-10-04T16:41:23.543463Z,2026-10-05T01:41:23.543463+09:00,Codex for tjung03,owned_app_redis_stopped,OK,summary.md#results
+owned_process_handle_cleanup_verified,2026-10-04T16:41:24.072378Z,2026-10-05T01:41:24.072378+09:00,Codex for tjung03,owned_process_handle_cleanup_verified,OK,summary.md#results
+owned_private_temporary_material_removed,2026-10-04T16:41:24.079701Z,2026-10-05T01:41:24.079701+09:00,Codex for tjung03,owned_private_temporary_material_removed,OK,summary.md#results

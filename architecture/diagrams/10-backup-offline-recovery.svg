@@ -11,7 +11,7 @@
 <text x="64" y="120" font-size="39" fill="#152C43" font-weight="700" text-anchor="start">10  백업과 On-Prem 오프라인 복구</text>
 <text x="64" y="161" font-size="23" fill="#52677A" font-weight="400" text-anchor="start">정상 시 사전 준비와 AWS 접속 불가 시 실행의 분리</text>
 <rect x="64" y="206" width="1672" height="355" rx="18" fill="#E8F5F1" stroke="#237E70" stroke-width="1.6"/>
-<text x="88" y="244" font-size="25" fill="#237E70" font-weight="700" text-anchor="start">정상 시 / 운영 중 1시간 Backup · 일반 7일 보존 · 마지막 검증본 보호</text>
+<text x="88" y="244" font-size="25" fill="#237E70" font-weight="700" text-anchor="start">정상 시 / 운영 중 15분 Backup · 일반 7일 보존 · 마지막 검증본 보호</text>
 <rect x="88" y="284" width="358" height="155" rx="12" fill="#FFFFFF" stroke="#CCD8E3" stroke-width="1.6"/>
 <rect x="88" y="298" width="5" height="127" rx="2" fill="#237E70"/>
 <text x="110" y="324" font-size="24" fill="#152C43" font-weight="700" text-anchor="start">Data 작업 VM</text>
@@ -53,9 +53,9 @@
 <text x="88" y="900.0" font-size="21" fill="#52677A" font-weight="400" text-anchor="start">대표 업무/영속 데이터 확인 · 재로그인/새 게임 · 진행 상태 중단 · 사용자 Host 안내/재접속도 복구 시간에 포함</text>
 <rect x="64" y="980" width="1672" height="94" rx="14" fill="#F1F4F7"/>
 <text x="86" y="1014" font-size="23" fill="#60788E" font-weight="700" text-anchor="start">시험 목표 / 아직 달성값 아님</text>
-<text x="86" y="1048.0" font-size="20" fill="#60788E" font-weight="400" text-anchor="start">RTO 30분 · RPO 90분  |  장애 후 AWS/S3/GitHub/Cloud IDP/ECR/KMS 신규 조회를 필수 단계로 두지 않음 · 1차 DB/MaxScale/Redis 보존</text>
+<text x="86" y="1048.0" font-size="20" fill="#60788E" font-weight="400" text-anchor="start">RTO 10분 · 영속 DB RPO 30분  |  장애 후 AWS/S3/GitHub/Cloud IDP/ECR/KMS 신규 조회를 필수 단계로 두지 않음 · 1차 DB/MaxScale/Redis 보존</text>
 <rect x="64" y="1078" width="1672" height="1" rx="0" fill="#CED9E3"/>
-<text x="64" y="1111" font-size="18" fill="#52677A" font-weight="400" text-anchor="start">기준: 승인 Project Source 00~04 · 2026-10-01  |  제작: 2026-10-02 KST</text>
+<text x="64" y="1111" font-size="18" fill="#52677A" font-weight="400" text-anchor="start">기준: Project Source 00~04 · DR 개정 2026-10-05  |  제작·개정: 2026-10-05 KST</text>
 <text x="64" y="1142" font-size="18" fill="#52677A" font-weight="400" text-anchor="start">근거: 03 §3-C.12.7 / §3-D.9.3~9.8 / §3-F.17.3 / §3-G.7 · 04 §5.1 / §5.5</text>
 <text x="64" y="1173" font-size="18" fill="#52677A" font-weight="400" text-anchor="start">확인 대기: 실제 Backup·독립 Storage/Key·도구 호환·복원 결과는 확인 대기</text>
 </svg>
