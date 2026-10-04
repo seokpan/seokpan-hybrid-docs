@@ -22,6 +22,8 @@
 
 **App·Infra 승인/병합 후속:** [§9.16](#app-infra-merged-20261004)에 h-app PR #5·h-infra PR #27의 main 병합과 #28의 main 기준 전환을 연결한다. App Source 리뷰/병합 대기는 해소됐고 새 Image·실제 최소 예행 입력은 남는다. [§9.15](#app-source-published-20261003)와 이전 관측은 당시 이력으로 보존한다.
 
+**ROSA Source 검사 최신 후속:** [§9.17](#rosa-linux-source-validation-20261004)의 h-infra PR #28 고정 HEAD에서 Linux CI의 fmt·원 Root validate·Provider Schema/선언 비교가 통과했다. 과거 환경의 RPC socket BLOCKED는 당시 이력으로 보존한다. 실제 Cloud Controller의 Caller/Backend/Tool 사전 확인, A/C/D 실제 제한 입력·IAM/지원 조합·첫 Plan 준비 리뷰와 DR 최소 예행은 남는다.
+
 **별도 프로젝트 구현 이력:** [§9.13 Cloud·ROSA 구현과 App 경쟁 결함 후속](#cloud-rosa-app-followup-20261002), [§9.12](#tjung03-latest-source-20261002)의 승인/병합 관측과 [§9.11](#tjung03-registration-rosa-input-20261002)의 TH-01~19·81개 식별자는 보존한다. 기존 유효 코드/검사는 취소하지 않으며 이번 복구 목표 판단의 증거나 우선 완료 조건으로 확대하지 않는다.
 
 현재 진행 현황:
@@ -1079,6 +1081,19 @@ main은 승인 1명·Squash 정책이다. [reference/app-migration-history-20261
 
 최소 W04 예행에는 실제 Backup ID/Hash·Data 시각/로컬 확보, 격리 DB·새 Redis·Host/TLS·업무 시간선과 부담/비용이 남는다. 전체 ROSA·최종 T18 완료를 선행조건으로 추가하지 않는다. 기존 00–04 설계와 정합 보완 완료를 유지하며 DR 목표/주기/구조의 최종 선택은 미완료다. RTO 30분·영속 DB RPO 90분·운영 중 1시간 백업과 복원 구조를 유지한다. 새 Runtime Run·TH 전체 완료·공유 실행 결과는 기록하지 않았다.
 
+<a id="rosa-linux-source-validation-20261004"></a>
+### 9.17 ROSA Linux Source 검사 완료와 첫 Plan 준비 경계 — 2026-10-04
+
+[h-infra Draft PR #28](https://github.com/seokpan/seokpan-hybrid-infra/pull/28)의 HEAD `8c680ddd4aff33204b63afe041dc35258c470a65`에서 [GitHub Actions Run](https://github.com/seokpan/seokpan-hybrid-infra/actions/runs/37199716092)과 [검사 Job](https://github.com/seokpan/seokpan-hybrid-infra/actions/runs/37199716092/job/111428719094)의 success를 확인했다. Source 정본은 [h-infra Issue #25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25)다. Core 1.16.4·AWS 6.67.0·RHCS 1.7.7을 고정하고 Core 공식 checksum, `-backend=false -lockfile=readonly` 초기화, fmt, 원래 ROSA Root의 validate JSON `valid=true`·errors 0·warnings 0, 실제 Provider Schema와 선언의 고유 Type 13개 비교 및 검사 전후 Source/Lock 불변 확인이 모두 통과했다.
+
+Provider Schema는 별도 임시 디렉터리에 전체 `*.tf`와 같은 Lock을 복사하고 **`backend.tf`만 제외**한 대상으로 조회했다. 나머지 HCL·Lock은 원 Root와 같다. 원 Root의 validate 성공과 임시 사본의 Provider Schema 성공을 구분하며 실제 S3 Backend 초기화·접근·State/Caller 검증 성공으로 확대하지 않는다. `b67d5dd4790e58b569ddb97b28b21a5d49b70773` 대비 새 변경은 Source 검사 Workflow와 README이며 HCL·Lock·INPUT_CONTRACT·main Registry는 유지됐다.
+
+첫 `098` 실행은 job-level env의 `runner.temp` 참조 때문에 Job이 만들어지지 않았다. 두 번째 `47d327` 실행은 원 Root validate에 성공했지만 같은 Root의 직접 Schema 조회가 Backend 초기화를 요구해 실패했다. 최종 `8c680ddd4aff33204b63afe041dc35258c470a65`에서 임시 사본으로 Schema 조회를 분리해 모두 통과했다. §9.13·§9.16과 당시 Issue에 기록한 로컬 Unix RPC socket BLOCKED는 그 환경/시점의 실제 실패 이력으로 남긴다. 이번 Linux Source 검사가 해당 미충족 코드 검사 조건을 해소하며 실패 이력을 삭제하거나 과거 실행을 PASS로 바꾸지 않는다.
+
+남은 #28의 직접 조건은 A/C/D의 실제 제한 출력·Account/Region·Role/IAM·지원 조합 수신, 실제 Cloud Controller의 Caller/정본 Backend/Tool 사전 확인, Source 사람 리뷰와 첫 Plan 준비 리뷰다. 이 조건이 남아 Draft를 유지한다. Plan/Cost·Apply·Cloud 생성·Worker Pull·전파/T19·App/DB/Offline Runtime 결과는 이번 Source 검사 범위에 없다. 기존 T01~T23의 새 Runtime Run/Run Index·TH 전체 완료·Shared Execution 행을 만들지 않았다.
+
+이번 DR 목표 판단은 [03 §3-I.14](../design/03_DETAILED_DESIGN.md#recovery-design-review-20261003)의 기존 최소 예행을 따른다. C의 백업 Data 시각/로컬 확보 지연·Dump·격리 Import 부분 측정은 각 단계의 직접 입력으로 진행하며 새 App Image를 모든 단계의 선행조건으로 묶지 않는다. App을 포함한 전체 업무 복구에는 D의 새 Image와 C/A의 복구환경 입력이 필요하다. 00–04의 기존 설계 정합 보완 완료와 RTO 30분·영속 DB RPO 90분·운영 중 1시간 백업·복원 구조는 유지하며 새 목표/주기/구조의 최종 선택은 실제 근거 대기다.
+
 ## 남은 작업과 다음 단계
 
 - [x] 최종 04·지침 등록 확인과 전체 설계 완료 상태 유지
@@ -1101,10 +1116,11 @@ main은 승인 1명·Squash 정책이다. [reference/app-migration-history-20261
 - [x] 고정 Seed Source·원 lab 참고 범위 수신, App 연결 코드·이력 보존 묶음·실제 Kustomize 후보 구현 — §9.9
 - [x] 인증된 App 원격 이관·Source PR 게시와 고정 reference 이력 보존 — §9.15
 - [x] h-app PR #5·h-infra PR #27 승인/main 병합과 h-infra PR #28 main 기준 정합 — §9.16
-- [ ] D 새 Build/Scan/Digest·실제 lab/완성 Recovery Bundle 및 Controller 입력/검사 — §9.16
+- [x] h-infra PR #28 Linux fmt·원 Root validate·Provider Schema/13개 Type·Source/Lock 불변 검사 — §9.17
+- [ ] D 새 Build/Scan/Digest·실제 lab/완성 Recovery Bundle 및 실제 Cloud Controller Caller/Backend/Tool·제한 입력/IAM/지원·첫 Plan 준비 리뷰 — §9.16~9.17
 - [ ] 병행하는 foundation/Data/CI 구현과 B의 ROSA 코드 연결·실제 Plan 준비
 - [ ] 비용 확인 후 Cloud 생성·App/Data/Secret·GitOps 통합
 - [ ] 장애·재생성·복구·부하 시험과 Must 결과 판정
 - [ ] 결과·시연·발표·자원 정리와 보존 책임 완료
 
-**이번 요청의 다음 작업은 [03 §3-I.14](../design/03_DETAILED_DESIGN.md#recovery-design-review-20261003)의 설계 보완과 최소 Recovery 입력 확인을 기준으로, 부족한 실제 시간·Backup 최신성/손실·접속·팀 부담/비용 근거를 기존 예행에서 확보하고 목표/변경 범위를 비교하는 것이다.** 전체 프로젝트의 Source 이관·Build·Cloud/ROSA 구현과 인계는 별도 작업으로 보존하며 필요한 독립 준비는 병행한다. 기존 03·04 승인/종료 이력을 유지하되 이번 설계 보완을 막는 조건으로 사용하지 않는다. 05 전체와 이번 목표 선택은 모두 실제 결과를 확보하기 전 완료로 표시하지 않는다.
+**이번 요청의 다음 작업은 [03 §3-I.14](../design/03_DETAILED_DESIGN.md#recovery-design-review-20261003)의 설계 보완과 최소 Recovery 입력 확인을 기준으로, 부족한 실제 시간·Backup 최신성/손실·접속·팀 부담/비용 근거를 기존 예행에서 확보하고 목표/변경 범위를 비교하는 것이다.** 전체 프로젝트의 Source 이관·Build·Cloud/ROSA 구현과 인계는 별도 작업으로 보존하며 필요한 독립 준비는 병행한다. 기존 03·04 승인/종료 이력을 유지하되 이번 설계 보완을 막는 조건으로 사용하지 않는다. ROSA Source 검사는 §9.17에서 완료됐고 실제 Cloud 입력/Caller/Backend·첫 Plan 준비는 별도로 남는다. C의 부분 측정은 단계별 직접 입력으로 시작한다. 05 전체와 이번 목표 선택은 모두 실제 결과를 확보하기 전 완료로 표시하지 않는다.
