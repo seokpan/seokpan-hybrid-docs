@@ -3,6 +3,8 @@ Seokpan 2차 - 하이브리드 클라우드 기획·아키텍처·검증 문서
 
 1차 온프레미스 프로젝트를 기반으로 AWS 하이브리드 환경으로 이전하는 2차 프로젝트의 문서 저장소입니다. 승인된 목표는 **Cloud Primary + On-Prem Restore-based Recovery**입니다. 설계 승인과 실제 구축·시험 결과를 구분합니다.
 
+**2026-10-05 DR 설계 개정안:** [03 §3-I.14.5](design/03_DETAILED_DESIGN.md#recovery-design-decision-20261005)에 **RTO 10분·영속 DB RPO 30분·운영 중 Portable Backup 15분 주기**, 기존 Cloud Primary + On-Prem Backup/Restore 구조 유지안을 연결합니다. 이 개정의 리뷰·병합 전 공식 기준은 기존 30분·90분·1시간이며, 새 기준은 리뷰·병합 후 적용합니다. 설계 변경안과 실제 목표 달성·최종 T18 Acceptance는 구분합니다.
+
 현재 진행 현황:
 
 - [x] 설계 원문 00~04 보존과 출처 확인
@@ -58,4 +60,5 @@ Seokpan 2차 - 하이브리드 클라우드 기획·아키텍처·검증 문서
 Presentation Baseline은 새로운 Test Plan이 아닙니다. 공식 Test/Acceptance는 03을 따르고 실제 구현·검증 결과는 05와 [Evidence Index](evidence/README.md)에 남깁니다. 발표에서는 해당 원본 Evidence 중 의미 있는 결과만 선별하며 제품 기본기능·일반 구축 절차와 팀의 설계 판단·직접 구현·검증·Troubleshooting을 구분합니다.
 
 05 진행 중 발표 후보의 상태는 [Tracking Issue #6](https://github.com/seokpan/seokpan-hybrid-docs/issues/6)에서 추적합니다. 실제 Metric·Log·Timeline은 Issue나 `presentation/`에 중복 저장하지 않고 `evidence/<test-id>/<run-id>/`를 정본으로 사용합니다.
+
 

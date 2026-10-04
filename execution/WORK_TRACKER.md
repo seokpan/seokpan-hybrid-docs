@@ -2,9 +2,13 @@
 
 이 표는 작업/입력/통합의 **링크와 마지막 확인 시각**을 연결합니다. 담당자 인계와 팀의 부분 보고를 연결하며 이 표의 빈칸을 작업 부재나 실패로 해석하지 않습니다. 기존05의 Source 관측과 부분 검사 이력은 그 시점/범위로 보존합니다.
 
+**2026-10-05 현재 DR 설계 변경안:** [03 §3-I.14.5](../design/03_DETAILED_DESIGN.md#recovery-design-decision-20261005)의 **RTO10분·영속 DB RPO30분·운영 중 Portable Backup15분·기존 Backup/Restore 유지**를 선택했다. 이 개정이 main에 병합되면 새 공식 설계로 전환하며, 그 전 공식 main30분/90분/1시간과 아래 날짜별 관측/승인 이력은 보존한다. 관련 문서·Source·SVG/PNG·출처 정합 검증에서 필수 추가 보완이 없어질 때 설계 변경안 완료를 보고한다. 실제 Timer/전송/전체 업무 달성과 T18/전체05는 별도 실행 Gate다.
+
 **2026-10-03 이번 DR 피드백의 우선순위:** [03 §3-I.14 설계 재검토](../design/03_DETAILED_DESIGN.md#recovery-design-review-20261003) → 필요한 02/04 정합 보완 → 기존 최소 예행에서 부족한 시간·최신성/손실·접속·팀 부담/비용 확보 → 목표/변경 범위 선택 → 채택 내용의 설계·코드·SVG/PNG 반영입니다. [05 §9](05_IMPLEMENTATION_AND_VALIDATION.md#recovery-objective-review-20261002)는 실행 근거를 지원합니다. [Cloud·ROSA·App 후속](#cloud-rosa-app-progress-20261002)과 [05 §9.13](05_IMPLEMENTATION_AND_VALIDATION.md#cloud-rosa-app-followup-20261002)은 별도 프로젝트 구현 이력이며 전체 완료를 이번 판단의 선행조건으로 묶지 않습니다. 과거 관측과 다른 담당자의 기록은 보존합니다.
 
 **App·Infra 최신 인계:** h-app PR #5·h-infra PR #27 병합과 h-infra PR #28 main 전환은 [병합 후속](#app-infra-merged-20261004)에 보존한다. 현재 #28 HEAD와 Linux Source 검사 완료·직접 남은 입력은 [ROSA 후속](#rosa-linux-source-validation-20261004)과 [05 §9.17](05_IMPLEMENTATION_AND_VALIDATION.md#rosa-linux-source-validation-20261004)을 따른다. h-gitops PR #9/#11의 11개/19개 Linux Source CI·트리거 정리는 [이전 GitOps 후속](#gitops-linux-source-validation-20261004)·[05 §9.18](05_IMPLEMENTATION_AND_VALIDATION.md#gitops-linux-source-validation-20261004)에 보존한다. 현재 Recovery 역할·Source/입력·Draft 직접 조건 정정은 [Recovery 직접 후속](#recovery-source-role-followup-20261004)·[05 §9.19](05_IMPLEMENTATION_AND_VALIDATION.md#recovery-source-role-followup-20261004)에 연결한다. 과거 Push/리뷰 대기·로컬 RPC socket BLOCKED와 현재 실제 Image/환경·Cloud 입력 대기를 구분한다.
+
+**2026-10-05 독립 Data·Backend 부분 예행:** 사용자 정태훈의 요청으로 Codex가 별도 임시 DB·합성 데이터의 Backup/Restore와 새 TLS/AUTH Redis·HTTPS Backend의 로그인/랭킹·새 게임 FORFEIT/현재 결과·SQL 검증을 각각 실행하고 새 Run 2개와 Index를 연결했다. [최신 부분 예행](#recovery-fixture-measurement-20261005)·[05 §9.20](05_IMPLEMENTATION_AND_VALIDATION.md#recovery-fixture-measurement-20261005)·[Data Run](../evidence/T18/fixture-20261005-01/summary.md)·[Backend Run](../evidence/T18/business-fixture-20261005-01/summary.md)을 따른다. C/A/B/D 배정 책임은 유지하며 팀원 실행/리뷰·D Index 검토/수신 완료로 기록하지 않는다. FE/browser/WSS·승인 Image/Host·실제 운영 경로·전체 RTO/RPO 달성은 남는다. 새 설계 선택은 위03 §3-I.14.5의10분/30분/15분 변경안으로 정리했다.
 
 ## Current Observation
 
@@ -282,3 +286,23 @@ C의 백업 최신성 관측은 Data/로컬 완성 시각 근거, Dump는 실행
 C Dump/Import 실측·최종 DR 목표 선택은 #9의 추가 Draft 해제 조건이 아니다. #9는 B의 필요한 Source/계약 준비·사람 리뷰와 D 새 Image·C/D 실제 lab/Recovery 입력의 같은 조합 검증/수신을 확인한다. #11은 기존 Stack·향후 main retarget/diff 확인을 유지한다. 최종 T18·Warm Standby·전체 ROSA를 직접 조건으로 추가하지 않는다. 0 Replica/입력 대기 Source는 미기동이며 완성 Bundle/Runtime PASS가 아니다.
 
 사용자가 [h-docs PR #28](https://github.com/seokpan/seokpan-hybrid-docs/pull/28)의 작업 Branch를 삭제했고 이번 작업 시작 원격 목록에서 Docs main만 남은 것을 확인했다. 이번 작업에서 실제 유료 자원·배포·새 Runtime Run/Index·Shared Execution·TH 전체 완료는 만들지 않는다. 00–04 기존 보완 완료와 공식30분/90분/1시간 Backup/Restore는 유지하며 새 DR 선택은 실제 근거 대기다. 최종 선택과 관련 설계/코드/SVG/PNG 정합 반영·검증까지 완료되면 근거·변경/유지 위치를 사용자에게 알릴 기존 조건을 유지한다.
+
+
+<a id="recovery-fixture-measurement-20261005"></a>
+## 독립 합성 Data·Backend 부분 예행과 역할·수신 기록 — 2026-10-05
+
+[h-infra Draft PR #29](https://github.com/seokpan/seokpan-hybrid-infra/pull/29)의 Source `4a4ee1b6762502be1e2ddf12d451e45205fdca03`로 실제 수행한 [새 T18 부분 Run](../evidence/T18/fixture-20261005-01/summary.md)을 [Index](../evidence/README.md#run-index)에 연결했다. 구현은 시험용 Source 4파일이며 운영 Backup 자동화 전체가 아니다. [05 §9.20](05_IMPLEMENTATION_AND_VALIDATION.md#recovery-fixture-measurement-20261005)에 기여·인계와 판정 범위를 남기고 실제 수치·시간선은 Run 정본에만 둔다.
+
+후속 Source `29b4a1f01bd555edeebac946cd8ee174da4432ab`의 [별도 Backend 부분 Run](../evidence/T18/business-fixture-20261005-01/summary.md)은 age 복원 뒤 새 TLS/AUTH Redis·Production Backend HTTPS를 사용한 새 로그인/랭킹·새 방/게임·FORFEIT 완료와 현재 방 결과·SQL Rating 반영을 실제 검증했다. 앞선 Data Run의 Source/원문/측정값은 유지하고 새 다섯 파일 Run과 Index를 연결했다. 실제 수치는 여기 복사하지 않는다.
+
+- [x] 요청자 tjung03 / 실제 실행·기록 Codex / C Data 배정 책임 구분
+- [x] 새 임시 DB·합성 Fixture의 부분 실행과 새 다섯 파일 Run, Index 임시 연결
+- [x] 새 TLS/AUTH Redis·Production Backend HTTPS 업무 연결을 별도 다섯 파일 Run으로 실행·Index 연결
+- [ ] C Data 리뷰와 D Index 형식 검토·수신 — 이번 기록으로 팀원 수신/실행을 확정하지 않음
+- [ ] 실제 운영 버전/계정·Backup 경로와 Host/Redis/Image/클라이언트 차이, 전체 업무 재개·손실·부담/비용 근거 비교
+- [x] 새 DR10분/30분/15분·Backup/Restore 유지 설계 변경안 선택과 관련 계약 반영 —03 §3-I.14.5
+- [ ] Source/문서·SVG/PNG/출처 최종 검증·PR 리뷰/병합, 실제 전체 목표 달성은 별도
+
+MariaDB 10.11.14·동시 쓰기 없는 합성 데이터·동일 Host 복사로 한정한다. 실제 사전 점검11.8.9·RDS/S3/VPN·운영 부하는 검증하지 않았다. Data Run의 TLS/목적 계정·App/Redis 제외와 후속 Backend Run의 폐기 가능한 목적 SSL 계정·새 TLS/AUTH Redis·HTTPS Backend 검증을 구분한다. FE/browser/WSS·승인 Image/Release·OCP/Host·사고 탐지/판단/안내는 미측정이다. 두 부분 실행 PASS, Render/Deployment/Acceptance NOT RUN, 전체 RTO/RPO null이며 스크립트 부분 시간을 서비스 RTO로 쓰지 않는다. 공유 실행·C Branch/main·실제 프로젝트 Data/Backup/Key와 A/B/D 기존 기록은 변경하지 않았다. 최유준의 증거 책임은 유지하며 Index는 Codex가 임시 연결했으므로 D 검토/수신을 별도로 남긴다.
+
+**새 DR 설계 변경안은 [03 §3-I.14.5](../design/03_DETAILED_DESIGN.md#recovery-design-decision-20261005)의10분/30분/15분·Backup/Restore 유지로 선택했고, 다음은 관련 Source·문서·SVG/PNG/출처의 최종 정합 검증·리뷰/병합이다.** 고정 App Source의 과거 DB 기록 보존과 새 Redis의 현재 방 결과/사용자 업무 경계도03 §3-I.14.4·04 §5.1/§10.2·05 §9.2~9.3에 반영했다.00/01/02의 역사/목적/구조와 네 사람 책임·$450/$500·Freeze는 유지한다. 실제15분 Timer/사본 완성/전송/최신성·Host/독립 사본·Image/FE/HTTPS/WSS·전체 사고 t0~업무/Data t1과 손실·Cost/기간은 해당 실행 전에 확인한다. 정태훈도 승인된 격리 환경의 C 기술 측정을 수행할 수 있으며 배정 책임·실제 수행자/리뷰/수신을 구분한다. nominal15분을 성공 간격G≤15분/전송D≤15분으로 보장하지 않고 실제G+D+시점 불확실성U≤30분을 관측한다. 지연/실패/이전 사본 선택은 실제 Data 나이·미달/null로 남기고 같은 Run의 목표를 완화하지 않는다. 관련 산출물의 필수 추가 보완0건이면 설계 변경안 완료·변경/유지 위치를 사용자에게 보고하며 PR의 공식 main 반영과 실제 전체 목표 달성/운영 T18/05 종료는 따로 밝힌다.

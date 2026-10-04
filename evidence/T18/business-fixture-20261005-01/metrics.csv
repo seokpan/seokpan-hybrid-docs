@@ -1,0 +1,8 @@
+metric_id,baseline,target,actual,unit,aggregation,sample_count,condition_ref,raw_artifact_ref
+dump_seconds,,,0.037194974000158254,seconds,single synthetic execution,1,summary.md#scope,summary.md#results
+dump_bytes,,,98069,bytes,single synthetic execution,1,summary.md#scope,summary.md#results
+decrypt_verify_seconds,,,0.0034630939990165643,seconds,single synthetic execution,1,summary.md#scope,summary.md#results
+import_seconds,,,0.06652162300088094,seconds,single synthetic execution,1,summary.md#scope,summary.md#results
+app_start_to_ready_seconds,,,2.0135046010000224,seconds,single synthetic execution,1,summary.md#scope,summary.md#results
+https_business_probe_seconds,,,1.832387189999281,seconds,single synthetic execution,1,summary.md#scope,summary.md#results
+scripted_continuation_seconds,,,5.813593316001061,seconds,single synthetic execution,1,summary.md#scope,summary.md#results

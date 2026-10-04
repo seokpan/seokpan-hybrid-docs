@@ -156,7 +156,7 @@
 - **목적:** 정상 시 사전 준비와 AWS 접속 불가 시 복구 실행을 분리합니다.
 - **정상 준비:** Data VM→VPN/TLS→RDS 논리 덤프→압축/age 암호화→S3 HTTPS 업로드→로컬 다운로드/무결성·완성본 확인. Image는 Harbor, Manifest/도구/CA·암호화 설정은 Recovery Bundle로 확보합니다.
 - **복구 실행:** 로컬 검증 Backup 선택/해독→새 전용 VM의 격리 MariaDB 복원→직접 TLS 접속→새 Recovery Redis→별도 Secret·보존 Manifest Apply→사용자 Host 안내→대표 업무/영속 데이터 검증.
-- **필수 표시:** Data 작업 VM과 복구 DB VM은 별도. 기존 1차 DB/MaxScale/Redis를 덮어쓰지 않음. Backup 주기는 운영 중 1시간·일반 7일, RTO 30분/RPO 90분은 달성값이 아니라 시험 목표입니다.
+- **필수 표시:** Data 작업 VM과 복구 DB VM은 별도. 기존 1차 DB/MaxScale/Redis를 덮어쓰지 않음. 2026-10-05 개정 요구사항은 운영 중 Portable Backup 15분 주기·일반 7일 보존, RTO 10분/영속 DB RPO 30분이며 달성값이 아니라 설계·시험 목표입니다. 최초 제작 당시의 1시간·30분/90분 기준은 03 §3-I.14의 이력에 보존합니다.
 - **주의:** 장애 후 AWS/S3/GitHub/Cloud IDP/ECR/KMS 신규 조회가 복구 필수 단계인 선은 그리지 않습니다. 로컬 DNS/Harbor/기존 플랫폼까지 차단하는 시험으로 확대하지 않습니다. RDS PITR와 Portable Backup은 다른 경로입니다.
 - **근거:** 03 §3-C.12.7·§3-D.9.3~9.8·§3-F.17.3·§3-G.7, 04 §5.1·5.5·§10.2.
 - **남은 입력:** 실제 독립 Storage/Key/호환 도구·Backup·Bundle·Restore 결과. 계획된 사전 준비와 복구 순서를 제작합니다.

@@ -19,11 +19,11 @@
     },
     {
       "path": "design/03_DETAILED_DESIGN.md",
-      "sha256": "caca6cd19bd459aab1b3569295078850f75b241e8faaab758a50ce961f99f4fc"
+      "sha256": "1588d95a1a3b220e9b13192c13115034834fcc71a66badfb3db947668168f1b7"
     },
     {
       "path": "design/04_IMPLEMENTATION_READINESS.md",
-      "sha256": "750c84d0a43a25f1941867f012247e37f0ce7ed0649ab77fd809d6b42255d222"
+      "sha256": "b104e8aa57233e1cfdb0027f4ec918e920999c1dd4395a3f8f8c277008afe1e7"
     }
   ],
   "checks": {
@@ -278,13 +278,13 @@
       "pending": "실제 Backup·독립 Storage/Key·도구 호환·복원 결과는 확인 대기",
       "svg": {
         "path": "architecture/diagrams/10-backup-offline-recovery.svg",
-        "bytes": 37413,
-        "sha256": "6471d1e7bbd449f913ee8f5438d87b2b9c0cdd5953d8c5441dbd40c289918709"
+        "bytes": 37432,
+        "sha256": "d703b30a42538132b928b13ff994d01f22b2ebb4de051deeea2cf0ca13c2804b"
       },
       "png": {
         "path": "architecture/exports/10-backup-offline-recovery.png",
-        "bytes": 592907,
-        "sha256": "077eeaace988f64132f7e1baacba34bddff9b29a5998eccf2160a9f3ef00f261"
+        "bytes": 597942,
+        "sha256": "2932a637dccf9a2f914fdd9ad619610b4b1d52feb6c8eeff4e5d1c51cc84d28a"
       },
       "svg_size": [
         1800,
@@ -361,5 +361,111 @@
     "new_recovery_targets": "NOT_DECIDED",
     "runtime_validation": "NOT_ASSESSED",
     "svg_png_content": "UNCHANGED"
+  },
+  "followup_review": {
+    "date": "2026-10-05 KST",
+    "status": "SPEC_COMPLETE",
+    "reference": "design/03_DETAILED_DESIGN.md#recovery-design-decision-20261005",
+    "changed_design_documents": [
+      "03_DETAILED_DESIGN.md",
+      "04_IMPLEMENTATION_READINESS.md"
+    ],
+    "new_recovery_targets": "SPEC_REQUIREMENT_SELECTED",
+    "requirements": {
+      "rto_minutes": 10,
+      "persistent_db_rpo_minutes": 30,
+      "operating_portable_backup_interval_minutes": 15
+    },
+    "structure": "Cloud Primary plus On-Prem Backup/Restore; dedicated new isolated MariaDB and separate new Redis; no additional Warm Standby or continuous replication.",
+    "repository_application": "New design requirements apply when this Docs change is reviewed and merged to main; earlier 30/90/hourly baseline remains historical.",
+    "actual_partial_runs": [
+      {
+        "reference": "evidence/T18/fixture-20261005-01/summary.md",
+        "app_sha": "c12b3d15a4dd2c806fac4326a9eb30ed6e8a81b3",
+        "infra_sha": "4a4ee1b6762502be1e2ddf12d451e45205fdca03",
+        "scope": "partial T17/T18: synthetic MariaDB Dump/gzip/age/local-copy/decrypt/isolated import/data verification only",
+        "partial_execution": "PASS",
+        "actual_operator": "Codex, user-authorized contribution for tjung03",
+        "assigned_execution_owner": "kshi1313-gif (C/Data)",
+        "reviewer": null,
+        "verification": {
+          "render": "NOT RUN",
+          "deployment": "NOT RUN",
+          "acceptance": "NOT RUN"
+        },
+        "rto_seconds": null,
+        "rpo_seconds": null
+      },
+      {
+        "reference": "evidence/T18/business-fixture-20261005-01/summary.md",
+        "app_sha": "c12b3d15a4dd2c806fac4326a9eb30ed6e8a81b3",
+        "infra_sha": "29b4a1f01bd555edeebac946cd8ee174da4432ab",
+        "scope": "partial synthetic Backup/Restore + new Redis TLS/AUTH + production Backend HTTPS login/ranking/new-game",
+        "partial_execution": "PASS",
+        "actual_operator": "Codex, user-authorized contribution for tjung03",
+        "assigned_execution_owner": "kshi1313-gif C/Data; tjung03 B/App; cyj200115-prog D/evidence",
+        "reviewer": null,
+        "verification": {
+          "render": "NOT RUN",
+          "deployment": "NOT RUN",
+          "acceptance": "NOT RUN"
+        },
+        "rto_seconds": null,
+        "rpo_seconds": null
+      }
+    ],
+    "runtime_validation": "ACTUAL_OFFLINE_RECOVERY_UNVALIDATED",
+    "full_t18_acceptance": "NOT RUN",
+    "data_and_index_review": "C Data review and D Index review/receipt pending; no teammate execution/review attributed by these records.",
+    "svg_png_content": "UPDATED_DIAGRAM_10_ONLY",
+    "unchanged_diagrams": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "11",
+      "12"
+    ],
+    "scope": "Selected design requirements and current restore structure, with preserved historical Run criteria. Synthetic local Data and Backend/new Redis business-path runs inform feasibility only; actual RDS/S3/On-Prem freshness, approved Images/platform, detection/decision/client transition and full operational Acceptance are not established."
+  },
+  "followup_review_history": [
+    {
+      "date": "2026-10-05 KST",
+      "status": "DR_FOLLOWUP_PR_CANDIDATE",
+      "reference": "design/03_DETAILED_DESIGN.md#recovery-app-scope-20261005",
+      "changed_design_documents": [
+        "03_DETAILED_DESIGN.md",
+        "04_IMPLEMENTATION_READINESS.md"
+      ],
+      "scope": "Clarify SQL preservation of older completed DB records versus new Redis session/rankings/cumulative statistics/new game completion/current room result; no new history feature or DB structure change.",
+      "actual_partial_run": {
+        "reference": "evidence/T18/fixture-20261005-01/summary.md",
+        "app_sha": "c12b3d15a4dd2c806fac4326a9eb30ed6e8a81b3",
+        "infra_sha": "4a4ee1b6762502be1e2ddf12d451e45205fdca03",
+        "scope": "Independent disposable synthetic MariaDB Dump/gzip/age/same-host copy/decrypt/new isolated import/data comparison only.",
+        "partial_execution": "PASS",
+        "assigned_execution_owner": "kshi1313-gif (C/Data)",
+        "actual_operator": "Codex under tjung03 authorization",
+        "data_and_index_review": "C Data review and D Index review/receipt pending"
+      },
+      "new_recovery_targets": "NOT_DECIDED",
+      "baseline": "UNCHANGED: RTO 30 minutes, persistent DB RPO 90 minutes, hourly Portable Backup, Cloud Primary plus On-Prem Backup/Restore.",
+      "runtime_validation": "PARTIAL_LOCAL_SYNTHETIC_DATA_ONLY",
+      "full_t18_acceptance": "NOT RUN",
+      "svg_png_content": "UNCHANGED",
+      "diagram_checks": "Existing historical checks preserved; not rerun in this metadata-only follow-up."
+    }
+  ],
+  "latest_check_scope": {
+    "date": "2026-10-05 KST",
+    "reference": "architecture/PRODUCTION_REVIEW.md",
+    "asset_checks": "Current 12 diagram SVG/XML, PNG, embedded font, declared geometry and subnet checks passed in staging review; only diagram 10 content changed.",
+    "source_identity": "SOURCE_IDENTITY_5_PASS",
+    "note": "2026-10-05 KST final verification after frozen 03/04 and both manifests were resynchronized into staging: SVG XML 12, PNG decode 12, embedded font glyphs 12, declared geometry 12, approved subnet CIDRs 9, source identity 5 and high-risk text matches 0. Final source hashes match source_files: 03 1588d95a1a3b220e9b13192c13115034834fcc71a66badfb3db947668168f1b7 and 04 b104e8aa57233e1cfdb0027f4ec918e920999c1dd4395a3f8f8c277008afe1e7. Eleven unchanged diagrams retain their original bytes; no runtime or target-attainment validation."
   }
 }

@@ -1,6 +1,6 @@
 # Evidence Index and Run Guide
 
-실제 실행 결과는 승인04 §5.4·§10.4에 따라 `evidence/<test-id>/<run-id>/`에 남깁니다. 각 실행 담당자가 자기 결과를 작성하고 최유준이 Index/형식을 연결합니다. 아래는 빈 양식이며 **이 Index에 연결된 실제 Run은 아직 없습니다.** 기존 lab 보고와05의 부분 검사 이력을 여기 새 Run으로 수행했다고 표시하지 않습니다.
+실제 실행 결과는 승인04 §5.4·§10.4에 따라 `evidence/<test-id>/<run-id>/`에 남깁니다. 각 실행 담당자가 자기 결과를 작성하고 최유준이 Index/형식을 연결합니다. **현재 Index에는 아래의 독립 합성 Data 부분 예행과 Backend 업무 연결 부분 예행의 실제 Run 2개가 연결돼 있습니다.** 사용자 정태훈의 요청으로 Codex가 실행·기록하고 Index를 임시 연결했으며, C/B 영역 리뷰와 D Index 검토·수신은 대기합니다. 기존 lab 보고와05의 부분 검사 이력을 여기 새 Run으로 수행했다고 표시하지 않습니다.
 
 ## Create a Run
 
@@ -12,7 +12,7 @@
 
 발표 후보로 선별한 실제 Run은 [05 §0.7](../execution/05_IMPLEMENTATION_AND_VALIDATION.md#07-발표와-보고에-사용할-측정과-증거)의 별도 기준에 따라 [Issue #6](https://github.com/seokpan/seokpan-hybrid-docs/issues/6)에 원본 Run 링크와 간략한 후보 판정을 연결합니다. 실제 수치·로그·시간선의 정본은 이 Run이며 Issue에 복사하지 않습니다.
 
-GitOps의 `releases/<release-id>.json`은 후보/선언이며 Docs의 Run과 구분합니다. 후보 안에 후보 자신을 포함한 GitOps SHA를 넣지 않습니다. 실제 Run은 Commit 후 실제 사용 GitOps SHA를 기록합니다. 이번 release.json은 승인 필드의 빈 Run 양식이며 새 Validator/파이프라인 구현이나 최종 검증을 의미하지 않습니다.
+GitOps의 `releases/<release-id>.json`은 후보/선언이며 Docs의 Run과 구분합니다. 후보 안에 후보 자신을 포함한 GitOps SHA를 넣지 않습니다. 실제 Run은 Commit 후 실제 사용 GitOps SHA를 기록합니다. `_template/release.json`은 승인 필드의 빈 Run 양식이며 새 Validator/파이프라인 구현이나 최종 검증을 의미하지 않습니다.
 
 ## Recovery time calculation
 
@@ -45,7 +45,13 @@ python3 tools/recovery_metrics.py evidence/<test-id>/<run-id>/release.json --con
 <a id="recovery-design-review-inputs"></a>
 ## Recovery design review inputs
 
+현재 목표/주기 설계 변경안은 [03 §3-I.14.5](../design/03_DETAILED_DESIGN.md#recovery-design-decision-20261005)의 **RTO10분·영속 DB RPO30분·DB 운영 중 Portable Backup15분·기존 Backup/Restore 유지**다. 이 개정이 main에 병합되면 새 공식 설계로 전환하며 그 전 main의30분/90분/1시간 승인 이력과 구분한다. 이미 수행한 아래 두 부분 Run의10파일·빈 Target/null·NOT RUN 판정은 소급 수정하지 않는다. 실제 운영 Timer/Backup 경로·사고 시작부터 지정 클라이언트 업무/Data 완료의 전체 Run이 있어야 새 목표 달성을 판정한다.
+
+정상 성공 경로에서는 실제 성공 Data 최대 간격G＋Data→로컬 사용 가능한 완성본 지연D＋시점/시계 불확실성U≤30분을 관측한다. nominal15분을 G≤15분 또는 D≤15분 보장으로 대체하지 않는다. jitter/생략·전송/Storage/VM 장애·이전 사본 선택은 실제 사용 Data 나이와 손실로 기록하고 초과는 미달, 시점 미확인은 null/미판정으로 남긴다.30분은 프로젝트 시험 후보이며 실제 사업 사용자의 손실 허용 승인이나 상용 SLA가 아니다.
+
 복구 목표의 설계 판단은 [03 §3-I.14](../design/03_DETAILED_DESIGN.md#recovery-design-review-20261003), 최소 예행의 입력·측정은 [05 §9.2~9.6](../execution/05_IMPLEMENTATION_AND_VALIDATION.md#recovery-objective-review-20261002)를 따른다. 기존 Run 다섯 파일과 [HANDOFF](../execution/HANDOFF_TEMPLATE.md)를 사용하며 새 스키마·시험 ID·상시 자동화를 추가하지 않는다.
+
+현재 새 Redis에서의 사용자 기능 범위는 [03 §3-I.14.4](../design/03_DETAILED_DESIGN.md#recovery-app-scope-20261005)를 따른다. 고정 [h-app Source c12b3d15](https://github.com/seokpan/seokpan-hybrid-app/tree/c12b3d15a4dd2c806fac4326a9eb30ed6e8a81b3)의 [Game 결과 계약](https://github.com/seokpan/seokpan-hybrid-app/blob/c12b3d15a4dd2c806fac4326a9eb30ed6e8a81b3/backend/src/seokpan/game/application/service.py)과 [현재 결과 화면](https://github.com/seokpan/seokpan-hybrid-app/blob/c12b3d15a4dd2c806fac4326a9eb30ed6e8a81b3/frontend/src/game/GamePanel.tsx)을 근거로 기존 완료 DB 기록 보존과 현재 방 결과 조회를 구분한다. 아래 Fixture DDL의 출처는 같은 개정의 [20260901 Migration](https://github.com/seokpan/seokpan-hybrid-app/blob/c12b3d15a4dd2c806fac4326a9eb30ed6e8a81b3/backend/migrations/versions/20260901_0001_stone_game_v1.py)·[20260902 Migration](https://github.com/seokpan/seokpan-hybrid-app/blob/c12b3d15a4dd2c806fac4326a9eb30ed6e8a81b3/backend/migrations/versions/20260902_0002_game_participant_identity_expand.py)이며, 실제 Migration CLI/운영 Schema/데이터 검증과 구분한다. Source는 [h-infra Draft PR #29](https://github.com/seokpan/seokpan-hybrid-infra/pull/29)와 Run의 정확한 Infra SHA를 연결한다.
 
 기존 CSV의 식별자는 다음처럼 사용할 수 있다. 아래는 기입 안내이며 실제 이벤트·측정값이 아니다. 시각/Actual을 측정하지 못했으면 빈 값을 유지하고 summary에 이유·범위·불확실성을 남긴다.
 
@@ -64,6 +70,8 @@ python3 tools/recovery_metrics.py evidence/<test-id>/<run-id>/release.json --con
 
 | Test/Case·Requirement | Run·환경 | 실행자·Reviewer | 실제 Source/Release | Render/Deployment/Acceptance | 증거 링크 | 실패/후속 Run·제한 |
 | --- | --- | --- | --- | --- | --- | --- |
+| T18의 Data 부분 예행 / 최종 T17·T18 미실행 | `fixture-20261005-01` / 새 임시 MariaDB의 로컬 TCP 합성 Fixture | 배정 책임 C 김상희. 요청 tjung03, 실행·기록 Codex. C 리뷰·D Index 검토/수신 대기 | App `c12b3d15a4dd2c806fac4326a9eb30ed6e8a81b3`, Infra `4a4ee1b6762502be1e2ddf12d451e45205fdca03`; 실제 Image/Release 없음 | 모두 NOT RUN; 합성 Data 부분 실행만 PASS | [Summary](T18/fixture-20261005-01/summary.md)·[Release](T18/fixture-20261005-01/release.json)·[Metric](T18/fixture-20261005-01/metrics.csv)·[Timeline](T18/fixture-20261005-01/timeline.csv)·[Checksum](T18/fixture-20261005-01/checksums.txt), Source [h-infra Draft PR #29](https://github.com/seokpan/seokpan-hybrid-infra/pull/29) | MariaDB 10.11.14이며 실제 기준 11.8.9와 다름. 동시 쓰기 없는 합성 데이터·동일 Host 복사, 실제 RDS/S3/VPN·TLS/목적 계정·App/Redis/접속·전체 RTO/RPO 미측정. 운영 Backup 자동화/최종 Acceptance 아님 |
+| T18의 합성 Backend 업무 연결 부분 예행 / 최종 T18 미실행 | `business-fixture-20261005-01` / 새 임시 DB·TLS/AUTH Redis·HTTPS Backend, loopback | 배정 책임 C Data/B App/D 증거, 실제 Host A. 요청 tjung03, 실행·기록 Codex. C/B 영역 리뷰·D Index 검토/수신 대기 | App `c12b3d15a4dd2c806fac4326a9eb30ed6e8a81b3`, Infra `29b4a1f01bd555edeebac946cd8ee174da4432ab`; 실제 Image/Release 없음 | 모두 NOT RUN; 합성 Backend 부분 실행만 PASS | [Summary](T18/business-fixture-20261005-01/summary.md)·[Release](T18/business-fixture-20261005-01/release.json)·[Metric](T18/business-fixture-20261005-01/metrics.csv)·[Timeline](T18/business-fixture-20261005-01/timeline.csv)·[Checksum](T18/business-fixture-20261005-01/checksums.txt), Source [h-infra Draft PR #29](https://github.com/seokpan/seokpan-hybrid-infra/pull/29) | Fixture MariaDB/Redis 버전·새 목적 SSL 계정/TLS의 부분 조건. age 복원→새 Redis→Backend HTTPS 로그인/랭킹→새 게임 FORFEIT 완료/현재 결과·SQL Rating 검증. FE/browser/WSS·Image/OCP/Host·RDS/S3/VPN·사고 탐지/판단/안내·과거 개별 결과 HTTP 미검증; 전체 RTO/RPO null |
 
 ## Required Boundaries
 

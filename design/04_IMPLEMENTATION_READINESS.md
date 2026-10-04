@@ -6,9 +6,11 @@
 > **상위 기준:** 승인된 `01_PROJECT_CHARTER.md`, `02_TARGET_ARCHITECTURE.md`, `03_DETAILED_DESIGN.md`, `PROJECT_INSTRUCTIONS.md`와 사용자의 최신 명시적 결정  
 > **기간과 AWS 한도:** 2026-09-28~2026-10-26, $500. 승인된 계획선 $450와 여유 $50 유지
 
-> **2026-10-03 DR 재검토 인계:** 기존 문서 종료와 운영 결정은 유지하며, 사용자 재검토 요청의 설계 판단은 [03 §3-I.14](03_DETAILED_DESIGN.md#recovery-design-review-20261003)에 연결한다. 05 전체 구현 후에만 00–04를 수정하는 순서는 아니다. 새 목표·백업 주기·DR 구조는 미확정이며 05는 기존 W04 예행의 부족한 근거를 확보하는 실행 기록이다.
+> **2026-10-05 DR 설계 변경 인계:** 기존 직접 TLS·새 전용 DB VM·새 Redis 구조/운영 결정은 유지한다. [03 §3-I.14.5](03_DETAILED_DESIGN.md#recovery-design-decision-20261005)의 현재 변경안은 **RTO10분·영속 DB RPO30분·운영 중 Backup15분, Backup/Restore 유지**다. 이 개정이 main에 병합되면 새 공식 설계로 전환하며, 그 전 main의30분/90분/1시간 승인 이력과 구분한다. 실제 전체 달성은 NOT RUN이다. 실제 준비/Cost/전체 업무 Acceptance는 실행 Gate로 남기고 전체 ROSA/05 완료를 설계안의 선행조건으로 묶지 않는다.
 
 이 문서는 승인된 03 상세설계를 실제 작업자, 입력, 인계, 일정과 구현 시작 조건으로 연결한다. 03의 설계 기준은 유지하고, 04에서 확정된 운영 결정과 아직 확인하지 못한 실제 값을 구분해 기록한다. 사람별 역할, 작성과 리뷰 책임, Root별 실행 책임, 복구 DB 직접 연결, AWS Provider 6.67.0 초기 후보, GitOps Writer PAT, Secret 주·예비 보관자와 Release/Evidence 운영 형식, 전용 새 복구 DB VM과 비상 관리·초기 인증 회수 모델이 확정됐다. 새 복구 VM 생성은 가능하다는 사용자 확인을 받았고 Host의 자원 여유는 아직 예상이다. AI의 코드 작성, 배포, 계정 변경, 데이터 이전, 시험과 비용 확인은 완료된 것으로 표시하지 않는다. 팀원의 선행 Bootstrap 코드와 시험 보고는 별도 출처/범위로 기록한다. 추가 demo2 보고의 최유준 A/B/C 예제·관측·정책 검증과 부분 정리도 보고 범위로 접수하며 실제 base/ROSA 시험과 구분한다.
+
+**도입/이전 검토의 시점:** 위 설명과 §7의 미실행·Run 미확인은2026-10-01 문서 종료 시점의 기록이다.2026-10-05에는 [05 §9.20](../execution/05_IMPLEMENTATION_AND_VALIDATION.md#recovery-fixture-measurement-20261005)의 Codex 실제 Data/Backend 부분 Run2개가 추가됐다. 그 Source 작성·부분 DB 복원/업무 시험과 현재 [03 §3-I.14.5](03_DETAILED_DESIGN.md#recovery-design-decision-20261005)의 설계 변경안을 우선 연결하며, 실제 운영 DB/Cloud 배포·전체 RTO/RPO/최종T18·팀원 수행/리뷰/수신이 완료됐다는 의미는 아니다. 과거 문구를 모든 후속 실행의 부재로 읽지 않는다.
 
 현재 진행 현황:
 
@@ -33,6 +35,8 @@
 - [x] PR #11 merge와 새 Root/State Key/정확 버전·입력 전달 문서의 Source 정합 확인
 - [x] 두 새 구조안의 직접·후속 영향 반영
 - [x] 04·지침 전체 재검증 수렴과 04 문서 전체 종료 판단
+- [x]2026-10-05 DR10분/30분/15분 변경안의 준비/최신성/Runbook·역할 인계 반영 —03 §3-I.14.5
+- [ ] 관련 Source/문서·SVG/PNG/출처 최종 검증·PR 리뷰/병합, 실제 운영 목표 달성은 별도
 - [ ] 작업별 실제 구현 시작 조건 충족과 실행
 
 ## 1 03 종료와 04 사용 범위
@@ -176,7 +180,7 @@ DB 접속 방식과 전용 VM 배치 모델은 각각 채택됐다. Endpoint, TL
 
 ### 5.1 확정된 로컬 복구 DB 직접 연결
 
-**상태는 CONFIRMED DECISION이다.** 2026-10-01 사용자가 직접 연결안을 채택했다. 03 §3-D.3에서 MaxScale 재사용 여부를 별도 결정으로 남겼고, §3-D.9.8은 새 격리 2차 DB에 복원하도록 했다. §3-G.7의 RTO 30분 목표는 장애 주입/접속 불가 시작부터 탐지·복구 결정·Key/자료 준비·DB 복원·새 Redis·App 배포·Host 안내와 대표 업무/Data 확인 완료까지 포함한다. 접속 방식은 이 복구 목표와 1차 자산 보호를 기준으로 비교했다.
+**상태는 CONFIRMED DECISION이다.** 2026-10-01 사용자가 직접 연결안을 채택했다. 03 §3-D.3에서 MaxScale 재사용 여부를 별도 결정으로 남겼고, §3-D.9.8은 새 격리 2차 DB에 복원하도록 했다. 당시 §3-G.7의 RTO30분 목표는 장애 주입/접속 불가 시작부터 탐지·복구 결정·Key/자료 준비·DB 복원·새 Redis·App 배포·Host 안내와 대표 업무/Data 확인 완료까지 포함한다. 접속 방식은 이 복구 목표와 1차 자산 보호를 기준으로 비교했다.
 
 | 결정 기록 | 내용 |
 |---|---|
@@ -200,9 +204,15 @@ MaxScale의 Listener는 Service로 연결 요청을 전달하고 Router가 Backe
 
 직접 연결 선택은 제품 문서가 강제하는 구성이 아니라 프로젝트 조건에 따른 판단이다. 단일 복원 DB로 업무를 재개하는 현재 범위에서 복구 의존성을 줄이려는 이유다. MaxScale 한 개를 단일 DB 앞에 추가하는 것만으로 대체 DB나 복제 구성이 생기지는 않는다. 실제 App의 필수 Proxy 의존성, 직접 연결의 호환성 문제, 추가 복제/Proxy 기능 요구가 확인되면 이 선택을 재검토한다.
 
-김상희가 격리 DB의 접속/계정/CA와 Restore 조건을 정리하고 정태훈이 Recovery App/Overlay 연결 계약을 반영한다. 최유준은 T04/T18의 TLS 실패, 오프라인 대표 업무와 전체 복구 시간선을 연결한다. W04 예행과 W08 측정, Bundle/Secret 보존, 후속 수정의 시간/비용을 같이 추적한다. 아직 30분 RTO나 90분 DB RPO를 달성했다고 기록하지 않는다.
+김상희가 격리 DB의 접속/계정/CA와 Restore 조건을 정리하고 정태훈이 Recovery App/Overlay 연결 계약을 반영한다. 최유준은 T04/T18의 TLS 실패, 오프라인 대표 업무와 전체 복구 시간선을 연결한다. W04 예행과 W08 측정, Bundle/Secret 보존, 후속 수정의 시간/비용을 같이 추적한다. 이전30분/90분 및 새10분/30분 어느 기준의 전체 RTO/RPO 달성도 기록하지 않는다. 현재 실행 목표 변경안과15분 계획 간격은 03 §3-I.14.5를 따른다.
 
 이번 목표 재검토는 직접 TLS·전용 새 VM·새 Redis를 뒤집는 결정이 아니다. 현재 단계에서 이 구조가 필요한 사용자 범위와 감당 가능한 중단/손실을 충족하는지, 사전 준비/작은 절차 개선으로 충분한지 확인한다. Host/도구·사전 로컬 사본/Key/Image·담당자 대응·클라이언트 위치/접속 조건을 먼저 기록하고 §10.2의 t0~t1 전체 시간선과 손실·부담/비용을 측정한다. 세부 입력/기록은 [05 §9.2~9.6](../execution/05_IMPLEMENTATION_AND_VALIDATION.md#recovery-objective-review-20261002)을 사용하며 새 양식이나 모든 백업 주기/DR 구조의 비교 구현을 추가하지 않는다. 실측에 따라 운영 인계·목표·구조의 변경이 채택되면 이 문서의 해당 절을 보완한다.
+
+**2026-10-05 기능 경계 명확화:** [03 §3-I.14.4](03_DETAILED_DESIGN.md#recovery-app-scope-20261005)의 고정 App Source 대조에 따라, 새 Redis 복구에서 과거 완료 DB 기록의 SQL/데이터 보존 확인과 클라이언트 업무 재개를 구분한다. 클라이언트는 재로그인·랭킹/회원 누적 기록·새 방/게임의 진행·완료 및 현재 방 결과를 확인한다. 개별 결과 API는 현재 Redis Room/Participation과 현재/마지막 Game에 제한되므로, 새 Redis에 이전 Room이 없는 상태에서 과거 개별 결과 HTTP/화면 재개를 기본으로 보장하지 않는다. 과거 이력 API/UI 추가나 DB 구조 변경을 이번 보완의 필수 작업으로 확대하지 않는다. 실제 통합 조합의 수행 결과와 전체 t0~t1은 별도로 측정한다.
+
+**현재 목표/준비 인계:** 03 §3-I.14.5의10분/30분/15분 설계 변경안은 기존 구조에서 먼저 구현·검증할 요구다. 실제 Data VM의15분 Timer·중복 잠금·사본/시각 대장·S3/로컬 완성/실패 재전송·보관·최신성 감시는 C 책임으로 준비한다. `실제 성공 Data 간격(G)＋Data→로컬 완성 지연(D)＋시점/시계 불확실성(U)≤30분`을 관측하며 nominal15분을 `G≤15분`이나 `D≤15분` 보장으로 바꾸지 않는다. 이전 사본 선택·누락/늦은 전송·Storage/VPN 장애는 실제 나이/손실로 판정하고 알림·재시도로 미달을 숨기지 않는다.
+
+실제 전체 예행 전에 A의 Host/용량·보존 도구/독립 사본, B의 지정 클라이언트 FE/HTTPS/WSS·기능/진행 상태 처리, D의 승인 Image/Scan/Digest·Index/시간선, C의 실제 버전/계정/CA/Key·데이터/복원 입력을 확인한다. 각 부분의 확보 여부는 해당 실행의 Gate이며 설계 변경안을 정리하기 위해 네 사람의 전체 작업/ROSA·05 종료를 기다리지는 않는다. 정태훈이나 승인된 다른 실행자가 C 기술 측정을 수행할 수 있고 배정 책임·실제 수행/리뷰/수신을 정확히 기록한다. 실제 Cost Ledger는 시간당4회 계획/7일 사본·전송/임시 공간/DB 부하와 재시험/문서/발표 시간을 반영하고 $450/$500·Freeze를 유지한다. 새 유료 자원 가동은 구체화된 실행 동의 전 진행하지 않는다.
 
 신규 복구 VM 생성은 가능하다. 다음으로 이유빈과 김상희가 사용할 Host/Namespace, 실제 CPU/RAM/디스크 여유, 1차와 분리된 Data Directory, Backup/독립 사본과 Harbor/도구를 확인한다. 03 §3-D.10.5의 2 vCPU/4 GiB/40 GiB는 Data 작업 VM의 초기 검토 후보이며 복구 DB 용량을 확정한 값이 아니다. 실제 Data/Index/로그/Import 임시 공간과 여유를 대조해 채택한 전용 VM의 Host·용량과 디스크 배치를 확정한다. 이 입력이 없어도 Source 읽기, CI 인증/보관 비교, Release 형식 준비는 계속할 수 있다.
 
@@ -337,7 +347,7 @@ GitOps 파일 자체를 포함한 Commit SHA를 그 파일에 넣으면 자기 �
 |---|---|
 | Decision ID | PH2-04-RECOVERY-DB-DEDICATED-VM |
 | 결정일과 승인 | 2026-10-01 KST. 사용자 남은 두 구조 권고안 모두 채택 |
-| 근거 | 단일 DB 복원·RTO 30분 목표, 1차 보호, 새 VM 생성 가능. 현재 자원 여유는 예상이며 실측 전 |
+| 근거 | 당시2026-10-01 단일 DB 복원·RTO30분 목표/1차 보호/새 VM 가능성으로 채택. 구조는 유지하고 현재 RTO10분 변경안은03 §3-I.14.5를 따른다. 자원 여유는 실측 전 |
 | 책임 | 김상희 DB/Restore/용량, 이유빈 Host/Network 협업, 정태훈 Recovery 설정, 최유준 복구 시간선 |
 | 확인 시점 | VM 생성/배치 전에 Host 실측과 Data Directory/디스크 확인, 예행 전에 TLS·CA·DB/Driver·Backup 검증 |
 | 재검토 조건 | Host 여유 부족, 독립 보존/통신 실패, 복원 소요나 운영 부담이 목표를 위반 |
@@ -399,6 +409,8 @@ htpasswd 경로는 Cluster API/OAuth 전체 장애나 AWS 전체 접근 불가�
 [Terraform Validate 공식 범위](https://developer.hashicorp.com/terraform/cli/commands/validate)는 구문/내부 일관성을 확인하며 Remote State나 Provider API를 검증하지 않는다. 필요한 Provider/Module을 갖춘 별도 작업 사본의 로컬 확인을 실제 Backend/Caller 검증과 구분한다. 여기서 Controller의 기존 Backend/State 설정을 변경하거나 Terraform 명령을 실행한 것은 아니다.
 
 ## 7 확정 결정의 연쇄 영향과 검토
+
+아래 표와 검토 문단은2026-10-01 종료 시점의 영향/미확인 기록을 보존한다. “DB/Backup/RTO/RPO 실측 미실행”, “실제 Run 확인 전”, “AI가 DB 복원/시험을 수행하지 않았다”는 당시의 범위다. 현재는 [05 §9.20](../execution/05_IMPLEMENTATION_AND_VALIDATION.md#recovery-fixture-measurement-20261005)에 실제 Data/Backend 부분 Run2개·정확한 Source/기여/제한을 연결했고 [03 §3-I.14.5](03_DETAILED_DESIGN.md#recovery-design-decision-20261005)의 새 설계 변경안을 따른다. 실제 운영 Backup/지원 조합·FE/WSS/Image/Host·전체 RTO/RPO/최종T18은 미검증으로 유지한다.
 
 | 변경 | 직접 연결 | 후속 연결과 상태 |
 |---|---|---|
@@ -616,8 +628,12 @@ Source 정합 완료와 TF Role/State 복원/개인 작업 사본/실제 Plan·A
 | App/base/lab | Source/Seed·Overlay Commit 확인→Image Build/Test/Scan·Digest/플랫폼 매핑→Secret 별도 공급 확인→Render/Owner/Namespace/삭제 경계 리뷰→lab 배포/Argo Case→결과와 원본 인계 | Build/Render/lab PASS는 ROSA Acceptance와 구분. 실패 Run/조건을 보존하고 기존 실습 Overlay를 근거 없이 삭제하지 않음 |
 | CI와 Release | 제한된 Job Credential Binding→ECR/Harbor Digest와 Scan 결과→Release 후보 JSON→GitOps Branch Push/PR→사람 리뷰/Merge→Commit 후 Docs Run 연결→실제 배포/업무 시험 | CI가 자동 Merge하지 않는 흐름 확인. 후보와 배포/Acceptance 별도 판정. 실패 조합을 덮어쓰지 않고 수정 PR/새 Run으로 연결 |
 | Secret 공급/교체 | 목적별 암호문·Recipient/개정 확인→주/예비본 읽기·복호화→대상 서비스에 제한 공급→로그인/Pull/DB 연결→교체 후 옛 인증/Token 확인→임시 파일 정리 | SOPS 해독만으로 서비스 성공을 판정하지 않음. 폐기된 자격증명/필요한 기존 데이터 해독 Key를 구분하고 실제 인증·회수 미완료를 다음 실행자에게 알림 |
-| Offline Recovery | 장애 전 Backup/Image/Render/Secret/도구·CA 확보→장애 주입/접속 불가 시작 t0 기록→탐지·복구 결정→Key/사전 자료 확인→격리 DB Import/TLS 검증→새 Redis/App 적용→Host 안내→대표 업무/영속 데이터 확인 t1→RTO/RPO 판정 | 장애 선언/주입·탐지·조치·단계 완료/실패 시각을 기록하며 RTO=t1−t0가 30분 이내인지 판정. 03 §3-C.12.7에 따라 AWS·GitHub·Cloud IDP·ECR·AWS KMS 신규 조회에 의존하지 않는 경로를 검증한다. 로컬 DNS·Harbor 접근까지 차단하는 시험으로 확대하지 않으며 1차 자산을 복원 대상으로 사용하지 않음 |
+| Offline Recovery | 장애 전 Backup/Image/Render/Secret/도구·CA 확보→장애 주입/접속 불가 시작 t0 기록→탐지·복구 결정→Key/사전 자료 확인→격리 DB Import/TLS 검증→새 Redis/App 적용→Host 안내→대표 업무/영속 데이터 확인 t1→RTO/RPO 판정 | 장애 선언/주입·탐지·조치·단계 완료/실패 시각을 기록하며 현재 변경안 RTO=t1−t0≤10분과 실제 사용 사본의 영속 DB RPO≤30분을 별도 판정. 03 §3-C.12.7에 따라 AWS·GitHub·Cloud IDP·ECR·AWS KMS 신규 조회에 의존하지 않는 경로를 검증한다. 로컬 DNS·Harbor 접근까지 차단하는 시험으로 확대하지 않으며 1차 자산을 복원 대상으로 사용하지 않음 |
 | Cloud 관리 인계 | 정상 개인 IDP/RBAC·Argo SSO/권한 시험→채택된 비상 경로/전환 시험→초기 인증·높은 Binding·관련 Token/세션 정리→재접속 거부/정상 경로 재확인 | §5.6 결정에 따라 실제 지원·입력 확인 후 적용. 접속 계정 생성만으로 완료하지 않고 신규 로그인과 기존 세션의 남은 범위를 기록 |
+
+Offline의 “대표 업무/영속 데이터 확인”은 [03 §3-I.14.4](03_DETAILED_DESIGN.md#recovery-app-scope-20261005)와 §5.1의 범위를 따른다. 기존 완료 Game/Move/Result/Rating은 복원 DB의 SQL/비민감 데이터 비교로 보존을 확인하고, 지정 클라이언트는 재로그인·랭킹/회원 누적 기록·새 게임 진행/완료와 현재 방 결과를 확인한다. 새 Redis에서 사라진 이전 Room에 대한 과거 개별 결과 API의 거부를 DB 데이터 소실과 혼동하지 않으며, 그 API를 성공시키기 위한 새로운 이력 기능을 기본 Acceptance에 추가하지 않는다. DB Import와 현재 Room 결과 확인만으로 전체 복구 시간을 단축해 보고하지 않는다.
+
+Offline의 현재 목표 변경안은 03 §3-I.14.5의 RTO10분/영속 DB RPO30분이며15분은 장애 전 DB 운영 중 계획 간격이다. 사고 시작/사본 Data 시점이 미확인인 부분 예행은 RTO/RPO를 null로 유지한다.30분의 영속 신규 회원·완료 결과/Rating 손실을 이 프로젝트의 시험 후보로 밝히고 상용 사업자의 허용 손실 승인이나24시간 SLA로 해석하지 않는다. 실제 예행 미달 뒤 같은 Run의 기준을 완화하지 않으며 후속 수정/재시험을 새 Run으로 기록한다.
 
 팀원의 개인 자격증명/새 clone 재접속 점검은 init/plan까지다. 최신 공지는 Bootstrap apply 일시 중지를 해제했지만 지정 Root 담당자와 검토된 범위 조건은 유지한다. 이 문서로 각자 State를 재이전하거나 임의 apply/destroy·전체 패키지 업데이트·지원하지 않는 ROSA Managed Resource 변경을 수행하는 것으로 해석하지 않는다. Bootstrap의 기존 Source 차이는 §8의 담당/영향에 따라 정합화하고 실제 변경은 별도 검토된 코드/실행 범위로 진행한다.
 
@@ -673,10 +689,10 @@ Docs의 `evidence/<test-id>/<run-id>/release.json`은 후보에서 실제 사용
 | 실행 Source | 실제 GitOps 전체 SHA, Render/Bundle/Tool Manifest 참조, Image Digest/실행 플랫폼, 조건/부하/장애 주입 |
 | 실행과 협업 | assigned_execution_owner, actual_operator, reviewer, collaborators와 작업, observed_principal_ref, account_management_owner_ref, borrowing_handover_ref |
 | 시각과 판정 | UTC ISO 시각(Z 또는 명시적 오프셋)과 같은 시각을 변환한 KST 표시, Baseline/Target/Actual/단위·집계 조건, render/deployment/acceptance별 결과와 증거 |
-| Recovery/Backup | 사용 Backup ID·암호문 Hash, 사고 시각과 영속 Data 기준 시각/확인 수준, Dump 시작/종료·사전 동기화/무결성·Import·업무 재개 시각. RPO=사고 시각−실제 사용 Data 기준 시각의 90분 목표와 손실 업무·Redis 새 Runtime 손실을 구분. RTO/달성·미달 이유 |
+| Recovery/Backup | 사용 Backup ID·암호문 Hash, 사고 시각과 영속 Data 기준 시각/확인 수준, Dump 시작/종료·사전 동기화/무결성·Import·업무 재개 시각. RPO=사고 시각−실제 사용 Data 기준 시각의30분 변경안 목표와 손실 업무·Redis 새 Runtime 손실을 구분. RTO/달성·미달 이유 |
 | 보호 자료 | raw_artifact_ref, custodian_ref, access_policy_ref, retention_ref, availability/integrity 결과. 실값/접속 경로는 보호 운영 대장 |
 
-정확한 Snapshot 시각을 계측하지 못한 Backup은 Dump 시작 시각과 확인 수준을 보수적으로 기록하고 쓰기 Marker/복원 데이터로 대조한다. 파일 수정/덤프 종료 시각을 Data 기준으로 대신하지 않는다. 정확한 RPO를 판정할 수 없으면 시점 범위와 확인된 손실을 기록하며 기존 90분 목표를 자동 완화하지 않는다.
+정확한 Snapshot 시각을 계측하지 못한 Backup은 Dump 시작 시각과 확인 수준을 보수적으로 기록하고 쓰기 Marker/복원 데이터로 대조한다. 파일 수정/덤프 종료 시각을 Data 기준으로 대신하지 않는다. 정확한 RPO를 판정할 수 없으면 시점 범위와 확인된 손실을 기록하며 현재30분 변경안 목표를 자동 완화하거나 같은 Run의 기준을 낮추지 않는다. 실제 사용 사본의 시점 미확인은 null/미판정으로 남긴다.
 
 JSON/Markdown/CSV 구현 후 검사는 다음 기준으로 수행한다.
 
@@ -758,5 +774,7 @@ Host명/실제 용량, Credential ID, Org 정책, 실제 단가/Plan이나 후�
 - [x] 추가 demo2 보고의 예제/실제 base 구분·잔존/Token/후속 담당 연결
 - [x] WBS/Window/Cost 조건과 04 문서 종료/실제 실행 Gate 분리
 - [x] 새 결정의 연쇄 검토·정정 후 재검증 수렴과 04 문서 전체 종료 판단
+- [x] 현재 DR10분/30분/15분 변경안의 실제 준비/권한·최신성·역할/Runbook Gate 인계 —03 §3-I.14.5
+- [ ] 관련 산출물 최종 정합/리뷰·병합과 실제 목표 달성은 서로 분리해 확인
 
 두 구조 결정과 최종 전체 검토·지침 정합 확인이 완료돼 04를 종료했다. 다음은 05의 실제 입력/Source 점검과 준비된 영역의 구현·통합·검증이다. 확정된 보관자·형식의 실제 자산/접근/인계와 Source·도구·계정·Host·비용 입력은 I01~I07로 구현 단계에 넘긴다. 03 종료는 유지하며 04 문서 종료, 작업별 구현 시작과 첫 Full Apply는 서로 다른 조건으로 판정한다.

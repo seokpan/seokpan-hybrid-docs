@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "record_kind": "run",
+  "completeness": "INCOMPLETE",
+  "release_id": null,
+  "source": {
+    "app_sha": "c12b3d15a4dd2c806fac4326a9eb30ed6e8a81b3",
+    "infra_sha": "4a4ee1b6762502be1e2ddf12d451e45205fdca03",
+    "gitops_sha": null
+  },
+  "images": {
+    "frontend": {
+      "ecr_digest": null,
+      "harbor_digest": null,
+      "platform": null
+    },
+    "backend": {
+      "ecr_digest": null,
+      "harbor_digest": null,
+      "platform": null
+    }
+  },
+  "revisions": {
+    "schema": "20260902_0002 (derived fixture DDL; not online Alembic execution)",
+    "config": null,
+    "secret": null,
+    "tool_manifest": "1fb3dbacfdc167689d2e3abb0713a6453d05eb4a61db9773368097ae2027ee8c",
+    "recovery_bundle": null
+  },
+  "review_refs": [],
+  "verification": {
+    "render": "NOT RUN",
+    "deployment": "NOT RUN",
+    "acceptance": "NOT RUN"
+  },
+  "missing_inputs": [
+    "ACTUAL_RDS_BACKUP_PATH",
+    "APP_REDIS_CLIENT_RECOVERY",
+    "APPROVED_IMAGES_RELEASE",
+    "C_DATA_REVIEW",
+    "FULL_T18_ACCEPTANCE"
+  ],
+  "run_id": "fixture-20261005-01",
+  "test_id": "T18",
+  "case_ids": [],
+  "requirement_ids": [],
+  "environment": "ephemeral tcp local Ubuntu fixture",
+  "scope": "partial T17/T18: synthetic MariaDB Dump/gzip/age/local-copy/decrypt/isolated import/data verification only",
+  "previous_run_ref": null,
+  "next_run_ref": null,
+  "render_ref": null,
+  "assigned_execution_owner": "kshi1313-gif (C/Data)",
+  "actual_operator": "Codex, user-authorized contribution for tjung03",
+  "reviewer": null,
+  "collaborators": [],
+  "observed_principal_ref": "temporary isolated fixture root; no project/cloud account",
+  "account_management_owner_ref": "temporary harness only; C operational account ownership unchanged",
+  "borrowing_handover_ref": null,
+  "started_at_utc": "2026-10-04T16:21:51.320143Z",
+  "finished_at_utc": "2026-10-04T16:22:14.608371Z",
+  "started_at_kst": "2026-10-05T01:21:51.320143+09:00",
+  "finished_at_kst": "2026-10-05T01:22:14.608371+09:00",
+  "conditions_ref": "summary.md#identity-and-scope",
+  "measurements_ref": "metrics.csv",
+  "timeline_ref": "timeline.csv",
+  "recovery": {
+    "backup_id": "fixture-4",
+    "encrypted_backup_sha256": "b2b5831271f91bb561851150298cade8efb5cb76a42fa138eee60de1e4f010cb",
+    "data_reference_time_utc": null,
+    "data_reference_level": null,
+    "incident_at_utc": null,
+    "dump_started_at_utc": "2026-10-04T16:22:12.083590Z",
+    "dump_finished_at_utc": "2026-10-04T16:22:12.137085Z",
+    "import_started_at_utc": "2026-10-04T16:22:13.120115Z",
+    "import_finished_at_utc": "2026-10-04T16:22:13.414340Z",
+    "business_resumed_at_utc": null,
+    "rto_seconds": null,
+    "rpo_seconds": null,
+    "persistent_data_losses": null,
+    "redis_runtime_losses": null
+  },
+  "raw_artifact_ref": "summary.md#evidence-and-recovery",
+  "custodian_ref": "tjung03; public summaries in new Docs Run",
+  "access_policy_ref": "synthetic aggregate/hash outputs only; temporary SQL/backup/key never published",
+  "retention_ref": "public source/evidence retained; disposable material cleanup result in summary",
+  "availability_integrity": "five-file Run/four payload checksums; all temporary datadirs/processes/keys/backups removed"
+}
