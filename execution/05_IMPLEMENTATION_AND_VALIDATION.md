@@ -20,7 +20,7 @@
 
 **2026-10-03 이번 요청의 우선 작업:** [03 §3-I.14 복구 설계 재검토](../design/03_DETAILED_DESIGN.md#recovery-design-review-20261003)를 중심으로 필요한 02/04 정합 보완과 사용자 영향·구조 대안을 먼저 대조한다. 05는 [§9의 기존 최소 예행](#recovery-objective-review-20261002)으로 부족한 시간·손실·접속·팀 부담/비용 근거를 확보한다. 전체 Cloud/ROSA 구현이나 05 최종 종료는 이 판단의 선행조건이 아니다.
 
-**App 원격 게시 후속:** [§9.15](#app-source-published-20261003)에 인증 Push·h-app PR #5와 고정 이력 보존을 연결한다. 현재 Source PR 리뷰/병합과 새 Image·실제 최소 예행 입력이 남아 있으며 기존 관측과 구분한다.
+**App·Infra 승인/병합 후속:** [§9.16](#app-infra-merged-20261004)에 h-app PR #5·h-infra PR #27의 main 병합과 #28의 main 기준 전환을 연결한다. App Source 리뷰/병합 대기는 해소됐고 새 Image·실제 최소 예행 입력은 남는다. [§9.15](#app-source-published-20261003)와 이전 관측은 당시 이력으로 보존한다.
 
 **별도 프로젝트 구현 이력:** [§9.13 Cloud·ROSA 구현과 App 경쟁 결함 후속](#cloud-rosa-app-followup-20261002), [§9.12](#tjung03-latest-source-20261002)의 승인/병합 관측과 [§9.11](#tjung03-registration-rosa-input-20261002)의 TH-01~19·81개 식별자는 보존한다. 기존 유효 코드/검사는 취소하지 않으며 이번 복구 목표 판단의 증거나 우선 완료 조건으로 확대하지 않는다.
 
@@ -1064,6 +1064,21 @@ main은 승인 1명·Squash 정책이다. [reference/app-migration-history-20261
 - [ ] 03 §3-I.14의 최소 예행 근거 비교와 목표/주기/구조 최종 선택
 
 
+<a id="app-infra-merged-20261004"></a>
+### 9.16 App·Infra 승인 병합과 후속 인계 — 2026-10-04
+
+[h-app PR #5](https://github.com/seokpan/seokpan-hybrid-app/pull/5)는 승인된 HEAD `51321ec1087cc02dbd5b55272594ec49efc9dbce`에서 squash 병합돼 main `c12b3d15a4dd2c806fac4326a9eb30ed6e8a81b3`가 됐다. 병합 Tree `535aa50d5f4936a7ba03dfdf3fb20339f0de7440`는 승인한 제출 Tree와 동일하다. 코드 검사 기준 c837 및 전체 78개 원본 이력은 고정 reference에 보존하고 삭제 대상에서 제외한다. Squash main의 계보와 원본 이력은 구분한다. 정본은 [h-app Issue #1](https://github.com/seokpan/seokpan-hybrid-app/issues/1)·[h-app Issue #4](https://github.com/seokpan/seokpan-hybrid-app/issues/4)다.
+
+[D의 같은 HEAD 리뷰](https://github.com/seokpan/seokpan-hybrid-app/pull/5#pullrequestreview-5404267068)는 기본 pytest 1,752·Ruff·mypy 재현을 보고했다. 실제 필수 상태 검사 규칙은 없고 HEAD check/status/run은 0건이므로 GitHub CI PASS를 기록하지 않는다. 리뷰어의 Redis 7.0.15 보조 확인은 고정 7.2.4 재현과 다르며 작성자의 [고정 Redis 7.2.4 Lua 3개 기록](https://github.com/seokpan/seokpan-hybrid-app/issues/4#issuecomment-5952269420)을 별도로 대조했다. 실제 DB/TLS·다중 Pod·복구 결과로 확대하지 않는다.
+
+[h-infra PR #27](https://github.com/seokpan/seokpan-hybrid-infra/pull/27)은 수정 HEAD `a5754151c94877a5f5a0b89daf067ee2a920e145`의 [재승인](https://github.com/seokpan/seokpan-hybrid-infra/pull/27#pullrequestreview-5404435073)을 확인한 뒤 main `7276dbf2f2a297121e7564c20b343f5f3d07374b`에 squash 병합됐다. 두 계약 문서만 변경됐고 기존 Registry 선언은 보존됐다. 새 비차단 제안은 [h-infra Issue #25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25)의 후속 계약 정비에 연결한다.
+
+[h-infra Draft PR #28](https://github.com/seokpan/seokpan-hybrid-infra/pull/28)은 HEAD `431472a085ea5015e60badf95cc5bb0c8ecd64a3`에서 새 main을 부모 이력으로 합쳐 base를 main으로 전환했다. 새 main 전체 Tree에 기존 ROSA 변경 14파일만 반영해 Registry 4파일과 ROSA 14개 Blob/Mode를 보존했고 main 조상 관계·diff 14파일을 대조했다. Controller의 같은 Source/Lock 재검증·제한 입력/IAM/지원 조합·첫 Plan 준비 리뷰가 남아 Draft를 유지한다. Provider validate/schema의 기존 RPC socket BLOCKED를 PASS로 바꾸지 않는다.
+
+다음 직접 인계는 D의 [h-app Issue #2](https://github.com/seokpan/seokpan-hybrid-app/issues/2)에서 병합 Source로 새 Build/Scan·Registry별 Digest/Platform을 제공하고, C/D의 대상·CA/AUTH/Secret·Schema·접속 입력을 [h-gitops Issue #5](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5)·[#6](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6)의 같은 조합 검증에 연결하는 것이다. 1차 목적지 Promotion Helper와 보존 Pipeline을 직접 실행하지 않으며 CI 전환에서 대상·Job/Folder를 대조한다. [h-gitops PR #9](https://github.com/seokpan/seokpan-hybrid-gitops/pull/9)는 새 Image·환경 입력/검증의 직접 조건으로 Draft를 유지한다.
+
+최소 W04 예행에는 실제 Backup ID/Hash·Data 시각/로컬 확보, 격리 DB·새 Redis·Host/TLS·업무 시간선과 부담/비용이 남는다. 전체 ROSA·최종 T18 완료를 선행조건으로 추가하지 않는다. 기존 00–04 설계와 정합 보완 완료를 유지하며 DR 목표/주기/구조의 최종 선택은 미완료다. RTO 30분·영속 DB RPO 90분·운영 중 1시간 백업과 복원 구조를 유지한다. 새 Runtime Run·TH 전체 완료·공유 실행 결과는 기록하지 않았다.
+
 ## 남은 작업과 다음 단계
 
 - [x] 최종 04·지침 등록 확인과 전체 설계 완료 상태 유지
@@ -1085,7 +1100,8 @@ main은 승인 1명·Squash 정책이다. [reference/app-migration-history-20261
 - [ ] I01~I07의 현 Source·실제 입력/결과·미반영 작업·담당별 가용시간/비용 인계
 - [x] 고정 Seed Source·원 lab 참고 범위 수신, App 연결 코드·이력 보존 묶음·실제 Kustomize 후보 구현 — §9.9
 - [x] 인증된 App 원격 이관·Source PR 게시와 고정 reference 이력 보존 — §9.15
-- [ ] App 사람 승인/main 병합·새 Build/Scan/Digest·실제 lab/완성 Recovery Bundle — §9.15
+- [x] h-app PR #5·h-infra PR #27 승인/main 병합과 h-infra PR #28 main 기준 정합 — §9.16
+- [ ] D 새 Build/Scan/Digest·실제 lab/완성 Recovery Bundle 및 Controller 입력/검사 — §9.16
 - [ ] 병행하는 foundation/Data/CI 구현과 B의 ROSA 코드 연결·실제 Plan 준비
 - [ ] 비용 확인 후 Cloud 생성·App/Data/Secret·GitOps 통합
 - [ ] 장애·재생성·복구·부하 시험과 Must 결과 판정
