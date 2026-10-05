@@ -1414,6 +1414,20 @@ OCP 새 조합 사전검증, 새 격리 Recovery 구성/부분 업무, 실제 �
 
 원 GitOps #10·Infra #25·Docs #21/#8의 현재 안내만 갱신하고 TH01~19/81개·기존 완료2·기존 모든 체크와 과거 리뷰/검사 이력을 보존한다. OCP 업무 종료·실습 정리·공유 Cluster 종료, ROSA 중간/최종 삭제·잔존 비용·10/26 프로젝트 종료는 각각 기존 조건으로 판정한다. 이번 Source/문서 후속에서는 실제 OCP Sync·Cloud Plan/Apply·유료 생성·DDL·STS·전체 T18·새 Runtime Run/Index를 수행하지 않는다. #9 보존 브랜치를 임의 삭제하지 않는다.
 
+<a id="b-current-source-acceptance-20261005"></a>
+### 9.30 Cloud #11·ROSA #28 최신 Source 수락과 병합/브랜치 정리 판단 — 2026-10-05 KST
+
+[h-docs PR #39](https://github.com/seokpan/seokpan-hybrid-docs/pull/39)는 main `6f77ef39de0508752c52bfe7d427df4b78767483`에 병합됐고 해당 브랜치는 삭제됐다. 이전 §9.29의 Ready/재리뷰 요청·미승인 표기는 당시 상태로 보존하며 최신 사람 수락은 이 절과 원 PR/Issue에서 확인한다. Source/CI 변경 없이 추가 승인만 수신했으므로 새 검사를 임의 반복하거나 실제 시험 Gate를 변경하지 않는다.
+
+| 원본 | 새 수락·대상 | 현재 판단 |
+| --- | --- | --- |
+| [GitOps #11](https://github.com/seokpan/seokpan-hybrid-gitops/pull/11) | C 22:52:31 KST, `7d66958f0a7bfa00104f6bd82656d9785b393eba`, [C 최신 승인](https://github.com/seokpan/seokpan-hybrid-gitops/pull/11#pullrequestreview-5415539176) 수신·merge_state clean·A/D 요청 유지. base main·main 대비12파일·39개 Source PASS 유지 | 현재 필수 승인·검사·충돌 상태 기준으로 Source 병합 가능. [원 PR 최종 답변](https://github.com/seokpan/seokpan-hybrid-gitops/pull/11#issuecomment-5996033678)에 판단 기록. 요청된 A/D 리뷰가 남았다는 것만으로 추가 필수 승인을 만들지 않으며 새 코멘트/검사/보호 조건 변경은 병합 직전 재확인 |
+| [Infra #28](https://github.com/seokpan/seokpan-hybrid-infra/pull/28) | D 22:39:48·A 22:43:57·C 22:55:02 KST, `8061326041f03aa2cd556afab9a8fbb4890df310`, [A](https://github.com/seokpan/seokpan-hybrid-infra/pull/28#pullrequestreview-5415411614)·[C](https://github.com/seokpan/seokpan-hybrid-infra/pull/28#pullrequestreview-5415579240)·[D](https://github.com/seokpan/seokpan-hybrid-infra/pull/28#pullrequestreview-5415352568) 최신 HEAD 승인 수신·변경 요청 해소·merge_state clean. 기존 동일 HEAD CI 유지 | C의 구 변경 요청은 새 동일 HEAD 승인으로 수락됐으며 현재 변경 요청 차단 없음. Source 병합 가능. [원 PR 최종 답변](https://github.com/seokpan/seokpan-hybrid-infra/pull/28#issuecomment-5996034151)에 판단 기록. 실제 Cloud 권한/입력·Plan/총비용/실행 창·생성 후 SA JWT/STS는 별도 |
+
+실제 두 PR의 병합·브랜치 삭제는 이 수락 관측에서 아직 수행하지 않았다. 병합 후 해당 PR 브랜치는 main 포함·현재 원격 Ref에 추가 미병합 변경 없음·다른 열린 PR의 base 의존 없음과 본인 작업 변경 보존을 확인해 정리한다. #9 보존 브랜치는 #11 base가 main으로 전환돼 기존 Stack 의존이 해소됐으므로 같은 조건을 확인한 뒤 삭제를 판단할 수 있다. 현재 #9 브랜치의 40개 Blob/Mode는 병합 main과 일치하고 추가 미병합 Source·다른 열린 PR의 base 의존이 없어 Source 정합 기준으로 삭제 가능하다. Repository Application4개의 targetRevision은 입력 대기 값이고 이 브랜치를 고정하지 않지만 실제 Cluster와 본인 로컬 변경은 이번 조회 범위가 아니다. 필요한 실제 Revision/개인 작업 보존을 확인하고 reference/ocp-lab-original 및 다른 Infra Data/Recovery 브랜치를 삭제 대상으로 확대하지 않는다. 기존 사용자 보존 행위와 §9.29 이력은 삭제하지 않는다.
+
+C의 1→2→3 Replica 비차단 제안은 기존 단일 Replica 실측→다중 Replica 업무/전환 수락 Gate를 활용해 실제 승격 경로에서 검토하며 [#11 최종 답변](https://github.com/seokpan/seokpan-hybrid-gitops/pull/11#issuecomment-5996033678)에 연결한다. 새 Source 병합 조건을 추가하지 않는다. C/D의 harness 비차단 제안은 [기존 사용 안내](https://github.com/seokpan/seokpan-hybrid-infra/pull/28#issuecomment-5995878318)와 [#28 최종 답변](https://github.com/seokpan/seokpan-hybrid-infra/pull/28#issuecomment-5996034151)을 연결하며 별도 Root 검사·선언 집합 보호의 확인 범위를 실제 Federation 성공으로 확대하지 않는다. 기본 FE/BE0·미확정 입력·별도 Cloud3Replica Preview, captured/실제 1·3Pod 업무/전환 수락·Owner/Image/Pull/Data/CA/Secret/Schema·Migration과 Runtime7·전체 T18은 유지한다. 실제 OCP Sync·Cloud Plan/Apply·유료 생성·DDL·STS·전체 복구 성공으로 Source 승인을 확대하지 않는다. B는 병합 #9의 Source/Render/입력표/Case 인계와 Cloud/Recovery 준비를 병행한다. 실제 최소 입력을 수락한 실행만 진행하며 TH81/완료2와 모든 기존 체크·역할·비용/보존/종료 기준은 그대로다.
+
 ## 남은 작업과 다음 단계
 
 - [x] 최종 04·지침 등록 확인과 기존 승인 설계의 정합 보완 완료 이력 보존 — 새 DR 목표·주기·구조 선택의 최종 완료와 구분
