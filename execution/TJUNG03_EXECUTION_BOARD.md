@@ -1,6 +1,6 @@
 # 정태훈 실행판 — 지금 할 일·입력 대기·OCP와 ROSA 수명
 
-> 기준 2026-10-05 KST: 승인03/04·프로젝트 지침·개인계획과 최신 네 저장소 Issue/댓글·PR34 병합 후 main을 대조했다. 작업 순서·찾는 법을 구체화한 실행판이며 설계·역할·T 성공기준·승인 날짜를 변경하지 않는다. 실제 OCP/Controller/AWS Runtime 재조회·Sync/Plan/Apply는 이번 정리에 포함하지 않는다. 요청 정태훈, 작성·검토 지원 Codex.
+> 기준 2026-10-05 KST: 승인03/04·프로젝트 지침·개인계획, h-docs PR #35 병합과 최신 GitOps/ROSA Source 후속을 연결한다. 작업 순서·찾는 법을 구체화한 실행판이며 설계·역할·T 성공기준·승인 날짜를 변경하지 않는다. 이번 후속은 Source 구현·게시와 검사/리뷰 준비이며 실제 OCP/Controller/AWS Runtime 재조회·Sync/Plan/Apply가 아니다. 요청 정태훈, 작성·검토 지원 Codex.
 
 ## 먼저 열 이슈와 기록 순서
 
@@ -31,13 +31,22 @@ TH17은 App4의 App/Pool, GitOps10의 선언/관측, Infra25의 ROSA/SG/재생�
 - [x] App [h-app PR #5](https://github.com/seokpan/seokpan-hybrid-app/pull/5) 병합, GitOps/ROSA 후보 Source 검사, 두 합성 부분 예행과 [h-infra PR #29](https://github.com/seokpan/seokpan-hybrid-infra/pull/29) 도구 병합
 - [x] [h-docs PR #34](https://github.com/seokpan/seokpan-hybrid-docs/pull/34) main `efb07db36c140d77702fe5e2854d6d44df0af198` 병합·해당 브랜치 삭제 확인
 - [x] 네 저장소의 기존 실행 이슈 10개 탐색 보완과 TH81/기존 완료2·원 기록/메타데이터 보존
+- [x] [h-docs PR #35](https://github.com/seokpan/seokpan-hybrid-docs/pull/35) 병합·해당 브랜치 삭제 확인, OCP 최초 제어·인계 Source와 ROSA 리뷰/실행 안내 게시
 - [ ] B 남은 선언/검사·실제 Image/입력·OCP 새 조합 수락
 - [ ] A/C/D 실제 기반·Data·CI/Pull/비용과 B ROSA 실제 실행/통합
 - [ ] 최종 시험·발표·삭제/잔존/보관·팀 종료
 
 **B는 지금 착수할 수 있다. A 전체 업무 완료를 기다리지 않는다.** 현재 원격 Source는 준비/일부 병합돼 있지만 새 Image·OCP 새 조합 Runtime·실제 foundation 제한 Output·ROSA 실행 수락은 기록에서 확인되지 않았다. 미확인은 해당 실행의 대기이며 모든 Source 준비의 중단이 아니다.
 
-**현재 B 작업 묶음:** TH-01의 본인 작업환경 연결 → TH-08의 **OCP 최초 배포에 필요한 선언·입력·Render·Case 인계**. 그동안 TH-09/11의 Cloud·Recovery·Secret Source와 TH-10/12의 ROSA 준비를 병행한다. 다음은 D/C의 최소 lab 입력 수신 → OCP 제한 배포/검증이다. 같은 App 코드를 다시 이관하거나, A의 VPN/Host/발표까지 모두 끝날 때를 기다리는 단계가 아니다.
+**현재 B 작업 묶음:** TH-08의 OCP 최초 제어 선언·입력표·Render/Case 인계 자료와 TH-10/12의 ROSA 리뷰/실행 안내를 Source로 구현해 기존 PR에 게시했다. 새 HEAD의 검사·리뷰 전환 상태는 **#9 [정확 HEAD 24개 PASS](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37296400801), #11 [정확 HEAD 32개 PASS](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37296400493), #28 [fmt·validate 오류0/경고0·Provider Schema 13종·Lock/Source 불변 PASS](https://github.com/seokpan/seokpan-hybrid-infra/actions/runs/37296404096) / #9/#28 Ready 전환 완료·사람 리뷰 대기, #11 Draft 유지**이다. 최신 검사 통과와 Ready 전환 후 **Source 사람 리뷰와 최소 입력 인계의 제출/수신 확인**을 진행한다. 본인 PC의 TH-01 개인 변경 대조는 별도이며 대신 완료 처리하지 않는다. Cloud/Recovery·Secret/Bundle 보완은 병행하고, 실제 OCP 배포는 D/C의 최소 lab 입력 수신 후 진행한다.
+
+| 지금 검토할 원본 | 사용할 전체 HEAD·자료 | 다음 확인 |
+| --- | --- | --- |
+| [h-gitops PR #9](https://github.com/seokpan/seokpan-hybrid-gitops/pull/9) | `07ac21a2fbeb9ae45b9df887abcd7c6020a51afe` · [OCP 최초 인계](https://github.com/seokpan/seokpan-hybrid-gitops/blob/07ac21a2fbeb9ae45b9df887abcd7c6020a51afe/handoff/OCP_FIRST_DEPLOYMENT.md) · [Source Run](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37296400801) | D/C/A의 Source 리뷰와 [h-gitops Issue #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10)의 제출·수신/보완 |
+| [h-gitops PR #11](https://github.com/seokpan/seokpan-hybrid-gitops/pull/11) | `b0eea0596c2c792999a4268e52deffb505a90277` · #9 Stack 소비, Cloud 차이 보존 · [Source Run](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37296400493) | #9 병합 → main retarget → diff·새 검사 확인 → Ready/리뷰. 확인 전 #9 브랜치 보존 |
+| [h-infra PR #28](https://github.com/seokpan/seokpan-hybrid-infra/pull/28) | `b65dc9244f1d6714c4dc56cba4267b572027f661` · [ROSA 리뷰/실행 조건](https://github.com/seokpan/seokpan-hybrid-infra/blob/b65dc9244f1d6714c4dc56cba4267b572027f661/terraform/rosa/REVIEW_AND_EXECUTION_GATES.md) · [Source Run](https://github.com/seokpan/seokpan-hybrid-infra/actions/runs/37296404096) | A/C/D의 Source 리뷰. 실제 기반 입력·Controller·Plan/비용 조건은 [h-infra Issue #25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25) |
+
+이전에는 실제 Image/lab/Recovery 수락이나 실제 기반 입력을 Draft 해제의 선행으로 함께 묶었다. 이번에는 입력 대기 선언의 **Source 리뷰·병합**과 **실제 활성화·Plan·시험 수락**을 분리한다. Source의 입력 보류·Owner·수동 Sync·삭제 보호·Case를 사람에게 검토받는 데 실제 배포 전체 완료가 필요하지 않기 때문이다. Source 검사/Ready와 Runtime PASS는 다르며, 새 OCP Root/Project와 선택 Namespace·suspended 읽기 전용 Schema 확인 Job도 실제 적용·DDL 실행 증거가 아니다. 상세 근거는 [05 §9.25](05_IMPLEMENTATION_AND_VALIDATION.md#b-source-review-handoff-20261005)에 연결한다.
 
 상위 개인 체크 정본은 [h-docs Issue #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의 TH01~19/81개다. 완료체크 TH03.1/03.2를 보존하고 아래 준비/실측 분해만으로 다른79개를 자동완료 처리하지 않는다. 팀 전체 W/T는 [팀 실행 순서](TEAM_EXECUTION_SEQUENCE.md)·[h-docs Issue #8](https://github.com/seokpan/seokpan-hybrid-docs/issues/8)이며 B 개인 일과 구분한다.
 
@@ -45,8 +54,8 @@ TH17은 App4의 App/Pool, GitOps10의 선언/관측, Infra25의 ROSA/SG/재생�
 
 | 우선 | B의 구체적인 행동 | 이번 묶음에서 남길 결과 | 지금 기다리는가 / 막히는 범위 | 원본·TH |
 | --- | --- | --- | --- | --- |
-| 1 | 본인 clone의 HEAD·미커밋/미추적 변경·도구/작업 Branch 확인. App main c12b3d15와 GitOps PR9 head39f416f를 출발점으로 고정 | 전체 SHA·개인 변경의 보존/반영 구분·작업 범위 | A/C/D 전체 완료 대기 없음. 실제 본인 PC/Controller 접근만 본인 확인 | [h-docs Issue #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21), TH01/02 |
-| 2 | PR9의 ocp-lab 최초 배포 경로를 검토. 대상 Namespace/Application/Project·Resource Owner·Image/Secret 참조·활성화/삭제 보호·Migration 실행 경계 작성/보완 | 필요한 선언 diff, 비밀값 없는 입력표, 초기1Replica 활성화 전후 Render/검사, 아직 빠진 값 | Source/Render는 지금 가능. 실제 Sync는 §3 lab 입력이 있어야 함 | [h-gitops Issue #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10), TH08 |
+| 1 | 본인 clone의 HEAD·미커밋/미추적 변경·도구/작업 Branch 확인. App main c12b3d15와 GitOps PR9 전체 HEAD07ac21a를 대조 | 전체 SHA·개인 변경의 보존/반영 구분·작업 범위 | A/C/D 전체 완료 대기 없음. 실제 본인 PC/Controller 접근만 본인 확인 | [h-docs Issue #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21), TH01/02 |
+| 2 | PR9의 구현된 ocp-lab 제어·인계 자료를 최신 검사와 함께 Source 리뷰. 대상/Owner·Image/Secret·기동 보류/수동 Sync·삭제 보호·선택 Namespace·Schema 확인/필요 Migration 경계를 대조 | Source 보완 요구·수락 범위, 인계할 전체 SHA·진단 Render/입력 누락·Case | Source 리뷰는 실제 Image/lab 전체 수락을 기다리지 않음. 실제 Sync는 §3 lab 입력 후 | [h-gitops Issue #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10), TH08 |
 | 3 | D에게 exact App/GitOps SHA·Render·Image/Secret 입력 칸·시험 Case를 인계. C와 DB/Redis/TLS/AUTH/Schema 계약 대조 | D Build/lab 인계와 C 검토의 제출/수신/보완 상태. TLS 오류·Ready/Migration·FE/API/WSS·업무·삭제 보호 Case | 실제 새 Image/Context/CA/Secret을 쓰는 시험만 대기. 계약/Case는 지금 작성 | [h-app Issue #2](https://github.com/seokpan/seokpan-hybrid-app/issues/2)·[h-app Issue #4](https://github.com/seokpan/seokpan-hybrid-app/issues/4)·[h-gitops Issue #5](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5)·[h-gitops Issue #6](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6), TH03~08/14.1 |
 | 4 | 입력이 수락된 최소 OCP 조합부터 D와 배포/검증. 문제는 B 선언/App와 C Data·D lab 역할로 분리 | 같은 SHA/Digest/Platform/Config/CA/Secret/Context의 새 Run. 실패/제한·수신·ROSA 차이 | OCP 실행은 필요한 lab 입력 후 가능. A VPC/ECR/ROSA 전체를 기다리지 않음 | [h-gitops Issue #5](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5)·[h-gitops Issue #6](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6), TH08.4 |
 | 병행 A | Cloud/Recovery Overlay, Root/AppProject/NP/UWM·단일 Migration·Bundle 목록·Cloud Secret/관리 회수 Case 준비 | Source/Render와 Owner/논리 참조·환경 차이·재시험 범위 | 실제 Cloud/Recovery 적용만 해당 입력 대기 | [h-gitops Issue #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10)·[h-app Issue #4](https://github.com/seokpan/seokpan-hybrid-app/issues/4), TH09/11/15 |
@@ -70,7 +79,7 @@ OCP용 Harbor 사전검증을 ECR+Harbor CI E2E나 최종 Cloud Release 완료�
 
 ## 4 A가 어느 범위까지 제공하면 B의 실제 Plan이 가능한가
 
-현 [h-infra PR #28](https://github.com/seokpan/seokpan-hybrid-infra/pull/28) HEAD402a6445의 계약 기준이다. **A의 모든 업무 종료가 아니라 rosa가 소비하는 필수 실제 출력 묶음의 수락**이 필요하다. 현재 코드는 Network만으로 Plan할 수 없다.
+현 [h-infra PR #28](https://github.com/seokpan/seokpan-hybrid-infra/pull/28) HEAD `b65dc9244f1d6714c4dc56cba4267b572027f661`의 계약 기준이다. 최신 main 통합·리뷰/실행 안내 추가에서 실행 HCL·Lock을 보존했다. **A의 모든 업무 종료가 아니라 rosa가 소비하는 필수 실제 출력 묶음의 수락**이 필요하다. 현재 코드는 Network만으로 Plan할 수 없다.
 
 | 필요 묶음 | 필요한 내용 | 여기까지 필요 없는 것 |
 | --- | --- | --- |
@@ -240,7 +249,7 @@ OCP의 사전검증 업무 완료와 정리 날짜는 별개다. 추천 운영 �
 
 ## 10 전체 남은 작업 현황
 
-- [ ] **B 지금:** 본인Source/환경연결 → OCP최초배포의선언/입력/Render/Case 인계 → 최소lab입력수신 → D와새조합검증. TH01/03~08/14.1
+- [ ] **B 지금:** 본인 Source/개인 변경 대조 → 게시된 OCP 제어·인계 묶음과 ROSA Source의 최신 검사/사람 리뷰 → 제출·수신/보완 → 최소 lab 입력 수신 → D와 새 조합 검증. TH01/03~08/14.1
 - [ ] **B 병행Source:** Cloud/Recovery차이·Root/AppProject/NP/UWM·단일Migration·Secret/관리/Bundle·rosa계약/Controller·비용/창입력. TH09~12/15/17.1/18/19계획
 - [ ] **A 기반:** foundation공통틀/Network·Data/Registry/공통ROSA prerequisite·권한코드통합, 보호Plan/비용/실행·필수제한Output수신. VPN/Host후속과구분
 - [ ] **A Host/VPN:** 실제종단/Route·허용거부·재부팅/재구축·격리Host/공간/통신. 실제이전/Backup/Recovery의직접조건
@@ -256,6 +265,6 @@ OCP의 사전검증 업무 완료와 정리 날짜는 별개다. 추천 운영 �
 - [ ] **OCP 업무/정리:** 승격조합/차이/결함인계·공유사용종료·승인실습대상/시험Secret정리. 공유OCP전체/1차자산삭제로확대금지
 - [ ] **최종ROSA/비용:** 영상/Backup/Harbor/Bundle/Key접근·복원확인→승인rosa삭제·실제부속/잔존·후속청구/Owner. foundation/bootstrap전체Destroy별도승인
 - [ ] **발표·전체종료:** 비교/한계/기여·시연/예비영상/대본·자료/해독Key보존·불필요Credential/실데이터정리·보관/후속책임수신·T20/T23/Cost정합. TH18/19, W09~10
-- [ ] **메타데이터/후속:** Freeze milestone10/18→승인10/16정정·PR30/새실행판PR리뷰/머지·PR9→11retarget/검사·원본/제출/수신상태갱신
+- [ ] **메타데이터/후속:** Freeze milestone10/18→승인10/16정정·GitOps9/Infra28 Source 사람 리뷰·GitOps9→11 retarget/새 검사·원본/제출/수신 상태 갱신. Docs35 병합 후속은 확인 완료
 
 근거: 승인03 §3-C.4/3-F/3-G/3-H·3-I.14.5, 04 §2.2~2.3/3.1~3.2/4/9~10, 개인계획 §6/7/9/11/12/18, 지침 §37, 최신 원 Issue/PR/Tree/체크. 현재기록은원격Source/보고범위이며본인PC·OCP/AWS/Registry실제입력수신/서버상태는해당Owner/새Run으로확인한다.

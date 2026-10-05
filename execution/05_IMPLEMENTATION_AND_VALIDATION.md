@@ -1266,6 +1266,32 @@ OCP검증종료와실습자원정리/공유클러스터삭제는별개이며 OCP
 
 승인 10/16 Technical Freeze와 GitHub Milestone 10/18 메타데이터 불일치는 관리자 보정 후속으로 유지하며 승인 날짜를 바꾸지 않는다. 실제 OCP 정리·ROSA 생성/삭제 시각은 미확정이다. 새 코드·실제 환경 시험·Source 병합·유료 실행·팀원 메시지/수신은 이번 탐색 보완으로 수행/완료 처리하지 않는다.
 
+<a id="b-source-review-handoff-20261005"></a>
+### 9.25 OCP 최초 Source·인계 묶음과 ROSA 사람 리뷰의 출발점 — 2026-10-05 KST
+
+[h-docs PR #35](https://github.com/seokpan/seokpan-hybrid-docs/pull/35)의 병합·브랜치 삭제를 확인했고, 이슈 탐색 보완 이후 첫 B Source 묶음을 기존 PR에 게시했다. 요청자는 정태훈, Source 구현·검사/기록 지원은 Codex다. 실제 수행과 기존 B/C/D/A 배정 책임을 구분한다. 새 개인 이슈나 완료 체크 정본은 만들지 않는다.
+
+| 원본·최종 전체 HEAD | 이번 Source 변경·보존 | 같은 HEAD의 Source 검사 원본 |
+| --- | --- | --- |
+| [h-gitops PR #9](https://github.com/seokpan/seokpan-hybrid-gitops/pull/9) · `07ac21a2fbeb9ae45b9df887abcd7c6020a51afe` | 기존 App base/lab/Recovery 선언을 보존하고 OCP Root/Project·초기 수동 Sync/기동 보류·선택 Namespace·별도 suspended 읽기 전용 Schema 확인 Job을 추가. 38파일 후보의 [OCP 최초 인계](https://github.com/seokpan/seokpan-hybrid-gitops/blob/07ac21a2fbeb9ae45b9df887abcd7c6020a51afe/handoff/OCP_FIRST_DEPLOYMENT.md)에 최소 입력·Owner·Render·Case·제출/수신을 연결 | [Run 37296400801](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37296400801) |
+| [h-gitops PR #11](https://github.com/seokpan/seokpan-hybrid-gitops/pull/11) · `b0eea0596c2c792999a4268e52deffb505a90277` | 새 #9 Source를 Stack으로 소비하고 기존 Cloud 차이·기동 보류·검사를 보존 | [Run 37296400493](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37296400493) |
+| [h-infra PR #28](https://github.com/seokpan/seokpan-hybrid-infra/pull/28) · `b65dc9244f1d6714c4dc56cba4267b572027f661` | 최신 main을 통합하고 [REVIEW_AND_EXECUTION_GATES.md](https://github.com/seokpan/seokpan-hybrid-infra/blob/b65dc9244f1d6714c4dc56cba4267b572027f661/terraform/rosa/REVIEW_AND_EXECUTION_GATES.md)를 추가. 기존 실행 Terraform HCL·Lock·Workflow를 보존 | [Run 37296404096](https://github.com/seokpan/seokpan-hybrid-infra/actions/runs/37296404096) |
+
+**최신 Source 검사 결과:** #9 [정확 HEAD 24개 PASS](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37296400801), #11 [정확 HEAD 32개 PASS](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37296400493), #28 [fmt·validate 오류0/경고0·Provider Schema 13종·Lock/Source 불변 PASS](https://github.com/seokpan/seokpan-hybrid-infra/actions/runs/37296404096)  **PR 상태/리뷰 전환:** #9/#28 Ready 전환 완료·사람 리뷰 대기, #11 Draft 유지
+
+**리뷰와 실제 실행의 분리:** 이전 기록은 새 Image/lab/Recovery 수락이나 실제 기반 출력의 준비를 Draft 유지 조건으로 함께 묶었다. 이번 Source 보완은 입력 대기 상태에서도 검토할 수 있는 Owner·배선·수동 Sync·삭제 보호·입력 계약·Case와 실행 조건을 구체화했다. 최종 HEAD의 Source 검사 확인 후 사람의 Source 리뷰·병합 판단을 시작하고, 물리 활성화·실제 Plan·시험 수락은 각 원 Issue에서 계속 대기/추적한다. 이것은 설계·역할·필수 실행 Gate를 완화하는 변경이 아니며, 병합을 실제 Runtime 성공으로 처리하지 않는다. 진단 Render의 `INPUT_REQUIRED`/예약 주소·0 Replica와 suspended Job은 실제 Apply할 Release가 아니다. 별도 Job의 현재 동작은 읽기 전용 Schema 확인이며 DDL Migration 실행 완료가 아니다.
+
+| 다음 확인 | 원 기록·확인 범위 |
+| --- | --- |
+| **GitOps #9 Source 사람 리뷰** | D는 lab/Argo·Image·Case, C는 Data/TLS·Schema/목적 인증, A는 공유 기반/Owner·bootstrap 경계를 해당 PR의 최신 HEAD에서 검토. [h-gitops Issue #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10)에 인계 자료/검사·보완을 연결 |
+| **GitOps #11 Stack** | #9 병합 → #11 main retarget → Cloud diff 보존·새 HEAD 검사 → Ready/사람 리뷰. 이 확인 전 #9 작업 브랜치를 삭제하지 않음 |
+| **Infra #28 Source 사람 리뷰** | A 기반/State·출력 소비, C Data SG/Rule·보존, D/A Registry/Pull·권한 차이를 PR에서 검토. 실제 Caller/Backend·필수 출력·지원·첫 Plan/총비용·유료 실행 조건은 [h-infra Issue #25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25)에 유지 |
+| **실제 OCP와 수신** | D의 새 Harbor Image/Scan/Digest·lab Context/권한·C/D Data/TLS/Schema와 별도 Secret 공급 후 [h-gitops Issue #5](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5)·[h-gitops Issue #6](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6)에서 같은 Source/Image/설정 조합의 새 Run. 필요한 Migration만 별도 단일 실행/수락 |
+
+Source 게시·리뷰 대상 제시는 인계 자료의 제출 범위다. A/C/D의 실제 열람·기술 수락·보완 수신은 별도이며 대신 완료 표시하지 않는다. 본인 PC의 미반영 변경·TH01도 실제 확인 전 완료로 쓰지 않는다. 원 결과를 GitOps10/Infra25와 각 PR/Source Run에 먼저 연결하고 [h-docs Issue #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의 해당 TH·[h-docs Issue #8](https://github.com/seokpan/seokpan-hybrid-docs/issues/8)·Tracker에는 원 링크·영향·다음 행동만 연결한다.
+
+TH01~19의 식별자81개와 기존 완료2개를 유지한다. 새 Runtime Evidence Run/빈 Index·Shared Execution 행·팀원 메시지/수신을 만들지 않는다. 실제 OCP Sync·Cloud 인증/Plan/Apply·유료 자원 생성·전체 T18과 서비스 RTO10분/DB RPO30분 달성은 이번 Source 후속으로 수행/완료하지 않는다. $450 계획선/$500 한도, foundation/bootstrap 보호와 조건부 중간/최종 삭제·잔존 비용/전체 종료 기준을 유지한다.
+
 ## 남은 작업과 다음 단계
 
 - [x] 최종 04·지침 등록 확인과 기존 승인 설계의 정합 보완 완료 이력 보존 — 새 DR 목표·주기·구조 선택의 최종 완료와 구분

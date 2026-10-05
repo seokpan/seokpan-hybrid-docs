@@ -1,5 +1,7 @@
 # Work and Input Tracker
 
+**B의 현재 Source·다음 확인 — 2026-10-05 KST:** [h-docs PR #35](https://github.com/seokpan/seokpan-hybrid-docs/pull/35) 병합·브랜치 삭제 후 OCP 최초 제어·인계 자료와 ROSA 리뷰/실행 안내를 기존 PR에 게시했다. 최신 Source 검사·PR 상태는 #9 [정확 HEAD 24개 PASS](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37296400801), #11 [정확 HEAD 32개 PASS](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37296400493), #28 [fmt·validate 오류0/경고0·Provider Schema 13종·Lock/Source 불변 PASS](https://github.com/seokpan/seokpan-hybrid-infra/actions/runs/37296404096) / #9/#28 Ready 전환 완료·사람 리뷰 대기, #11 Draft 유지이다. 다음은 최신 HEAD의 사람 Source 리뷰·인계 제출/수신·보완 확인이며, 실제 Image/lab 수락을 Source 리뷰의 일괄 선행으로 묶지 않는다. 실제 OCP·Plan/유료 생성은 각 입력 Gate를 유지한다. [최신 후속](#b-source-review-handoff-20261005)·[05 §9.25](05_IMPLEMENTATION_AND_VALIDATION.md#b-source-review-handoff-20261005)·[개인 실행판](TJUNG03_EXECUTION_BOARD.md)을 우선하고, 아래 시각별 관측은 이력으로 보존한다.
+
 **이슈를 따라가는 현재 진입 — 2026-10-05 KST:** [h-docs PR #34](https://github.com/seokpan/seokpan-hybrid-docs/pull/34) 병합·브랜치 삭제 확인. [h-docs Issue #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의 현재 안내 → App1/App4·GitOps10·Infra25 실행 카드 → 원 PR/새 Run·제출/수신 → 개인 TH 확인으로 진행한다. 기존 10개 이슈의 탐색·범위·종료 안내를 보완하며 TH81/완료2·과거 본문·메타데이터를 보존한다. 새 중복 이슈는 생성하지 않는다. [감사](#b-issue-navigation-audit-20261005)·[05 §9.24](05_IMPLEMENTATION_AND_VALIDATION.md#b-issue-navigation-audit-20261005)·[개인 실행판](TJUNG03_EXECUTION_BOARD.md)을 우선한다. 아래 날짜별 상태는 해당 시점 이력이다.
 
 **B의 현재/다음/Blocker — 2026-10-05 15:40 KST:** [정태훈 실행판](TJUNG03_EXECUTION_BOARD.md)·[05 §9.23](05_IMPLEMENTATION_AND_VALIDATION.md#b-platform-execution-20261005). 현재 최초lab선언/입력/Render/Case인계; 다음은최소lab입력수신후OCP새조합검증. Cloud/Secret/Bundle·rosaSource/Controller준비병행. A전체종료를B착수Gate로두지않는다. 실제Plan/유료생성/CloudAppSync/Offline복원은각직접입력대기를구분한다.
@@ -370,3 +372,22 @@ TH-01~19·세부 식별자81개·T01~T23 연결과 기존 완료 체크2개는 �
 현재 다음 작업은 본인 Source 확인 후 GitOps10의 OCP 최초 선언·입력표·Render·Case 인계다. Infra25의 Controller/ROSA Source·지원/권한·Plan 입력/비용 준비는 병행한다. 실제 OCP/Plan/유료 생성/App Sync/격리 복구는 각 직접 입력만 대기한다. 결과는 원 Issue/PR/새 Run에 먼저 기록하고 Tracker에는 개정·원 링크·제출/수신·막힌 실행·다음 확인 시점·계속할 준비를 연결한다.
 
 OCP 검증과 실습 정리·공유 Cluster 종료, ROSA 중간/최종 삭제와 AWS 잔존/후속 비용, 개인 TH19와 팀 전체 종료를 구분한다. 중간 삭제는 검증 Backup 로컬 완성본·Release/Bundle/Key 접근·App 쓰기/Data/Binding 보호·범위/비용/실행 확인 후이며 유지 시 시간/비용을 기록한다. 필요한 Migration만 실행한다. 승인10/16와 Milestone10/18 불일치는 관리자 메타데이터 보정 후속으로 유지한다. 이번 정리로 새 Run/PASS·유료 실행·팀 수신을 만들지 않는다.
+
+<a id="b-source-review-handoff-20261005"></a>
+## OCP 최초 Source·인계와 ROSA 사람 리뷰 후속 — 2026-10-05 KST
+
+[h-docs PR #35](https://github.com/seokpan/seokpan-hybrid-docs/pull/35)의 이슈 탐색 보완이 main에 반영됐다. 요청 정태훈, Source 구현·게시/검사·기록 지원 Codex. 기존 이슈/PR에서 첫 B Source 후속을 진행하며, 기존 TH81·완료2와 시각별 이력을 보존한다. 상세 근거·보존 범위·실제 실행 조건은 [05 §9.25](05_IMPLEMENTATION_AND_VALIDATION.md#b-source-review-handoff-20261005)에 연결한다.
+
+| 원본·정확한 HEAD | 이번 준비와 다음 담당 확인 | Source 검사 원본 |
+| --- | --- | --- |
+| [h-gitops PR #9](https://github.com/seokpan/seokpan-hybrid-gitops/pull/9) · `07ac21a2fbeb9ae45b9df887abcd7c6020a51afe` | App 선언 보존 + OCP 제어/수동·보호/선택 Namespace·suspended 읽기 전용 Schema 확인 후보. [최초 배포 인계](https://github.com/seokpan/seokpan-hybrid-gitops/blob/07ac21a2fbeb9ae45b9df887abcd7c6020a51afe/handoff/OCP_FIRST_DEPLOYMENT.md)의 입력·Render·Case를 GitOps10에 연결하고 D/C/A Source 리뷰·제출/수신을 별도 확인 | [Run 37296400801](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37296400801) |
+| [h-gitops PR #11](https://github.com/seokpan/seokpan-hybrid-gitops/pull/11) · `b0eea0596c2c792999a4268e52deffb505a90277` | 새 #9 Stack 소비·Cloud 차이 보존. #9 병합 후 main retarget·diff·새 HEAD 검사 → Ready/리뷰. 확인 전 #9 브랜치 보존 | [Run 37296400493](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37296400493) |
+| [h-infra PR #28](https://github.com/seokpan/seokpan-hybrid-infra/pull/28) · `b65dc9244f1d6714c4dc56cba4267b572027f661` | 최신 main 통합·[리뷰/실행 안내](https://github.com/seokpan/seokpan-hybrid-infra/blob/b65dc9244f1d6714c4dc56cba4267b572027f661/terraform/rosa/REVIEW_AND_EXECUTION_GATES.md), 실행 HCL/Lock/Workflow 보존. A/C/D Source 리뷰와 Infra25의 실제 입력/Plan·비용 조건을 분리 | [Run 37296404096](https://github.com/seokpan/seokpan-hybrid-infra/actions/runs/37296404096) |
+
+**Source 검사/PR 상태:** #9 [정확 HEAD 24개 PASS](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37296400801), #11 [정확 HEAD 32개 PASS](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37296400493), #28 [fmt·validate 오류0/경고0·Provider Schema 13종·Lock/Source 불변 PASS](https://github.com/seokpan/seokpan-hybrid-infra/actions/runs/37296404096) / #9/#28 Ready 전환 완료·사람 리뷰 대기, #11 Draft 유지.
+
+이전 Draft 기록은 Image/lab/Recovery 수락과 기반 출력 준비를 Source 리뷰 조건에 함께 묶었다. 이번에는 입력 대기 선언의 안전한 Owner·배선·수동 Sync/삭제 보호·계약과 Case를 검토하는 **Source 리뷰/병합**, 공급 개정과 실제 대상/Caller·Image·Data/Secret을 확인하는 **실제 실행/수락**을 분리한다. Source 검사 또는 Ready가 Runtime PASS를 뜻하지 않으며 과거 Draft 시점은 덮어쓰지 않는다.
+
+원 작업은 [h-gitops Issue #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10)·[h-infra Issue #25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25)와 위 PR/Source Run이다. 실제 OCP 실행은 [h-gitops Issue #5](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5)·[h-gitops Issue #6](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6)의 같은 조합 Run으로, 수신·보완은 담당자의 원 기록으로 확인한다. 개인 상위 [h-docs Issue #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)·팀 입력 허브 [h-docs Issue #8](https://github.com/seokpan/seokpan-hybrid-docs/issues/8)에 연결한다. 제출과 실제 수신/기술 수락은 별도이고 본인 PC/Controller 상태도 대신 확인하지 않는다.
+
+새 Runtime Run/Index·공유 실행 행·팀원 메시지/수신, 실제 OCP Sync·Cloud Plan/Apply·유료 생성·전체 T18은 이번 후속으로 수행/완료하지 않는다. Source 리뷰를 진행하면서 lab 입력·Controller·기반 출력·Cloud/Recovery/Secret·비용/창 준비를 병행하고, 각 실제 실행만 직접 입력을 대기한다.
