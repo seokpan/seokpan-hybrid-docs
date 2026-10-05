@@ -1394,6 +1394,26 @@ OCP 새 조합 사전검증, 새 격리 Recovery 구성/부분 업무, 실제 �
 
 원 Issue #25/#10·Docs #21/#8의 현재 안내만 갱신하고 기존 TH01~19/81개·완료2개·원 체크/메타데이터·승인 설계·비용/보존/종료 조건을 유지한다. 실제 OCP Sync·Cloud Plan/Apply·유료 생성·DDL·STS·전체 T18·Runtime Run/Index는 이번 Source 후속으로 수행하지 않는다. B는 OCP 최소 선언/Render/Case 인계와 Cloud/Recovery/Secret·Controller 준비를 병행하며 A 전체 종료를 기다리지 않는다.
 
+<a id="b-cloud-main-review-followup-20261005"></a>
+### 9.29 GitOps #9·Docs #38 병합 후 Cloud #11의 main 전환·Source 리뷰 — 2026-10-05 KST
+
+사용자는 [h-gitops PR #9](https://github.com/seokpan/seokpan-hybrid-gitops/pull/9)와 [h-docs PR #38](https://github.com/seokpan/seokpan-hybrid-docs/pull/38)의 병합 및 Docs 브랜치 삭제를 알렸고, #11을 위해 #9 브랜치는 보존했다. 원 PR·main/Tree·브랜치와 기존 #11의 실제 Source 차이를 재대조한다. #9의 squash 병합 뒤 #11의 Draft가 자동 해제되지 않는 것은 남아 있던 **main 통합·base 전환·Cloud 차이·새 검사·사람 리뷰** 단계이며 실제 ROSA나 전체 Recovery 완료 대기가 아니다.
+
+| 원본 | 최신 확인·직접 후속 | 유지하는 실행 경계 |
+| --- | --- | --- |
+| [h-gitops PR #9](https://github.com/seokpan/seokpan-hybrid-gitops/pull/9) | main `c8b87904a28b8a6db5fbcdb35ac781cfb3f72615` 병합. 기존 `implementation/app-lab-recovery-20261002` 브랜치는 사용자 요청에 따라 보존 | Source 병합과 기존 Runtime7의 실제 Image/Data/UID/Migration/업무·복구 수락은 별도. [원 연결표](https://github.com/seokpan/seokpan-hybrid-gitops/pull/9#issuecomment-5995162694)·GitOps #5/#6/#10·App #1/#2/#4·Infra #16/#17 유지 |
+| [h-docs PR #38](https://github.com/seokpan/seokpan-hybrid-docs/pull/38) | main `32aee1b6b9214c06aacbde7e962db9619e65814c` 병합·해당 브랜치 삭제. 05/Tracker/실행판 3파일과 이전 게시본을 대조 | §9.27~9.28의 리뷰 대상/판단·CI·실제 STS 수행 시점은 당시 이력. 이번 현재 안내는 새 문서 후속에서 기록 |
+| [h-gitops PR #11](https://github.com/seokpan/seokpan-hybrid-gitops/pull/11) | #9 squash main을 소비해 통합하고 base `main`으로 전환. 최신 `7d66958f0a7bfa00104f6bd82656d9785b393eba`·[같은 HEAD Source CI](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37318410790)·Ready 전환·A/C/D 재리뷰 요청 완료·최신 사람 승인 대기 | 기본 FE/BE 0 Replica·INPUT_REQUIRED·미확인 대상 유지. Cloud 3 Replica 목표는 별도 Preview이고 실제 활성화가 아님 |
+| [h-infra PR #28](https://github.com/seokpan/seokpan-hybrid-infra/pull/28) | `8061326041f03aa2cd556afab9a8fbb4890df310`·[Source CI PASS](https://github.com/seokpan/seokpan-hybrid-infra/actions/runs/37315242625). A/C 재리뷰 요청 상태 유지, 새 Source 승인을 기다림 | Cloud Plan/Apply·유료 생성·실제 SA JWT/STS는 NOT RUN. 재리뷰 대기가 OCP 인계나 Cloud 입력 대기 Source 준비 전체를 막지 않음 |
+
+#11의 main 통합은 기존 `6ea0ab2437fbb6239140f2c9205350c3d81ee58f`와 squash main `c8b87904a28b8a6db5fbcdb35ac781cfb3f72615`를 부모로 사용하고 49개 전체 Blob/Mode를 보존한다. main 대비 최종 Cloud 차이는 **12파일**이며 과거 Stack에서 기록한 13파일과 비교 기준이 다르다. [새 원 PR 답변](https://github.com/seokpan/seokpan-hybrid-gitops/pull/11#issuecomment-5995675431)에 통합·base·검사·Ready/리뷰 요청을 연결했다. 같은 HEAD CI는 App18+OCP6+Safety6+Cloud9=**39개 PASS**, skip0·Source 불변을 확인했다. 이미 병합된 공통/lab/Recovery·OCP 인계 선언을 재변경하지 않고 기존 Cloud 전용 차이만 검토한다. 기존 HEAD/base 검사는 새 main 비교와 같은 HEAD 검사를 대신하지 않는다. Source CI에는 실제 Kustomize·의미 Guard가 포함되지만 실제 Image Pull/TLS/Schema/업무 안전·ROSA 지원/권한·비용 확인을 대신하지 않는다. Draft 해제·Ready/재리뷰는 기동 보류 Source에 대한 사람 검토 단계이며 Cloud Sync 권한 부여가 아니다.
+
+**Cloud 활성화는 후속 단계다.** 목표 Preview를 기본 Overlay에 자동 연결하지 않는다. 다중 Backend Release는 검토한 `captured` 입력, 실제 1/3 Pod 업무·전환/종료·DB/Redis 결과와 App #4 수락을 요구한다. Controller/Namespace·Project/Application 단일 Owner, 외부 Image/Pull·Data/CA/Secret 공급 및 재기동/회수·Schema/필요 Migration은 GitOps #10·Infra #25 및 각 공급 원본의 최소 입력을 수락해 별도 승인 변경·새 Run으로 진행한다. Preview·Renderer 입력 검사를 실제 Runtime 전환 성공으로 표시하지 않는다.
+
+**B의 지금 행동:** #11 최신 Source 리뷰를 진행하면서 병합된 #9의 [OCP 최초 인계](https://github.com/seokpan/seokpan-hybrid-gitops/blob/c8b87904a28b8a6db5fbcdb35ac781cfb3f72615/handoff/OCP_FIRST_DEPLOYMENT.md)를 기준으로 D/C에 Source·Render·입력표·Case를 인계한다. 본인환경의 개인 변경/정확 App·GitOps SHA를 대조하고, 제출·Source 수신·실입력 수락·실제 시험 판정을 원 Issue/PR/Run에 기록한다. 최소 lab Image/Context/Owner·DB/Redis/CA/Secret/Schema 수신 후 실제 수동 활성화·배포/검증을 진행한다. Cloud/Recovery·Secret/Bundle·ROSA Controller와 실제 Plan 입력/권한/비용/창 준비는 병행한다. A 전체 업무·OCP 정리·C Backup 전체를 일괄 선행조건으로 추가하지 않는다.
+
+원 GitOps #10·Infra #25·Docs #21/#8의 현재 안내만 갱신하고 TH01~19/81개·기존 완료2·기존 모든 체크와 과거 리뷰/검사 이력을 보존한다. OCP 업무 종료·실습 정리·공유 Cluster 종료, ROSA 중간/최종 삭제·잔존 비용·10/26 프로젝트 종료는 각각 기존 조건으로 판정한다. 이번 Source/문서 후속에서는 실제 OCP Sync·Cloud Plan/Apply·유료 생성·DDL·STS·전체 T18·새 Runtime Run/Index를 수행하지 않는다. #9 보존 브랜치를 임의 삭제하지 않는다.
+
 ## 남은 작업과 다음 단계
 
 - [x] 최종 04·지침 등록 확인과 기존 승인 설계의 정합 보완 완료 이력 보존 — 새 DR 목표·주기·구조 선택의 최종 완료와 구분
