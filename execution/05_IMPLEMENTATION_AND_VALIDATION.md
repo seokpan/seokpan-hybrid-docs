@@ -1372,6 +1372,28 @@ OCP 새 조합 사전검증, 새 격리 Recovery 구성/부분 업무, 실제 �
 
 기존 TH01~19/81개·완료2개·이전 HEAD/검사/승인/§9.26 이력을 보존한다. 실제 OCP·Cloud Plan/Apply·유료 생성·JWT/STS·DDL·전체 T18·Runtime Run/Index를 이번 Source 후속으로 수행/완료하지 않는다. B는 최소 OCP 인계/입력과 ROSA 준비를 병행하고 A 전체 종료를 기다리지 않는다. $450 계획선/$500 한도·foundation/bootstrap 보호·조건부 중간/최종 삭제·잔존 비용/프로젝트 전체 종료의 개별 확인을 유지한다.
 
+<a id="b-oidc-condition-review-followup-20261005"></a>
+### 9.28 최신 A 리뷰의 대상 개정·Trust 조건 판단과 동일 PR 후속 — 2026-10-05 KST
+
+사용자는 GitOps #9의 기존 Runtime7 연결표를 원 PR 코멘트에 추가하고 새 리뷰까지 확인해 머지 여부를 판단하도록 요청했다. Infra #28의 추가 Request Changes는 수정 전 개정의 판단인지 확인하고 타당한 문제는 같은 PR에서 보완하도록 요청했다. 원 리뷰·시각·commit_id·실제 Source를 대조하며 리뷰 문구 전체를 그대로 설계나 새 실행 Gate로 확대하지 않는다. 기록은 기존 [h-docs PR #38](https://github.com/seokpan/seokpan-hybrid-docs/pull/38) 안에서 갱신한다.
+
+| 새 리뷰 | 실제 대상·판정 | 후속 |
+| --- | --- | --- |
+| [GitOps #9 A APPROVED](https://github.com/seokpan/seokpan-hybrid-gitops/pull/9#pullrequestreview-5414822497) | A `ggbun2`, 2026-10-05 21:58:27 KST, HEAD `46ae246c5267561890463926a9a1557f1a7bf264`. D 제안 6건의 실제 반영·Source CI·base를 재확인했고 새 Source Blocker 없음 | C의 [동일 HEAD 승인](https://github.com/seokpan/seokpan-hybrid-gitops/pull/9#pullrequestreview-5414095085)과 함께 Source 병합 가능 판단. 기존 Runtime7 표를 [원 PR 코멘트](https://github.com/seokpan/seokpan-hybrid-gitops/pull/9#issuecomment-5995162694)에 연결. 실제 Sync/업무/복구 승인으로 확대하지 않음 |
+| [Infra #28 A REQUEST CHANGES](https://github.com/seokpan/seokpan-hybrid-infra/pull/28#pullrequestreview-5414713742) | A `ggbun2`, 2026-10-05 21:49:37 KST, HEAD `620314ea2e3309f418f02a9d622ac8a8beb6bc75`. C의 scheme/Ownership 보완 **이후 개정**이며 C가 같은 구 지적을 반복한 리뷰가 아님 | 해결된 issuer 보완은 유지하고 새 `sub` 비교 조건 요구를 독립 검토. 최신 Source의 보완·검사는 [원 PR 답변](https://github.com/seokpan/seokpan-hybrid-infra/pull/28#issuecomment-5995232257)으로 연결 |
+
+**Trust 조건의 판단과 정정:** OIDC `sub`의 단일 요청 값에는 set operator를 사용하지 않고 일반 `StringEquals`로 허용 ServiceAccount 목록을 비교하는 것이 AWS 조건 규칙에 맞다. 정책 목록의 여러 허용 값은 OR 비교되므로 기존 `each.value.service_accounts`와 6개 Role·SA/Policy mapping은 그대로 유지한다. 이에 production 조건과 두 issuer 입력의 기대 JSON을 `StringEquals`로 변경한다. 이는 실제 AWS/STS의 실패나 침해·권한 확대를 관측했다는 판정이 아니다.
+
+공식 모듈 근거는 버전과 구현을 구분한다. 이 프로젝트에서 대조한 **Classic 고정 v1.7.2와 그 현행 구현은 `ForAnyValue:StringEquals`를 사용**하며, A가 `StringEquals`라고 인용한 코드는 별도 `terraform-aws-rosa-sts` 구현이다. 이전에 고정 Classic과 같은 조건이라고 확인했던 이력을 삭제하거나 처음부터 plain 비교였다고 바꾸지 않는다. 공식 고정 예제가 있다는 이유만으로 IAM 조건 의미의 별도 검토를 생략한 점을 보완하고, AWS 규칙에 따른 최소 변경을 채택한다. `aud` 조건·새 Provider/Lock·권한/State·대기 자원·Cluster 생성은 이 수정에 추가하지 않는다.
+
+**최신 Infra #28 Source:** `8061326041f03aa2cd556afab9a8fbb4890df310` · **같은 HEAD 검사:** [Source CI PASS: fmt/validate 오류0·경고0·Schema13·harness2·Source/Lock 불변](https://github.com/seokpan/seokpan-hybrid-infra/actions/runs/37315242625) · **사람 리뷰:** `A/C 재리뷰 요청 완료·최신 Source 재수락 대기; 실제 STS/실행 NOT RUN`. 원 Root fmt/validate·실제 Provider Schema와 격리 OIDC harness 두 입력의 Trust/SA/Attachment 검사는 각각의 확인 범위를 기록한다. harness는 production OIDC/Role/Attachment HCL·정규화를 보존/대조하며 Operator 조회·postcondition·foundation 소비·Cluster graph를 실제로 실행한 검사가 아니다. 구 HEAD의 CI/사람 승인으로 새 HEAD를 수락하지 않는다.
+
+**진행 순서:** GitOps #9는 최신 승인/검사/미해결 리뷰·base 확인 후 Source 머지 가능이며 이번 작업에서는 머지·브랜치 삭제하지 않는다. #11은 Draft/Stack으로 유지하고 **#9 머지 → #11 main retarget → diff·새 검사·Ready/사람 리뷰** 후 기존 #9 브랜치를 정리한다. Infra #28은 새 Source/CI를 A와 C에게 다시 제출하고 사람 수락 전 머지하지 않는다. C의 원 변경 요청과 A의 새 변경 요청을 임의 해제하지 않는다.
+
+실제 권한/최소 입력·Backend·전체 Plan·지원·총비용/실행 창과 승인 IAM/OIDC 준비 후 issuer/discovery/JWKS/TLS 대조는 [h-infra Issue #25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25)에 유지한다. 실제 Operator SA JWT/STS·Operator 상태는 승인 Cluster 생성 후 새 Run으로 검증한다. Source Trust 검사 PASS를 Federation·Cloud App·전체 T18/RTO/RPO 성공으로 쓰지 않으며 실제 시험 전체를 Source 머지 전 일괄 조건으로 되돌리지 않는다.
+
+원 Issue #25/#10·Docs #21/#8의 현재 안내만 갱신하고 기존 TH01~19/81개·완료2개·원 체크/메타데이터·승인 설계·비용/보존/종료 조건을 유지한다. 실제 OCP Sync·Cloud Plan/Apply·유료 생성·DDL·STS·전체 T18·Runtime Run/Index는 이번 Source 후속으로 수행하지 않는다. B는 OCP 최소 선언/Render/Case 인계와 Cloud/Recovery/Secret·Controller 준비를 병행하며 A 전체 종료를 기다리지 않는다.
+
 ## 남은 작업과 다음 단계
 
 - [x] 최종 04·지침 등록 확인과 기존 승인 설계의 정합 보완 완료 이력 보존 — 새 DR 목표·주기·구조 선택의 최종 완료와 구분
