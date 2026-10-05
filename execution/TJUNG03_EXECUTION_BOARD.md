@@ -1,6 +1,6 @@
 # 정태훈 실행판 — 지금 할 일·입력 대기·OCP와 ROSA 수명
 
-> 기준 2026-10-05 KST: 승인03/04·프로젝트 지침·개인계획, h-docs PR #36 병합과 D의 GitOps/ROSA Source 리뷰 후속을 연결한다. 작업 순서·찾는 법을 구체화한 실행판이며 설계·역할·T 성공기준·승인 날짜를 변경하지 않는다. 이번 후속은 Source 리뷰 제안의 논거 대조·보완과 새 HEAD 검사/재리뷰 준비이며 실제 OCP/Controller/AWS Runtime 재조회·Sync/Plan/Apply가 아니다. 요청 정태훈, 작성·검토 지원 Codex.
+> 기준 2026-10-05 KST: 승인03/04·프로젝트 지침·개인계획, h-docs PR #37 병합과 C의 GitOps 승인/ROSA OIDC 수정 요청을 연결한다. 작업 순서·찾는 법을 구체화한 실행판이며 설계·역할·T 성공기준·승인 날짜를 변경하지 않는다. 이번 후속은 OIDC Source 계약/검사 보강과 추가 검증의 실행 시점 판단이며 실제 OCP/AWS Sync·Plan/Apply·STS 실행이 아니다. 요청 정태훈, 작성·검토 지원 Codex.
 
 ## 먼저 열 이슈와 기록 순서
 
@@ -33,23 +33,26 @@ TH17은 App4의 App/Pool, GitOps10의 선언/관측, Infra25의 ROSA/SG/재생�
 - [x] 네 저장소의 기존 실행 이슈 10개 탐색 보완과 TH81/기존 완료2·원 기록/메타데이터 보존
 - [x] [h-docs PR #35](https://github.com/seokpan/seokpan-hybrid-docs/pull/35) 병합·해당 브랜치 삭제 확인, OCP 최초 제어·인계 Source와 ROSA 리뷰/실행 안내 게시
 - [x] [h-docs PR #36](https://github.com/seokpan/seokpan-hybrid-docs/pull/36) main `d5ead4600c7e819141c1d8213c760cc693f3c238` 병합·해당 브랜치 삭제 확인, D의 이전 HEAD Source 승인·비차단 제안 접수
+- [x] [h-docs PR #37](https://github.com/seokpan/seokpan-hybrid-docs/pull/37) main `198996c32b02985578e339b514d38155ec17cff8` 병합·해당 브랜치 삭제 확인, GitOps #9 최신 HEAD에 대한 C Source 승인 수신
 - [ ] B 남은 선언/검사·실제 Image/입력·OCP 새 조합 수락
 - [ ] A/C/D 실제 기반·Data·CI/Pull/비용과 B ROSA 실제 실행/통합
 - [ ] 최종 시험·발표·삭제/잔존/보관·팀 종료
 
 **B는 지금 착수할 수 있다. A 전체 업무 완료를 기다리지 않는다.** 현재 원격 Source는 준비/일부 병합돼 있지만 새 Image·OCP 새 조합 Runtime·실제 foundation 제한 Output·ROSA 실행 수락은 기록에서 확인되지 않았다. 미확인은 해당 실행의 대기이며 모든 Source 준비의 중단이 아니다.
 
-**현재 B 작업 묶음:** D가 GitOps #9의 `07ac21a2fbeb9ae45b9df887abcd7c6020a51afe`와 Infra #28의 `b65dc9244f1d6714c4dc56cba4267b572027f661`를 Source 범위로 승인했다. 원 제안·연결 Issue·App/Provider Source를 대조해 지금 고칠 Source와 실제 실행에서 확인할 조건을 나누고, 기존 PR #9/#28에서 보완해 게시했다. **이전 승인으로 즉시 병합하지 않는다.** 변경 후 새 HEAD의 Source 검사와 사람 재리뷰 상태는 **#9 [30개 Source PASS](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37304174354) · #11 [39개 Source PASS](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37304179708) · #28 [fmt/validate 오류0·경고0/Provider Schema13종/Lock·Source 불변 PASS](https://github.com/seokpan/seokpan-hybrid-infra/actions/runs/37304176200) / #9/#28 Ready·D 재리뷰 요청 완료, 구 승인 해제·새 HEAD 승인 대기; #11 Draft 유지**이며 이전 승인·검사 성공을 새 개정에 자동 승계하지 않는다. D의 이전 개정 Source 수신/검토는 확인했지만 새 개정 수락·실제 Image/lab·Plan/Runtime 수락은 별도다. 본인 PC의 TH-01·Cloud/Recovery/Secret/Bundle 및 실행별 최소 입력 준비는 병행한다.
+**현재 B 작업 묶음:** C가 GitOps #9 HEAD `46ae246c5267561890463926a9a1557f1a7bf264`를 Source 범위로 승인했고, Infra #28 HEAD `870d1e43cb2dfa8ee430c8a174665eb690e5059f`의 OIDC Trust/Ownership에는 수정·검증을 요청했다. GitOps #9의 추가 7항목은 해당 실제 배포/복구의 실행 Gate이며 새 Source 병합 조건으로 되돌리지 않는다. #9/#11 Source는 이번 후속에서 바꾸거나 병합·브랜치 삭제하지 않았다. **지금은 Infra #28의 공통 issuer 정규화·실제 HCL mock 검사와 Ownership/검증 시점 안내를 보강해 새 HEAD의 C 재리뷰를 받는 구간**이다. 새 Infra Source 검사·사람 리뷰 상태는 **[Source CI PASS: fmt·validate 오류0/경고0·Schema13종·격리 OIDC harness2·Source/Lock 불변](https://github.com/seokpan/seokpan-hybrid-infra/actions/runs/37309802660) / `C 재리뷰 요청 완료·최신 Source 재수락 대기; 실제 STS/실행 NOT RUN`**이며 구 승인·검사 성공을 새 HEAD에 승계하지 않는다. OCP 최소 입력·Cloud/Recovery/Secret·본인 Controller/실제 Plan 준비는 병행한다.
 
 | 지금 검토할 원본 | 사용할 전체 HEAD·자료 | 다음 확인 |
 | --- | --- | --- |
-| [h-gitops PR #9](https://github.com/seokpan/seokpan-hybrid-gitops/pull/9) | `46ae246c5267561890463926a9a1557f1a7bf264` · [OCP 최초 인계](https://github.com/seokpan/seokpan-hybrid-gitops/blob/46ae246c5267561890463926a9a1557f1a7bf264/handoff/OCP_FIRST_DEPLOYMENT.md) · [원 D 리뷰](https://github.com/seokpan/seokpan-hybrid-gitops/pull/9#pullrequestreview-5413591924) | 새 HEAD 검사·D/C/A 사람 재리뷰와 [h-gitops Issue #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10)의 제출·수신/보완 |
+| [h-gitops PR #9](https://github.com/seokpan/seokpan-hybrid-gitops/pull/9) | `46ae246c5267561890463926a9a1557f1a7bf264` · [OCP 최초 인계](https://github.com/seokpan/seokpan-hybrid-gitops/blob/46ae246c5267561890463926a9a1557f1a7bf264/handoff/OCP_FIRST_DEPLOYMENT.md) · [C 승인 리뷰](https://github.com/seokpan/seokpan-hybrid-gitops/pull/9#pullrequestreview-5414095085) | Source 수락은 확인 완료. 실제 Image/Redis TLS·AUTH/Storage/UID·DB/Redis/Migration/Recovery 업무는 [h-gitops Issue #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10)·#5/#6의 실행별 입력 후. 이번 후속에서 미병합 |
 | [h-gitops PR #11](https://github.com/seokpan/seokpan-hybrid-gitops/pull/11) | `6ea0ab2437fbb6239140f2c9205350c3d81ee58f` · 새 #9 Stack 소비·Cloud 선택 미확정 입력 유지 | #9 새 개정 수락/병합 → main retarget → diff·새 검사 → Ready/리뷰. 확인 전 #9 브랜치 보존 |
-| [h-infra PR #28](https://github.com/seokpan/seokpan-hybrid-infra/pull/28) | `870d1e43cb2dfa8ee430c8a174665eb690e5059f` · [ROSA 리뷰/실행 조건](https://github.com/seokpan/seokpan-hybrid-infra/blob/870d1e43cb2dfa8ee430c8a174665eb690e5059f/terraform/rosa/REVIEW_AND_EXECUTION_GATES.md) · [원 D 리뷰](https://github.com/seokpan/seokpan-hybrid-infra/pull/28#pullrequestreview-5413597372) | 문서 보완 후 새 HEAD 검사·A/C/D 사람 재리뷰. 실제 입력/권한·Plan/비용 조건은 [h-infra Issue #25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25) |
+| [h-infra PR #28](https://github.com/seokpan/seokpan-hybrid-infra/pull/28) | `620314ea2e3309f418f02a9d622ac8a8beb6bc75` · [ROSA 리뷰/실행 조건](https://github.com/seokpan/seokpan-hybrid-infra/blob/620314ea2e3309f418f02a9d622ac8a8beb6bc75/terraform/rosa/REVIEW_AND_EXECUTION_GATES.md) · [C 수정 요청](https://github.com/seokpan/seokpan-hybrid-infra/pull/28#pullrequestreview-5414086734) | 새 HEAD의 Source/mock 검사·Ownership 근거를 C에게 재리뷰. 실제 목적 권한/issuer preflight·Plan/비용과 생성 후 JWT/STS는 [h-infra Issue #25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25)의 서로 다른 단계 |
 
 이전에는 실제 Image/lab/Recovery 수락이나 실제 기반 입력을 Draft 해제의 선행으로 함께 묶었다. 이번에는 입력 대기 선언의 **Source 리뷰·병합**과 **실제 활성화·Plan·시험 수락**을 분리한다. Source의 입력 보류·Owner·수동 Sync·삭제 보호·Case를 사람에게 검토받는 데 실제 배포 전체 완료가 필요하지 않기 때문이다. Source 검사/Ready와 Runtime PASS는 다르며, 새 OCP Root/Project와 선택 Namespace·suspended 읽기 전용 Schema 확인 Job도 실제 적용·DDL 실행 증거가 아니다. 상세 근거는 [05 §9.25](05_IMPLEMENTATION_AND_VALIDATION.md#b-source-review-handoff-20261005)에 연결한다.
 
 이번 리뷰 후속의 처리 근거·새 개정·재리뷰 경로는 [05 §9.26](05_IMPLEMENTATION_AND_VALIDATION.md#b-source-review-resolution-20261005)에 연결한다. 비차단 제안을 모두 물리 실행으로 처리하거나, 모든 제안을 설계 변경으로 확대하지 않는다. Cloud 다중 Pod 모드는 자동 확정하지 않고 실제 계약·상태/경합 검증 후 활성화한다. 실제 OCP와 ROSA 실행 Gate·TH 완료 판정은 그대로 유지한다.
+
+**추가 검증의 시점:** 고정 RHCS 1.7.7은 OIDC 상태값의 `https://`를 이미 제거한다. 기존 Trust가 실제로 깨졌다고 단정하지 않고 명시 공통 계약·두 입력 형태의 mock plan으로 Source를 보강한다. 이는 실제 AWS/RHCS 호출·JWT/STS 성공 증거가 아니다. 생성 전 실제 입력/권한·issuer/TLS/JWKS·전체 Plan/비용/실행 범위를 확인하고, 실제 Operator SA JWT를 쓰는 Web Identity STS는 승인 Cluster 생성 후 확인한다. 후자를 Source 병합 전 선행으로 묶지 않으며, 실패 시 확대 실행 중단·Owner/비용/정리 대응을 기록한다. 최신 근거는 [05 §9.27](05_IMPLEMENTATION_AND_VALIDATION.md#b-oidc-review-and-runtime-gates-20261005)다.
 
 상위 개인 체크 정본은 [h-docs Issue #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의 TH01~19/81개다. 완료체크 TH03.1/03.2를 보존하고 아래 준비/실측 분해만으로 다른79개를 자동완료 처리하지 않는다. 팀 전체 W/T는 [팀 실행 순서](TEAM_EXECUTION_SEQUENCE.md)·[h-docs Issue #8](https://github.com/seokpan/seokpan-hybrid-docs/issues/8)이며 B 개인 일과 구분한다.
 
@@ -82,7 +85,7 @@ OCP용 Harbor 사전검증을 ECR+Harbor CI E2E나 최종 Cloud Release 완료�
 
 ## 4 A가 어느 범위까지 제공하면 B의 실제 Plan이 가능한가
 
-현 [h-infra PR #28](https://github.com/seokpan/seokpan-hybrid-infra/pull/28) HEAD `870d1e43cb2dfa8ee430c8a174665eb690e5059f`의 계약 기준이다. D 리뷰 후 문서 보완에서도 실행 HCL·Lock을 보존했다. **A의 모든 업무 종료가 아니라 rosa가 소비하는 필수 실제 출력 묶음의 수락**이 필요하다. 현재 코드는 Network만으로 Plan할 수 없다.
+현 [h-infra PR #28](https://github.com/seokpan/seokpan-hybrid-infra/pull/28) HEAD `620314ea2e3309f418f02a9d622ac8a8beb6bc75`의 계약 기준이다. OIDC 공통 정규화/검사를 보강하되 Root·State·권한 Owner·버전/Lock의 경계를 유지한다. **A의 모든 업무 종료가 아니라 rosa가 소비하는 필수 실제 출력 묶음의 수락**이 필요하다. 현재 코드는 Network만으로 Plan할 수 없다.
 
 | 필요 묶음 | 필요한 내용 | 여기까지 필요 없는 것 |
 | --- | --- | --- |
@@ -268,6 +271,6 @@ OCP의 사전검증 업무 완료와 정리 날짜는 별개다. 추천 운영 �
 - [ ] **OCP 업무/정리:** 승격조합/차이/결함인계·공유사용종료·승인실습대상/시험Secret정리. 공유OCP전체/1차자산삭제로확대금지
 - [ ] **최종ROSA/비용:** 영상/Backup/Harbor/Bundle/Key접근·복원확인→승인rosa삭제·실제부속/잔존·후속청구/Owner. foundation/bootstrap전체Destroy별도승인
 - [ ] **발표·전체종료:** 비교/한계/기여·시연/예비영상/대본·자료/해독Key보존·불필요Credential/실데이터정리·보관/후속책임수신·T20/T23/Cost정합. TH18/19, W09~10
-- [ ] **메타데이터/후속:** Freeze milestone10/18→승인10/16정정·GitOps9/Infra28 새 HEAD 사람 재리뷰·GitOps9→11 retarget/새 검사·원본/제출/수신 상태 갱신. Docs35/36 병합 후속은 확인 완료
+- [ ] **메타데이터/후속:** Freeze milestone10/18→승인10/16정정·Infra28 OIDC 새 HEAD 검사/C 재리뷰·GitOps9 승인 Source와 실제 Gate 구분·GitOps9→11 retarget/새 검사·원본/제출/수신 갱신. Docs35/36/37 병합 확인 완료
 
 근거: 승인03 §3-C.4/3-F/3-G/3-H·3-I.14.5, 04 §2.2~2.3/3.1~3.2/4/9~10, 개인계획 §6/7/9/11/12/18, 지침 §37, 최신 원 Issue/PR/Tree/체크. 현재기록은원격Source/보고범위이며본인PC·OCP/AWS/Registry실제입력수신/서버상태는해당Owner/새Run으로확인한다.

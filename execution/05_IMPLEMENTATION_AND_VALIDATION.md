@@ -1324,6 +1324,54 @@ TH01~19의 식별자81개와 기존 완료2개를 유지한다. 새 Runtime Evid
 
 TH01~19의 세부 식별자81개·기존 완료2개, 과거 HEAD/승인/검사·이전 §9.25를 보존한다. 이번은 Source 보완/검사이며 새 Runtime Evidence Run·빈 Index·Shared Execution 행을 추가하지 않는다. 실제 OCP Sync·DDL Migration·Cloud Plan/Apply·유료 생성·전체 T18/목표 달성은 수행/완료하지 않는다. 입력 대기·0 Replica·별도 Secret/Owner·비용/보존·조건부 삭제와 팀 전체 종료 기준은 유지한다.
 
+<a id="b-oidc-review-and-runtime-gates-20261005"></a>
+### 9.27 C의 Source 승인·OIDC 수정 요청과 추가 검증 시점 — 2026-10-05 KST
+
+[h-docs PR #37](https://github.com/seokpan/seokpan-hybrid-docs/pull/37)은 main `198996c32b02985578e339b514d38155ec17cff8`에 병합됐고 해당 브랜치 삭제를 확인했다. C의 [h-gitops PR #9 승인](https://github.com/seokpan/seokpan-hybrid-gitops/pull/9#pullrequestreview-5414095085)은 HEAD `46ae246c5267561890463926a9a1557f1a7bf264`의 입력 대기 Source 범위다. C의 [h-infra PR #28 수정 요청](https://github.com/seokpan/seokpan-hybrid-infra/pull/28#pullrequestreview-5414086734)은 HEAD `870d1e43cb2dfa8ee430c8a174665eb690e5059f`의 OIDC issuer/Trust와 RHCS/AWS 객체 Ownership·실제 Web Identity 검증 경로를 대상으로 한다. 두 리뷰의 개정·사람 수행 범위와 기존 D 리뷰 이력을 보존한다. 요청 정태훈, 원 리뷰/공식 Source 대조·후속 Source/기록 지원 Codex.
+
+**GitOps의 현재 판정:** #9 Source 수락은 확인됐으며 승인 Image Digest·Recovery Redis TLS/AUTH·Storage·임의 UID·DB/Redis 접속·필요 Migration·실제 Recovery 업무의 7항목은 각각의 실제 배포/복구 Gate다. 이것을 다시 Source 병합 전 일괄 조건으로 묶거나, Source 승인으로 실제 성공을 대신 표시하지 않는다. 이번 후속에서 #9 Source 변경·병합·브랜치 삭제는 하지 않았다. #11 HEAD `6ea0ab2437fbb6239140f2c9205350c3d81ee58f`의 Draft/Stack은 유지한다. #9 병합 후 main retarget·diff·새 검사/리뷰 확인 전 #9 브랜치를 보존한다.
+
+7항목은 기존 Issue·TH·[OCP 인계서](https://github.com/seokpan/seokpan-hybrid-gitops/blob/46ae246c5267561890463926a9a1557f1a7bf264/handoff/OCP_FIRST_DEPLOYMENT.md)·[App/Recovery 입력 안내](https://github.com/seokpan/seokpan-hybrid-gitops/blob/46ae246c5267561890463926a9a1557f1a7bf264/apps/README.md)에 이미 계획돼 있다. 아래는 찾는 위치와 실제 확인 시점이며 체크를 복제하지 않는다. 해당 원 기록에서 같은 조합의 새 실행/수락은 아직 확인되지 않았다. 새 이슈 7개를 만들 필요는 없다.
+
+| C가 언급한 항목 | 기존 원 이슈·B 개인 TH | 실제 확인 시점·공급/수행 |
+| --- | --- | --- |
+| 승인 Image Digest | [h-app Issue #2](https://github.com/seokpan/seokpan-hybrid-app/issues/2)·[h-app Issue #4](https://github.com/seokpan/seokpan-hybrid-app/issues/4), TH07.3~4; 선언은 [h-gitops Issue #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10), TH08.4·09.2/4·15.1~2 | D 새 Build/Scan·Mapping/플랫폼·Pull → B 개정 수신 → OCP 또는 격리 Recovery의 해당 조합 새 Run |
+| Recovery Redis TLS/AUTH | GitOps10 TH09.2/4·15.3~4; [h-app Issue #1](https://github.com/seokpan/seokpan-hybrid-app/issues/1) TH05.2~4·07.2; [h-infra Issue #17](https://github.com/seokpan/seokpan-hybrid-infra/issues/17) | C 서버/Client·CA/SAN·AUTH 계약, B 선언/업무, D/A 자산 → 새 격리 Recovery에서 실제 양성/음성·업무 확인. lab 결과 승계 없음 |
+| Storage | GitOps10 TH09.2/4·15.1~2/4; Infra17·[h-infra Issue #16](https://github.com/seokpan/seokpan-hybrid-infra/issues/16) | A Host/공간·C 격리 DB/새 Redis Volume·정책·B Mount/참조 → 실제 Recovery 배치 전 격리/쓰기/공간·선택 정책 확인. 현재 PVC 이름은 실물 채택 증거가 아님 |
+| 임의 UID 권한 | App4 TH06.2/4·07.4; GitOps10 TH08.2~4·09.2; [h-gitops Issue #5](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5)·[h-gitops Issue #6](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6) | D/B의 새 OCP Image·SCC/UID·읽기/쓰기 Run, Recovery Redis Key/Volume 권한은 해당 격리 플랫폼에서 별도 확인 |
+| DB/Redis 연결 | App1 TH05.1~4·07.2; GitOps6·[h-infra Issue #19](https://github.com/seokpan/seokpan-hybrid-infra/issues/19)·Infra17 | C 목적 계정/TLS/AUTH/Schema·B Client·D lab → 최소 lab 입력 후 OCP 양성/음성/Ready. Cloud·새 직접 TLS Recovery DB/Redis에서는 각각 재시험 |
+| Migration | App1 TH05.1/3·07.2; GitOps10 TH08.2~4; Infra17·GitOps5/6 | C 현재 Schema/필요 Action·대상/Backup/목적 인증/시간 수락 → 지정 실행자의 필요한 단일 실행/결과 수락 → App Sync. current/suspended·Source helper 성공은 DDL 완료가 아님 |
+| 실제 Recovery 업무 | GitOps10 TH15.1~4·09.2/4; App4·Infra17·실제 T18 Run | A Host·C 검증 Backup/Key/새 DB/Redis·D 보존 Image/시간선·B FE/API/WSS/업무 → 전체 클라이언트/DB 정합·사고부터 업무 재개/실제 Data 나이 판정. 자산 준비 후 ROSA 창 밖에서도 가능 |
+
+OCP 새 조합 사전검증, 새 격리 Recovery 구성/부분 업무, 실제 전체 T18은 서로 다른 판정이다. Source 승인이나 두 합성 부분 PASS를 각 실제 결과로 승계하지 않는다. 이번 C Source 승인은 두 부분 Run의 C 기술 검토나 D Index 수신 완료 증거도 아니다.
+
+**OIDC 논거와 Source 보강:** 고정 RHCS 1.7.7의 [OIDC populateState 구현](https://github.com/terraform-redhat/terraform-provider-rhcs/blob/f77dde5a5bf48694ea6b07e493a30a6a2a0fc82d/provider/oidcconfig/rosa_oidc_config_resource.go#L392)은 실제 issuer URL의 `https://`를 제거해 OIDC endpoint 상태값에 저장한다. 따라서 기존 Source의 Trust가 실제로 깨졌거나 현재 AWS STS가 실패했다고 단정하지 않는다. 이번에는 공통 issuer 정규화를 Source에 명시하고, AWS OIDC Provider에는 전체 HTTPS URL·IAM Trust 조건에는 host/path 기반 key를 일관되게 소비하도록 보강한다. 격리 Source harness/mock plan에서 prefix 유무 두 입력 형태를 검증한다. OIDC/Role/Attachment와 정규화 production 선언을 보존·대조하되 mock이 지원하지 않는 Operator 목록 조회를 생략하고 map 참조 1개를 합성 6개 입력으로 치환한다. variables/providers/versions/Lock은 원본 사본, input_contract는 harness 한정 stub이다. 실제 foundation/Operator 조회·6개 postcondition·Cluster graph를 harness에서 실행했다고 기록하지 않는다. Mock은 RHCS/AWS computed 값을 합성한 Source 검사이며 실제 IAM/API·issuer 존재·JWT 서명/수명/aud/sub·STS 성공을 입증하지 않는다.
+
+| Ownership 대조 | Source/State의 경계 | 실제 확인 시점 |
+| --- | --- | --- |
+| RHCS 관리 OIDC Configuration | Red Hat/OCM의 관리 OIDC 설정을 RHCS Resource로 연결 | 승인한 준비/생성 단계의 실제 설정·지원/issuer 관측 |
+| Operator Role Data Source | Role/ServiceAccount 등 소비 메타데이터를 읽으며 고객 AWS Role 생성 책임과 구분 | Source Schema/구현 대조와 실제 생성 전 소비 계약 확인 |
+| 고객 AWS OIDC Provider·Operator Role·Policy Attachment | Terraform AWS Provider가 rosa State에서 관리. foundation 공통 Role/Policy·Data/Backend Owner를 가져오지 않음 | 실제 Plan의 Owner/수량·권한/Trust와 생성 후 Federation/Operator 상태 |
+
+세부 근거·리소스 diff·공식 구현 참조는 원 PR과 [ROSA 리뷰/실행 안내](https://github.com/seokpan/seokpan-hybrid-infra/blob/620314ea2e3309f418f02a9d622ac8a8beb6bc75/terraform/rosa/REVIEW_AND_EXECUTION_GATES.md)에 두고 문서에는 경계와 상태를 연결한다. 기존 설계·Root/State·버전/Lock·비용·보존 경계를 유지한다.
+
+| 추가 검증 | 지금 할 일과 기다리는 입력 | 다른 단계로 확대하지 않는 판정 |
+| --- | --- | --- |
+| **Source 병합 검토 전** | 명시 issuer 계약·Ownership 근거·prefix 유무 실제 HCL mock plan·같은 HEAD Source 검사와 C 재리뷰 | 실제 AWS/RHCS 호출·SA JWT/STS·유료 Cluster를 Source 리뷰의 선행으로 요구하지 않음 |
+| **실제 준비/유료 생성 전** | 필요한 실제 기반 출력·목적 Caller/서비스 권한·IAM 객체/Trust·지원·실행/비용 범위 대조. 승인한 IAM/OIDC 준비 후 확인 가능한 실제 issuer discovery/JWKS/TLS·Network preflight와 관측 한계를 기록하고 전체 Plan/비용·생성 승인을 확인 | 이 준비 Apply도 실제 쓰기/실행 승인 대상이며 새 유료 생성 또는 Federation PASS를 자동 허용하지 않음 |
+| **승인 Cluster 생성 후** | 실제 Operator ServiceAccount JWT·aud/sub·Role/issuer 조합으로 Web Identity STS와 Operator 상태를 확인. 토큰/임시 자격 증명은 비공개, 공개에는 논리 참조·제거된 결과/CloudTrail·Run/시각/판정을 연결 | JWT가 있어야 하는 실제 Federation을 생성 전 완료로 쓰지 않음. 실패 시 확대 실행 보류·Owner/비용/중단·정리 대응 |
+| **App/Data·최종 시험** | Stage2 실제 Worker SG/Data Binding·Worker Pull·Data/TLS/Secret/Schema 이후 수동 App 배포·정상 Baseline·관련 T Run | Cluster/STS 성공을 App 업무·전체 T18/RTO10분·DB RPO30분 PASS로 확대하지 않음 |
+
+이 순서는 추가 검증의 실제 대상·입력·비용·가능 시점을 구분한 판단이다. 리뷰어가 요청한 실제 AssumeRole 검증을 없애지 않으며 **Source 수정/검사와 실제 생성 후 Federation 검증을 서로 다른 수락 범위로 인계**한다. C의 수정 요청은 새 HEAD의 근거·Source/mock 결과를 재리뷰해 사람이 판정하며, Runtime이 아직 미실행이라는 사실을 숨기거나 수정 요청을 임의 해제하지 않는다.
+
+첫 [Run 37308095633](https://github.com/seokpan/seokpan-hybrid-infra/actions/runs/37308095633)(HEAD `548920523b87d9e7be1fa7b9900c0ed81c5a5911`)과 목록 override를 시도한 [Run 37308483017](https://github.com/seokpan/seokpan-hybrid-infra/actions/runs/37308483017)(HEAD `d928385e426d42cfbdb6217bc18d7861757d251d`)는 fmt/validate(오류0·경고0)/Provider Schema 단계는 통과했지만 중첩 mock 목록 제약으로 각각 0 PASS/1 FAIL/1 SKIP이었다. 이는 실제 IAM/STS 실패가 아니다. [고정 Core mock 처리](https://github.com/hashicorp/terraform/blob/v1.16.4/internal/moduletest/mocking/fill.go#L25)를 확인한 뒤 production HCL/Postcondition·Lock을 유지하고 위 격리 harness의 검사 범위를 명시했다. 실패 Run을 삭제하거나 PASS로 바꾸지 않으며 아래 새 HEAD/Run의 실제 결과와 구분한다.
+
+**새 h-infra PR #28 HEAD:** `620314ea2e3309f418f02a9d622ac8a8beb6bc75`  **같은 HEAD Source/mock CI:** [Source CI PASS: fmt·validate 오류0/경고0·Schema13종·격리 OIDC harness2·Source/Lock 불변](https://github.com/seokpan/seokpan-hybrid-infra/actions/runs/37309802660)  **새 개정 사람 리뷰:** `C 재리뷰 요청 완료·최신 Source 재수락 대기; 실제 STS/실행 NOT RUN`
+
+원 기록은 [h-infra PR #28](https://github.com/seokpan/seokpan-hybrid-infra/pull/28)·[h-infra Issue #25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25)다. GitOps의 실제 입력·조합 수락은 [h-gitops Issue #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10)·[h-gitops Issue #5](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5)·[h-gitops Issue #6](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6)에 유지하고 개인 TH·팀 입력은 [h-docs Issue #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)·[h-docs Issue #8](https://github.com/seokpan/seokpan-hybrid-docs/issues/8)·Tracker에 원 링크를 연결한다. Source 제출·사람 수신/수락·실제 실행/판정을 구분한다.
+
+기존 TH01~19/81개·완료2개·이전 HEAD/검사/승인/§9.26 이력을 보존한다. 실제 OCP·Cloud Plan/Apply·유료 생성·JWT/STS·DDL·전체 T18·Runtime Run/Index를 이번 Source 후속으로 수행/완료하지 않는다. B는 최소 OCP 인계/입력과 ROSA 준비를 병행하고 A 전체 종료를 기다리지 않는다. $450 계획선/$500 한도·foundation/bootstrap 보호·조건부 중간/최종 삭제·잔존 비용/프로젝트 전체 종료의 개별 확인을 유지한다.
+
 ## 남은 작업과 다음 단계
 
 - [x] 최종 04·지침 등록 확인과 기존 승인 설계의 정합 보완 완료 이력 보존 — 새 DR 목표·주기·구조 선택의 최종 완료와 구분
