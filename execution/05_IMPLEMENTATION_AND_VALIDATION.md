@@ -1292,6 +1292,38 @@ Source 게시·리뷰 대상 제시는 인계 자료의 제출 범위다. A/C/D�
 
 TH01~19의 식별자81개와 기존 완료2개를 유지한다. 새 Runtime Evidence Run/빈 Index·Shared Execution 행·팀원 메시지/수신을 만들지 않는다. 실제 OCP Sync·Cloud 인증/Plan/Apply·유료 자원 생성·전체 T18과 서비스 RTO10분/DB RPO30분 달성은 이번 Source 후속으로 수행/완료하지 않는다. $450 계획선/$500 한도, foundation/bootstrap 보호와 조건부 중간/최종 삭제·잔존 비용/전체 종료 기준을 유지한다.
 
+<a id="b-source-review-resolution-20261005"></a>
+### 9.26 D의 Source 승인 제안 대조·보완과 새 개정 재리뷰 — 2026-10-05 KST
+
+[h-docs PR #36](https://github.com/seokpan/seokpan-hybrid-docs/pull/36)이 main `d5ead4600c7e819141c1d8213c760cc693f3c238`에 병합됐고 해당 브랜치 삭제를 확인했다. D의 [h-gitops PR #9 승인 리뷰](https://github.com/seokpan/seokpan-hybrid-gitops/pull/9#pullrequestreview-5413591924)는 HEAD `07ac21a2fbeb9ae45b9df887abcd7c6020a51afe`, [h-infra PR #28 승인 리뷰](https://github.com/seokpan/seokpan-hybrid-infra/pull/28#pullrequestreview-5413597372)는 HEAD `b65dc9244f1d6714c4dc56cba4267b572027f661`의 입력 대기 Source를 대상으로 한다. 두 원 승인·구 HEAD 검사·D의 비차단 제안은 이력으로 보존한다. D가 그 개정을 열람/검토한 사실과 실제 Image/lab·목적 Role·Plan/Runtime 수락을 구분한다.
+
+**처리 원칙:** 원 리뷰의 GitOps 6개·Infra 4개 제안을 연결 Issue·App/Manifest·Provider/Module Source와 대조해 지금 반영할 Source 보완과 실제 실행 전/중 확인할 조건을 분리했다. 요청 정태훈, 대조·Source 보완·검사/기록 지원 Codex. 새 Source 변경이 있으므로 기존 승인으로 즉시 병합하지 않고 **같은 PR #9/#28에서 새 HEAD 검사와 사람 재리뷰**를 받는다. 두 Source PR을 새로 만들거나, 비차단 제안을 실제 실행 완료로 기록하지 않는다. 상세 논거·코드 diff·공식 Source 참조는 원 PR/인계 문서에 두고 이 문서에는 처리 범위·연결·상태만 기록한다.
+
+| 원 제안 | Source에서 보완할 범위 | 실제 실행/수락에 남길 범위·원 기록 |
+| --- | --- | --- |
+| GitOps #9 — Controller/Namespace·Project | #5 관측과 reuse/선택 경로·Owner/관리 라벨·제한 Project 비교를 인계 안내에 연결 | 현재 Context/라벨·공유 사용 공지/수락·권한은 [h-gitops Issue #5](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5)에서 실행 전 재확인 |
+| GitOps #9 — lab Image 고정 | Source의 lab Release 입력 검사를 보완 | D 새 Build/Scan·실제 Digest/플랫폼·Pull 수락은 [h-app Issue #2](https://github.com/seokpan/seokpan-hybrid-app/issues/2)·[h-gitops Issue #6](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6) |
+| GitOps #9 — 정리 Case | finalizer 없는 기본 정리와 별도 승인 App 한정 cascade의 차이를 Case에 연결 | 실제 정리 대상·수동 객체 정리·공유 사용 종료/보존은 GitOps5/6·Owner 수락 후. Namespace/공유 Data 전체 삭제로 확대하지 않음 |
+| GitOps #9 — Recovery Redis 상태 | 기동/준비 Source 검사와 그 한계를 구분 | Listener 확인을 TLS/AUTH·업무 PASS로 확대하지 않으며 실제 재시작/수명 영향은 [h-gitops Issue #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10)·전체 T18에 유지 |
+| GitOps #9 — Migration 후보 | App의 DB 전용 실행 근거·Job Image/설정·시간 제한 후보와 보류/Case를 대조 | 필요한 경우의 실제 대상/Schema·목적 인증·시간 제한·단일 실행/timeout 후 상태·C 수락은 [h-app Issue #1](https://github.com/seokpan/seokpan-hybrid-app/issues/1)·GitOps5/6에 유지 |
+| GitOps #9 — Cloud 다중 Pod 모드 | #11의 Cloud 모드를 legacy 자동 상속/새 모드 자동 확정에서 분리하고 미확정 입력으로 유지 | 실제 상태/경합/부분 실패 검증·활성화 선택은 [h-app Issue #4](https://github.com/seokpan/seokpan-hybrid-app/issues/4)·GitOps10의 새 Run. Source 보완을 TH14 업무 안전 PASS로 쓰지 않음 |
+| Infra #28 — 목적 Role 서비스 권한 | Backend와 서비스 권한 차이·호출 대응표·권한 PR/확인 경로를 문서에 연결 | A bootstrap/권한 Owner의 [h-infra Issue #20](https://github.com/seokpan/seokpan-hybrid-infra/issues/20)·[h-infra Issue #25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25)에서 실제 목적 Caller·허용/거부 확인. 임의 IAM Policy 변경 없음 |
+| Infra #28 — creator ARN | 기존 세션 helper·Provider의 속성 처리 근거와 실제 Plan 관측 조건을 문서화 | 동일/갱신/다른 실행자 세션의 Plan·지원 동작은 Infra25에서 확인. 임의 ignore/State 편집/Replace 없음 |
+| Infra #28 — IAM/OIDC 전파 | 공식 모듈 대기 경계와 현재 Root의 관측·부분 실패/정리·실행 보류 조건을 안내 | 실제 권한·관측/지원·첫 Plan/유료 실행 전 조건은 Infra25·A Owner 수락. Provider/Lock/시간 자원 임의 추가 없음 |
+| Infra #28 — 문서 상태 | 오래된 Draft·로컬 socket BLOCKED를 이력으로 구분하고 구 HEAD Linux 검사 결과와 최신 상태를 연결 | 새 문서 HEAD의 검사·재리뷰 필요. 구 성공을 새 HEAD로 복제하지 않음 |
+
+| 새 개정의 원 PR·HEAD | 변경/보존과 다음 확인 |
+| --- | --- |
+| [h-gitops PR #9](https://github.com/seokpan/seokpan-hybrid-gitops/pull/9) · `46ae246c5267561890463926a9a1557f1a7bf264` | 40파일 후보, Source 검사 범위 App18 + OCP6 + Safety6 = 30개. 위 Source/인계 보완 후 D/C/A의 최신 HEAD 재리뷰. [OCP 최초 인계](https://github.com/seokpan/seokpan-hybrid-gitops/blob/46ae246c5267561890463926a9a1557f1a7bf264/handoff/OCP_FIRST_DEPLOYMENT.md)와 GitOps10에서 제출·수신/보완 개정을 별도 확인 |
+| [h-gitops PR #11](https://github.com/seokpan/seokpan-hybrid-gitops/pull/11) · `6ea0ab2437fbb6239140f2c9205350c3d81ee58f` | 49파일 후보, 위 공통30 + Cloud9 = 39개 Source 검사 범위. 새 #9 Stack을 소비하고 Cloud 모드 `INPUT_REQUIRED`를 유지. Cloud Source 입력 검사의 `captured` 요구는 실제 다중 Pod 업무 안전 PASS가 아니다. #9 새 개정 수락/병합 → main retarget → diff·새 HEAD 검사 → Ready/리뷰. 이 확인 전 #9 브랜치 보존 |
+| [h-infra PR #28](https://github.com/seokpan/seokpan-hybrid-infra/pull/28) · `870d1e43cb2dfa8ee430c8a174665eb690e5059f` | INPUT_CONTRACT/README/[리뷰·실행 안내](https://github.com/seokpan/seokpan-hybrid-infra/blob/870d1e43cb2dfa8ee430c8a174665eb690e5059f/terraform/rosa/REVIEW_AND_EXECUTION_GATES.md) 문서 보완. 실행 HCL·Lock·Workflow·bootstrap Policy를 보존하고 A/C/D의 최신 HEAD 재리뷰 |
+
+위 수량은 Source/검사 범위이며 새 CI 실행 성공 수를 선기록한 값이 아니다. **새 HEAD Source 검사:** #9 [30개 Source PASS](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37304174354) · #11 [39개 Source PASS](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37304179708) · #28 [fmt/validate 오류0·경고0/Provider Schema13종/Lock·Source 불변 PASS](https://github.com/seokpan/seokpan-hybrid-infra/actions/runs/37304176200)  **새 개정 사람 리뷰:** #9/#28 Ready·D 재리뷰 요청 완료, 구 승인 해제·새 HEAD 승인 대기; #11 Draft 유지
+
+앞선 D의 Source 승인·수신 범위는 확인한 사실로 보존한다. 새 개정의 사람 수락·실제 Image·Context/Data/TLS/Secret·Schema/Migration·기반 출력/Caller·Plan/Cost/Window·Runtime 수락은 별도다. 결과는 원 PR·GitOps10/Infra25·실제 Source Run에 먼저 기록하고 [h-docs Issue #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)·[h-docs Issue #8](https://github.com/seokpan/seokpan-hybrid-docs/issues/8)·Tracker에는 개정/상태/영향을 연결한다. 사람 승인 여부나 리뷰어의 실제 실행 범위를 대신 만들어 쓰지 않는다.
+
+TH01~19의 세부 식별자81개·기존 완료2개, 과거 HEAD/승인/검사·이전 §9.25를 보존한다. 이번은 Source 보완/검사이며 새 Runtime Evidence Run·빈 Index·Shared Execution 행을 추가하지 않는다. 실제 OCP Sync·DDL Migration·Cloud Plan/Apply·유료 생성·전체 T18/목표 달성은 수행/완료하지 않는다. 입력 대기·0 Replica·별도 Secret/Owner·비용/보존·조건부 삭제와 팀 전체 종료 기준은 유지한다.
+
 ## 남은 작업과 다음 단계
 
 - [x] 최종 04·지침 등록 확인과 기존 승인 설계의 정합 보완 완료 이력 보존 — 새 DR 목표·주기·구조 선택의 최종 완료와 구분
