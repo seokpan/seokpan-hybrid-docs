@@ -1239,6 +1239,33 @@ OCP검증종료와실습자원정리/공유클러스터삭제는별개이며 OCP
 
 원본은 [h-docs Issue #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)·[h-docs Issue #8](https://github.com/seokpan/seokpan-hybrid-docs/issues/8)와각작업Issue이며 Code/실제Run/팀수신/유료실행을이번정리로완료체크하지않는다. 역할변경·새설계·새성공기준/날짜결정없이작업단위를구체화했다. 전체팀현재/다음/Blocker·직접인계·보존/삭제/잔존/후속책임은실행판과원본에연결한다.
 
+<a id="b-issue-navigation-audit-20261005"></a>
+### 9.24 B의 기존 이슈 범위·탐색·전체 종료 연결 감사 — 2026-10-05 KST
+
+**요청:** 정태훈이 PR34 병합·브랜치 삭제 후, 각 2차 저장소의 본인 작업과 프로젝트 완료까지 이슈를 보고 따라갈 수 있는지 확인하고 부족한 안내를 보완하도록 요청했다. Codex가 네 저장소의 현재 Issue 33개(열림17/닫힘16), 관련 댓글 15개 이슈, PR34 병합 후 main과 개인계획/승인 자료를 읽었다. 원격 Source 관측과 실제 Runtime·팀 수신을 구분한다.
+
+[h-docs PR #34](https://github.com/seokpan/seokpan-hybrid-docs/pull/34)는 `2026-10-05T07:23:50Z`(16:23:50 KST)에 main `efb07db36c140d77702fe5e2854d6d44df0af198`로 병합됐고 브랜치 삭제도 확인했다. 직전 답변의 리뷰·병합 대기는 당시 상태이며 현재 안내에서 갱신한다. 기존 Source·새 Image/OCP 수락·실제 제한 출력·ROSA/전체 T18·최종 팀 종료는 별도 상태다.
+
+**판정:** [h-docs Issue #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의 기존 TH01~19 연결표와 81개 세부 체크는 개인 시작부터 발표·최종 보존/ROSA 정리/종료까지 이미 포함한다. [h-app Issue #1](https://github.com/seokpan/seokpan-hybrid-app/issues/1)·[h-app Issue #4](https://github.com/seokpan/seokpan-hybrid-app/issues/4)·[h-gitops Issue #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10)·[h-infra Issue #25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25)·[h-docs Issue #6](https://github.com/seokpan/seokpan-hybrid-docs/issues/6)와 협업 Issue가 해당 실행 범위를 담당하므로 새 중복 상위/19개/81개 이슈 생성은 필요 없다. 다만 상위 본문 56,130자와 누적 날짜별 안내 때문에 현재 행동·주 원본·수신·다음 실행을 찾기 어려웠다. Native Sub-issues는 등록되지 않았으며 실제 구조는 본문 양방향 링크다.
+
+| 보완한 기존 이슈 | 현재 카드에서 드러낸 경로 |
+| --- | --- |
+| Docs21 | 현재/다음·TH19묶음 탐색 → 81개 원 체크 → 접은 이전 본문·개인 종료/팀 종료 |
+| App1·App2·App4 | Client 계약/접속 정본, D CI/B 리뷰·인계, App 업무/TH13·15·17 실제 Run |
+| GitOps10·GitOps5·GitOps6 | B 최소 lab 인계/Cloud·Recovery·TH17 선언, D Sync/보호, D 새 Image Client 시험·B/C 수신 |
+| Infra25 | Controller/Source·실제 제한 입력/Plan → 비용/창/생성 → 통합 → 조건부 중간 정리/재생성·TH17 → 최종 삭제/잔존/후속 책임 |
+| Docs8·Docs6 | 팀 입력/공유 실행·수신 연결, 발표/시연 증거·접근·한계·수락 |
+
+기존 본문·완료 기준·시점별 이력을 접어 보존하고 Docs21의 TH81 블록은 그대로 앞쪽으로 이동한다. 완료2개(TH03.1/03.2), 식별자/문구/순서·이전 체크, 제목·담당·상태·라벨·마일스톤은 보존한다. [개인 실행판 §9](TJUNG03_EXECUTION_BOARD.md)의 81개에는 주 기록 위치만 연결하며 새 체크 정본을 만들지 않는다. TH04/05·07.2는 App1 정본, TH17은 App4/App·GitOps10/선언·Infra25/ROSA별 원본과 실제 Run으로 분리한다.
+
+**사용법:** Docs21 현재 안내 → 실행 이슈의 행동/최소 입력 → 해당 PR/실제 새 Run에 먼저 기록 → 담당 제출/수신/보완 확인 → 해당 TH 증거/체크 → Tracker/05·D Index에 원 링크 연결. 막히면 필요한 입력/개정·공급 이슈·담당·막힌 실행·다음 확인 시점·지금 가능한 준비를 남긴다. 한 Source PR만으로 전체 Runtime 범위가 끝나지 않으면 `Refs`로 연결하며 병합에 의한 자동 종료를 피한다. 공개 기록에는 논리 참조/개정만 남긴다.
+
+**직전 안내 검토:** A 전체 대기 없음·첫 Plan Data SG2 필수와 실제 Worker SG 이후 Stage2·OCP 삭제가 ROSA 선행 아님·목표 창과 실제 시각 분리·전체 T18의 ROSA 창 밖 실행 가능은 승인 기준과 맞다. 필요한 Migration만 단일 실행하고 기존 Schema에 불필요한 DDL을 강제하지 않는다. Window A 뒤 중간 정리는 검증 Backup의 로컬 완성본·Release/Bundle/Key 접근·App 쓰기/Data/Binding 보호·범위/비용/실행 확인 후의 조건부 실행이며 유지하면 실제 가동시간·비용을 기록한다.
+
+**종료 구분:** OCP 사전검증 수락≠승인 실습 대상 정리≠공유 Cluster 종료. ROSA 삭제≠AWS 잔존/후속 비용 종료≠B 개인 종료≠팀 프로젝트 전체 완료. B 개인 Docs21 종료는 자신의 필수 실행·증거·수신·TH19 범위 충족 후이며, 팀 완료는 공식 T01~T23/Must·결함/미실행 판정·05/Tracker/Index·발표/영상·보존/회수·자원/잔존 비용/후속 책임의 팀 수락으로 별도 판정한다. Docs8은 팀 입력/인계 허브이지 그것의 닫힘이 전체 완료를 보장하는 단일 Epic은 아니다.
+
+승인 10/16 Technical Freeze와 GitHub Milestone 10/18 메타데이터 불일치는 관리자 보정 후속으로 유지하며 승인 날짜를 바꾸지 않는다. 실제 OCP 정리·ROSA 생성/삭제 시각은 미확정이다. 새 코드·실제 환경 시험·Source 병합·유료 실행·팀원 메시지/수신은 이번 탐색 보완으로 수행/완료 처리하지 않는다.
+
 ## 남은 작업과 다음 단계
 
 - [x] 최종 04·지침 등록 확인과 기존 승인 설계의 정합 보완 완료 이력 보존 — 새 DR 목표·주기·구조 선택의 최종 완료와 구분

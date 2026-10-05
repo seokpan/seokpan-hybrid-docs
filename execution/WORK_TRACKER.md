@@ -1,5 +1,7 @@
 # Work and Input Tracker
 
+**이슈를 따라가는 현재 진입 — 2026-10-05 KST:** [h-docs PR #34](https://github.com/seokpan/seokpan-hybrid-docs/pull/34) 병합·브랜치 삭제 확인. [h-docs Issue #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의 현재 안내 → App1/App4·GitOps10·Infra25 실행 카드 → 원 PR/새 Run·제출/수신 → 개인 TH 확인으로 진행한다. 기존 10개 이슈의 탐색·범위·종료 안내를 보완하며 TH81/완료2·과거 본문·메타데이터를 보존한다. 새 중복 이슈는 생성하지 않는다. [감사](#b-issue-navigation-audit-20261005)·[05 §9.24](05_IMPLEMENTATION_AND_VALIDATION.md#b-issue-navigation-audit-20261005)·[개인 실행판](TJUNG03_EXECUTION_BOARD.md)을 우선한다. 아래 날짜별 상태는 해당 시점 이력이다.
+
 **B의 현재/다음/Blocker — 2026-10-05 15:40 KST:** [정태훈 실행판](TJUNG03_EXECUTION_BOARD.md)·[05 §9.23](05_IMPLEMENTATION_AND_VALIDATION.md#b-platform-execution-20261005). 현재 최초lab선언/입력/Render/Case인계; 다음은최소lab입력수신후OCP새조합검증. Cloud/Secret/Bundle·rosaSource/Controller준비병행. A전체종료를B착수Gate로두지않는다. 실제Plan/유료생성/CloudAppSync/Offline복원은각직접입력대기를구분한다.
 
 **팀 전체 현재 순서 — 2026-10-05 14:27 KST:** [저장소·담당별 전체 실행 순서](TEAM_EXECUTION_SEQUENCE.md)·[05 §9.22](05_IMPLEMENTATION_AND_VALIDATION.md#team-execution-sequence-20261005)가 PR32 병합/Branch 삭제와 현행 이슈·역할·선행/병행·전체 종료를 연결한다. 현재 설계 반영은 완료, W02~W10/실제T·05는 진행 중. TH01~19/81은 B 개인 범위로 유지한다.
@@ -350,3 +352,21 @@ TH-01~19·세부 식별자81개·T01~T23 연결과 기존 완료 체크2개는 �
 [h-docs PR #33](https://github.com/seokpan/seokpan-hybrid-docs/pull/33)병합·Branch삭제확인. [실행판](TJUNG03_EXECUTION_BOARD.md)은 TH81을보존한준비/실측분해·현재우선작업·팀최소인계·OCP업무/정리·ROSA준비/실제Plan/생성/WindowA/중간/WindowB/최종종료·10/26팀종료를연결한다. 기존담당별큰묶음의전체완료를다음담당착수조건으로읽지않는다. Source검사·인계제출/수신·실제실행/Run을구분하며 OCP새조합/ROSA/유료실행/최종T18를이번정리로추가완료하지않는다. 실제가용시간/입력/Plan/Cost로Window를확정하며OCP정리/ROSA삭제일을임의확정하지않는다. 상세 [05 §9.23](05_IMPLEMENTATION_AND_VALIDATION.md#b-platform-execution-20261005).
 
 **다음 작업:** [정태훈 실행판 §2](TJUNG03_EXECUTION_BOARD.md)를 현재 우선순위로 사용한다. 본인 Source/환경 연결 → OCP 최초 배포에 직접 필요한 선언·입력·Render·Case와 D/C 인계 → 해당 최소 lab 입력 수신 후 OCP 새 조합 배포/검증을 진행한다. Cloud/Recovery/Secret/Bundle Source와 rosa Controller/지원·권한·비용/창 준비는 병행한다. 실제 rosa Plan·유료 생성·Cloud App Sync·격리 복원은 각각의 최소 입력만 대기하며 A 전체·전체 Backup/Host/Bundle 완료를 B 첫 착수 조건으로 두지 않는다. OCP 업무/정리·ROSA 중간/최종 삭제·10/26 프로젝트 종료는 실행판 §5~7의 별도 판정으로 관리한다.
+
+
+<a id="b-issue-navigation-audit-20261005"></a>
+### B Issue Navigation Audit — 2026-10-05 KST
+
+기존 개인 상위 [h-docs Issue #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)와 실행/협업 이슈가 TH01~19·81개·발표/최종 보존/ROSA 정리/개인 종료를 모두 포함함을 대조했다. 긴 누적 본문 앞에 현재 실행 카드를 두고 과거 본문을 접어 보존한다. 원본과 완료 기준은 [05 §9.24](05_IMPLEMENTATION_AND_VALIDATION.md#b-issue-navigation-audit-20261005)에 연결한다. Native Sub-issues가 아닌 본문 양방향 연결이며 새 Issue를 생성하지 않는다.
+
+| 원 기록 | 사용 범위 |
+| --- | --- |
+| [h-app Issue #1](https://github.com/seokpan/seokpan-hybrid-app/issues/1) | TH04/05·07.2 Client 계약·접속/실제 Driver 검사 |
+| [h-app Issue #4](https://github.com/seokpan/seokpan-hybrid-app/issues/4)·[h-app Issue #2](https://github.com/seokpan/seokpan-hybrid-app/issues/2) | App 업무·Build 인계/수신, D CI·B 리뷰; TH17 App/Pool |
+| [h-gitops Issue #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10)·[h-gitops Issue #5](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5)·[h-gitops Issue #6](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6) | B 최소 lab/Cloud/Recovery 선언·TH17 관측; D 실제 Sync/보호·Client/업무와 B 수신 |
+| [h-infra Issue #25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25) | 필수 기반 소비/실제 Plan·Window A/B·TH17 ROSA/SG·조건부 중간/최종 삭제·잔존/후속 책임 |
+| [h-docs Issue #6](https://github.com/seokpan/seokpan-hybrid-docs/issues/6)·[h-docs Issue #8](https://github.com/seokpan/seokpan-hybrid-docs/issues/8) | 발표 증거·팀 입력/공유 실행/수신 조정; 팀 공식 종료는 실제 T/Must·05/Index 수락 별도 |
+
+현재 다음 작업은 본인 Source 확인 후 GitOps10의 OCP 최초 선언·입력표·Render·Case 인계다. Infra25의 Controller/ROSA Source·지원/권한·Plan 입력/비용 준비는 병행한다. 실제 OCP/Plan/유료 생성/App Sync/격리 복구는 각 직접 입력만 대기한다. 결과는 원 Issue/PR/새 Run에 먼저 기록하고 Tracker에는 개정·원 링크·제출/수신·막힌 실행·다음 확인 시점·계속할 준비를 연결한다.
+
+OCP 검증과 실습 정리·공유 Cluster 종료, ROSA 중간/최종 삭제와 AWS 잔존/후속 비용, 개인 TH19와 팀 전체 종료를 구분한다. 중간 삭제는 검증 Backup 로컬 완성본·Release/Bundle/Key 접근·App 쓰기/Data/Binding 보호·범위/비용/실행 확인 후이며 유지 시 시간/비용을 기록한다. 필요한 Migration만 실행한다. 승인10/16와 Milestone10/18 불일치는 관리자 메타데이터 보정 후속으로 유지한다. 이번 정리로 새 Run/PASS·유료 실행·팀 수신을 만들지 않는다.
