@@ -1,5 +1,7 @@
 # Work and Input Tracker
 
+**팀 전체 현재 순서 — 2026-10-05 14:27 KST:** [저장소·담당별 전체 실행 순서](TEAM_EXECUTION_SEQUENCE.md)·[05 §9.22](05_IMPLEMENTATION_AND_VALIDATION.md#team-execution-sequence-20261005)가 PR32 병합/Branch 삭제와 현행 이슈·역할·선행/병행·전체 종료를 연결한다. 현재 설계 반영은 완료, W02~W10/실제T·05는 진행 중. TH01~19/81은 B 개인 범위로 유지한다.
+
 이 표는 작업/입력/통합의 **링크와 마지막 확인 시각**을 연결합니다. 담당자 인계와 팀의 부분 보고를 연결하며 이 표의 빈칸을 작업 부재나 실패로 해석하지 않습니다. 기존05의 Source 관측과 부분 검사 이력은 그 시점/범위로 보존합니다.
 
 **현재 DR 설계·갱신 소스 — 2026-10-05 13:29 KST:** [h-docs PR #30](https://github.com/seokpan/seokpan-hybrid-docs/pull/30) main 병합으로 [03 §3-I.14.5](../design/03_DETAILED_DESIGN.md#recovery-design-decision-20261005)는 SPEC_COMPLETE다. 현행 RTO10분·영속 DB RPO30분·Portable Backup15분 계획 간격·Backup/Restore 유지와 사용자 갱신 소스 확인은 [최신 대조](#project-source-design-sync-20261005)·[05 §9.21](05_IMPLEMENTATION_AND_VALIDATION.md#project-source-design-sync-20261005)을 우선한다. 실제 Timer/전송/전체 업무 목표 달성·운영 T18/05 종료는 별도다. 이전30분/90분/1시간·미병합/선택 대기 문구는 당시 이력이다.
@@ -330,3 +332,12 @@ MariaDB 10.11.14·동시 쓰기 없는 합성 데이터·동일 Host 복사로 �
 **다음 작업:** 병합 App Source와 준비된 GitOps/ROSA Source를 기준으로 승인 Image·실제 DB/CA/Backup·새 Redis·Host/진입 경로·Secret 입력 및 두 부분 예행의 리뷰/수신을 연결한다. 동일 조합 lab/Recovery·완성 Bundle 수락과 실제 15분 백업 최신성·지정 클라이언트 전체 업무 재개 시험을 준비한다. ROSA 실제 Controller·제한 입력·권한·Source/첫 Plan 리뷰·전체 비용/실행 창 확인은 병행한다. Cloud 실행과 TH-13~19 실제 완료는 해당 입력·리뷰·비용/실행 Gate 이후다. TH-16 중간 삭제/재생성과 TH-19 최종 보존/ROSA 삭제·잔존 비용·발표/후속 인계·종료 판정은 계속 같은 상위 Issue에서 관리한다.
 
 TH-01~19·세부 식별자81개·T01~T23 연결과 기존 완료 체크2개는 유지한다. 이번은 문서/Source 상태 검토·연결 반영이며 새 Runtime Run·빈 Index·Shared Execution 행·시험 PASS·팀원 수신을 만들지 않는다. 기존 $450 계획선/$500 한도, foundation Data/Network 및 bootstrap Backend 보호, 유료 실행의 구체적 범위 확인 조건은 유지한다. 링크는 `h-docs PR #30`·`h-app Issue #4`처럼 저장소/종류/번호를 함께 표시한다.
+
+<a id="team-execution-sequence-20261005"></a>
+## 팀 전체 순서·원본 이슈 점검 — 2026-10-05 14:27 KST
+
+[팀 전체 실행 순서](TEAM_EXECUTION_SEQUENCE.md)는 새설계나 별도 Issue체계를 만드는 문서가 아니다. 승인W/T·역할·Root순서·현재코드/인계·실행조건을 기존원본에 연결한다. 상세는 [05 §9.22](05_IMPLEMENTATION_AND_VALIDATION.md#team-execution-sequence-20261005). PR32병합/Branch삭제·첨부설계일치·승인PR29독립병합과 실제운영미검증을 구분한다.
+
+**현재 병행:** A foundation/Network/Host·B App/GitOps/rosa·C Data/Backup·D CI/Image/lab/관측/계측/비용. **실제 순서:** 해당 Plan/권한/전체Cost/유료범위 조건→A foundation→B rosa→같은조합 정상통합→재생성/정상Baseline/분리장애/부하. 사전자산/Key/검증Backup/Release가 준비된 격리T18은 ROSA창밖에서 가능하다.
+
+**남은 공동현행화:** 원Issue 현재/다음/Blocker와 제출/수신, 실제Caller/입력/Plan·Cost·Window, I01~I07·새Run/Index·SharedExecution·보호대장, PR리뷰/병합·Freeze milestone기한10/18→승인10/16정정. 마일스톤수정은현재연결에서지원되지않아 관리자의별도후속이며 일정변경으로해석하지않는다. 타담당행·원Run·개인TH체크·종료/보존·비용조건은보존한다.
