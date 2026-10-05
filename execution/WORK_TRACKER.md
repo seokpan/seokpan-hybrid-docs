@@ -1,5 +1,7 @@
 # Work and Input Tracker
 
+**B의 현재/다음/Blocker — 2026-10-05 15:40 KST:** [정태훈 실행판](TJUNG03_EXECUTION_BOARD.md)·[05 §9.23](05_IMPLEMENTATION_AND_VALIDATION.md#b-platform-execution-20261005). 현재 최초lab선언/입력/Render/Case인계; 다음은최소lab입력수신후OCP새조합검증. Cloud/Secret/Bundle·rosaSource/Controller준비병행. A전체종료를B착수Gate로두지않는다. 실제Plan/유료생성/CloudAppSync/Offline복원은각직접입력대기를구분한다.
+
 **팀 전체 현재 순서 — 2026-10-05 14:27 KST:** [저장소·담당별 전체 실행 순서](TEAM_EXECUTION_SEQUENCE.md)·[05 §9.22](05_IMPLEMENTATION_AND_VALIDATION.md#team-execution-sequence-20261005)가 PR32 병합/Branch 삭제와 현행 이슈·역할·선행/병행·전체 종료를 연결한다. 현재 설계 반영은 완료, W02~W10/실제T·05는 진행 중. TH01~19/81은 B 개인 범위로 유지한다.
 
 이 표는 작업/입력/통합의 **링크와 마지막 확인 시각**을 연결합니다. 담당자 인계와 팀의 부분 보고를 연결하며 이 표의 빈칸을 작업 부재나 실패로 해석하지 않습니다. 기존05의 Source 관측과 부분 검사 이력은 그 시점/범위로 보존합니다.
@@ -341,3 +343,10 @@ TH-01~19·세부 식별자81개·T01~T23 연결과 기존 완료 체크2개는 �
 **현재 병행:** A foundation/Network/Host·B App/GitOps/rosa·C Data/Backup·D CI/Image/lab/관측/계측/비용. **실제 순서:** 해당 Plan/권한/전체Cost/유료범위 조건→A foundation→B rosa→같은조합 정상통합→재생성/정상Baseline/분리장애/부하. 사전자산/Key/검증Backup/Release가 준비된 격리T18은 ROSA창밖에서 가능하다.
 
 **남은 공동현행화:** 원Issue 현재/다음/Blocker와 제출/수신, 실제Caller/입력/Plan·Cost·Window, I01~I07·새Run/Index·SharedExecution·보호대장, PR리뷰/병합·Freeze milestone기한10/18→승인10/16정정. 마일스톤수정은현재연결에서지원되지않아 관리자의별도후속이며 일정변경으로해석하지않는다. 타담당행·원Run·개인TH체크·종료/보존·비용조건은보존한다.
+
+<a id="b-platform-execution-20261005"></a>
+## B 작업별 직접 의존·OCP/ROSA 종료 연결 — 2026-10-05 15:40 KST
+
+[h-docs PR #33](https://github.com/seokpan/seokpan-hybrid-docs/pull/33)병합·Branch삭제확인. [실행판](TJUNG03_EXECUTION_BOARD.md)은 TH81을보존한준비/실측분해·현재우선작업·팀최소인계·OCP업무/정리·ROSA준비/실제Plan/생성/WindowA/중간/WindowB/최종종료·10/26팀종료를연결한다. 기존담당별큰묶음의전체완료를다음담당착수조건으로읽지않는다. Source검사·인계제출/수신·실제실행/Run을구분하며 OCP새조합/ROSA/유료실행/최종T18를이번정리로추가완료하지않는다. 실제가용시간/입력/Plan/Cost로Window를확정하며OCP정리/ROSA삭제일을임의확정하지않는다. 상세 [05 §9.23](05_IMPLEMENTATION_AND_VALIDATION.md#b-platform-execution-20261005).
+
+**다음 작업:** [정태훈 실행판 §2](TJUNG03_EXECUTION_BOARD.md)를 현재 우선순위로 사용한다. 본인 Source/환경 연결 → OCP 최초 배포에 직접 필요한 선언·입력·Render·Case와 D/C 인계 → 해당 최소 lab 입력 수신 후 OCP 새 조합 배포/검증을 진행한다. Cloud/Recovery/Secret/Bundle Source와 rosa Controller/지원·권한·비용/창 준비는 병행한다. 실제 rosa Plan·유료 생성·Cloud App Sync·격리 복원은 각각의 최소 입력만 대기하며 A 전체·전체 Backup/Host/Bundle 완료를 B 첫 착수 조건으로 두지 않는다. OCP 업무/정리·ROSA 중간/최종 삭제·10/26 프로젝트 종료는 실행판 §5~7의 별도 판정으로 관리한다.
