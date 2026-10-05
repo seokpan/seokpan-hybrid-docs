@@ -6,6 +6,8 @@
 
 ## Start Here
 
+**정태훈의 지금 작업부터 확인:** [개인 실행판 — 지금할일·막힌입력·OCP/ROSA시작과종료·타임라인](TJUNG03_EXECUTION_BOARD.md). A전체를기다리지않고가능한준비를시작하며각실제실행의직접입력과팀인계를구분합니다.
+
 [저장소·담당별 전체 실행 순서와 현행화 점검](TEAM_EXECUTION_SEQUENCE.md)에서 현재 전체 진행, A/B/C/D의 병행 준비·실제 선행조건·W01~W10/T01~T23·최종 보존/삭제/종료를 확인합니다. PR32 병합 이후의 현행 순서를 연결하며 TH 개인 범위와 팀 전체 범위를 구분합니다.
 
 공유용 [팀 작업·환경 전환·입력 인계 안내](TEAM_WORK_AND_HANDOFF_GUIDE.md)에서 공통 안내, OCP·ROSA 전환 조건과 본인 담당을 한 번에 확인합니다. [담당별 바로가기](TEAM_WORK_AND_HANDOFF_GUIDE.md#role-navigation)로 이동한 뒤 아래 작업/인계 기록을 이어갑니다. 이 안내는 기존 역할 배정의 참조 기록이며 실제 Run Evidence와 구분합니다.

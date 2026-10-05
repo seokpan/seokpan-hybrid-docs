@@ -2,12 +2,15 @@
 
 > 기준: 승인 01~04·현재 프로젝트 지침·개인 계획, 네 저장소 Source/Issue/PR/댓글/리뷰/Branch/검사 조회. 관측은 저장소별 조회 시각이며 동일 순간의 Runtime Snapshot이 아니다. 작성·검토 지원 Codex, 요청 정태훈. 작성 기준 2026-10-05 14:27 KST.
 
+**최신 실행 해석 — 2026-10-05 15:40 KST:** [h-docs PR #33](https://github.com/seokpan/seokpan-hybrid-docs/pull/33) main b45ea2d 병합·작업 Branch 삭제를 확인했다. [정태훈 실행판](TJUNG03_EXECUTION_BOARD.md)에서 지금할일·직접입력대기·OCP사전검증/정리·ROSA준비/생성/중간/최종종료·승인목표일을 작은 실행별로 확인한다. 아래 담당별 큰 묶음은 A전체→B전체의 선행관계가 아니다.
+
 ## 1 현재 전체 작업 진행 현황
 
 - [x] 00 역사 원본·승인 설계 01~04 및 03/04 종료·현재 역할/Root 책임 확정 유지
 - [x] DR 설계10분/30분/15분·Backup/Restore 유지와 관련 설계·그림·출처 정합 반영
 - [x] [h-docs PR #32](https://github.com/seokpan/seokpan-hybrid-docs/pull/32) 승인 사용자 확인·main 병합/제출 Tree 동일·작업 Branch 삭제 확인
 - [x] 첨부 00~04 Git Blob5개와 현재 h-docs main 일치
+- [x] [h-docs PR #33](https://github.com/seokpan/seokpan-hybrid-docs/pull/33) 팀 실행순서 main 병합·작업 Branch 삭제 확인
 - [x] App 원본 이력 보존·2차 Source 이관/수정 main 병합, ROSA/GitOps Source 검사 근거 확보
 - [x] 두 독립 합성 부분 예행·Run 기록과 승인된 도구 [h-infra PR #29](https://github.com/seokpan/seokpan-hybrid-infra/pull/29) squash 병합
 - [x] 네 저장소 Issue/관련 PR의 현재 상태·기록 연결·담당/선행/병행 경계 점검
@@ -33,7 +36,7 @@ bootstrap Backend/실행 Role은 bootstrap, Data/Network/Registry는 foundation,
 
 | 담당 | 지금 진행할 묶음 | 다음 수신자와 최소 인계 | 해당 입력이 없을 때 보류할 실행 |
 | --- | --- | --- | --- |
-| A 이유빈 | foundation 공통 틀/Network·VPN/Host·제한 Output/권한 리뷰 | B에 Account/Region·전체 SHA·Output allowlist/개정·Worker Role/SG·Caller/Backend 논리 참조; C에 격리 Host/공간·접근/도구 | 보호 State/Plan·실제 기반 생성/변경. C/D Source와 리뷰는 병행 |
+| A 이유빈 | foundation 공통 틀/Network·VPN/Host·제한 Output/권한 리뷰 | B 실제 rosa Plan에 필요한 Account/Region·VPC/6Subnet·Data SG2·공통Classic Role/Policy·전체SHA/개정·Caller/Backend 참조. 실제 Worker SG/Cluster-specific Binding은 rosa 단계; C에 격리 Host/공간·접근/도구 | 보호 State/Plan·실제 기반 생성/변경. C/D Source와 리뷰는 병행 |
 | B 정태훈 | 병합 App 계약/Case·Root/AppProject/NP/UWM/Migration/Overlay·Recovery Bundle·rosa/관리/Secret 준비 | D에 main c12b3d15와 검사/빌드 범위·Overlay/업무 Case; C에 DB/Redis/TLS/시간대·복구 업무 계약; A에 Output/Worker Pull/Binding 요구 | 승인 Image/실제 DB·CA/Secret·Host가 필요한 lab/Cloud/Recovery 및 실제 rosa Plan. 입력에 독립인 Source 준비는 진행 |
 | C 김상희 | Data module→Root 전환 준비·목적 GRANT/TLS·이전/반출 조건·15분 Backup/Restore·부분 Run 리뷰 | A에 Data 권한·Root 파일/Output/전체 Plan 범위; B에 DB/Redis/CA/Schema·Backup/Key 논리 참조; D에 Data 시각/Hash·실제 Run | 첫 Apply 전 Root 전환·실제 지원/계정/보호 입력·Host가 필요한 이전/복원. 단계별 독립 Data 측정은 전체 ROSA/D Image를 기다리지 않음 |
 | D 최유준 | CI/Writer/PAT·Job/Agent/Plugin·새 Image/Scan/Digest·lab·Harness/UWM/Index·Cost | B에 Registry별 Digest/Platform/Scan·동일 Source lab 결과; 전원에 시험 순서·Index 수신/비용 산식 | 실제 Credential/Job/Org 정책·Registry/배포 환경을 요구하는 실행. CI Source/Case/비용 입력 준비는 병행 |
@@ -46,39 +49,34 @@ Cloud Secret 주 B/예비 A, CI Secret 주 D/예비 B, Data/Backup 해독 수단
 
 ```mermaid
 flowchart TB
-    S["승인 설계·현재 Source"]
-    A["A 기반·Network·Host"]
-    B["B App·GitOps·ROSA"]
-    C["C Data·Backup·Restore"]
-    D["D CI·Image·시험 준비"]
-    L["같은 조합 lab·Bundle 수락"]
-    F["기반 Root Plan·비용·실행"]
-    R["ROSA Plan·비용·실행"]
-    U["Cloud 정상 통합"]
-    O["격리 Offline 업무 복구"]
-    V["재생성·정상 Baseline·분리 장애·부하"]
-    E["증거·보존·삭제·잔존 비용·발표·종료"]
-    S --> A
-    S --> B
-    S --> C
-    S --> D
-    A --> F
-    C --> F
-    D --> F
-    F --> R
-    B --> R
-    B --> L
-    C --> L
-    D --> L
-    R --> U
-    L --> U
-    A --> O
-    L --> O
-    C --> O
-    U --> V
-    V --> E
-    O --> E
+    BS["B 최초 lab 선언·Render·Case"]
+    DI["D lab Image·Context·권한"]
+    CI["C/D lab Data·CA·Secret"]
+    OC["OCP 제한 배포·새 조합 수락"]
+    AO["A ROSA Plan 필수 출력"]
+    BR["B rosa Source·Controller 준비"]
+    RP["B 실제 rosa Plan"]
+    RC["Plan·Cost·범위 후 ROSA 생성"]
+    CD["C Cloud Data·D Pull·B Secret"]
+    U["Cloud 정상 통합·재생성·시험"]
+    LO["A 격리 Host·C 사본·B/D 자산"]
+    OF["격리 Offline 전체 복구"]
+    E["보존·실제 삭제·비용·발표·종료"]
+    BS --> OC
+    DI --> OC
+    CI --> OC
+    AO --> RP
+    BR --> RP
+    RP --> RC
+    RC --> U
+    CD --> U
+    OC --> U
+    LO --> OF
+    U --> E
+    OF --> E
 ```
+
+OCP Source/최소 lab 실행·ROSA Source 준비·격리 복구 준비는 병행한다. A의 필수출력은 **실제 rosa Plan**에만 연결한다. OCP 수락은 Cloud 조합의 관련 위험/차이를 인계하는 단계이고 ROSA 생성의 새 일괄 Gate나 전체 OCP 철거 조건이 아니다. Cloud 생성 뒤 Data Binding/Pull/Secret/Schema를 확인해 App을 통합한다. [실행판 §3~6](TJUNG03_EXECUTION_BOARD.md)에서 행동별 최소입력/플랫폼 수명을 확인한다.
 
 | 작업 구간 | 순서·담당 | 완료/다음 단계의 직접 조건 |
 | --- | --- | --- |
@@ -144,6 +142,8 @@ PR29 승인 리뷰의 비차단 후속은 [h-infra Issue #25](https://github.com
 매 작업 묶음 전후·새 인계·공유 실행 직전에는 Source/Issue/PR/댓글/리뷰/Branch/Commit/checks·수신을 확인한다. 바뀐 원본만 갱신하고 Tracker/05/#8에는 링크·상태·영향·시각을 연결한다. 실제 시험/재시험은 새 Run+Index(D 수신), 민감 원본/접근경로는 보호 대장, 충돌 실행은 Shared Execution에서 관리한다. 이름/번호·Repo Link·Owner·선행/병행·완료근거·현재/다음/Blocker·Cost/보존/종료를 함께 대조하고 Merge/보고/수신/Runtime를 분리한다.
 
 ## 8 전체 남은 작업 현황
+
+다음은 W/담당별 요약이다. 실제 착수/대기는 [실행판 §2~4](TJUNG03_EXECUTION_BOARD.md), OCP/ROSA 종료와 목표 창은 §5~7, 작은 팀 의존과 전체잔여는 §8~10을 우선 확인한다. A의 이 요약 전체 완료를 B 착수의 조건으로 읽지 않는다.
 
 - [ ] W02~W03 / A: foundation 공통 틀·Network/Data/Registry/VPN 통합, 실제 서비스 권한·제한 Output/Host·Plan/Cost·인계
 - [ ] W02~W03 / B: 개인 환경/계약 후속, 남은 Root/AppProject/NP/UWM/Migration/Bundle, rosa/관리/Secret·실제 Controller/입력·리뷰

@@ -34,6 +34,8 @@
 
 **팀 전체 최신 순서/현행화:** [h-docs PR #32](https://github.com/seokpan/seokpan-hybrid-docs/pull/32) main 병합·Branch 삭제로 설계 반영 종료를 확인했다. [§9.22](#team-execution-sequence-20261005)·[팀 전체 실행 순서](TEAM_EXECUTION_SEQUENCE.md)에서 저장소/A·B·C·D·선행/병행·W/T·마지막 보존/삭제/종료까지 확인한다. TH19/81은 B 개인 범위이며 팀 전체 범위와 구분한다.
 
+**B의 현재 실행판:** [지금할일·입력대기·OCP/ROSA수명](TJUNG03_EXECUTION_BOARD.md)·[§9.23](#b-platform-execution-20261005). A전체완료대기 없이 최초lab선언/인계부터 진행하고 실제Plan/Sync/복원만 해당최소입력을 기다린다.
+
 현재 진행 현황:
 
 - [x] 03 상세설계와 04 운영 결정·구현 인계 완료
@@ -1224,6 +1226,19 @@ TH-01~19·세부 식별자81개·T01~T23 연결과 기존 완료 체크2개는 �
 
 원본은 [h-docs Issue #8](https://github.com/seokpan/seokpan-hybrid-docs/issues/8)·[h-docs Issue #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)와 각 작업Issue/PR이며 Tracker/이 문서는 연결상태만 관리한다. 같은State/공유자원 실행은 단일실행자·Plan/Cost/Window/Shared Execution을 확인하고, 종료는 보존/실제삭제·잔존비용·자료/인증/실데이터·후속책임까지 구분한다.
 
+<a id="b-platform-execution-20261005"></a>
+### 9.23 B의 직접 착수·입력별 대기와 OCP/ROSA 수명 구체화 — 2026-10-05 15:40 KST
+
+[h-docs PR #33](https://github.com/seokpan/seokpan-hybrid-docs/pull/33)는 main b45ea2d7630901c2e2ed58aa1077219d6f2aeded에 병합됐고 Branch 삭제를 확인했다. 사용자 후속 검토에서 담당별 큰 묶음이 A전체→B전체 선행으로 보이고 OCP/ROSA/개인 현재위치·종료 조건이 불명확한 점을 보완했다. [정태훈 실행판](TJUNG03_EXECUTION_BOARD.md)은 TH01~19/81을 보존하며 지금의 최초lab 인계 묶음·병행Source·막히는실행의최소입력·OCP사전검증/정리·ROSA준비/Plan/생성/중간/최종삭제·프로젝트종료를 구분한다.
+
+B는 지금 개인Source/환경 연결→OCP최초배포에직접필요한선언·입력·Render·Case인계부터 진행하고 Cloud/Recovery/Secret·rosaSource/Controller/지원/비용준비를 병행한다. 실제 OCP실행은 D 새Harbor사전Image/Context·C/D labData/TLS·B선언/Secret 등 해당조합입력 후 가능하다. ECR/전체foundation·전체CloudRoot/NP/UWM/Bundle를 첫OCP Sync의일괄조건으로 추가하지 않는다. 기존Project/Application 사용가능범위는실제Owner/권한을 확인한다.
+
+실제rosaPlan은 현PR28필수제한출력(같은Account/Region/VPC·3AZ Public3/ROSAprivate3·Classic공통Role4/OperatorPolicy·DataSG2·개정/전체SHA/도구)와 본인Caller/Backend/목적Role·지원/사전리뷰가필요하다. worker_sg_binding=null 첫단계허용과실제Cluster/WorkerSG관측후두번째Binding/App연결을구분한다. DB이전/Backup전체·VPN/복구Host전체는그Plan직접조건이아니다. 유료생성은실제전체Plan/총Cost/Window/구체적실행범위후, AppSync는실제Data/CA/Schema/Secret/ECRPull후다.
+
+OCP검증종료와실습자원정리/공유클러스터삭제는별개이며 OCP삭제는ROSA시작조건이아니다. 최종로컬복구Runtime은승인1차OnPremKubernetes·새DB/새Redis·보존자료경로이고OCP실습수명에자동묶지않는다. 승인목표창10/5~8준비/조건부WindowA·10/12~15통합·10/16Freeze·10/19~21WindowB·10/22Demo·10/23Ready·10/26종료를유지하고실제OCP정리/ROSA생성삭제시각은미확정으로남긴다. 최종T18은준비된실자산으로ROSA창밖가능하다.
+
+원본은 [h-docs Issue #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)·[h-docs Issue #8](https://github.com/seokpan/seokpan-hybrid-docs/issues/8)와각작업Issue이며 Code/실제Run/팀수신/유료실행을이번정리로완료체크하지않는다. 역할변경·새설계·새성공기준/날짜결정없이작업단위를구체화했다. 전체팀현재/다음/Blocker·직접인계·보존/삭제/잔존/후속책임은실행판과원본에연결한다.
+
 ## 남은 작업과 다음 단계
 
 - [x] 최종 04·지침 등록 확인과 기존 승인 설계의 정합 보완 완료 이력 보존 — 새 DR 목표·주기·구조 선택의 최종 완료와 구분
@@ -1262,6 +1277,6 @@ TH-01~19·세부 식별자81개·T01~T23 연결과 기존 완료 체크2개는 �
 - [ ] 장애·재생성·복구·부하 시험과 Must 결과 판정
 - [ ] 결과·시연·발표·자원 정리와 보존 책임 완료
 
-**다음 작업:** 병합 App Source와 준비된 GitOps/ROSA Source를 기준으로 승인 Image·실제 DB/CA/Backup·새 Redis·Host/진입 경로·Secret 입력 및 두 부분 예행의 리뷰/수신을 연결한다. 동일 조합 lab/Recovery·완성 Bundle 수락과 실제 15분 백업 최신성·지정 클라이언트 전체 업무 재개 시험을 준비한다. ROSA 실제 Controller·제한 입력·권한·Source/첫 Plan 리뷰·전체 비용/실행 창 확인은 병행한다. Cloud 실행과 TH-13~19 실제 완료는 해당 입력·리뷰·비용/실행 Gate 이후다. TH-16 중간 삭제/재생성과 TH-19 최종 보존/ROSA 삭제·잔존 비용·발표/후속 인계·종료 판정은 계속 같은 상위 Issue에서 관리한다.
+**다음 작업:** [정태훈 실행판 §2](TJUNG03_EXECUTION_BOARD.md)를 현재 우선순위로 사용한다. 본인 Source/환경 연결 → OCP 최초 배포에 직접 필요한 선언·입력·Render·Case와 D/C 인계 → 해당 최소 lab 입력 수신 후 OCP 새 조합 배포/검증을 진행한다. Cloud/Recovery/Secret/Bundle Source와 rosa Controller/지원·권한·비용/창 준비는 병행한다. 실제 rosa Plan·유료 생성·Cloud App Sync·격리 복원은 각각의 최소 입력만 대기하며 A 전체·전체 Backup/Host/Bundle 완료를 B 첫 착수 조건으로 두지 않는다. OCP 업무/정리·ROSA 중간/최종 삭제·10/26 프로젝트 종료는 실행판 §5~7의 별도 판정으로 관리한다.
 
 TH-01~19·세부 식별자81개·T01~T23 연결과 기존 완료 체크2개는 유지한다. 이번은 문서/Source 상태 검토·연결 반영이며 새 Runtime Run·빈 Index·Shared Execution 행·시험 PASS·팀원 수신을 만들지 않는다. 기존 $450 계획선/$500 한도, foundation Data/Network 및 bootstrap Backend 보호, 유료 실행의 구체적 범위 확인 조건은 유지한다. 링크는 `h-docs PR #30`·`h-app Issue #4`처럼 저장소/종류/번호를 함께 표시한다.
