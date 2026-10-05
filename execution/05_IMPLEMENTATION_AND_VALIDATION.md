@@ -32,6 +32,8 @@
 
 **별도 프로젝트 구현 이력:** [§9.13 Cloud·ROSA 구현과 App 경쟁 결함 후속](#cloud-rosa-app-followup-20261002), [§9.12](#tjung03-latest-source-20261002)의 승인/병합 관측과 [§9.11](#tjung03-registration-rosa-input-20261002)의 TH-01~19·81개 식별자는 보존한다. 기존 유효 코드/검사는 취소하지 않으며 이번 복구 목표 판단의 증거나 우선 완료 조건으로 확대하지 않는다.
 
+**팀 전체 최신 순서/현행화:** [h-docs PR #32](https://github.com/seokpan/seokpan-hybrid-docs/pull/32) main 병합·Branch 삭제로 설계 반영 종료를 확인했다. [§9.22](#team-execution-sequence-20261005)·[팀 전체 실행 순서](TEAM_EXECUTION_SEQUENCE.md)에서 저장소/A·B·C·D·선행/병행·W/T·마지막 보존/삭제/종료까지 확인한다. TH19/81은 B 개인 범위이며 팀 전체 범위와 구분한다.
+
 현재 진행 현황:
 
 - [x] 03 상세설계와 04 운영 결정·구현 인계 완료
@@ -1208,6 +1210,19 @@ Provider Schema는 별도 임시 디렉터리에 전체 `*.tf`와 같은 Lock을
 **다음 작업:** 병합 App Source와 준비된 GitOps/ROSA Source를 기준으로 승인 Image·실제 DB/CA/Backup·새 Redis·Host/진입 경로·Secret 입력 및 두 부분 예행의 리뷰/수신을 연결한다. 동일 조합 lab/Recovery·완성 Bundle 수락과 실제 15분 백업 최신성·지정 클라이언트 전체 업무 재개 시험을 준비한다. ROSA 실제 Controller·제한 입력·권한·Source/첫 Plan 리뷰·전체 비용/실행 창 확인은 병행한다. Cloud 실행과 TH-13~19 실제 완료는 해당 입력·리뷰·비용/실행 Gate 이후다. TH-16 중간 삭제/재생성과 TH-19 최종 보존/ROSA 삭제·잔존 비용·발표/후속 인계·종료 판정은 계속 같은 상위 Issue에서 관리한다.
 
 TH-01~19·세부 식별자81개·T01~T23 연결과 기존 완료 체크2개는 유지한다. 이번은 문서/Source 상태 검토·연결 반영이며 새 Runtime Run·빈 Index·Shared Execution 행·시험 PASS·팀원 수신을 만들지 않는다. 기존 $450 계획선/$500 한도, foundation Data/Network 및 bootstrap Backend 보호, 유료 실행의 구체적 범위 확인 조건은 유지한다. 링크는 `h-docs PR #30`·`h-app Issue #4`처럼 저장소/종류/번호를 함께 표시한다.
+
+<a id="team-execution-sequence-20261005"></a>
+### 9.22 설계 반영 종료·팀 전체 저장소/담당 순서와 이슈 현행화 — 2026-10-05 14:27 KST
+
+[h-docs PR #32](https://github.com/seokpan/seokpan-hybrid-docs/pull/32)는 main d17891b8bd76d704bd74f58be2e5e1d67113de13에 병합됐고 제출 Tree와 동일하다. 해당 작업 Branch는 원격 목록에서 삭제됐으며 첨부00~04 Blob도 현재 main과 같다. 이번 설계 변경 반영은 완료된 기준으로 사용한다. 실제10분/30분·15분 Timer/전송·전체T18·05 종료는 별도다.
+
+팀 전체 작업은 [저장소·담당별 전체 실행 순서](TEAM_EXECUTION_SEQUENCE.md)에서 승인 W01~W10/T01~T23·A/B/C/D·원본 Issue·현재/다음/Blocker를 연결한다. TH01~19/81개는 B 개인 범위로 그대로 유지한다. A기반·BApp/GitOps/rosa·CData/Backup·DCI/Image/lab/시험 준비는 병행하고, 실제 Cloud Root는 A bootstrap 정본→A foundation 통합→B rosa 순서다. 정상 통합은 기반/Data/승인Image/Manifest·Secret의 같은 조합 수락 후, Window B는 T19→정상Baseline→분리장애→부하이며 격리 T18은 ROSA창 밖 가능하다.
+
+네 Repo 진짜Issue33개·PR44개 시작목록과 관련 본문/댓글/리뷰/Branch/Tree/checks를 점검했다. PR32 대기·DR 선택 대기·AppPush/PR대기·연결placeholder·foundation State-only 설명을 실제 원본으로 정합화한다. 승인된 [h-infra PR #29](https://github.com/seokpan/seokpan-hybrid-infra/pull/29) 도구7개는 exactHEAD 승인·미해결리뷰/충돌 없음 확인 후 main054d4fc에 squash 병합했다. 원 Run/실제수행자/보호경계와 C검토/D수신·운영Acceptance를 유지한다. [h-infra PR #30](https://github.com/seokpan/seokpan-hybrid-infra/pull/30)은 오래된 권한 표/주석만의 정정PR이며 실제IAM 변경은 없다. 현재 #28 Source/Draft와 #9→#11 Stack/실제입력 후속을 유지한다.
+
+네 Repo Freeze milestone1 metadata10/18과 승인10/16의 불일치를 찾았다. 승인일정은 바꾸지 않고 관리자의 기한 정정후속을 [h-docs Issue #8](https://github.com/seokpan/seokpan-hybrid-docs/issues/8)에 기록한다. 이번 연결에서 milestone 기한 수정은 지원되지 않으므로 완료로 표시하지 않는다. 현재 실행·새Run/팀수신/Cloud/유료가동 PASS는 추가하지 않는다.
+
+원본은 [h-docs Issue #8](https://github.com/seokpan/seokpan-hybrid-docs/issues/8)·[h-docs Issue #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)와 각 작업Issue/PR이며 Tracker/이 문서는 연결상태만 관리한다. 같은State/공유자원 실행은 단일실행자·Plan/Cost/Window/Shared Execution을 확인하고, 종료는 보존/실제삭제·잔존비용·자료/인증/실데이터·후속책임까지 구분한다.
 
 ## 남은 작업과 다음 단계
 
