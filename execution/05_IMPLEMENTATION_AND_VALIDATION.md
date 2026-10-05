@@ -16,9 +16,9 @@
 
 **추가 자료와 최신 후속:** [2026-10-02 자료 수용·권한 계약·현재 작업](#supplement-20261002)에서 I03 부분 접수, GitOps #7 종료 범위, App #1·GitOps #5/#6 및 Infra #14/#15를 확인한다. 과거 관측은 유지하고 현재 상태는 진행표에 연결한다.
 
-**복구 목표 피드백의 현재 설계 변경안:** [03 §3-I.14.5](../design/03_DETAILED_DESIGN.md#recovery-design-decision-20261005)는 RTO10분·영속 DB RPO30분·운영 중 Portable Backup15분과 기존 Backup/Restore 유지를 선택했다. 이 개정이 main에 병합되면 새 공식 설계로 전환한다. 그 전 공식 main의30분/90분/1시간과 과거 관측은 이력으로 보존한다. 설계/산출물 정합과 실제 목표 달성·전체T18/05 종료는 구분한다.
+**현재 DR 설계·갱신 소스:** [h-docs PR #30](https://github.com/seokpan/seokpan-hybrid-docs/pull/30)은 main에 병합됐고 [03 §3-I.14.5](../design/03_DETAILED_DESIGN.md#recovery-design-decision-20261005)는 SPEC_COMPLETE다. 현행 RTO10분·영속 DB RPO30분·Portable Backup15분 계획 간격과 Backup/Restore 유지를 적용한다. 사용자 갱신 보고와 첨부 00~04/main 일치는 [최신 대조](#project-source-design-sync-20261005)에 기록한다. 설계 선택 완료와 실제 Timer/전체 T18·목표 달성/05 종료는 구분한다. 이전30분/90분/1시간은 당시 이력이다.
 
-**2026-10-03 이번 요청의 우선 작업:** [03 §3-I.14 복구 설계 재검토](../design/03_DETAILED_DESIGN.md#recovery-design-review-20261003)를 중심으로 필요한 02/04 정합 보완과 사용자 영향·구조 대안을 먼저 대조한다. 05는 [§9의 기존 최소 예행](#recovery-objective-review-20261002)으로 부족한 시간·손실·접속·팀 부담/비용 근거를 확보한다. 전체 Cloud/ROSA 구현이나 05 최종 종료는 이 판단의 선행조건이 아니다.
+**2026-10-03 당시 요청의 우선 작업 이력:** [03 §3-I.14 복구 설계 재검토](../design/03_DETAILED_DESIGN.md#recovery-design-review-20261003)를 중심으로 필요한 02/04 정합 보완과 사용자 영향·구조 대안을 먼저 대조한다. 05는 [§9의 기존 최소 예행](#recovery-objective-review-20261002)으로 부족한 시간·손실·접속·팀 부담/비용 근거를 확보한다. 전체 Cloud/ROSA 구현이나 05 최종 종료는 이 판단의 선행조건이 아니다.
 
 **App·Infra 승인/병합 후속:** [§9.16](#app-infra-merged-20261004)에 h-app PR #5·h-infra PR #27의 main 병합과 #28의 main 기준 전환을 연결한다. App Source 리뷰/병합 대기는 해소됐고 새 Image·실제 최소 예행 입력은 남는다. [§9.15](#app-source-published-20261003)와 이전 관측은 당시 이력으로 보존한다.
 
@@ -1185,6 +1185,30 @@ Provider Schema는 별도 임시 디렉터리에 전체 `*.tf`와 같은 Lock을
 - [x]10분/30분/15분·Backup/Restore 유지 설계 변경안의 선택/근거와 관련 계약 반영 —03 §3-I.14.5
 - [ ] 관련 Source·문서·SVG/PNG/출처 필수 추가 보완0건 검증·PR 리뷰/병합, 실제 전체 업무/목표 달성은 별도
 
+<a id="project-source-design-sync-20261005"></a>
+### 9.21 갱신 프로젝트 소스 대조·설계 병합 상태와 다음 작업 — 2026-10-05 13:29 KST
+
+사용자의 프로젝트 소스 갱신 보고와 현재 첨부 7파일을 확인했다. 첨부 00~04의 전체 바이트/Git Blob은 h-docs main `5d17f0cfcfeaaa5778055c784c1bfcfec29a913d`의 원문 5파일과 모두 같다. 개인 실행계획 §18과 프로젝트 지침 §15.1·§37도 이 DR 개정 기준을 사용한다. 사본 작성 당시의 “새 등록본 확인 대기”는 이번 사용자 확인으로 해소됐다. 저장소와 프로젝트 소스의 자동 동기화 완료를 주장하지 않는다.
+
+[h-docs PR #30](https://github.com/seokpan/seokpan-hybrid-docs/pull/30)은 main에 병합됐으며 `PH2-DR-DESIGN-20261005`는 **SPEC_COMPLETE**다. 현행 요구사항은 **서비스 RTO 10분·영속 DB RPO 30분·운영 중 Portable Backup 15분 계획 간격**이고 Cloud Primary + On-Prem Backup/Restore 구조를 유지한다. [h-docs PR #31](https://github.com/seokpan/seokpan-hybrid-docs/pull/31)의 안내 정리도 병합됐다. 이전 30분/90분/1시간·미병합·등록 대기 표기는 당시 이력으로 보존하며 현재 활성 기준으로 사용하지 않는다.
+
+설계 선택 완료와 두 합성 부분 예행 PASS를 실제 전체 목표 달성으로 합치지 않는다. 전체 운영 T18은 **NOT RUN**, 서비스 전체 RTO/RPO는 **null/미판정**이다. 15분 예약만으로 RPO 30분 PASS를 선언하지 않으며 실제 성공 사본 Data 간격 G + 로컬 완성본 확보 지연 D + 시각 불확실성 U ≤ 30분과 사고 시 사용 사본의 Data 나이를 확인한다. 일반 사본 7일·독립 보호 사본, 시간당 계획 4회에 따른 공간·부하·전송/잔존 비용을 실제 입력으로 확인한다.
+
+복구 Acceptance는 과거 완료 Game/Move/Result/Rating의 DB 보존·정합과 지정 클라이언트의 새 로그인·랭킹·새 게임·현재 방 결과를 구분한다. 과거 개별 결과 화면이 새 Redis에서 자동 복구됐다고 주장하지 않는다. 별도 새 Recovery Redis와 전용 격리 DB/TLS, A Host·B App/GitOps·C Data/Key·D Image/Index 배정은 유지한다. 두 Run의 요청자는 정태훈, 실제 수행자는 Codex이며 C 리뷰·D 수신은 별도다.
+
+| 작업 | 최신 Source 상태 | 직접 남은 조건 |
+| --- | --- | --- |
+| TH-02·05~07 / [h-app PR #5](https://github.com/seokpan/seokpan-hybrid-app/pull/5) | 이력 보존 이관·연결/경합 수정 Source main 병합 완료 | D 새 Build/Scan·Registry별 Digest/Platform, 실제 DB/TLS·생명주기·같은 조합 lab/Recovery 수락. 이미 완료한 Source 이관을 다시 대기로 만들지 않음 |
+| TH-08·09·15 / [h-gitops PR #9](https://github.com/seokpan/seokpan-hybrid-gitops/pull/9)·[h-gitops PR #11](https://github.com/seokpan/seokpan-hybrid-gitops/pull/11) | HEAD39f416f/4328932, Source CI18개/26개 PASS. 두 PR은 Draft | 승인 Image·DB/새 Redis/TLS/CA/Secret·격리 Volume/진입 경로, 같은 조합 검증/수신·Source 리뷰. Root/AppProject·NP/UWM·Migration·완성 Bundle은 기존 Gate. #9 병합 → #11 main retarget → diff/검사·리뷰 재확인 |
+| TH-10~12 / [h-infra PR #27](https://github.com/seokpan/seokpan-hybrid-infra/pull/27)·[h-infra PR #28](https://github.com/seokpan/seokpan-hybrid-infra/pull/28) | #27 병합 완료. #28 HEAD402a644, Linux fmt/원 Root validate/Provider Schema·Source/Lock 불변 PASS, Draft 유지 | 실제 Cloud Controller·Caller/정본 Backend/도구, A/C/D 제한 Output·Account/Region·Role/IAM/지원·Worker Pull과 Source/첫 Plan 준비 리뷰. 과거 socket BLOCKED를 현재 검사 대기로 반복하지 않음 |
+| TH-15·17 / [h-infra PR #29](https://github.com/seokpan/seokpan-hybrid-infra/pull/29) | HEAD29b4a1f, 두 부분 Run의 시험용 Source, Ready. #28과 독립 | 최신 Source 사람 리뷰·검토 의견/체크 확인. 등록된 Check/Status가 없는 것을 CI PASS로 쓰지 않음. 실제 운영 Timer/전송·전체 T18·C 검토/D 수신은 별도 |
+
+원본 관리: [h-docs Issue #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21) → [h-app Issue #4](https://github.com/seokpan/seokpan-hybrid-app/issues/4) · [h-gitops Issue #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10) · [h-infra Issue #25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25). 실제 결과는 원래 Issue/PR/새 Run에서 기록하고 이 문서와 WORK_TRACKER는 링크·상태·영향만 연결한다.
+
+**다음 작업:** 병합 App Source와 준비된 GitOps/ROSA Source를 기준으로 승인 Image·실제 DB/CA/Backup·새 Redis·Host/진입 경로·Secret 입력 및 두 부분 예행의 리뷰/수신을 연결한다. 동일 조합 lab/Recovery·완성 Bundle 수락과 실제 15분 백업 최신성·지정 클라이언트 전체 업무 재개 시험을 준비한다. ROSA 실제 Controller·제한 입력·권한·Source/첫 Plan 리뷰·전체 비용/실행 창 확인은 병행한다. Cloud 실행과 TH-13~19 실제 완료는 해당 입력·리뷰·비용/실행 Gate 이후다. TH-16 중간 삭제/재생성과 TH-19 최종 보존/ROSA 삭제·잔존 비용·발표/후속 인계·종료 판정은 계속 같은 상위 Issue에서 관리한다.
+
+TH-01~19·세부 식별자81개·T01~T23 연결과 기존 완료 체크2개는 유지한다. 이번은 문서/Source 상태 검토·연결 반영이며 새 Runtime Run·빈 Index·Shared Execution 행·시험 PASS·팀원 수신을 만들지 않는다. 기존 $450 계획선/$500 한도, foundation Data/Network 및 bootstrap Backend 보호, 유료 실행의 구체적 범위 확인 조건은 유지한다. 링크는 `h-docs PR #30`·`h-app Issue #4`처럼 저장소/종류/번호를 함께 표시한다.
+
 ## 남은 작업과 다음 단계
 
 - [x] 최종 04·지침 등록 확인과 기존 승인 설계의 정합 보완 완료 이력 보존 — 새 DR 목표·주기·구조 선택의 최종 완료와 구분
@@ -1214,7 +1238,8 @@ Provider Schema는 별도 임시 디렉터리에 전체 `*.tf`와 같은 Lock을
 - [x] 독립 합성 Data 부분 예행 실행·새 Run과 Index 임시 연결·실제 기여/리뷰 경계 — §9.20
 - [x] 별도 합성 Backend 업무 연결 부분 예행과 두 번째 새 Run·Index 연결 — §9.20, FE/browser/WSS·운영 Release/전체 RTO·RPO와 구분
 - [x] DR10분/30분/15분·현 복원 구조 유지의 설계 변경안 선택/근거 —03 §3-I.14.5
-- [ ] 관련 산출물 최종 정합/PR 리뷰·병합과 C/B 리뷰·D 수신·실제 경로/전체 업무 목표 달성 — §9.20
+- [x] 관련 산출물 최종 정합과 h-docs PR #30/#31 main 병합·사용자 갱신 첨부 대조 — §9.21
+- [ ] C/B 리뷰·D 수신·실제 경로/전체 업무 목표 달성 — §9.20~9.21
 - [ ] C의 실제 새 Redis 정책/입력·보호 공급/Volume·기동, Root/Application/AppProject·NP/UWM·Migration·완성 Recovery Bundle과 bootstrap Namespace/CRD/Owner — 기존 Gate, TH-08/09/15 전체 미완료
 - [ ] D 새 Build/Scan/Digest·C/D 실제 lab/Recovery 입력·#5/#6 같은 조합 검증/수신·#9/#11 리뷰 및 실제 Cloud Controller Caller/Backend/Tool·제한 입력/IAM/지원·첫 Plan 준비 리뷰 — §9.16~9.19
 - [ ] 병행하는 foundation/Data/CI 구현과 B의 ROSA 코드 연결·실제 Plan 준비
@@ -1222,4 +1247,6 @@ Provider Schema는 별도 임시 디렉터리에 전체 `*.tf`와 같은 Lock을
 - [ ] 장애·재생성·복구·부하 시험과 Must 결과 판정
 - [ ] 결과·시연·발표·자원 정리와 보존 책임 완료
 
-**이번 요청의 설계 선택은 [03 §3-I.14.5](../design/03_DETAILED_DESIGN.md#recovery-design-decision-20261005)의10분/30분/15분·Backup/Restore 유지 변경안으로 정리했다.** 다음은 해당 문서/Source/그림10·출처의 최종 정합 검증/리뷰·병합이며, 미검증 실제 입력은 Runtime/Acceptance Gate로 인계한다. C의 실제15분 Timer/완성본·최신성·실패/보관, B의 FE/HTTPS/WSS/기능·Transient 처리, A의 Host/독립 사본/로컬 자산, D의 승인 Image/Index/전체시간선을 기존 원본 작업에서 이어간다. 정태훈도 승인된 격리 환경에서 C 기술 측정을 수행할 수 있고 책임/실제 수행·리뷰/수신을 구분한다. #9/#11의 기존 직접 Draft 조건과 별도 Cloud/ROSA 작업·전체TH/05 종료는 유지하며 최종 DR 설계의 일괄 선행조건으로 추가하지 않는다. 실제Cost Ledger/$450/$500·Freeze와 구체화된 유료 실행의 명시적 동의는 유지한다. 설계 변경안의 관련 산출물에서 필수 추가 보완이 없어지면 완료·변경/유지 위치를 사용자에게 보고하며 공식main 반영·실제 목표 달성·최종T18/프로젝트 종료는 별도 상태로 밝힌다.
+**다음 작업:** 병합 App Source와 준비된 GitOps/ROSA Source를 기준으로 승인 Image·실제 DB/CA/Backup·새 Redis·Host/진입 경로·Secret 입력 및 두 부분 예행의 리뷰/수신을 연결한다. 동일 조합 lab/Recovery·완성 Bundle 수락과 실제 15분 백업 최신성·지정 클라이언트 전체 업무 재개 시험을 준비한다. ROSA 실제 Controller·제한 입력·권한·Source/첫 Plan 리뷰·전체 비용/실행 창 확인은 병행한다. Cloud 실행과 TH-13~19 실제 완료는 해당 입력·리뷰·비용/실행 Gate 이후다. TH-16 중간 삭제/재생성과 TH-19 최종 보존/ROSA 삭제·잔존 비용·발표/후속 인계·종료 판정은 계속 같은 상위 Issue에서 관리한다.
+
+TH-01~19·세부 식별자81개·T01~T23 연결과 기존 완료 체크2개는 유지한다. 이번은 문서/Source 상태 검토·연결 반영이며 새 Runtime Run·빈 Index·Shared Execution 행·시험 PASS·팀원 수신을 만들지 않는다. 기존 $450 계획선/$500 한도, foundation Data/Network 및 bootstrap Backend 보호, 유료 실행의 구체적 범위 확인 조건은 유지한다. 링크는 `h-docs PR #30`·`h-app Issue #4`처럼 저장소/종류/번호를 함께 표시한다.
