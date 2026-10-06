@@ -78,7 +78,7 @@ path: apps/overlays/lab
 
 **A 전체 업무·OCP 삭제·완성 Recovery Bundle을 기다리지 않는다.** 두 갈래를 병행하며 입력 수락·실행·결과 수신을 구분한다. 수신 미확인은 자원이 없다고 실측한 뜻이 아니다.
 
-**현재 기준 — 2026-10-06 KST:** GitOps #12는 main `6ea2d9a90ab7c58803767220abf956d3c1b54a5f`, Docs #41은 main `a00899c946544ee231ab82ef11c80bd2fd2f1853`에 병합됐고 관련 브랜치 삭제를 확인했다. Source PR 검토/병합 대기는 해소됐다. OCP 인계는 [병합된 카드](https://github.com/seokpan/seokpan-hybrid-gitops/blob/6ea2d9a90ab7c58803767220abf956d3c1b54a5f/handoff/OCP_SOURCE_HANDOFF_20261005.md)와 [병합 후 원 기록](https://github.com/seokpan/seokpan-hybrid-gitops/pull/12#issuecomment-5998279839)을 따른다.
+**현재 기준 — 2026-10-06 KST:** [Docs #42](https://github.com/seokpan/seokpan-hybrid-docs/pull/42)는 main `74666daec098974e61e4e58ae84153efd4fbe621`/Tree `2b619092065b3883ac2ade002829bb63005c386f`로 병합됐고 작업 브랜치 삭제를 확인했다. [Docs #45](https://github.com/seokpan/seokpan-hybrid-docs/pull/45)의 C Lock 시험 기록·완료 체크는 최신 main `f3b8e1709612ae836e04b24d7b592e820d71d41c`에서 보존한 뒤 이번 변경을 연결했다. 기존 GitOps #12 main `6ea2d9a90ab7c58803767220abf956d3c1b54a5f`의 39개 Source 검사·진단 Render8·Hash 확인과 **10/13 00:09:31 KST** artifact 만료 기준은 유지한다. 새 실제 Image/lab/Data/Migration 수락·본인 PC/Controller·OCP Sync/ROSA Plan/Apply 결과는 확인되지 않았으며 자원이 없다고 판정한 것이 아니다. [Infra #31](https://github.com/seokpan/seokpan-hybrid-infra/pull/31)은 C가 이전 HEAD `3621335b7bae97bef51d1fb036aa5521554560b0`을 승인한 뒤 비차단 제안인 도구 `MISSING` 후 버전 명령 처리만 같은 PR에서 보완했다. 새 HEAD `4d67d33fca826aeda4db766b56bd5d2fbfad4208`의 [Source CI](https://github.com/seokpan/seokpan-hybrid-infra/actions/runs/37398991364)는 통과했고 [원 답변](https://github.com/seokpan/seokpan-hybrid-infra/pull/31#issuecomment-6007424694)에 적용 범위·실제 실행 한계·병합/삭제 조건을 남겼다. GitHub 규칙 `required_approving_review_count=1`, `dismiss_stale_reviews_on_push=true` 때문에 구 C 승인은 해제됐고 **C 재리뷰 요청 완료·새 HEAD 승인 1개 대기**다. A/D 요청은 유지한다. 현재 내용 보완은 완료지만 `mergeable_state=blocked`이므로 승인/최신 검사·충돌 상태를 확인한 뒤 사용자가 병합하고 그 작업 브랜치를 삭제한다. 새 HEAD 승인·병합·삭제를 완료로 쓰지 않는다. [현재 학습 안내](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/TJUNG03_WORKFLOW_AND_LEARNING_GUIDE.md)·[05 §9.33](05_IMPLEMENTATION_AND_VALIDATION.md#b-latest-team-source-input-cost-followup-20261006)에서 팀 Source/실제 입력/비용을 구분한다. 이전 전체 개요는 충분하므로 현재 실행을 여는 지점만 추가한다.
 
 병합 main [Run 37330480298](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37330480298)의 39개 검사와 실제 Render8 다운로드/Hash·목록 대조를 확인했다. 현재 artifact는 main6ea 개정이며 **10/13 00:09:31 KST**에 만료된다. D/C의 파일 수신/별도 보존·실제 Image/lab/Data/Migration 입력 수락·Runtime의 새 기록은 아직 확인되지 않았다. 실제 클러스터/API를 조회한 자원 부재 판정은 아니다.
 
@@ -136,11 +136,33 @@ git -C "$B_GITOPS_DIR" diff --cached --stat
 
 **이번 공부:** `runtime.env` 내용이 바뀌면 Kustomize가 `backend-config-<hash>`와 Backend의 `envFrom` 참조를 함께 바꾼다. 현재 진단 Render의 이름은 `backend-config-mb7mk6mgt2`다. 활성 상태에서 이 PodTemplate 변경을 승인 Sync하면 새 Pod 실행으로 연결된다. 고정 이름의 외부 Secret/CA를 교체했다고 기존 환경변수·TLS 연결까지 자동 갱신됐다고 판단하지 않고 별도 확인한다. 동작 근거는 [Kustomize의 생성 이름/참조](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/)·[ConfigMap 환경변수 갱신](https://kubernetes.io/docs/concepts/configuration/configmap/)을 함께 읽는다.
 
-ROSA의 본인 Source/도구·Lock·보호 입력·Caller/Backend 준비는 [Infra PR #31](https://github.com/seokpan/seokpan-hybrid-infra/pull/31)의 [실행 절차](https://github.com/seokpan/seokpan-hybrid-infra/blob/3621335b7bae97bef51d1fb036aa5521554560b0/terraform/rosa/LOCAL_PREPARATION.md)를 따른다. 지금은 실제 AWS 인증/Plan을 수행한 상태가 아니며 이 준비를 OCP와 병행한다.
+ROSA의 본인 Source/도구·Lock·보호 입력·Caller/Backend 준비는 [Infra PR #31](https://github.com/seokpan/seokpan-hybrid-infra/pull/31)의 [실행 절차](https://github.com/seokpan/seokpan-hybrid-infra/blob/4d67d33fca826aeda4db766b56bd5d2fbfad4208/terraform/rosa/LOCAL_PREPARATION.md)를 따른다. 지금은 실제 AWS 인증/Plan을 수행한 상태가 아니며 이 준비를 OCP와 병행한다.
+
+### 5.4 이번 변경이 실행을 여는 지점
+
+| 현재 변화·파일 | 동작 원리·B가 소비할 결과 | 직접 다음 행동 |
+| --- | --- | --- |
+| D [App6](https://github.com/seokpan/seokpan-hybrid-app/pull/6) `Jenkinsfile.image-pipeline`, `scripts/image_registry.py` | 고정 App Commit을 검사·Build해 실행 Image를 Registry에 올리는 절차. 기본 `ENABLE_ECR=false`는 Harbor 경로 | 현재49bf 맨 위 stub `error()` 차단에 대한 기존 A/B 리뷰 후속. helper23 PASS는 실제 Image 아님. 이 Jenkins 경로의 수정/리뷰/병합 후 첫 Run이면 새 main SHA·FE/BE Digest·검사/Pull 수락. 별도 기존 승인 경로의 같은 Source Image 수락도 가능 |
+| A [Infra32](https://github.com/seokpan/seokpan-hybrid-infra/pull/32) `terraform/foundation/`의 공통 Provider/Backend/Lock | 같은 foundation 폴더/State에서 Network/Data/Registry를 계산할 실행 기준. `phase2/foundation/terraform.tfstate`와 rosa State는 구분 | 공통 틀 병합과 실제 Backend/Plan/Apply/Output 인계는 별개. A/C 실제 VPC/Subnet/Role/Data SG2를 받아 B 첫 ROSA Plan. C Infra10 probe는 해당 격리 범위 성공 |
+| D [Docs43](https://github.com/seokpan/seokpan-hybrid-docs/issues/43) ← B Infra25 | 전체 비용 집계에 ROSA 수량·가동/삭제/재시험 시간과 잔존 범위가 입력됨 | B가 설계 기준 예비 입력 제출 → 실제 Plan/지원·가격/누적 확인 뒤 개정. 이슈 생성·입력 제출·전체 Cost PASS를 구분 |
+
+**Image Digest(이미지 내용 식별값):** 실제 Run의 `commit_sha_full`, `jenkins_build_url`, `components.<frontend/backend>.harbor.final_digest`와 `release_json_images.<frontend/backend>.harbor_digest`를 받으면 정확 Source·Image·검사 개정을 대조한다. Harbor-only에서 ECR Digest `null`은 Cloud Image 승인이 아니다. Health Smoke의 `/health/live`는 기동 확인 범위이고 DB/Redis·TLS/AUTH·Migration·FE/API/WSS 대표 업무는 별도 OCP 시험이다. Pipeline의 `gitops_change: "NONE"`인 동안 Image가 생겨도 GitOps/OCP 선언이 자동으로 바뀌지 않는다.
+
+```yaml
+# apps/overlays/lab/kustomization.yaml — 실제 승인 입력을 받은 뒤 연결
+images:
+  - name: seokpan-backend
+    newName: <승인된 Harbor Backend Repository>
+    digest: sha256:<승인된 전체 Digest>
+```
+
+FE도 같은 방식으로 연결한다. 실제 입력 수락 후 lab 최초 Replica·설정/CA/Secret 참조·필요 Migration 선언과 lab 검사를 같은 활성화 PR에서 맞춘다. 필요한 Migration에는 같은 승인 Backend Digest·최종 ConfigMap Hash·C가 수락한 Action/Deadline·별도 목적 자격을 사용한다. 이 구문은 입력 경로 설명이며 승인 값이 들어간 실행 YAML은 아니다. Cloud/Recovery 보류를 함께 풀지 않는다.
+
+**지금 행동:** 본인 clone/개인 변경 확인 → App6 수정/리뷰와 D 실제 Run 수락 → C 계약+D 공급·단일 Owner의 최소 lab 입력 대조 → B 활성화·수동 Sync·같은 조합 새 Run. 그동안 Infra31의 본인 Tool/Lock·Caller/Backend·A/C 출력/SG2와 D 비용 입력을 준비한다. OCP 삭제·전체 Backup/VPN/Recovery 완료가 첫 Plan의 새 선행조건은 아니다.
 
 ## 6. 작업하며 공부하는 고정 형식
 
-이후 작업마다 짧은 카드로 설명한다. 첫 안내의 전체 역사/기본 용어는 반복하지 않는다.
+이후 작업마다 짧은 카드로 설명한다. 첫 안내의 전체 역사/기본 용어는 반복하지 않는다. 용어는 공식 명칭/한국어 → 실제 동작 원리 → 현재 저장소의 파일/단계로 연결한다. 그림을 쓰면 목적·구성요소·화살표의 주체/행위·동작 순서·선택 이유·프로젝트 위치를 바로 설명한다. 전체 AWS 진도는 별도 학습 공간에서 이어가고 이 안내는 현재 실행을 이해하는 개념만 다룬다. 새 첨부의 10/7·10/8 제안을 새 공식 Gate/마감으로 고정하지 않는다.
 
 | 항목 | 반드시 보여줄 내용 |
 |---|---|
