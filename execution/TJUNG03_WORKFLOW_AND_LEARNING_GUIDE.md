@@ -276,7 +276,7 @@ App10은 기존 B 승인 뒤 병합됐으며 이번에 새 APPROVE를 올린 것
 | DB Pool은 Engine마다 연결을 연다 | 현재 Runtime Engine2·uvicorn1 process, Pool 환경변수 소비 없음. C의 Engine당3+2 후보면10/Pod. `(활성4+종료1)×10+예약10=60`은 종료1개 시나리오 | B/C가 실제 max_connections·process/종료 연결 상한과 시간·예약 예산을 결정 → B `backend/src/seokpan/persistence/mariadb/connection.py` Source → D 새 Build/Scan/Digest → 활성화. 60을 보장 상한/현재 설정으로 쓰지 않음 |
 | 엔진 선택과 호환 판정 | Valkey7.2 팀 선택 수락. 기존 Redis7.2.4 통합 기준과 Lua10모듈/명령29종은 보존 | B 실제 Session/Room/Vote/채팅/Presence/게임/PubSub·RESP3 시험. INFO 원문의 server_name/valkey_version/redis_version·AWS engine/version을 기록. 기존7.2.4 검사를 무조건 없애거나 값을 바꿔 PASS 처리하지 않음 |
 | 이미지 주소와 내용 | lab은 기존 OCP 내부 Registry 선택, 승인 Run3 BE/FE Image 내용은 유지 | D가 index+children/amd64를 보존해 복사·target Digest 검증, 전용 nonoverwrite ImageStream tag/pruner·NFS 실제 여유·Pull/Trust/SA 공급 → B `apps/overlays/lab/kustomization.yaml` mapping. PVC100Gi−6.1Gi는 실제 여유가 아님 |
-| Pod 자원과 초기 시험 | lab requests/limits를 명시하되 숫자는 D의 노드별 allocatable/기존 requests/usage·Quota/LimitRange·기존 FE/BE 관측으로 정함 | D 자원 보고/B 초기 후보 수신 → PR16 lab-only held Source Ready·D/C 리뷰 → 준비된 새 Redis1 → Schema 확인 후 필요한 Job 완료·종료 → BE1 → FE1. 새 시험 peak는 준비의 선행으로 요구하지 않음. Cloud3HA와 분리하며 OOM/Pending/pressure·Owner 중단 시 우리 workload 확대를 멈춤 |
+| Pod 자원과 초기 시험 | lab requests/limits를 명시하되 숫자는 D의 노드별 allocatable/기존 requests/usage·Quota/LimitRange·기존 FE/BE 관측으로 정함 | D 자원 보고/B 초기 후보 수신 → PR16 lab-only held Source 병합·브랜치 삭제 → 실제 Registry/Data 입력 수락 → 준비된 새 Redis1 → Schema 확인 후 필요한 Job 완료·종료 → BE1 → FE1. 새 시험 peak는 준비의 선행으로 요구하지 않음. Cloud3HA와 분리하며 OOM/Pending/pressure·Owner 중단 시 우리 workload 확대를 멈춤 |
 
 ● **0 Sync는 별도 시험:** D가 오늘 수락된 범위/대상·삭제 보호·권한/live Diff를 확인하면 replicas0·Migration 미실행의 Argo 선언/Sync 검증은 Registry 복사·신규 Data Pod·requests/limits 숫자를 기다리지 않고 병행한다. 승인 실행 선언을 쓰며 진단 artifact/helper guard를 우회하지 않는다. API 선언/Sync 결과와 실제 Pod/TLS/업무 결과는 별도 기록이다.
 
@@ -299,11 +299,19 @@ App10은 기존 B 승인 뒤 병합됐으며 이번에 새 APPROVE를 올린 것
 - **사용 코드와 운영 권한:** [C17에 게시한 B 답변](https://github.com/seokpan/seokpan-hybrid-infra/issues/17#issuecomment-6015153704)에서 현 회원 흐름은 identity_svc의 SELECT/INSERT이고 정보 수정·탈퇴가 없음을 확인했다. `DELETE /api/v1/session`은 로그아웃이며 Rating UPDATE는 별도 game_svc다. 이 Source 확인으로 운영 권한을 줄이지 않고 05 §8.2의 승인 CRUD를 유지한다. 실제 MariaDB11.8/승인 계정·복원 데이터 Run은 후속이다.
 - **빈 Redis와 기록 보존:** 개별 결과 API는 있으나 현재 Room/참가·현재/직전 Game 연결을 요구해 빈 Redis에서 이전 GameID만으로 조회하는 UI 흐름은 없다. DB 영속 기록 손실이라는 뜻은 아니며 복원 DB 비교와 새 로그인 뒤 누적 전적/Rating/랭킹을 별도로 실제 시험한다. 이번에 새 과거 경기 UI·권한 정책을 추가하지 않았다.
 
-**D 자원 입력 부분 수신:** [D 자원 입력 정정·공급](https://github.com/seokpan/seokpan-hybrid-gitops/issues/14#issuecomment-6015356358)의 노드별 메모리 예약 여유 worker-1 430Mi/worker-2 145Mi, CPU 4986m/5716m·대상 두 Namespace의 Quota/LimitRange 없음, Registry NFS197G 중 여유191G 보고를 받았다. 기존 5일 최대 working set BE107Mi/FE9.2Mi는 기동 Peak·부하 조건을 보장하지 않고 Migration은 미측정이다. BE Harbor 원본 Index 일치만 확인됐으며 FE·복사/target Digest·노드 Pull은 진행/대기다. [B lab 최초 자원 후보](https://github.com/seokpan/seokpan-hybrid-gitops/issues/14#issuecomment-6015449085)에 초기 수치/단계별 시험을 게시했다. [GitOps PR #16](https://github.com/seokpan/seokpan-hybrid-gitops/pull/16) Ready HEAD `2dc0cabde223fde79c6883169842cbbfed959385`로 lab-only 자원 Source를 제출하고 D/C 리뷰 요청을 확인했다. 기존 로컬 Source39 PASS와 [같은 HEAD Source CI](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37458708031) success/진단 Render 보존은 Source 범위다. replicas0/Job held·300초를 유지하며 사람 리뷰·실제 활성화/Run은 대기다. 기존 관측을 새 workload의 안전/기동 PASS로 쓰지 않는다.
+**D 자원 입력 부분 수신:** [D 자원 입력 정정·공급](https://github.com/seokpan/seokpan-hybrid-gitops/issues/14#issuecomment-6015356358)의 노드별 메모리 예약 여유 worker-1 430Mi/worker-2 145Mi, CPU 4986m/5716m·대상 두 Namespace의 Quota/LimitRange 없음, Registry NFS197G 중 여유191G 보고를 받았다. 기존 5일 최대 working set BE107Mi/FE9.2Mi는 기동 Peak·부하 조건을 보장하지 않고 Migration은 미측정이다. BE Harbor 원본 Index 일치만 확인됐으며 FE·복사/target Digest·노드 Pull은 진행/대기다. [B lab 최초 자원 후보](https://github.com/seokpan/seokpan-hybrid-gitops/issues/14#issuecomment-6015449085)에 초기 수치/단계별 시험을 게시했다. [GitOps PR #16](https://github.com/seokpan/seokpan-hybrid-gitops/pull/16)의 lab-only 자원 Source HEAD `2dc0cabde223fde79c6883169842cbbfed959385`는 21:08:58 KST main `43860c37c7a60b7723f373021d49af08a67c1bc7`에 병합됐고 해당 브랜치 삭제를 확인했다. 기존 로컬 Source39 PASS와 [같은 HEAD Source CI](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37458708031) success/진단 Render 보존은 Source 범위다. replicas0/Job held·300초는 유지하며 Source 병합 이후의 실제 활성화/Run은 대기다. 기존 관측을 새 workload의 안전/기동 PASS로 쓰지 않는다.
 
 ● **requests와 limits:** [B lab 최초 자원 후보](https://github.com/seokpan/seokpan-hybrid-gitops/issues/14#issuecomment-6015449085)의 requests는 스케줄러가 **노드별로** 배치할 때 합산하는 요청량, limits는 해당 컨테이너의 실행 상한이다. 430/145Mi를 합친575Mi를 큰 Pod 하나의 여유로 쓰지 않는다. 필요한 Job 완료·종료 뒤 BE1→FE1을 기동하며 maxmemory192mb도 Redis 전체 프로세스 RSS 상한을 보장하지 않는다. 실제 admitted requests/사용량·Owner 범위는 실행 직전 다시 확인한다.
 
-**지금 B가 독립적으로 할 일:** 본인 clone/변경·도구·실제 Caller/Backend/지원·가용시각/비용 입력을 확인하고 현재 Source와 계약을 대조한다. 본인 환경 Run을 대신 수행했다고 쓰지 않는다. ROSA 첫 Plan·자료 보존·종료는 기존 직접 입력과 목표 창을 유지한다.
+● **이번 학습 — public recipient와 복호화 권한:** [Cloud Valkey AUTH의 B 응답](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6015974607)은 AUTH 한 파일에 C+A+B를 수신자로 넣는 범위다. C는 세 public recipient로 같은 파일을 암호화하며 각자는 자신의 private identity로 독립 복호화한다. 공개 recipient는 전달할 수 있고 private identity는 본인 보호 보관 대상이다.
+
+| 확인 단계 | 이번 기준·남은 확인 |
+| --- | --- |
+| B의 첫 입력 | 본인 Controller의 기존 표준 age(X25519) identity를 우선 확인·재사용. 없으면 본인 환경에서 준비한 public recipient만 C에게 전달. 실제 B public key·별도 private identity 보관 확인·복호화는 미완 |
+| public 형식 확인 | 합의한 소비 형식은 `age1`로 시작하는 62자 표준 recipient다. `age1pq1`은 이번 소비 계약과 다르며 보편적인 안전성 판정이 아니다. 접두사·길이는 예비 형식 확인이며 실제 SOPS 암호화와 C/A/B 각자 복호화까지 확인해야 수락 |
+| 제공 그림과 범위 | C+A 두 recipient를 그린 첨부는 이전 범위다. 현재 Cloud AUTH 한 파일은 C+A+B 세 recipient이며 Backup 데이터·lab CA Key·전체 Cloud Bundle의 보관 역할은 그대로 유지 |
+
+**지금 B가 독립적으로 할 일:** 먼저 Cloud AUTH public recipient 입력을 준비하고 본인 clone/변경·도구·실제 Caller/Backend/지원·가용시각/비용 입력을 확인하고 현재 Source와 계약을 대조한다. 본인 환경 Run을 대신 수행했다고 쓰지 않는다. ROSA 첫 Plan·자료 보존·종료는 기존 직접 입력과 목표 창을 유지한다.
 
 ## 6. 작업하며 공부하는 고정 형식
 
