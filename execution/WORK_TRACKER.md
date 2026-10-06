@@ -1,14 +1,19 @@
 # Work and Input Tracker
 
-**최신 출발점 — 2026-10-06 KST:** D 개정 비용 원장의 독립 재계산 결과는 [05 §9.37](05_IMPLEMENTATION_AND_VALIDATION.md#b-cost-ledger-independent-audit-20261006)·실행판·학습 §5.9를 따른다. GitOps13·Docs53/54·C Docs58 병합과 Image 수락은 유지한다. 현재 비용 PARTIAL·수식 보완과 실제 lab/ROSA 입력 수락이 후속이다. 기존 날짜별 기록·C §8.9/§8.10/§8.11·체크를 보존한다.
+**최신 출발점 — 2026-10-06 KST:** lab Registry 차단·제한 등록/Full Sync/Pod 시험 구분은 [05 §9.38](05_IMPLEMENTATION_AND_VALIDATION.md#b-lab-registry-path-and-sync-scope-20261006)·학습 §5.10, 비용 독립 감사는 [§9.37](05_IMPLEMENTATION_AND_VALIDATION.md#b-cost-ledger-independent-audit-20261006)·§5.9를 따른다. GitOps13·Docs53/54·C Docs58 병합과 Image 수락은 유지하고 Runtime/Cost PASS는 별도다. C §8.9/8.10/8.11·체크·날짜별 이력은 보존한다.
 
 | 이번 완료한 준비/검사 | 현재 직접 대기 | 다음 담당/실행 |
 | --- | --- | --- |
+| D Registry TCP timeout/SYN 미도착·임시 route 원복 보고 수신 | Node 직접 경로·target 공통 Registry·Owner/B권한·4조 사용창/Git 접근은 미수락 | D/공유 Owner 경로 공급 → 내 일 B 제한 등록 준비. Full Lab0 Sync는 현 guard 유지·live Owner/Diff 수락 필요. Pod/업무는 Registry+Data 최소 입력 뒤 |
 | D Run3 Image 보고/B 개정 수락·GitOps13 승인/병합 | 실제 lab Owner/권한·Namespace Pull Secret·C/D Data/TLS/Schema·필요 Migration 수락 | 팀원 D/C 공급 → 내 일 B 활성화·수동 Sync → 실제 Workload Pull/Ready/업무 시험 |
 | D 개정 xlsx 수신·60수식/18시나리오 독립 재계산 | 미완19·미확인5·PARTIAL. 입력 검증·최대시간 비시간 비용·합계/하한 표시 보완 | 내 일 B: 개정19~24행 입력1~6 / 팀원 D: 수식·전체 비용 / 생성 후 B/D: 실제 목록·기간 개정 |
 | rosa 단계별 목적 권한 수요 Source | 자기State 접근≠서비스 권한. 실효 정책/목적 Caller/Backend/Plan 미확인 | A bootstrap/Infra20 리뷰·적용 → B Infra25 단계별 수락. C34 Data 범위 별도 |
 
-**학습 핵심:** 비용은 수량×단가×과금기간이다. 실제 가용 시각과 과금시간을 나누고 최대시간은 비시간 비용·Buffer를 포함해 산정한다. Image/Source 수락과 실제 실행은 별도다. A33 Ready/062a371·A36 Draft는 Source 상태이며 실출력/ROSA 전체 권한 수락이 아니다. 기존 TH81/완료2·Source Native39 PASS·체크·기간/비용/보존 기준은 유지하며 이번 OCP Sync·Cloud Plan/Apply·전체 Recovery는 미실행이다. 아래 접힌 내용과 날짜별 표는 당시 관측 이력이다.
+**지금 리뷰/공급 확인:** [GitOps PR #15](https://github.com/seokpan/seokpan-hybrid-gitops/pull/15) Ready·최신db0251b C/D 재리뷰 요청·[같은 HEAD CI39 PASS/Render8 생성](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37435158422). 이전6d626c5/54952bf CI는 구 HEAD 이력이다. C v2 §0~7 전체 파일/논리 자원6개·deadline300 계약 수신 완료. B는 Alembic head/Image 자산·Redis7.1 호환·Pool/rolling 예산을 확인하며 실제 Endpoint/CA/Secret/DB시간대는 팀 공급·생성 후 수락이다. 공개 원 댓글 전체 게시는 문서 후속이고 계약 검토 대기가 아니다.
+
+**Cloud 활성화의 새 직접 차단:** C 전체 계약의 기본 Backend2/10개 예약과 Cloud activation-target의 Backend3·RollingUpdate maxSurge1(rollout4 후보)이 일치하지 않는다. 기본 lab/cloud는0으로 유지한다. B/C가 Process·Pool 상한·종료/Migration까지 함께 합의한 뒤 별도 활성화 개정을 검토하며, 승인된3HA Preview를2로 바꾸거나 overflow5/surge0 하나만 선택해 안전을 확정하지 않는다.
+
+**학습 핵심:** 비용은 수량×단가×과금기간이다. 실제 가용 시각과 과금시간을 나누고 최대시간은 비시간 비용·Buffer를 포함해 산정한다. Image/Source 수락과 실제 실행은 별도다. A33 main2c17488 병합(062a371 리뷰 이력)·A36 c06db53 Draft는 Source 상태이며 실출력/ROSA 전체 권한 수락이 아니다. 기존 TH81/완료2·Source Native39 PASS·체크·기간/비용/보존 기준은 유지하며 이번 OCP Sync·Cloud Plan/Apply·전체 Recovery는 미실행이다. 아래 접힌 내용과 날짜별 표는 당시 관측 이력이다.
 
 **이전 #12 인계 자료:** [병합 main Native Run 37330480298](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37330480298)의 정확 main39 PASS·Source clean, `ocp-source-handoff-6ea2d9a90ab7c58803767220abf956d3c1b54a5f` artifact11353184732의 다운로드/11파일·YAML8 SHA/바이트/inventory·main/Tree/보류·Secret0 검증을 완료했다. 만료는 **10/13 00:09:31 KST**며 원 제출/입력 요청은 [원 댓글](https://github.com/seokpan/seokpan-hybrid-gitops/pull/12#issuecomment-5998279839)이다. 이전60bda/10/12 안내와 구분한다.
 
