@@ -73,14 +73,14 @@ path: apps/overlays/lab
 
 | 목적·원본 | B가 지금 준비하는 것 | 누구의 무엇을 기다리며 어디가 막히는가 | 다음 가지 |
 |---|---|---|---|
-| **OCP 인계** [GitOps #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10), `handoff/OCP_FIRST_DEPLOYMENT.md` | Source/Render·입력표·Case 제출, 기존 객체/단일 Owner 대조 | **Sync**: D Image/Digest/Scan/Pull·lab 권한/공유 사용, C/D Data/CA/Secret/Schema 수락 | D #5 배포 → D #6/B/C 시험 → ROSA 조합/차이 인계 |
+| **OCP 인계** [GitOps #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10), `handoff/OCP_FIRST_DEPLOYMENT.md` | D Image 제공/B 수락 완료·held Digest 개정, Source/Render/Case·단일 Owner 대조 | Source 리뷰/병합·D Namespace Secret/권한/공유 사용·C/D Data/CA/Schema 준비 → 활성화/Sync | 해당 Workload Pull/Ready·D #6/B/C 업무 시험 → ROSA 조합/차이 인계 |
 | **ROSA 병행** [Infra #25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25), `terraform/rosa/INPUT_CONTRACT.md` | 입력 요구·Caller/Backend/목적 권한/지원·Plan/비용/창 준비 | **Plan**: A 필수 기반 출력·C Data SG 2개·B 목적 Caller/Backend/지원·권한 수락. **생성**: 실제 전체 Plan/비용/실행 승인 | 생성 → 실제 Worker SG Binding → Pull/Data/Secret → Window A |
 
 **A 전체 업무·OCP 삭제·완성 Recovery Bundle을 기다리지 않는다.** 두 갈래를 병행하며 입력 수락·실행·결과 수신을 구분한다. 수신 미확인은 자원이 없다고 실측한 뜻이 아니다.
 
-**현재 기준 — 2026-10-06 KST:** [App8](https://github.com/seokpan/seokpan-hybrid-app/pull/8)은 [기존 B 승인](https://github.com/seokpan/seokpan-hybrid-app/pull/8#pullrequestreview-5423331533) 뒤 main `e862a0f9e384f2e5539e69c31fbf0b4678c87a25` 병합·브랜치 삭제됐다. 당시 독립 lock3필드/consumer3 semver 대조는 같은 Source 결론이며 새 리뷰/실제 npm12 CI가 아니다. App7 첫 Run의 P1 audit 실패와 이 lock 보완은 이력이다. 이후 D는 Run#2의 P1·RegistryAuth 통과 후 Guard `NOT_FOUND` 실패를 보고했다. [App10](https://github.com/seokpan/seokpan-hybrid-app/pull/10)은 [기존 B 승인](https://github.com/seokpan/seokpan-hybrid-app/pull/10#pullrequestreview-5423568587) 뒤 main `46e21a74dd608b41f2c12a0a57d76bddfcf25949`로 병합·브랜치 삭제됐다. Harbor 첫 Push 전 Repository 부재 허용·CPS Matcher 보완 후 새 Run·Image/Digest/Pull은 대기다. D 비용 수신/수정 보고와 실제 원장 검증·Cost PASS는 구분한다. 목적 권한 단계·추가 비용 범위는 [05 §9.35](05_IMPLEMENTATION_AND_VALIDATION.md#b-lock-cost-receipt-phase-permission-followup-20261006)·이 안내 §5.6에서 현재 변경만 공부한다. C50 §8.10과 이전 전체 개요는 보존한다.
+**현재 기준 — 2026-10-06 KST:** [D Run#3](https://github.com/seokpan/seokpan-hybrid-app/pull/10#issuecomment-6009053898) SUCCESS·Harbor-only·`linux/amd64` 보고와 FE/BE Final Index Digest를 [B 수락 답변](https://github.com/seokpan/seokpan-hybrid-app/pull/10#issuecomment-6009213599)에서 제공 개정으로 수락했다. App Source는 `46e21a74dd608b41f2c12a0a57d76bddfcf25949`, Final tag는 `git-46e21a74dd60`다. 초기 frontend Alpine 경고는 최신 D 스캔 정정으로 공급 대기에서 해소했다. Private Harbor 원본 metadata/bytes를 B/AI가 독립 조회한 것은 아니며 cp-03 Podman Pull/Smoke 보고도 OCP Workload Pull/Ready 판정과 구분한다. [GitOps PR #13](https://github.com/seokpan/seokpan-hybrid-gitops/pull/13) HEAD `e75791c27cb0c3297e52296753b2846d1cae2b1c`로 Ready 제출했다. [동일 HEAD Source CI](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37413607147) 통과(39개 검사). D/C 리뷰 요청 완료·판정/병합 대기다. 현재 변경의 원리는 §5.8·[05 §9.36](05_IMPLEMENTATION_AND_VALIDATION.md#b-image-receipt-held-source-pullsecret-20261006)에서 본다. 이전 Source/Run 대기·학습은 당시 이력이며 C 기록/체크는 보존한다.
 
-병합 main [Run 37330480298](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37330480298)의 39개 검사와 실제 Render8 다운로드/Hash·목록 대조를 확인했다. 현재 artifact는 main6ea 개정이며 **10/13 00:09:31 KST**에 만료된다. D/C의 파일 수신/별도 보존·실제 Image/lab/Data/Migration 입력 수락·Runtime의 새 기록은 아직 확인되지 않았다. 실제 클러스터/API를 조회한 자원 부재 판정은 아니다.
+병합 main [Run 37330480298](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37330480298)의 39개 검사와 실제 Render8 다운로드/Hash·목록 대조를 확인했다. 현재 artifact는 main6ea 개정이며 **10/13 00:09:31 KST**에 만료된다. D Run3 Image 제공/B 개정 수락은 확인됐고 D/C의 파일 수신/별도 보존·실제 Namespace Secret/lab/Data/Migration 준비와 활성화 후 Pull/Ready/업무 수락은 후속이다. 실제 클러스터/API를 조회한 자원 부재 판정은 아니다.
 
 <details>
 <summary>이전 PR HEAD의 인계·승인·파일 대조 이력</summary>
@@ -119,7 +119,7 @@ git -C "$B_GITOPS_DIR" diff --cached --stat
 
 | 받은 입력 | 들어갈 파일·필드 또는 별도 공급 | 관련자·다음 확인 |
 |---|---|---|
-| FE/BE 승인 Image·전체 Digest/Platform | `apps/overlays/lab/kustomization.yaml`의 `images[].newName`/`digest`; lab 최초 Replica 변경 | D Image/Scan/Pull → B lab 활성화 PR. `newTag: INPUT_REQUIRED` 처리·lab Replica/검사/진단 Guard를 같은 PR에 맞추고 base/Cloud/Recovery 보류는 유지 |
+| FE/BE 승인 Image·Final Index Digest/Platform | `apps/overlays/lab/kustomization.yaml`의 `images[].newName`/`digest`, Recovery Image와 held Migration BE Digest | D Run3 제공/B 수락 완료 → held Source 리뷰/병합. Lab/Recovery replicas0·Job suspend/current와 기타 base/Cloud 보류 유지. 나머지 실제 입력 수락 뒤 별도 활성화/Sync에서 Pull·Ready 확인 |
 | 기존 Controller·Project/Application·Namespace·Owner | **선택한** Application의 `metadata.namespace`, `spec.project`, `source.targetRevision/path`, `destination.namespace`. `clusters/ocp-lab/reuse/application.yaml`은 기존 객체 대조용 | D/공유 Owner 확인 → B 원본/권한 대조. 같은 App를 관리하는 후보를 중복 등록하지 않음 |
 | DB/Redis 대상·Port·DB와 실제 Route Host | `apps/overlays/lab/runtime.env`의 `SEOKPAN_DATABASE_EXPECTED_*`, Redis URL/EXPECTED 값·`SEOKPAN_ALLOWED_ORIGINS`; `routes.yaml`의 같은 Host FE/API/WSS | C 계약 + D 경로 + B 소비. Secret 속 목적 URL·인증서 Host/CA와 일치 확인 |
 | Runtime 비밀번호/AUTH·CA | 별도 Owner가 공급하는 `backend-db-runtime`·`backend-redis-runtime` Secret, `backend-database-ca`·`backend-redis-ca` ConfigMap. `apps/base/backend.yaml`은 이 이름/키를 참조 | C/D 보호 공급 → B/D 개정·참조 수락. 비밀값을 YAML/Issue/Render에 넣지 않음 |
@@ -160,7 +160,7 @@ images:
 
 FE도 같은 방식으로 연결한다. 실제 입력 수락 후 lab 최초 Replica·설정/CA/Secret 참조·필요 Migration 선언과 lab 검사를 같은 활성화 PR에서 맞춘다. 필요한 Migration에는 같은 승인 Backend Digest·최종 ConfigMap Hash·C가 수락한 Action/Deadline·별도 목적 자격을 사용한다. 이 구문은 입력 경로 설명이며 승인 값이 들어간 실행 YAML은 아니다. Cloud/Recovery 보류를 함께 풀지 않는다.
 
-**지금 행동:** 본인 clone/개인 변경 확인 → App10 새 main의 D 실제 npm12/P1·Build/검사/Pull·승인 Image 수락 → C 계약+D 공급/단일 Owner 최소 lab 입력 → B 활성화/필요 Migration/수동 Sync·같은 조합 Run. ROSA는 단계별 목적 권한표/Infra20의 정책 리뷰·적용과 본인 Caller/Backend·A/C 출력/SG2·지원/예비 비용을 병행한다. 비용 추가값은 지원/예상 계획과 생성 후 실제 기록으로 나누고 본인 가용 시각은 응답 전TBD로 둔다.
+**지금 행동:** Image 제공·개정 수락 대기는 해소됐다. B는 Source PR 리뷰/병합 뒤 D와 대상 Namespace의 실제 Pull Secret 공급·Context·권한·단일 Owner, C/D Data·CA/TLS/AUTH·Schema/필요 Migration 준비를 수락한다. 그 뒤 별도 활성화 개정·필요 단일 Migration·수동 Sync를 수행하며 해당 Job/Pod의 Workload Pull·Ready/FE/API/WSS/대표 업무 Case를 같은 조합으로 확인한다. 선언의 Digest/Secret 이름만으로 실제 실행을 완료 처리하지 않는다. ROSA는 A/C 실제 기반/SG2·본인 목적 Role/Caller/Backend·지원/비용 준비를 병행하며 OCP 종료를 기다리지 않는다.
 
 ### 5.5 이번 학습 — Network 출력과 비용 기간의 소비
 
@@ -188,6 +188,15 @@ Window A10/12~15·B10/19~21은 목표 날짜이며8시간 예시/날짜 전체 �
 | **Jenkins CPS:** Pipeline을 중단·재개할 때 실행 중 값도 저장함([공식 설명](https://www.jenkins.io/blog/2017/02/01/pipeline-scalability-best-practice/)) | [Jenkinsfile.image-pipeline](https://github.com/seokpan/seokpan-hybrid-app/blob/46e21a74dd608b41f2c12a0a57d76bddfcf25949/Jenkinsfile.image-pipeline): 저장할 수 없는 정규식 Matcher를 남기지 않고 문자열로 `OK`/`ALREADY_ABSENT` 상태를 판정 | D 새 Run의 실제 Cleanup·결과 파일/Evidence 확인이 필요하다. helper 검사·문법 검사는 Jenkins 재개/정리 성공과 다름 |
 
 App10은 기존 B 승인 뒤 병합됐으며 이번에 새 APPROVE를 올린 것이 아니다. App9의 Source 이슈 종료와 새 Run의 실제 전체 성공을 구분한다.
+
+### 5.8 이번 학습 — 제공된 Image를 선언에 넣은 뒤 실제 Pod가 쓰는 과정
+
+| 핵심 원리 | 이번 실제 파일·변경 | 남은 실제 확인 |
+| --- | --- | --- |
+| **Digest:** Image 내용의 식별값. Index는 플랫폼별 Manifest 목록을 가리키고 child는 한 플랫폼의 Manifest임 | [apps/overlays/lab/kustomization.yaml](https://github.com/seokpan/seokpan-hybrid-gitops/blob/e75791c27cb0c3297e52296753b2846d1cae2b1c/apps/overlays/lab/kustomization.yaml)·[apps/overlays/recovery/kustomization.yaml](https://github.com/seokpan/seokpan-hybrid-gitops/blob/e75791c27cb0c3297e52296753b2846d1cae2b1c/apps/overlays/recovery/kustomization.yaml)·[operations/ocp-lab/migration/job.yaml](https://github.com/seokpan/seokpan-hybrid-gitops/blob/e75791c27cb0c3297e52296753b2846d1cae2b1c/operations/ocp-lab/migration/job.yaml): FE/BE와 보류 Migration에 제공 Final Index Digest를 사용 | `linux/amd64` 결과의 child Digest나 local image ID로 바꾸지 않는다. PR 리뷰/병합 뒤 활성화·수동 Sync하면 Controller가 선언을 읽고 Pod 기동/Pull을 시도한다. 실제 Ready/Data/업무 Case는 별도 확인 |
+| **imagePullSecrets:** Pod가 Private Registry에 인증할 때 참조하는 Kubernetes Secret 이름. 같은 Namespace에 실제 Secret이 있어야 함 | [apps/overlays/lab/registry-pull.yaml](https://github.com/seokpan/seokpan-hybrid-gitops/blob/e75791c27cb0c3297e52296753b2846d1cae2b1c/apps/overlays/lab/registry-pull.yaml): Lab `lab-harbor-pull` 참조 추가. Recovery 기존 `recovery-harbor-pull` 유지. 비밀값은 Git에 넣지 않음 | 이름을 선언한 것과 Secret 공급은 다르다. D가 대상 Namespace/Owner·보호 공급 참조와 목적별 Workload Pull을 인계한다. cp-03의 Podman Pull 보고를 OCP Pod Pull로 승계하지 않는다 |
+
+순서는 **D Image 개정 제공/B 수락 → B held Source 개정 → PR 리뷰/병합 → 실제 Secret/Data·Owner 수락 → 별도 활성화/필요 Migration·수동 Sync → 해당 Workload Pull/Ready/업무 시험**이다. §5.7의 새 Run/Cleanup 대기는 당시 이력이며 D Run3 성공 보고는 이번에 수락했다. 현재 replicas0·Job suspend/current를 유지하므로 이번 Image 선언만으로 App이 가동되는 것은 아니다. OCP Image 공급 대기는 해소됐고 Source 리뷰와 나머지 실제 최소 입력은 계속 대기한다.
 
 ## 6. 작업하며 공부하는 고정 형식
 
