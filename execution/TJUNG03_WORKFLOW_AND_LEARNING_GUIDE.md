@@ -288,6 +288,15 @@ App10은 기존 B 승인 뒤 병합됐으며 이번에 새 APPROVE를 올린 것
 
 ● **A/C와 연결:** [A 19:01 답변](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6013894166)으로 VM `192.168.52.50/32`, Data Root의 공통 변수1회 선언, 동일 승인 SOPS Token의 Plan/Apply 임시 공급·ephemeral/write-only, `manage_master_user_password=true`·별도 C 초기SQL 권한, Asia/Seoul 통합 방향을 수락했다. 실제 Root chain/누락 Token fail-fast·정책/출력SG2·Route/왕복·SQL/업무 시각·Secrets Manager 비용은 아직 확인 대상이다. 공개 댓글에 비밀값을 쓰지 않는다.
 
+● **이번 학습 — 생성된 Data Role과 B 실행 권한:** [C 서비스 연결 Role 보고](https://github.com/seokpan/seokpan-hybrid-infra/pull/37#issuecomment-6015927016)를 수신했다. 배정 A·실제 C가 `ksh_data` personal MFA로 없던 ElastiCache/RDS Role을 21:02:29/31 KST에 생성했고 Terraform/bootstrap Source는 그대로다. 이 보고는 실제 RDS/Valkey 생성이나 B의 실행 권한 확인이 아니다.
+
+| 역할 종류 | 누가 사용하며 무엇을 확인하는가 |
+| --- | --- |
+| Data 서비스 연결 Role | AWS ElastiCache/RDS 서비스가 계정 자원을 관리할 때 사용. 두 Role 생성 보고로 기존 부재 조건만 해소 |
+| ROSA 실행/공통·Worker Pull 역할 | B 실행 주체·ROSA 구성요소·Worker의 해당 작업 권한. Data Role 생성과 별도로 실제 Caller/Backend·지원·권한, 출력/SG2·Endpoint·Plan/Apply 확인이 남음 |
+
+**Plan과 Apply의 구분:** [B 수락 답변](https://github.com/seokpan/seokpan-hybrid-infra/pull/37#issuecomment-6016211581)처럼 Plan은 조회·설정·변경안을 만들며 그때 발생한 권한 오류를 확인한다. 실제 RDS/Valkey 생성과 그 작업의 Create 권한은 전체 Plan·비용·실행 창을 수락한 Apply에서 검증한다. Plan 성공을 실제 생성이나 모든 Create 권한 PASS로 쓰지 않는다.
+
 ● **Owner와 보호 범위:** [D의 4조 보고](https://github.com/seokpan/seokpan-hybrid-gitops/issues/14#issuecomment-6013827433)는 10/6 Argo/Registry/노드 사용 수락이고 이후 창·연락/중단 담당은 미확정이다. D 노드별 admitted requests+신규 요청이 맞으면 기존 FE/BE를 유지하고, 부족할 때만 D와 시험 종료·결과 보존 뒤 자신의 FE/BE 축소 또는 다른 승인창을 정해 재측정한다.  DB/기존 Redis/PVC·4조 hello/neuroplan-*/pvc-test-2·nfs-provisioner는 보존한다. 노드 재시작 수반 Trust 변경은 직전 재안내하며 이번에 실행하지 않았다. 실제 적용 직전 B 권한/수행자·live Diff/현 guard 확인은 유지한다.
 
 ● **Recovery·음성 시험·비용:** Recovery 판단3건은 조건부다. (1) 선택 이미지의 binary/cli·alias 확인 뒤 redis-server 유지 또는 valkey-server 선택, (2) 새 빈 Redis의 emptyDir 원칙은 동의하되 B/A 실제 Storage/UID 결정 뒤 Source/guard 변경, (3) TLS+AUTH readiness는 lab에서 검증한 뒤 Source 반영한다. 전용CA/Token/새 Digest도 실제 공급 대기다. Case5는 C의 설명용 호출 대신 GitOps15의 엄격한 exit-code 검사 명령을 사용한다(가짜 URL·네트워크 차단·진짜 db_admin 자격 미공급); 계정 거부와 TLS/GRANT/업무 PASS는 별개다. Valkey20%는 노드 단가 후보이며 전체 비용20% 절감/Cost PASS가 아니다. D가 해당 노드 행을 재계산하며 PARTIAL·Credit 미차감·앞선 수식 감사는 유지한다.

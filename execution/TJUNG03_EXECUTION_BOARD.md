@@ -10,6 +10,8 @@
 
 **지금 B가 먼저 할 입력 — Cloud AUTH:** [C 요청에 대한 B 응답](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6015974607)을 기준으로 본인 Controller의 기존 표준 age(X25519) identity 사용 가능 여부를 먼저 확인한다. 사용 가능한 기존 키가 있으면 재사용하고, 없으면 본인 환경에서 준비한 뒤 **public recipient만** C에게 전달한다. 실제 B public key·별도 private identity 보관 확인·복호화는 미확인이다. C는 **Cloud Valkey AUTH 한 파일**을 C+A+B 세 public recipient로 암호화하고 세 사람이 각자 복호화할 수 있는지 확인한다. Backup 데이터·lab CA Key·전체 Cloud Bundle의 보관 역할은 바꾸지 않는다. ROSA 연결은 [Infra25 원 기록](https://github.com/seokpan/seokpan-hybrid-infra/issues/25#issuecomment-6015978789)을 본다.
 
+**팀원 C/A의 Data Role 생성 보고 수신:** [C 원 기록](https://github.com/seokpan/seokpan-hybrid-infra/pull/37#issuecomment-6015927016)에서 배정 A·실제 C가 사람 IAM User `ksh_data`의 personal MFA 세션으로 없던 `AWSServiceRoleForElastiCache`/`AWSServiceRoleForRDS`를 21:02:29/31 KST에 생성했다고 보고했다. Data 서비스 연결 Role 부재는 해당 범위 해소됐으며 Terraform/bootstrap Source는 바꾸지 않았다. 이 Role은 AWS Data 서비스가 사용하는 역할이다. B ROSA 실행/공통 역할·Worker Pull, 실제 Caller/Backend·지원·출력/SG2·Endpoint·첫 Plan/Apply는 별도 확인이다. B public age recipient 준비도 계속 남았다.
+
 **0 Sync 병행:** D가 오늘 수락된 범위/대상·삭제 보호·수행 권한/live Diff를 확인하면 replicas0·Migration 미실행의 Argo 선언/Sync 범위 시험은 Registry 복사·신규 Data Pod·자원 숫자를 기다리지 않고 별도 진행할 수 있다. 승인 실행 선언을 사용하며 진단 artifact/helper guard를 우회하지 않는다. 이 결과는 Pod/업무 PASS가 아니다.
 
 **지금 실행 순서:** D 노드별 자원·기존 FE/BE 관측/Quota·LimitRange 공급 → B의 **lab만** requests/limits 선언 검토 → 선택한 새 lab Redis1(준비 완료 시) → Schema 확인 후 필요할 때 단일 Migration → Backend1 → Frontend1. 새 시험의 최고 사용량은 준비의 선행값으로 요구하지 않는다. D의 노드별 admitted requests+신규 requests가 맞으면 기존 FE/BE는 유지한다. 부족할 때만 D와 비교시험 종료·결과 보존 뒤 자신의 FE/BE 축소 또는 다른 승인창을 정하고 재측정한다. DB/기존 Redis/PVC·4조 객체는 보호한다. 우리 새 workload의 OOM/Pending·노드 pressure·Owner 중단 요청 때 기동 확대를 멈춘다. 실제 적용/시험은 아직 아니다.
