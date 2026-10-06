@@ -1,0 +1,80 @@
+name: Current consistency review snapshot
+on:
+  push:
+    branches: [docs/b-current-guides-audit-20261007]
+    paths: [.github/workflows/current-audit-snapshot-temporary.yml]
+permissions:
+  contents: read
+  actions: read
+  issues: read
+  pull-requests: read
+jobs:
+  collect:
+    if: ${{ github.repository == 'seokpan/seokpan-hybrid-docs' && github.actor == 'tjung03' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Read public repositories; do not execute their application or deployment code
+        env:
+          TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import concurrent.futures, datetime, hashlib, json, os, pathlib, re, subprocess, urllib.request
+          root=pathlib.Path(os.environ['RUNNER_TEMP'])/'current-audit'; root.mkdir()
+          pages=[]; index={}; started=datetime.datetime.now(datetime.timezone.utc).isoformat()
+          def save(path,value):
+              p=root/path;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n')
+          def get(short,tail):
+              req=urllib.request.Request('https://api.github.com/repos/seokpan/seokpan-hybrid-'+short+'/'+tail,headers={'Authorization':'Bearer '+os.environ['TOKEN'],'Accept':'application/vnd.github+json','User-Agent':'seokpan-source-consistency'})
+              with urllib.request.urlopen(req,timeout=60) as response:return json.load(response),response.headers
+          def all_pages(short,tail,key=None):
+              result=[]
+              for page in range(1,101):
+                  data,headers=get(short,tail+('&' if '?' in tail else '?')+'per_page=100&page='+str(page));rows=data if key is None else data[key]
+                  result.extend(rows);more='rel="next"' in headers.get('Link','');pages.append({'repo':short,'path':tail,'page':page,'count':len(rows),'has_next':more})
+                  if not more:return result
+              raise RuntimeError('Pagination exceeded safety limit')
+          def collect(short):
+              branches=all_pages(short,'branches'); main=next(b['commit']['sha'] for b in branches if b['name']=='main')
+              save('metadata/'+short+'/branches.json',branches)
+              source=pathlib.Path(os.environ['RUNNER_TEMP'])/('clone-'+short)
+              subprocess.run(['git','clone','--quiet','--no-checkout','https://github.com/seokpan/seokpan-hybrid-'+short+'.git',str(source)],check=True,timeout=180)
+              raw=subprocess.check_output(['git','-C',str(source),'ls-tree','-rlz',main]); tree=[];excluded=[]
+              sensitive=re.compile(rb'(?:AGE-SECRET-KEY-[A-Z0-9]{40,}|-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----|\b(?:AKIA|ASIA)[A-Z0-9]{16}\b)')
+              for row in raw.split(b'\0'):
+                  if not row:continue
+                  info,name=row.split(b'\t',1);mode,kind,sha,size=info.decode().split();name=name.decode();item={'path':name,'mode':mode,'type':kind,'sha':sha,'bytes':None if size=='-' else int(size)};tree.append(item)
+                  if kind!='blob':continue
+                  if pathlib.PurePosixPath(name).suffix.lower() in ('.ttf','.otf','.woff','.woff2','.key','.p12','.pfx','.age') or '.sops.' in name:
+                      excluded.append(name);continue
+                  data=subprocess.check_output(['git','-C',str(source),'cat-file','blob',sha])
+                  if sensitive.search(data):excluded.append(name);continue
+                  assert hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()==sha
+                  p=root/'sources'/short/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(data)
+              save('metadata/'+short+'/tree.json',tree)
+              histories=subprocess.check_output(['git','-C',str(source),'log','--all','--format=COMMIT %H%nPARENTS %P%nDATE %cI%nSUBJECT %s','--name-status'],text=True)
+              save('metadata/'+short+'/history-index.json',{'text':histories})
+              collections={}
+              for label,tail,key in [('issues','issues?state=all',None),('pulls','pulls?state=all',None),('comments','issues/comments?sort=created&direction=asc',None),('inline-comments','pulls/comments',None),('milestones','milestones?state=all',None),('runs','actions/runs','workflow_runs')]:
+                  rows=all_pages(short,tail,key);save('metadata/'+short+'/'+label+'.json',rows);collections[label]=len(rows)
+                  if label=='pulls':prs=rows
+              for pr in prs:
+                  for suffix in ['reviews','files','commits']:
+                      # Previously captured closed PR details remain in the original snapshot.
+                      if pr['updated_at']>='2026-10-06T16:56:38Z' or pr['state']=='open':save('metadata/'+short+'/pulls/'+str(pr['number'])+'-'+suffix+'.json',all_pages(short,'pulls/'+str(pr['number'])+'/'+suffix))
+              end=all_pages(short,'branches');save('metadata/'+short+'/branches-end.json',end)
+              index[short]={'main':main,'files':len(tree),'excluded':excluded,'collections':collections,'branch_stable':branches==end,'reachable_commits':int(subprocess.check_output(['git','-C',str(source),'rev-list','--all','--count']))}
+          with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:list(pool.map(collect,['app','infra','gitops','docs']))
+          save('pagination.json',pages);save('index.json',{'started_at':started,'finished_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'repositories':index,'scope':'current source and collaboration delta; no Runtime execution'})
+          print(json.dumps(index,ensure_ascii=False))
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: ${{ always() }}
+        with:
+          name: current-audit-${{ github.run_id }}
+          path: ${{ runner.temp }}/current-audit
+          include-hidden-files: true
+          retention-days: 14
+          if-no-files-found: error
