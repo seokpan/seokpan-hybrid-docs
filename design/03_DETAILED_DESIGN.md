@@ -187,7 +187,7 @@ Bootstrap 실행 코드가 동일 Manifest를 별도로 복사하여 계속 관�
 
 ### 3-A.11. Source 계보 및 검증 상태
 
-`00_PROJECT_STARTING_POINT.md`는 역사적 출발점으로 보존한다. `01_PROJECT_CHARTER.md`와 `02_TARGET_ARCHITECTURE.md`는 현재 승인된 상위 프로젝트/Architecture 기준이다. 상위 문서 작성 당시 미확정이었던 Repository topology는 이후 사용자에게 승인받은 이 문서의 3-A 작업 전제를 따른다. 지침 개정본에도 이 상태를 반영했다. 전체03의 최종 컨펌과 프로젝트 소스 등록 완료는 2026-10-01 사용자 확인으로 반영했다(§3-I.12.4). GitOps 내부 구조는 B04 작업 전제로 승인되었으며, Release Metadata의 실제 저장 형식·대용량 Evidence 위치는 구현 입력으로 확인한다.
+`00_PROJECT_STARTING_POINT.md`는 역사적 출발점으로 보존한다. `01_PROJECT_CHARTER.md`와 `02_TARGET_ARCHITECTURE.md`는 현재 승인된 상위 프로젝트/Architecture 기준이다. 상위 문서 작성 당시 미확정이었던 Repository topology는 이후 사용자에게 승인받은 이 문서의 3-A 작업 전제를 따른다. 지침 개정본에도 이 상태를 반영했다. 전체03의 최종 컨펌과 프로젝트 소스 등록 완료는 2026-10-01 전달 확인에 따라 반영했다(§3-I.12.4). GitOps 내부 구조는 B04 작업 전제로 승인되었으며, Release Metadata의 실제 저장 형식·대용량 Evidence 위치는 구현 입력으로 확인한다.
 
 관련 근거는 3-A 비교 제안 및 2026-10-01 KST 사용자의 명시적 동의다. 3-A 설계 작성 당시에는 GitHub 저장소 상태를 조회하거나 생성하지 않았다. 이후 이번 구현 준비에서 수행한 읽기 전용 Repo/Issue/지정 Commit 조회는 §3-I.13에 따로 기록한다. Runtime을 직접 조회하거나 Repo를 변경한 것은 아니다.
 

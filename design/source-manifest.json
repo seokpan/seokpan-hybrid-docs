@@ -29,8 +29,8 @@
     {
       "path": "design/03_DETAILED_DESIGN.md",
       "uploaded_name": "03_DETAILED_DESIGN.md",
-      "bytes": 479616,
-      "sha256": "7196900ed401b3f2b800ccb68ff74a6bff455451b33d15cdf10fec04611ca91a",
+      "bytes": 479617,
+      "sha256": "746f27f6a49b82ef17b9b15753ff15a8d4c2c969e4131471a1d8915d8df014d9",
       "source_header_date": "2026-10-01 KST"
     },
     {
@@ -233,9 +233,8 @@
   },
   "consistency_revision": {
     "date": "2026-10-07 KST",
-    "scope": "Current DR decision wording and Data Source status; no new architecture, limits, Runtime result or historical test rewrite.",
-    "source_reference": "Docs #21; GitOps #17; Infra #19/PR #37",
+    "scope": "Merged #64/#67 recheck; independent current guidance; diagram04 Source path/port caption correction",
     "runtime_validation": "NOT_PERFORMED",
-    "svg_png_policy": "Preserve all 12 existing SVG/PNG byte identities; regenerate provenance only after verification."
+    "svg_png_policy": "Only diagram04 is regenerated; other eleven pairs and historical Run payloads retained"
   }
 }

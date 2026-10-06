@@ -19,7 +19,7 @@
     },
     {
       "path": "design/03_DETAILED_DESIGN.md",
-      "sha256": "7196900ed401b3f2b800ccb68ff74a6bff455451b33d15cdf10fec04611ca91a"
+      "sha256": "746f27f6a49b82ef17b9b15753ff15a8d4c2c969e4131471a1d8915d8df014d9"
     },
     {
       "path": "design/04_IMPLEMENTATION_READINESS.md",
@@ -30,7 +30,7 @@
     "svg_xml": 12,
     "png_decode": 12,
     "embedded_font_glyphs": 12,
-    "declared_geometry": 0,
+    "declared_geometry": 12,
     "approved_subnet_cidrs": 9,
     "source_identity": 5,
     "high_risk_text_pattern_matches": 0
@@ -119,16 +119,16 @@
       "title": "사용자 트래픽과 TLS",
       "status": "DESIGN_TARGET",
       "source_refs": "03 §3-B.8.3 / §3-E.3~7 · 04 §1",
-      "pending": "실제 Host·Path·Port·Route·Probe·Timeout은 Source 확인 후 반영",
+      "pending": "실제 Host·배포·연결·Probe/Timeout 동작은 환경별 확인",
       "svg": {
         "path": "architecture/diagrams/04-service-traffic-tls.svg",
-        "bytes": 33792,
-        "sha256": "71897f0e0cc872dff124c0a0863028bf49abc601e00d4b89ece77c03bf9c988f"
+        "bytes": 34311,
+        "sha256": "e86318efbe97c278b8c51b3a02fa63a518b54045cd2c555c55211d08f35efadf"
       },
       "png": {
         "path": "architecture/exports/04-service-traffic-tls.png",
-        "bytes": 470608,
-        "sha256": "b816eb8ea23ab3716698121ac10efc3c2cf62912a7aa4a3f1dc33c439eb7e541"
+        "bytes": 457533,
+        "sha256": "80ec7bc9df632ef10f8f5a62cc17ef490c595371bbdab4d1d7c4e65dc75b7eba"
       },
       "svg_size": [
         1800,
@@ -478,6 +478,25 @@
       "unchanged_diagrams": "03/05/06/07/08/09/10/11 SVG and PNG byte/hash identities preserved.",
       "runtime_validation": "NOT_RUN_FOR_VALKEY",
       "note": "Asset integrity and target-label consistency only; no Data Source merge, Foundation Apply, App compatibility acceptance, Pool adoption, OCP/ROSA run or DR target attainment."
+    },
+    {
+      "date": "2026-10-07 KST",
+      "reference": "architecture/tools/verify_diagrams.py",
+      "mode": "integrity_only",
+      "asset_checks": {
+        "svg_xml": 12,
+        "png_decode": 12,
+        "embedded_font_glyphs": 12,
+        "declared_geometry": 0,
+        "approved_subnet_cidrs": 9,
+        "source_identity": 5,
+        "high_risk_text_pattern_matches": 0
+      },
+      "source_identity": "SOURCE_IDENTITY_5_PASS",
+      "declared_geometry": "SKIPPED_NO_BUILD_LAYOUT",
+      "visual_review": "NOT_ASSESSED_BY_THIS_SCRIPT",
+      "runtime_validation": "NOT_ASSESSED_BY_THIS_SCRIPT",
+      "note": "Asset/source provenance verification only; no deployment, compatibility, cost or recovery target-attainment test."
     }
   ],
   "data_engine_followup": {
@@ -522,27 +541,26 @@
   "latest_check_scope": {
     "date": "2026-10-07 KST",
     "reference": "architecture/tools/verify_diagrams.py",
-    "mode": "integrity_only",
+    "mode": "build_layout",
     "asset_checks": {
       "svg_xml": 12,
       "png_decode": 12,
       "embedded_font_glyphs": 12,
-      "declared_geometry": 0,
+      "declared_geometry": 12,
       "approved_subnet_cidrs": 9,
       "source_identity": 5,
       "high_risk_text_pattern_matches": 0
     },
     "source_identity": "SOURCE_IDENTITY_5_PASS",
-    "declared_geometry": "SKIPPED_NO_BUILD_LAYOUT",
+    "declared_geometry": "CHECKED_AGAINST_BUILD_LAYOUT",
     "visual_review": "NOT_ASSESSED_BY_THIS_SCRIPT",
     "runtime_validation": "NOT_ASSESSED_BY_THIS_SCRIPT",
     "note": "Asset/source provenance verification only; no deployment, compatibility, cost or recovery target-attainment test."
   },
   "consistency_revision": {
     "date": "2026-10-07 KST",
-    "scope": "Current DR decision wording and Data Source status; no new architecture, limits, Runtime result or historical test rewrite.",
-    "source_reference": "Docs #21; GitOps #17; Infra #19/PR #37",
+    "scope": "Merged #64/#67 recheck; independent current guidance; diagram04 Source path/port caption correction",
     "runtime_validation": "NOT_PERFORMED",
-    "svg_png_policy": "Preserve all 12 existing SVG/PNG byte identities; regenerate provenance only after verification."
+    "svg_png_policy": "Only diagram04 is regenerated; other eleven pairs and historical Run payloads retained"
   }
 }
