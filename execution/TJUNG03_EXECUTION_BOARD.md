@@ -1,6 +1,8 @@
 # 정태훈 실행판 — 지금 할 일·입력 대기·OCP와 ROSA 수명
 
-> 기준 2026-10-06 KST: 승인03/04·프로젝트 지침·개인계획, h-docs #41·h-gitops #12 병합·브랜치 삭제 확인 후 실제 OCP 입력/보류 검사·ROSA 로컬 준비·직접 대기를 연결한다. 설계·역할·T 성공기준·승인 날짜는 유지한다. 실제 본인 PC/OCP/AWS 조회·Sync·Plan/Apply·STS 실행이 아니다. 요청 정태훈, 작성·검토 지원 Codex.
+> 기준 2026-10-06 KST: 승인03/04·프로젝트 지침·개인계획, Docs42 병합/브랜치 삭제·Infra31 댓글 보완/새 HEAD CI/규칙상 재승인·팀의 App6/Infra32/Docs43을 현재 직접 입력과 연결한다. 설계·역할·T 성공기준·승인 날짜는 유지한다. 본인 PC/OCP/AWS 조회·Sync·Plan/Apply·STS 실행이 아니다. 요청 정태훈, 작성·검토 지원 Codex.
+
+**마지막 팀 변경:** A [Infra #33](https://github.com/seokpan/seokpan-hybrid-infra/pull/33)은 Network Source의 새 **Draft**다. B의 Public3/ROSA Private3 출력 필드 매핑은 기존 계약과 맞지만 실제 VPC/Subnet/Role/Data SG 출력 수락은 미확인이다. A의 Source 보완·C/B/D 검토와 Ready 전환 후속은 원 PR, B의 제한 소비·남은 첫 Plan 입력은 [Infra #25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25)에 기록한다. 현재 Draft를 B가 해제하거나 실제 Plan/Apply 완료를 Source 리뷰의 일괄 선행조건으로 추가하지 않는다.
 
 ## 먼저 열 이슈와 기록 순서
 
@@ -40,14 +42,15 @@ TH17은 App4의 App/Pool, GitOps10의 선언/관측, Infra25의 ROSA/SG/재생�
 
 **B는 지금 착수할 수 있다. A 전체 업무 완료를 기다리지 않는다.** 현재 App·GitOps·ROSA Source는 병합됐지만 새 Image·OCP 새 조합 Runtime·실제 foundation 제한 Output·ROSA 실행 수락은 기록에서 확인되지 않았다. 미확인은 해당 실행의 대기이며 모든 Source 준비의 중단이 아니다.
 
-**현재 B 작업 묶음:** [h-gitops #12](https://github.com/seokpan/seokpan-hybrid-gitops/pull/12)는 main `6ea2d9a90ab7c58803767220abf956d3c1b54a5f`/Tree `c9bdee7cce0284322e8a25fc06cee5d3defaad11`, [h-docs #41](https://github.com/seokpan/seokpan-hybrid-docs/pull/41)은 main `a00899c946544ee231ab82ef11c80bd2fd2f1853`/Tree `0eb5a389743fc9e4df9f8c2508f132301a8c8aee`에 병합됐고 두 작업 브랜치 삭제를 확인했다. 검토 Source와 같은 Tree이며 이번 착수 조회 당시 네 저장소의 열린 PR은 0개였다. 지금은 새 Source PR 승인을 기다리는 단계가 아니라 **본인 Source/도구 읽기 확인·ZIP 보존/수신·D/C 실제 입력 대조와 ROSA 로컬/실입력 준비** 단계다. [05 §9.32](05_IMPLEMENTATION_AND_VALIDATION.md#b-ocp-input-gates-rosa-local-preparation-20261006)·[학습 안내](TJUNG03_WORKFLOW_AND_LEARNING_GUIDE.md)를 우선하고 아래 Ready/Source 검토 대기는 이력으로 읽는다.
+**현재 B 작업 묶음:** [Docs #42](https://github.com/seokpan/seokpan-hybrid-docs/pull/42)는 main `74666daec098974e61e4e58ae84153efd4fbe621`/Tree `2b619092065b3883ac2ade002829bb63005c386f`로 병합됐고 작업 브랜치 삭제를 확인했다. [Docs #45](https://github.com/seokpan/seokpan-hybrid-docs/pull/45)의 C Lock 시험 기록·완료 체크는 최신 main `f3b8e1709612ae836e04b24d7b592e820d71d41c`에서 보존한 뒤 이번 변경을 연결했다. 기존 GitOps #12 main `6ea2d9a90ab7c58803767220abf956d3c1b54a5f`의 39개 Source 검사·진단 Render8·Hash 확인과 **10/13 00:09:31 KST** artifact 만료 기준은 유지한다. 새 실제 Image/lab/Data/Migration 수락·본인 PC/Controller·OCP Sync/ROSA Plan/Apply 결과는 확인되지 않았으며 자원이 없다고 판정한 것이 아니다. [Infra #31](https://github.com/seokpan/seokpan-hybrid-infra/pull/31)은 C가 이전 HEAD `3621335b7bae97bef51d1fb036aa5521554560b0`을 승인한 뒤 비차단 제안인 도구 `MISSING` 후 버전 명령 처리만 같은 PR에서 보완했다. 새 HEAD `4d67d33fca826aeda4db766b56bd5d2fbfad4208`의 [Source CI](https://github.com/seokpan/seokpan-hybrid-infra/actions/runs/37398991364)는 통과했고 [원 답변](https://github.com/seokpan/seokpan-hybrid-infra/pull/31#issuecomment-6007424694)에 적용 범위·실제 실행 한계·병합/삭제 조건을 남겼다. GitHub 규칙 `required_approving_review_count=1`, `dismiss_stale_reviews_on_push=true` 때문에 구 C 승인은 해제됐고 **C 재리뷰 요청 완료·새 HEAD 승인 1개 대기**다. A/D 요청은 유지한다. 현재 내용 보완은 완료지만 `mergeable_state=blocked`이므로 승인/최신 검사·충돌 상태를 확인한 뒤 사용자가 병합하고 그 작업 브랜치를 삭제한다. 새 HEAD 승인·병합·삭제를 완료로 쓰지 않는다. 지금은 본인 Source/개인 변경·실제 환경 확인, D App6 실행 차단 후속과 실제 Image/lab·C Data/Migration 입력 소비, A/C 실제 기반 출력과 D 비용 입력을 병행한다. [05 §9.33](05_IMPLEMENTATION_AND_VALIDATION.md#b-latest-team-source-input-cost-followup-20261006)·[학습 안내](TJUNG03_WORKFLOW_AND_LEARNING_GUIDE.md)를 우선한다. 아래 Ready/리뷰 상태와 #42 제출은 당시 이력이다.
 
 | 실제 위치/원본 | 이번 결과 | 직접 막힌 실행·다음 행동 |
 | --- | --- | --- |
-| GitOps `handoff/OCP_SOURCE_HANDOFF_20261005.md`·`tools/render_release.py`·`tools/check_migration_manifest.py`; GitOps10/5/6·App1/2 | 병합 main50개와 진단8 YAML/Hash 대조. 보류 Digest/Config/필수 리뷰 누락을 기존 Guard가 거부: NOT_READY(예상 거부) | ZIP 수신/보존·D Image/lab·C Data/Migration 수락 미확인. 보호 공급 개정 수신 뒤 같은 활성화 PR에서 lab Replica/Digest·보류 검사 함께 갱신; 실제 수동 Sync·업무는 새 Run |
-| [h-infra PR #31](https://github.com/seokpan/seokpan-hybrid-infra/pull/31); Infra25·`terraform/rosa/LOCAL_PREPARATION.md`·README | Source/Lock·기존 builder/Python/Bash 구문·격리 harness 준비. 예시 보류30개/Binding null 확인, 실제 Terraform/Cloud 검사 아님 | B 본인 기기·Caller/Backend·A/C 보호 출력/SG2·목적 서비스 권한·지원/예비 비용 수락. 문서 PR 검토와 실제 첫 Plan 실행 조건은 별도 |
+| GitOps10/5/6·App1/2, lab Image/설정/Owner·Migration | 기존39검사·Render8·보류 Guard 유지. D App6 helper23 PASS는 실제 Image 아님 | 현재 D Jenkins 경로: App6 수정·리뷰·병합 → 새 main SHA의 승인 Image/Run. 기존 승인 경로의 같은 Source Image도 수락 가능; C/D Data·Owner 수락 → B 활성화/수동 Sync |
+| [Infra31](https://github.com/seokpan/seokpan-hybrid-infra/pull/31), `terraform/rosa/LOCAL_PREPARATION.md` | MISSING 버전 명령 보완·새4d67 Source CI PASS, 규칙으로 구 승인 해제/C 재요청 | 새 HEAD 승인1대기. 실제 본인 Tool/Caller/Backend·A/C Output/SG2·지원/권한 확인은 병행 |
+| A Infra32/23·C Infra10 → B Infra25 → D Docs43 | foundation 공통6파일 병합·C 격리 probe 성공. 비용 입력 수집 이슈 생성 | 실제 기반 Output과 B 본인 Caller/Backend 수락은 별도. B 수량/Window/삭제·재시험 예비 입력 → 실제 Plan/누적/가격 후 개정 |
 
-**지금 확인할 결과:** Source PR 병합·진단 자료 검사는 완료다. ZIP 보존/수신·실입력·새 Runtime은 후속 기록 미확인이며 실제 자원 부재를 판정한 것이 아니다. 비밀값 없이 출처 SHA/공급 개정·보호 참조·수락 범위를 원 이슈에 남긴다. 파일의 `replicas: 0`은 희망 상태이며 현재 OCP Pod 수를 측정한 값이 아니다. 본인 PC/서버/Cloud를 이번에 조회하지 않았다. 실제 Sync·Plan/Apply·STS·DDL은 미실행이다.
+**지금 확인할 결과:** GitOps #12와 Docs #42의 병합 및 기존 진단 자료 검사는 완료다. Infra #31의 새 승인·병합은 별도 대기다. ZIP 보존/수신·실입력·새 Runtime은 후속 기록 미확인이며 실제 자원 부재를 판정한 것이 아니다. 비밀값 없이 출처 SHA/공급 개정·보호 참조·수락 범위를 원 이슈에 남긴다. 파일의 `replicas: 0`은 희망 상태이며 현재 OCP Pod 수를 측정한 값이 아니다. 본인 PC/서버/Cloud를 이번에 조회하지 않았다. 실제 Sync·Plan/Apply·STS·DDL은 미실행이다.
 
 **보고 형식 유지:** 목적·저장소/파일·이번 결과/한계·관련자/연계·막힌 직접 입력·핵심 동작·B 다음 행동을 짧은 카드/표로 함께 설명한다. 상단 전체 현황·하단 전체 남은 작업을 유지하며 첫 회 전체 개요는 반복하지 않는다.
 
@@ -273,7 +276,7 @@ OCP의 사전검증 업무 완료와 정리 날짜는 별개다. 추천 운영 �
 
 ## 10 전체 남은 작업 현황
 
-**현재 구분:** 아래 복합 범위의 체크 원문은 보존한다. #12/#41 Source PR 검토·병합과 정확 main 진단 자료 검사는 완료됐으며 해당 완료 단계는 다시 대기하지 않는다. 지금 B는 본인 환경 읽기 확인·main artifact ZIP 수신/보존·D/C 실입력 수락을 대조하고 ROSA 로컬/실제 첫 Plan 준비를 병행한다. 필요한 최소 입력 수락 뒤만 lab 활성화 PR·수동 Sync·새 Run으로 진행한다. 이전60bda/10/12 artifact 안내 대신 최신 main/10/13 00:09:31 KST 만료 자료를 사용한다. GitHub milestone10/18→승인10/16 정정은 여전히 미완료다.
+**현재 구분:** 아래 복합 체크 원문은 보존한다. #12/#41/#42 병합·작업 브랜치 정리는 확인됐고 기존 Source 검사/자료 보존 범위는 유지한다. Infra31은 내용 보완/CI 완료지만 규칙에 따른 새 HEAD 승인1 대기다. B는 본인 환경·D Image/lab·C Data/Migration 최소 입력 수락과 ROSA 실제 Caller/Backend·A/C 출력/SG2·D 비용 인계를 병행한다. App6 병합 뒤 실제 새 main SHA를 Build Source로 확인하며 C의 격리 probe를 B rosa Backend 성공으로 승계하지 않는다. 새 Runtime/Cost/전체 종료 체크는 추가하지 않는다. artifact10/13 00:09:31 KST, 승인 목표 창과 milestone10/18→10/16 정정 후속은 유지한다.
 
 - [ ] **B 지금:** 본인 Source/개인 변경 대조 → 병합 OCP Source와 새 인계 PR의 입력/Case·진단 Render 보존·검사 → 제출·사람 수신/보완 → 최소 lab 입력 수신 → D와 새 조합 검증. TH01/03~08/14.1
 - [ ] **B 병행Source:** Cloud/Recovery차이·Root/AppProject/NP/UWM·단일Migration·Secret/관리/Bundle·rosa계약/Controller·비용/창입력. TH09~12/15/17.1/18/19계획
