@@ -29,15 +29,15 @@
     {
       "path": "design/03_DETAILED_DESIGN.md",
       "uploaded_name": "03_DETAILED_DESIGN.md",
-      "bytes": 479617,
-      "sha256": "746f27f6a49b82ef17b9b15753ff15a8d4c2c969e4131471a1d8915d8df014d9",
+      "bytes": 479154,
+      "sha256": "099281cffca81c82308d15f36a135da6d473d0fc04b357da28ac73c24b253f12",
       "source_header_date": "2026-10-01 KST"
     },
     {
       "path": "design/04_IMPLEMENTATION_READINESS.md",
       "uploaded_name": "04_IMPLEMENTATION_READINESS.md",
-      "bytes": 116585,
-      "sha256": "a7d5a374edd27fed92ef633aac74f15a5a515fd2491b5a55b2f0508f4557088d",
+      "bytes": 116333,
+      "sha256": "a99f974d7ca657421feb35323373ca5cb48887b98afc3ffabc3af45a55f07105",
       "source_header_date": "2026-10-01 KST"
     }
   ],
@@ -235,6 +235,7 @@
     "date": "2026-10-07 KST",
     "scope": "Merged #64/#67 recheck; independent current guidance; diagram04 Source path/port caption correction",
     "runtime_validation": "NOT_PERFORMED",
-    "svg_png_policy": "Only diagram04 is regenerated; other eleven pairs and historical Run payloads retained"
+    "svg_png_policy": "Only diagram04 is regenerated; other eleven pairs and historical Run payloads retained",
+    "writing_scope": "Objective approval, supplied evidence and historical execution descriptions; no runtime results or design requirements changed."
   }
 }

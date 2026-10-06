@@ -3,25 +3,25 @@
 > **현재 단계:** 03 종료 유지, 04 문서 전체 종료 — 후속 05 구현·통합·검증으로 인계  
 > **기준일:** 최초 2026-10-01 KST / 설계 정합성 개정 2026-10-07 KST  
 > **상태:** 04 문서 종료 유지. 역할/Root 실행, 복구 DB 직접 TLS·전용 새 VM, Provider 초기 후보, GitOps Writer, Secret 보관, Release/Evidence 및 비상 관리·초기 인증 회수의 운영 기준을 확정했다. 이후 DR·Valkey 결정은 반영하며 실제 입력·구현·시험은 05의 실행 Gate로 관리한다. 2026-10-01 당시 검토 종료와 이후 정합성 보완을 구분한다.  
-> **상위 기준:** 승인된 `01_PROJECT_CHARTER.md`, `02_TARGET_ARCHITECTURE.md`, `03_DETAILED_DESIGN.md`, `PROJECT_INSTRUCTIONS.md`와 사용자의 최신 명시적 결정  
+> **상위 기준:** 승인된 `01_PROJECT_CHARTER.md`, `02_TARGET_ARCHITECTURE.md`, `03_DETAILED_DESIGN.md`, `PROJECT_INSTRUCTIONS.md`와 기록된 최신 승인 결정  
 > **기간과 AWS 한도:** 2026-09-28~2026-10-26, $500. 승인된 계획선 $450와 여유 $50 유지
 
 > **현재 DR 설계 인계:** 직접 TLS·새 전용 DB VM·별도 새 Runtime 및 Backup/Restore 구조는 유지한다. [03 §3-I.14.5](03_DETAILED_DESIGN.md#recovery-design-decision-20261005)의 **RTO 10분·영속 DB RPO 30분·DB 운영 중 Backup 15분 계획 주기**는 [PR #30](https://github.com/seokpan/seokpan-hybrid-docs/pull/30)으로 채택·병합됐다. 이전 30분/90분/1시간은 당시 이력이며 실제 전체 목표 달성·T18은 미검증이다. 실제 준비·Cost·업무 Acceptance는 실행 Gate로 유지하고 ROSA/05 전체 종료를 설계 선택의 선행조건으로 두지 않는다.
 
-이 문서는 승인된 03 상세설계를 실제 작업자, 입력, 인계, 일정과 구현 시작 조건으로 연결한다. 03의 설계 기준은 유지하고, 04에서 확정된 운영 결정과 아직 확인하지 못한 실제 값을 구분해 기록한다. 사람별 역할, 작성과 리뷰 책임, Root별 실행 책임, 복구 DB 직접 연결, AWS Provider 6.67.0 초기 후보, GitOps Writer PAT, Secret 주·예비 보관자와 Release/Evidence 운영 형식, 전용 새 복구 DB VM과 비상 관리·초기 인증 회수 모델이 확정됐다. 새 복구 VM 생성은 가능하다는 사용자 확인을 받았고 Host의 자원 여유는 아직 예상이다. 설계 확정을 코드 작성·배포·계정 변경·데이터 이전·시험·비용 확인의 완료로 표시하지 않는다. 팀원의 선행 Bootstrap 코드와 시험 보고는 별도 출처/범위로 기록한다. 추가 demo2 보고의 최유준 A/B/C 예제·관측·정책 검증과 부분 정리도 보고 범위로 접수하며 실제 base/ROSA 시험과 구분한다.
+이 문서는 승인된 03 상세설계를 실제 작업자, 입력, 인계, 일정과 구현 시작 조건으로 연결한다. 03의 설계 기준은 유지하고, 04에서 확정된 운영 결정과 아직 확인하지 못한 실제 값을 구분해 기록한다. 사람별 역할, 작성과 리뷰 책임, Root별 실행 책임, 복구 DB 직접 연결, AWS Provider 6.67.0 초기 후보, GitOps Writer PAT, Secret 주·예비 보관자와 Release/Evidence 운영 형식, 전용 새 복구 DB VM과 비상 관리·초기 인증 회수 모델이 확정됐다. 새 복구 VM 생성 가능은 확인 보고를 받았고 Host의 자원 여유는 아직 예상이다. 설계 확정을 코드 작성·배포·계정 변경·데이터 이전·시험·비용 확인의 완료로 표시하지 않는다. 팀원의 선행 Bootstrap 코드와 시험 보고는 별도 출처/범위로 기록한다. 추가 demo2 보고의 최유준 A/B/C 예제·관측·정책 검증과 부분 정리도 보고 범위로 접수하며 실제 base/ROSA 시험과 구분한다.
 
 **도입/이전 검토의 시점:** 위 설명과 §7의 미실행·Run 미확인은2026-10-01 문서 종료 시점의 기록이다.2026-10-05에는 [05 §9.20](../execution/05_IMPLEMENTATION_AND_VALIDATION.md#recovery-fixture-measurement-20261005)의 Codex 실제 Data/Backend 부분 Run2개가 추가됐다. 그 Source 작성·부분 DB 복원/업무 시험과 현재 [03 §3-I.14.5](03_DETAILED_DESIGN.md#recovery-design-decision-20261005)의 설계 변경안을 우선 연결하며, 실제 운영 DB/Cloud 배포·전체 RTO/RPO/최종T18·팀원 수행/리뷰/수신이 완료됐다는 의미는 아니다. 과거 문구를 모든 후속 실행의 부재로 읽지 않는다.
 
 현재 진행 현황:
 
 - [x] 최신 등록 03의 두 피드백 수정과 첨부본 일치 확인
-- [x] 사용자 확인을 근거로 03 문서 단계 종료
+- [x] 최종 승인 보고를 근거로 03 문서 단계 종료
 - [x] 00 §30.6 이후 추가 역할 변경이나 확정 없음 확인
 - [x] 영역별 작성과 Root별 실행 담당안 사용자 채택
 - [x] ocp-lab 후속 검증을 최유준 책임으로 연결
 - [x] 역할의 직접 영향과 후속 인계 조건 기록
 - [x] 격리 복구 MariaDB 직접 연결안 사용자 채택
-- [x] 복구용 새 VM 생성 가능 사용자 확인
+- [x] 복구용 새 VM 생성 가능 확인 보고
 - [x] AWS 자격증명 공지와 Infra Source/Issue 결과 대조
 - [x] AWS Provider 6.67.0 초기 검증 후보 사용자 채택
 - [x] GitOps Writer PAT 하나와 무기한 우선/허용 최대 수명 사용자 채택
@@ -43,7 +43,7 @@
 
 2026-10-01 최신 등록 사본에서 03 §3-D.4는 `00_PROJECT_STARTING_POINT.md §5`로 정정됐고, §3-G.1은 일부 지정 Source 조회, 최종 Seed 미확인, Runtime 미검증과 ROSA 최종 시험 NOT RUN을 구분했다. 해당 사본은 수정된 첨부본과 바이트 단위로 일치했다. 사용자는 동일한 파일의 프로젝트 소스 업로드 완료를 확인했고, 이번 확인을 거쳐 03 문서 단계를 종료했다.
 
-03의 당시 "실제 배정 확인 전" 기록은 작성 당시 상태다. 이 문서의 새 결정이 현재 사람별 배정을 제공하며, 완료된 03을 다시 작성 중으로 되돌리는 뜻은 아니다. 사용자가 03 종료 뒤 04를 진행하도록 명시했으므로, 03 §3-H.1의 당시 준비 기록 방식에 이어 이 04 문서에서 후속 준비를 관리한다. 00의 `GATE 4 — Foundation Build`와 이 문서의 04 번호는 서로 다른 식별자다.
+03의 당시 "실제 배정 확인 전" 기록은 작성 당시 상태다. 이 문서의 새 결정이 현재 사람별 배정을 제공하며, 완료된 03을 다시 작성 중으로 되돌리는 뜻은 아니다. 03 종료 뒤 04의 구현 준비를 진행하기로 결정됐으므로, 03 §3-H.1의 당시 준비 기록 방식에 이어 이 04 문서에서 후속 준비를 관리한다. 00의 `GATE 4 — Foundation Build`와 이 문서의 04 번호는 서로 다른 식별자다.
 
 다음 승인 기준을 유지한다.
 
@@ -70,7 +70,7 @@
 |---|---|
 | Decision ID | PH2-04-ROLE-ROOT-EXECUTION |
 | 결정일 | 2026-10-01 KST |
-| 사용자 확인 | 00 §30.6 이후 변경하거나 확정한 역할 배정 없음. 직전의 영역별 작성과 Root별 실행 담당안 채택에 동의 |
+| 채택 근거 | 00 §30.6 이후 변경하거나 확정한 역할 배정 없음. 직전의 영역별 작성과 Root별 실행 담당안 채택에 동의 |
 | 기존 상태 | 03은 A~D 작업 트랙과 공유 실행 Owner 원칙을 승인했고, 사람별 실제 배정은 확인 전이었다 |
 | 채택안 | 기존 담당 영역을 이어가며 작성, 통합, 리뷰, 공유 실행 책임을 구분. bootstrap/foundation 실행은 이유빈, rosa 실행은 정태훈 |
 | 검토한 대안 | Terraform 전체 실행 한 사람 집중, 영역별 작성과 Root별 실행 담당, 주요 영역 재배정 |
@@ -108,7 +108,7 @@ Registry/CI 코드를 작성하는 최유준과 Data 코드를 작성하는 김�
 
 ### 2.4 공동 참여와 계정 사용 기록
 
-2026-10-01 사용자는 필요하면 팀원이 서로의 계정을 물리적으로 빌려 사용할 수도 있고 실제로 전원이 참여한다고 설명했다. 동시에 설계상 역할·보관자 배정의 의미에 동의했다. 이 설명은 팀의 허용된 협업 방식과 참여에 관한 사용자 제공 정보로 기록한다. 특정 Run에서 누가 어느 계정을 사용했는지 또는 어떤 작업을 완료했는지까지 확인된 것은 아니다.
+2026-10-01 팀 협업 설명에는 필요 시 계정의 물리적 대행 사용 가능성과 전원 참여가 포함됐으며, 설계상 역할·보관자 배정도 수락됐다. 이는 당시 제공된 협업·참여 범위의 기록이며 계정별 보안 검증이나 개별 작업 수행 확인을 뜻하지 않는다. 특정 Run에서 누가 어느 계정을 사용했는지 또는 어떤 작업을 완료했는지까지 확인된 것은 아니다.
 
 설계의 실행/보관 책임은 유지하고 실제 작업 기록은 아래처럼 구분한다. 계정 대여를 이유로 역할안을 다시 승인받거나 모든 Key의 수신자를 네 사람 전체로 확대하지 않는다.
 
@@ -127,7 +127,7 @@ Caller/Commit 계정만으로 실제 사람의 기여를 단정하지 않는다.
 
 ### 3.1 향후 실습 담당
 
-사용자의 ocp-lab 추천안 채택은 최유준이 향후 Argo 검증을 실행하고 결과를 조율하는 책임으로 적용한다. 정태훈은 공통 base와 환경별 Overlay 통합을 담당한다. 기존 demo2 9항목 통과와 11건 발견의 원래 수행자, 미커밋 Overlay 작성자는 별도 출처 확인 상태로 남긴다. 최유준에게 과거 수행 이력을 소급해 부여하지 않는다. 추가 제공된 2026-10-01 16:04~18:30 A/B/C 보고는 최유준을 작업자로 명시한다. 그 수행 범위의 Argo 공개 예제·Native/UWM·정책/알림 검증은 팀 보고 완료로 접수한다. 실제 hybrid-gitops base 검증은 여전히 후속 작업이며 상세 영향과 정리 상태는 §8.5에 기록한다.
+채택된 ocp-lab 책임 배정은 최유준이 향후 Argo 검증을 실행하고 결과를 조율하는 책임으로 적용한다. 정태훈은 공통 base와 환경별 Overlay 통합을 담당한다. 기존 demo2 9항목 통과와 11건 발견의 원래 수행자, 미커밋 Overlay 작성자는 별도 출처 확인 상태로 남긴다. 최유준에게 과거 수행 이력을 소급해 부여하지 않는다. 추가 제공된 2026-10-01 16:04~18:30 A/B/C 보고는 최유준을 작업자로 명시한다. 그 수행 범위의 Argo 공개 예제·Native/UWM·정책/알림 검증은 팀 보고 완료로 접수한다. 실제 hybrid-gitops base 검증은 여전히 후속 작업이며 상세 영향과 정리 상태는 §8.5에 기록한다.
 
 | 인계 | 책임 | 필요한 결과 |
 |---|---|---|
@@ -157,7 +157,7 @@ Cloud Application을 lab Branch에 연결하지 않는다. 실습 검증은 ROSA
 | AWS와 Controller | 이유빈, 정태훈 rosa 범위 | Account/서울 Region, Caller/MFA/STS/Role, Credit 조건, Quota/Classic 지원/구독, Red Hat/OCM 인증의 공급/만료/복원 참조, 도구/Provider/Lock, 실행 Workspace와 보호 저장소 | 실제값이 필요한 HCL 입력 확정·Plan/Apply. 비의존 선언 작성·도구/Schema·로컬 확인은 가능 |
 | ROSA 개인 인증 | 정태훈, 이유빈 기반 인증 협업 | GitHub IDP/RBAC의 실제 Org/Team/사용자 매핑, 필요한 권한과 허용/거부/회수 결과, Bootstrap와 비상 접속 공급 참조 | 플랫폼 초기 설정과 개인 관리 접속 검증 |
 | DB와 TLS | 김상희와 정태훈 | 1차 GRANT에서 비밀값 제거, 목적별 권한, Engine/Client/Driver/Schema, CA/Hostname 검증 경로, 데이터와 Dump 크기 | 권한 판정, 연결 수정 검증, Data 이전 |
-| 로컬 Recovery | 김상희, 이유빈 기반 자산 협업 | 새 복구 VM 생성 가능 사용자 확인. 사용할 Host/Namespace와 실제 CPU/RAM/디스크 여유, 독립 DB Data Directory, Storage/NFS/독립 사본, 도구/Harbor/CA는 확인 전 | 확정된 전용 VM 모델의 실제 Host/용량 확정·배치, Offline 복구 |
+| 로컬 Recovery | 김상희, 이유빈 기반 자산 협업 | 새 복구 VM 생성 가능 확인 보고. 사용할 Host/Namespace와 실제 CPU/RAM/디스크 여유, 독립 DB Data Directory, Storage/NFS/독립 사본, 도구/Harbor/CA는 확인 전 | 확정된 전용 VM 모델의 실제 Host/용량 확정·배치, Offline 복구 |
 | CI와 Registry | 최유준, 정태훈 App/Pull 협업 | 실제 Jenkins Job/Agent와 인증 공급 참조, Scan 도구/정책 결과, ECR/Harbor Artifact Mapping, PR 대상과 쓰기 인증 정책 | CI 변경과 Cloud Pull/Release 검증 |
 | 비용과 Window | 최유준 집계, 이유빈 자원 목록, 김상희 Data 수명, 정태훈 ROSA 시간 | 서울 단가/출처, Credit 적용 범위, 누적/잔존, 실제 생성/삭제 시간, 가용일과 재시험 여유 | Window 확정과 첫 Full Apply Cost Gate |
 
@@ -181,7 +181,7 @@ DB 접속 방식과 전용 VM 배치 모델은 각각 채택됐다. Endpoint, TL
 
 ### 5.1 확정된 로컬 복구 DB 직접 연결
 
-**상태는 CONFIRMED DECISION이다.** 2026-10-01 사용자가 직접 연결안을 채택했다. 03 §3-D.3에서 MaxScale 재사용 여부를 별도 결정으로 남겼고, §3-D.9.8은 새 격리 2차 DB에 복원하도록 했다. 당시 §3-G.7의 RTO30분 목표는 장애 주입/접속 불가 시작부터 탐지·복구 결정·Key/자료 준비·DB 복원·새 Redis·App 배포·Host 안내와 대표 업무/Data 확인 완료까지 포함한다. 접속 방식은 이 복구 목표와 1차 자산 보호를 기준으로 비교했다.
+**상태는 CONFIRMED DECISION이다.** 2026-10-01 직접 연결안이 채택됐다. 03 §3-D.3에서 MaxScale 재사용 여부를 별도 결정으로 남겼고, §3-D.9.8은 새 격리 2차 DB에 복원하도록 했다. 당시 §3-G.7의 RTO30분 목표는 장애 주입/접속 불가 시작부터 탐지·복구 결정·Key/자료 준비·DB 복원·새 Redis·App 배포·Host 안내와 대표 업무/Data 확인 완료까지 포함한다. 접속 방식은 이 복구 목표와 1차 자산 보호를 기준으로 비교했다.
 
 | 결정 기록 | 내용 |
 |---|---|
@@ -189,7 +189,7 @@ DB 접속 방식과 전용 VM 배치 모델은 각각 채택됐다. Endpoint, TL
 | 결정일과 승인 | 2026-10-01 KST. 사용자 "직접 연결안을 채택" |
 | 결정 | Recovery App이 새 격리 2차 MariaDB에 직접 TLS 연결. 복구 경로에 MaxScale를 추가하지 않음 |
 | 근거와 대안 | 단일 DB 복원과 업무 재개 목표에 맞춰 Proxy 의존성을 줄임. 별도 MaxScale와 기존 1차 MaxScale 활용을 비교 |
-| 확인된 조건 | 복구용 새 VM 생성 가능 — 사용자 확인 |
+| 확인된 조건 | 복구용 새 VM 생성 가능 — 확인 보고 |
 | 미확인 | 실제 Host와 CPU/RAM/디스크 여유, 채택한 VM의 용량/Endpoint/계정/CA와 Driver 호환, 수행 시간과 결과 |
 | 사용자 예상 | 현재 자원이 부족하지 않을 것 같다고 했으나 실측 확인은 아님 |
 | 담당과 영향 | 김상희 DB/계정/CA/Restore, 이유빈 Host 자산, 정태훈 Recovery 설정, 최유준 T04/T18과 복구 시간선. W04/W08/Bundle/Secret 연결 |
@@ -263,7 +263,7 @@ MaxScale의 Listener는 Service로 연결 요청을 전달하고 Router가 Backe
 
 ### 5.3 확정된 Secret 주·예비 보관 책임
 
-**상태는 CONFIRMED DECISION이다.** 2026-10-01 사용자가 보관자 배정안 채택에 동의했다. 승인된 SOPS+age, Cloud Bootstrap/Automation/On-Prem Recovery 범위 분리와 독립 오프라인 예비본을 현재 사람 배정에 연결한다. 실제 Key/파일/보호 저장소·접근 설정과 복원 시험은 확인 전이다.
+**상태는 CONFIRMED DECISION이다.** 2026-10-01 보관자 배정안이 채택됐다. 승인된 SOPS+age, Cloud Bootstrap/Automation/On-Prem Recovery 범위 분리와 독립 오프라인 예비본을 현재 사람 배정에 연결한다. 실제 Key/파일/보호 저장소·접근 설정과 복원 시험은 확인 전이다.
 
 | 결정 기록 | 내용 |
 |---|---|
@@ -297,7 +297,7 @@ WireGuard Peer Private Key는 승인된 별도 Host/담당자 범위로 유지�
 
 ### 5.4 확정된 Release·Evidence 운영 형식
 
-**상태는 CONFIRMED DECISION이다.** 2026-10-01 사용자가 Release/Evidence 운영 형식 채택에 동의했다. 03 §3-A.8·§3-G.9·§3-I.7의 승인 필드와 Index 경계를 파일/인계 순서로 구체화한다. 실제 Release/Run 자료 생성과 수집/검증은 미실행이다.
+**상태는 CONFIRMED DECISION이다.** 2026-10-01 Release/Evidence 운영 형식이 채택됐다. 03 §3-A.8·§3-G.9·§3-I.7의 승인 필드와 Index 경계를 파일/인계 순서로 구체화한다. 실제 Release/Run 자료 생성과 수집/검증은 미실행이다.
 
 | 결정 기록 | 내용 |
 |---|---|
@@ -335,7 +335,7 @@ GitOps 파일 자체를 포함한 Commit SHA를 그 파일에 넣으면 자기 �
 
 ### 5.5 확정된 복구 DB 전용 VM 배치
 
-**상태는 CONFIRMED DECISION이다.** 2026-10-01 KST 사용자가 남은 두 구조 권고안에 동의해 새 전용 VM 배치 모델을 채택했다. 직접 TLS 연결·새 VM 생성 가능과 배치 모델은 각각 확인된 결정이며, 실제 Host·용량은 미확인 입력이다. 아래는 채택 전에 비교한 주요 대안이다.
+**상태는 CONFIRMED DECISION이다.** 2026-10-01 KST 새 전용 VM 배치 모델이 채택됐다. 직접 TLS 연결·새 VM 생성 가능과 배치 모델은 각각 확인된 결정이며, 실제 Host·용량은 미확인 입력이다. 아래는 채택 전에 비교한 주요 대안이다.
 
 | 대안 | 구현·복구 편익 | 의존성과 준비 부담 | 판단 |
 |---|---|---|---|
@@ -358,7 +358,7 @@ GitOps 파일 자체를 포함한 Commit SHA를 그 파일에 넣으면 자기 �
 
 ### 5.6 확정된 비상 접속과 초기 관리자 회수
 
-**상태는 CONFIRMED DECISION이다.** 2026-10-01 KST 사용자가 남은 두 구조 권고안에 동의해 유지 비상 관리자 하나와 초기 인증 명시 회수 모델을 채택했다. 정상 GitHub 프로젝트 Team IDP와 개인별 RBAC는 승인 기준을 유지한다. 아래는 외부 IDP 장애의 관리 경로와 초기 인증 종료를 비교한 기록이다.
+**상태는 CONFIRMED DECISION이다.** 2026-10-01 KST 유지 비상 관리자 하나와 초기 인증 명시 회수 모델이 채택됐다. 정상 GitHub 프로젝트 Team IDP와 개인별 RBAC는 승인 기준을 유지한다. 아래는 외부 IDP 장애의 관리 경로와 초기 인증 종료를 비교한 기록이다.
 
 | 대안 | 편익 | 의존성과 운영 부담 | 판단 |
 |---|---|---|---|
@@ -436,7 +436,7 @@ htpasswd 경로는 Cluster API/OAuth 전체 장애나 AWS 전체 접근 불가�
 
 ### 8.1 자료 분류와 조회 범위
 
-2026-10-01 사용자가 팀의 개인 Linux/IAM 자격증명 등록과 bootstrap init/plan 공지를 제공했다. 공지는 TEAM PROVIDED 운영 안내이고 NoCredentials 사례는 팀 수행 보고다. 공지를 계정/Backend/모든 역할 검증 완료로 처리하지 않는다.
+2026-10-01 팀의 개인 Linux/IAM 자격증명 등록과 bootstrap init/plan 공지를 접수했다. 공지는 TEAM PROVIDED 운영 안내이고 NoCredentials 사례는 팀 수행 보고다. 공지를 계정/Backend/모든 역할 검증 완료로 처리하지 않는다.
 
 04에 포함하는 근거는 자료의 제공 시점이 아니라 실제 실행 준비에 미치는 영향이다. 개인 인증과 Backend 접근은 Terraform 시작 입력이고, 기존 Lock/State와 승인 기준의 차이는 Root 인계 조건과 보완 책임에 연결된다. 따라서 공지 전문을 수록하는 대신 실행에 필요한 확인 사실, 보고의 범위, 차이와 담당을 추출해 기록한다. 설계 기준은 승인된 03과 최신 사용자 결정으로 유지한다.
 
@@ -488,7 +488,7 @@ Source 정합 완료와 TF Role/State 복원/개인 작업 사본/실제 Plan·A
 
 ### 8.4 확정된 AWS Provider 초기 후보 조정
 
-**상태는 CONFIRMED DECISION이다.** 2026-10-01 사용자가 AWS Provider 초기 후보 권고안을 채택했다. 현재 Source는 AWS Provider 6.67.0을 고정했고 팀원 bootstrap 성공 보고가 있다. [공식 6.67.0 Release](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v6.67.0)의 공개와 변경 설명도 대조했다. 이 결정은 초기 검증 후보의 조정이며 프로젝트 전체 안정성과 모든 Resource 조합의 검증 완료를 뜻하지 않는다.
+**상태는 CONFIRMED DECISION이다.** 2026-10-01 AWS Provider 초기 후보 권고안이 채택됐다. 현재 Source는 AWS Provider 6.67.0을 고정했고 팀원 bootstrap 성공 보고가 있다. [공식 6.67.0 Release](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v6.67.0)의 공개와 변경 설명도 대조했다. 이 결정은 초기 검증 후보의 조정이며 프로젝트 전체 안정성과 모든 Resource 조합의 검증 완료를 뜻하지 않는다.
 
 | 결정 기록 | 내용 |
 |---|---|
@@ -512,7 +512,7 @@ Source 정합 완료와 TF Role/State 복원/개인 작업 사본/실제 Plan·A
 
 ### 8.5 추가 demo2 관측·Argo·NetworkPolicy 검증 보고
 
-**자료 분류는 팀원이 수행한 OBSERVED EVIDENCE의 보고다.** 2026-10-01 사용자가 참고용으로 제공한 `OCP 실습 서버(demo2) 2차 사전 검증 작업 보고 - 2026/10/01` 원문을 읽었다. 보고는 최유준을 작업자로, 16:04~18:30 KST를 작업 시각으로 명시한다. 환경은 OCP 4.20.0, master 3/worker 2, GitOps Operator 1.22.0/Argo 3.5.3으로 보고됐다. 로그 08~33과 Manifest는 별도 보관 중이라는 설명이며 AI가 해당 원시 Log/Manifest나 Runtime을 조회한 것은 아니다. 원본 보고를 수정하지 않고 현재 판단에 필요한 결과와 인계만 반영한다.
+**자료 분류는 팀원이 수행한 OBSERVED EVIDENCE의 보고다.** 2026-10-01 참고 자료로 접수한 `OCP 실습 서버(demo2) 2차 사전 검증 작업 보고 - 2026/10/01` 원문을 읽었다. 보고는 최유준을 작업자로, 16:04~18:30 KST를 작업 시각으로 명시한다. 환경은 OCP 4.20.0, master 3/worker 2, GitOps Operator 1.22.0/Argo 3.5.3으로 보고됐다. 로그 08~33과 Manifest는 별도 보관 중이라는 설명이며 해당 원시 Log/Manifest나 Runtime을 독립 조회한 것은 아니다. 원본 보고를 수정하지 않고 현재 판단에 필요한 결과와 인계만 반영한다.
 
 이 보고의 작업자 확인은 이번 A/B/C 범위에 적용한다. 기존 Issue #1의 9항목/11건과 원래 미커밋 Overlay 작성자까지 모두 최유준으로 소급 확정하지 않는다. 사용 계정은 Token 계정이었다가 보호 kubeconfig로 교체했다는 보고이므로 실제 Principal·Token 회수와 파일 정리는 별도 검증 항목이다. 계정 관리/공유와 실제 수행자 기록은 §2.4에 연결한다. 접속 경로나 kubeconfig 값은 공개 문서에 복제하지 않는다.
 
@@ -565,7 +565,7 @@ Source 정합 완료와 TF Role/State 복원/개인 작업 사본/실제 Plan·A
 | 정확 버전 | Core 1.16.4/AWS 6.67.0 제약, Lock의 version/constraints 6.67.0 확인 | Controller 공용 설치/개인 호출 바이너리 확인. 버전 불일치를 개인 임의 설치/전체 업데이트로 해결하지 않음 |
 | 입력/기준 문서 | README의 03 기준·Root Ownership·제한된 비밀값 아닌 Output 파일 전달 정합 | 실제 추출/소비 코드·입력 개정/Account/Region/생성 시각 검사 구현은 후속 |
 | 팀 Runtime 보고 | [PR 검증 댓글](https://github.com/seokpan/seokpan-hybrid-infra/pull/11#issuecomment-5928927573)의 Core/Provider/init/No changes 출력, [Issue #10 후속](https://github.com/seokpan/seokpan-hybrid-infra/issues/10#issuecomment-5928992867)의 정규화 State 비교·구 key 삭제·잔여 Lock 없음·버저닝 보존 보고 | 해당 Root/조합 보고이며 네 사람/목적 Role/다른 Root/복원·동시 실행/Cost 전체 PASS가 아님. 실제 보호 State/Version/독립 사본과 재접속 결과 확인 |
-| Bootstrap apply 중지 해제 | 사용자 제공 공지는 일시 중지 해제와 지정 담당자만 apply 조건을 명시 | 기존 승인 Root 실행자 이유빈과 리뷰/Plan/Lock 인계 유지. 일반 팀원의 확인 절차는 init/plan이며 destroy 또는 Full Apply 준비 완료로 확대하지 않음 |
+| Bootstrap apply 중지 해제 | 접수된 공지는 일시 중지 해제와 지정 담당자만 apply 조건을 명시 | 기존 승인 Root 실행자 이유빈과 리뷰/Plan/Lock 인계 유지. 일반 팀원의 확인 절차는 init/plan이며 destroy 또는 Full Apply 준비 완료로 확대하지 않음 |
 
 **State 내용 비교와 식별정보의 차이를 함께 인계한다.** Issue #10은 구 Serial 2/새 Serial 1과 서로 다른 Lineage를 보고했다. 비교한 `version/terraform_version/outputs/resources`는 동일하고 새 key의 Plan은 No changes였다는 보고다. 이는 선택된 내용과 Plan 정합의 근거이며 전체 State 바이트/모든 메타데이터/이력 보존의 동일성을 뜻하지 않는다. 구 key는 삭제됐고 버저닝으로 이전 버전을 보존했다는 설명은 실제 Version ID·읽기/독립 사본/복원 시험과 별개다.
 

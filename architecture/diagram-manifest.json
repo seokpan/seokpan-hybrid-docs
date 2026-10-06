@@ -19,18 +19,18 @@
     },
     {
       "path": "design/03_DETAILED_DESIGN.md",
-      "sha256": "746f27f6a49b82ef17b9b15753ff15a8d4c2c969e4131471a1d8915d8df014d9"
+      "sha256": "099281cffca81c82308d15f36a135da6d473d0fc04b357da28ac73c24b253f12"
     },
     {
       "path": "design/04_IMPLEMENTATION_READINESS.md",
-      "sha256": "a7d5a374edd27fed92ef633aac74f15a5a515fd2491b5a55b2f0508f4557088d"
+      "sha256": "a99f974d7ca657421feb35323373ca5cb48887b98afc3ffabc3af45a55f07105"
     }
   ],
   "checks": {
     "svg_xml": 12,
     "png_decode": 12,
     "embedded_font_glyphs": 12,
-    "declared_geometry": 12,
+    "declared_geometry": 0,
     "approved_subnet_cidrs": 9,
     "source_identity": 5,
     "high_risk_text_pattern_matches": 0
@@ -497,6 +497,25 @@
       "visual_review": "NOT_ASSESSED_BY_THIS_SCRIPT",
       "runtime_validation": "NOT_ASSESSED_BY_THIS_SCRIPT",
       "note": "Asset/source provenance verification only; no deployment, compatibility, cost or recovery target-attainment test."
+    },
+    {
+      "date": "2026-10-07 KST",
+      "reference": "architecture/tools/verify_diagrams.py",
+      "mode": "build_layout",
+      "asset_checks": {
+        "svg_xml": 12,
+        "png_decode": 12,
+        "embedded_font_glyphs": 12,
+        "declared_geometry": 12,
+        "approved_subnet_cidrs": 9,
+        "source_identity": 5,
+        "high_risk_text_pattern_matches": 0
+      },
+      "source_identity": "SOURCE_IDENTITY_5_PASS",
+      "declared_geometry": "CHECKED_AGAINST_BUILD_LAYOUT",
+      "visual_review": "NOT_ASSESSED_BY_THIS_SCRIPT",
+      "runtime_validation": "NOT_ASSESSED_BY_THIS_SCRIPT",
+      "note": "Asset/source provenance verification only; no deployment, compatibility, cost or recovery target-attainment test."
     }
   ],
   "data_engine_followup": {
@@ -541,18 +560,18 @@
   "latest_check_scope": {
     "date": "2026-10-07 KST",
     "reference": "architecture/tools/verify_diagrams.py",
-    "mode": "build_layout",
+    "mode": "integrity_only",
     "asset_checks": {
       "svg_xml": 12,
       "png_decode": 12,
       "embedded_font_glyphs": 12,
-      "declared_geometry": 12,
+      "declared_geometry": 0,
       "approved_subnet_cidrs": 9,
       "source_identity": 5,
       "high_risk_text_pattern_matches": 0
     },
     "source_identity": "SOURCE_IDENTITY_5_PASS",
-    "declared_geometry": "CHECKED_AGAINST_BUILD_LAYOUT",
+    "declared_geometry": "SKIPPED_NO_BUILD_LAYOUT",
     "visual_review": "NOT_ASSESSED_BY_THIS_SCRIPT",
     "runtime_validation": "NOT_ASSESSED_BY_THIS_SCRIPT",
     "note": "Asset/source provenance verification only; no deployment, compatibility, cost or recovery target-attainment test."
@@ -561,6 +580,7 @@
     "date": "2026-10-07 KST",
     "scope": "Merged #64/#67 recheck; independent current guidance; diagram04 Source path/port caption correction",
     "runtime_validation": "NOT_PERFORMED",
-    "svg_png_policy": "Only diagram04 is regenerated; other eleven pairs and historical Run payloads retained"
+    "svg_png_policy": "Only diagram04 is regenerated; other eleven pairs and historical Run payloads retained",
+    "writing_scope": "Objective approval, supplied evidence and historical execution descriptions; no runtime results or design requirements changed."
   }
 }
