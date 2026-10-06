@@ -741,6 +741,24 @@ ZIP의 2026-09-29 기록은 승인00 §30.1/03 §3-B의 기존 PoC를 설명하�
 
 **아직 하지 않은 것.** 구조 전환과 PR, bootstrap 권한 반영, 실제 plan·apply, Redis 7.1과 App Driver 호환 확인(정태훈)이 남아 있다. validate와 조회는 코드와 생성 가능 조합의 확인이며, 권한·생성·접속 시험의 결과가 아니다.
 
+### 8.9 TF 실행 Role 남은 시험과 Infra #10 종료
+
+2026-10-06 [Infra #10](https://github.com/seokpan/seokpan-hybrid-infra/issues/10)의 마지막 체크 항목(다른 Key 접근 실패·Lock 충돌·Caller 확인)을 마무리하고 닫았다. 배정 실행자는 이유빈(bootstrap), 실제 작업자는 김상희다(04 문서 2.4절). 함께 열려 있던 [Infra #13](https://github.com/seokpan/seokpan-hybrid-infra/issues/13)은 10-02에 이미 닫혀 있었다.
+
+다른 Key 접근 실패와 Caller 확인은 [PR #12 검증 코멘트](https://github.com/seokpan/seokpan-hybrid-infra/pull/12#issuecomment-5930110859)의 Role별 거부·실행 주체 결과를 근거로 했다. 직접 시험한 기록이 없던 Lock 충돌만 새로 확인했다.
+
+| 순서 | 기대 | 결과 |
+| --- | --- | --- |
+| bootstrap 세션 1의 `terraform console` 중 세션 2 plan | Lock 오류 | plan 성공 — `console`은 State Lock을 잡지 않아 시험 방법으로 맞지 않음 |
+| 저장소 밖 probe Root(`phase2/foundation/_probe/`, 120초 대기)를 foundation 세션 1에서 apply | Lock 보유 | 2분간 생성 중 |
+| foundation 세션 2의 `terraform plan -lock-timeout=0s` | Lock 오류로 중단 | `Error acquiring the state lock` (S3 PutObject 412) |
+| 세션 1 apply 완료 후 세션 2 plan | No changes | 확인 |
+| 정리 | probe 자원·객체 모든 Version 삭제 | personal 세션으로 삭제, 로컬 디렉터리 삭제 |
+
+S3 lockfile은 `.tflock` 파일을 "없을 때만 생성"하는 조건부 쓰기로 만들기 때문에, 두 번째 쓰기가 412로 거부되는 것이 Lock 동작이다. Lock 정보의 보유자(`Who`)는 IAM 주체가 아니라 OS 사용자와 호스트로 표시된다. 공용 controller에서는 리눅스 계정 이름으로 보유자를 구분한다. foundation·rosa Role의 init에는 README backend 템플릿처럼 `workspace_key_prefix`가 필요하다는 점도 다시 확인했다.
+
+State Lineage·Serial 차이의 원인과 내용 동일성은 [첫 코멘트](https://github.com/seokpan/seokpan-hybrid-infra/issues/10#issuecomment-5928992867)에 남아 있다. 이후 State 판단은 04 문서 8.6절 기준 bootstrap 실행 담당(이유빈) 범위로 넘겼다. 이번 시험은 Backend Lock 동작의 확인이며 foundation·rosa 서비스 권한이나 실제 자원 생성 결과가 아니다.
+
 <a id="recovery-objective-review-20261002"></a>
 ## 9 복구 예행과 목표 재검토 — 2026-10-02
 
@@ -1496,6 +1514,7 @@ ROSA 첫 Plan은 실제 VPC/Subnet6·공통 Role4/Operator Policy Map·Data SG2�
 - [x] 1차 MariaDB 읽기 전용 사전 점검과 데이터 이관 범위 결정(실제 데이터 논리 덤프) — 8.7절(1차 MariaDB 사전 점검과 데이터 이관 범위), Infra #17
 - [x] 실사용자 데이터 이관 여부 결정 — 그대로 이관, `login_id` 가명화 대안 사용 안 함, 취급 조건 유지 — Infra #17
 - [x] foundation Data 코드 초안·정적 검증과 foundation Role Data 권한 요청 — 8.8절(foundation Data 코드 초안과 Data 권한 요청), Infra #19
+- [x] TF 실행 Role 남은 Lock 충돌 시험과 Infra #10 종료 — 8.9절(TF 실행 Role 남은 시험과 Infra #10 종료)
 - [x] 복구 목표 피드백·특정 수치 우선 권고 수정과 기존 W04/T17/T18 예행/부담 판단 준비 — §9
 - [x] Run 시각 계산 보조 구현·합성 입력 검사 — §9.8, 실제 시험과 구분
 - [ ] 실제 백업 최신성·전체 복구 예행·팀 부담/비용과 목표 달성 검증 — §9, I03/I05/I07. 목표·주기·구조 선택은 03 §3-I.14.5에 완료한 설계안으로 연결
