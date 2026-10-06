@@ -763,6 +763,15 @@ State Lineage·Serial 차이의 원인과 내용 동일성은 [첫 코멘트](ht
 
 **2026-10-03 설계 우선순위 정정:** 이번 피드백의 목적과 대안 비교·수정 범위는 [03 §3-I.14](../design/03_DETAILED_DESIGN.md#recovery-design-review-20261003)를 기준으로 읽는다. 이 절은 최소 예행의 기존 입력·측정·부담 비교를 지원한다. 02의 기존 1차 Redis 재사용 설명과 03의 좁게 읽힐 수 있는 RTO 경계는 설계 문서에서 바로잡는다. 아래 코드·검사·Cloud/ROSA 후속은 각 시점/범위의 기록이며 설계 재검토보다 우선하는 전체 구현 요구가 아니다.
 
+### 8.10 bootstrap Data 권한 PR (infra #19 / PR #34)
+
+- 일자: 2026-10-06 / 작성 김상희, bootstrap apply 이유빈 (04 §2.4)
+- 내용: foundation Role에 Data 계층(RDS · ElastiCache · Data SG · Backup 버킷 · Backup IAM User) 관리 권한 추가, Backup User 전용 Permissions Boundary를 bootstrap 소유로 추가
+- 결정: Backup User는 경로 없이 `seokpan-fnd-backup` (CI User와 통일)
+- 확인: plan 2 add · 1 change · 0 destroy. RDS · ElastiCache 서비스 연결 Role은 계정에 없음
+- 열린 항목: ① Network 권한 PR과 EC2 SG 범위 중복 여부(이유빈), ② apply 후 inline policy 합계 실측, ③ 첫 apply AccessDenied 발생 시 Action 보강
+- 증빙: PR #34, infra #19 코멘트
+
 ### 9.1 피드백·초기 재검토 기록과 현재 변경안 연결
 
 정태훈이 전달한 강사 피드백은 `architecture/exports/10-backup-offline-recovery.png`의 RTO 30분·RPO 90분이 사용자 관점에서 넓으며, RTO 5~10분 정도를 검토할 수 있다는 의견이다. RPO 수치나 일반 인터넷 사용자 전체의 복구를 필수로 확대한다는 결정은 전달되지 않았다. 분류는 **외부 피드백 / 목표 재검토 입력**이며 실제 성능 Evidence가 아니다.
