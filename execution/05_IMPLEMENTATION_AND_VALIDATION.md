@@ -7,7 +7,7 @@
 > **기간/한도:** 2026-09-28~2026-10-26, 10/16 Technical Freeze, $450 계획선+$50 여유=$500 한도
 > **공유와 종료:** 공유 반영은 [PR #5](https://github.com/seokpan/seokpan-hybrid-docs/pull/5)의 병합 Metadata로 확인한다. 변경은 Branch/PR에서 검토하고 개인별 읽기/쓰기 접근·실제 팀 도입은 별도 확인한다. 05 최종 종료는 구현·검증·정리 후다.
 
-**최신 출발점 — 2026-10-06 KST:** [Docs52](https://github.com/seokpan/seokpan-hybrid-docs/pull/52) main `d28c589f61c2500d54977d81b7c56f1c88052408` 병합·브랜치 삭제를 확인했고 C §8.9/§8.10·체크를 보존한다. D Image 제공·B 수락 대기는 해소됐으며 현재는 Lab/Recovery Digest Source 리뷰·실제 Secret/Data 최소 입력·수동 Sync/Run이 후속이다. [§9.36](#b-image-receipt-held-source-pullsecret-20261006)·실행판·학습 안내에 최신 수락 범위를 연결한다. 이전 Image/스캔 대기는 당시 이력이고 실제 OCP/Recovery/Cloud 전체 완료가 아니다.
+**최신 출발점 — 2026-10-06 KST:** GitOps13·Docs53/54와 C Docs58 병합 기록을 유지한다. D 개정 비용 원장을 수신해 독립 재계산했고 [§9.37](#b-cost-ledger-independent-audit-20261006)에 결과·남은 수식 보완·B/팀원 다음 행동을 연결한다. Lab/Recovery Image Source 병합은 완료, 실제 lab/Data 입력·활성화/Run은 대기다. C §8.9/§8.10/§8.11과 기존 체크·이력은 보존한다.
 
 **팀원이 시작할 위치:** [실행 안내](README.md)에서 읽는 순서를 확인하고, [공통 진행표](WORK_TRACKER.md)에 자기 작업과 입력 인계를 연결한다. [인계 양식](HANDOFF_TEMPLATE.md)은 해당 작업 Issue의 제출/확인 기록으로 사용한다. 실제 실행 결과는 [Evidence 안내](../evidence/README.md)의 Run별 양식으로 남긴다.
 
@@ -1662,3 +1662,37 @@ Image 제공·개정 수락과 Source 승인·병합 대기는 해소됐다. B�
 C [Infra34](https://github.com/seokpan/seokpan-hybrid-infra/pull/34)은 A 승인 뒤 main `0403c520c04bfd39d963b20df45271c855694728` 병합·브랜치 삭제됐다. [C 최초 Plan 보고](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6009072900)는 이력이다. [A 최종 Data 권한 Apply 보고](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6009301576)의 2 added/0 changed/0 destroyed·재Plan No changes·inline 7878/10240을 수신해 A Data Apply 대기는 해소됐다. 최초 CreatePolicy AccessDenied 후 새 bootstrap 세션의 재Plan/Apply 정상 완료는 해당 보고의 이력으로 유지한다. A Network33은 Draft·실제 출력 미수락이고 C Data Root 통합/실제 SG2도 대기다. B 목적 Role/Caller/rosa Backend·지원/비용·실제 전체 Plan/ROSA 생성은 별도 미수락이다.
 
 기존 GitOps39검사/Render8·artifact10/13 00:09:31 KST의 수신/보존 조건은 당시 자료의 기준이다. 새 Source 검사/Render는 해당 PR의 결과로 별도 기록하며 실제 Run 완료와 구분한다. TH81/완료2·모든 체크·C §8.9/§8.10·담당·목표 창/$450/$500·보존/정리 조건은 유지한다. 이번 본인 PC/Controller·Registry 원문 조회·OCP/AWS API·Sync·Plan/Apply·STS·DDL·전체 T18은 실행하지 않았다.
+
+
+<a id="b-cost-ledger-independent-audit-20261006"></a>
+
+### 9.37. 개정 Cost Ledger 독립 재계산·B 비용 입력과 팀 공급 구분 — 2026-10-06 KST
+
+**원 기록:** [B 실행 원본 Infra #25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25) → [D 비용 원본 Docs #43](https://github.com/seokpan/seokpan-hybrid-docs/issues/43). 제공 파일 `Cost_Gate_Ledger_I07(1).xlsx`의 SHA256은 `970e4f4206f2f17fcdf0cd7eb33748e971b226dff861468e3adf7b4ccd4b9104`다. 원본을 변경하지 않고 복사본3시트·60수식을 LibreOfficeDev26.8 실제 계산 엔진으로 재계산했다. 원본 저장값60개 일치·계산 오류0, 합성18시나리오/56개 기대값 대조다. 합성 결과는 실제 예산·가동 계획이 아니다.
+
+| 확인 범위 | 결과·남은 조치 |
+| --- | --- |
+| 기간/Credit 보완 | 시간·월기간 공란이면 비용 빈칸/미완. 합성24시간 IPv4 비용$0.48·완결, Credit$100을 넣어도 비용 차감 없음 |
+| 현재 파일 판정 | 미완19줄·그 밖 미확인5개·PARTIAL. 판정 B18~B20은 산출 보류이며 Cost PASS 아님 |
+| 입력 유효성 | 판정 B7/B11/B12의 `미확인` 글자가 빈칸 검사/N(text)=0을 통과해 합성 PASS 가능. 수량·단가·기간과 보조 비용에 숫자·비음수 검증 필요 |
+| 적용 Window 확인 | A8h·B공란도 P완결/PASS 가능. 실제 쓰는 각 창의 시간/잔존 수락을 확인하며 상시 K만 쓰는 행은 별도로 확인 |
+| 최대시간 B20 | Window의 비시간 비용(EBS/GB 등)을 빼지 않음. 합성 계획선$450·비시간$150·시간당$2에서225시간 표시, 해당 가정의 잔여시간은150시간 |
+| 합계/하한 표시 | Ledger O32·판정 B14/B15는 현재0을 계속 표시해 D의 산출 보류 설명과 다름. 미완 후보행도 O 비용에 포함될 수 있어 확정 하한이라는 명칭/범위 보완 필요 |
+
+**B 추가 입력1~6은 모두 유지한다.** 개정 원장의 B 범위는 **19~24행**이며 기존16~21행은 이전 원장 이력이다. 생성 전 예상과 생성 후 실목록을 나눠 적는다.
+
+| 내 일 B | 지금 제공할 범위 | 아직 확정할 수 없는 것 |
+| --- | --- | --- |
+| **1 CP/Infra** | [AWS 요금 페이지](https://aws.amazon.com/rosa/pricing/)의 예시 CP `m5.2xlarge`3×350GB·Infra `r5.xlarge`3×300GB를 견적 후보로 참고 | 실제 서비스 지원/지정 type·Volume·목록. 예시를 실구성 확정으로 사용하지 않음 |
+| **2 Worker disk** | [공식 Machine Pool 문서 §4.2.2](https://docs.redhat.com/en/documentation/red_hat_openshift_service_on_aws_classic_architecture/4/html/cluster_administration/managing-compute-nodes-using-machine-pools)의300GiB 기본값을 견적 후보로 참고 | Source `worker_disk_size_gib`는 default 없이 입력 필요·현재 미확인. 문서의4.14+ 128GiB~16TiB 범위도 선택4.20 patch·서울 계정 지원/비용과 별도 확인 |
+| **3 LB/IPv4** | [공식 환경 문서 §2.9](https://docs.redhat.com/en/documentation/red_hat_openshift_service_on_aws_classic_architecture/4/html-single/prepare_your_environment/index)의 NLB최대2·CLB최대2 범위를 구성 근거와 함께 견적 | 실제 유형·수량·IPv4 수·서울 단가는 미확인. 첫 Cost 전에 예상 입력, 생성 후 목록/잔존 개정 |
+| **4~5 Window/삭제** | A10/12~15·B10/19~21은 목표 창. 시작/종료·시간 합계·재시험과 중간/최종 Destroy·지연 잔존 예상 입력 | 실제 시각·횟수 미확인. 마지막 Cloud 시험/증거 보존 후 최종 삭제, 지연 Buffer는 D 전체 집계에 반영 |
+| **6 본인 가용성** | 10/12~26 가능한 시각·휴무를 본인이 확인해 별도 팀 실행 창 자료로 제공 | 실제 응답 전 미확인. 가용 시각을 Ledger 과금시간으로 복사하지 않음 |
+
+| 팀원 일·직접 연결 | 현재 상태·다음 수락 |
+| --- | --- |
+| **D 비용 원장** | 위 남은 수식 보완·개정 원장과 B/전원 입력을 재대조. 전체 비용/$450 계획선/$500 한도·Credit 확인·최종 Cost 판정은 D 집계 책임 유지 |
+| **A 기반 / C Data → B ROSA Plan** | A33은 Ready/062a371·태그·NAT 안전수칙 추가, NAT 기본false에서 운영 창 true의 기반 통신과 NAT3/EIP3 기간을 연계. 실출력 아님·B Source 수정 불필요. A36은 Draft Network IAM이며 ROSA account-wide/Worker ECR 제외. 실제 기반/공통 역할·C Data SG2와 B Caller/Backend·지원 수락 뒤 Plan |
+| **D/C lab → B OCP 활성화** | Image 제공/B 개정 수락·GitOps Source 병합은 완료. D Context/권한/Namespace/Owner·실제 Pull Secret, C/D Data/TLS/AUTH/Schema·필요 Migration 수락 뒤 별도 활성화/수동 Sync·Workload Pull/Ready/업무 시험 |
+
+**이번 학습:** 공란을0으로 계산하지 않는 보완과 전체 수식의 올바른 판정은 별도다. 최대시간에는 시간당비 밖의 비용도 포함한다. 지금은 비용 입력과 수식 보완을 진행하며 실제 OCP/AWS API·Plan/Apply·생성/삭제·전체 Recovery는 실행하지 않았다. 원본 체크·C §8.9/§8.10/§8.11·기존 실행/보존/종료 조건은 유지한다.

@@ -1,8 +1,8 @@
 # 정태훈 실행판 — 지금 할 일·입력 대기·OCP와 ROSA 수명
 
-> 기준 2026-10-06 KST: Docs47·C50의 최신 기록과 App8 기존 B 승인/병합·D 첫 Run 실패/비용 수신·단계별 ROSA 권한 준비를 현재 입력/행동에 연결한다. 승인 설계/역할/목표 창은 유지한다. 본인 환경·Cloud 실제 Run/지원·권한 확인 완료가 아니다.
+> 기준 2026-10-06 KST: 개정 비용 원장을 수신해 실제 계산 엔진으로 독립 재검증했다. 현재 PARTIAL과 남은 수식 보완을 원 Issue에 연결한다. 아래 #33 Draft/2a5 검토는 당시 이력이고 최신은 Ready/062a371이다. 실제 출력·가동 시각·본인 가용성은 미확인이다.
 
-**마지막 팀 변경:** **B Network 소비 검토:** A [Infra #33](https://github.com/seokpan/seokpan-hybrid-infra/pull/33) HEAD `2a5b05bb4b8e8903cfd359f1133c0d7df993d3f4`와 병합 rosa 소비 Source를 대조해 B 범위의 추가 필수 Source 수정 요청0을 [원 답변](https://github.com/seokpan/seokpan-hybrid-infra/pull/33#issuecomment-6008053282)에 남겼다. A의 [수신 답변](https://github.com/seokpan/seokpan-hybrid-infra/pull/33#issuecomment-6008091169)에서 제한 Public3/ROSA Private3·Account/Region·Code SHA/시각을 실제 공급에 반영하겠다는 범위 수신을 확인했다. 이 수신은 실제 값 공급/수락이 아니다. Public3/ROSA Private3 슬롯·CIDR·AZ 쌍과 출력 표현은 현재 계약으로 소비할 수 있다. PR은 A 소유 **Draft**이며 B 답변은 전체 승인/Ready 전환·실제 Output/Plan/Apply가 아니다. C/A의 공통 `onprem_job_host_cidrs` 선언 합의와 VPN ENI/반환 Route 후속은 해당 Data 접근/이전의 조건으로 유지한다. VPN·전체 Data 이전·Backup/OCP 정리를 B 첫 ROSA Plan의 일괄 조건으로 추가하지 않는다.
+**초기 Network 검토 이력:** **B Network 소비 검토:** A [Infra #33](https://github.com/seokpan/seokpan-hybrid-infra/pull/33) HEAD `2a5b05bb4b8e8903cfd359f1133c0d7df993d3f4`와 병합 rosa 소비 Source를 대조해 B 범위의 추가 필수 Source 수정 요청0을 [원 답변](https://github.com/seokpan/seokpan-hybrid-infra/pull/33#issuecomment-6008053282)에 남겼다. A의 [수신 답변](https://github.com/seokpan/seokpan-hybrid-infra/pull/33#issuecomment-6008091169)에서 제한 Public3/ROSA Private3·Account/Region·Code SHA/시각을 실제 공급에 반영하겠다는 범위 수신을 확인했다. 이 수신은 실제 값 공급/수락이 아니다. Public3/ROSA Private3 슬롯·CIDR·AZ 쌍과 출력 표현은 현재 계약으로 소비할 수 있다. PR은 A 소유 **Draft**이며 B 답변은 전체 승인/Ready 전환·실제 Output/Plan/Apply가 아니다. C/A의 공통 `onprem_job_host_cidrs` 선언 합의와 VPN ENI/반환 Route 후속은 해당 Data 접근/이전의 조건으로 유지한다. VPN·전체 Data 이전·Backup/OCP 정리를 B 첫 ROSA Plan의 일괄 조건으로 추가하지 않는다.
 
 ## 먼저 열 이슈와 기록 순서
 
@@ -48,13 +48,26 @@ TH17은 App4의 App/Pool, GitOps10의 선언/관측, Infra25의 ROSA/SG/재생�
 | --- | --- | --- |
 | App2/PR10 → GitOps10/5/6 | D Run3 SUCCESS·Final Digest·최신 Scan 보고 수신/B 개정 수락. Lab/Recovery held Source 연결 | Source 병합 완료. D Namespace Secret/Owner + C/D Data·Schema 준비 → B 활성화/수동 Sync → Workload Pull·Ready/Case |
 | rosa 목적 Role 수요·Infra20/25 | PR35 A 재승인·병합, 정상 Get/조건부 Update 수요 확정 | 첫 Plan용 조회·State 정책/Caller·Backend·필수 Output/SG2/지원 수락 → 첫 Plan. 생성/Update/삭제 검증·조건부 ListTags 호출/미발생 기록은 해당 단계 |
-| B Infra25 ↔ D Docs43 | D 수신·기간/Credit 수정 보고 확인. 새 xlsx 검증아님 | CP/Infra서비스구성·Worker disk·LB예상목록·예상/실제시간/삭제 입력. 가용성 별도실행창TBD |
+| B Infra25 ↔ D Docs43 | 개정 xlsx 수신·60수식/18시나리오 독립 재계산. 미완19·미확인5·PARTIAL 유지 | D 남은 수식 보완·재검증 + B 비용 입력1~6 준비. 예상/실제 구분, 본인 가용성은 별도 미확인 |
 
 **지금 확인할 결과:** Docs52·53 병합·브랜치 삭제, D Run3/Image·최종 스캔 정정 보고와 B 개정 수락을 확인했다. [GitOps PR #13](https://github.com/seokpan/seokpan-hybrid-gitops/pull/13)은 검토 HEAD `c798ed28d516533d5ffb984ad58332e3a5e5829d`의 [D 최신 승인](https://github.com/seokpan/seokpan-hybrid-gitops/pull/13#pullrequestreview-5424398322) 후 main `fc175a7002ad567e9d5206b6e4b6642e8416eea2`로 병합됐고 작업 브랜치 삭제를 확인했다. [Source CI #40](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37420661610)의 39개 검사 통과(skip0)는 기존 검증 결과이며 이번에 새 검사/실행을 추가하지 않았다. 이전 e757 승인 `DISMISSED`·c798 `blocked`/재검토 요청은 [보완 답변](https://github.com/seokpan/seokpan-hybrid-gitops/pull/13#issuecomment-6010256873) 당시 이력이고 현재 Source 승인·병합 대기는 해소됐다. [Docs #53](https://github.com/seokpan/seokpan-hybrid-docs/pull/53)도 main `17b601b1e4dc2db82efaf8e82df78a39ae9c1376`로 병합·브랜치 삭제됐다. Source 준비 완료와 실제 입력 공급·활성화·실행 수락은 별개다. 실제 OCP Workload Pull/Ready·Data/Migration/업무, Recovery Redis TLS/AUTH/Storage/임의 UID/T18, ROSA ECR·본인 Caller/Backend/Plan/Cost는 별도다. 기존 진단 자료/체크·C 기록은 유지한다.
 
+**이번 비용 점검 — 내 일과 팀원 일:** [05 §9.37](05_IMPLEMENTATION_AND_VALIDATION.md#b-cost-ledger-independent-audit-20261006)에서 수식 근거를 보고 [B 실행 원본 Infra #25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25) → [D 비용 원본 Docs #43](https://github.com/seokpan/seokpan-hybrid-docs/issues/43)로 진행한다. 개정 원장의 B 입력은 **19~24행**이며 이전16~21행 안내는 구원장 이력이다.
+
+| 구분 | 지금 할 일 | 직접 기다리는 것 |
+| --- | --- | --- |
+| **내 일 B** | 서비스 지원/예상 구성·Worker disk·LB/IPv4 견적 입력1~3, Window/재시험/삭제 예상4~5, 본인 가용성6 확인 | 실제 사양·시간은 미확인. 후보·예시를 확정으로 채우지 않음 |
+| **팀원 D** | Docs43에서 미확인 글자/음수 검증, 최대시간의 비시간 비용, 합계·하한 표시 보완 | 이번 감사 답변을 반영한 개정 원장·전체 비용 판정 |
+| **팀원 A/C** | A 실제 기반/공통 역할, C 실제 Data SG2 공급 | #33 Ready/062a371은 Source 상태. 실제 출력 미수락, #36 Draft는 Network IAM이며 ROSA account-wide/Worker ECR 제외 |
+| **생성 후 B/D** | 실제 목록·가동/삭제 완료·잔존으로 예측을 개정 | 생성 전 실제 목록을 요구하지 않으며 유료 생성은 Plan·비용·실행 창 수락 뒤 |
+
+**핵심:** 기간 공란을0으로 계산하는 문제는 보완됐지만 전체 판정 수식에는 남은 문제가 있다. 현재 비용 PASS·유료 실행 허용으로 읽지 않는다. #33의 NAT 기본false와 운영 창의 NAT3/EIP3 기간은 통신·비용 계획에 함께 반영하며 B Source 추가 변경은 필요하지 않다.
+
 **보고 형식 유지:** 목적·저장소/파일·이번 결과/한계·관련자/연계·막힌 직접 입력·핵심 동작·B 다음 행동을 짧은 카드/표로 함께 설명한다. 상단 전체 현황·하단 전체 남은 작업을 유지하며 첫 회 전체 개요는 반복하지 않는다.
 
-**최신 수신 자료:** [병합 main Native Run 37330480298](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37330480298)의 정확 main39 PASS·Source clean과 artifact11353184732의 11파일/YAML8 Hash·main/Tree·보류·Secret0 검증을 완료했다. `ocp-source-handoff-6ea2d9a90ab7c58803767220abf956d3c1b54a5f`를 **10/13 00:09:31 KST** 만료 전 별도 보존·수신하며 원 제출/요청은 [원 댓글](https://github.com/seokpan/seokpan-hybrid-gitops/pull/12#issuecomment-5998279839)이다. 이전60bda/10/12 안내는 당시 이력이다.
+**이전 #12 인계 자료:** [병합 main Native Run 37330480298](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37330480298)의 정확 main39 PASS·Source clean과 artifact11353184732의 11파일/YAML8 Hash·main/Tree·보류·Secret0 검증을 완료했다. `ocp-source-handoff-6ea2d9a90ab7c58803767220abf956d3c1b54a5f`를 **10/13 00:09:31 KST** 만료 전 별도 보존·수신하며 원 제출/요청은 [원 댓글](https://github.com/seokpan/seokpan-hybrid-gitops/pull/12#issuecomment-5998279839)이다. 이전60bda/10/12 안내는 당시 이력이다.
+
+**현행 Image Source의 기존 검증:** [Native #40](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37420661610)의 39 PASS(skip0)와 artifact `11392428533`의 Render8/Hash 대조는 기존 확인 결과다. 해당 자료 만료는 **10/13 14:52:05 KST**다. 이번 비용 감사에서 새 Render/다운로드나 Runtime 시험을 수행한 것은 아니다.
 
 <details>
 <summary>이전 Source 리뷰·수락 판단 — 병합 전 관측 이력</summary>

@@ -1,16 +1,18 @@
 # Work and Input Tracker
 
-**최신 출발점 — 2026-10-06 KST:** [Docs52](https://github.com/seokpan/seokpan-hybrid-docs/pull/52) main `d28c589f61c2500d54977d81b7c56f1c88052408` 병합·브랜치 삭제를 확인했고 C §8.9/§8.10·체크를 보존한다. D Image 제공·B 수락 대기는 해소됐으며 현재는 Lab/Recovery Digest Source 리뷰·실제 Secret/Data 최소 입력·수동 Sync/Run이 후속이다. [05 §9.36](05_IMPLEMENTATION_AND_VALIDATION.md#b-image-receipt-held-source-pullsecret-20261006)·실행판·학습 안내에 최신 수락 범위를 연결한다. 이전 Image/스캔 대기는 당시 이력이고 실제 OCP/Recovery/Cloud 전체 완료가 아니다.
+**최신 출발점 — 2026-10-06 KST:** D 개정 비용 원장의 독립 재계산 결과는 [05 §9.37](05_IMPLEMENTATION_AND_VALIDATION.md#b-cost-ledger-independent-audit-20261006)·실행판·학습 §5.9를 따른다. GitOps13·Docs53/54·C Docs58 병합과 Image 수락은 유지한다. 현재 비용 PARTIAL·수식 보완과 실제 lab/ROSA 입력 수락이 후속이다. 기존 날짜별 기록·C §8.9/§8.10/§8.11·체크를 보존한다.
 
 | 이번 완료한 준비/검사 | 현재 직접 대기 | 다음 담당/실행 |
 | --- | --- | --- |
-| App8 기존 B 승인·병합/브랜치 삭제, 독립 lock3필드/consumer3 semver 대조 | D App7 첫 Run audit 실패 후 프로젝트 npm12 재Run·실제 Image/metadata/Digest/Pull 미확인 | D 새 main 단계별 Run → B GitOps 동일 조합 수락/활성화·실제 OCP 시험 |
-| D 비용 수신·기간/Credit 수정 보고 확인 | 새 xlsx 미수신/독립재검증아님. CP/Infra/LB 지원 예상구성·Worker disk·예상/실제시간과 가용시각 추가 입력 | B Infra25→D Docs43, 비용1~5 유지·예상→실제개정. 가용성은 실행창 별도 |
+| D Run3 Image 보고/B 개정 수락·GitOps13 승인/병합 | 실제 lab Owner/권한·Namespace Pull Secret·C/D Data/TLS/Schema·필요 Migration 수락 | 팀원 D/C 공급 → 내 일 B 활성화·수동 Sync → 실제 Workload Pull/Ready/업무 시험 |
+| D 개정 xlsx 수신·60수식/18시나리오 독립 재계산 | 미완19·미확인5·PARTIAL. 입력 검증·최대시간 비시간 비용·합계/하한 표시 보완 | 내 일 B: 개정19~24행 입력1~6 / 팀원 D: 수식·전체 비용 / 생성 후 B/D: 실제 목록·기간 개정 |
 | rosa 단계별 목적 권한 수요 Source | 자기State 접근≠서비스 권한. 실효 정책/목적 Caller/Backend/Plan 미확인 | A bootstrap/Infra20 리뷰·적용 → B Infra25 단계별 수락. C34 Data 범위 별도 |
 
-**학습 핵심:** 파일의 Replica0는 희망 상태이며 지금 서버의 Pod0개 관측이 아니다. 보류 Guard의 거부는 진단 자료를 실행본으로 쓰지 않게 하는 결과다. 이번 안내는 현재 변경만 설명하고 이전 전체 개요는 가이드에 남긴다. 현재 서버/Cloud/Registry API나 본인 PC를 조회하지 않았다. ZIP 수신·보존과 새 Image/lab/Data/Migration 수락·Runtime 결과가 후속 기록에서 확인되지 않는다는 뜻이며 실제 자원/입력의 부재를 판정한 것이 아니다. 새 OCP Sync·Cloud Plan/Apply·STS·DDL·전체 Recovery는 미실행이다. 기존 TH81/완료2·Source Native39 PASS·기간/비용/보존 기준은 유지한다. 아래 접힌 내용과 날짜별 표는 당시 관측 이력이다.
+**학습 핵심:** 비용은 수량×단가×과금기간이다. 실제 가용 시각과 과금시간을 나누고 최대시간은 비시간 비용·Buffer를 포함해 산정한다. Image/Source 수락과 실제 실행은 별도다. A33 Ready/062a371·A36 Draft는 Source 상태이며 실출력/ROSA 전체 권한 수락이 아니다. 기존 TH81/완료2·Source Native39 PASS·체크·기간/비용/보존 기준은 유지하며 이번 OCP Sync·Cloud Plan/Apply·전체 Recovery는 미실행이다. 아래 접힌 내용과 날짜별 표는 당시 관측 이력이다.
 
-**최신 수신 자료:** [병합 main Native Run 37330480298](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37330480298)의 정확 main39 PASS·Source clean, `ocp-source-handoff-6ea2d9a90ab7c58803767220abf956d3c1b54a5f` artifact11353184732의 다운로드/11파일·YAML8 SHA/바이트/inventory·main/Tree/보류·Secret0 검증을 완료했다. 만료는 **10/13 00:09:31 KST**며 원 제출/입력 요청은 [원 댓글](https://github.com/seokpan/seokpan-hybrid-gitops/pull/12#issuecomment-5998279839)이다. 이전60bda/10/12 안내와 구분한다.
+**이전 #12 인계 자료:** [병합 main Native Run 37330480298](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37330480298)의 정확 main39 PASS·Source clean, `ocp-source-handoff-6ea2d9a90ab7c58803767220abf956d3c1b54a5f` artifact11353184732의 다운로드/11파일·YAML8 SHA/바이트/inventory·main/Tree/보류·Secret0 검증을 완료했다. 만료는 **10/13 00:09:31 KST**며 원 제출/입력 요청은 [원 댓글](https://github.com/seokpan/seokpan-hybrid-gitops/pull/12#issuecomment-5998279839)이다. 이전60bda/10/12 안내와 구분한다.
+
+**현행 Image Source의 기존 검증:** [Native #40](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37420661610)의 39 PASS(skip0)와 artifact `11392428533`의 Render8/Hash 대조는 기존 확인 결과다. 해당 자료 만료는 **10/13 14:52:05 KST**다. 이번 비용 감사에서 새 Render/다운로드나 Runtime 시험을 수행한 것은 아니다.
 
 <details>
 <summary>이전 상단 안내 — 시점별 관측 이력</summary>
@@ -568,3 +570,6 @@ C의 1→2→3 Replica 비차단 제안은 기존 단일 Replica 실측→다중
 
 
 **최신 직접 대기 — D Image 수락 후:** Image 제공·개정 수락과 Source 승인·병합 대기는 해소됐다. B는 이제 D와 대상 Namespace의 실제 Pull Secret 공급·Context·권한·단일 Owner, C/D Data·CA/TLS/AUTH·Schema/필요 Migration 준비를 수락한다. 그 뒤 별도 활성화 개정·필요 단일 Migration·수동 Sync를 수행하며 해당 Job/Pod의 Workload Pull·Ready/FE/API/WSS/대표 업무 Case를 같은 조합으로 확인한다. 선언의 Digest/Secret 이름만으로 실제 실행을 완료 처리하지 않는다. C [Infra34](https://github.com/seokpan/seokpan-hybrid-infra/pull/34)은 A 승인 뒤 main `0403c520c04bfd39d963b20df45271c855694728` 병합·브랜치 삭제됐다. [C 최초 Plan 보고](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6009072900)는 이력이다. [A 최종 Data 권한 Apply 보고](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6009301576)의 2 added/0 changed/0 destroyed·재Plan No changes·inline 7878/10240을 수신해 A Data Apply 대기는 해소됐다. 최초 CreatePolicy AccessDenied 후 새 bootstrap 세션의 재Plan/Apply 정상 완료는 해당 보고의 이력으로 유지한다. A Network33은 Draft·실제 출력 미수락이고 C Data Root 통합/실제 SG2도 대기다. B 목적 Role/Caller/rosa Backend·지원/비용·실제 전체 Plan/ROSA 생성은 별도 미수락이다. 상세 개정은 [05 §9.36](05_IMPLEMENTATION_AND_VALIDATION.md#b-image-receipt-held-source-pullsecret-20261006)·GitOps10/Infra25 원본을 따른다.
+
+
+**개정 원장 감사 연결 — 2026-10-06 KST:** [05 §9.37](05_IMPLEMENTATION_AND_VALIDATION.md#b-cost-ledger-independent-audit-20261006) → [B 실행 원본 Infra #25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25) → [D 비용 원본 Docs #43](https://github.com/seokpan/seokpan-hybrid-docs/issues/43). B 입력19~24행의 예상·실제는 분리하고 입력1~6은 제외하지 않는다. 이전 새xlsx 미수신·#33 Draft/2a5는 당시 이력이다. 새 원장 수신만으로 비용 PASS·실제 ROSA 생성으로 승격하지 않는다.
