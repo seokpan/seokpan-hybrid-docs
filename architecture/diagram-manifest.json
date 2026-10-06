@@ -15,22 +15,22 @@
     },
     {
       "path": "design/02_TARGET_ARCHITECTURE.md",
-      "sha256": "2bacd5627343a008f3b9dd5cdfd47c865c093abfcb585f00fab6b12ac932aa91"
+      "sha256": "87ad991c1af4ed139c420724d57f723ab33ff25725c3d405f53b07b66cef1835"
     },
     {
       "path": "design/03_DETAILED_DESIGN.md",
-      "sha256": "131385736ff3ad26843653ee1d16a81f376b9785d67ffcf46399e3fee8ea034d"
+      "sha256": "7196900ed401b3f2b800ccb68ff74a6bff455451b33d15cdf10fec04611ca91a"
     },
     {
       "path": "design/04_IMPLEMENTATION_READINESS.md",
-      "sha256": "ddbcf9740c215550ab4bb19f2077ba63bafb0b009acbc9881a9c6d38a9398973"
+      "sha256": "a7d5a374edd27fed92ef633aac74f15a5a515fd2491b5a55b2f0508f4557088d"
     }
   ],
   "checks": {
     "svg_xml": 12,
     "png_decode": 12,
     "embedded_font_glyphs": 12,
-    "declared_geometry": 12,
+    "declared_geometry": 0,
     "approved_subnet_cidrs": 9,
     "source_identity": 5,
     "high_risk_text_pattern_matches": 0
@@ -377,7 +377,7 @@
       "operating_portable_backup_interval_minutes": 15
     },
     "structure": "Cloud Primary plus On-Prem Backup/Restore; dedicated new isolated MariaDB and separate new Redis; no additional Warm Standby or continuous replication.",
-    "repository_application": "New design requirements apply when this Docs change is reviewed and merged to main; earlier 30/90/hourly baseline remains historical.",
+    "repository_application": "DR requirements adopted and merged through Docs PR #30 (ab116463fd1f1a75d54e734c3c1c99cd098f639d); earlier 30/90/hourly baseline is historical. This wording correction is not a new target approval or Runtime PASS.",
     "actual_partial_runs": [
       {
         "reference": "evidence/T18/fixture-20261005-01/summary.md",
@@ -468,20 +468,30 @@
       "asset_checks": "Current 12 diagram SVG/XML, PNG, embedded font, declared geometry and subnet checks passed in staging review; only diagram 10 content changed.",
       "source_identity": "SOURCE_IDENTITY_5_PASS",
       "note": "2026-10-05 KST final verification after frozen 03/04 and both manifests were resynchronized into staging: SVG XML 12, PNG decode 12, embedded font glyphs 12, declared geometry 12, approved subnet CIDRs 9, source identity 5 and high-risk text matches 0. Final source hashes match source_files: 03 1588d95a1a3b220e9b13192c13115034834fcc71a66badfb3db947668168f1b7 and 04 b104e8aa57233e1cfdb0027f4ec918e920999c1dd4395a3f8f8c277008afe1e7. Eleven unchanged diagrams retain their original bytes; no runtime or target-attainment validation."
+    },
+    {
+      "date": "2026-10-06 KST",
+      "reference": "design/03_DETAILED_DESIGN.md#data-engine-contract-20261006",
+      "asset_checks": "Current 12 SVG/XML, PNG decode, embedded fonts, declared geometry and subnet checks passed locally. Only diagram 01/02/04/12 engine target labels and matching PNG exports changed.",
+      "source_identity": "SOURCE_IDENTITY_5_PASS",
+      "visual_review": "Engine labels and layout visually inspected for current diagram 01/02/04/12 PNGs; existing Noto CJK KR and Inkscape renderer used.",
+      "unchanged_diagrams": "03/05/06/07/08/09/10/11 SVG and PNG byte/hash identities preserved.",
+      "runtime_validation": "NOT_RUN_FOR_VALKEY",
+      "note": "Asset integrity and target-label consistency only; no Data Source merge, Foundation Apply, App compatibility acceptance, Pool adoption, OCP/ROSA run or DR target attainment."
     }
   ],
   "data_engine_followup": {
     "date": "2026-10-06 KST",
-    "status": "TEAM_TARGET_SELECTED_SOURCE_IMPLEMENTATION_PENDING",
+    "status": "TEAM_TARGET_SELECTED_DATA_SOURCE_MERGED_RUNTIME_PENDING",
     "reference": "design/03_DETAILED_DESIGN.md#data-engine-contract-20261006",
-    "authority": "User-provided C Data contract v2.2, team Valkey 7.2 decision; Infra #19",
+    "authority": "C Data contract v2.2 and team Valkey 7.2 decision; Infra #19 and PR #37",
     "provided_contract": {
       "name": "data-contract-v2_2-20261006.md",
       "bytes": 31460,
       "sha256": "40f4480d3d6d40d932e0ca7c336c129985010429c6f4cab95de90a688954f509"
     },
     "target_engine": "ElastiCache Valkey 7.2; same Valkey 7.2 family for lab and Recovery",
-    "current_data_source_engine": "Redis OSS 7.1; C Data Root change pending",
+    "current_data_source_engine": "Valkey 7.2: Infra PR #37 merged at 2af2d61f6985ca15dbe8415c84712575f0e92aeb; actual creation and compatibility acceptance remain pending.",
     "runtime_validation": "NOT_RUN_FOR_VALKEY",
     "existing_redis_7_2_4_runs": "HISTORICAL_ONLY_NOT_VALKEY_ACCEPTANCE",
     "pool_proposal": "NOT_ADOPTED; measured connections, terminating Pod overlap and load require B/C decision",
@@ -510,13 +520,29 @@
     ]
   },
   "latest_check_scope": {
-    "date": "2026-10-06 KST",
-    "reference": "design/03_DETAILED_DESIGN.md#data-engine-contract-20261006",
-    "asset_checks": "Current 12 SVG/XML, PNG decode, embedded fonts, declared geometry and subnet checks passed locally. Only diagram 01/02/04/12 engine target labels and matching PNG exports changed.",
+    "date": "2026-10-07 KST",
+    "reference": "architecture/tools/verify_diagrams.py",
+    "mode": "integrity_only",
+    "asset_checks": {
+      "svg_xml": 12,
+      "png_decode": 12,
+      "embedded_font_glyphs": 12,
+      "declared_geometry": 0,
+      "approved_subnet_cidrs": 9,
+      "source_identity": 5,
+      "high_risk_text_pattern_matches": 0
+    },
     "source_identity": "SOURCE_IDENTITY_5_PASS",
-    "visual_review": "Engine labels and layout visually inspected for current diagram 01/02/04/12 PNGs; existing Noto CJK KR and Inkscape renderer used.",
-    "unchanged_diagrams": "03/05/06/07/08/09/10/11 SVG and PNG byte/hash identities preserved.",
-    "runtime_validation": "NOT_RUN_FOR_VALKEY",
-    "note": "Asset integrity and target-label consistency only; no Data Source merge, Foundation Apply, App compatibility acceptance, Pool adoption, OCP/ROSA run or DR target attainment."
+    "declared_geometry": "SKIPPED_NO_BUILD_LAYOUT",
+    "visual_review": "NOT_ASSESSED_BY_THIS_SCRIPT",
+    "runtime_validation": "NOT_ASSESSED_BY_THIS_SCRIPT",
+    "note": "Asset/source provenance verification only; no deployment, compatibility, cost or recovery target-attainment test."
+  },
+  "consistency_revision": {
+    "date": "2026-10-07 KST",
+    "scope": "Current DR decision wording and Data Source status; no new architecture, limits, Runtime result or historical test rewrite.",
+    "source_reference": "Docs #21; GitOps #17; Infra #19/PR #37",
+    "runtime_validation": "NOT_PERFORMED",
+    "svg_png_policy": "Preserve all 12 existing SVG/PNG byte identities; regenerate provenance only after verification."
   }
 }

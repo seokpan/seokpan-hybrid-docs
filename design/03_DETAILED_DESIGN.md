@@ -1,16 +1,16 @@
 # 石나가는 판단 2차 프로젝트 03 상세설계
 
-> **프로젝트 단계:** 03 상세설계 승인 완료 / 실제 구현 준비  
-> **기준일:** 2026-10-01 KST  
-> **상태:** CONFIRMED DESIGN — 03 전체·개정 지침 사용자 최종 컨펌, 프로젝트 소스 등록 완료(사용자 확인). 실제 구현 준비 중  
+> **문서 단계:** 03 상세설계 승인 완료 / 후속 05 구현·검증의 설계 기준  
+> **기준일:** 최초 2026-10-01 KST / 설계 정합성 개정 2026-10-07 KST  
+> **상태:** CONFIRMED DESIGN — 2026-10-01 상세설계 승인, 2026-10-05 DR 목표·주기 및 2026-10-06 Valkey 선택 반영. 실제 구현·시험 결과는 05와 원 Issue·PR·Run에서 관리  
 > **상위 기준:** `01_PROJECT_CHARTER.md`, `02_TARGET_ARCHITECTURE.md`, `PROJECT_INSTRUCTIONS.md` 및 사용자의 최신 명시적 결정  
 > **기간 / AWS 지원 한도:** 2026-09-28~2026-10-26 / $500
 
-> **2026-10-05 DR 설계 변경 후보:** [§3-I.14.5](#recovery-design-decision-20261005)의 선택은 **RTO10분·영속 DB RPO30분·운영 중 Portable Backup15분, 기존 Backup/Restore 구조 유지**다. 이번 변경본의 현재 DR 계약은 이 후보에 정합화하고, 과거 승인/관측은 해당 시점의 이력으로 보존한다. 이 개정이 main에 병합되면10분/30분/15분이 새 공식 설계로 전환되며, 그 전 공식 main 기준은30분/90분/1시간이다. 새 수치의 실제 달성·전체 T18은 NOT RUN이며 05 전체/ROSA 완료를 설계 후보 정리의 선행조건으로 두지 않는다.
+> **현재 DR 설계 기준:** [§3-I.14.5](#recovery-design-decision-20261005)의 **RTO 10분·영속 DB RPO 30분·DB 운영 중 Portable Backup 15분 계획 주기, 기존 Backup/Restore 구조 유지**를 적용한다. [PR #30](https://github.com/seokpan/seokpan-hybrid-docs/pull/30)은 main에 병합됐으며 30분/90분/1시간은 이전 승인 이력이다. 설계 선택과 실제 운영 달성은 별개다. 전체 T18은 미검증이며 05/ROSA 전체 완료를 설계 선택의 선행조건으로 두지 않는다.
 
 이 문서는 프로젝트 03 상세설계 전체를 담은 단일 문서다. Repository·Network·IAM/Secret·Migration/Data·서비스 규약·Terraform/GitOps·시험/Evidence·WBS/비용과 통합 검토 결과를 포함한다. 세부 절차·비교 근거·검증 조건은 각 분야 절에 유지하고 분야 간 참조를 같은 문서의 절 번호로 연결했다.
 
-현재 진행 현황:
+설계 단계 진행 현황 — 실제 실행 상태는 05와 원 작업 참조:
 
 - [x] 3-A~3-E·3-F-1 승인된 작업 전제 문서화
 - [x] B01~B07 선택·대안·영향·구현 Gate 작성
@@ -23,13 +23,13 @@
 - [x] 최종 승인 상태 반영·프로젝트 소스 등록 완료 사용자 확인 — §3-I.12.4
 - [x] 추가 팀원 자료·Issue 결과의 범위 대조 및 구현 준비 인계 — §3-I.13
 - [x] 두 독립 부분 Run·고정 App Source와 제약 비교에 따른 DR 목표/주기/구조 변경 후보 정리 — §3-I.14.5
-- [ ] 변경 후보의 관련 Source·SVG/PNG·출처 정합 검증 및 PR 리뷰/병합, 실제 운영 경로 Acceptance는 별도
+- [x] DR 설계 요구 채택·PR #30 병합. 후속 문구·출처 정합성 보완과 실제 운영 경로 Acceptance는 별도
 - [ ] 실제 Seed·팀 배정·계정/도구/자산 Preflight 확인
 - [ ] 첫 Full Apply 전 Cost Baseline Gate 확인
 
 ## 문서의 승인 상태와 사용 범위
 
-3-A~3-E·3-F-1·B01~B07 작업 전제 승인을 거쳐, 2026-10-01 사용자가 제공한 두 문서 전체를 최종 컨펌하고 프로젝트 소스 등록 완료를 알렸다. 03 전체와 개정 지침은 승인된 설계 기준이다. 별도 변경·보류 범위가 제시되지 않아 두 문서 전체를 승인 범위로 기록한다. 실제 지원·입력·가격 확인과 구현/시험 완료는 이 승인에 포함된 결과가 아니다. 버전·규모는 실제 지원과 Source 검증을 전제로 한 초기 후보이고, 시험 수치는 승인된 프로젝트 목표다. 작업 전제 승인을 실제 확인·실행·시험 성공으로 기록하지 않는다.
+3-A~3-E·3-F-1·B01~B07 작업 전제 검토를 거쳐 2026-10-01 전체 상세설계와 프로젝트 지침이 승인됐다. 이후 DR 요구사항과 Data 엔진의 변경은 각 결정 기록에 연결한다. 실제 지원·입력·가격 확인 및 구현·시험 완료는 설계 승인과 구분한다. 버전·규모는 실제 지원과 Source 검증을 전제로 한 초기 후보이며, 시험 수치는 프로젝트 요구사항이다. 설계 승인을 실행·시험 성공으로 기록하지 않는다.
 
 실제 Source/Seed SHA·Account/Quota/지원 패치·Role/IDP/Secret 공급 값·로컬 자산·가격/Credit·자원/Pool 측정값은 구현 전에 확인한다. 미확인 입력을 임의 값이나 PASS로 대체하지 않는다. 문서 최종 확정 후에도 실제 지원·비용·Source 결과가 변경을 요구하면 그 영향과 재검증을 기록한다.
 
@@ -37,16 +37,16 @@
 
 | 범위 | 현재 상태 | 상세 위치 |
 |---|---|---|
-| Repository·Source | 3-A 승인·Repo Metadata 조회 완료. 개인별 권한/Branch 보호·Tree·Seed 확인 전 | 3-A·3-I.13 |
-| Network·IPAM·Hybrid | 3-B 작업 전제 승인, 실제 경로/Source/권한/복구 확인 전 | 3-B |
+| Repository·Source | 3-A 승인. 개인별 권한·Branch 보호·Tree·Seed의 실제 검증은 05와 원 작업에서 추적 | 3-A·3-I.13 |
+| Network·IPAM·Hybrid | 3-B 작업 전제 승인. 실제 경로·Source·권한·복구는 구현 검증 대상 | 3-B |
 | IAM·IDP·Secret | 3-C 작업 전제 승인. 사람 IAM User 4+Admin, CI/Backup 각 1, TF 목적 Role 별도 | 3-C |
-| Migration·Backup·Recovery Data | 3-D 기존 구조 승인 유지. 별도 새 Recovery Redis, 현재 변경 후보는 운영 중15분 Backup — 공식 main의 기존1시간과 구분 | 3-D·3-I.14.5 |
-| 서비스 연결·인증·업무 안전 | 3-E 작업 전제 승인, 실제 App 계약/Source·동작 확인 전 | 3-E |
+| Migration·Backup·Recovery Data | 3-D 기존 구조 승인 유지. 별도 새 Recovery Redis, 현재 계획 주기는 DB 운영 중15분 Backup — 이전1시간 승인 이력과 구분 | 3-D·3-I.14.5 |
+| 서비스 연결·인증·업무 안전 | 3-E 작업 전제 승인. 실제 App 계약·Source·동작 검증은 05에서 추적 | 3-E |
 | Root/State·제한 입력·GitOps 최초 설치 | 3-F-1 작업 전제 승인 | 3-F.2~7 |
-| 버전·Backend·Runtime Pull·배포·Replica | B01~B05 작업 전제 승인, 실제 지원·Source·코드/동작 확인 전 | 3-F.13~18 |
-| 시험/성능·복구 수치 | B06 기존 승인 이력 유지. DR만 현재 RTO10분/RPO30분 후보로 대체, 전체 Recovery/ROSA 최종 시험 NOT RUN | 3-G·3-I.13·3-I.14.5 |
-| 작업 트랙·Window·$450 계획선/$50 여유 | B07 작업 전제 승인. 실제 담당/가동시간·비용 미확인, $500 한도·Cost Gate 유지 | 3-H |
-| 전체03 | 사용자 전체 최종 컨펌·소스 등록 완료 사용자 확인, 실제 구현 준비 | 3-I |
+| 버전·Backend·Runtime Pull·배포·Replica | B01~B05 작업 전제 승인. 실제 지원·Source·코드/동작은 구현 단계에서 확인 | 3-F.13~18 |
+| 시험/성능·복구 수치 | B06 기존 승인 이력 유지. DR은 현재 RTO10분/RPO30분으로 변경, 전체 Recovery/ROSA 최종 시험 NOT RUN | 3-G·3-I.13·3-I.14.5 |
+| 작업 트랙·Window·$450 계획선/$50 여유 | B07 작업 전제 승인. 실제 담당은 04, 가동시간·비용은 05에서 추적. $500 한도·Cost Gate 유지 | 3-H |
+| 전체03 | 2026-10-01 설계 승인·03 종료 유지, 구현 진행은 05에서 관리 | 3-I |
 
 ## 상세설계 목차
 
@@ -591,7 +591,7 @@ AWS Gateway는 AZ-A에 고정 Private IP를 가진 전용 ENI를 보존해 같�
 5. AWS EIP Association과 사설 Route Target ENI를 각각 확인한다. EIP가 같아도 ENI가 새로 생기면 Route 복구가 필요하다. On-Prem IP/Next Hop이 바뀌면 관련 vRouter도 반영한다.
 6. 새 Handshake 이후 승인된 Host에서 RDS FQDN 해석·TCP/TLS·권한 범위의 실제 작업을 확인한다. 원본 Source 수신 기록과 왕복 경로를 확보한다.
 7. 미승인 Host·미승인 Port의 새 접속이 차단되는지 재시험하고 독립 Cloud Runtime의 영향 유무를 기록한다. SG 변경 전 기존 연결이 남을 수 있으므로 신규 연결로도 확인한다.
-8. 이관/전송 작업을 Checkpoint 기준으로 재개하고 무결성·중복 실행 영향을 확인한다. 탐지·조치 시작·재기동/재구축·업무 재개 시간을 기록한다. Gateway 탐지·조치·업무 재개 시간을 §3-G.4.1/T14에 따라 측정하고 반복/재시험 조건을 실행 Case에 기록한다. 승인된 별도 Gateway MTTR 수치는 없으며 현재 변경 후보의 Offline RTO10분을 Gateway MTTR에 대입하지 않는다. 측정 전 달성값을 주장하지 않는다.
+8. 이관/전송 작업을 Checkpoint 기준으로 재개하고 무결성·중복 실행 영향을 확인한다. 탐지·조치 시작·재기동/재구축·업무 재개 시간을 기록한다. Gateway 탐지·조치·업무 재개 시간을 §3-G.4.1/T14에 따라 측정하고 반복/재시험 조건을 실행 Case에 기록한다. 승인된 별도 Gateway MTTR 수치는 없으며 현재 설계의 Offline RTO10분을 Gateway MTTR에 대입하지 않는다. 측정 전 달성값을 주장하지 않는다.
 
 Gateway 손상과 AWS 전체 장애의 복구는 다르다. AWS 장애 선언 후 On-Prem 서비스 복구는 이미 로컬에 확보한 Backup/이미지/설정/Secret을 사용하며 Tunnel·S3·AWS DNS 조회 성공을 대기하지 않는다.
 
@@ -1258,7 +1258,7 @@ Evidence에는 시험 주체·대상 범위·기대한 결과·실제 결과·�
 
 ### 3-D.1. 기존 승인과 이번 설계 인계
 
-기존 승인 방향은 ROSA Classic Multi-AZ, RDS MariaDB Multi-AZ, ElastiCache Redis OSS Multi-AZ의 Cloud Primary다. On-Prem Jenkins를 유지하고 ECR을 Cloud 이미지 저장소로 사용하며 승인된 복구 Image·Portable Backup·설정·Secret을 장애 전에 On-Prem에 확보한다. On-Prem 복구는 DB 복원과 새 Redis Runtime을 사용한 서비스 복구이며 진행 중 Cloud Session/Room/Game의 무중단 승계를 주장하지 않는다.
+현재 승인 구조는 ROSA Classic Multi-AZ, RDS MariaDB Multi-AZ, ElastiCache Valkey 7.2 Multi-AZ의 Cloud Primary다. On-Prem Jenkins를 유지하고 ECR을 Cloud 이미지 저장소로 사용하며 승인된 복구 Image·Portable Backup·설정·Secret을 장애 전에 On-Prem에 확보한다. On-Prem 복구는 DB 복원과 새 Redis Runtime을 사용한 서비스 복구이며 진행 중 Cloud Session/Room/Game의 무중단 승계를 주장하지 않는다.
 
 3-A의 네 개 2차 저장소·1차 보존·Application 이력 보존 및 Seed 정책은 재승인 대상이 아니다. 3-C의 개인 IAM User 4개 + AdministratorAccess, 제한된 ECR CI User Key, ROSA IDP/RBAC, SOPS + age 및 담당자 공급 절차도 후속 설계의 입력으로 유지한다.
 
@@ -1380,12 +1380,12 @@ Release 기록에는 App Commit·FE/BE Image Digest·GitOps Commit·DB 구조 �
 | 1 | App 실행·구조 변경/가져오기·백업 읽기·로컬 복원 SQL 계정을 목적별로 분리 | 일반 Backend와 주기 백업이 DB 관리자 권한으로 실행되지 않도록 함. DB 관리 계정은 초기 사용자 준비·필요한 관리 작업에만 사용 |
 | 2 | On-Prem 전용 Data 작업 VM에서 이전·주기 백업을 실행하고 `systemd timer`로 예약 | ROSA 삭제와 작업 실행을 분리하고 추가 Cloud 작업 서버를 기본 구성에 넣지 않음. RDS는 VPN 사설 경로·TLS, S3는 Internet HTTPS로 연결 |
 | 3 | 호환성을 확인한 `mariadb-dump` / `mariadb`로 앱 DB 논리 복사, InnoDB에는 `--single-transaction --quick` 우선 적용 | 도구·옵션은 Source/Target/복구 DB와 함께 시험 후 고정. 덤프 중 DDL을 제한하며 혼합 Storage Engine에는 동일한 일관성을 주장하지 않음 |
-| 4 | 압축·age 암호화한 Portable Backup을 S3와 장애 전 On-Prem Recovery Storage에 보관, 현재 변경 후보는 운영 중15분 주기·일반 사본7일 보관 — §3-I.14.5 | S3 업로드 후 복구 저장소로 다운로드·무결성 확인해 상위 경로 유지. 마지막 복원 검증 사본은 일반 정리 제외. 기존2026-10-01의1시간 승인 이력과 새 후보/실제 달성 구분 |
-| 5 | Cloud Redis는 TLS + AUTH Token + Primary Endpoint를 사용하고 로컬 복구는 별도 Redis Runtime으로 시작 | 기존 node-based Redis OSS·cluster mode disabled 선택에 맞춰 단순한 접속 방식을 적용. 재로그인·연결 재생성·중복 쓰기 방지 규약은 App 설계에 연결 |
+| 4 | 압축·age 암호화한 Portable Backup을 S3와 장애 전 On-Prem Recovery Storage에 보관, 현재 설계는 DB 운영 중15분 계획 주기·일반 사본7일 보관 — §3-I.14.5 | S3 업로드 후 복구 저장소로 다운로드·무결성 확인해 상위 경로 유지. 마지막 복원 검증 사본은 일반 정리 제외. 기존2026-10-01의1시간 승인 이력과 현재 설계/실제 달성 구분 |
+| 5 | Cloud Redis는 TLS + AUTH Token + Primary Endpoint를 사용하고 로컬 복구는 별도 Redis Runtime으로 시작 | node-based Valkey 7.2·cluster mode disabled 선택에 맞춰 단순한 접속 방식을 적용. 재로그인·연결 재생성·중복 쓰기 방지 규약은 App 설계에 연결 |
 
 위 다섯 가지는 2026-10-01 사용자 동의로 후속 설계를 위한 작업 전제가 되었다. 결정 기록은 `PH2-3D-DATA-BACKUP-CONNECTION`으로 연결한다. 실제 계정 생성·VM 구성·백업 실행·Redis 설정을 완료했다고 기록하지 않는다. 03 전체 최종 검토 전까지 변경 가능한 작업 전제로 관리한다. 이하 제안 시점 표현은 승인된 설계 선택으로 해석하며 실제 입력·구현·시험은 별도 상태로 추적한다.
 
-이 표의 Backup 주기는 §3-I.14.5의2026-10-05 변경 후보로15분에 정합화했다. 당시1시간에 대한 사용자 승인과 현재15분 후보를 같은 승인으로 간주하지 않으며, 새로운 Acceptance는 해당 개정의 리뷰/채택 후 적용한다.
+이 표의 Backup 계획 주기는 §3-I.14.5의 2026-10-05 결정에 따라 15분이다. 이전 1시간은 당시 승인 이력으로 보존한다. PR #30의 병합으로 새 설계가 적용됐으며 실제 운영 주기·성공 간격·복구 최신성은 별도 시험으로 확인한다.
 
 #### 3-D.9.2 SQL 계정과 인증의 책임
 
@@ -1465,7 +1465,7 @@ Backup 기록에는 실제 Secret 값이나 행 내용을 넣지 않는다. 최�
 
 | 항목 | 초기 제안 | 확인 / 재검토 조건 |
 |---|---|---|
-| 예약 실행 | 변경 후보: DB 운영 Window 중15분마다, `systemd timer`로 시작 — 시간당4회 계획 | 실제 덤프/전송·부하/공간을 확인. 중복 실행 금지·스케줄 jitter/생략/늦은 완료 기록.15분 Timer만으로 RPO30분 보장 아님 |
+| 예약 실행 | 설계 기준: DB 운영 Window 중15분마다, `systemd timer`로 시작 — 시간당4회 계획 | 실제 덤프/전송·부하/공간을 확인. 중복 실행 금지·스케줄 jitter/생략/늦은 완료 기록.15분 Timer만으로 RPO30분 보장 아님 |
 | 추가 백업 | 작업 종료·계획된 DB Stop 전, 중요 이전/구조 변경/장애 시험 전 | 마지막 쓰기와 백업 완료 순서를 확인. 해당 전환 시험은 쓰기 제한 절차와 연결 |
 | 일반 사본 보관 | S3와 Recovery Storage에서 7일 | 실제 암호문 크기·시간당 건수·저장/전송 비용·로컬 용량 확인. 두 곳의 정리 상태를 각각 기록 |
 | 보호 사본 | 마지막 복원 검증 사본·핵심 시험 전 사본·최종 검증 사본 별도 보존 | 일반 7일 정리와 S3 Lifecycle 적용 Prefix를 분리. 최종 검토·제출 후 팀이 정한 정리 시점까지 보관 |
@@ -1487,7 +1487,7 @@ S3와 On-Prem 각각의 저장 공간이 필요하며, 작업 VM 임시 디스�
 
 **2026-10-06 Data 계약 v2.2:** 팀이 선택한 현재 엔진 목표는 **ElastiCache Valkey 7.2**다. 기존 node-based, cluster mode disabled, Primary 1 + Replica 1, Multi-AZ 구조는 유지한다. **TLS와 별도 AUTH Token을 생성 시부터 적용하며 App Read/Write는 Primary Endpoint DNS로 연결**한다. Reader Endpoint는 이번 실시간 Runtime의 기본 읽기 경로에 넣지 않는다.
 
-이번 개정은 [Infra #19](https://github.com/seokpan/seokpan-hybrid-infra/issues/19)의 C 계약과 사용자 제공본 `data-contract-v2_2-20261006.md`에 따른 Engine 목표 정합이다. 이전 Redis OSS 승인 이력은 보존하고 03/04 설계 단계를 다시 열지 않는다. **현재 Data Source의 Redis OSS 7.1은 아직 C의 Data Root PR에서 전환해야 하며 실제 생성·Valkey 호환성 시험은 완료되지 않았다.** Redis 7.2.4의 기존 App 시험 결과를 Valkey PASS로 승계하지 않는다. Cloud·lab·Recovery는 Valkey 7.2 계열을 목표로 하되 lab·Recovery Digest, 실행 파일(`redis-server`/`valkey-server`)·임의 UID·TLS/AUTH·명령/Lua/업무 호환은 D 공급과 B/C 검증으로 별도 수락한다. `Redis`, `SEOKPAN_REDIS_*`, `backend-redis-*`, Terraform `redis_*` 논리 이름은 유지한다. **DB Pool 축소안은 미채택 후보이며 실측 연결 상한·종료 중 Pod 연결·부하를 확인한 뒤 B/C가 정한다.**
+[Infra #19](https://github.com/seokpan/seokpan-hybrid-infra/issues/19)의 Data 계약 v2.2에 따라 선택 엔진을 Valkey 7.2로 정합화했다. 이전 Redis OSS 승인 이력과 기존 Redis 7.2.4 시험 결과는 보존하되 Valkey 시험 성공으로 승계하지 않는다. **Data Root의 Valkey 전환 Source는 [Infra PR #37](https://github.com/seokpan/seokpan-hybrid-infra/pull/37)으로 병합됐고, 실제 생성·Valkey 호환성 시험은 별도다.** Cloud·lab·Recovery는 Valkey 7.2 계열을 사용한다. lab·Recovery의 정확한 Image Digest, 실행 파일·임의 UID·TLS/AUTH·명령/Lua/업무 호환은 실제 공급 개정과 B/C 검증으로 수락한다. `Redis`, `SEOKPAN_REDIS_*`, `backend-redis-*`, Terraform `redis_*` 논리 이름은 유지한다. **DB Pool 축소안은 미채택 후보이며 실측 연결 상한·종료 중 Pod 연결·부하를 확인한 뒤 B/C가 정한다.**
 
 ElastiCache AUTH는 node-based 구성에서 사용할 수 있고 TLS가 필요하다. Serverless는 RBAC를 요구하지만 이번 선택은 Serverless가 아니다. RBAC가 더 세분화된 권한 제어를 제공하므로 여러 독립 App 주체나 명령별 제한이 실제 요구로 나타나면 재검토한다. 이번 AUTH 선택을 사용자별·명령별 최소 권한이 확보된 설계로 표현하지 않는다.
 
@@ -1623,7 +1623,7 @@ Micro는 더 작은 시작 후보이나 현재 상태 책임·측정 전 여유�
 | 로컬 Redis/App | 별도 Runtime·Image/도구·CA·설정·관측 Log | Backend 의존성·Volume 요구를 확인하고 AWS 조회 없이 준비 가능해야 함 |
 | 독립 로컬 사본 | 최소 마지막 복원 검증 사본과 필요한 호환 도구/Release | 같은 물리 디스크를 다른 Mount로 두 번 연결한 것을 독립 사본으로 세지 않음 |
 
-15분 후보의 예약 사본 계획은 `N = 7 × H × 4 + E + P`로 둔다. H는 하루 최대 DB 운영 시간,4는 시간당 계획 건수, E는7일 동안 추가 생성할 사본 수, P는 일반 기간 밖 보호 사본 수다.24시간 DB 운영이면 예약 사본 계획은 최대672개이며 성공 실적이 아니다. 중복 보호 사본·실제 Window·jitter/실패/재전송/임시 파일은 실제 개수로 조정한다. 과거1시간 기준의168개 산정은 이 변경 후보의 용량으로 재사용하지 않는다.
+15분 계획 주기의 예약 사본 수는 `N = 7 × H × 4 + E + P`로 둔다. H는 하루 최대 DB 운영 시간,4는 시간당 계획 건수, E는7일 동안 추가 생성할 사본 수, P는 일반 기간 밖 보호 사본 수다.24시간 DB 운영이면 예약 사본 계획은 최대672개이며 성공 실적이 아니다. 중복 보호 사본·실제 Window·jitter/실패/재전송/임시 파일은 실제 개수로 조정한다. 과거1시간 기준의168개 산정은 현재 계획 주기의 용량으로 재사용하지 않는다.
 
 Recovery Storage의 초기 계획 용량은 `1.3 × (N × B + W)` 이상으로 검토한다. B는 대표 시험 중 최대 압축·암호화 사본 크기, W는 다운로드 부분 파일·검증 작업 등 실제 필요한 추가 공간이다. **1.3은 계산한 필요량에 30%를 더하는 계획 여유이며 실제 Storage 사용률·파일 크기 측정값이 아니다.** 성장·실패 대기 증가와 다른 업무 사용량을 별도 반영한다.
 
@@ -1637,7 +1637,7 @@ Data VM 임시 영역과 로컬 복원 DB도 같은 방식으로 해당 작업�
 | RDS | Data는 보존, 미사용 기간 Stop 후보 | App 쓰기 제한·진행 작업 확인 → 마지막 백업의 로컬 확보 → Client 종료 → Stop 완료 상태 확인. 다음 시험 전 Start·연결·Data 확인 |
 | Redis | 인접 시험 사이 유지, 긴 미사용 구간은 계획 재생성 비용과 비교 | RDS처럼 Stop 비용 모델을 적용하지 않음. 재생성 선택 시 신규 진입 제한·Runtime 처리·결과 보존·Terraform 변경·Secret/Endpoint 재공급·App 재확인 |
 | Data VM / VPN | RDS Dump 실행 Window에 필요 | ROSA가 없어도 Data 작업이 필요한 동안 유지. Gateway/NAT 정리와 남은 DB·S3 전송 의존성 확인 |
-| 백업 예약 | 변경 후보: DB 운영 Window의15분 주기·시간당4회 | RDS Stop 구간은 계획 생략 기록, Restart 후 새 성공 사본 확보. 전송/확보 실패는 계획 생략으로 처리하지 않음. 실제 성공 간격/최신성에 따라 RPO30분 별도 판정 |
+| 백업 예약 | 설계 기준: DB 운영 Window의15분 계획 주기·시간당4회 | RDS Stop 구간은 계획 생략 기록, Restart 후 새 성공 사본 확보. 전송/확보 실패는 계획 생략으로 처리하지 않음. 실제 성공 간격/최신성에 따라 RPO30분 별도 판정 |
 | Import / Restore | 측정된 완료 시간과 검증 시간을 예약 | 생성·Upload·Download·해독·Import·App 시작·대표 검증 시간을 각각 기록.15분 예약과 전체 업무 RTO10분 목표는 서로 다른 기준 |
 
 RDS는 연속 7일 Stop 후 자동으로 시작할 수 있으며 Stop 상태에서도 Storage·Backup 비용이 남는다. 기동·정지는 즉시 끝난다고 가정하지 않는다. 다음 작업 전에 실제 상태·유지보수·예산을 확인한다.
@@ -2745,7 +2745,7 @@ BE의 실제 프로세스 수·Session·Room Runtime·Pub/Sub·Connection Genera
 | T14 / §3-B.9.8 조건별 복구 | 출구 IP/Port 변경·유휴 재연결, 통제된 Peer Key 교체 후 이전 Key 거부, 다른 AZ/새 ENI 복구를 수행한 경우 모든 관련 Route/정책 갱신. 미재현 시 미실행/제한으로 남기며 자동 AZ Failover나 AZ 장애 검증 성공으로 확대하지 않음 |
 | T19 / §3-B.9.7·3-F IM-03 | foundation/rosa를 순서대로 재실행하여 Rule 덮어쓰기/영구 Diff가 없는지 확인. Cluster 삭제 전에 rosa Binding을 제거하고 기반 Rule/Data를 보존. 새 Cluster Worker SG로 다시 연결한 뒤 이전 SG 참조가 남지 않는지 확인 |
 
-Gateway 복구 시간은 장애 인지·조치·업무 Probe 완료의 실제 시간선으로 남긴다. 현재 변경 후보의 Offline 서비스 RTO10분을 Gateway MTTR 목표로 자동 대입하지 않는다. 위 장애/재구축을 W08에 추가로 숨겨 넣지 않고 소요·재시험·재생성·가동 비용을 사전에 3-H의 Window/Cost Ledger에 반영한다.
+Gateway 복구 시간은 장애 인지·조치·업무 Probe 완료의 실제 시간선으로 남긴다. 현재 설계의 Offline 서비스 RTO10분을 Gateway MTTR 목표로 자동 대입하지 않는다. 위 장애/재구축을 W08에 추가로 숨겨 넣지 않고 소요·재시험·재생성·가동 비용을 사전에 3-H의 Window/Cost Ledger에 반영한다.
 
 #### 3-G.4.2 플랫폼·CI 검증 경계와 기존 Should 처리
 
@@ -2804,13 +2804,13 @@ Source에 맞는 기존 HTTP/WS 시험 도구·Harness를 활용하고 정확한
 
 ### 3-G.7. 승인된 Recovery·Backup 정량 목표
 
-**2026-10-05 현재 변경 후보:** 아래는 [§3-I.14.5](#recovery-design-decision-20261005)의 RTO10분·영속 DB RPO30분·Portable Backup15분이다.2026-10-03까지30분/90분/1시간이 유효했던 승인 이력과 최초10분/15분/5분 우선 권고 철회는 보존한다. 이번 PR 리뷰/채택·병합 전 공식 main은 기존 기준이고, 아래 후보의 실제 전체 Recovery 달성/Acceptance는 NOT RUN이다.
+**현재 설계 요구사항:** [§3-I.14.5](#recovery-design-decision-20261005)의 RTO 10분·영속 DB RPO 30분·DB 운영 중 Portable Backup 15분 계획 주기는 PR #30으로 채택·병합됐다. 이전 30분/90분/1시간과 철회된 10분/15분/5분 우선 권고는 결정 이력으로 보존한다. 아래 목표의 실제 전체 Recovery 달성·Acceptance는 미검증이다.
 
-| 항목 | 변경 후보의 프로젝트 목표 / 정의 — 공식 main 승격 전 | 미달·제한 처리 |
+| 항목 | 현재 프로젝트 요구사항 / 정의 | 미달·제한 처리 |
 |---|---|---|
 | Offline Recovery RTO | **10분 이내**. 장애 주입/접속 불가 시작→탐지/복구 결정·DB 복원·새 Redis·App 배포·Host 안내·대표 업무/Data 확인 완료까지 | 부분 Fixture/Restore 명령 시간만 계산하지 않음. 자동 장애 전환이나 동일 접속 주소 유지로 표현하지 않음 |
 | Offline Recovery RPO | **30분 이내**. 사고 시각과 실제 사용한 On-Prem 검증 Backup의 일관된 Data 기준 시각 간 차이 | 정상 성공 간격＋로컬 확보 지연＋시계/시점 불확실성≤30분의 실제 근거 필요. 신규 회원·완료 Game/Result/Rating 손실을 별도 기록 |
-| Backup | 운영 중15분 후보·7일 및 최종/마지막 검증본 보호는3-D 유지 | Timer 간격만으로 RPO30분 보장하지 않음. jitter/중복 실행 생략·Data 시각·S3/로컬 완료·실패/재전송·이전 사본 선택 기록 |
+| Backup | DB 운영 중15분 계획 주기·7일 및 최종/마지막 검증본 보호는3-D 유지 | Timer 간격만으로 RPO30분 보장하지 않음. jitter/중복 실행 생략·Data 시각·S3/로컬 완료·실패/재전송·이전 사본 선택 기록 |
 | 정상 Data 비교 | Schema·핵심 Row/관계·대표 결과·권한 정상 | 단순 import Exit Code·파일 Hash만으로 업무/Data 검증 완료 아님 |
 
 일관된 Snapshot/Data 시각을 모르면 파일 수정 시각을 Data 기준으로 대신하지 않는다. 시험에는 확인 가능한 쓰기 Marker/업무 기록을 사용해 Backup과 복원 데이터의 경계를 확인한다. 후보 적용 후 실제 사용 사본의 RPO가30분을 넘어가면 차이/손실을 미달로 보고한다. 시점 불명확은 null/미판정으로 남기며 검증 Backup이 오래됐다고 목표를 자동 완화하거나 같은 Run의 기준을 낮춰 PASS로 바꾸지 않는다.
@@ -3026,7 +3026,7 @@ Runbook/시험/WBS와 연쇄 영향은 **3-I의 전체 통합 검토**에 일괄
 | 3-A | 작업 전제 승인 | 네 Repo·1차 보존·구현 직전 Seed·Owner·Release/Evidence 경계 |
 | 3-B | 작업 전제 승인 | 서울 Region·IPAM/Subnet·API/Ingress·AZ별 NAT·Route/SG·WireGuard/Gateway·Lifecycle |
 | 3-C | 작업 전제 승인 | 사람 IAM User 4개+Admin·목적별 실행 Role·ROSA IDP/RBAC·제한된 CI/Backup·SOPS+age 공급/복구 |
-| 3-D | 기존 구조 승인/현재 주기 변경 후보 구분 | 논리 이전·격리 Restore·새 Redis·TLS 유지, 현재15분 Backup 후보/7일 보존·초기 Data 크기·업무 재개/중단 — §3-I.14.5 |
+| 3-D | 기존 구조 유지/현재 주기와 이전 이력 구분 | 논리 이전·격리 Restore·새 Redis·TLS 유지, 현재15분 Backup 계획/7일 보존·초기 Data 크기·업무 재개/중단 — §3-I.14.5 |
 | 3-E | 작업 전제 승인 | 같은 Host의 FE/API/WSS·Edge TLS·설정/Secret·Probe/종료·인증·재접속·중복/불명 결과·부분 실패 |
 | 3-F-1 | 작업 전제 승인 | 세 Root/State Key·bootstrap 실행 Role 소유·제한 Output 전달·Ansible 최초 GitOps 설치/인계 |
 | 3-F·3-G·3-H | B01~B07 작업 전제 승인 — 2026-10-01 | 버전·Backend 인증·Runtime Pull·배포/Offline·Replica·시험 수치·작업/비용 운영 |
@@ -3088,7 +3088,7 @@ Runbook/시험/WBS와 연쇄 영향은 **3-I의 전체 통합 검토**에 일괄
 | B03 | Classic Worker Role에 지정 ECR Repo Pull 권한·추가 Pull IAM User 기본 제외 | 지원되는 Pull Secret 경로는 발급/갱신·원본 Key·추가 Owner 필요. 실제 지원 제약이 나오면 비교 | 공유 Role/Cluster·새 Node/지속 인증·Network·계정표 |
 | B04 | Base+Overlay·Digest·CI→PR→GitOps·App 자동 Sync/SelfHeal·자동 Prune 보류. 로컬 복구는 보존 Manifest를 Ansible Apply | App 수동 Sync는 배포 단계 증가. 자동 Prune는 삭제 범위 보호 필요. Offline GitOps는 로컬 Git/Controller 가용성 준비 필요 | Namespace/Secret·Release/Schema·Offline Owner 예외·복구 시간 |
 | B05 | Worker 3개·FE/BE 각 3 Replica 후보·PDB/배치/Rolling/Pool 함께 검증, Recovery 초기 각 1 | Replica/Worker 감소는 시험/가용성 목표에 영향. 확대는 Node/DB/비용 영향. Source 확인 없이 선택하지 않음 | 다중 Pod 상태·DB 연결/Redis·자원 여유·부하/장애·비용 |
-| B06 | 정상60명/30분·HTTP/WS p95 1초·오류율1% 미만·Must 묶음 유지. Offline 기존30분/90분 승인 이력은 보존하고 현재 DR 변경 후보는 RTO10분/RPO30분 — §3-I.14.5 | 새 후보는 PR 리뷰/채택 후 적용. 부하/정상 성능은 변경하지 않으며 실제 복구 달성은 미검증 | Harness·Data 규모·부하·실패/재시험·주장 범위 |
+| B06 | 정상60명/30분·HTTP/WS p95 1초·오류율1% 미만·Must 묶음 유지. Offline 기존30분/90분 승인 이력은 보존하고 현재 DR 설계는 RTO10분/RPO30분 — §3-I.14.5 | PR #30으로 채택·병합된 요구사항을 적용. 부하/정상 성능은 변경하지 않으며 실제 복구 달성은 미검증 | Harness·Data 규모·부하·실패/재시험·주장 범위 |
 | B07 | 네 트랙·목적별 가동 Window 두 묶음·$450 계획+$50 여유·기존 Freeze 유지 | 가동 구간 재배치/추가는 남은 예산·재생성·시험 시간을 다시 계산 | 담당/인계·가동시간·잔존/실패 비용·일정 |
 
 공식 공개 버전 존재는 전체 조합의 검증 성공이 아니다. Worker Role Pull도 Pod별 IAM 격리를 제공한다는 뜻이 아니다. 60명·RTO/RPO는 측정 전 프로젝트 목표이며 제품 SLA로 표현하지 않는다.
@@ -3459,7 +3459,7 @@ Base와 lab Overlay 인계는 Cloud 생성보다 먼저 준비할 수 있다. B 
 <a id="recovery-design-review-20261003"></a>
 ### 3-I.14. 복구 목표 피드백에 따른 설계 재검토 — 2026-10-03
 
-**2026-10-03 검토 이력:** 아래 §3-I.14.1~3의 새 목표 미확정은 당시 상태다. 현재2026-10-05의 변경 후보·근거/판정은 [§3-I.14.5](#recovery-design-decision-20261005)를 우선한다. 당시 상태는 설계 정합 보완·선택 근거 정리 / 새 목표·주기·구조 변경 미확정이었다. 시작점은 `architecture/exports/10-backup-offline-recovery.png`의 RTO 30분·RPO 90분에 대한 강사의 사용자 관점 피드백이다. RTO 5~10분은 검토 의견이며 RPO 숫자나 전체 인터넷 사용자 전환은 새 Must로 채택되지 않았다. 사용자는 특정 숫자를 먼저 정해 구현을 맞추지 않고, 가능한 품질·편의성·네 사람의 구현/학습/운영 부담·일정·비용·설계 정합성·발표 준비를 함께 비교하도록 요청했다. 최초 AI의 10분/15분/5분 우선 권고와 근거 없는 2+3+3+2분 시간 예산은 철회된 후보로 취급한다.
+**2026-10-03 검토 이력:** 아래 §3-I.14.1~3의 새 목표 미확정은 당시 상태다. 현재2026-10-05의 설계 결정·근거/판정은 [§3-I.14.5](#recovery-design-decision-20261005)를 우선한다. 당시 상태는 설계 정합 보완·선택 근거 정리 / 새 목표·주기·구조 변경 미확정이었다. 시작점은 `architecture/exports/10-backup-offline-recovery.png`의 RTO 30분·RPO 90분에 대한 강사의 사용자 관점 피드백이다. RTO 5~10분은 검토 의견이며 RPO 숫자나 전체 인터넷 사용자 전환은 새 Must로 채택되지 않았다. 사용자는 특정 숫자를 먼저 정해 구현을 맞추지 않고, 가능한 품질·편의성·네 사람의 구현/학습/운영 부담·일정·비용·설계 정합성·발표 준비를 함께 비교하도록 요청했다. 최초 AI의 10분/15분/5분 우선 권고와 근거 없는 2+3+3+2분 시간 예산은 철회된 후보로 취급한다.
 
 #### 3-I.14.1 현재 확인한 설계와 필요한 보완
 
@@ -3513,7 +3513,7 @@ RTO는 전체 시간선을, RPO는 실제 사용 사본의 Data 시각을 별도
 | 기존 세션·진행 게임 | Redis Runtime 손실/중단을 별도로 기록. 완료 결과·승패/Rating을 임의 생성하거나 기존 Room 상태를 DB만으로 재구성했다고 기록하지 않음 |
 | 추가 과거 이력 기능 | 요구가 채택되면 인증/권한·API/화면·시험·운영/기간 부담을 별도로 검토. 이번 해석 정정이 새 기능/DB 구조 변경의 자동 채택은 아님 |
 
-기존 “완료 기록 조회”를 새 Redis에서도 모든 과거 개별 결과를 화면으로 조회할 수 있다는 뜻으로 확대하지 않도록 §3-D.5·§3-D.9.8·§3-D.10.7, 이 절의 사용자 범위, 04 §5.1/§10.2와 05 §9.2~9.3을 정합화했다. 이 기능 경계 보완 시점에는 기존 Backup/Restore·전용 새 DB·새 Redis·로컬 보존 자산과30분/90분/1시간 기준을 유지했다. 이후 목표/주기의 현재 변경 후보는 §3-I.14.5를 따른다. 구조/수치 선택 전에 수행한 실제 00–04 설계 명확화이며 05 기록만 추가한 작업이 아니다. 당시 기능 해석 보완은 그림의 경로/업무 확인을 유지했고, 이후 §3-I.14.5의 새 수치는 그림10의 SVG/PNG·생성 원본과 함께 변경하며 출처 Manifest를 개정 문서에 연결한다.
+기존 “완료 기록 조회”를 새 Redis에서도 모든 과거 개별 결과를 화면으로 조회할 수 있다는 뜻으로 확대하지 않도록 §3-D.5·§3-D.9.8·§3-D.10.7, 이 절의 사용자 범위, 04 §5.1/§10.2와 05 §9.2~9.3을 정합화했다. 이 기능 경계 보완 시점에는 기존 Backup/Restore·전용 새 DB·새 Redis·로컬 보존 자산과30분/90분/1시간 기준을 유지했다. 이후 목표/주기의 현재 결정은 §3-I.14.5를 따른다. 구조/수치 선택 전에 수행한 실제 00–04 설계 명확화이며 05 기록만 추가한 작업이 아니다. 당시 기능 해석 보완은 그림의 경로/업무 확인을 유지했고, 이후 §3-I.14.5의 새 수치는 그림10의 SVG/PNG·생성 원본과 함께 변경하며 출처 Manifest를 개정 문서에 연결한다.
 
 새 독립 합성 Data 부분 예행은 [05 §9.20](../execution/05_IMPLEMENTATION_AND_VALIDATION.md#recovery-fixture-measurement-20261005)·[Run](../evidence/T18/fixture-20261005-01/summary.md)에 연결했다. 앞선 §3-I.14.1의 “실제 Run 미확인”은 2026-10-03 관측 이력이다. 이번 부분 결과는 실제 RDS 경로·App/Redis/클라이언트 전체 업무·운영 목표 달성이나 새 목표 선택 완료를 대신하지 않는다. C Data 리뷰·D Index 검토/수신과 환경 차이는 실행 기록으로 인계한다.
 
@@ -3524,11 +3524,11 @@ RTO는 전체 시간선을, RPO는 실제 사용 사본의 Data 시각을 별도
 - [ ] 전체 업무 예행·손실/접속/부담/비용 근거와 새 목표·주기·구조 선택, 채택 내용의 정합 반영/재검증
 
 <a id="recovery-design-decision-20261005"></a>
-#### 3-I.14.5 DR 목표·주기·구조의 최종 설계 변경 후보 — 2026-10-05
+#### 3-I.14.5 DR 목표·주기·구조의 설계 결정 — 2026-10-05
 
-**기록 ID: PH2-DR-DESIGN-20261005. 상태: SPEC_COMPLETE — 설계 선택·관련 산출물 정합 검증 완료 / PR 리뷰·병합 상태는 해당 PR에서 확인 / 운영 달성 미검증.** 사용자가 직접 인계 없이도 독립 예행을 진행하며 새 DR 설계를 우선 마무리하도록 지시한 범위에서, 현재 구현 가능성과 추가 부담을 비교해 아래 후보를 선택한다. 이는2026-10-01 사용자 승인 기록을 소급 변경하거나 데이터 손실 허용을 사용자가 별도로 승인했다고 주장하는 기록이 아니다. 공식 main은 이 변경 PR의 리뷰/채택·병합 전30분/90분/1시간이며, 이 변경본의 현재 계약은 아래10분/30분/15분 후보다.
+**기록 ID: PH2-DR-DESIGN-20261005. 상태: SPEC_COMPLETE — 설계 선택 완료·[PR #30](https://github.com/seokpan/seokpan-hybrid-docs/pull/30) main 병합 / 실제 운영 달성 미검증.** 복원 가능성·추가 부담·손실 기준·일정·비용을 비교해 RTO 10분·영속 DB RPO 30분·DB 운영 중 Backup 15분 계획 주기를 선택했다. 이 결정은 2026-10-01의 이전 30분/90분/1시간 승인 기록을 소급 변경하거나 상용 서비스의 데이터 손실 허용을 승인한 기록이 아니다. 이후 설계 문구·출처 정합성 보완은 별도 변경으로 검증하되, 그 작업을 이 설계 결정의 채택 대기로 되돌리지 않는다.
 
-| 항목 | 이전 승인 기준 | 현재 변경 후보와 유지하는 범위 |
+| 항목 | 이전 승인 기준 | 현재 설계와 유지하는 범위 |
 | --- | --- | --- |
 | 서비스 복구 RTO |30분 이내 | **10분 이내**. 실제 사고 시작→탐지/판단/대응 대기→보존 사본/Key 확인·DB 복원→새 Redis/App 기동→Host 안내/지정 클라이언트 업무·Data 확인까지 |
 | 영속 DB RPO |90분 이내 | **30분 이내**. 사고와 실제 사용한 복원 가능한 로컬 사본의 일관된 Data 시각 차이. 신규 회원·완료 Game/Result/Rating의 해당 손실 범위를 명시 |
@@ -3540,23 +3540,23 @@ RTO는 전체 시간선을, RPO는 실제 사용 사본의 Data 시각을 별도
 
 RTO는 강사 의견의5~10분 중 상단10분을 설계 시험 목표로 선택한다. 사람/Host/클라이언트의 미측정 구간을 고려해5분 목표·새 상시 복제·별도 Cloud 자원을 추가하지 않는다.10분도 보장이나 실측 여유 계산이 아니며 전체 Run에서 실패하면 병목/조건·부담을 먼저 개선/재검토한다. 고정2/3/3/2분 예산을 다시 적용하지 않는다.
 
-RPO30분과15분 계획 간격은 기존90분/1시간보다 손실 기준을 강화하면서 운영 중 시간당4회로 제한하는 선택이다. 최초5분 후보의12회/시간보다 생성/전송/보관·실패 처리 부담을 낮추고,15분 RPO를 위해 모든 지연을 촘촘히 보장해야 하는 조건을 추가하지 않는다.30분은 이 교육 프로젝트의 시험/설계 후보이며 사업 사용자가30분의 신규 회원·완료 결과·Rating 손실을 승인했다는 의미나 상용 SLA가 아니다. 실제 사용자 전환/상용 운영 범위를 확대하면 업무별 손실 허용·접속·쓰기 통제/복귀를 별도로 결정한다.
+RPO30분과15분 계획 간격은 기존90분/1시간보다 손실 기준을 강화하면서 운영 중 시간당4회로 제한하는 선택이다. 최초5분 후보의12회/시간보다 생성/전송/보관·실패 처리 부담을 낮추고,15분 RPO를 위해 모든 지연을 촘촘히 보장해야 하는 조건을 추가하지 않는다.30분은 이 교육 프로젝트의 시험·설계 요구사항이며 사업 사용자가30분의 신규 회원·완료 결과·Rating 손실을 승인했다는 의미나 상용 SLA가 아니다. 실제 사용자 전환/상용 운영 범위를 확대하면 업무별 손실 허용·접속·쓰기 통제/복귀를 별도로 결정한다.
 
 **최신성 판정:** 정상 성공 경로에서 `G + D + U ≤ 30분`을 근거로 확인한다. G는 실제 사용 가능한 성공 사본들의 Data 기준 시각 최대 간격, D는 해당 Data→로컬 사용 가능한 완성본 최대 확보 지연, U는 Snapshot 시점/시계 불확실성의 보수적 여유다.15분은 nominal Timer 간격이며 `G≤15분` 또는 `D≤15분`이 자동 확정되지 않는다. jitter·겹친 실행 생략·전송/VM/Storage 장애·계획 Stop·최신 사본 실패/이전 사본 선택은 실제 값으로 기록한다. 각 최대값을 더하는 정상 경로 확인이 실제 사고마다 복원 가능성을 보장하지도 않는다. 실제 복구는 사용 사본의 Data 나이와 손실을 별도 판정하며30분 초과는 미달, 시점 미확인은 null/미판정이다. 경고·재시도 또는 같은 Run의 목표 완화로 PASS를 만들지 않는다.
 
-| 실행 인계 | 해당 실제 실행 전에 확보할 근거 — 설계 후보 작성의 일괄 선행조건은 아님 |
+| 실행 인계 | 해당 실제 실행 전에 확보할 근거 — 설계 선택의 일괄 선행조건은 아님 |
 | --- | --- |
 | C Data/새 Redis | 실제 지원 버전/Client·Snapshot/권한·TLS/CA/Key·Timer/중복 잠금·S3/로컬 완료·최신성/경고·보관/실패 재전송 구현.15분 부하/성공 간격·확보 지연·실제 복원/데이터 검증을 새 Run에 기록 |
 | B App/클라이언트 | 승인 Image/Manifest/Secret·현재 기능/권한/Transient 처리·새 Redis/DB 계약과 지정 클라이언트 HTTPS/WSS/FE 업무 확인. 과거 DB 기록 보존을 과거 결과 화면 복구로 확대하지 않음 |
 | A Host/자산 | 사전 준비된 새 전용 DB VM/플랫폼·CPU/RAM/Storage·독립 사본·Harbor/로컬 도구/CA·관리/접속 경로·예비 담당자의 가용성 확인 |
 | D Image/Index/시간선 | Build/Test/Scan·Registry별 Digest/Platform/보존·실제 Index 수신/리뷰, 사고 t0부터 업무/Data 완료 t1까지 및 신규/실패 Run의 증거 연결 |
-| 실제 Cost/기간 |15분 후보의4배 계획 건수·672개/24시간×7일 계획 상한·실제 암호문/임시 공간/전송/DB 부하·재시험/인계/문서/발표 시간을 Cost Ledger에 반영. $450 계획선/$500 한도·10/16 Freeze·10/22 Demo·10/23 Ready 유지. 추가 유료 실행은 구체화된 범위/동의 전 하지 않음 |
+| 실제 Cost/기간 | 이전1시간 대비15분 계획 주기의4배 계획 건수·672개/24시간×7일 계획 상한·실제 암호문/임시 공간/전송/DB 부하·재시험/인계/문서/발표 시간을 Cost Ledger에 반영. $450 계획선/$500 한도·10/16 Freeze·10/22 Demo·10/23 Ready 유지. 추가 유료 실행은 구체화된 범위/동의 전 하지 않음 |
 
-책임 배정과 실제 수행자는 구분한다. 정태훈 또는 승인된 다른 실행자가 C 기술 측정을 수행할 수 있으며 C 직접 인계/실행만을 독점 조건으로 두지 않는다. 이번 두 Run은 요청 tjung03·실제 Codex 기여이고 팀원 리뷰/수신은 미확인으로 남긴다. 실제 보호 입력·공유 실행은 대상/권한·단일 실행자·충돌 조율을 확인한다. C 전체 작업·D Image·ROSA 전체·05 최종 종료를 설계 선택의 일괄 Gate로 확대하지 않되, 그것들이 필요한 실제 Runtime/T18은 준비 전 실행/성공 처리하지 않는다.
+책임 배정과 실제 수행자는 구분한다. 승인된 실행자가 C의 기술 측정을 수행할 수 있으며 C의 직접 인계·실행만을 독점 조건으로 두지 않는다. 두 합성 부분 Run의 환경·수행자·측정·검토/수신 범위는 해당 Run 원본에서 확인한다. 실제 보호 입력·공유 실행에는 대상·권한·단일 실행자·충돌 조율을 확인한다. C 전체 작업·D Image·ROSA 전체·05 최종 종료를 설계 선택의 일괄 Gate로 확대하지 않으며, 실제 Runtime/T18은 해당 준비와 실행 증거 없이 완료 처리하지 않는다.
 
-관련 설계의 Data 주기·최신성/실패 처리·Storage/비용·시험/G7/B06·W04,04 준비/Runbook,05/Tracker·Index와 그림10의 표시를 이 후보로 정합화한다.00의 역사,01 목적/예산/Freeze,02의 Cloud Primary/BackupRestore·지정 검증 범위는 바뀌지 않아 추가 구조 개정을 요구하지 않는다. 이전 승인·철회된10/15/5 제안·Run10파일·과거 관측은 그대로 보존한다. 최종 설계 후보 완료는 관련 문서/Source/그림 출처·SVG/PNG 검증에서 필수 추가 보완이 없어질 때 보고하고, PR 리뷰/병합과 실제 목표 달성·T18/프로젝트 종료 상태는 따로 표시한다.
+Data 주기·최신성/실패 처리·Storage/비용·시험/G7/B06·W04, 04 준비/Runbook, 05/Tracker·Index와 그림10에 현재 설계 요구를 적용한다. 00의 역사, 01의 목적/예산/Freeze와 02의 Cloud Primary/BackupRestore·지정 검증 범위는 유지한다. 이전 승인·철회된 10/15/5 제안·기존 Run과 과거 관측은 보존한다. 이후 발견한 문서·Source·그림 출처의 불일치는 해당 변경에서 검증하며, 설계 선택 완료와 전체 정합성 조사·실제 목표 달성·T18/프로젝트 종료를 각각 판정한다.
 
-**원본/최신 기준의 우선순위:** 사용자가 업로드한 `TJUNG03_IMPLEMENTATION_STUDY_AND_PRESENTATION_PLAN.md`의 이전 RTO30분/RPO90분과 `PROJECT_INSTRUCTIONS.md`의1시간 Backup 숫자 행은 원본/승인 이력으로 보존하며 파일을 덮어쓰지 않는다. 이 개정이 main에 병합되면 DR 수치/간격에 한해 본 ADR의10분/30분/15분을 최신 기준으로 우선 적용한다. 원본의 담당/보호/Ownership·기록·Freeze/기간·예산 등 비수치 경계는 그대로 적용한다. 기존 Source 등록본이 자동 갱신됐다고 주장하지 않으며 사용자에게 변경 위치/공식 개정을 연결한다.
+**원본/최신 기준의 우선순위:** DR 수치·간격에는 PR #30으로 병합된 본 결정의 10분/30분/15분을 적용한다. Project 등록본과 개인 계획에 남은 이전 30분/90분/1시간은 당시 이력이며 현재 실행 기준으로 사용하지 않는다. 담당·보호·Ownership·기록·Freeze/기간·예산 등 비수치 경계는 유지한다. 등록용 개정본 제작과 실제 Project 소스 교체는 별도이며, 교체가 확인되기 전 자동 동기화를 주장하지 않는다.
 
 - [x] 부분 실측/고정 Source와 사용자 영향·복원 구조·주기/부담 대안 비교,10분/30분/15분 후보 선택
 - [x] 기존 구조·역할/예산/Freeze 유지와 실제 실행 Gate·손실/최신성 미판정 처리 인계
@@ -3569,7 +3569,7 @@ RPO30분과15분 계획 간격은 기존90분/1시간보다 손실 기준을 강
 - [x] 프로젝트 소스 등록 완료 사용자 확인
 - [x] 추가 자료·Issue·지정 Source의 근거/충돌·시험/인계 정리
 - [x] 현재 DR10분/30분/15분·Backup/Restore 유지 설계 변경안과 근거/실행 Gate 기록 — §3-I.14.5
-- [ ] 관련 Source·문서·SVG/PNG/출처 정합 검증·PR 리뷰/병합, 실제 운영 목표 달성은 별도
+- [x] DR 설계 요구 채택·PR #30 병합. 후속 정합성 보완과 실제 운영 목표 달성은 별도
 - [ ] 실제 팀 배정/Branch·Seed·GRANT·CI/계정/도구/자산 입력 확인
 - [ ] 의존 작업별 구현 시작 조건·첫 Full Apply 전 Cost Gate 확인
 
