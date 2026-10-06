@@ -9,11 +9,15 @@
 | D 개정 xlsx 수신·60수식/18시나리오 독립 재계산 | 미완19·미확인5·PARTIAL. 입력 검증·최대시간 비시간 비용·합계/하한 표시 보완 | 내 일 B: 개정19~24행 입력1~6 / 팀원 D: 수식·전체 비용 / 생성 후 B/D: 실제 목록·기간 개정 |
 | rosa 단계별 목적 권한 수요 Source | 자기State 접근≠서비스 권한. 실효 정책/목적 Caller/Backend/Plan 미확인 | A bootstrap/Infra20 리뷰·적용 → B Infra25 단계별 수락. C34 Data 범위 별도 |
 
-**지금 리뷰/공급 확인:** [GitOps PR #15](https://github.com/seokpan/seokpan-hybrid-gitops/pull/15) Ready·최신db0251b C/D 재리뷰 요청·[같은 HEAD CI39 PASS/Render8 생성](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37435158422). 이전6d626c5/54952bf CI는 구 HEAD 이력이다. C v2 §0~7 전체 파일/논리 자원6개·deadline300 계약 수신 완료. B는 Alembic head/Image 자산·Redis7.1 호환·Pool/rolling 예산을 확인하며 실제 Endpoint/CA/Secret/DB시간대는 팀 공급·생성 후 수락이다. 공개 원 댓글 전체 게시는 문서 후속이고 계약 검토 대기가 아니다.
+**지금 리뷰/공급 확인:** [GitOps PR #15](https://github.com/seokpan/seokpan-hybrid-gitops/pull/15) Ready·최신02215c8 C/D 재리뷰 요청·[같은 HEAD CI39 PASS/Render8 생성](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37436964045). 이전db0251b/6d626c5/54952bf CI는 구 HEAD 이력이다. C v2 §0~7 전체 파일/논리 자원6개·deadline300 계약 수신 완료. B는 Alembic head/Image 자산·Redis7.1↔client8.1 지원 전략/실제 호환·Pool/rolling 예산을 확인하며 실제 Endpoint/CA/Secret/DB시간대는 팀 공급·생성 후 수락이다. 공개 원 댓글도17:14:34 KST에 전체 게시 완료, 실제 공급/Run은 별도다.
 
 **Cloud 활성화의 새 직접 차단:** C 전체 계약의 기본 Backend2/10개 예약과 Cloud activation-target의 Backend3·RollingUpdate maxSurge1(rollout4 후보)이 일치하지 않는다. 기본 lab/cloud는0으로 유지한다. B/C가 Process·Pool 상한·종료/Migration까지 함께 합의한 뒤 별도 활성화 개정을 검토하며, 승인된3HA Preview를2로 바꾸거나 overflow5/surge0 하나만 선택해 안전을 확정하지 않는다.
 
-**학습 핵심:** 비용은 수량×단가×과금기간이다. 실제 가용 시각과 과금시간을 나누고 최대시간은 비시간 비용·Buffer를 포함해 산정한다. Image/Source 수락과 실제 실행은 별도다. A33 main2c17488 병합(062a371 리뷰 이력)·A36 c06db53 Draft는 Source 상태이며 실출력/ROSA 전체 권한 수락이 아니다. 기존 TH81/완료2·Source Native39 PASS·체크·기간/비용/보존 기준은 유지하며 이번 OCP Sync·Cloud Plan/Apply·전체 Recovery는 미실행이다. 아래 접힌 내용과 날짜별 표는 당시 관측 이력이다.
+**D의 새 공급/다음 실행:** [D §6 최신 답변](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6012181426)로 DB DNS/SAN/10월31일 만료·300초 수락을 확인했다. CA/목적 Secret/Schema/current/노드 경로는 대기. lab Redis는 D 구성/실행·B 선언/Probe 리뷰·C CA/AUTH 계약으로 나눈다. 기존 demo2 평문 Redis/PVC·Argo 내부 Redis는 보존. db_admin 음성 Case와 Image head는 D cp-03 승인 Image에서 네트워크 차단/가짜 입력·offline 검사로 수행하며 아직 NOT RUN이다.
+
+**C v2.1/새 lab 목록:** [C v2.1 후속](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6012401242) 설정원칙 부분 수신·완성 redis.conf/인증서/Probe 기준10/7오전 예정 → D 발급/K8s/배포시험 → B UID/쓰기/TLSAUTH 소비리뷰. D는17:30 Namespace 기본SA/CA 외 객체없음·Quota/Limit/NP없음·CA metadata를 보고했으며 B 권한/live Diff·실물/Runtime 수락은 별도다. Redis exactDigest·Cloud지원전략/호환·실제Secret/Schema는 대기다.
+
+**학습 핵심:** 비용은 수량×단가×과금기간이다. 실제 가용 시각과 과금시간을 나누고 최대시간은 비시간 비용·Buffer를 포함해 산정한다. Image/Source 수락과 실제 실행은 별도다. A33 main2c17488 병합(062a371 리뷰 이력)·A36 5b999fb Draft는 Source 상태이며 실출력/ROSA 전체 권한 수락이 아니다. 기존 TH81/완료2·Source Native39 PASS·체크·기간/비용/보존 기준은 유지하며 이번 OCP Sync·Cloud Plan/Apply·전체 Recovery는 미실행이다. 아래 접힌 내용과 날짜별 표는 당시 관측 이력이다.
 
 **이전 #12 인계 자료:** [병합 main Native Run 37330480298](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37330480298)의 정확 main39 PASS·Source clean, `ocp-source-handoff-6ea2d9a90ab7c58803767220abf956d3c1b54a5f` artifact11353184732의 다운로드/11파일·YAML8 SHA/바이트/inventory·main/Tree/보류·Secret0 검증을 완료했다. 만료는 **10/13 00:09:31 KST**며 원 제출/입력 요청은 [원 댓글](https://github.com/seokpan/seokpan-hybrid-gitops/pull/12#issuecomment-5998279839)이다. 이전60bda/10/12 안내와 구분한다.
 
