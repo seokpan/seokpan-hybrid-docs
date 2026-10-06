@@ -1,12 +1,12 @@
 # Architecture
 
 > **상태:** 설계 기준 그림 12장 제작·자체 검증 완료, 사용자 그림 검토 대기  
-> **설계 근거:** Project Source 00~04, 기본 구조 2026-10-01 KST·DR 목표 개정 2026-10-05 KST  
-> **제작일:** 최초 2026-10-02 KST·그림 10 개정 2026-10-05 KST. 실제 구축·운영·시험 결과를 보여주는 판본과 구분
+> **설계 근거:** Project Source 00~04, 기본 구조 2026-10-01 KST·DR 목표 개정 2026-10-05 KST·Valkey 목표 개정 2026-10-06 KST  
+> **제작일:** 최초 2026-10-02 KST·그림 10 개정 2026-10-05 KST·그림 01/02/04/12 개정 2026-10-06 KST. 실제 구축·운영·시험 결과를 보여주는 판본과 구분
 
 현재 진행 현황:
 
-- [x] 제작 계획과 후속 진행 요청 확인
+- [x] 제작 계획과 대상 범위 확인
 - [x] 전체 논리·물리 시안 2장 제작·자체 시각 검증
 - [x] 상세 그림 10장 제작·원문/그림 간 교차 검증
 - [x] SVG 12개·고해상도 PNG 12개·출처/해시 기록
@@ -57,6 +57,8 @@
 
 **2026-10-03 재검토 이력:** 당시에는 RTO 30분·RPO 90분·1시간 백업을 유지한 채 적절성/달성 여부를 재검토했습니다. 02/03/04의 별도 새 DB/Redis·전체 업무/접속 범위를 보완하고, 그림 내용·수치를 변경하지 않아 출처 Manifest만 갱신했습니다. 그때의 원문·판단 이력은 보존하며 현행 목표는 위 2026-10-05 개정을 따릅니다.
 
+**현재 Data·Registry 경계:** Cloud·lab·Recovery의 선택 엔진은 Valkey 7.2 계열이다. 그림 01/02/04/12의 엔진 표시는 2026-10-06 개정이며, 나머지 `Redis`는 프로토콜·Runtime 논리 계층 또는 1차/과거 자산을 뜻한다. 실습 OCP는 Harbor 직접 경로 제약에 따라 승인 이미지를 내부 Registry로 보존 복사해 소비한다. 이는 그림의 정상 Cloud ECR 경로와 온프레미스 Harbor Recovery 보존 역할을 대체하지 않는다. lab 실제 경로·Source·Pull/업무 결과는 [GitOps #14](https://github.com/seokpan/seokpan-hybrid-gitops/issues/14)·[#17](https://github.com/seokpan/seokpan-hybrid-gitops/pull/17)과 05에서 추적한다.
+
 ## 제작·검증 기록
 
 - [제작 계획](DIAGRAM_PLAN.md): 목적·포함 내용·근거·실제 확인 대기 입력
@@ -76,7 +78,11 @@ python3 architecture/tools/build_diagrams.py --font /path/to/NotoSansCJKkr-Regul
 python3 architecture/tools/verify_diagrams.py
 ```
 
-일부 그림만 다시 만들 때는 `--only 1 2`처럼 그림 번호를 지정합니다. 자동 검사는 글자/출력 경계·폰트 글리프·파일/원문 동일성을 확인합니다. 의미와 화살표 방향, 겹침/가독성은 수정된 그림을 직접 렌더링해 다시 확인합니다. 사용자 편집으로 SVG를 변경하면 PNG와 Manifest도 같은 개정으로 갱신합니다.
+일부 그림만 다시 만들 때는 `--only 1 2`처럼 그림 번호를 지정합니다. 전체 layout 입력이 없는 새 작업 사본에서는 먼저 필요한 전체 생성 입력을 마련합니다. 그림 바이트를 변경하지 않는 출처·설계 메타 갱신은 `python3 architecture/tools/verify_diagrams.py --integrity-only`로 기존 SVG/PNG를 manifest 해시와 대조할 수 있습니다. 이 모드는 원 생성 layout의 선언 기하 검사를 생략하며 이를 PASS로 기록하지 않습니다. 기본 검증 모드는 layout 입력이 없으면 실패합니다. 회귀 검사는 `python3 -m unittest discover -s architecture/tools -p "test_*.py"`로 수행합니다.
+
+최신 DR·Data 메타는 `design/source-manifest.json`에서 읽고 과거 검토·검사 이력과 알 수 없는 확장 필드는 보존합니다. 검증 실패 시 manifest를 덮어쓰지 않으며 같은 입력의 반복 실행은 같은 결과를 내야 합니다.
+
+자동 검사는 글자/출력 경계·폰트 글리프·파일/원문 동일성을 확인합니다. 의미와 화살표 방향, 겹침/가독성은 수정된 그림을 직접 렌더링해 다시 확인합니다. 사용자 편집으로 SVG를 변경하면 PNG와 Manifest도 같은 개정으로 갱신합니다.
 
 ## 남은 작업과 다음 단계
 

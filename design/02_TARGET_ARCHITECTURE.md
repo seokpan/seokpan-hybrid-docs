@@ -2,14 +2,14 @@
 
 > **문서 번호:** 02  
 > **문서 성격:** 2차 프로젝트의 확정 Target Architecture, 책임 배치, Failure Domain, Lifecycle 및 검증 경계를 정의하는 공식 Architecture 문서  
-> **기준일:** 2026-10-01 KST  
+> **기준일:** 최초 2026-10-01 KST / 설계 정합성 개정 2026-10-07 KST  
 > **프로젝트 기간:** 2026-09-28 ~ 2026-10-26  
 > **AWS Credit / 지원 한도:** $500  
 > **팀:** 石판(석나가는 판단), 4명  
 > **Architecture 상태:** CONFIRMED — 상세 Network/IAM/Migration/Test 설계 전 단계  
 > **상위 원칙:** 정상 사용자 요청은 AWS Cloud Primary 내부에서 처리하고, On-Prem은 Restore-based Recovery·CI·Recovery Artifact 역할을 수행한다.
 
-> **2026-10-03 DR 재검토:** 강사 피드백과 사용자 후속 요청에 따른 검토·변경 근거는 [03 §3-I.14](03_DETAILED_DESIGN.md#recovery-design-review-20261003)에 연결한다. 승인된 복원 구조와 목표는 유지 중이며 적절성과 달성 가능성은 재검토 대상이다. 이번 보완은 이미 승인된 새 Recovery Redis·전체 업무 재개 경계를 정합화하며 새 목표나 Warm Standby를 확정하지 않는다.
+> **현재 DR 설계 기준:** [03 §3-I.14.5](03_DETAILED_DESIGN.md#recovery-design-decision-20261005)의 **RTO 10분·영속 DB RPO 30분·DB 운영 중 Portable Backup 15분 계획 주기**를 적용한다. Cloud Primary + On-Prem Backup/Restore 구조는 유지한다. [PR #30](https://github.com/seokpan/seokpan-hybrid-docs/pull/30)으로 채택·병합된 설계이며, 2026-10-03의 재검토와 이전 30분/90분/1시간은 결정 이력이다. 실제 운영 최신성·전체 업무 복구·T18 달성 여부는 05와 실행 증거에서 별도로 판정한다.
 
 ---
 
@@ -34,6 +34,8 @@
 ---
 
 # 2. 프로젝트 배경과 출발점
+
+> **OCP 사전검증 Registry:** Harbor 직접 연결이 수락되지 않은 실습 환경에서는 승인 Digest를 보존한 OCP 내부 Registry 사본을 사용한다. 정상 Cloud의 ECR과 온프레미스 Recovery의 Harbor 역할은 유지한다. 경로 제약·복사/Pull·소비 Source의 실제 결과는 [GitOps #14](https://github.com/seokpan/seokpan-hybrid-gitops/issues/14)·[#17](https://github.com/seokpan/seokpan-hybrid-gitops/pull/17)과 05에서 추적하며, 사전검증을 ROSA 최종 수락으로 승계하지 않는다.
 
 ## 2.1 1차 온프레미스 플랫폼
 
@@ -503,7 +505,7 @@ User Access Path
 
 2차 Runtime State 계층의 목표 엔진은 **Amazon ElastiCache for Valkey 7.2**다(2026-10-06 팀 결정, Data 계약 v2.2).
 
-현재 Data Source의 Redis OSS 7.1은 C의 Data Root 개정에서 전환하며, 설계 목표 선택을 Source 병합·실제 생성·App 호환성 시험 완료로 해석하지 않는다. Cloud·lab·Recovery는 Valkey 7.2 계열을 목표로 하고, lab·Recovery Image Digest와 실제 실행 조건은 별도로 수락한다. Generic Redis는 Runtime 계층과 프로토콜의 논리 이름으로 유지한다. 상세 경계는 [03 §3-D.9.7](03_DETAILED_DESIGN.md#data-engine-contract-20261006)에 기록한다.
+Cloud·lab·Recovery의 선택 엔진은 Valkey 7.2 계열이다. Data Root 전환 Source는 [Infra PR #37](https://github.com/seokpan/seokpan-hybrid-infra/pull/37)으로 병합됐으며, 실제 생성·App 호환성 시험과 lab·Recovery Image Digest/실행 조건 수락은 별도다. 구현 진행은 05·Infra #19에서 추적한다. Generic Redis는 Runtime 계층과 프로토콜의 논리 이름으로 유지한다. 상세 경계는 [03 §3-D.9.7](03_DETAILED_DESIGN.md#data-engine-contract-20261006)에 기록한다.
 
 기본 구조:
 

@@ -1,14 +1,14 @@
 # 石나가는 판단 2차 프로젝트 04 구현 준비와 실행계획
 
 > **현재 단계:** 03 종료 유지, 04 문서 전체 종료 — 후속 05 구현·통합·검증으로 인계  
-> **기준일:** 2026-10-01 KST  
-> **상태:** 역할/Root 실행 책임, 복구 DB 직접 연결, AWS Provider 6.67.0 초기 후보, GitOps Writer PAT, Secret 주·예비 보관자와 Release/Evidence 형식 확정. 새 VM 생성 가능 사용자 확인. 전용 새 복구 DB VM과 유지 비상 관리자·초기 인증 회수 모델까지 사용자 채택. 전체 연쇄 보완·재검증 수렴, 추가 보완 0건으로 04 문서 전체 종료. 실제 입력·구현·시험은 후속 Gate로 인계  
+> **기준일:** 최초 2026-10-01 KST / 설계 정합성 개정 2026-10-07 KST  
+> **상태:** 04 문서 종료 유지. 역할/Root 실행, 복구 DB 직접 TLS·전용 새 VM, Provider 초기 후보, GitOps Writer, Secret 보관, Release/Evidence 및 비상 관리·초기 인증 회수의 운영 기준을 확정했다. 이후 DR·Valkey 결정은 반영하며 실제 입력·구현·시험은 05의 실행 Gate로 관리한다. 2026-10-01 당시 검토 종료와 이후 정합성 보완을 구분한다.  
 > **상위 기준:** 승인된 `01_PROJECT_CHARTER.md`, `02_TARGET_ARCHITECTURE.md`, `03_DETAILED_DESIGN.md`, `PROJECT_INSTRUCTIONS.md`와 사용자의 최신 명시적 결정  
 > **기간과 AWS 한도:** 2026-09-28~2026-10-26, $500. 승인된 계획선 $450와 여유 $50 유지
 
-> **2026-10-05 DR 설계 변경 인계:** 기존 직접 TLS·새 전용 DB VM·새 Redis 구조/운영 결정은 유지한다. [03 §3-I.14.5](03_DETAILED_DESIGN.md#recovery-design-decision-20261005)의 현재 변경안은 **RTO10분·영속 DB RPO30분·운영 중 Backup15분, Backup/Restore 유지**다. 이 개정이 main에 병합되면 새 공식 설계로 전환하며, 그 전 main의30분/90분/1시간 승인 이력과 구분한다. 실제 전체 달성은 NOT RUN이다. 실제 준비/Cost/전체 업무 Acceptance는 실행 Gate로 남기고 전체 ROSA/05 완료를 설계안의 선행조건으로 묶지 않는다.
+> **현재 DR 설계 인계:** 직접 TLS·새 전용 DB VM·별도 새 Runtime 및 Backup/Restore 구조는 유지한다. [03 §3-I.14.5](03_DETAILED_DESIGN.md#recovery-design-decision-20261005)의 **RTO 10분·영속 DB RPO 30분·DB 운영 중 Backup 15분 계획 주기**는 [PR #30](https://github.com/seokpan/seokpan-hybrid-docs/pull/30)으로 채택·병합됐다. 이전 30분/90분/1시간은 당시 이력이며 실제 전체 목표 달성·T18은 미검증이다. 실제 준비·Cost·업무 Acceptance는 실행 Gate로 유지하고 ROSA/05 전체 종료를 설계 선택의 선행조건으로 두지 않는다.
 
-이 문서는 승인된 03 상세설계를 실제 작업자, 입력, 인계, 일정과 구현 시작 조건으로 연결한다. 03의 설계 기준은 유지하고, 04에서 확정된 운영 결정과 아직 확인하지 못한 실제 값을 구분해 기록한다. 사람별 역할, 작성과 리뷰 책임, Root별 실행 책임, 복구 DB 직접 연결, AWS Provider 6.67.0 초기 후보, GitOps Writer PAT, Secret 주·예비 보관자와 Release/Evidence 운영 형식, 전용 새 복구 DB VM과 비상 관리·초기 인증 회수 모델이 확정됐다. 새 복구 VM 생성은 가능하다는 사용자 확인을 받았고 Host의 자원 여유는 아직 예상이다. AI의 코드 작성, 배포, 계정 변경, 데이터 이전, 시험과 비용 확인은 완료된 것으로 표시하지 않는다. 팀원의 선행 Bootstrap 코드와 시험 보고는 별도 출처/범위로 기록한다. 추가 demo2 보고의 최유준 A/B/C 예제·관측·정책 검증과 부분 정리도 보고 범위로 접수하며 실제 base/ROSA 시험과 구분한다.
+이 문서는 승인된 03 상세설계를 실제 작업자, 입력, 인계, 일정과 구현 시작 조건으로 연결한다. 03의 설계 기준은 유지하고, 04에서 확정된 운영 결정과 아직 확인하지 못한 실제 값을 구분해 기록한다. 사람별 역할, 작성과 리뷰 책임, Root별 실행 책임, 복구 DB 직접 연결, AWS Provider 6.67.0 초기 후보, GitOps Writer PAT, Secret 주·예비 보관자와 Release/Evidence 운영 형식, 전용 새 복구 DB VM과 비상 관리·초기 인증 회수 모델이 확정됐다. 새 복구 VM 생성은 가능하다는 사용자 확인을 받았고 Host의 자원 여유는 아직 예상이다. 설계 확정을 코드 작성·배포·계정 변경·데이터 이전·시험·비용 확인의 완료로 표시하지 않는다. 팀원의 선행 Bootstrap 코드와 시험 보고는 별도 출처/범위로 기록한다. 추가 demo2 보고의 최유준 A/B/C 예제·관측·정책 검증과 부분 정리도 보고 범위로 접수하며 실제 base/ROSA 시험과 구분한다.
 
 **도입/이전 검토의 시점:** 위 설명과 §7의 미실행·Run 미확인은2026-10-01 문서 종료 시점의 기록이다.2026-10-05에는 [05 §9.20](../execution/05_IMPLEMENTATION_AND_VALIDATION.md#recovery-fixture-measurement-20261005)의 Codex 실제 Data/Backend 부분 Run2개가 추가됐다. 그 Source 작성·부분 DB 복원/업무 시험과 현재 [03 §3-I.14.5](03_DETAILED_DESIGN.md#recovery-design-decision-20261005)의 설계 변경안을 우선 연결하며, 실제 운영 DB/Cloud 배포·전체 RTO/RPO/최종T18·팀원 수행/리뷰/수신이 완료됐다는 의미는 아니다. 과거 문구를 모든 후속 실행의 부재로 읽지 않는다.
 
@@ -36,7 +36,7 @@
 - [x] 두 새 구조안의 직접·후속 영향 반영
 - [x] 04·지침 전체 재검증 수렴과 04 문서 전체 종료 판단
 - [x]2026-10-05 DR10분/30분/15분 변경안의 준비/최신성/Runbook·역할 인계 반영 —03 §3-I.14.5
-- [ ] 관련 Source/문서·SVG/PNG/출처 최종 검증·PR 리뷰/병합, 실제 운영 목표 달성은 별도
+- [x] DR 설계 요구 채택·PR #30 병합. 이후 정합성 보완과 실제 운영 목표 달성은 별도
 - [ ] 작업별 실제 구현 시작 조건 충족과 실행
 
 ## 1 03 종료와 04 사용 범위
@@ -47,10 +47,11 @@
 
 다음 승인 기준을 유지한다.
 
-- Cloud Primary와 On-Prem Restore-based Recovery, ROSA Classic Multi-AZ, RDS MariaDB Multi-AZ, ElastiCache Valkey 7.2 Multi-AZ(2026-10-06 팀 목표 개정 — [03 §3-D.9.7](03_DETAILED_DESIGN.md#data-engine-contract-20261006); 현재 Data Source의 Redis OSS 7.1 전환·실제 생성/호환성 시험은 별도)
+- Cloud Primary와 On-Prem Restore-based Recovery, ROSA Classic Multi-AZ, RDS MariaDB Multi-AZ, ElastiCache Valkey 7.2 Multi-AZ(2026-10-06 팀 목표 개정 — [03 §3-D.9.7](03_DETAILED_DESIGN.md#data-engine-contract-20261006); Data Root 전환은 Infra PR #37 병합, 실제 생성·호환성 시험은 별도)
 - App, Infra, GitOps, Docs 네 저장소와 1차 독립 포트폴리오 보존
 - bootstrap, foundation, rosa 세 Root와 State, 목적별 실행 Role, 제한된 비밀값 아닌 입력 전달
 - ECR Cloud Runtime Pull과 Harbor Recovery 보존, GitOps와 Secret 공급의 소유권 분리
+- OCP 사전검증은 승인 Digest를 보존한 내부 Registry 사본을 사용하며, 실습의 Harbor 직접 경로 제약을 Cloud ECR·Recovery Harbor 역할 변경으로 확대하지 않음
 - SOPS+age와 범위별 Secret 공급, Git 밖 암호문 원본과 오프라인 예비 Key
 - App 자동 Sync/SelfHeal과 자동 Prune 보류, 제한된 Offline Ansible Apply 예외
 - 승인된 버전과 규모의 초기 후보, 시험 목표, $450 계획선과 $500 한도, 10/16 Technical Freeze 등 기존 일정
@@ -746,7 +747,7 @@ Host명/실제 용량, Credential ID, Org 정책, 실제 단가/Plan이나 후�
 
 ### 11.3 종료와 다음 입력
 
-2026-10-01 KST 전체 연쇄 검토→보완→재검증→정정 후 재검증을 마쳤으며 추가 보완/변경 0건으로 수렴했다. 사용자 요청의 종료 조건이 충족돼 **04 문서 전체 종료**로 판단한다. 역할/Infra·State/Recovery/Evidence를 나눠 전체 대조하고 수정 영향을 다시 확인했으며 최종 상태 선언도 별도 확인했다. I01~I07과 W02~W10은 `05_IMPLEMENTATION_AND_VALIDATION.md`로 인계한다. 05의 새 Source 관측/실행 결과는 그 기록에 누적하며 닫힌 04의 과거 관측을 최신 Runtime으로 바꾸지 않는다. 설계 기준을 실질적으로 바꾸는 제약은 결정·영향을 별도 기록한다.
+2026-10-01 KST 전체 연쇄 검토→보완→재검증→정정 후 재검증을 마쳤으며 추가 보완/변경 0건으로 수렴했다. 당시 문서 검토 종료 조건을 충족해 **04 문서 전체 종료**로 판단했다. 역할/Infra·State/Recovery/Evidence를 나눠 전체 대조하고 수정 영향을 다시 확인했으며 최종 상태 선언도 별도 확인했다. I01~I07과 W02~W10은 `05_IMPLEMENTATION_AND_VALIDATION.md`로 인계한다. 05의 새 Source 관측/실행 결과는 그 기록에 누적하며 닫힌 04의 과거 관측을 최신 Runtime으로 바꾸지 않는다. 설계 기준을 실질적으로 바꾸는 제약은 결정·영향을 별도 기록한다.
 
 04의 문서 완결성과 실제 실행 준비를 분리한다. 실제 base/lab·Plan·Full Apply·ROSA/Recovery Acceptance는 미완료이며, 문서 검증으로 PASS를 부여하지 않는다. 추가 입력/코드/시험으로 발견되는 제약은 후속 단계의 정당한 변경 관리이며 모든 미래 사실이 알려졌다는 뜻으로 문서를 종료하지 않는다.
 

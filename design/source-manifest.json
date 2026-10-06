@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "source_basis_date": "2026-10-06 KST",
-  "recorded_date": "2026-10-06 KST",
-  "source_type": "approved Project Source with scoped DR and Data engine target corrections",
-  "copy_policy": "00/01 unchanged; original upload identities and approval history retained; current 02/03/04 include scoped DR corrections and the 2026-10-06 Valkey 7.2 target alignment",
+  "recorded_date": "2026-10-07 KST",
+  "source_type": "approved design decisions with current wording and provenance corrections",
+  "copy_policy": "00/01 unchanged; original upload identities and decision/run history retained; 02/03/04 wording aligned with merged DR and Valkey decisions; project registration tracked separately.",
   "files": [
     {
       "path": "design/00_PROJECT_STARTING_POINT.md",
@@ -22,26 +22,26 @@
     {
       "path": "design/02_TARGET_ARCHITECTURE.md",
       "uploaded_name": "02_TARGET_ARCHITECTURE.md",
-      "bytes": 45047,
-      "sha256": "2bacd5627343a008f3b9dd5cdfd47c865c093abfcb585f00fab6b12ac932aa91",
+      "bytes": 45759,
+      "sha256": "87ad991c1af4ed139c420724d57f723ab33ff25725c3d405f53b07b66cef1835",
       "source_header_date": "2026-10-01 KST"
     },
     {
       "path": "design/03_DETAILED_DESIGN.md",
       "uploaded_name": "03_DETAILED_DESIGN.md",
-      "bytes": 480072,
-      "sha256": "131385736ff3ad26843653ee1d16a81f376b9785d67ffcf46399e3fee8ea034d",
+      "bytes": 479616,
+      "sha256": "7196900ed401b3f2b800ccb68ff74a6bff455451b33d15cdf10fec04611ca91a",
       "source_header_date": "2026-10-01 KST"
     },
     {
       "path": "design/04_IMPLEMENTATION_READINESS.md",
       "uploaded_name": "04_IMPLEMENTATION_READINESS.md",
-      "bytes": 116396,
-      "sha256": "ddbcf9740c215550ab4bb19f2077ba63bafb0b009acbc9881a9c6d38a9398973",
+      "bytes": 116585,
+      "sha256": "a7d5a374edd27fed92ef633aac74f15a5a515fd2491b5a55b2f0508f4557088d",
       "source_header_date": "2026-10-01 KST"
     }
   ],
-  "source_basis_meaning": "latest decision date of this source set; each original document retains its own header date",
+  "source_basis_meaning": "latest approved decision date; recorded_date separately tracks wording/provenance verification, not a new design approval",
   "original_upload_files": [
     {
       "path": "design/00_PROJECT_STARTING_POINT.md",
@@ -108,7 +108,7 @@
       "operating_portable_backup_interval_minutes": 15
     },
     "structure": "Cloud Primary plus On-Prem Backup/Restore; dedicated new isolated MariaDB and separate new Redis; no additional Warm Standby or continuous replication.",
-    "repository_application": "New design requirements apply when this Docs change is reviewed and merged to main; earlier 30/90/hourly baseline remains historical.",
+    "repository_application": "DR requirements adopted and merged through Docs PR #30 (ab116463fd1f1a75d54e734c3c1c99cd098f639d); earlier 30/90/hourly baseline is historical. This wording correction is not a new target approval or Runtime PASS.",
     "actual_partial_runs": [
       {
         "reference": "evidence/T18/fixture-20261005-01/summary.md",
@@ -194,16 +194,16 @@
   ],
   "data_engine_followup": {
     "date": "2026-10-06 KST",
-    "status": "TEAM_TARGET_SELECTED_SOURCE_IMPLEMENTATION_PENDING",
+    "status": "TEAM_TARGET_SELECTED_DATA_SOURCE_MERGED_RUNTIME_PENDING",
     "reference": "design/03_DETAILED_DESIGN.md#data-engine-contract-20261006",
-    "authority": "User-provided C Data contract v2.2, team Valkey 7.2 decision; Infra #19",
+    "authority": "C Data contract v2.2 and team Valkey 7.2 decision; Infra #19 and PR #37",
     "provided_contract": {
       "name": "data-contract-v2_2-20261006.md",
       "bytes": 31460,
       "sha256": "40f4480d3d6d40d932e0ca7c336c129985010429c6f4cab95de90a688954f509"
     },
     "target_engine": "ElastiCache Valkey 7.2; same Valkey 7.2 family for lab and Recovery",
-    "current_data_source_engine": "Redis OSS 7.1; C Data Root change pending",
+    "current_data_source_engine": "Valkey 7.2: Infra PR #37 merged at 2af2d61f6985ca15dbe8415c84712575f0e92aeb; actual creation and compatibility acceptance remain pending.",
     "runtime_validation": "NOT_RUN_FOR_VALKEY",
     "existing_redis_7_2_4_runs": "HISTORICAL_ONLY_NOT_VALKEY_ACCEPTANCE",
     "pool_proposal": "NOT_ADOPTED; measured connections, terminating Pod overlap and load require B/C decision",
@@ -230,5 +230,12 @@
       "10",
       "11"
     ]
+  },
+  "consistency_revision": {
+    "date": "2026-10-07 KST",
+    "scope": "Current DR decision wording and Data Source status; no new architecture, limits, Runtime result or historical test rewrite.",
+    "source_reference": "Docs #21; GitOps #17; Infra #19/PR #37",
+    "runtime_validation": "NOT_PERFORMED",
+    "svg_png_policy": "Preserve all 12 existing SVG/PNG byte identities; regenerate provenance only after verification."
   }
 }
