@@ -198,6 +198,75 @@ App10은 기존 B 승인 뒤 병합됐으며 이번에 새 APPROVE를 올린 것
 
 순서는 **D Image 개정 제공/B 수락 → B held Source 개정 → PR 리뷰/병합 → 실제 Secret/Data·Owner 수락 → 별도 활성화/필요 Migration·수동 Sync → 해당 Workload Pull/Ready/업무 시험**이다. §5.7의 새 Run/Cleanup 대기는 당시 이력이며 D Run3 성공 보고는 이번에 수락했다. 현재 replicas0·Job suspend/current를 유지하므로 이번 Image 선언만으로 App이 가동되는 것은 아니다. OCP Image 공급 대기는 해소됐고 Source 리뷰와 나머지 실제 최소 입력은 계속 대기한다.
 
+### 5.9 이번 학습 — 입력 완료와 비용 판정은 따로 확인한다
+
+| 배우는 원리 | 실제 이번 확인 | 왜 필요한가 |
+| --- | --- | --- |
+| **수량 × 단가 × 과금기간** | 개정 원장의 기간 공란은 비용 빈칸·미완. 합성 입력의 IPv4 4개×$0.005×24시간은$0.48 | 빈칸은 아직 모르는 값이다. 기간0을 확인한 것과 다름. 예시는 서울 견적 확정값이 아님 |
+| **숫자 검증** | 판정 B7/B11/B12에 `미확인`을 넣으면 빈칸 검사에서 빠져 합성 PASS가 나올 수 있음 | 글자가 들어있어도 비용 계산에 쓸 숫자가 없을 수 있다. 숫자·비음수와 완결 상태를 함께 확인 |
+| **최대시간 = 남은 예산 ÷ 시간당비** | 계획선$450·비시간 비용$150·시간당$2이면150시간. 현 B20은 비시간 비용을 빼지 않아225시간 표시 | EBS/GB·전송·보관·Buffer처럼 시간당비에 없는 비용을 먼저 포함해야 실제 남은 예산을 알 수 있음 |
+| **예상과 실제** | B 입력은 개정 원장19~24행. 생성 전 지원 구성/예상 목록·기간, 생성 후 실제 목록·기간을 따로 기록 | 본인 가용 시각은 팀 실행 창이고 Cloud가 과금되는 시간과 같지 않음 |
+
+검증은 원본을 바꾸지 않고 LibreOfficeDev26.8로 복사본60수식을 재계산해18시나리오·56개 기대값을 대조했다. 기간/Credit 보완은 확인됐고 현재 **미완19·미확인5·PARTIAL**이다. 남은 수식 보완과 B 입력1~6은 [05 §9.37](05_IMPLEMENTATION_AND_VALIDATION.md#b-cost-ledger-independent-audit-20261006)·[D 비용 원본 Docs #43](https://github.com/seokpan/seokpan-hybrid-docs/issues/43)를 따른다. 이전 §5.6의 새xlsx 미수신은 당시 이력이다.
+
+### 5.10 이번 학습 — Git 선언 적용과 Image Pull은 서로 다른 경로다
+
+**목적·위치:** [D Registry 원 보고](https://github.com/seokpan/seokpan-hybrid-gitops/issues/14#issuecomment-6011344271)와 GitOps `clusters/ocp-lab/{bootstrap,root}/`, `apps/overlays/lab/`, `tools/render_release.py`를 대조했다. 코드가 클러스터에 영향을 주는 경로와 Image를 받는 경로는 다르다.
+
+| 경로·핵심 개념 | 실제 동작 | 이번 상태·조건 |
+| --- | --- | --- |
+| GitHub → Argo CD → Kubernetes API | Argo가 지정 SHA/Path의 YAML을 읽고 요청하면 API가 Deployment/Service/Route 등 선언을 적용 | 제한 Project/Root 등록·Repo/Render/Diff를 먼저 준비할 수 있음. 공유 Owner·수행자/B권한·사용창·Git 접근 수락 필요. Root Sync로 Child를 등록해도 자동 Sync 없는 Child App은 바로 적용되지 않음 |
+| Worker Node → Registry → Image → Pod | Worker가 Registry에 연결하고 TLS 확인·인증 후 Image를 받아 컨테이너를 실행 | 현재 직접 Harbor 경로 미확보. DNS=주소 찾기, TCP=요청/응답 길, CA=서버 신뢰, Secret=로그인 권한. Secret/CA만으로 망은 연결되지 않음 |
+| `replicas: 0` | Deployment가 원하는 Pod 수를0으로 요청 | 새 Pod Image Pull은 필요하지 않지만 Service2/Route3/ConfigMap1/Deployment2 적용은 실제 변경. 기존 동명 App을0으로 줄일 수 있어 live Owner/Diff 없이 Full Lab Sync하지 않음 |
+| Image Index와 child | Index가 플랫폼별 Manifest를 가리킴 | 기존 승인 index를 유지하는 복사와 한 amd64 child 복사를 구분. `--all`과 `--preserve-digests`는 별개이고 대상 실제 digest를 확인하며 내용/identity mapping을 수락 |
+
+**진행 판단:** ② lab 노드와 승인 이미지 전송 호스트가 모두 접근 가능한 **기존 공통 Registry의 가능성 확인을 우선**하고, ① 공유 망 Owner의 lab↔Harbor 연결 가능 여부·영향·담당·예상 시점을 병행 확인한다. 실제 target Registry·Owner·권한·도달성은 미확인이며 아직 주소/Secret 참조를 바꾸거나 복사하지 않는다. ③ 양쪽이 OCP 목표 창 안에 불가능하면 기존 ROSA/ECR 시험선에 미수행 Case를 연결한다. OCP 등록/Sync와 Pull/업무 결과를 따로 남기고, lab 시험만을 위한 추가 유료 Cluster는 만들지 않는다. Cloud ECR·Recovery Harbor 역할은 유지한다.
+
+**이번 결과·한계:** exact GitOps main `fc175a7002ad567e9d5206b6e4b6642e8416eea2`의 8경로/22객체를 독립 Render했고 Lab은8객체다. 별도 suspended Migration/선택 Namespace는 Root/App 일괄 적용 대상이 아니다. 현 Release helper는 `INPUT_REQUIRED`·`.invalid`·draft marker·0Replica 보류를 exit2로 거부하고 출력하지 않아 실행 guard를 유지한다. 신규 validator/Namespace나 강제 우회를 만들지 않았다. D 임시 route 원복 보고를 유지하며 노드 직접 접근·B 권한·실제 등록/Sync/Pull·공지 수락은 미확인이다.
+
+**병합된 후속 Source:** [GitOps PR #15](https://github.com/seokpan/seokpan-hybrid-gitops/pull/15)은 문서 2파일 PR이며 C의 최신 HEAD 승인 후 18:42:19 KST에 main `57c73bea3c01609a90143f7cf7e51d86035e0fc9`로 병합·브랜치 삭제됐다. D의 [02215c8 승인](https://github.com/seokpan/seokpan-hybrid-gitops/pull/15#pullrequestreview-5426097223)은 문서 정확성 범위이며 실제 입력/Runtime 수락이 아니다. 동일 Podman 계정·모드와 실패 결과 기록, 실제 Redis protocol 기록과 중복 설명을 같은 PR에서 보완해 최신 HEAD `cdb77dc3abd99d7321f905d53dfd431d2ea554ef`의 C 리뷰를 수락해 병합했다. [같은 HEAD Native CI](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37441602354)의 Source 검사 39개 PASS·진단 Render 8경로/22객체 생성을 확인했고 최신 C 문서 승인을 확인했다. Pool/Redis 판단의 기준은 [최초 배포 안내](https://github.com/seokpan/seokpan-hybrid-gitops/blob/57c73bea3c01609a90143f7cf7e51d86035e0fc9/handoff/OCP_FIRST_DEPLOYMENT.md)이며 실제 설정 선택·Registry 이동/IDMS 적용은 별도다. 승인 YAML·Image·Guard·Namespace·기동 보류는 그대로다. CI artifact ZIP을 이번에 독립 다운로드·Hash 대조한 것은 아니다.
+
+**앞선 검토/CI 이력:** `02215c823bbbe7e74cabccf54e9a61b81b34f401`의 [Native CI](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37436964045)는 39검사 PASS·8경로/22객체 Render 생성이다. 이전 `db0251baf7283de5529c0bfd43cad82950e8f3b1`의 [Native CI](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37435158422)39검사 PASS·8경로/22객체 Render 생성과6d626c5/Run37434254592·54952bf/Run37433341860은 구 HEAD 이력이다. 현재 main은 fc175a70이며 실제 OCP/AWS/Registry/Image 명령·호환 Run은 미실행이다.
+
+**C v2 전체 파일 수신·B §6 대응:** 사용자가 제공한 `data-contract-v2-20261006.md`의 §0~7 전체를 읽었다. SHA256은 `8679c46b80b1fe93b2083aea584a47e65cf4882d0c976a7cd9218159fe8f4616`다. [Infra19 v2 원 기록](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6011904645)·[§6 수락 요청](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6011914737)·[GitOps6 연결](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6#issuecomment-6011931355)과 연결한다. C는 원 댓글도2026-10-06 17:14:34 KST에 §0~7 전체로 갱신했다. 최초 공개 조회의 소개/§0 관측은 당시 이력이며 파일/원 댓글 전체 수신·공유는 완료다. 실제 공급값·Run 수락은 별도다.
+
+| C §6의 B 요청 | B 수신·Source 판단 | 내 일 또는 팀 공급으로 남는 실제 확인 |
+| --- | --- | --- |
+| App Image Alembic head=`20260902_0002` | 승인 Image Source46와 App2003의 Migration2개가 같은 Blob이며 Source head=`20260902_0002` 확인. Cloud import 후 `current` 전제 조건부 수락 | 실제 Run3 Image 자산/명령 확인·C 실제 import/DB `current` 출력은 별도. Source head 확인을 실제 Schema PASS로 쓰지 않음 |
+| Redis OSS7.1 호환 | C의7.1 선택/서울 생성 지원 보고는 수신. AWS7.1은 RedisOSS7.0 호환이고 locked redis-py8.1.0 지원표는 Redis7.2 이상으로 차이가 있음. B 호환 수락은 아직 보류 | **B/C의 일:**engine/client 지원 전략을 합의한 뒤 B가 Lua10모듈/정적 명령29개·전체 Session/Room/Vote/채팅/Presence/시작·종료/PubSub·RESP3/응답 동작을 실제 시험. Source46→2003은 동일. 현 작업환경 실행 도구가 없어 NOT RUN이지만 환경 확보만의 대기는 아님. Managed 연결 수락 단계 조건이며 첫 ROSA Plan/독립 준비 선행으로 추가하지 않음 |
+| native Endpoint/no CNAME·세션 시간대 미지정 | Source에 `SET time_zone` 없고 게임 UTC-naive/회원 CURRENT_TIMESTAMP 사용을 확인해 조건 수락. RDS `time_zone=Asia/Seoul`·DATETIME±9h 일괄 변환 금지 유지 | A/C: 실제 DB 기본 시간대 통합/값. B: 실제 Client/업무 시각 확인. Endpoint/CA/Secret 실값은 Apply 후 |
+| backend Pod/uvicorn process·Pool/rolling | Cloud3HA·surge1 후보와 C의10개 예약/연결 상한을 함께 대조. 현재0보류 유지 | B/C: 실제 max_connections와 Process/Engine/Pool·종료/Migration 예산 합의. overflow5 또는 surge0 단독으로3HA 안전을 수락하지 않음 |
+| Runtime Host=VPC `/20` | Source machineCIDR192.168.64.0/20·podCIDR10.128.0.0/14를 구분하고 VPC SQL Host를 조건부 수락. Worker→Data SG 제한 유지 | 생성 후 B/A/C가 실제 CNI/Egress·DB SQL 출처/Host·SG를 확인. 기본 OVN Node SNAT 가능성을 실제 환경의 성공으로 쓰지 않음. Migration의 Data VM `/32`는 별도 공급이며 `%`로 넓히지 않음 |
+
+**이미 받은 공급 계약:** §2.9의 논리 자원6개는 `backend-config`, `backend-db-runtime`, `backend-db-migration`, `backend-redis-runtime`, `backend-database-ca`, `backend-redis-ca`로 명시돼 있다. 현재 Source는 비민감 `backend-config` ConfigMap·목적 Secret3개·공개 CA ConfigMap2개를 소비한다. C 그림/표의 CA Secret 표현은 실제 공급 kind를 맞추는 문서 정합 후속이며 중복 Secret 생성/무조건 Source 변경을 하지 않는다. RDS 서울 CA Bundle 조건을 수락하되 실제 bytes/Hash는 별도 수신, Redis CA는 생성 후 실제 체인 인계 대기다. 실제 자격/값은 보호 공급하고 공개 댓글에 복사하지 않는다.
+
+**Migration/lab 수락과 직접 대기:** deadline300초·suspended 기본·단일 Job·`db_admin` 전용·기대 Revision 출력 판정을 계약으로 수락했다. Cloud/Recovery는 Image head와 import revision이 맞으면 `current`; lab은 D가 Schema 상태를 확인해 `current` 또는 빈 DB의 `upgrade head`1회를 정한다. Job Complete만으로 Schema PASS/DDL 권한 수락으로 쓰지 않는다. D는 lab DB Service DNS·인증서 SAN/10월26일 이후 유효기간·Schema, 새 TLS+AUTH Redis의 구성/시각·목적 자격·음성 Case5개를 공급/실행한다. 기존 PVC 없는 lab DB의 재시작/삭제 금지는 유지한다. 전체 계약 수신과 실제 CA/Secret/Endpoint·Job/Redis7.1/업무 Run은 별도다. 이미 보고된 Data bootstrap IAM Apply를 다시 대기조건으로 만들지 않는다.
+
+**DB 연결 예산·RollingUpdate:** App main `2003fe9d0b27a9b443da26f9fb15cd829aaf8fed`의 `backend/src/seokpan/persistence/mariadb/connection.py`는 Identity/Game Runtime Engine2개를 만들며 `pool_size`/`max_overflow`를 명시하지 않는다. SQLAlchemy2.0의 QueuePool 기본5+10으로 **uvicorn1process Source 기준 상한 후보30연결/Pod**다([공식 Pool 문서](https://docs.sqlalchemy.org/en/20/core/pooling.html)). 2Pod 정상60/2+surge1은90, Cloud3은90/3+surge1은120이다. 여기에 C가 지정한 App 외10개 예약과 종료 중 Pod/Migration 사용을 함께 반영해야 한다. 실제 실행 결과가 아니다. C의 max_connections<85/Backend2를2Pod rollout 안전으로 수락할 수 없다. GitOps `apps/overlays/cloud/activation-target/kustomization.yaml` Backend3와 base `maxSurge: 1`/`maxUnavailable: 0`를 대조했다([공식 Deployment 문서](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)). overflow10→5만 줄이면20/Pod가 되어도4×20+예약10=90으로85미만에 맞지 않는다. maxSurge0만 고르면 기존 maxUnavailable0과 둘 다0이 되어 유효한 rolling 조합이 아니며 정상3×30부터 예산 초과다. 종료 중 연결도 별도 여유가 필요하다. 따라서 제시된 둘 중 하나를 단독으로 고르거나3→2만 바꾸지 않고 B/C가 실측 max_connections−예약10·Process/Engine/Pool cap·활성/종료/Migration 예산과 rolling 정책을 합의한다. 현0보류와 승인3HA Preview를 유지하며 실제 연결/rolling 시험은 별도다. Pool 소비/수정 정본은 [App #1](https://github.com/seokpan/seokpan-hybrid-app/issues/1), 실제 연결/업무 결과는 GitOps6에 남긴다.
+
+**Redis 지원 범위의 새 확인:** [AWS engine versions](https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/engine-versions.html)는 ElastiCache7.1을 RedisOSS7.0 호환으로 설명하고, [locked redis-py8.1.0 지원표](https://github.com/redis/redis-py/blob/v8.1.0/README.md)는6.0이상 클라이언트의 Redis7.2이상 지원 범위를 적는다. 실행 불가능이 증명된 것은 아니지만 현재 선택을 문서상 지원 조합/호환 PASS로 수락할 수 없다. B/C가 engine/client 지원 전략을 먼저 합의하고 전체 실제 시험을 수행한다. driver 임의 다운그레이드·Valkey 전환·RESP2 강제 변경은 지금 적용하지 않으며 기존8.1 RESP3/응답 동작도 시험 범위에 포함한다. 이 판단은 Cloud App 연결/업무 수락에 해당하며 첫 ROSA Plan·제한 등록·offline Image 검사와 독립이다.
+
+**D lab 부분 공급 수신·B 판단 — 2026-10-06 KST:** [D §6 최신 답변](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6012181426)(17:17:02 KST 개정)을 읽었다. DB Service DNS `mariadb.seokpan-app.svc`, DB 서버 인증서의 같은 SAN·발급자 `seokpan-lab-ca`·서버 인증서2026-10-31 만료 보고를 수신해10/26 이후 조건을 수락한다. CA 인증서의 만료·실제 CA bytes/Hash·Runtime/Migration 목적 Secret·Schema/DB 노드 경로는 별도 공급·실행 대기다. D도 Migration300초를 수락했고 실제 `current`/`upgrade`는 아직 실행하지 않았다.
+
+| 직접 입력/진행 | 지금 수신·결정 | 다음 담당·실제 조건 |
+| --- | --- | --- |
+| lab MariaDB | DNS/SAN/만료·300초 범위 수신. PVC 없는 기존 DB 재시작/삭제 금지 유지 | D: CA bytes/Hash·목적 자격·합성 데이터 출처·실제 Schema/current·노드 연결. Schema가 비었을 때만 수락한 단일 upgrade1회 |
+| lab TLS+AUTH Redis | 현재 사용 가능한 새 TLS/AUTH Redis 없음. 기존 seokpan-app/redis8.10.1은 평문/noAUTH·PVC5Gi이며 demo2 보존. Argo 내부 Redis도 제외 | **D가 lab 구성/실행·공급과 일정을 맡고, B는 선언/restricted UID·읽기전용/쓰기 경로·TLS/AUTH Probe를 리뷰, C는 Data CA/AUTH 계약 확인.** 정확 DNS·CA 발급 주체/기간·ImageDigest/noeviction·Probe·공유 사용 수락은 D 실제 개정 대기 |
+| db_admin Runtime 음성 Case | Migration 실제 자격을 Backend Deployment에 공급하지 않음. 승인 Image의 순수 URL 검사 함수에 가짜 db_admin URL을 주고 계정 거부만 확인 | D 기존 cp-03에서 `--network=none --pull=never`·Secret/DB/CA/Settings 없이 실행. 별도 Pod/진짜 자격 공급 없음. 실제 수행/결과는 GitOps6 Run에 기록 |
+| 실제 Image Alembic head | 승인 Source head20260902_0002 확인과 Image 내부 자산 확인을 분리 | D cp-03의 승인 Digest Image에서 ScriptDirectory offline `get_heads`로 확인 가능. DB/env.py·lab Registry 연결을 기다리지 않음. 검사안 제공이며 실제 실행은 NOT RUN |
+
+**영향/계속할 일:** D는 lab Redis 구성 주체/일정과 실제 선언·입력, B는 그 개정과 제한 등록 입력을 리뷰하고 Source를 연결한다. 지금 신규 Redis 선언·Namespace·검사 Gate를 만들지 않았으며 기존 demo2/Argo Redis·DB를 수정하지 않았다. 순수 User 거부 Case는 TLS/Ready/GRANT 시험의 PASS가 아니고 offline Image head는 실제 DB revision 확인이 아니다. 자세한 실행안은 GitOps PR15 인계 문서에서 확인한다. 이 수신은 OCP Registry 차단·실제 Secret/Data/Owner 수락을 해소한 전체 배포 완료가 아니다.
+
+**17:27~17:30 KST 추가 수신·직접 대기:** [C v2.1 후속](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6012401242)에서 lab Redis 설정 원칙을 받았다. C는 complete `redis.conf`·인증서 조건·Probe 실행 기준을 **10/7 오전 제공 예정**이며, D가 인증서 발급/Kubernetes 구성·배포·시험을 맡고 B는 소비 선언·임의 UID/쓰기 경로·TLS/AUTH Probe를 리뷰한다. C의 `port0`, server TLS+별도AUTH, noeviction·저장off/emptyDir·Key0440·AUTH 환경변수/TLS execProbe 원칙은 수신했고 완성 공급/실행은 아직 아니다. D가 Service 이름을 정해 SAN에 `.svc`/`.svc.cluster.local` 두이름을 넣고 소비 Host를 하나와 정확히 맞춘다. Redis7.x 권장은 정확 version/digest 공급이 아니며 Cloud7.1/client8.1 지원 전략·실제 호환 대기는 유지한다. 같은 Recovery 설정 원칙도 환경별 CA/Token/DNS를 섞지 않고 적용한다.
+
+**D의17:30 읽기 보고:** [GitOps6 현재 카드](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6)에서 대상 Namespace의 기본 SA/CA 외 객체 없음, Quota/LimitRange/NetworkPolicy 없음·default Project의 넓은 허용·Applications0·Controller 정상 보고를 수신했다. D Caller system:admin과 B 권한은 별도이며 실제 적용 직전 Owner/권한/사용창·선택 범위/live Diff 수락을 유지한다. D는 CA CN seokpan-lab-ca의 만료도2026-10-31 05:54:12 GMT로 보고했다. 이는 추가 CA metadata 보고이고 B/AI의 CA bytes/Hash·TLS 독립검증 완료가 아니다. DB서버 인증서와 CA 만료를 같은 관측으로 합치지 않는다. 기존 demo2/DB/평문Redis/PVC·Argo 내부Redis를 변경하지 않는다.
+
+**기록·전달·수신 구분:** Registry 판단은 [GitOps14](https://github.com/seokpan/seokpan-hybrid-gitops/issues/14)·[10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10)에 작성했다. 사용자 18:44:47 KST 확인으로 Registry·Data·최신 비용 답장 3건의 전달·수신은 완료됐다. 공유 Owner 공지·사용창 수락은 별도다. C 계약 B5 응답은 [Infra19](https://github.com/seokpan/seokpan-hybrid-infra/issues/19)에 기록한 부분 수락/보완이며 Runtime 수락이 아니다. [Docs43](https://github.com/seokpan/seokpan-hybrid-docs/issues/43)의 개정 원장 독립 감사 피드백은 D 수신 확인까지 완료됐으며 수식 보완·Cost Gate PASS는 남았다. [A Network IAM 적용 보고](https://github.com/seokpan/seokpan-hybrid-infra/pull/36#issuecomment-6013414243)의 복구 Apply2 add/0 change/0 destroy·정책/Role 연결·재Plan No changes를 수신했다. 실제 Network/Full foundation 출력·SG2·ROSA 권한 수락은 남았다.
+
+**B 설명 연습:** “Git에 배포 선언을 넣어도 Argo가 수락한 범위로 API에 적용해야 클러스터가 바뀝니다. Pod를 실행하려면 Worker가 Registry와 Data에 실제로 접근해야 하므로, 지금은 등록 준비와 업무 시험의 대기를 나누고 있습니다.”
+
+관련자/직접 입력과 사본 수락은 [실행판](TJUNG03_EXECUTION_BOARD.md)·[05 §9.38](05_IMPLEMENTATION_AND_VALIDATION.md#b-lab-registry-path-and-sync-scope-20261006)·GitOps14/10/5/6 원 기록에 연결한다. Cloud ECR·Recovery Harbor 설계와 Cost PARTIAL/유료 실행 조건은 유지한다.
+
 ## 6. 작업하며 공부하는 고정 형식
 
 이후 작업마다 짧은 카드로 설명한다. 첫 안내의 전체 역사/기본 용어는 반복하지 않는다. 용어는 공식 명칭/한국어 → 실제 동작 원리 → 현재 저장소의 파일/단계로 연결한다. 그림을 쓰면 목적·구성요소·화살표의 주체/행위·동작 순서·선택 이유·프로젝트 위치를 바로 설명한다. 전체 AWS 진도는 별도 학습 공간에서 이어가고 이 안내는 현재 실행을 이해하는 개념만 다룬다. 새 첨부의 10/7·10/8 제안을 새 공식 Gate/마감으로 고정하지 않는다.
