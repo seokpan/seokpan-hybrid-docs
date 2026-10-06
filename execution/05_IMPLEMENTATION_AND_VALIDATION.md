@@ -759,18 +759,22 @@ S3 lockfile은 `.tflock` 파일을 "없을 때만 생성"하는 조건부 쓰기
 State Lineage·Serial 차이의 원인과 내용 동일성은 [첫 코멘트](https://github.com/seokpan/seokpan-hybrid-infra/issues/10#issuecomment-5928992867)에 남아 있다. 이후 State 판단은 04 문서 8.6절 기준 bootstrap 실행 담당(이유빈) 범위로 넘겼다. 이번 시험은 Backend Lock 동작의 확인이며 foundation·rosa 서비스 권한이나 실제 자원 생성 결과가 아니다.
 
 <a id="recovery-objective-review-20261002"></a>
-## 9 복구 예행과 목표 재검토 — 2026-10-02
-
-**2026-10-03 설계 우선순위 정정:** 이번 피드백의 목적과 대안 비교·수정 범위는 [03 §3-I.14](../design/03_DETAILED_DESIGN.md#recovery-design-review-20261003)를 기준으로 읽는다. 이 절은 최소 예행의 기존 입력·측정·부담 비교를 지원한다. 02의 기존 1차 Redis 재사용 설명과 03의 좁게 읽힐 수 있는 RTO 경계는 설계 문서에서 바로잡는다. 아래 코드·검사·Cloud/ROSA 후속은 각 시점/범위의 기록이며 설계 재검토보다 우선하는 전체 구현 요구가 아니다.
 
 ### 8.10 bootstrap Data 권한 PR (infra #19 / PR #34)
 
 - 일자: 2026-10-06 / 작성 김상희, bootstrap apply 이유빈 (04 §2.4)
-- 내용: foundation Role에 Data 계층(RDS · ElastiCache · Data SG · Backup 버킷 · Backup IAM User) 관리 권한 추가, Backup User 전용 Permissions Boundary를 bootstrap 소유로 추가
-- 결정: Backup User는 경로 없이 `seokpan-fnd-backup` (CI User와 통일)
-- 확인: plan 2 add · 1 change · 0 destroy. RDS · ElastiCache 서비스 연결 Role은 계정에 없음
-- 열린 항목: ① Network 권한 PR과 EC2 SG 범위 중복 여부(이유빈), ② apply 후 inline policy 합계 실측, ③ 첫 apply AccessDenied 발생 시 Action 보강
+- 내용: foundation Role에 Data 계층(RDS · ElastiCache · Data SG · Backup 버킷 설정 · Backup IAM User) 관리 권한 추가, Backup User 전용 Permissions Boundary를 bootstrap 소유로 추가
+- 결정: Backup User는 경로 없이 `seokpan-fnd-backup`. 버킷 정책 변경 권한은 foundation Role에 부여하지 않고 백업 객체 접근은 explicit Deny, Backup Boundary에 삭제·비HTTPS explicit Deny. RDS 마스터 Secret용 `kms:DescribeKey`는 `alias/aws/secretsmanager` 한정. HTTPS·삭제 보호는 Backup User에만 적용되며 다른 주체(사람 Admin)의 요청은 막지 않음
+- 리뷰: Blocker 4건(KMS 권한 누락, 버킷 정책 우회, HTTPS explicit Deny, PR 본문 불일치) 수정 후 APPROVE, squash merge `0403c52`
+- 확인: plan 2 add · 1 change · 0 destroy. 이유빈 apply에서 첫 시도의 `iam:CreatePolicy` AccessDenied는 같은 apply 안에서 bootstrap Role 권한 변경 직후 그 권한을 쓴 IAM 반영 지연으로 판단, 새 세션 재-plan·재-apply로 완료, 재-plan No changes. RDS · ElastiCache 서비스 연결 Role은 계정에 없음, `alias/aws/secretsmanager` 키 Enabled
+- inline policy 합계: 7878 / 10240 (backend 578 · registry-ci 1276 · data 6024), 남은 여유 2362자
+- 해소: Network 권한 PR과 EC2 SG 범위는 Data SG 블록(`Component=data` 조건) 유지로 정리 (10-06 이유빈). 03의 3-F Bucket Policy 예상과 달라진 버킷 정책 구조는 PR #34 리뷰 승인으로 수락
+- 열린 항목: ① foundation 첫 plan에서 RDS · ElastiCache · SG · S3 · IAM 경로 AccessDenied 확인 (#33 병합·Root 전환 후), ② Root 전환 때 `aws_s3_bucket_policy.backup` 삭제 · `path = "/automation/"` 삭제 · Boundary 지정 (미반영 시 foundation apply 실패), ③ Network/Hybrid 권한 합산 시 inline 한도 여유 2362자
 - 증빙: PR #34, infra #19 코멘트
+
+## 9 복구 예행과 목표 재검토 — 2026-10-02
+
+**2026-10-03 설계 우선순위 정정:** 이번 피드백의 목적과 대안 비교·수정 범위는 [03 §3-I.14](../design/03_DETAILED_DESIGN.md#recovery-design-review-20261003)를 기준으로 읽는다. 이 절은 최소 예행의 기존 입력·측정·부담 비교를 지원한다. 02의 기존 1차 Redis 재사용 설명과 03의 좁게 읽힐 수 있는 RTO 경계는 설계 문서에서 바로잡는다. 아래 코드·검사·Cloud/ROSA 후속은 각 시점/범위의 기록이며 설계 재검토보다 우선하는 전체 구현 요구가 아니다.
 
 ### 9.1 피드백·초기 재검토 기록과 현재 변경안 연결
 
