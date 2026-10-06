@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "created_date": "2026-10-03 KST",
-  "design_basis_date": "2026-10-01 KST",
+  "created_date": "2026-10-06 KST",
+  "design_basis_date": "2026-10-06 KST",
   "status": "DESIGN_TARGET",
   "runtime_validation": "NOT_ASSESSED",
   "source_files": [
@@ -15,15 +15,15 @@
     },
     {
       "path": "design/02_TARGET_ARCHITECTURE.md",
-      "sha256": "fbfd8adfdb57fce12fa0692633aaf012663bd8974947712a6f5c1d4cedefd45c"
+      "sha256": "2bacd5627343a008f3b9dd5cdfd47c865c093abfcb585f00fab6b12ac932aa91"
     },
     {
       "path": "design/03_DETAILED_DESIGN.md",
-      "sha256": "1588d95a1a3b220e9b13192c13115034834fcc71a66badfb3db947668168f1b7"
+      "sha256": "131385736ff3ad26843653ee1d16a81f376b9785d67ffcf46399e3fee8ea034d"
     },
     {
       "path": "design/04_IMPLEMENTATION_READINESS.md",
-      "sha256": "b104e8aa57233e1cfdb0027f4ec918e920999c1dd4395a3f8f8c277008afe1e7"
+      "sha256": "ddbcf9740c215550ab4bb19f2077ba63bafb0b009acbc9881a9c6d38a9398973"
     }
   ],
   "checks": {
@@ -44,13 +44,13 @@
       "pending": "실제 운영 상태·복구 준비 완료 여부는 문서 05의 증거로 확인",
       "svg": {
         "path": "architecture/diagrams/01-logical-architecture.svg",
-        "bytes": 39141,
-        "sha256": "04fc1324b4f0053cf942b82c56c899819345786277cc9310b5f1bc9885d637f6"
+        "bytes": 39279,
+        "sha256": "ff60603f74e5457d24e71cdbc5ec278abee05c6b1426080da47d420fb12a69d8"
       },
       "png": {
         "path": "architecture/exports/01-logical-architecture.png",
-        "bytes": 669687,
-        "sha256": "4647b0099f2a12375340dea621c4d75a910f34c4de68858ebb8a7c9ac9997897"
+        "bytes": 680782,
+        "sha256": "c77259812b03d2044e39d449a66e3738b988e8f709e3b9e4d181d77d9ba7619b"
       },
       "svg_size": [
         1800,
@@ -70,13 +70,13 @@
       "pending": "실제 AZ 이름·Host·VM 주소/용량·서비스 배치 AZ는 확인 대기",
       "svg": {
         "path": "architecture/diagrams/02-physical-architecture.svg",
-        "bytes": 38862,
-        "sha256": "f2b507dd9223e4c86c838d24aa601e723a3e88fc16f6be632b9e3a8f2f5b2e4a"
+        "bytes": 38904,
+        "sha256": "0d2b1f4e0a7cc770b33c8b7809933ae00293bb623b1773e30ec3b5fa30ac0283"
       },
       "png": {
         "path": "architecture/exports/02-physical-architecture.png",
-        "bytes": 744293,
-        "sha256": "8fa9a7d6876851483ff04a6edb0c091458aee8dacc07a1f918512c8f73aa7380"
+        "bytes": 754005,
+        "sha256": "c02209c0426e859c6c950830b4c5e4aae18939a3db455252d71f2fed6b574877"
       },
       "svg_size": [
         1800,
@@ -122,13 +122,13 @@
       "pending": "실제 Host·Path·Port·Route·Probe·Timeout은 Source 확인 후 반영",
       "svg": {
         "path": "architecture/diagrams/04-service-traffic-tls.svg",
-        "bytes": 33726,
-        "sha256": "a53283c5e591834196d004777979faa1b65c575f11f41a18851f9425c9c543f8"
+        "bytes": 33792,
+        "sha256": "71897f0e0cc872dff124c0a0863028bf49abc601e00d4b89ece77c03bf9c988f"
       },
       "png": {
         "path": "architecture/exports/04-service-traffic-tls.png",
-        "bytes": 459464,
-        "sha256": "c120927ac08e5d0014fbb1968e1af4961b087d78a0d6bc175ca821504049e193"
+        "bytes": 470608,
+        "sha256": "b816eb8ea23ab3716698121ac10efc3c2cf62912a7aa4a3f1dc33c439eb7e541"
       },
       "svg_size": [
         1800,
@@ -330,13 +330,13 @@
       "pending": "Seed SHA·실제 Migration/전환·개별 자원의 최종 판정은 확인 대기",
       "svg": {
         "path": "architecture/diagrams/12-migration-responsibility.svg",
-        "bytes": 36021,
-        "sha256": "c78095875a80d512e5a2d924ee3ba94dd909f19f9264b64921c57f9552163d3d"
+        "bytes": 36063,
+        "sha256": "8b1df70633d5f21cd02b1bcbf29367a1a5afd6c5c24c283571069dd839e6018b"
       },
       "png": {
         "path": "architecture/exports/12-migration-responsibility.png",
-        "bytes": 604354,
-        "sha256": "8b968e0c9256c145e75f8e0ba56b5b105cdab4ca4bbdb69f851c67d68d670494"
+        "bytes": 615502,
+        "sha256": "a3afe4ecdd7d21c5723a45fc5fcbb23b09b0b17abed0921616f2d7930a2dd11c"
       },
       "svg_size": [
         1800,
@@ -461,11 +461,62 @@
       "diagram_checks": "Existing historical checks preserved; not rerun in this metadata-only follow-up."
     }
   ],
+  "check_scope_history": [
+    {
+      "date": "2026-10-05 KST",
+      "reference": "architecture/PRODUCTION_REVIEW.md",
+      "asset_checks": "Current 12 diagram SVG/XML, PNG, embedded font, declared geometry and subnet checks passed in staging review; only diagram 10 content changed.",
+      "source_identity": "SOURCE_IDENTITY_5_PASS",
+      "note": "2026-10-05 KST final verification after frozen 03/04 and both manifests were resynchronized into staging: SVG XML 12, PNG decode 12, embedded font glyphs 12, declared geometry 12, approved subnet CIDRs 9, source identity 5 and high-risk text matches 0. Final source hashes match source_files: 03 1588d95a1a3b220e9b13192c13115034834fcc71a66badfb3db947668168f1b7 and 04 b104e8aa57233e1cfdb0027f4ec918e920999c1dd4395a3f8f8c277008afe1e7. Eleven unchanged diagrams retain their original bytes; no runtime or target-attainment validation."
+    }
+  ],
+  "data_engine_followup": {
+    "date": "2026-10-06 KST",
+    "status": "TEAM_TARGET_SELECTED_SOURCE_IMPLEMENTATION_PENDING",
+    "reference": "design/03_DETAILED_DESIGN.md#data-engine-contract-20261006",
+    "authority": "User-provided C Data contract v2.2, team Valkey 7.2 decision; Infra #19",
+    "provided_contract": {
+      "name": "data-contract-v2_2-20261006.md",
+      "bytes": 31460,
+      "sha256": "40f4480d3d6d40d932e0ca7c336c129985010429c6f4cab95de90a688954f509"
+    },
+    "target_engine": "ElastiCache Valkey 7.2; same Valkey 7.2 family for lab and Recovery",
+    "current_data_source_engine": "Redis OSS 7.1; C Data Root change pending",
+    "runtime_validation": "NOT_RUN_FOR_VALKEY",
+    "existing_redis_7_2_4_runs": "HISTORICAL_ONLY_NOT_VALKEY_ACCEPTANCE",
+    "pool_proposal": "NOT_ADOPTED; measured connections, terminating Pod overlap and load require B/C decision",
+    "logical_names": "UNCHANGED: Redis protocol/runtime names, SEOKPAN_REDIS_*, backend-redis-*, Terraform redis_*",
+    "structure_and_dr_targets": "UNCHANGED: Cloud Primary plus isolated On-Prem Restore; RTO 10 min, persistent DB RPO 30 min, operating Backup 15 min",
+    "changed_design_documents": [
+      "02_TARGET_ARCHITECTURE.md",
+      "03_DETAILED_DESIGN.md",
+      "04_IMPLEMENTATION_READINESS.md"
+    ],
+    "changed_diagrams": [
+      "01",
+      "02",
+      "04",
+      "12"
+    ],
+    "unchanged_diagrams": [
+      "03",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11"
+    ]
+  },
   "latest_check_scope": {
-    "date": "2026-10-05 KST",
-    "reference": "architecture/PRODUCTION_REVIEW.md",
-    "asset_checks": "Current 12 diagram SVG/XML, PNG, embedded font, declared geometry and subnet checks passed in staging review; only diagram 10 content changed.",
+    "date": "2026-10-06 KST",
+    "reference": "design/03_DETAILED_DESIGN.md#data-engine-contract-20261006",
+    "asset_checks": "Current 12 SVG/XML, PNG decode, embedded fonts, declared geometry and subnet checks passed locally. Only diagram 01/02/04/12 engine target labels and matching PNG exports changed.",
     "source_identity": "SOURCE_IDENTITY_5_PASS",
-    "note": "2026-10-05 KST final verification after frozen 03/04 and both manifests were resynchronized into staging: SVG XML 12, PNG decode 12, embedded font glyphs 12, declared geometry 12, approved subnet CIDRs 9, source identity 5 and high-risk text matches 0. Final source hashes match source_files: 03 1588d95a1a3b220e9b13192c13115034834fcc71a66badfb3db947668168f1b7 and 04 b104e8aa57233e1cfdb0027f4ec918e920999c1dd4395a3f8f8c277008afe1e7. Eleven unchanged diagrams retain their original bytes; no runtime or target-attainment validation."
+    "visual_review": "Engine labels and layout visually inspected for current diagram 01/02/04/12 PNGs; existing Noto CJK KR and Inkscape renderer used.",
+    "unchanged_diagrams": "03/05/06/07/08/09/10/11 SVG and PNG byte/hash identities preserved.",
+    "runtime_validation": "NOT_RUN_FOR_VALKEY",
+    "note": "Asset integrity and target-label consistency only; no Data Source merge, Foundation Apply, App compatibility acceptance, Pool adoption, OCP/ROSA run or DR target attainment."
   }
 }

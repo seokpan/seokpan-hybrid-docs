@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "source_basis_date": "2026-10-01 KST",
-  "recorded_date": "2026-10-03 KST",
-  "source_type": "approved Project Source with scoped DR review corrections",
-  "copy_policy": "00/01 unchanged; original upload identities and approval history retained; current 02/03/04 include scoped review corrections",
+  "source_basis_date": "2026-10-06 KST",
+  "recorded_date": "2026-10-06 KST",
+  "source_type": "approved Project Source with scoped DR and Data engine target corrections",
+  "copy_policy": "00/01 unchanged; original upload identities and approval history retained; current 02/03/04 include scoped DR corrections and the 2026-10-06 Valkey 7.2 target alignment",
   "files": [
     {
       "path": "design/00_PROJECT_STARTING_POINT.md",
@@ -22,22 +22,22 @@
     {
       "path": "design/02_TARGET_ARCHITECTURE.md",
       "uploaded_name": "02_TARGET_ARCHITECTURE.md",
-      "bytes": 44482,
-      "sha256": "fbfd8adfdb57fce12fa0692633aaf012663bd8974947712a6f5c1d4cedefd45c",
+      "bytes": 45047,
+      "sha256": "2bacd5627343a008f3b9dd5cdfd47c865c093abfcb585f00fab6b12ac932aa91",
       "source_header_date": "2026-10-01 KST"
     },
     {
       "path": "design/03_DETAILED_DESIGN.md",
       "uploaded_name": "03_DETAILED_DESIGN.md",
-      "bytes": 478921,
-      "sha256": "1588d95a1a3b220e9b13192c13115034834fcc71a66badfb3db947668168f1b7",
+      "bytes": 480072,
+      "sha256": "131385736ff3ad26843653ee1d16a81f376b9785d67ffcf46399e3fee8ea034d",
       "source_header_date": "2026-10-01 KST"
     },
     {
       "path": "design/04_IMPLEMENTATION_READINESS.md",
       "uploaded_name": "04_IMPLEMENTATION_READINESS.md",
-      "bytes": 116207,
-      "sha256": "b104e8aa57233e1cfdb0027f4ec918e920999c1dd4395a3f8f8c277008afe1e7",
+      "bytes": 116396,
+      "sha256": "ddbcf9740c215550ab4bb19f2077ba63bafb0b009acbc9881a9c6d38a9398973",
       "source_header_date": "2026-10-01 KST"
     }
   ],
@@ -191,5 +191,44 @@
       "svg_png_content": "UNCHANGED",
       "diagram_checks": "Existing historical checks preserved; not rerun in this metadata-only follow-up."
     }
-  ]
+  ],
+  "data_engine_followup": {
+    "date": "2026-10-06 KST",
+    "status": "TEAM_TARGET_SELECTED_SOURCE_IMPLEMENTATION_PENDING",
+    "reference": "design/03_DETAILED_DESIGN.md#data-engine-contract-20261006",
+    "authority": "User-provided C Data contract v2.2, team Valkey 7.2 decision; Infra #19",
+    "provided_contract": {
+      "name": "data-contract-v2_2-20261006.md",
+      "bytes": 31460,
+      "sha256": "40f4480d3d6d40d932e0ca7c336c129985010429c6f4cab95de90a688954f509"
+    },
+    "target_engine": "ElastiCache Valkey 7.2; same Valkey 7.2 family for lab and Recovery",
+    "current_data_source_engine": "Redis OSS 7.1; C Data Root change pending",
+    "runtime_validation": "NOT_RUN_FOR_VALKEY",
+    "existing_redis_7_2_4_runs": "HISTORICAL_ONLY_NOT_VALKEY_ACCEPTANCE",
+    "pool_proposal": "NOT_ADOPTED; measured connections, terminating Pod overlap and load require B/C decision",
+    "logical_names": "UNCHANGED: Redis protocol/runtime names, SEOKPAN_REDIS_*, backend-redis-*, Terraform redis_*",
+    "structure_and_dr_targets": "UNCHANGED: Cloud Primary plus isolated On-Prem Restore; RTO 10 min, persistent DB RPO 30 min, operating Backup 15 min",
+    "changed_design_documents": [
+      "02_TARGET_ARCHITECTURE.md",
+      "03_DETAILED_DESIGN.md",
+      "04_IMPLEMENTATION_READINESS.md"
+    ],
+    "changed_diagrams": [
+      "01",
+      "02",
+      "04",
+      "12"
+    ],
+    "unchanged_diagrams": [
+      "03",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11"
+    ]
+  }
 }
