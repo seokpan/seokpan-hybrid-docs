@@ -348,3 +348,38 @@ App10은 기존 B 승인 뒤 병합됐으며 이번에 새 APPROVE를 올린 것
 기존 목표는 Window A **10/12~15** → Technical Freeze **10/16** → Window B **10/19~21** → Demo Freeze **10/22** → 발표 준비 **10/23** → 전체 종료 **10/26**이다. 실제 생성/삭제 시각은 미확정이다. 최신 남은 작업·대기는 실행판/Docs #21을 따른다.
 
 동작 원리 확인: [Kubernetes Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)는 선언한 Pod 상태를 관리하고, [Argo CD Sync 정책](https://argo-cd.readthedocs.io/en/stable/user-guide/auto_sync/)은 Git의 선언과 클러스터 상태를 맞추는 실행을 설명한다. 이번 프로젝트는 입력 대기 Source의 최초 배포를 수동으로 검토·실행한다.
+
+
+### 5.12 이번 학습 — 같은 Image의 주소 전환과 Secret 공급·Pod 생성의 차이
+
+**목적:** lab은 Harbor에 닿지 않으므로 접근 가능한 OCP 내부 Registry에서 승인 Image를 받는다. Digest는 Image 내용의 식별자이고 Registry 주소는 받는 위치다. D가 보존 복사/워커 Pull을 확인했고 B가 Git 선언에 주소를 연결한다.
+
+| 실제 파일/위치 | 이번 B 변경 | 아직 증명하지 않는 것 |
+| --- | --- | --- |
+| GitOps `apps/overlays/lab/kustomization.yaml` images/patches | FE/BE newName 내부 Registry·같은 Digest, lab Harbor Pull 패치 제거 | Pod Ready·서비스 업무 성공 |
+| `operations/ocp-lab/migration/job.yaml` Pod image | 같은 내부 Backend 주소·Digest와 인증 경로 연결, Job 보류 유지 | DB 상태/revision·DDL 수행 성공 |
+| `apps/overlays/lab/runtime.env` | rediss://lab-redis.seokpan-argotest.svc:6379/0 + 기대 Host | Service/DNS·서버 Pod 존재·TLS/AUTH 성공 |
+| `clusters/ocp-lab/root/app-project.yaml` | 이번 변경 없음. 현재 StatefulSet 미허용 | D lab Valkey 초안이 같은 App을 쓰면 목적 Kind 허용 검토 필요 |
+
+**동작:** Secret/CA/이미지가 공급돼도 Pod는 저절로 만들어지지 않는다. StatefulSet/Service/config 선언과 검토된 적용이 있어야 서버가 만들어진다. Git 병합도 자동 Sync가 보류돼 있으므로 실제 클러스터 반영과 다르다. D는 초안/실행 입력, C는 Data 계약, B는 Source·권한/환경 연결과 활성화를 맡는다. 2안은 역할 유지 제안이며 D 작성 수락을 기록해야 한다.
+
+**Cloud 금고 확인:** public recipient 전달과 암호문 공급 안내는 수신 완료, B 실복호화는10/7 직접 확인이다. shell tracing을 끄고 파이프 실패를 보존한다. 아래는 본인 Controller의 bash에서 실행할 확인 절차이며 AI가 실행한 결과가 아니다. 해시는 암호문 파일의 해시이고 Token 해시가 아니다.
+
+```bash
+(
+  set +x
+  set -euo pipefail
+  vault_file="$HOME/secrets/seokpan/foundation-data.sops.yaml"
+  cipher_sha=$(sha256sum -- "$vault_file")
+  cipher_sha=${cipher_sha%% *}
+  test "${cipher_sha:0:12}" = 9a86f90e6ba6
+  sops decrypt --extract '["redis_auth_token"]' "$vault_file" |
+    grep -Ex '[0-9a-f]{64}' >/dev/null
+  echo "열림 OK"
+  echo "${cipher_sha:0:12}"
+)
+```
+
+실패하면 성공으로 회신하지 않고 C에게 단계/오류만 전달하며 Token/개인키·명령 출력 전체를 복사하지 않는다. 개인키의 독립 사본/복구 확인, 나중에 같은 승인 Token을 Cloud backend-redis-runtime Secret에 무노출 공급하는 것은 각각 후속이다. lab의 별도 Token을 이 파일로 덮어쓰지 않는다. `ansible` 계정 전용 여부는 A가 답한다.
+
+**판정:** Source39검사/진단Render8 PASS, 활성 Release는 미해결 입력으로 차단됨. 실클러스터/Cloud 복호화·Pod·DB/TLS/업무는 아직 미실행. 이번 기존00–04 설계/그림 추가 변경은 불필요하다.

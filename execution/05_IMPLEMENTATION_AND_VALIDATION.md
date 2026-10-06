@@ -1849,3 +1849,25 @@ C [Infra34](https://github.com/seokpan/seokpan-hybrid-infra/pull/34)은 A 승인
 **AUTH 공급 후속:** [B의 lab v1.1 후속 검토](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6015027863)에서 초기 생성과 회전을 나누고 난수 생성/create/get 실패·빈값/불일치·실제 requirepass를 별도로 확인하는 보완을 요청했다. 초기 공급 검토 후보는 합성 CLI 12조건 중 정상1만 PASS·실패/중단11은 nonzero/임시 파일 정리 확인이며 실제 oc/Secret/TLS 시험은 아니다. 댓글 게시·readback과 C/D 메시지 수신/채택은 구분한다. 이 보완은 해당 AUTH 실제 공급에만 적용하며 Registry Image 복사나 승인된 replicas0 Sync를 막지 않는다.
 
 **기존 메타데이터 예외 재확인:** 네 저장소 Freeze Milestone의 10/18 표시는 승인 목표 Technical Freeze 10/16과 다르다. 목표 창/일정은 임의 변경하지 않으며 관리자 수정안/후속으로 남긴다. 현재 연결은 Milestone 수정 도구를 지원하지 않아 메타데이터를 변경하지 않았다. 설계/도식은 Docs62의 Valkey 목표 정합을 유지하고 이번 실제 Source/Run 완료로 승계하지 않는다. 이번에는 실제 Credential/Secret·Registry·클러스터/Argo·AWS 명령을 실행하지 않았다.
+
+
+<a id="b-internal-registry-binding-and-cloud-vault-receipt-20261006"></a>
+### 9.41 내부 Registry 소비·Cloud 금고 인계·lab Valkey 선언의 직접 조건 — 2026-10-06 KST
+
+[Docs63](https://github.com/seokpan/seokpan-hybrid-docs/pull/63)은 main `fa94b3ded9698516af9f4ec1837cab7e5cb74c2f`에 병합됐고 브랜치 삭제를 확인했다. 아래 이전 시점 안내에서 미수신으로 적힌 public key/암호문·Registry copy/Pull은 이번 수신 상태를 우선한다. 공급 보고·실제 복호화·Pod/업무 시험은 구분한다.
+
+| 구분 | 현재 완료/수신 | B 행동·직접 대기 |
+| --- | --- | --- |
+| **내 일: Cloud AUTH** | 사용자 확인으로 B age public recipient 생성·C 전달 완료. C의 본인 계정 암호문 공급 안내 수신 | **10/7** 본인 Controller에서 값 출력 없이 복호화/64hex 검사·암호문 Hash 앞12자리 `9a86f90e6ba6` 대조 → C에 결과만 회신. 파일 존재/실제 성공·개인키 독립 사본은 미확인. Cloud/lab Token 분리 |
+| **내 일: lab 소비 Source** | [GitOps PR17](https://github.com/seokpan/seokpan-hybrid-gitops/pull/17) `adacf6fffd9d179eef4715e92a3fed721759db55` Ready/D·C 리뷰 요청. FE/BE+별도 Migration Job 주소 내부 Registry 전환·lab Harbor Pull 참조 제거·Redis URL/Host 연결. Source39검사/진단Render8 통과 | 리뷰/병합은 미완. replicas0·Job suspend/current/300초·삭제 보호 유지. 기존 Secret 삭제·Valkey 선언/활성화·실제 Sync는 하지 않음 |
+| **팀원 D: Registry** | [D 원 보고](https://github.com/seokpan/seokpan-hybrid-gitops/issues/14#issuecomment-6016144794): FE/BE Index Digest 보존 복사와 워커2×Image2/default SA Pull4건. Image Source46e21a74는 현재 App main과 구분 | 최종 실행 SA·Pruner 보존·사용창 확인은 직전 확인. Harbor 망 연결/Cloud ECR은 lab 직접 대기에서 제외 |
+| **팀원 D/C: lab Valkey** | [Image 원 기록](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6#issuecomment-6014194818)·[TLS 원 기록](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6#issuecomment-6016508869) + D 메시지의 AUTH/Runtime Secret 공급 완료 보고 수신. 선택 DNS lab-redis.seokpan-argotest.svc | **D 초안 작성 → C Data/B Source·권한 리뷰의2안 제안**. D 수락은 미확인. StatefulSet/Service/config Source가 아직 없으므로 DNS/Pod Ready가 아님. AUTH 공급의 비민감 개정·동일 Token 검사 결과는 D가 #6 보완 |
+| **내 일: 활성화** | 초기자원 후보/단계 순서 유지 | Valkey 초안에 TLS-only·AUTH·noeviction·저장off/emptyDir·valkey binary·REDISCLI_AUTH+VALKEYCLI_AUTH·restricted UID·Probe/쓰기경로 적용. 같은 App이면 StatefulSet Kind만 AppProject에 제한 허용 검토 → DB/Route/권한/사용창/live Diff 수락 → Valkey1 → 필요한 단일 Migration → BE1 → FE1 → 새Run |
+| **병행: ROSA/비용** | Data PR37/SLR 생성 보고 수신 상태 유지 | A/C의 실제 Network 출력/SG2, B Caller/Backend·지원·사양/Volume/LB·기간/가용성, D Cost 보완 → 전체Plan/Cost/실행창. OCP 종료나 모든 복구 자산을 일괄 기다리지 않음 |
+
+기록 정본: [GitOps10 B 후속](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10#issuecomment-6016940121)·[Infra19 B 금고 수신](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6016940538). 전달/수신은 사용자 확인을 기준으로 갱신하며 이번 답장 초안 전달 완료를 대신 표시하지 않는다.
+
+**00–04·아키텍처 판단:** 이번 입력은 이미 승인된 내부 lab Registry·Valkey7.2·환경별 Secret/키 보관 설계의 실제 공급/소비 연결이다. 목표 플랫폼·엔진·TLS/AUTH·Data 영속성·격리/역할 경계를 바꾸지 않으므로 이번00–04/아키텍처 그림 추가 변경은 필요하지 않다. 설계/Source 완료를 실측 완료로 확대하지 않는다. 향후 Cloud HA/Pool·운영 정책의 실질 변경은 원 설계와 그림까지 다시 대조한다. GitHub Freeze milestone10/18 vs 승인10/16 메타데이터 정정은 여전히 별도 미완이다.
+
+
+학습/본인 Controller 무노출 확인 절차는 개인 학습 안내§5.12, 순서는 실행판 최신 후속 표를 따른다. 기존 TH81/완료2·C§8.9~8.12·비용 감사/원 Run 이력은 보존한다. Source 검사39개 통과와 진단Render8 생성은 B 검사이며 D 공급/Pull 보고·본인 실제 금고 검사는 별도다.
