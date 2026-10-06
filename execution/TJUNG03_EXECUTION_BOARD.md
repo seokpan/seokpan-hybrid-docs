@@ -2,6 +2,8 @@
 
 > 기준 2026-10-06 KST: 승인03/04·프로젝트 지침·개인계획, Docs42 병합/브랜치 삭제·Infra31 댓글 보완/새 HEAD CI/규칙상 재승인·팀의 App6/Infra32/Docs43을 현재 직접 입력과 연결한다. 설계·역할·T 성공기준·승인 날짜는 유지한다. 본인 PC/OCP/AWS 조회·Sync·Plan/Apply·STS 실행이 아니다. 요청 정태훈, 작성·검토 지원 Codex.
 
+**마지막 팀 변경:** A [Infra #33](https://github.com/seokpan/seokpan-hybrid-infra/pull/33)은 Network Source의 새 **Draft**다. B의 Public3/ROSA Private3 출력 필드 매핑은 기존 계약과 맞지만 실제 VPC/Subnet/Role/Data SG 출력 수락은 미확인이다. A의 Source 보완·C/B/D 검토와 Ready 전환 후속은 원 PR, B의 제한 소비·남은 첫 Plan 입력은 [Infra #25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25)에 기록한다. 현재 Draft를 B가 해제하거나 실제 Plan/Apply 완료를 Source 리뷰의 일괄 선행조건으로 추가하지 않는다.
+
 ## 먼저 열 이슈와 기록 순서
 
 **개인 출발점은 [h-docs Issue #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)입니다.** TH01~19의 81개 체크와 완료 2개를 유지하며, 상단 현재 안내 → 저장소별 실행 카드 → 원 PR/Run → 제출/수신 → 상위 TH 확인 순으로 읽습니다. 이전 본문은 접어 보존하고 체크 정본을 복제하지 않습니다. Native Sub-issues는 등록되지 않았으며 기존 본문 양방향 링크 구조입니다.
