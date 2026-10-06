@@ -728,7 +728,7 @@ ZIP의 2026-09-29 기록은 승인00 §30.1/03 §3-B의 기존 PoC를 설명하�
 | --- | --- | --- |
 | Data SG | RDS·Redis SG 분리. 규칙은 모두 별도 Rule 리소스, ROSA Worker → Data SG 규칙은 rosa State가 추가. 온프렘 → RDS는 Data VM `/32` 확정 전 규칙 없음 | 03 3-B.9.6~9.7절 |
 | RDS | MariaDB 11.8.9 Multi-AZ, db.t4g.small, gp3 20GiB(자동 확장 끔). 파라미터 그룹 `time_zone = Asia/Seoul`·`sql_mode` 1차 동일·`require_secure_transport = 1`·utf8mb4_unicode_ci | 03 3-D.10.3절, 이 문서 8.7절 |
-| Redis | Redis OSS 7.1, cache.t4g.small 2개(Primary+Replica, Multi-AZ), `noeviction`, TLS + AUTH | 03 3-D.9.7절, 3-D.10.4절 |
+| Redis | Redis OSS 7.1, cache.t4g.small 2개(Primary+Replica, Multi-AZ), `noeviction`, TLS + AUTH. 2026-10-06 엔진을 Valkey 7.2로 변경(8.13절) | 03 3-D.9.7절, 3-D.10.4절 |
 | Backup S3 | `hourly/` 7일 후 삭제, `protected/` 자동 삭제 없음, 버전 관리. HTTPS 강제는 초안에서는 Bucket Policy였으나 foundation Role의 버킷 정책 권한을 제거해 Backup User Boundary의 explicit Deny로 바뀜(8.10절) | 03 3-D.9.5~9.6절 |
 | Backup User | 이름 `seokpan-fnd-backup`(경로 없음). 업로드·다운로드·목록만, 삭제는 bootstrap 소유 Boundary의 explicit Deny. Access Key는 Terraform 밖에서 발급 | 03 3-C.13절, 이 문서 8.10절 |
 
@@ -738,7 +738,7 @@ ZIP의 2026-09-29 기록은 승인00 §30.1/03 §3-B의 기존 PoC를 설명하�
 
 **권한 요청.** foundation 실행 Role에 붙일 Data 권한을 [#19 코멘트](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-5947207348)로 이유빈에게 전달했다. 리소스 이름을 `seokpan-` 접두사로 제한해 요청했고(PR #34에서 `seokpan-fnd-` 접두사로 확정, 8.10절), 백업 객체 읽기·쓰기, 마스터 비밀번호 열람, Access Key 발급, 복구·장애 시험 권한은 일부러 뺐다.
 
-**아직 하지 않은 것.** bootstrap 권한 반영은 8.10절(PR #34 병합·apply 완료)에서 끝났다. 구조 전환과 PR, 실제 plan·apply, Redis 7.1과 App Driver 호환 확인(정태훈)이 남아 있다. validate와 조회는 코드와 생성 가능 조합의 확인이며, 권한·생성·접속 시험의 결과가 아니다.
+**아직 하지 않은 것.** bootstrap 권한 반영은 8.10절(PR #34 병합·apply 완료)에서 끝났다. 구조 전환과 PR은 8.13절(PR #37 병합)에서 끝났고 엔진은 Valkey 7.2로 바뀌었다. 실제 plan·apply와 Valkey 7.2 App 연결 확인(정태훈)이 남아 있다. validate와 조회는 코드와 생성 가능 조합의 확인이며, 권한·생성·접속 시험의 결과가 아니다.
 
 ### 8.9 TF 실행 Role 남은 시험과 Infra #10 종료
 
@@ -790,8 +790,20 @@ State Lineage·Serial 차이의 원인과 내용 동일성은 [첫 코멘트](ht
 - PR #29 검토: 합성 예행 도구를 1차 사전 점검 결과와 대조해 합성 범위에서 승인하고, 실제 운영과 다른 5가지(MariaDB 11.8 · 덤프 옵션 · 해독 Key 분리 · 복원 계정 · 실제 S3 경로)를 [Infra #17](https://github.com/seokpan/seokpan-hybrid-infra/issues/17)에 남겼다. 복원 비교 방식(Schema · 행 Hash · 건수 · Revision)은 실제 이관 · 복원 검증에 그대로 쓴다.
 - RDS Stop: Data 담당이 CLI Runbook으로 Stop/Start한다([Infra #16](https://github.com/seokpan/seokpan-hybrid-infra/issues/16)). 이에 따라 Cost 입력은 R2(작업 창만 가동, 최대 168시간)를 설계 기준으로 쓴다([Docs #43](https://github.com/seokpan/seokpan-hybrid-docs/issues/43)).
 - Data VM: Server-02 `192.168.52.0/24`, IP 후보 `192.168.52.50`(VMware · IP 할당표 확인 전). `onprem_job_host_cidrs`는 이유빈이 #16 후속에서 foundation 공통 변수로 선언하고 Data SG · Route · VPN · 백업 계정 Host가 같은 값을 쓴다.
-- 열린 항목: ① B 수락(계약 6절), ② lab Redis Data 기준 게시(10/7), ③ `onprem_job_host_cidrs` 선언 순서, ④ Redis AUTH Token 원본 · 공급 방식(#19 질문 2), ⑤ Data VM 생성 · `/32` 확정
+- 열린 항목: ① B 수락(계약 6절), ② lab Redis Data 기준 게시(10/7), ③ `onprem_job_host_cidrs` 선언 순서, ④ Redis AUTH Token 원본 · 공급 방식(#19 질문 2), ⑤ Data VM 생성 · `/32` 확정 → ②~④는 8.13절에서 처리(② lab Redis 기준 v1.1 게시, ③ PR #37에 공통 선언 포함, ④ SOPS 원본 준비 · 공급 절차 확정). ①은 계약 v2.2 6절 상태표로 이어서 관리, ⑤는 IP `192.168.52.50` 확정 · VM 생성 남음
 - 한계: 계약 게시 · 리뷰 · 결정 기록이며, 실제 자원 생성 · 이관 · Backup/Restore 측정은 아니다.
+
+### 8.13 Data Root 전환 · Valkey 7.2 · 서비스 연결 Role · Token 준비 (infra #19 / PR #37)
+
+- 일자: 2026-10-06 / 작성 김상희
+- 엔진 변경: 팀 회의에서 Cloud Runtime State 엔진을 ElastiCache Redis OSS 7.1에서 **Valkey 7.2**로 바꿨다. Redis 프로토콜 · TLS + AUTH · `noeviction` · cache.t4g.small 2개(Primary+Replica, Multi-AZ)는 그대로이고, App 환경변수 · Secret 이름(`SEOKPAN_REDIS_*`, `backend-redis-*`)도 바꾸지 않는다. 02/03/04 표기는 Docs #62에서 갱신됐다.
+- Data 계약 v2.2: Valkey 7.2, CA 공급 형태 ConfigMap(`backend-database-ca` · `backend-redis-ca`), DB 연결 예산 재계산(Pod당 연결 × (최대 Pod 4 + 종료 중 1) + 예약 10 ≤ `max_connections`, 후보 Pool 3+2 → 60), v2.1분(D 답변)을 반영해 [Infra #19 코멘트](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6014028826)에 기준본으로 게시했다. lab Redis Data 기준은 [v1.1](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6014685336)(GitOps Recovery Redis 구조 재사용, C는 include 파일 2개만 정함, `emptyDir` 수명 구분)로, 팀 전체 흐름 안내는 [별도 코멘트](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6014680909)로 남겼다.
+- Root 전환: [Infra PR #37](https://github.com/seokpan/seokpan-hybrid-infra/pull/37)로 `terraform/modules/data/`를 `terraform/foundation/data_*.tf` 7개 파일로 옮기고 `aws_vpc.main` · `aws_subnet.data`를 직접 참조하게 바꿨다. 첫 apply 전이라 주소 변경에 따른 재생성이 없다. 공통 `variables.tf`에 `onprem_job_host_cidrs`(IPv4 `/32`만 허용)를 한 번 선언했고, `redis_auth_token`은 `ephemeral` · `nullable = false` · 허용 문자 검사 때문에 값이 없거나 틀리면 Plan에서 멈춘다. 2026-10-06 20:38 KST main `2af2d61`로 병합했다.
+- 서비스 연결 Role: 첫 RDS · ElastiCache 생성 때 필요한 `AWSServiceRoleForRDS` · `AWSServiceRoleForElastiCache`를 foundation Role 권한을 늘리지 않고 CLI로 미리 만들었다(21:02:29/31 KST, 배정 실행자 이유빈 동의 / 실제 수행자 김상희, [PR #37 코멘트](https://github.com/seokpan/seokpan-hybrid-infra/pull/37#issuecomment-6015927016)).
+- Redis AUTH Token: SOPS 3.13.3 + age v1.3.2로 암호화한 원본을 controller에 두고, 수신자를 김상희 · 이유빈 · 정태훈 3명으로 제한했다(04 §5.3). 이유빈 · 정태훈 계정에서 같은 파일이 해독되는 것을 확인했고 Token 값은 어디에도 출력하지 않았다. Terraform에는 infra README의 공급 절차(subshell · 종료 시 unset)로만 넘긴다.
+- 10/8 통합 Plan의 Data 선행 조건(코드 main 반영 · 서비스 연결 Role · Token)은 모두 준비됐다. Plan · Apply 실행은 이유빈이다.
+- 열린 항목: ① 10/8 첫 Plan의 Data AccessDenied 확인, ② Apply 후 Endpoint · Port · SG ID · Secret 참조 인계와 Valkey CA 체인 확인, ③ Data VM(`192.168.52.50`) 생성 · `onprem_job_host_cidrs` 값 입력, ④ 후속 bootstrap PR(`CreateDataServiceLinkedRoles` 제거 · README `export` 분리 · `iam.tf` 주석 정정), ⑤ Cost Gate Redis 단가를 Valkey 기준으로 재계산(D)
+- 한계: 코드 병합 · 계정 수준 Role 생성 · 암호화 원본 준비까지이며, RDS · Valkey 실제 생성 · 접속 시험 · 이관 · Backup/Restore 측정은 아니다.
 
 ## 9 복구 예행과 목표 재검토 — 2026-10-02
 
@@ -1553,7 +1565,7 @@ ROSA 첫 Plan은 실제 VPC/Subnet6·공통 Role4/Operator Policy Map·Data SG2�
 - [x] 복구 목표 피드백·특정 수치 우선 권고 수정과 기존 W04/T17/T18 예행/부담 판단 준비 — §9
 - [x] Run 시각 계산 보조 구현·합성 입력 검사 — §9.8, 실제 시험과 구분
 - [ ] 실제 백업 최신성·전체 복구 예행·팀 부담/비용과 목표 달성 검증 — §9, I03/I05/I07. 목표·주기·구조 선택은 03 §3-I.14.5에 완료한 설계안으로 연결
-- [ ] Data 코드의 foundation Root 직접 배치 전환·PR과 첫 plan 확인 — Infra #19, 이유빈 Network 코드 merge 후
+- [ ] Data 코드의 foundation Root 직접 배치 전환·PR(완료: PR #37 병합, 8.13절)과 첫 plan 확인 — Infra #19, 10/8 통합 Plan(이유빈)
 - [ ] I01~I07의 현 Source·실제 입력/결과·미반영 작업·담당별 가용시간/비용 인계
 - [x] 고정 Seed Source·원 lab 참고 범위 수신, App 연결 코드·이력 보존 묶음·실제 Kustomize 후보 구현 — §9.9
 - [x] 인증된 App 원격 이관·Source PR 게시와 고정 reference 이력 보존 — §9.15
