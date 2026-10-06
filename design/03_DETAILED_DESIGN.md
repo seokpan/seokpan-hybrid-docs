@@ -66,7 +66,7 @@
 
 ### 3-A.1. 목적과 상위 Architecture
 
-2차 프로젝트는 1차 온프레미스 Kubernetes 결과물을 AWS 하이브리드 환경으로 마이그레이션하고 검증한다. 정상 서비스는 ROSA Classic Multi-AZ, RDS MariaDB Multi-AZ, ElastiCache Redis OSS Multi-AZ를 사용하는 Cloud Primary에서 실행한다. On-Prem은 Jenkins, Harbor Recovery Registry, 사전 동기화 Backup 및 Restore-based Recovery를 담당한다.
+2차 프로젝트는 1차 온프레미스 Kubernetes 결과물을 AWS 하이브리드 환경으로 마이그레이션하고 검증한다. 정상 서비스는 ROSA Classic Multi-AZ, RDS MariaDB Multi-AZ, ElastiCache Valkey 7.2 Multi-AZ를 목표로 하는 Cloud Primary에서 실행한다. On-Prem은 Jenkins, Harbor Recovery Registry, 사전 동기화 Backup 및 Restore-based Recovery를 담당한다.
 
 이 절은 Application 코드, Infrastructure 자동화, 배포 Desired State, 설계·검증 기록의 보관 위치와 경계에 대한 소단계 승인 내용을 기록한다. Resource별 Owner는 하나로 두며, 기존 1차는 독립 포트폴리오로 보존한다.
 
@@ -477,7 +477,7 @@ Cloud DNS를 On-Prem DNS로 일괄 Forward하지 않는다. 필요 도메인의 
 | `AWS_EXECUTOR_CIDRS` | Cloud→On-Prem 작업이 필요할 때 실제 Cloud Source 확인 후 지정. ROSA Source가 Worker IP이면 해당 Private Subnet 범위 등을 비교 |
 | AWS VPN Gateway | AZ-A Public의 `192.168.64.10` 고정 Private IP 후보 + ENI + 기존 승인된 EIP. 실제 AZ/주소 사용 가능 여부 확인 전 |
 | On-Prem VPN Gateway | 실제 VM·주소·접속 Subnet·기본 Gateway 미확인. 각 vRouter에서 도달 가능해야 함 |
-| RDS / Redis | 제공된 서비스 FQDN과 실제 설정 Port. DB 3306 / Redis OSS 6379를 초기 설계 Port로 검토 |
+| RDS / Redis | 제공된 서비스 FQDN과 실제 설정 Port. DB 3306 / Redis 프로토콜 6379를 초기 설계 Port로 검토 |
 
 이 표는 실행 가능한 Terraform 변수 파일이나 Host Inventory가 아니다. 값이 없는 역할을 전체 Subnet 또는 0.0.0.0/0으로 대체해 적용하지 않는다. `192.168.64.10`은 승인된 작업 전제의 VPC/Public Subnet 안에 둔 고정 주소 후보이며 아직 IP 할당 증거가 없다.
 
@@ -1287,7 +1287,7 @@ Evidence에는 시험 주체·대상 범위·기대한 결과·실제 결과·�
 | 서비스 진입 | HAProxy/Common VIP·Gateway API | Cloud Public Ingress와 OpenShift Route의 확정 연결 규약을 3-E에서 작성 | 1차 VIP/인증서를 그대로 사용할 수 있다고 가정하지 않음. 도메인·TLS·WS·헬스 확인 |
 | MariaDB | On-Prem MariaDB·MaxScale, 영속 데이터 기준 | RDS MariaDB Multi-AZ에 앱 DB와 필요한 사용자를 별도 준비 | Version·문자셋·Collation·시간대·Schema·Grant·지원 SQL·덤프 호환성 |
 | MaxScale | 1차의 DB 연결·운영 경로 | Cloud에서는 RDS 연결 경로로 대체, 기존 On-Prem 자산은 보존 | App의 DB 주소/연결 동작을 수정. 로컬 복구의 MaxScale 재사용 여부는 별도 결정 |
-| Redis | StatefulSet·PVC·AOF, Session/Room/Ready/Game/Turn/Vote | ElastiCache Redis OSS에 새 Runtime 구성, 로컬 복구도 별도 Redis 사용 | 인증·TLS·명령·연결·TTL·Pub/Sub 등 실제 Code 사용, 재로그인·재접속·상태 손실 영향 |
+| Redis | StatefulSet·PVC·AOF, Session/Room/Ready/Game/Turn/Vote | ElastiCache Valkey 7.2에 새 Runtime 구성, 로컬 복구도 별도 Valkey 7.2 계열 Redis 사용 | 인증·TLS·명령·연결·TTL·Pub/Sub 등 실제 Code 사용, 재로그인·재접속·상태 손실 영향 |
 | App DB Schema 변경 | 일반 Backend Replica 시작 시 자동 수행하지 않음 | 별도 승인된 변경 작업·인증정보로 수행 | 실행 도구·시점·구조 버전·복구 가능성·중복 실행 방지 |
 | Jenkins | On-Prem Build/Test/전달 | 유지, ECR Push와 Harbor 사전 보존 경로를 추가 | 실제 Jenkinsfile·Agent·제한된 인증·Image Scan·승인 Release 연결 |
 | Harbor | On-Prem Registry | Cloud용 승인 Image의 로컬 복구 사본 보존 | 실제 버전·Project·Robot 권한·만료·Digest 일치·새 Pod Pull |
@@ -1483,7 +1483,11 @@ S3와 On-Prem 각각의 저장 공간이 필요하며, 작업 VM 임시 디스�
 
 #### 3-D.9.7 Redis 인증·TLS·접속과 재접속
 
-기존 node-based ElastiCache Redis OSS, cluster mode disabled, Primary 1 + Replica 1, Multi-AZ 선택을 유지한다. **TLS를 켜고 AUTH Token을 생성 시부터 필수로 적용하며 App Read/Write는 Primary Endpoint DNS로 연결**하는 안을 제안한다. Reader Endpoint는 이번 실시간 Runtime의 기본 읽기 경로에 넣지 않는다.
+<a id="data-engine-contract-20261006"></a>
+
+**2026-10-06 Data 계약 v2.2:** 팀이 선택한 현재 엔진 목표는 **ElastiCache Valkey 7.2**다. 기존 node-based, cluster mode disabled, Primary 1 + Replica 1, Multi-AZ 구조는 유지한다. **TLS와 별도 AUTH Token을 생성 시부터 적용하며 App Read/Write는 Primary Endpoint DNS로 연결**한다. Reader Endpoint는 이번 실시간 Runtime의 기본 읽기 경로에 넣지 않는다.
+
+이번 개정은 [Infra #19](https://github.com/seokpan/seokpan-hybrid-infra/issues/19)의 C 계약과 사용자 제공본 `data-contract-v2_2-20261006.md`에 따른 Engine 목표 정합이다. 이전 Redis OSS 승인 이력은 보존하고 03/04 설계 단계를 다시 열지 않는다. **현재 Data Source의 Redis OSS 7.1은 아직 C의 Data Root PR에서 전환해야 하며 실제 생성·Valkey 호환성 시험은 완료되지 않았다.** Redis 7.2.4의 기존 App 시험 결과를 Valkey PASS로 승계하지 않는다. Cloud·lab·Recovery는 Valkey 7.2 계열을 목표로 하되 lab·Recovery Digest, 실행 파일(`redis-server`/`valkey-server`)·임의 UID·TLS/AUTH·명령/Lua/업무 호환은 D 공급과 B/C 검증으로 별도 수락한다. `Redis`, `SEOKPAN_REDIS_*`, `backend-redis-*`, Terraform `redis_*` 논리 이름은 유지한다. **DB Pool 축소안은 미채택 후보이며 실측 연결 상한·종료 중 Pod 연결·부하를 확인한 뒤 B/C가 정한다.**
 
 ElastiCache AUTH는 node-based 구성에서 사용할 수 있고 TLS가 필요하다. Serverless는 RBAC를 요구하지만 이번 선택은 Serverless가 아니다. RBAC가 더 세분화된 권한 제어를 제공하므로 여러 독립 App 주체나 명령별 제한이 실제 요구로 나타나면 재검토한다. 이번 AUTH 선택을 사용자별·명령별 최소 권한이 확보된 설계로 표현하지 않는다.
 
@@ -1563,7 +1567,7 @@ RTO는 §3-G.7과 04 §10.2에 따라 **실제 장애 주입/접속 불가 시�
 | RDS MariaDB | 서울 Region에서 생성 가능한 Engine Version·Class·Multi-AZ·Storage 조합, 지원 종료·업데이트 조건 | Source와 호환되는 지원 버전 우선. Major 변경이 필요하면 이유와 양방향 논리 복원 시험을 별도 기록 |
 | 로컬 복구 MariaDB | 실제 복구용 Server 패키지/이미지와 Cloud 덤프의 호환성 | RDS에 올라간 구조·SQL·데이터를 가져올 수 있는 검증 버전. 구형 1차 DB Server를 그대로 복원 대상으로 가정하지 않음 |
 | Dump / Import Client | `mariadb-dump` 출력과 `mariadb` 입력 호환성, TLS·CA 지원·옵션 | 패키지 Version 또는 Image Digest·실행 옵션을 고정하고 오프라인에 확보 |
-| Redis OSS / Driver | 실제 1차 Server·Backend Driver Version, 사용 명령·Lua·TTL·Pub/Sub·TLS/AUTH | node-based ElastiCache에서 지원되고 App 시험을 통과한 조합. 최신 태그로 매번 바뀌지 않도록 고정 |
+| Valkey 7.2 / Redis Driver | 실제 1차 Server·Backend Driver Version, 사용 명령·Lua·TTL·Pub/Sub·TLS/AUTH | node-based ElastiCache에서 지원되고 App 시험을 통과한 조합. 최신 태그로 매번 바뀌지 않도록 고정 |
 | DB 구조 / App Release | 실제 Migration 도구·구조 버전·FE/BE Commit 및 Image Digest | Backup 구조와 실행 App 호환성 기록. 가져오기와 Migration 실행 순서를 검증 |
 
 동일 제품명이나 동일 Major 계열만으로 호환성이 입증되었다고 판단하지 않는다. 새 RDS에서 추가한 구조·객체·SQL이 옛 로컬 DB에서 처리되지 않을 수 있으므로 **원본→RDS→로컬 복원**을 하나의 시험 묶음으로 둔다. 실제 지원 버전은 생성 직전 다시 확인한다.
@@ -1755,7 +1759,7 @@ ElastiCache는 미사용 상태에서도 노드가 존재하면 과금되며, �
 | 입력 | 이번 설계에 적용할 내용 | 승인·상세 기록 |
 |---|---|---|
 | Cloud Primary와 Public 기본 Ingress | ROSA Classic Multi-AZ의 사용자 접속 경로를 유지. 정상 게임 서비스는 Hybrid VPN에 의존하지 않음 | 02·3-B |
-| RDS MariaDB / Redis OSS | DB는 영속 업무 기록, Redis는 Session/Room/Game 등 Runtime. TLS·목적별 인증과 Endpoint를 구분 | 3-C·3-D |
+| RDS MariaDB / Valkey 7.2(Redis 프로토콜) | DB는 영속 업무 기록, Redis는 Session/Room/Game 등 Runtime. TLS·목적별 인증과 Endpoint를 구분 | 3-C·3-D |
 | Secret 공급 | 환경별 비밀값은 3-C 공급 절차와 Secret 참조로 연결. FE에 DB/Redis·IAM·Signing 비밀값을 전달하지 않음 | 3-C |
 | Release 조합 | 같은 검증 App/Image와 환경별 배포 설정·Schema·Secret 개정·Backup 호환성을 연결 | 3-A·3-D |
 | Cloud/On-Prem 복구 차이 | 복구 시 DB를 복원하고 로컬 Redis는 새 Runtime으로 시작. Cloud 연결·진행 상태의 무중단 승계를 보장하지 않음 | 02·3-D |
@@ -2080,7 +2084,7 @@ Game/Turn별 고유성·서버의 판정 주체·완료된 결과의 변경 금�
 
 #### 3-E.14.2 Redis Failover와 새 Runtime의 차이
 
-ElastiCache Redis OSS는 비동기 복제로 일부 최신 상태를 잃을 수 있다. [3-E-R7] Failover 후 연결이 복구되었더라도 Session·Room·Turn·Vote·연결 식별이 서로 맞는지 확인한다. Client 캐시나 늦게 도착한 이벤트를 근거로 삭제된 Runtime을 무조건 생성하지 않는다.
+ElastiCache Valkey는 비동기 복제로 일부 최신 상태를 잃을 수 있다. [3-E-R7] Failover 후 연결이 복구되었더라도 Session·Room·Turn·Vote·연결 식별이 서로 맞는지 확인한다. Client 캐시나 늦게 도착한 이벤트를 근거로 삭제된 Runtime을 무조건 생성하지 않는다.
 
 일부 Redis 상태가 남은 Failover, Pod 교체, Redis 전체 재생성, On-Prem 논리 복원은 다른 시험이다. Pod 교체에서 현재 상태가 정상인 게임은 재접속 기준을 검증한다. 일부 소실 상태는 DB/Runtime과 실제 Code의 재구성 가능성을 확인한다. 전체 Runtime 소실에서 진행 게임을 중단하는 방향은 이미 승인받았으므로 같은 선택을 재승인 대상에 추가하지 않는다.
 

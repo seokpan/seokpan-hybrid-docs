@@ -152,8 +152,12 @@ class Canvas:
 
     def finish(self):
         self.rect(64,self.h-122,1672,1,'#CED9E3',radius=0)
-        provenance = ('기준: Project Source 00~04 · DR 개정 2026-10-05  |  제작·개정: 2026-10-05 KST'
-                      if self.number == 10 else '기준: 승인 Project Source 00~04 · 2026-10-01  |  제작: 2026-10-02 KST')
+        if self.number in {1, 2, 4, 12}:
+            provenance = '기준: Project Source 00~04 · Data Engine 목표 개정 2026-10-06  |  제작: 2026-10-02 · 개정: 2026-10-06 KST'
+        elif self.number == 10:
+            provenance = '기준: Project Source 00~04 · DR 개정 2026-10-05  |  제작·개정: 2026-10-05 KST'
+        else:
+            provenance = '기준: 승인 Project Source 00~04 · 2026-10-01  |  제작: 2026-10-02 KST'
         self.text(64,self.h-89,provenance,18,MUTED)
         self.text(64,self.h-58,'근거: '+self.meta[3],18,MUTED)
         self.text(64,self.h-27,'확인 대기: '+self.meta[4],18,MUTED)
@@ -194,7 +198,7 @@ def logical(c):
     c.card(112,810,270,109,'OpenShift GitOps',['Desired State 반영'],theme='cloud',size=20)
     c.card(404,810,270,109,'Native + UWM',['플랫폼/앱 관측'],theme='cloud',size=20)
     c.card(730,470,370,155,'RDS for MariaDB',['Multi-AZ DB instance','영속 업무 기록'],theme='data',tag='DB')
-    c.card(730,647,370,155,'ElastiCache Redis OSS',['Primary + Replica · Multi-AZ','Session / Room / Game Runtime'],theme='data',tag='RT',size=20)
+    c.card(730,647,370,155,'ElastiCache Valkey 7.2',['Primary + Replica · Multi-AZ','Session / Room / Game Runtime'],theme='data',tag='RT',size=20)
     c.card(730,824,178,120,'ECR',['Cloud Image'],theme='cloud',size=19)
     c.card(930,824,170,120,'S3',['Backup/State','별도 Bucket'],theme='cloud',size=19)
     c.panel(1160,380,576,594,'On-Prem / 운영과 복구','local','1차 자산 보존 · 정상 Cloud Runtime의 필수 경로 아님')
@@ -214,7 +218,7 @@ def physical(c):
         c.card(x+20,478,480,122,f'ROSA Private · 192.168.{67+i}.0/24',['관리형 Control Plane / Infra / Worker 영역','同 AZ NAT로 Egress'.replace('同','같은')],theme='cloud',size=20)
         c.card(x+20,620,480,94,f'Data Private · 192.168.{70+i}.0/24',['RDS / Redis Subnet Group · 인터넷 기본 Route 없음'],theme='data',size=19)
     c.card(88,758,520,148,'ROSA 규모와 배치',['Control Plane 3 + Infra 3 + Worker 3 최소','Worker m5.xlarge · FE/BE 각 3 Replica는 초기 후보','Pod 10.128.0.0/14 · Service 10.240.0.0/16'],theme='cloud',size=20)
-    c.card(640,758,520,148,'관리형 Data의 수와 책임',['RDS: Primary + 동기 Standby','Redis OSS: Primary 1 + 비동기 Replica 1'],theme='data',size=20)
+    c.card(640,758,520,148,'관리형 Data의 수와 책임',['RDS: Primary + 동기 Standby','Valkey 7.2: Primary 1 + 비동기 Replica 1'],theme='data',size=20)
     c.card(1192,758,520,148,'Network 공통 자원',['IGW · NAT 3 · S3 Gateway Endpoint','VPN EC2 1 + EIP · Public AZ-A 배치는 후보'],theme='cloud',size=20)
     c.para(88,949,'ROSA 설치 입력: Public/ROSA Private 6개  |  Data Subnet 3개 ≠ 서비스 인스턴스 3개',1624,21)
     c.para(88,983,'예비 7블록: 192.168.73.0/24~192.168.79.0/24 · 미생성  |  Data 응답: 승인 Host /32 → VPN ENI',1624,20)
@@ -266,7 +270,7 @@ def traffic(c):
     for tx,label in [(340,'FE Path'),(900,'API Path'),(1460,'WSS Path')]:
         c.arrow([(tx,503),(tx,556)],label,color='#316FB4',label_pos=(tx,534))
     c.card(648,786,504,99,'RDS for MariaDB',['TLS · 서버 이름/CA · SQL 인증'],theme='data',size=20)
-    c.card(1208,786,504,99,'ElastiCache Redis OSS',['TLS · 서버 이름/CA · AUTH'],theme='data',size=20)
+    c.card(1208,786,504,99,'ElastiCache Valkey 7.2',['TLS · 서버 이름/CA · AUTH'],theme='data',size=20)
     c.arrow([(900,704),(900,786)],color='#7461A8')
     c.arrow([(1460,704),(1460,786)],color='#7461A8')
     c.parts.append('<path d="M900 746H1460" fill="none" stroke="#7461A8" stroke-width="2.8"/>')
@@ -429,7 +433,7 @@ def migration(c):
     for x,t in headers:c.text(x,293,t,24,MUTED,700)
     rows=[('kubeadm / Calico / Gateway','Replatform / Replace','ROSA Classic · Route · 플랫폼 Network'),
           ('MariaDB / MaxScale','영속 역할 이전 / Replace','RDS MariaDB · 격리 논리 이전'),
-          ('Redis / 공유 Runtime','Replace / 새 Runtime','ElastiCache Redis OSS · 새 Recovery Redis'),
+          ('Redis / 공유 Runtime','Replace / 새 Runtime','ElastiCache Valkey 7.2 · 새 Recovery Redis'),
           ('Jenkins / Harbor','Retain / Registry 역할 분담','On-Prem CI · ECR Cloud / Harbor Recovery'),
           ('Argo / Ansible / NFS·관측','역할별 유지·분리 / 개별 판정 대기','GitOps / Infra / Backup·Evidence 경계')]
     for i,(left,decision,right) in enumerate(rows):

@@ -30,7 +30,7 @@
 <rect x="88" y="493" width="1624" height="68" rx="8" fill="#FFFFFF"/>
 <text x="104" y="524" font-size="22" fill="#152C43" font-weight="400" text-anchor="start">Redis / 공유 Runtime</text>
 <text x="680" y="524" font-size="21" fill="#237E70" font-weight="400" text-anchor="start">Replace / 새 Runtime</text>
-<text x="1158" y="524" font-size="21" fill="#152C43" font-weight="400" text-anchor="start">ElastiCache Redis OSS · 새 Recovery Redis</text>
+<text x="1158" y="524" font-size="21" fill="#152C43" font-weight="400" text-anchor="start">ElastiCache Valkey 7.2 · 새 Recovery Redis</text>
 <path d="M 606,518 L 650,518" fill="none" stroke="#60788E" stroke-width="2.8" stroke-linejoin="round" marker-end="url(#arrow-60788E)"/>
 <path d="M 1084,518 L 1128,518" fill="none" stroke="#60788E" stroke-width="2.8" stroke-linejoin="round" marker-end="url(#arrow-60788E)"/>
 <rect x="88" y="578" width="1624" height="68" rx="8" fill="#F7F9FB"/>
@@ -65,7 +65,7 @@
 <path d="M 1140,931 L 1256,931" fill="none" stroke="#237E70" stroke-width="2.8" stroke-linejoin="round" marker-end="url(#arrow-237E70)"/>
 <text x="64" y="1055" font-size="21" fill="#52677A" font-weight="400" text-anchor="start">개별 자원의 Retire/완료 판정은 실제 Migration Matrix와 Source를 확인한 뒤 기록</text>
 <rect x="64" y="1078" width="1672" height="1" rx="0" fill="#CED9E3"/>
-<text x="64" y="1111" font-size="18" fill="#52677A" font-weight="400" text-anchor="start">기준: 승인 Project Source 00~04 · 2026-10-01  |  제작: 2026-10-02 KST</text>
+<text x="64" y="1111" font-size="18" fill="#52677A" font-weight="400" text-anchor="start">기준: Project Source 00~04 · Data Engine 목표 개정 2026-10-06  |  제작: 2026-10-02 · 개정: 2026-10-06 KST</text>
 <text x="64" y="1142" font-size="18" fill="#52677A" font-weight="400" text-anchor="start">근거: 00 §6 / §8 / §12 · 02 §2.3 · 03 §3-A.6 / §3-D.2~7</text>
 <text x="64" y="1173" font-size="18" fill="#52677A" font-weight="400" text-anchor="start">확인 대기: Seed SHA·실제 Migration/전환·개별 자원의 최종 판정은 확인 대기</text>
 </svg>

@@ -112,7 +112,7 @@ AWS
   │    └─ OpenShift GitOps / Native Monitoring
   │
   ├─ Amazon RDS for MariaDB Multi-AZ
-  ├─ Amazon ElastiCache for Redis OSS Multi-AZ
+  ├─ Amazon ElastiCache for Valkey 7.2 Multi-AZ
   ├─ Amazon ECR
   └─ Amazon S3
 ```
@@ -158,7 +158,7 @@ AWS와 On-Prem 사이의 Hybrid Link는 다음 역할을 수행한다.
                               │          ├──────────────┐             │
                               │          ▼              ▼             │
                               │  RDS for MariaDB   ElastiCache        │
-                              │  Multi-AZ          Redis OSS          │
+                              │  Multi-AZ          Valkey 7.2         │
                               │  Primary +         Multi-AZ           │
                               │  Sync Standby      Primary + Replica  │
                               │                                       │
@@ -497,11 +497,13 @@ User Access Path
 
 ---
 
-# 10. Runtime State — Amazon ElastiCache for Redis OSS
+# 10. Runtime State — Amazon ElastiCache for Valkey 7.2
 
 ## 10.1 확정 구성
 
-2차 Runtime State 계층은 **Amazon ElastiCache for Redis OSS**를 사용한다.
+2차 Runtime State 계층의 목표 엔진은 **Amazon ElastiCache for Valkey 7.2**다(2026-10-06 팀 결정, Data 계약 v2.2).
+
+현재 Data Source의 Redis OSS 7.1은 C의 Data Root 개정에서 전환하며, 설계 목표 선택을 Source 병합·실제 생성·App 호환성 시험 완료로 해석하지 않는다. Cloud·lab·Recovery는 Valkey 7.2 계열을 목표로 하고, lab·Recovery Image Digest와 실제 실행 조건은 별도로 수락한다. Generic Redis는 Runtime 계층과 프로토콜의 논리 이름으로 유지한다. 상세 경계는 [03 §3-D.9.7](03_DETAILED_DESIGN.md#data-engine-contract-20261006)에 기록한다.
 
 기본 구조:
 
@@ -528,7 +530,7 @@ Redis
   └─ Runtime Coordination
 ```
 
-ElastiCache Redis OSS replication은 asynchronous이므로 장애 시 최신 일부 Runtime State가 손실될 가능성을 인정한다.
+ElastiCache Valkey replication은 asynchronous이므로 장애 시 최신 일부 Runtime State가 손실될 가능성을 인정한다.
 
 따라서 Test에서는 “Redis HA가 무손실”이라고 가정하지 않고 다음을 확인한다.
 
@@ -1404,7 +1406,7 @@ Target Architecture를 실제로 주장하려면 최소 다음 Evidence가 필�
 | Application Runtime | **ROSA** |
 | Primary DB | **Amazon RDS for MariaDB Multi-AZ DB instance deployment** |
 | Recovery DB | **On-Prem MariaDB Restore Target** |
-| Redis | **ElastiCache for Redis OSS / Single Shard / Primary+Replica / Multi-AZ / Auto Failover** |
+| Redis | **ElastiCache for Valkey 7.2 / Single Shard / Primary+Replica / Multi-AZ / Auto Failover** |
 | CI | **On-Prem Jenkins Retain** |
 | Cloud Registry | **Amazon ECR** |
 | Recovery Registry | **On-Prem Harbor** |

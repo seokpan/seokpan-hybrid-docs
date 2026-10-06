@@ -68,7 +68,7 @@
 <rect x="640" y="772" width="5" height="120" rx="2" fill="#7461A8"/>
 <text x="662" y="798" font-size="24" fill="#152C43" font-weight="700" text-anchor="start">관리형 Data의 수와 책임</text>
 <text x="662" y="830.0" font-size="20" fill="#52677A" font-weight="400" text-anchor="start">RDS: Primary + 동기 Standby</text>
-<text x="662" y="860.0" font-size="20" fill="#52677A" font-weight="400" text-anchor="start">Redis OSS: Primary 1 + 비동기 Replica 1</text>
+<text x="662" y="860.0" font-size="20" fill="#52677A" font-weight="400" text-anchor="start">Valkey 7.2: Primary 1 + 비동기 Replica 1</text>
 <rect x="1192" y="758" width="520" height="148" rx="12" fill="#FFFFFF" stroke="#CCD8E3" stroke-width="1.6"/>
 <rect x="1192" y="772" width="5" height="120" rx="2" fill="#316FB4"/>
 <text x="1214" y="798" font-size="24" fill="#152C43" font-weight="700" text-anchor="start">Network 공통 자원</text>
@@ -99,7 +99,7 @@
 <text x="1340" y="1170.0" font-size="20" fill="#52677A" font-weight="400" text-anchor="start">격리 MariaDB · 직접 TLS</text>
 <text x="1340" y="1200.0" font-size="20" fill="#52677A" font-weight="400" text-anchor="start">기존 DB/MaxScale 보존</text>
 <rect x="64" y="1278" width="1672" height="1" rx="0" fill="#CED9E3"/>
-<text x="64" y="1311" font-size="18" fill="#52677A" font-weight="400" text-anchor="start">기준: 승인 Project Source 00~04 · 2026-10-01  |  제작: 2026-10-02 KST</text>
+<text x="64" y="1311" font-size="18" fill="#52677A" font-weight="400" text-anchor="start">기준: Project Source 00~04 · Data Engine 목표 개정 2026-10-06  |  제작: 2026-10-02 · 개정: 2026-10-06 KST</text>
 <text x="64" y="1342" font-size="18" fill="#52677A" font-weight="400" text-anchor="start">근거: 03 §3-B.3~6 / §3-B.8~9 / §3-D.10 / §3-F.18 · 04 §5.5</text>
 <text x="64" y="1373" font-size="18" fill="#52677A" font-weight="400" text-anchor="start">확인 대기: 실제 AZ 이름·Host·VM 주소/용량·서비스 배치 AZ는 확인 대기</text>
 </svg>

@@ -47,7 +47,7 @@
 
 다음 승인 기준을 유지한다.
 
-- Cloud Primary와 On-Prem Restore-based Recovery, ROSA Classic Multi-AZ, RDS MariaDB Multi-AZ, ElastiCache Redis OSS Multi-AZ
+- Cloud Primary와 On-Prem Restore-based Recovery, ROSA Classic Multi-AZ, RDS MariaDB Multi-AZ, ElastiCache Valkey 7.2 Multi-AZ(2026-10-06 팀 목표 개정 — [03 §3-D.9.7](03_DETAILED_DESIGN.md#data-engine-contract-20261006); 현재 Data Source의 Redis OSS 7.1 전환·실제 생성/호환성 시험은 별도)
 - App, Infra, GitOps, Docs 네 저장소와 1차 독립 포트폴리오 보존
 - bootstrap, foundation, rosa 세 Root와 State, 목적별 실행 Role, 제한된 비밀값 아닌 입력 전달
 - ECR Cloud Runtime Pull과 Harbor Recovery 보존, GitOps와 Secret 공급의 소유권 분리
