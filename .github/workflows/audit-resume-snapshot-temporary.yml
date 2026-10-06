@@ -26,10 +26,11 @@ jobs:
           start=datetime.datetime.now(datetime.timezone.utc).isoformat()
           def save(path,value):
               p=root/path;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n')
+          save('collection-start.json',{'started_at_utc':start})
           def collect(short):
               repo='seokpan-hybrid-'+short;page_log=[];errors=[]
               def get(tail):
-                  request=urllib.request.Request('https://api.github.com/repos/seokpan/'+repo+'/'+tail,headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json','User-Agent':'seokpan-public-audit'})
+                  request=urllib.request.Request('https://api.github.com/repos/seokpan/'+repo+('/'+tail if tail else ''),headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json','User-Agent':'seokpan-public-audit'})
                   for attempt in range(3):
                       try:
                           with urllib.request.urlopen(request,timeout=45) as r:return json.load(r),r.headers
