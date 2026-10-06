@@ -775,7 +775,7 @@ State Lineage·Serial 차이의 원인과 내용 동일성은 [첫 코멘트](ht
 ### 8.11 Cost Gate Data 입력과 VPN 가동 시간 답변
 
 - 일자: 2026-10-06 / 작성 김상희
-- 내용: D의 Cost Gate(I07) 요청에 foundation Data 항목의 가동 시간 입력을 [Docs #43 코멘트](<링크>)로 제출하고, VPN 가동 시간 질문에 대한 답을 [Infra #16 코멘트](<링크>)로 남겼다.
+- 내용: D의 Cost Gate(I07) 요청에 foundation Data 항목의 가동 시간 입력을 [Docs #43 코멘트](https://github.com/seokpan/seokpan-hybrid-docs/issues/43)로 제출하고, VPN 가동 시간 질문에 대한 답을 [Infra #16 코멘트](https://github.com/seokpan/seokpan-hybrid-infra/issues/16)로 남겼다.
 - Data 입력: RDS 가동 시간을 두 경우로 나눠 제출했다. R1은 상시 가동(약 336시간), R2는 작업 창 밖에서 RDS를 Stop하는 경우(최대 168시간). R2의 창은 이관 목표 창 10/12~15(96시간)와 검증 목표 창 10/19~21(72시간)이며 날짜는 목표일 뿐 확정 창이 아니다.
 - 제약: RDS Stop은 Storage·Backup 비용을 없애지 않고 최대 7일 후 자동 재시작된다. 프로젝트 PC는 주말에 꺼지고 평일과 한글날(10/9)에는 켜져 있다. 최종 Snapshot과 Backup S3에는 실사용자 데이터가 들어 있으므로 프로젝트 종료 시 삭제해야 한다.
 - 열린 항목: ① RDS Stop 구현이 코드에 아직 없음(03 3-F.9 후속), ② 종료 시 최종 Snapshot·Backup S3 삭제 담당·시점 미정, ③ D의 Ledger 개정 수신 후 Data 입력 재대조
