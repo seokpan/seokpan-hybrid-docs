@@ -1,0 +1,146 @@
+name: B handoff checkpoint preparation
+on:
+  push:
+    branches: [docs/b-registry-vault-followup]
+    paths: [.github/workflows/b-handoff-checkpoint-temporary.yml]
+permissions:
+  contents: write
+concurrency:
+  group: b-handoff-checkpoint-preparation
+  cancel-in-progress: false
+jobs:
+  prepare:
+    if: ${{ github.repository == 'seokpan/seokpan-hybrid-docs' && github.event.repository.private == false }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Prepare a checked commit without moving any branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PYTHONDONTWRITEBYTECODE: '1'
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import base64, collections, hashlib, json, os, pathlib, re, subprocess, urllib.request
+          repo = 'seokpan/seokpan-hybrid-docs'
+          branch = 'docs/b-registry-vault-followup'
+          trigger = os.environ['GITHUB_SHA']
+          assert os.environ['GITHUB_REF'] == 'refs/heads/' + branch
+          out = pathlib.Path(os.environ['RUNNER_TEMP']) / 'b-handoff-checkpoint'
+          out.mkdir()
+          def api(path, data=None):
+              req = urllib.request.Request('https://api.github.com/repos/' + path, data=None if data is None else json.dumps(data).encode(), headers={'Authorization': 'Bearer ' + os.environ['GH_TOKEN'], 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json', 'User-Agent': 'seokpan-source-checkpoint'})
+              with urllib.request.urlopen(req, timeout=60) as response:
+                  return json.load(response)
+          def git(*args):
+              return subprocess.check_output(['git', *args], text=True).strip()
+          assert api(repo + '/git/ref/heads/' + branch)['object']['sha'] == trigger
+          main = api(repo + '/git/ref/heads/main')['object']['sha']
+          assert main == '8a0a6c7f23527995929451775868f9553531ae7c', 'Main changed: review before retrying'
+          pr = api('seokpan/seokpan-hybrid-gitops/pulls/17')
+          merge = 'fa3cea313e2cb1533d9703082619b085a3de25cc'
+          assert pr['merged'] and pr['merge_commit_sha'] == merge
+          names = api('seokpan/seokpan-hybrid-gitops/branches?per_page=100')
+          assert len(names) < 100 and not any(x['name'] == 'b/lab-internal-registry-binding' for x in names)
+          git('config', 'user.name', 'github-actions[bot]')
+          git('config', 'user.email', '41898282+github-actions[bot]@users.noreply.github.com')
+          git('fetch', '--no-tags', 'origin', main)
+          subprocess.run(['git', 'merge', '--no-commit', '--no-ff', main], check=True)
+          paths = ['execution/TJUNG03_EXECUTION_BOARD.md', 'execution/TJUNG03_WORKFLOW_AND_LEARNING_GUIDE.md', 'execution/WORK_TRACKER.md', 'execution/05_IMPLEMENTATION_AND_VALIDATION.md']
+          before = {p: pathlib.Path(p).read_text() for p in paths}
+          def checkboxes(text):
+              return re.findall(r'^\s*[-*] \[[ xX]\].*$', text, re.M)
+          def c_section(text):
+              m = re.search(r'^### 8\.13 .*?(?=^## 9 )', text, re.M | re.S)
+              assert m, 'C section 8.13 missing'
+              return m.group()
+          c_before = c_section(before[paths[3]])
+          checkpoint = '''<a id="gitops17-merged-checkpoint-20261007"></a>
+          ## 2026-10-07 현재 작업 기준 — GitOps #17 병합
+
+          [GitOps #17](https://github.com/seokpan/seokpan-hybrid-gitops/pull/17)은 2026-10-06 23:45:46 KST에 main `fa3cea313e2cb1533d9703082619b085a3de25cc`로 병합됐고 작업 브랜치가 삭제됐다. 검토 HEAD `adacf6fffd9d179eef4715e92a3fed721759db55`와 병합 SHA, 승인 Image Source `46e21a74dd608b41f2c12a0a57d76bddfcf25949`와 현재 App main은 각각 구분한다.
+
+          | 구분 | 현재 결과와 다음 조건 |
+          |---|---|
+          | Source | FE/BE·별도 Migration Job의 내부 Registry 주소·기존 Digest·lab Redis URL/기대 Host 연결이 병합됐다. lab Harbor Pull 참조 제거는 실제 Secret 삭제가 아니다. Cloud ECR·Recovery Harbor는 유지한다 |
+          | 실제 실행 | FE/BE replicas 0·Migration suspend/current/300초·단일 실행을 유지한다. 검토된 Valkey 선언과 Service/Ready 확인, DB/Schema·CA/목적 Secret·Route·권한·공유 사용창·live Diff 수락 뒤 필요한 단일 Migration → Backend → Frontend → 동일 조합 시험으로 진행한다 |
+          | Cloud 금고 | B 공개키 전달·C 암호문 공급 안내 수신은 완료다. Docs #66의 C 계정별 해독 확인 보고와 B 본인 확인·수신·독립 사본 검증은 구분해 대조한다. 비밀값을 기록하지 않는다 |
+          | 조사 범위 | 이번 Source 병합 반영은 네 저장소 전수조사 완료가 아니다. 설계·주석·그림·등록본의 발견과 남은 검토는 [정합성 조사 대장](REPOSITORY_CONSISTENCY_AUDIT.md) Q01~Q12를 따른다 |
+
+          아래 날짜별 기록은 해당 시점의 이력이다. 과거 대기 표시를 현재의 새 선행조건으로 되살리지 않는다. 기존 TH 81개·실제 완료 표시, C의 05 §8.13과 담당별 기록, 비용·Run 원본은 보존한다. Docs #64의 실제 병합 여부는 다음 작업 시작 시 GitHub에서 확인한다.
+
+          '''
+          checkpoint = '\n'.join(line[10:] if line.startswith('          ') else line for line in checkpoint.split('\n'))
+          row_old = '| **내 일: lab 소비 Source** | [GitOps PR17](https://github.com/seokpan/seokpan-hybrid-gitops/pull/17) `adacf6fffd9d179eef4715e92a3fed721759db55` Ready/D·C 리뷰 요청. FE/BE+별도 Migration Job 주소 내부 Registry 전환·lab Harbor Pull 참조 제거·Redis URL/Host 연결. Source39검사/진단Render8 통과 | 리뷰/병합은 미완. replicas0·Job suspend/current/300초·삭제 보호 유지. 기존 Secret 삭제·Valkey 선언/활성화·실제 Sync는 하지 않음 |'
+          row_new = '| **내 일: lab 소비 Source** | [GitOps PR17](https://github.com/seokpan/seokpan-hybrid-gitops/pull/17) 검토 HEAD `adacf6fffd9d179eef4715e92a3fed721759db55`, 병합 main `fa3cea313e2cb1533d9703082619b085a3de25cc`·작업 브랜치 삭제 완료. FE/BE+별도 Migration 내부 Registry·기존 Digest·Redis URL/Host 연결. Source39/Render8은 기존 검사 결과 | Source 리뷰·병합 대기는 해소됐다. replicas0·Job suspend/current/300초·삭제 보호 유지. Valkey 선언·실제 Sync/Ready·업무 시험은 별도다 |'
+          old_judgment = '**00–04·아키텍처 판단:** 이번 입력은 이미 승인된 내부 lab Registry·Valkey7.2·환경별 Secret/키 보관 설계의 실제 공급/소비 연결이다. 목표 플랫폼·엔진·TLS/AUTH·Data 영속성·격리/역할 경계를 바꾸지 않으므로 이번00–04/아키텍처 그림 추가 변경은 필요하지 않다. 설계/Source 완료를 실측 완료로 확대하지 않는다. 향후 Cloud HA/Pool·운영 정책의 실질 변경은 원 설계와 그림까지 다시 대조한다. GitHub Freeze milestone10/18 vs 승인10/16 메타데이터 정정은 여전히 별도 미완이다.'
+          new_judgment = '**설계 영향 범위:** 공개키·암호문 공급과 내부 Registry 소비 연결 자체는 새 아키텍처 선택이 아니다. 이는 기존 00–04·그림에 남은 불일치가 없다는 판정과 다르다. 현재 DR 요구는 RTO 10분·영속 DB RPO 30분·운영 중 백업 계획 주기 15분이며, Valkey·Registry·DR의 설계/코드/그림/등록본 정합성은 조사 대장에서 별도로 추적한다. 실제 전체 T18·Runtime·Cost PASS는 미판정이다. Freeze 10/18 메타데이터와 승인 목표 10/16의 차이도 후속으로 유지한다.'
+          for p in paths:
+              text = before[p]
+              assert 'gitops17-merged-checkpoint-20261007' not in text
+              if p.endswith('WORK_TRACKER.md') or p.endswith('05_IMPLEMENTATION_AND_VALIDATION.md'):
+                  assert text.count(row_old) == 1, p + ': unexpected source row'
+                  text = text.replace(row_old, row_new)
+                  assert text.count(old_judgment) == 1, p + ': unexpected design paragraph'
+                  text = text.replace(old_judgment, new_judgment)
+                  text = text.replace('사용자 확인으로 B age public recipient 생성·C 전달 완료.', 'B age public recipient 생성·C 전달 완료.')
+                  text = text.replace('전달/수신은 사용자 확인을 기준으로 갱신하며 이번 답장 초안 전달 완료를 대신 표시하지 않는다.', '제출·수신은 실제 기록으로 갱신하고 답장 초안 작성과 전달 완료를 구분한다.')
+              if p.endswith('TJUNG03_WORKFLOW_AND_LEARNING_GUIDE.md'):
+                  old = '아래는 본인 Controller의 bash에서 실행할 확인 절차이며 AI가 실행한 결과가 아니다.'
+                  assert text.count(old) == 1
+                  text = text.replace(old, '아래는 본인 Controller의 bash에서 실행할 확인 절차다. 명령 예시는 실제 확인 결과와 구분한다.')
+                  old = '**판정:** Source39검사/진단Render8 PASS, 활성 Release는 미해결 입력으로 차단됨. 실클러스터/Cloud 복호화·Pod·DB/TLS/업무는 아직 미실행. 이번 기존00–04 설계/그림 추가 변경은 불필요하다.'
+                  assert text.count(old) == 1
+                  text = text.replace(old, '**판정 범위:** GitOps #17의 기존 Source39/진단Render8 검사와 Source 병합은 완료다. 활성 Release·실제 Sync/Pod/DB/TLS/업무는 남은 입력과 별도 시험이 필요하다. 이 인계만으로 00–04·그림 전체의 정합성 검토를 완료 처리하지 않는다. Cloud 금고의 공급자 확인 보고와 본인 확인은 상단 현재 기준으로 대조한다.')
+              if p.endswith('TJUNG03_EXECUTION_BOARD.md'):
+                  text = text.replace('핵심구현현동결', '핵심구현동결')
+              title, remainder = text.split('\n', 1)
+              text = title + '\n\n' + checkpoint + remainder.lstrip('\n')
+              assert checkboxes(text) == checkboxes(before[p]), p + ': checkbox change'
+              assert collections.Counter(re.findall(r'TH-\d+\.\d+', text)) == collections.Counter(re.findall(r'TH-\d+\.\d+', before[p])), p + ': TH identifiers changed'
+              assert not re.search(r'^(<<<<<<<|=======|>>>>>>>)', text, re.M)
+              pathlib.Path(p).write_text(text)
+          assert c_section(pathlib.Path(paths[3]).read_text()) == c_before
+          git('diff', '--check')
+          workflow = '.github/workflows/b-handoff-checkpoint-temporary.yml'
+          changed = git('diff', '--name-only', trigger).splitlines()
+          assert set(changed) <= set(paths), changed
+          report = {'trigger_sha': trigger, 'incorporated_main_sha': main, 'gitops17_merge_sha': merge, 'changed_files': changed, 'checkboxes_preserved': True, 'th_identifiers_preserved': True, 'c_section_8_13_preserved': True, 'diff_check': 'PASS', 'runtime': 'NOT RUN', 'full_audit': 'IN PROGRESS'}
+          (out / 'preservation-checks.json').write_text(json.dumps(report, ensure_ascii=False, indent=2))
+          (out / 'changes.patch').write_text(git('diff', trigger, '--', *paths) + '\n')
+          elements = []
+          for p in changed:
+              data = pathlib.Path(p).read_bytes()
+              blob = api(repo + '/git/blobs', {'content': base64.b64encode(data).decode(), 'encoding': 'base64'})
+              elements.append({'path': p, 'mode': '100644', 'type': 'blob', 'sha': blob['sha']})
+              target = out / 'updated' / p
+              target.parent.mkdir(parents=True, exist_ok=True)
+              target.write_bytes(data)
+          elements.append({'path': workflow, 'mode': '100644', 'type': 'blob', 'sha': None})
+          base_tree = api(repo + '/git/commits/' + trigger)['tree']['sha']
+          tree = api(repo + '/git/trees', {'base_tree': base_tree, 'tree': elements})
+          commit = api(repo + '/git/commits', {'message': 'docs: reconcile GitOps 17 handoff and preserve Data update', 'tree': tree['sha'], 'parents': [trigger, main]})
+          report['prepared_commit_sha'] = commit['sha']
+          report['prepared_tree_sha'] = tree['sha']
+          report['branch_moved'] = False
+          (out / 'preservation-checks.json').write_text(json.dumps(report, ensure_ascii=False, indent=2))
+          print(json.dumps(report, ensure_ascii=False))
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
+              f.write('Prepared commit: `' + commit['sha'] + '`\n\nNo branch ref was changed. Four-file patch, original checkboxes and C section 8.13 validated. Runtime and full audit remain separate.\n')
+          PY
+      - name: Upload exact patch and preservation results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: b-handoff-checkpoint-${{ github.sha }}
+          path: ${{ runner.temp }}/b-handoff-checkpoint/
+          if-no-files-found: warn
+          retention-days: 7
+          include-hidden-files: false
+          overwrite: false
