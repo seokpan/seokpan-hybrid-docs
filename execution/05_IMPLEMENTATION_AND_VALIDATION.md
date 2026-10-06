@@ -729,16 +729,16 @@ ZIP의 2026-09-29 기록은 승인00 §30.1/03 §3-B의 기존 PoC를 설명하�
 | Data SG | RDS·Redis SG 분리. 규칙은 모두 별도 Rule 리소스, ROSA Worker → Data SG 규칙은 rosa State가 추가. 온프렘 → RDS는 Data VM `/32` 확정 전 규칙 없음 | 03 3-B.9.6~9.7절 |
 | RDS | MariaDB 11.8.9 Multi-AZ, db.t4g.small, gp3 20GiB(자동 확장 끔). 파라미터 그룹 `time_zone = Asia/Seoul`·`sql_mode` 1차 동일·`require_secure_transport = 1`·utf8mb4_unicode_ci | 03 3-D.10.3절, 이 문서 8.7절 |
 | Redis | Redis OSS 7.1, cache.t4g.small 2개(Primary+Replica, Multi-AZ), `noeviction`, TLS + AUTH | 03 3-D.9.7절, 3-D.10.4절 |
-| Backup S3 | `hourly/` 7일 후 삭제, `protected/` 자동 삭제 없음, 버전 관리·HTTPS 강제 | 03 3-D.9.5~9.6절 |
-| Backup User | 업로드·다운로드·목록만, 삭제 권한 없음. Access Key는 Terraform 밖에서 발급 | 03 3-C.13절 |
+| Backup S3 | `hourly/` 7일 후 삭제, `protected/` 자동 삭제 없음, 버전 관리. HTTPS 강제는 초안에서는 Bucket Policy였으나 foundation Role의 버킷 정책 권한을 제거해 Backup User Boundary의 explicit Deny로 바뀜(8.10절) | 03 3-D.9.5~9.6절 |
+| Backup User | 이름 `seokpan-fnd-backup`(경로 없음). 업로드·다운로드·목록만, 삭제는 bootstrap 소유 Boundary의 explicit Deny. Access Key는 Terraform 밖에서 발급 | 03 3-C.13절, 이 문서 8.10절 |
 
 **비밀값과 State.** RDS 마스터 비밀번호는 RDS가 만들어 Secrets Manager에 보관하는 방식, Redis Token은 State에 저장되지 않는 write-only 인자를 쓴다. Backup User Access Key는 Terraform으로 만들지 않는다. 세 가지 모두 비밀값이 Terraform State에 남지 않게 하려는 선택이며, RDS 방식은 이유빈 확인을 기다린다.
 
 **확인한 것.** 저장소 밖 검증용 Root(AWS provider 6.67.0 고정)에서 모듈 8개 파일의 `terraform validate`가 통과했고, 입력 검사 2개(서브넷 3개, 온프렘 주소 `/32`)가 잘못된 값을 막는 것을 확인했다. 서울 리전 조회로 RDS 11.8.9 + db.t4g.small + Multi-AZ + gp3, Redis 7.1 조합이 생성 가능함을 확인했다.
 
-**권한 요청.** foundation 실행 Role에 붙일 Data 권한을 [#19 코멘트](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-5947207348)로 이유빈에게 전달했다. 리소스 이름을 `seokpan-` 접두사로 제한했고, 백업 객체 읽기·쓰기, 마스터 비밀번호 열람, Access Key 발급, 복구·장애 시험 권한은 일부러 뺐다.
+**권한 요청.** foundation 실행 Role에 붙일 Data 권한을 [#19 코멘트](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-5947207348)로 이유빈에게 전달했다. 리소스 이름을 `seokpan-` 접두사로 제한해 요청했고(PR #34에서 `seokpan-fnd-` 접두사로 확정, 8.10절), 백업 객체 읽기·쓰기, 마스터 비밀번호 열람, Access Key 발급, 복구·장애 시험 권한은 일부러 뺐다.
 
-**아직 하지 않은 것.** 구조 전환과 PR, bootstrap 권한 반영, 실제 plan·apply, Redis 7.1과 App Driver 호환 확인(정태훈)이 남아 있다. validate와 조회는 코드와 생성 가능 조합의 확인이며, 권한·생성·접속 시험의 결과가 아니다.
+**아직 하지 않은 것.** bootstrap 권한 반영은 8.10절(PR #34 병합·apply 완료)에서 끝났다. 구조 전환과 PR, 실제 plan·apply, Redis 7.1과 App Driver 호환 확인(정태훈)이 남아 있다. validate와 조회는 코드와 생성 가능 조합의 확인이며, 권한·생성·접속 시험의 결과가 아니다.
 
 ### 8.9 TF 실행 Role 남은 시험과 Infra #10 종료
 
@@ -771,6 +771,15 @@ State Lineage·Serial 차이의 원인과 내용 동일성은 [첫 코멘트](ht
 - 해소: Network 권한 PR과 EC2 SG 범위는 Data SG 블록(`Component=data` 조건) 유지로 정리 (10-06 이유빈). 03의 3-F Bucket Policy 예상과 달라진 버킷 정책 구조는 PR #34 리뷰 승인으로 수락
 - 열린 항목: ① foundation 첫 plan에서 RDS · ElastiCache · SG · S3 · IAM 경로 AccessDenied 확인 (#33 병합·Root 전환 후), ② Root 전환 때 `aws_s3_bucket_policy.backup` 삭제 · `path = "/automation/"` 삭제 · Boundary 지정 (미반영 시 foundation apply 실패), ③ Network/Hybrid 권한 합산 시 inline 한도 여유 2362자
 - 증빙: PR #34, infra #19 코멘트
+
+### 8.11 Cost Gate Data 입력과 VPN 가동 시간 답변
+
+- 일자: 2026-10-06 / 작성 김상희
+- 내용: D의 Cost Gate(I07) 요청에 foundation Data 항목의 가동 시간 입력을 [Docs #43 코멘트](https://github.com/seokpan/seokpan-hybrid-docs/issues/43)로 제출하고, VPN 가동 시간 질문에 대한 답을 [Infra #16 코멘트](https://github.com/seokpan/seokpan-hybrid-infra/issues/16)로 남겼다.
+- Data 입력: RDS 가동 시간을 두 경우로 나눠 제출했다. R1은 상시 가동(약 336시간), R2는 작업 창 밖에서 RDS를 Stop하는 경우(최대 168시간). R2의 창은 이관 목표 창 10/12~15(96시간)와 검증 목표 창 10/19~21(72시간)이며 날짜는 목표일 뿐 확정 창이 아니다.
+- 제약: RDS Stop은 Storage·Backup 비용을 없애지 않고 최대 7일 후 자동 재시작된다. 프로젝트 PC는 주말에 꺼지고 평일과 한글날(10/9)에는 켜져 있다. 최종 Snapshot과 Backup S3에는 실사용자 데이터가 들어 있으므로 프로젝트 종료 시 삭제해야 한다.
+- 열린 항목: ① RDS Stop 구현이 코드에 아직 없음(03 3-F.9 후속), ② 종료 시 최종 Snapshot·Backup S3 삭제 담당·시점 미정, ③ D의 Ledger 개정 수신 후 Data 입력 재대조
+- 한계: 입력 제출이며 Cost Gate PASS나 실제 비용 확정이 아니다.
 
 ## 9 복구 예행과 목표 재검토 — 2026-10-02
 
@@ -1527,6 +1536,8 @@ ROSA 첫 Plan은 실제 VPC/Subnet6·공통 Role4/Operator Policy Map·Data SG2�
 - [x] 실사용자 데이터 이관 여부 결정 — 그대로 이관, `login_id` 가명화 대안 사용 안 함, 취급 조건 유지 — Infra #17
 - [x] foundation Data 코드 초안·정적 검증과 foundation Role Data 권한 요청 — 8.8절(foundation Data 코드 초안과 Data 권한 요청), Infra #19
 - [x] TF 실행 Role 남은 Lock 충돌 시험과 Infra #10 종료 — 8.9절(TF 실행 Role 남은 시험과 Infra #10 종료)
+- [x] bootstrap Data 권한 PR #34 병합·apply·재plan No changes — 8.10절, Infra #19
+- [ ] Cost Gate Data 입력 제출(완료)과 Ledger 개정 후 재대조·RDS Stop 구현·종료 시 삭제 대상 확정 — 8.11절, Docs #43, Infra #16
 - [x] 복구 목표 피드백·특정 수치 우선 권고 수정과 기존 W04/T17/T18 예행/부담 판단 준비 — §9
 - [x] Run 시각 계산 보조 구현·합성 입력 검사 — §9.8, 실제 시험과 구분
 - [ ] 실제 백업 최신성·전체 복구 예행·팀 부담/비용과 목표 달성 검증 — §9, I03/I05/I07. 목표·주기·구조 선택은 03 §3-I.14.5에 완료한 설계안으로 연결
