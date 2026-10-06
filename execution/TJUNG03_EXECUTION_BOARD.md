@@ -51,6 +51,9 @@ TH17은 App4의 App/Pool, GitOps10의 선언/관측, Infra25의 ROSA/SG/재생�
 - [ ] A/C/D 실제 기반·Data·CI/Pull/비용과 B ROSA 실제 실행/통합
 - [ ] 최종 시험·발표·삭제/잔존/보관·팀 종료
 
+<details>
+<summary>2026-10-05~06의 Source·비용·인계 관측 이력 — 현재 지시는 상단·§2~10</summary>
+
 **B의 본인 환경 준비는 A 전체 업무 완료를 기다리지 않는다.** D Run3 Image 제공·B 개정 수락과 Lab/Recovery Source 승인·병합은 완료됐다. 다음 활성화·실행은 D/C의 최소 lab/Pull Secret/Data/Owner 입력 수락 뒤 진행하며, ROSA 실제 제한 Output/SG2·B 목적 Caller/Backend·비용 준비는 병행한다. OCP 정리는 별도이며 ROSA 시작의 일괄 조건으로 추가하지 않는다.
 
 **현재 B 작업 묶음:** [D Run#3](https://github.com/seokpan/seokpan-hybrid-app/pull/10#issuecomment-6009053898) SUCCESS·Harbor-only·`linux/amd64` 보고와 FE/BE Final Index Digest를 [B 수락 답변](https://github.com/seokpan/seokpan-hybrid-app/pull/10#issuecomment-6009213599)에서 제공 개정으로 수락했다. App Source는 `46e21a74dd608b41f2c12a0a57d76bddfcf25949`, Final tag는 `git-46e21a74dd60`다. 초기 frontend Alpine 경고는 최신 D 스캔 정정으로 공급 대기에서 해소했다. Private Harbor 원본 metadata/bytes를 독립 조회로 검증한 것은 아니며 cp-03 Podman Pull/Smoke 보고도 OCP Workload Pull/Ready 판정과 구분한다. [GitOps PR #13](https://github.com/seokpan/seokpan-hybrid-gitops/pull/13)은 검토 HEAD `c798ed28d516533d5ffb984ad58332e3a5e5829d`의 [D 최신 승인](https://github.com/seokpan/seokpan-hybrid-gitops/pull/13#pullrequestreview-5424398322) 후 main `fc175a7002ad567e9d5206b6e4b6642e8416eea2`로 병합됐고 작업 브랜치 삭제를 확인했다. [Source CI #40](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37420661610)의 39개 검사 통과(skip0)는 기존 검증 결과이며 이번에 새 검사/실행을 추가하지 않았다. 이전 e757 승인 `DISMISSED`·c798 `blocked`/재검토 요청은 [보완 답변](https://github.com/seokpan/seokpan-hybrid-gitops/pull/13#issuecomment-6010256873) 당시 이력이고 현재 Source 승인·병합 대기는 해소됐다. [Docs #53](https://github.com/seokpan/seokpan-hybrid-docs/pull/53)도 main `17b601b1e4dc2db82efaf8e82df78a39ae9c1376`로 병합·브랜치 삭제됐다. Source 준비 완료와 실제 입력 공급·활성화·실행 수락은 별개다. Lab/Recovery FE·BE 및 held Migration에 제공된 Final Index Digest를 연결했고 Lab `lab-harbor-pull` 참조를 추가했다. Recovery `recovery-harbor-pull`은 유지한다. App replicas0·Migration suspend/current·기타 INPUT_REQUIRED·Cloud ECR 보류는 그대로다. Image 제공·개정 수락과 Source 승인·병합 대기는 해소됐다. B는 이제 D와 대상 Namespace의 실제 Pull Secret 공급·Context·권한·단일 Owner, C/D Data·CA/TLS/AUTH·Schema/필요 Migration 준비를 수락한다. 그 뒤 별도 활성화 개정·필요 단일 Migration·수동 Sync를 수행하며 해당 Job/Pod의 Workload Pull·Ready/FE/API/WSS/대표 업무 Case를 같은 조합으로 확인한다. 선언의 Digest/Secret 이름만으로 실제 실행을 완료 처리하지 않는다. ROSA 준비는 Infra25에서 병행한다. [05 §9.36](05_IMPLEMENTATION_AND_VALIDATION.md#b-image-receipt-held-source-pullsecret-20261006)·학습 안내 §5.8을 본다.
@@ -101,6 +104,9 @@ TH17은 App4의 App/Pool, GitOps10의 선언/관측, Infra25의 ROSA/SG/재생�
 
 상위 개인 체크 정본은 [h-docs Issue #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의 TH01~19/81개다. 완료체크 TH03.1/03.2를 보존하고 아래 준비/실측 분해만으로 다른79개를 자동완료 처리하지 않는다. 팀 전체 W/T는 [팀 실행 순서](TEAM_EXECUTION_SEQUENCE.md)·[h-docs Issue #8](https://github.com/seokpan/seokpan-hybrid-docs/issues/8)이며 B 개인 일과 구분한다.
 
+
+</details>
+
 ## 2 다음 작업 구간에서 B가 할 순서
 
 | 우선 | B의 구체적인 행동 | 남길 결과/관련 담당 | 기다리는 범위 | 원본·TH |
@@ -126,7 +132,7 @@ TH17은 App4의 App/Pool, GitOps10의 선언/관측, Infra25의 ROSA/SG/재생�
 | **초기 관리자 회수** | 정상 개인 관리·Argo 권한과 유지 비상 경로 실제 성공, 신규/기존 Token·Session 회수 Case | IDP/RBAC/공급 선언과 Case | 실제 환경별 Run·B/A 리뷰 |
 | **중간/최종 rosa 삭제** | App 쓰기/진행상태 보호·Backup 로컬완성·Release/Bundle/Key/영상 접근·Binding 해제·범위/비용/인계 | 삭제/보존 목록·Runbook·발표·증거 정리 | Infra25·T19/T20·실제 삭제/잔존 기록 |
 
-OCP용 Harbor 사전검증을 ECR+Harbor CI E2E나 최종 Cloud Release 완료로 표시하지 않는다. ECR이 아직 없어도 해당 lab Image/보호/승인 경로로 OCP 사전검증을 준비할 수 있으며, ECR/Worker Pull과 양쪽 Registry 실제 검증은 별도로 남긴다. 현재 기록에 새 Image/입력이 없다는 것은 공급 완료 미확인 상태이며 서버에 없다고 직접 관측한 뜻이 아니다.
+Harbor에서 생성·보존하고 OCP 내부 Registry로 복사한 Image의 lab 사전검증을 ECR+Harbor CI E2E나 최종 Cloud Release 완료로 표시하지 않는다. ECR이 아직 없어도 해당 lab Image/보호/승인 경로로 OCP 사전검증을 준비할 수 있으며, ECR/Worker Pull과 양쪽 Registry 실제 검증은 별도로 남긴다. 현재 기록에 새 Image/입력이 없다는 것은 공급 완료 미확인 상태이며 서버에 없다고 직접 관측한 뜻이 아니다.
 
 ## 4 A가 어느 범위까지 제공하면 B의 실제 Plan이 가능한가
 
@@ -242,7 +248,7 @@ OCP의 사전검증 업무 완료와 정리 날짜는 별개다. 추천 운영 �
 | TH-07.1 | 기존근거/지금: 기존검사범위연결·필요gap 검사 | 의미있는 변경/미해결관심만 재검사 | [h-app Issue #4](https://github.com/seokpan/seokpan-hybrid-app/issues/4) 검사/인계 |
 | TH-07.2 | 기존근거: 부분예행; 실제Driver Client수명Case | 목적CA/AUTH/승인Driver 실제연결조합 | [h-app Issue #1](https://github.com/seokpan/seokpan-hybrid-app/issues/1) Client 실제검사 |
 | TH-07.3 | 지금: 병합main SHA·검사·빌드범위 D인계 | D 수신과 Build실행 별도 | [h-app Issue #4](https://github.com/seokpan/seokpan-hybrid-app/issues/4) Build 인계 |
-| TH-07.4 | 입력대기: D 새Image/RegistryDigest·Platform·Scan수신 | D 실제Build/Registry입력, GitOps6결과 | [h-app Issue #4](https://github.com/seokpan/seokpan-hybrid-app/issues/4) Image 수신 |
+| TH-07.4 | 입력대기: 다음 App 개정이 필요하면 D 새Image/RegistryDigest·Platform·Scan수신 | 현재 승인 Image의 공급 수락은 보존. 새 Build와 GitOps6 실제 결과는 별도 | [h-app Issue #4](https://github.com/seokpan/seokpan-hybrid-app/issues/4) Image 수신 |
 | TH-08.1 | 지금: 원 labManifest 개정/범위/질문 대조 | 개인원본 미반영자료는 D/작성자확인 | [h-gitops Issue #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10) |
 | TH-08.2 | 지금: Root/Project/Namespace/NP/Migration 누락Source | 실제Secret값/Cloud주소 없이 선언준비가능 | [h-gitops Issue #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10) |
 | TH-08.3 | 지금: KustomizeBuild/Owner/Sync·Prune·삭제Case | 실제Sync는 Context/Secret/Image 후 | [h-gitops Issue #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10) |
