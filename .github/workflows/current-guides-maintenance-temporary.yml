@@ -1,0 +1,134 @@
+name: Current guidance consistency verification
+on:
+  push:
+    branches: [docs/b-current-guides-audit-20261007]
+    paths: [.github/workflows/current-guides-maintenance-temporary.yml]
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+concurrency:
+  group: current-guides-consistency
+  cancel-in-progress: false
+jobs:
+  verify:
+    if: ${{ github.repository == 'seokpan/seokpan-hybrid-docs' && github.actor == 'tjung03' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      TARGET_BRANCH: docs/b-current-guides-audit-20261007
+      BASE_SHA: d2371a44f4c9b35cf8082991ec9700ccea2ec524
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - name: Prepare isolated source validation dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq inkscape fonts-noto-cjk >/dev/null
+          python3 -m venv "$RUNNER_TEMP/review-venv"
+          "$RUNNER_TEMP/review-venv/bin/pip" install --disable-pip-version-check Pillow==11.3.0 fonttools==4.59.1 >/dev/null
+          echo "$RUNNER_TEMP/review-venv/bin" >> "$GITHUB_PATH"
+          mkdir -p "$RUNNER_TEMP/current-review"
+          cp .github/maintenance/current_review.py "$RUNNER_TEMP/current-review/maintenance.py"
+      - name: Apply bounded source corrections and generate only diagram04
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --exit-code "$BASE_SHA" -- design execution evidence architecture
+          python "$RUNNER_TEMP/current-review/maintenance.py" source-docs
+          python - <<'PY'
+          import importlib.util,json,os,re,subprocess,tempfile
+          from pathlib import Path
+          from fontTools.ttLib import TTCollection,TTFont
+          root=Path.cwd();source='/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc'
+          with TTCollection(source,lazy=True) as fonts:
+              index=next(i for i,f in enumerate(fonts.fonts) if f['name'].getDebugName(1)=='Noto Sans CJK KR')
+          fontfile=Path(os.environ['RUNNER_TEMP'])/'review-font.otf'
+          with TTFont(source,fontNumber=index,recalcTimestamp=False) as font:font.save(fontfile)
+          subprocess.run(['python','architecture/tools/build_diagrams.py','--font',str(fontfile),'--only','4','--render'],check=True)
+          spec=importlib.util.spec_from_file_location('builder',root/'architecture/tools/build_diagrams.py')
+          builder=importlib.util.module_from_spec(spec);spec.loader.exec_module(builder)
+          with tempfile.TemporaryDirectory() as directory:
+              location=Path(directory);(location/'diagrams').mkdir();builder.ROOT=location;layouts=[]
+              for number,render in builder.BUILDERS.items():
+                  canvas=builder.Canvas(number,fontfile,1400 if number==2 else 1200);render(canvas);layouts.append(canvas.finish())
+              (root/'architecture/tools/layout-audit.json').write_text(json.dumps(layouts,ensure_ascii=False,indent=2)+'\n')
+          # Keep all C implementation subsections exactly as the merged main.
+          path=root/'execution/05_IMPLEMENTATION_AND_VALIDATION.md'
+          before=subprocess.check_output(['git','show',os.environ['BASE_SHA']+':execution/05_IMPLEMENTATION_AND_VALIDATION.md'],text=True)
+          after=path.read_text()
+          for section in ['8.9','8.10','8.11','8.12','8.13']:
+              pattern=r'(?ms)^## '+re.escape(section)+r'\b.*?(?=^## |\Z)'
+              original=re.search(pattern,before);current=re.search(pattern,after)
+              if original:
+                  assert current,section
+                  after=after[:current.start()]+original.group()+after[current.end():]
+          path.write_text(after)
+          PY
+      - name: Regression and preservation tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s architecture/tools -p 'test_*.py' -v 2>&1 | tee "$RUNNER_TEMP/current-review/provenance-tests.log"
+          python -m unittest discover -s tools -p test_recovery_metrics.py -v 2>&1 | tee "$RUNNER_TEMP/current-review/metrics-tests.log"
+          python architecture/tools/verify_diagrams.py | tee "$RUNNER_TEMP/current-review/asset-checks.json"
+          cp architecture/diagram-manifest.json "$RUNNER_TEMP/manifest-first.json"
+          python architecture/tools/verify_diagrams.py
+          cmp architecture/diagram-manifest.json "$RUNNER_TEMP/manifest-first.json"
+          python - <<'PY'
+          import ast,collections,hashlib,json,os,re,subprocess
+          from pathlib import Path
+          base=os.environ['BASE_SHA'];report=Path(os.environ['RUNNER_TEMP'])/'current-review'
+          changed=subprocess.check_output(['git','diff','--name-only',base],text=True).splitlines()
+          payload=[p for p in changed if not p.startswith('.github/')]
+          for name in payload:
+              p=Path(name)
+              assert p.exists(),name
+              assert name.endswith('.md') or name in ['architecture/tools/build_diagrams.py','design/source-manifest.json','architecture/diagram-manifest.json','architecture/diagrams/04-service-traffic-tls.svg','architecture/exports/04-service-traffic-tls.png'],name
+              if p.suffix=='.md':
+                  old=subprocess.check_output(['git','show',base+':'+name],text=True);new=p.read_text()
+                  counts=lambda text:collections.Counter(re.findall(r'^\s*[-*] \[([ xX])\]',text,re.M))
+                  assert counts(old)==counts(new),name
+          subprocess.run(['git','diff','--exit-code',base,'--','design/00_PROJECT_STARTING_POINT.md','design/01_PROJECT_CHARTER.md','evidence/T18'],check=True)
+          for directory in ['architecture/diagrams','architecture/exports']:
+              for p in Path(directory).iterdir():
+                  if p.suffix in ('.svg','.png') and not p.name.startswith('04-'):
+                      assert p.read_bytes()==subprocess.check_output(['git','show',base+':'+p.as_posix()]),p
+          for p in Path('.').rglob('*.py'):
+              if '.git' not in p.parts:ast.parse(p.read_text(),filename=str(p))
+          for name in payload:
+              dest=report/'files'/name;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(Path(name).read_bytes())
+          (report/'source-hashes.json').write_text(json.dumps({name:hashlib.sha256(Path(name).read_bytes()).hexdigest() for name in payload},indent=2)+'\n')
+          (report/'preservation.json').write_text(json.dumps({'checkbox_states':'PRESERVED','C_sections':'8.9-8.13 retained','unchanged_diagram_pairs':11,'historical_run_payloads':'UNCHANGED','runtime':'NOT_PERFORMED'},indent=2)+'\n')
+          (report/'reviewed.patch').write_bytes(subprocess.check_output(['git','diff','--binary',base,'--',*payload]))
+          PY
+      - name: Publish source to the feature branch only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add design execution evidence/README.md architecture
+          git rm .github/maintenance/current_review.py .github/workflows/current-audit-snapshot-temporary.yml .github/workflows/current-guides-maintenance-temporary.yml
+          git -c core.whitespace=-blank-at-eol,blank-at-eof,space-before-tab diff --cached --check
+          test "$(git ls-remote origin "refs/heads/$TARGET_BRANCH" | cut -f1)" = "$GITHUB_SHA"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit --author='tjung03 <73955817+tjung03@users.noreply.github.com>' -m 'docs: separate current actions from historical records and align route diagram'
+          git push origin "HEAD:refs/heads/$TARGET_BRANCH"
+          git rev-parse HEAD > "$RUNNER_TEMP/current-review/published-commit.txt"
+      - name: Update only B-owned collaboration records
+        shell: bash
+        run: |
+          set -euo pipefail
+          python "$RUNNER_TEMP/current-review/maintenance.py" metadata --repository "$GITHUB_REPOSITORY" --report "$RUNNER_TEMP/current-review/metadata"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: ${{ always() }}
+        with:
+          name: current-guides-review-${{ github.run_id }}
+          path: ${{ runner.temp }}/current-review
+          if-no-files-found: error
+          retention-days: 14
