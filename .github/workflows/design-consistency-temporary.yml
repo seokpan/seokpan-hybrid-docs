@@ -1,0 +1,217 @@
+name: B design consistency verification
+on:
+  push:
+    branches: [docs/b-design-consistency-20261007]
+    paths: [.github/workflows/design-consistency-temporary.yml]
+permissions:
+  contents: write
+concurrency:
+  group: b-design-consistency-20261007
+  cancel-in-progress: false
+jobs:
+  verify-and-publish:
+    if: ${{ github.repository == 'seokpan/seokpan-hybrid-docs' && github.actor == 'tjung03' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      TARGET_BRANCH: docs/b-design-consistency-20261007
+      BASE_SHA: 8a0a6c7f23527995929451775868f9553531ae7c
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - name: Prepare isolated verification dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m venv "$RUNNER_TEMP/design-venv"
+          "$RUNNER_TEMP/design-venv/bin/pip" install --disable-pip-version-check Pillow==11.3.0 fonttools==4.59.1
+          echo "$RUNNER_TEMP/design-venv/bin" >> "$GITHUB_PATH"
+          mkdir -p "$RUNNER_TEMP/design-report"
+      - name: Apply only preimage and output hash-verified edits
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD^)" = ec51cd5752c86c517d248b3846d36bbaea1230a6
+          test "$(git ls-remote origin "refs/heads/$TARGET_BRANCH" | cut -f1)" = "$GITHUB_SHA"
+          python - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          expected_paths = {
+              'architecture/DIAGRAM_PLAN.md', 'architecture/PRODUCTION_REVIEW.md',
+              'architecture/README.md', 'architecture/REVIEW_RECORD.md',
+              'architecture/diagram-manifest.json', 'design/02_TARGET_ARCHITECTURE.md',
+              'design/03_DETAILED_DESIGN.md', 'design/04_IMPLEMENTATION_READINESS.md',
+              'design/README.md', 'design/source-manifest.json',
+              'execution/TEAM_WORK_AND_HANDOFF_GUIDE.md',
+          }
+          data = {}
+          for filename in ['design-consistency-input.json', 'asset-consistency-input.json']:
+              part = json.loads((Path('.github/maintenance') / filename).read_text())
+              if set(data).intersection(part):
+                  raise RuntimeError('Duplicate target path')
+              data.update(part)
+          if set(data) != expected_paths:
+              raise RuntimeError('Unexpected target paths')
+          # Correct a transport transcription in the staged edit, not a repository value.
+          # The previously validated output SHA remains mandatory and unchanged.
+          header = data['design/04_IMPLEMENTATION_READINESS.md']['edits'][0]
+          header[2] = header[2].replace('입력·현·시험', '입력·구현·시험')
+          outputs, hashes = {}, {}
+          for name, change in data.items():
+              path = Path(name)
+              raw = path.read_bytes()
+              if hashlib.sha256(raw).hexdigest() != change['before_sha256']:
+                  raise RuntimeError('Changed preimage: ' + name)
+              lines = raw.decode('utf-8').splitlines(keepends=True)
+              end = len(lines)
+              for first, last, text in reversed(change['edits']):
+                  if not (0 <= first <= last <= end):
+                      raise RuntimeError('Invalid or overlapping edit: ' + name)
+                  lines[first:last] = text.splitlines(keepends=True)
+                  end = first
+              output = ''.join(lines).encode('utf-8')
+              if hashlib.sha256(output).hexdigest() != change['after_sha256']:
+                  raise RuntimeError('Output differs from reviewed bytes: ' + name)
+              outputs[path] = output
+              hashes[name] = change['after_sha256']
+          for name, expected in {
+              'architecture/tools/verify_diagrams.py': '482651dc4fe9ed979af33cc39d344c5e7857a4a9e16e77f0d3d82f7b2d1bae2d',
+              'architecture/tools/test_verify_diagrams.py': '5932bfd449cede0e9c27f5e50cf4d1d6bf3d28d4af0479e22de08cade36d6a92',
+          }.items():
+              if hashlib.sha256(Path(name).read_bytes()).hexdigest() != expected:
+                  raise RuntimeError('Verifier/test source changed: ' + name)
+              hashes[name] = expected
+          for path, output in outputs.items():
+              path.write_bytes(output)
+          report = Path(os.environ['RUNNER_TEMP']) / 'design-report'
+          (report / 'expected-output-hashes.json').write_text(json.dumps(hashes, indent=2) + '\n')
+          print('Preimage/output identities verified for 11 edited files and 2 verifier/test files')
+          PY
+      - name: Verify regression tests, asset integrity and idempotence
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s architecture/tools -p 'test_*.py' -v 2>&1 | tee "$RUNNER_TEMP/design-report/provenance-tests.log"
+          python -m unittest discover -s tools -p 'test_recovery_metrics.py' -v 2>&1 | tee "$RUNNER_TEMP/design-report/recovery-metrics-tests.log"
+          python architecture/tools/verify_diagrams.py --integrity-only | tee "$RUNNER_TEMP/design-report/asset-checks.json"
+          cp architecture/diagram-manifest.json "$RUNNER_TEMP/manifest-first.json"
+          python architecture/tools/verify_diagrams.py --integrity-only
+          cmp architecture/diagram-manifest.json "$RUNNER_TEMP/manifest-first.json"
+          python - <<'PY'
+          import base64, hashlib, importlib.util, io, json, os, re, shutil, subprocess, sys, tempfile
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+          from fontTools.ttLib import TTFont
+          from PIL import ImageFont
+          root = Path.cwd()
+          report = Path(os.environ['RUNNER_TEMP']) / 'design-report'
+          manifest = root / 'architecture/diagram-manifest.json'
+          original = manifest.read_bytes()
+          result = subprocess.run([sys.executable, 'architecture/tools/verify_diagrams.py'], capture_output=True)
+          assert result.returncode != 0 and manifest.read_bytes() == original
+          with tempfile.TemporaryDirectory() as directory:
+              isolated = Path(directory)
+              shutil.copytree(root / 'architecture', isolated / 'architecture')
+              shutil.copytree(root / 'design', isolated / 'design')
+              output = isolated / 'architecture/diagram-manifest.json'
+              before = output.read_bytes()
+              source = isolated / 'design/03_DETAILED_DESIGN.md'
+              source.write_bytes(source.read_bytes() + b'\n')
+              result = subprocess.run([sys.executable, 'architecture/tools/verify_diagrams.py', '--integrity-only'], cwd=isolated, capture_output=True)
+              assert result.returncode != 0 and output.read_bytes() == before
+              shutil.copyfile(root / 'design/03_DETAILED_DESIGN.md', source)
+              image = isolated / 'architecture/exports/01-logical-architecture.png'
+              image.write_bytes(image.read_bytes() + b'extra')
+              result = subprocess.run([sys.executable, 'architecture/tools/verify_diagrams.py', '--integrity-only'], cwd=isolated, capture_output=True)
+              assert result.returncode != 0 and output.read_bytes() == before
+          spec = importlib.util.spec_from_file_location('builder', root / 'architecture/tools/build_diagrams.py')
+          builder = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(builder)
+          layouts = []
+          for number in builder.BUILDERS:
+              raw = (root / 'architecture/diagrams' / f'{builder.META[number-1][0]}.svg').read_text()
+              xml = ET.fromstring(raw)
+              texts = [''.join(node.itertext()) for node in xml.findall('{http://www.w3.org/2000/svg}text')]
+              with TTFont(io.BytesIO(base64.b64decode(re.search(r'data:font/woff;base64,([^)]*)', raw).group(1)))) as font:
+                  font.flavor = None
+                  buffer = io.BytesIO()
+                  font.save(buffer)
+              class CheckCanvas(builder.Canvas):
+                  def font(self, size):
+                      if size not in self.fonts:
+                          self.fonts[size] = ImageFont.truetype(io.BytesIO(buffer.getvalue()), size)
+                      return self.fonts[size]
+                  def finish(self):
+                      return None
+              canvas = CheckCanvas(number, None, 1400 if number == 2 else 1200)
+              builder.BUILDERS[number](canvas)
+              assert canvas.texts == texts[:len(canvas.texts)], number
+              for text in canvas.audit:
+                  assert 0 <= text['x'] and text['x'] + text['w'] <= 1800
+                  assert text['size'] <= text['y'] <= canvas.h
+              layouts.append({'id': f'{number:02}', 'body_texts': len(canvas.texts), 'source_vs_svg': 'MATCH', 'body_geometry': 'PASS', 'font_source': 'existing embedded subset metrics; no image rebuilt'})
+          (report / 'builder-crosscheck.json').write_text(json.dumps(layouts, indent=2) + '\n')
+          expected = json.loads((report / 'expected-output-hashes.json').read_text())
+          for name, digest in expected.items():
+              assert hashlib.sha256(Path(name).read_bytes()).hexdigest() == digest, name
+          baseline = json.loads(subprocess.check_output(['git', 'show', os.environ['BASE_SHA'] + ':design/source-manifest.json']))
+          current = json.loads(Path('design/source-manifest.json').read_text())
+          for key in ['original_upload_files', 'followup_review_history']:
+              if key in baseline:
+                  assert current[key] == baseline[key], key
+          old = json.loads(subprocess.check_output(['git', 'show', os.environ['BASE_SHA'] + ':architecture/diagram-manifest.json']))
+          new = json.loads(manifest.read_text())
+          for key in ['check_scope_history', 'followup_review_history']:
+              assert all(item in new[key] for item in old.get(key, [])), key
+          assert old['latest_check_scope'] in new['check_scope_history']
+          assert current['followup_review']['actual_partial_runs'] == baseline['followup_review']['actual_partial_runs']
+          (report / 'integration-result.json').write_text(json.dumps({'failure_cases': 3, 'manifest_preserved_on_failure': True, 'idempotent_output': True, 'builder_bodies': 12, 'reviewed_output_hashes': 13, 'historical_runs_preserved': True, 'runtime_test': 'NOT_PERFORMED'}, indent=2) + '\n')
+          print('Three failure paths, idempotence, 12 builder bodies and historical evidence preservation: PASS')
+          PY
+      - name: Publish only the feature branch and remove temporary inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os, subprocess
+          from pathlib import Path
+          report = Path(os.environ['RUNNER_TEMP']) / 'design-report'
+          paths = list(json.loads((report / 'expected-output-hashes.json').read_text()))
+          subprocess.run(['git', 'add', '--', *paths], check=True)
+          PY
+          git rm .github/maintenance/design-consistency-input.json .github/maintenance/asset-consistency-input.json .github/workflows/design-consistency-temporary.yml
+          git -c core.whitespace=-blank-at-eol,blank-at-eof,space-before-tab diff --cached --check
+          python - <<'PY'
+          import json, os, subprocess
+          from pathlib import Path
+          report = Path(os.environ['RUNNER_TEMP']) / 'design-report'
+          allowed = set(json.loads((report / 'expected-output-hashes.json').read_text()))
+          changed = set(subprocess.check_output(['git', 'diff', '--cached', '--name-only', os.environ['BASE_SHA']], text=True).splitlines())
+          assert changed == allowed, sorted(changed ^ allowed)
+          subprocess.run(['git', 'diff', '--cached', '--exit-code', os.environ['BASE_SHA'], '--', 'architecture/diagrams', 'architecture/exports', 'evidence', 'design/00_PROJECT_STARTING_POINT.md', 'design/01_PROJECT_CHARTER.md', 'execution/05_IMPLEMENTATION_AND_VALIDATION.md', 'execution/WORK_TRACKER.md'], check=True)
+          (report / 'reviewed-changes.patch').write_bytes(subprocess.check_output(['git', 'diff', '--cached', '--binary', os.environ['BASE_SHA']]))
+          PY
+          test "$(git ls-remote origin "refs/heads/$TARGET_BRANCH" | cut -f1)" = "$GITHUB_SHA"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit --author='tjung03 <73955817+tjung03@users.noreply.github.com>' -m 'docs: align merged DR and Valkey decisions and preserve diagram provenance'
+          git push origin "HEAD:refs/heads/$TARGET_BRANCH"
+          git rev-parse HEAD > "$RUNNER_TEMP/design-report/published-commit.txt"
+          python - <<'PY'
+          import json, os, shutil
+          from pathlib import Path
+          report = Path(os.environ['RUNNER_TEMP']) / 'design-report'
+          for name in json.loads((report / 'expected-output-hashes.json').read_text()):
+              destination = report / 'reviewed-files' / name
+              destination.parent.mkdir(parents=True, exist_ok=True)
+              shutil.copyfile(name, destination)
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: ${{ always() }}
+        with:
+          name: design-consistency-verification-${{ github.run_id }}
+          path: ${{ runner.temp }}/design-report
+          if-no-files-found: error
+          retention-days: 14
