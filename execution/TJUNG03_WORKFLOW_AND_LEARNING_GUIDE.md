@@ -78,7 +78,7 @@ path: apps/overlays/lab
 
 **A 전체 업무·OCP 삭제·완성 Recovery Bundle을 기다리지 않는다.** 두 갈래를 병행하며 입력 수락·실행·결과 수신을 구분한다. 수신 미확인은 자원이 없다고 실측한 뜻이 아니다.
 
-**현재 기준 — 2026-10-06 KST:** [Docs #46](https://github.com/seokpan/seokpan-hybrid-docs/pull/46)는 main `3fb5bde84a7f34bc8b0e5dd2de81cd8ccbf323eb`, [Infra #31](https://github.com/seokpan/seokpan-hybrid-infra/pull/31)은 main `4f4f02f729dadacba6d1a808f08a8671a4bff265`로 병합됐고 해당 브랜치 삭제를 확인했다. #31은 최신 C 승인 후 병합됐으며 이전 새 승인/병합 대기는 해소됐다. Infra의 [정확 main Source CI](https://github.com/seokpan/seokpan-hybrid-infra/actions/runs/37403196435)도 통과했다. D [App #6](https://github.com/seokpan/seokpan-hybrid-app/pull/6)은 stub 수정·B 승인 뒤 main `b3f04ae0c971988dd524bffb9960e44fd2fabe4e`로 병합/브랜치 삭제됐고 기존 실행 차단은 해소됐다. D의 Jenkins Linter HTTP200 보고는 Source 구문 범위이며 **첫 실제 Harbor Run·승인 Digest/Scan/Smoke/Pull 인계는 미확인**이다. B Network/비용 기간 검토는 [05 §9.34](05_IMPLEMENTATION_AND_VALIDATION.md#b-network-consumer-ledger-period-followup-20261006)에 연결한다. 기존 기본 개요는 반복하지 않고 이번 입력/동작만 보완한다.
+**현재 기준 — 2026-10-06 KST:** [App8](https://github.com/seokpan/seokpan-hybrid-app/pull/8)은 [기존 B 승인](https://github.com/seokpan/seokpan-hybrid-app/pull/8#pullrequestreview-5423331533) 뒤 main `e862a0f9e384f2e5539e69c31fbf0b4678c87a25` 병합·브랜치 삭제됐다. 이번 독립 lock3필드/consumer3 semver 대조는 같은 Source 결론이며 새 리뷰/실제 npm12 CI가 아니다. D App7 첫 Run의 P1 audit 실패 후 새 main 재실행·Image/Digest/Pull 인계가 대기다. D 비용 수신/수정 보고와 실제 원장 검증·Cost PASS는 구분한다. 목적 권한 단계·추가 비용 범위는 [05 §9.35](05_IMPLEMENTATION_AND_VALIDATION.md#b-lock-cost-receipt-phase-permission-followup-20261006)·이 안내 §5.6에서 현재 변경만 공부한다. C50 §8.10과 이전 전체 개요는 보존한다.
 
 병합 main [Run 37330480298](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37330480298)의 39개 검사와 실제 Render8 다운로드/Hash·목록 대조를 확인했다. 현재 artifact는 main6ea 개정이며 **10/13 00:09:31 KST**에 만료된다. D/C의 파일 수신/별도 보존·실제 Image/lab/Data/Migration 입력 수락·Runtime의 새 기록은 아직 확인되지 않았다. 실제 클러스터/API를 조회한 자원 부재 판정은 아니다.
 
@@ -142,7 +142,7 @@ ROSA의 본인 Source/도구·Lock·보호 입력·Caller/Backend 준비는 [Inf
 
 | 현재 변화·파일 | 동작 원리·B가 소비할 결과 | 직접 다음 행동 |
 | --- | --- | --- |
-| D [App6](https://github.com/seokpan/seokpan-hybrid-app/pull/6) `Jenkinsfile.image-pipeline`, `scripts/image_registry.py` | 고정 App Commit을 검사·Build해 실행 Image를 Registry에 올리는 절차. 기본 `ENABLE_ECR=false`는 Harbor 경로 | 당시49bf stub 차단/변경 요청은 수정 후 B 승인·App6 main b3f04ae 병합으로 해소. helper23/Linter는 Source 범위. D 첫 실제 Harbor Run의 정확 Commit·FE/BE Digest·Scan/Smoke/Pull 수락이 후속이며 별도 기존 승인 경로의 같은 Source Image도 가능 |
+| D [App6](https://github.com/seokpan/seokpan-hybrid-app/pull/6) `Jenkinsfile.image-pipeline`, `scripts/image_registry.py` | 고정 App Commit을 검사·Build해 실행 Image를 Registry에 올리는 절차. 기본 `ENABLE_ECR=false`는 Harbor 경로 | 당시 App6 stub 차단은 해소. 이후 D 첫 Run의 P1 npm audit 실패 보고→App8 lock패치 기존B승인/병합. helper23/Linter와 lock검토는 Source 범위이며 D 새 main 실제 npm12/Build·Digest/Scan/Smoke/Pull 인계는 후속 |
 | A [Infra32](https://github.com/seokpan/seokpan-hybrid-infra/pull/32) `terraform/foundation/`의 공통 Provider/Backend/Lock | 같은 foundation 폴더/State에서 Network/Data/Registry를 계산할 실행 기준. `phase2/foundation/terraform.tfstate`와 rosa State는 구분 | 공통 틀 병합과 실제 Backend/Plan/Apply/Output 인계는 별개. A/C 실제 VPC/Subnet/Role/Data SG2를 받아 B 첫 ROSA Plan. C Infra10 probe는 해당 격리 범위 성공 |
 | D [Docs43](https://github.com/seokpan/seokpan-hybrid-docs/issues/43) ← B Infra25 | 전체 비용 집계에 ROSA 수량·가동/삭제/재시험 시간과 잔존 범위가 입력됨 | B가 설계 기준 예비 입력 제출 → 실제 Plan/지원·가격/누적 확인 뒤 개정. 이슈 생성·입력 제출·전체 Cost PASS를 구분 |
 
@@ -160,7 +160,7 @@ images:
 
 FE도 같은 방식으로 연결한다. 실제 입력 수락 후 lab 최초 Replica·설정/CA/Secret 참조·필요 Migration 선언과 lab 검사를 같은 활성화 PR에서 맞춘다. 필요한 Migration에는 같은 승인 Backend Digest·최종 ConfigMap Hash·C가 수락한 Action/Deadline·별도 목적 자격을 사용한다. 이 구문은 입력 경로 설명이며 승인 값이 들어간 실행 YAML은 아니다. Cloud/Recovery 보류를 함께 풀지 않는다.
 
-**지금 행동:** 본인 clone/개인 변경 확인 → 병합 App6의 D 실제 Harbor Run/승인 Digest·검사/Pull 수락 → C 계약+D 공급·단일 Owner의 최소 lab 입력 대조 → B 활성화·수동 Sync·같은 조합 새 Run. 그동안 병합 Infra31 안내의 본인 Tool/Lock·Caller/Backend·A/C 실제 출력/SG2와 Ledger16~21의 수량/기간 입력을 준비한다. App6 Source 수정/리뷰 대기는 해소됐으며 OCP 삭제·전체 Backup/VPN/Recovery 완료를 첫 Plan의 새 선행조건으로 추가하지 않는다.
+**지금 행동:** 본인 clone/개인 변경 확인 → App8 새 main의 D 실제 npm12/P1·Build/검사/Pull·승인 Image 수락 → C 계약+D 공급/단일 Owner 최소 lab 입력 → B 활성화/필요 Migration/수동 Sync·같은 조합 Run. ROSA는 단계별 목적 권한표/Infra20의 정책 리뷰·적용과 본인 Caller/Backend·A/C 출력/SG2·지원/예비 비용을 병행한다. 비용 추가값은 지원/예상 계획과 생성 후 실제 기록으로 나누고 본인 가용 시각은 응답 전TBD로 둔다.
 
 ### 5.5 이번 학습 — Network 출력과 비용 기간의 소비
 
@@ -169,6 +169,16 @@ FE도 같은 방식으로 연결한다. 실제 입력 수락 후 lab 최초 Repl
 **Cost Ledger(비용 입력/집계표):** B는16~21행의 서비스 수량/사양과 기간을 공급하고 D가 전체 비용을 집계한다. 실제 비용은 수량×단가×그 서비스의 과금 기간으로 연결되므로 기간 공란이 수식에서0으로 처리돼도 기간0이 확인된 것이 아니다. 현재 후보/미확인·PARTIAL을 유지하며, 기간 L/M/N을 확인하지 않는 P 완결식은 D가 최종 판정 전 보완/검토할 부분이다. 원본 워크북을 대신 수정하지 않았다.
 
 Window A10/12~15·B10/19~21은 목표 날짜이며8시간 예시/날짜 전체 상시 가동이 아니다. 서비스별 준비/초기화·시험·실패/재시험·삭제 완료/과금 종료를 계획하고 본인/팀 가용 시각과 횟수·지연을 확인해 기간을 채운다. 생성/Destroy timeout60분은 실제 과금시간이나 성공 보장이 아니다. 현재 실제 사양/Disk/LB·기간은TBD이며 [Infra25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25)→[D Docs43](https://github.com/seokpan/seokpan-hybrid-docs/issues/43)에서 입력/수신/집계 상태를 구분한다. 첫 Plan 전 예비 비용 참조와 실제 전체 Plan 후 총비용/창 수락을 혼동하지 않는다.
+
+### 5.6 이번 학습 — Source 확인과 실제 실행을 나누는 이유
+
+| 배우는 것 | 실제 파일·이번 확인 | 다음 실제 확인·나누는 이유 |
+| --- | --- | --- |
+| **Lockfile:** 설치할 외부 패키지의 정확한 버전을 고정하는 파일. Consumer는 그 패키지를 사용하는 다른 패키지 | App의 [frontend/package-lock.json](https://github.com/seokpan/seokpan-hybrid-app/blob/e862a0f9e384f2e5539e69c31fbf0b4678c87a25/frontend/package-lock.json): source-map-js의 version/resolved/integrity 3필드를1.2.2로 변경. 직접 사용하는 패키지3개의 `^1.2.1` 요구와 호환 확인 | D가 프로젝트 npm12로 `npm ci` → verify/build → 새 Image/검사를 실행한다. 버전 범위가 맞아도 실제 설치 자료·integrity·bundle/browser 동작은 추가 확인해야 한다. devDependency(개발/Build용 패키지)도 최종 bundle에 영향을 줄 수 있다 |
+| **State 접근과 서비스 권한:** 작업 상태 파일을 저장하는 권한과 AWS 자원을 읽고 바꾸는 권한은 다름. Tag는 자원에 붙이는 이름·값 표시 | Infra의 [terraform/rosa/REVIEW_AND_EXECUTION_GATES.md](https://github.com/seokpan/seokpan-hybrid-infra/blob/ba11c9f7f6c205748b37e1376b60ec86b00169a3/terraform/rosa/REVIEW_AND_EXECUTION_GATES.md): 단계별 호출을 구분하고 A 리뷰 뒤 조건부 Tag 조회를 같은 PR35에서 보완. 정상 Get은 Tag 출력이 있으면 별도 ListTags 조회를 건너뜀 | Update에서 식별자가 있고 예정 `tags_all`이 아직 완전히 정해지지 않았으면 Tag 갱신 성공 뒤 다시 조회한다. 이 경로의 두 ListTags Action만 현재 OIDC·Role6 ARN에 연결했다. 모든 Refresh의 필수 호출로 넓히지 않는다. 새 HEAD Source CI는 통과이며 A 재리뷰 요청 완료·새 판정 대기다. 판정 후 좁은 정책 리뷰/적용과 B 실제 Caller/단계 결과를 확인한다. 수요표 제출은 실제 권한 부여/PASS가 아니다 |
+| **예상 비용과 실제 비용:** 생성 전 계획과 생성 후 관측값의 시점을 구분 | [Docs43 B 비용 응답](https://github.com/seokpan/seokpan-hybrid-docs/issues/43)·[D 수신/수정 보고](https://github.com/seokpan/seokpan-hybrid-docs/issues/43#issuecomment-6008406025): 비용1~5 유지, CP/Infra/LB 지원 예상구성·Worker disk·Window/삭제/재시험 입력과 본인 가용성 구분 | 생성 전 지원 구성/예상목록·예상시간으로 검토하고 생성 후 실제목록/기간으로 갱신한다. 가용 시각은 팀 실행창 자료이며 Cloud 과금기간과 같지 않다. 새 xlsx를 받기 전에는 수식 독립 재검증/Cost PASS로 표현하지 않는다 |
+
+이 표는 이번 변경의 동작 원리만 설명한다. Source 승인·수요표 제출·보고 수신과 실제 npm12/Cloud 실행을 구분하며 본인 가용 시간은 실제 응답 전 미확인으로 둔다.
 
 ## 6. 작업하며 공부하는 고정 형식
 

@@ -1,6 +1,6 @@
 # 정태훈 실행판 — 지금 할 일·입력 대기·OCP와 ROSA 수명
 
-> 기준 2026-10-06 KST: Docs46/Infra31/App6 병합·브랜치 삭제 확인 후 B Network 소비 검토·D Ledger16~21 기간/입력·OCP/ROSA 직접 다음 행동을 연결한다. 승인 설계·역할·T 기준·목표 창은 유지한다. 본인 PC/Cloud 실제 조회·Build/Sync·Plan/Apply를 수행한 기록이 아니다.
+> 기준 2026-10-06 KST: Docs47·C50의 최신 기록과 App8 기존 B 승인/병합·D 첫 Run 실패/비용 수신·단계별 ROSA 권한 준비를 현재 입력/행동에 연결한다. 승인 설계/역할/목표 창은 유지한다. 본인 환경·Cloud 실제 Run/지원·권한 확인 완료가 아니다.
 
 **마지막 팀 변경:** **B Network 소비 검토:** A [Infra #33](https://github.com/seokpan/seokpan-hybrid-infra/pull/33) HEAD `2a5b05bb4b8e8903cfd359f1133c0d7df993d3f4`와 병합 rosa 소비 Source를 대조해 B 범위의 추가 필수 Source 수정 요청0을 [원 답변](https://github.com/seokpan/seokpan-hybrid-infra/pull/33#issuecomment-6008053282)에 남겼다. A의 [수신 답변](https://github.com/seokpan/seokpan-hybrid-infra/pull/33#issuecomment-6008091169)에서 제한 Public3/ROSA Private3·Account/Region·Code SHA/시각을 실제 공급에 반영하겠다는 범위 수신을 확인했다. 이 수신은 실제 값 공급/수락이 아니다. Public3/ROSA Private3 슬롯·CIDR·AZ 쌍과 출력 표현은 현재 계약으로 소비할 수 있다. PR은 A 소유 **Draft**이며 B 답변은 전체 승인/Ready 전환·실제 Output/Plan/Apply가 아니다. C/A의 공통 `onprem_job_host_cidrs` 선언 합의와 VPN ENI/반환 Route 후속은 해당 Data 접근/이전의 조건으로 유지한다. VPN·전체 Data 이전·Backup/OCP 정리를 B 첫 ROSA Plan의 일괄 조건으로 추가하지 않는다.
 
@@ -42,15 +42,15 @@ TH17은 App4의 App/Pool, GitOps10의 선언/관측, Infra25의 ROSA/SG/재생�
 
 **B는 지금 착수할 수 있다. A 전체 업무 완료를 기다리지 않는다.** 현재 App·GitOps·ROSA Source는 병합됐지만 새 Image·OCP 새 조합 Runtime·실제 foundation 제한 Output·ROSA 실행 수락은 기록에서 확인되지 않았다. 미확인은 해당 실행의 대기이며 모든 Source 준비의 중단이 아니다.
 
-**현재 B 작업 묶음:** [Docs #46](https://github.com/seokpan/seokpan-hybrid-docs/pull/46)는 main `3fb5bde84a7f34bc8b0e5dd2de81cd8ccbf323eb`, [Infra #31](https://github.com/seokpan/seokpan-hybrid-infra/pull/31)은 main `4f4f02f729dadacba6d1a808f08a8671a4bff265`로 병합됐고 해당 브랜치 삭제를 확인했다. #31은 최신 C 승인 후 병합됐으며 이전 새 승인/병합 대기는 해소됐다. Infra의 [정확 main Source CI](https://github.com/seokpan/seokpan-hybrid-infra/actions/runs/37403196435)도 통과했다. D [App #6](https://github.com/seokpan/seokpan-hybrid-app/pull/6)은 stub 수정·B 승인 뒤 main `b3f04ae0c971988dd524bffb9960e44fd2fabe4e`로 병합/브랜치 삭제됐고 기존 실행 차단은 해소됐다. D의 Jenkins Linter HTTP200 보고는 Source 구문 범위이며 **첫 실제 Harbor Run·승인 Digest/Scan/Smoke/Pull 인계는 미확인**이다. **B 지금:** 본인 GitOps/Infra clone의 HEAD·최신 main·개인 변경/도구·실제 가용 시각 확인 → D 실제 Harbor Run의 정확 App Commit·FE/BE Digest/Platform·Scan/Smoke/Pull을 수락 → C 계약+D lab 공급·Context/권한/단일 Owner·Data/TLS/Secret/Schema/필요 Migration 최소 입력 대조 → 별도 lab 활성화 개정/수동 Sync·같은 조합 새 Run. ROSA는 A/C 실제 최소 기반 Output/Role/Data SG2와 본인 Caller/rosa Backend·지원/Quota·예비 비용 참조를 병행한다. 실제 전체 Plan 뒤 동일 개정의 영향·전체 Cost/$450 계획선/$500 한도·가동/삭제/재시험 범위 수락 후 유료 생성한다. App6 병합은 실제 Image 생성이 아니며 기존 별도 승인 경로의 같은 Source Image도 수락할 수 있다. [05 §9.34](05_IMPLEMENTATION_AND_VALIDATION.md#b-network-consumer-ledger-period-followup-20261006)·[학습 안내](TJUNG03_WORKFLOW_AND_LEARNING_GUIDE.md)를 우선하고 이전 승인/병합/stub 안내는 이력으로 읽는다.
+**현재 B 작업 묶음:** [App8](https://github.com/seokpan/seokpan-hybrid-app/pull/8)은 [기존 B 승인](https://github.com/seokpan/seokpan-hybrid-app/pull/8#pullrequestreview-5423331533) 뒤 main `e862a0f9e384f2e5539e69c31fbf0b4678c87a25` 병합·브랜치 삭제됐다. 이번 독립 lock3필드/consumer3 semver 대조는 같은 Source 결론이며 새 리뷰/실제 npm12 CI가 아니다. D App7 첫 Run의 P1 audit 실패 후 새 main 재실행·Image/Digest/Pull 인계가 대기다. [ROSA 수요 PR35](https://github.com/seokpan/seokpan-hybrid-infra/pull/35)은 [A 변경 요청](https://github.com/seokpan/seokpan-hybrid-infra/pull/35#pullrequestreview-5423433718) 뒤 같은 PR에서 조건부 Update의 Tag 조회 수요 2개를 보완했다. 정상 Get/Refresh는 Tag 출력이 설정되면 fallback을 건너뛰며, 식별자가 있고 `tags_all`이 미확정인 Update의 조회는 별도다. 대상은 현재 OIDC ARN·Operator Role6 ARN이며 HCL/Lock/정책은 그대로다. 새 HEAD `ba11c9f7f6c205748b37e1376b60ec86b00169a3`의 [Source CI](https://github.com/seokpan/seokpan-hybrid-infra/actions/runs/37409290543) 통과·A 재리뷰 요청 완료·새 판정 대기. 구 HEAD CI는 이력이며 실제 정책 적용·목적 Caller/Backend·Cloud/Plan·실효 권한 PASS는 대기다. D 비용 수신/원장 수정 보고는 확인했지만 새 xlsx/독립 재검증·Cost PASS는 미확인이다. 지원 구성/Worker disk·예상 시간/횟수/삭제와 본인 가용성은 추가 확인하며 OCP와 ROSA 준비를 병행한다. [05 §9.35](05_IMPLEMENTATION_AND_VALIDATION.md#b-lock-cost-receipt-phase-permission-followup-20261006)·학습 안내를 우선한다.
 
 | 실제 위치/원본 | 이번 결과 | 직접 막힌 실행·다음 행동 |
 | --- | --- | --- |
-| App2/PR6 → GitOps10/5/6·App1 | stub 수정·B 승인/병합 완료, Jenkins Linter 보고 수신 | D 첫 Harbor Run/승인 Image/Digest·검사/Pull, C/D Data/Owner 최소 입력 → B lab 활성화·수동 Sync·새 Run |
-| Infra31 병합·Infra33 Draft·Infra25 | 정확 main Source CI, B Public3/ROSA Private3 매핑 필수수정0/답변 게시 | A/C 실제 제한 Output/Role/SG2·B 본인 Caller/Backend/지원 수락 → 실제 첫 Plan. VPN 후속은 Data 접근/이전 별도 조건 |
-| D Docs43 Ledger16~21 ↔ B Infra25 | 원본 변경 없이3시트/60수식 대조, 후보 수량/목표 창 입력 연결 | 실제 사양/Disk/LB·서비스별 시간/재시험/가용 시각/삭제지연TBD. 기간 검증 D 요청, 수신/Cost PASS 별도 |
+| App8·App7/2 → GitOps10/5/6 | App8 기존 승인/병합, lock3필드/semver 독립 대조. 첫 Run P1 audit 실패 보고 | D 새 main npm12/P1·Build/Scan/Smoke/Push·승인 Digest/Pull → B 최소 lab 입력/활성화·새 Run |
+| rosa 목적 Role 수요·Infra20/25 | A 리뷰 뒤 조건부 Update Tag 조회를 같은 PR35에 보완. 정상 Get/Refresh와 구분 | 새 HEAD CI·A 재판정 → A 좁은 정책 리뷰/적용·본인 목적 Caller/Backend·A/C 실제Output/SG2/지원 수락 → 첫 Plan |
+| B Infra25 ↔ D Docs43 | D 수신·기간/Credit 수정 보고 확인. 새 xlsx 검증아님 | CP/Infra서비스구성·Worker disk·LB예상목록·예상/실제시간/삭제 입력. 가용성 별도실행창TBD |
 
-**지금 확인할 결과:** Docs46/Infra31/App6 병합·작업 브랜치 정리는 완료됐고 기존 진단 자료 검사는 유지한다. 실제 D Harbor Run/Digest·ZIP 수신/보존·lab/Data/Migration 최소 입력과 본인 환경·ROSA 입력 수락은 후속이다. 파일 Replica0를 현재 서버 Pod 수로 읽지 않는다. 본인 PC/OCP/AWS/Registry를 조회하거나 새 Sync·Plan/Apply·DDL·STS·전체 T18을 실행하지 않았다.
+**지금 확인할 결과:** App8 Source 병합과 기존 B 승인·독립 lock 대조, D 비용 수신/수정 보고는 확인했다. 실제 npm12 재Run·Image/Digest/Pull·lab/Data 입력 수락·본인 Caller/Backend·ROSA 실효권한/Plan/Runtime은 별도다. 기존 GitOps 진단 자료/수신·보존 조건과 C의 기록/완료 체크는 유지한다.
 
 **보고 형식 유지:** 목적·저장소/파일·이번 결과/한계·관련자/연계·막힌 직접 입력·핵심 동작·B 다음 행동을 짧은 카드/표로 함께 설명한다. 상단 전체 현황·하단 전체 남은 작업을 유지하며 첫 회 전체 개요는 반복하지 않는다.
 
@@ -276,7 +276,7 @@ OCP의 사전검증 업무 완료와 정리 날짜는 별개다. 추천 운영 �
 
 ## 10 전체 남은 작업 현황
 
-**현재 구분:** 아래 복합 체크 원문은 보존한다. #12/#41/#42/#46·Infra31·App6의 Source 병합 대기는 해소됐다. 지금 B는 D 실제 Image/lab·C Data/Migration 최소 입력과 본인 환경을 대조하고, Infra33 B 소비 검토 후 A/C 실제 제한 Output/Role/SG2·본인 Caller/Backend·지원과 D 비용 입력을 병행한다. Ledger16~21의 사양/기간·재시험 횟수·가용 시각·삭제 지연을 실제 값으로 확인하기 전 TBD/미완을 유지한다. 전체 Cost/Runtime/종료 체크는 추가하지 않는다. artifact10/13 00:09:31 KST·목표 창·milestone10/18→승인10/16 정정 후속은 그대로다.
+**현재 구분:** 아래 복합 체크 원문을 보존한다. Source 병합·검토/보고 수신은 실제 단계 수행/전체 완료와 구분한다. D는 App8 새 main 실제 재Run·Image 인계를, B는 본인 환경·최소 lab 입력과 A/C 기반/SG2·목적 권한/지원/예비 비용을 준비한다. D의 비용1~5는 제외하지 않고 생성 전 지원/예상목록·예상시간→생성 후 실제목록/시각으로 개정한다. 가용 시각/휴무는 Ledger과금시간과 별도며 실제 응답 전TBD. 새로운Runtime/Cost/TH완료체크는 추가하지 않는다. artifact10/13·승인목표창·milestone10/18→10/16 정정 후속은 그대로다.
 
 - [ ] **B 지금:** 본인 Source/개인 변경 대조 → 병합 OCP Source와 새 인계 PR의 입력/Case·진단 Render 보존·검사 → 제출·사람 수신/보완 → 최소 lab 입력 수신 → D와 새 조합 검증. TH01/03~08/14.1
 - [ ] **B 병행Source:** Cloud/Recovery차이·Root/AppProject/NP/UWM·단일Migration·Secret/관리/Bundle·rosa계약/Controller·비용/창입력. TH09~12/15/17.1/18/19계획
