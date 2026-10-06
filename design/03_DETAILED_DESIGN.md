@@ -675,7 +675,7 @@ Route / SG / Gateway Recovery까지 작업 전제 승인을 받았고 Network �
 3-C IAM/Secret, 3-D Migration, 3-E Interface, 3-F Terraform/GitOps, 3-G Test/Evidence, 3-H WBS까지 연결한 전체03 검토·최종 컨펌을 완료했다. 문서 검토에서는 Address Conflict, Ownership, Runtime/Recovery 의존성, Secret 복구, 비용, 일정, Test 가능성을 함께 검토한다.
 
 - [x] 연결 모델 사용자 소단계 승인
-- [x] 최신 사용자 지시에 따른 Working Draft 상태 기록
+- [x] 당시 승인에 따른 Working Draft 상태 기록
 - [x] Region / CIDR / VPC 주요 후보 비교
 - [x] 알려진 주소 범위의 계산상 검증
 - [x] Region / IPAM / Subnet 작업 전제 승인
@@ -737,7 +737,7 @@ Route / SG / Gateway Recovery까지 작업 전제 승인을 받았고 Network �
 4. ROSA 권한: 제한된 Platform 관리와 Namespace/Resource별 업무 권한, 인증과 RBAC의 분리.
 5. 자동화 주체: Jenkins·GitOps·Backup·Runtime별 Principal과 Credential 목적 분리.
 
-기존 지침 §30~31에는 IAM User ×4 + AdministratorAccess의 단순 운영 후보와 Minimum Gate가 이미 기록되어 있었다. 앞선 제안은 이 후보를 충분히 반영하지 못했으며 이번 사용자 지시로 사람 계정의 작업 전제를 갱신한다. CI의 제한된 IAM Principal과 Secret Bootstrap Gate는 유지하며, CI 최초 인증은 3-C-2의 제한된 CI IAM User Key 안으로 작업 전제 승인되었다. Secret 저장·공급·복구는 3-C-3의 SOPS + age 및 담당자 초기 공급 절차를 작업 전제로 승인했다. 실제 구현·설정 검증은 아직 진행 전이다. 기존 팀의 별도 Security 합의나 계정 정책이 추가 제시되면 비교에 반영한다. 1차 팀 역할을 2차 AWS/ROSA 권한 배정으로 자동 승격하지 않는다. 실제 사람별 배정은 업무 확인 및 3-H WBS와 연결한다.
+기존 지침 §30~31에는 IAM User ×4 + AdministratorAccess의 단순 운영 후보와 Minimum Gate가 이미 기록되어 있었다. 앞선 제안은 이 후보를 충분히 반영하지 못했으며 2026-10-01 승인으로 사람 계정의 작업 전제를 갱신했다. CI의 제한된 IAM Principal과 Secret Bootstrap Gate는 유지하며, CI 최초 인증은 3-C-2의 제한된 CI IAM User Key 안으로 작업 전제 승인되었다. Secret 저장·공급·복구는 3-C-3의 SOPS + age 및 담당자 초기 공급 절차를 작업 전제로 승인했다. 실제 구현·설정 검증은 아직 진행 전이다. 기존 팀의 별도 Security 합의나 계정 정책이 추가 제시되면 비교에 반영한다. 1차 팀 역할을 2차 AWS/ROSA 권한 배정으로 자동 승격하지 않는다. 실제 사람별 배정은 업무 확인 및 3-H WBS와 연결한다.
 
 ### 3-C.2. 상위 불변조건과 구분할 권한
 
@@ -903,7 +903,7 @@ ROSA의 Workload ServiceAccount→AWS 권한은 실제 AWS API 호출 요구가 
 **결정 ID:** PH2-3C-IDENTITY-PRINCIPAL / PH2-3C-HUMAN-IAM-SIMPLE  
 **기록일:** 2026-10-01 KST  
 **상태:** 3-C-1 나머지 네 항목은 사용자 작업 전제 승인. AWS Human은 사용자 지정 IAM User ×4 + AdministratorAccess로 변경 반영. 실제 Minimum Gate 통과·구현 완료·3단계 최종 승인과 구분한다.  
-**근거:** 최신 사용자 지시와 기존 지침 §30~31의 구현 속도·복잡도 및 Minimum Gate.  
+**근거:** 당시 승인 결정과 기존 지침 §30~31의 구현 속도·복잡도 및 Minimum Gate.  
 **변경 영향:** 기존 연합 로그인 우선·사람 목적별 제한권한 제안은 현재 기본안에서 제외. TF Role은 실행 분리이며 사람 Admin의 기술적 격리를 보장하지 않음. CI 제한 Principal·ROSA IDP/RBAC·공식 Operator Role 유지.  
 **재검토 조건:** Account 상위 정책과 충돌, Credential 노출, 실제 작업·회수·복구 불가, 일정·비용 또는 3단계 통합 검토의 변경 필요.  
 **Issue / PR / Runtime Evidence:** 새 생성·조회한 자료 없음.
