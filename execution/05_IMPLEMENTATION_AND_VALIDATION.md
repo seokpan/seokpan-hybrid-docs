@@ -778,8 +778,20 @@ State Lineage·Serial 차이의 원인과 내용 동일성은 [첫 코멘트](ht
 - 내용: D의 Cost Gate(I07) 요청에 foundation Data 항목의 가동 시간 입력을 [Docs #43 코멘트](https://github.com/seokpan/seokpan-hybrid-docs/issues/43)로 제출하고, VPN 가동 시간 질문에 대한 답을 [Infra #16 코멘트](https://github.com/seokpan/seokpan-hybrid-infra/issues/16)로 남겼다.
 - Data 입력: RDS 가동 시간을 두 경우로 나눠 제출했다. R1은 상시 가동(약 336시간), R2는 작업 창 밖에서 RDS를 Stop하는 경우(최대 168시간). R2의 창은 이관 목표 창 10/12~15(96시간)와 검증 목표 창 10/19~21(72시간)이며 날짜는 목표일 뿐 확정 창이 아니다.
 - 제약: RDS Stop은 Storage·Backup 비용을 없애지 않고 최대 7일 후 자동 재시작된다. 프로젝트 PC는 주말에 꺼지고 평일과 한글날(10/9)에는 켜져 있다. 최종 Snapshot과 Backup S3에는 실사용자 데이터가 들어 있으므로 프로젝트 종료 시 삭제해야 한다.
-- 열린 항목: ① RDS Stop 구현이 코드에 아직 없음(03 3-F.9 후속), ② 종료 시 최종 Snapshot·Backup S3 삭제 담당·시점 미정, ③ D의 Ledger 개정 수신 후 Data 입력 재대조
+- 열린 항목: ① RDS Stop 방식 — 8.12절에서 Data 담당 Runbook으로 확정(10-06), ② 종료 시 최종 Snapshot·Backup S3 삭제 담당·시점 미정, ③ D의 Ledger 개정 수신 후 Data 입력 재대조
 - 한계: 입력 제출이며 Cost Gate PASS나 실제 비용 확정이 아니다.
+
+### 8.12 Data 계약 v2 · PR #29 Data 검토 · RDS Stop 방식
+
+- 일자: 2026-10-06 / 작성 김상희
+- Data 계약 v2: B(App · GitOps)와 D(OCP lab)가 소비할 DB · Redis 대상, TLS/CA, SQL 계정(백업 읽기 `backup_dump` 포함), 연결 수 예산, Schema/Migration 실행 조건, Secret 공급표, lab · Recovery 조건을 [Infra #19 코멘트](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6011904645)에 공식본으로 게시했다. Cloud는 덤프에 Schema가 포함돼 Migration은 `current` 확인만 하고, deadline은 300초로 수락했다.
+- D 수락(부분): [최유준 답변](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6012181426)으로 lab DB 대상 · 인증서 조건과 300초를 확정했다. lab Redis는 Data 기준을 김상희가, 인증서 발급 · 구성 · 배포를 최유준이 맡는다. `db_admin` URL 거부 시험은 Image 안 검사 함수 호출로 하며 실제 Migration 자격을 Deployment에 공급하지 않는다.
+- Data 모듈: PR #34 권한에 맞춰 이름 접두사 `seokpan-fnd-`, 버킷 정책 삭제, Backup User Boundary 지정, `Component = data`를 모듈에 미리 반영했다(브랜치 `infra/19-foundation-data`, validate 통과). [Infra PR #33](https://github.com/seokpan/seokpan-hybrid-infra/pull/33) 병합으로 foundation Root 전환이 가능해졌다.
+- PR #29 검토: 합성 예행 도구를 1차 사전 점검 결과와 대조해 합성 범위에서 승인하고, 실제 운영과 다른 5가지(MariaDB 11.8 · 덤프 옵션 · 해독 Key 분리 · 복원 계정 · 실제 S3 경로)를 [Infra #17](https://github.com/seokpan/seokpan-hybrid-infra/issues/17)에 남겼다. 복원 비교 방식(Schema · 행 Hash · 건수 · Revision)은 실제 이관 · 복원 검증에 그대로 쓴다.
+- RDS Stop: Data 담당이 CLI Runbook으로 Stop/Start한다([Infra #16](https://github.com/seokpan/seokpan-hybrid-infra/issues/16)). 이에 따라 Cost 입력은 R2(작업 창만 가동, 최대 168시간)를 설계 기준으로 쓴다([Docs #43](https://github.com/seokpan/seokpan-hybrid-docs/issues/43)).
+- Data VM: Server-02 `192.168.52.0/24`, IP 후보 `192.168.52.50`(VMware · IP 할당표 확인 전). `onprem_job_host_cidrs`는 이유빈이 #16 후속에서 foundation 공통 변수로 선언하고 Data SG · Route · VPN · 백업 계정 Host가 같은 값을 쓴다.
+- 열린 항목: ① B 수락(계약 6절), ② lab Redis Data 기준 게시(10/7), ③ `onprem_job_host_cidrs` 선언 순서, ④ Redis AUTH Token 원본 · 공급 방식(#19 질문 2), ⑤ Data VM 생성 · `/32` 확정
+- 한계: 계약 게시 · 리뷰 · 결정 기록이며, 실제 자원 생성 · 이관 · Backup/Restore 측정은 아니다.
 
 ## 9 복구 예행과 목표 재검토 — 2026-10-02
 
@@ -1723,19 +1735,19 @@ C [Infra34](https://github.com/seokpan/seokpan-hybrid-infra/pull/34)은 A 승인
 | **팀원 D** | 기존 공통 Registry 후보·Owner/Push/Pull/보존, 전송 호스트/노드 경로·DNS/TLS, Pull Secret과 Image mapping 공급 | 후보 미확인. cp-03 Pull 및 D system:admin을 lab Pod Pull·B 권한으로 승계하지 않음 |
 | **공유 4조·망 Owner / A와 D** | 정확 Owner 확인·공지/사용창 수락, 기존 객체 Owner/Diff, 연결 가능 범위/권한/영향/예상 시점 | A의 AWS Network 담당을 공유 OCP/학원 라우터 변경 권한으로 확대하지 않음. 실제 공지 전송/수락은 아직 미확인 |
 | **팀원 C/D** | DB/Redis Endpoint까지 lab 노드/App의 실제 경로·CA/TLS/AUTH·목적 Secret·Schema/필요 Migration 공급 | Registry가 풀려도 Data 연결은 별도. Harbor CA와 Data CA를 섞지 않음 |
-| **팀원 A/C → 내 일 B ROSA** | A 기반/공통 역할·C Data SG2 공급, B 첫 Plan 준비 | Infra33 main `2c17488f47f377f62444bfc49db5c48bbe7d069a` 병합은 Source 상태. 실출력/SG2·실효 Caller/Backend·지원/비용은 별도. Infra36은 17:59:30 KST main `a332d859416bd2e43a672d663d9ee0e114cafd39` 병합(Source HEAD5b999fb). Network IAM 범위이며 A bootstrap Apply·연결/No changes·실제 Network 검증은 후속 |
+| **팀원 A/C → 내 일 B ROSA** | A 기반/공통 역할·C Data SG2 공급, B 첫 Plan 준비 | Infra33 main `2c17488f47f377f62444bfc49db5c48bbe7d069a` 병합은 Source 상태. 실출력/SG2·실효 Caller/Backend·지원/비용은 별도. Infra36은 17:59:30 KST main `a332d859416bd2e43a672d663d9ee0e114cafd39` 병합(Source HEAD5b999fb). Network IAM 범위의 [A 보고](https://github.com/seokpan/seokpan-hybrid-infra/pull/36#issuecomment-6013414243)로 bootstrap 복구 Apply2 add/0 change/0 destroy·정책 생성/Role 연결·재Plan No changes를 수신했다. 실제 Network/Full foundation 출력·SG2·ROSA 권한은 별도 대기 |
 
 
 **사본 수락:** 재빌드 대신 승인 FE/BE Image의 같은 내용을 복사한다. D는 원 index/플랫폼 child→실제 target digest·도구/결과·보존 위치를 기록한다. Skopeo의 `--all --preserve-digests`는 전체 index/child 복사와 보존 실패 시 중단을 각각 뜻하며 대상 digest를 재조회한다([공식 문서](https://github.com/podman-container-tools/skopeo/blob/main/docs/skopeo-copy.1.md)). 대상이 index 보존을 지원하지 않으면 child를 같은 index라고 적지 않고 mapping/변환 범위를 별도 검토한다. 실제 target 수락 후에만 B가 Lab Image/Secret·held Migration 같은 Backend 참조를 검토한다. Cloud/Recovery 참조를 함께 바꾸지 않는다.
 
 **4조 공유 Owner 공지:** 실제 등록/Apply 전에 필요하다. 수행자/B권한·Controller/Namespace·정확 SHA/Path·대상/시간창·복제수0/Job보류·삭제/정리 보호·Registry 차단·Owner 수락을 담고 Trust/노드DNS/망 변경은 별도 범위로 표시한다. GitOps14의 B 구역은 공지 준비안이며 이번 실제 전송·Owner 수신 수락은 없다.
 
-**기록·전달·수신 구분:** Registry 판단은 [GitOps14](https://github.com/seokpan/seokpan-hybrid-gitops/issues/14)·[10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10)에 작성했다. D의 방향/4조 공지 질문에 대한 팀 채팅 회신·실제 전달·수신 확인은 미확인이다. C 계약 B5 응답은 [Infra19](https://github.com/seokpan/seokpan-hybrid-infra/issues/19)에 기록한 부분 수락/보완이며 Runtime 수락이 아니다. [Docs43](https://github.com/seokpan/seokpan-hybrid-docs/issues/43)의 개정 원장 독립 감사 피드백도 작성 완료와 D의 실제 수신을 나누며 후자는 미확인이다.
+**기록·전달·수신 구분:** Registry 판단은 [GitOps14](https://github.com/seokpan/seokpan-hybrid-gitops/issues/14)·[10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10)에 작성했다. 사용자 18:44:47 KST 확인으로 Registry·Data·최신 비용 답장 3건의 전달·수신은 완료됐다. 공유 Owner 공지·사용창 수락은 별도다. C 계약 B5 응답은 [Infra19](https://github.com/seokpan/seokpan-hybrid-infra/issues/19)에 기록한 부분 수락/보완이며 Runtime 수락이 아니다. [Docs43](https://github.com/seokpan/seokpan-hybrid-docs/issues/43)의 개정 원장 독립 감사 피드백은 D 수신 확인까지 완료됐으며 수식 보완·Cost Gate PASS는 남았다.
 
 **기록 순서·종료:** 공급/판단은 GitOps14, B 실행/활성화는10, 실제 등록/Sync는5, Pull/Data/업무는6에 먼저 남긴다. Source Render·환경 보고 수신·제한 등록·Full App Sync·Pull/Ready·업무 결과를 각각 기록한다. OCP 사전검증 결과/미수행/Cloud 재시험 인계를 수락한 뒤 실습 대상 정리하며 공유 클러스터 종료와 ROSA 시작을 묶지 않는다. ROSA 첫 Plan·비용·Window A/B·Recovery·최종 정리/발표 종료는 기존 범위와 목표 창을 유지한다. TH81/완료2·모든 체크·C §8.9/8.10/8.11·비용 §9.37/학습 §5.9와 기존 Run/Hash/보존 이력은 유지한다. 이번 클러스터/노드/Registry/AWS API·Sync·복사·망 변경·공지는 미실행이다.
 
 
-**검토할 후속 Source:** [GitOps PR #15](https://github.com/seokpan/seokpan-hybrid-gitops/pull/15)은 문서 2파일의 Ready PR이다. D의 [02215c8 승인](https://github.com/seokpan/seokpan-hybrid-gitops/pull/15#pullrequestreview-5426097223)은 문서 정확성 범위이며 실제 입력/Runtime 수락이 아니다. 동일 Podman 계정·모드와 실패 결과 기록, 실제 Redis protocol 기록과 중복 설명을 같은 PR에서 보완해 최신 HEAD `cdb77dc3abd99d7321f905d53dfd431d2ea554ef`로 C/D 재리뷰한다. [같은 HEAD Native CI](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37441602354)의 Source 검사 39개 PASS·진단 Render 8경로/22객체 생성을 확인했고 최신 사람 수락은 대기한다. Pool/Redis 판단의 기준은 [최초 배포 안내](https://github.com/seokpan/seokpan-hybrid-gitops/blob/cdb77dc3abd99d7321f905d53dfd431d2ea554ef/handoff/OCP_FIRST_DEPLOYMENT.md)이며 실제 설정 선택·Registry 이동/IDMS 적용은 별도다. 승인 YAML·Image·Guard·Namespace·기동 보류는 그대로다. CI artifact ZIP을 이번에 독립 다운로드·Hash 대조한 것은 아니다.
+**병합된 후속 Source:** [GitOps PR #15](https://github.com/seokpan/seokpan-hybrid-gitops/pull/15)은 문서 2파일 PR이며 C의 최신 HEAD 승인 후 18:42:19 KST에 main `57c73bea3c01609a90143f7cf7e51d86035e0fc9`로 병합·브랜치 삭제됐다. D의 [02215c8 승인](https://github.com/seokpan/seokpan-hybrid-gitops/pull/15#pullrequestreview-5426097223)은 문서 정확성 범위이며 실제 입력/Runtime 수락이 아니다. 동일 Podman 계정·모드와 실패 결과 기록, 실제 Redis protocol 기록과 중복 설명을 같은 PR에서 보완해 최신 HEAD `cdb77dc3abd99d7321f905d53dfd431d2ea554ef`의 C 리뷰를 수락해 병합했다. [같은 HEAD Native CI](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37441602354)의 Source 검사 39개 PASS·진단 Render 8경로/22객체 생성을 확인했고 최신 C 문서 승인을 확인했다. Pool/Redis 판단의 기준은 [최초 배포 안내](https://github.com/seokpan/seokpan-hybrid-gitops/blob/57c73bea3c01609a90143f7cf7e51d86035e0fc9/handoff/OCP_FIRST_DEPLOYMENT.md)이며 실제 설정 선택·Registry 이동/IDMS 적용은 별도다. 승인 YAML·Image·Guard·Namespace·기동 보류는 그대로다. CI artifact ZIP을 이번에 독립 다운로드·Hash 대조한 것은 아니다.
 
 **앞선 검토/CI 이력:** `02215c823bbbe7e74cabccf54e9a61b81b34f401`의 [Native CI](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37436964045)는 39검사 PASS·8경로/22객체 Render 생성이다. 이전 `db0251baf7283de5529c0bfd43cad82950e8f3b1`의 [Native CI](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37435158422)39검사 PASS·8경로/22객체 Render 생성과6d626c5/Run37434254592·54952bf/Run37433341860은 구 HEAD 이력이다. 현재 main은 fc175a70이며 실제 OCP/AWS/Registry/Image 명령·호환 Run은 미실행이다.
 
