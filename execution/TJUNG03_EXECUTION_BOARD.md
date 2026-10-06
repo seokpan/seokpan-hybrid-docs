@@ -1,21 +1,38 @@
 # 정태훈 실행판 — 지금 할 일·입력 대기·OCP와 ROSA 수명
 
+## 최신 후속 — 2026-10-07: GitOps #17 병합과 정합성 조사
+
+[GitOps #17](https://github.com/seokpan/seokpan-hybrid-gitops/pull/17)은 2026-10-06 23:45:46 KST main `fa3cea313e2cb1533d9703082619b085a3de25cc`에 병합됐고 `b/lab-internal-registry-binding` 브랜치는 삭제됐다. 검토 HEAD `adacf6fffd9d179eef4715e92a3fed721759db55`와 병합 SHA를 구분한다. 내부 Registry 소비 Source의 리뷰·병합 대기는 해소됐으며, 아래 10/6 기록의 해당 대기 표시는 당시 이력이다.
+
+| 작업 | 현재 상태 | B의 다음 행동·직접 조건 |
+|---|---|---|
+| lab 이미지·접속 선언 | FE/BE·별도 Migration Job의 내부 Registry 경로, 승인 Digest 보존, lab Harbor Pull 참조 제거, Redis URL/기대 Host 연결이 main에 반영됨 | 실제 사용할 main 개정을 확인한다. 기존 Secret을 삭제한 것은 아니며 Cloud ECR·Recovery Harbor는 유지한다 |
+| Valkey와 앱 활성화 | FE/BE replicas 0, Migration suspend/current/300초·단일 실행·목적 자격 유지. #17 병합은 실제 Sync/Ready/업무 시험이 아님 | Valkey 선언·제한 AppProject Kind·TLS/AUTH/Probe/자원 검토와 실제 Service/Ready 확인. 나머지 DB/Schema·CA/목적 Secret·Route·권한·공유 사용창·live Diff까지 수락한 뒤 필요한 단일 Migration → Backend → Frontend → 동일 조합 Run |
+| Cloud 금고 | B 공개키 전달과 C 암호문 공급 안내 수신 완료. Docs #66에는 C의 A/B 계정별 해독 확인 보고가 추가됨 | 원 보고의 수행자·시각·범위와 B 본인 확인/수신을 대조한다. C 보고를 B의 직접 확인·독립 사본 완료로 자동 승계하지 않는다. Token 값은 수집·출력하지 않는다 |
+| Docs #64 | #17 병합 결과와 현재/과거 경계를 보완 중 | C의 #66 main 변경을 보존하며 실행판·학습 안내·Tracker·05를 정합화한다. #64 실제 병합·브랜치 삭제는 다음 작업 전 GitHub에서 확인한다 |
+| 저장소·등록본 조사 | 네 저장소 전체의 최종 전수조사는 미완료 | [정합성 조사 대장](REPOSITORY_CONSISTENCY_AUDIT.md)의 Q01~Q12와 발견·미확인·재검증을 이어간다. 파일 목록 확보나 #17 검토를 전체 조사 완료로 확대하지 않는다 |
+| ROSA·비용 병행 | 실제 기반 출력·Data SG 2개, B Caller/Backend·지원·사양·시간·전체 Cost 수락은 별도 | 독립 준비는 계속한다. OCP 정리·모든 Recovery 자산 완료를 실제 ROSA Plan의 일괄 선행조건으로 추가하지 않는다 |
+
+**현재 설계 정합성의 주의사항:** 등록된 02~04는 저장소 Blob과 다르며, 저장소 03 도입부에도 DR를 병합 전 후보로 설명하는 문구가 남아 있다. 현재 요구는 RTO 10분·영속 DB RPO 30분·DB 운영 중 백업 계획 주기 15분이다. 설계 문서·코드·가이드·주석·그림 원본/SVG/PNG·등록본의 연쇄 대조가 끝나기 전에는 전체 정합성 완료를 선언하지 않는다. 실제 전체 T18 달성과는 별도다.
+
+다음 10/6 절과 그 안의 이전 관측은 이력으로 보존한다. B의 TH 81개·실제 완료 체크는 이번 Source 병합과 문서 조사만으로 추가 완료 처리하지 않는다.
+
 ## 최신 후속 — 2026-10-06: 내부 Registry 소비·Valkey 선언·Cloud 금고 확인
 
 [Docs63](https://github.com/seokpan/seokpan-hybrid-docs/pull/63)은 main `fa94b3ded9698516af9f4ec1837cab7e5cb74c2f`에 병합됐고 브랜치 삭제를 확인했다. 아래 이전 시점 안내에서 미수신으로 적힌 public key/암호문·Registry copy/Pull은 이번 수신 상태를 우선한다. 공급 보고·실제 복호화·Pod/업무 시험은 구분한다.
 
 | 구분 | 현재 완료/수신 | B 행동·직접 대기 |
 | --- | --- | --- |
-| **내 일: Cloud AUTH** | 사용자 확인으로 B age public recipient 생성·C 전달 완료. C의 본인 계정 암호문 공급 안내 수신 | **10/7** 본인 Controller에서 값 출력 없이 복호화/64hex 검사·암호문 Hash 앞12자리 `9a86f90e6ba6` 대조 → C에 결과만 회신. 파일 존재/실제 성공·개인키 독립 사본은 미확인. Cloud/lab Token 분리 |
-| **내 일: lab 소비 Source** | [GitOps PR17](https://github.com/seokpan/seokpan-hybrid-gitops/pull/17) `adacf6fffd9d179eef4715e92a3fed721759db55` Ready/D·C 리뷰 요청. FE/BE+별도 Migration Job 주소 내부 Registry 전환·lab Harbor Pull 참조 제거·Redis URL/Host 연결. Source39검사/진단Render8 통과 | 리뷰/병합은 미완. replicas0·Job suspend/current/300초·삭제 보호 유지. 기존 Secret 삭제·Valkey 선언/활성화·실제 Sync는 하지 않음 |
+| **내 일: Cloud AUTH** | B age public recipient 생성·C 전달 완료. C의 본인 계정 암호문 공급 안내 수신 | **10/7** 본인 Controller에서 값 출력 없이 복호화/64hex 검사·암호문 Hash 앞12자리 `9a86f90e6ba6` 대조 → C에 결과만 회신. 파일 존재/실제 성공·개인키 독립 사본은 미확인. Cloud/lab Token 분리 |
+| **내 일: lab 소비 Source** | [GitOps PR17](https://github.com/seokpan/seokpan-hybrid-gitops/pull/17) 검토 HEAD `adacf6fffd9d179eef4715e92a3fed721759db55`; 후속 병합 main `fa3cea313e2cb1533d9703082619b085a3de25cc`·작업 브랜치 삭제 완료. FE/BE+별도 Migration Job 주소 내부 Registry 전환·lab Harbor Pull 참조 제거·Redis URL/Host 연결. Source39검사/진단Render8은 기존 검사 결과 | Source 리뷰/병합 대기 해소. replicas0·Job suspend/current/300초·삭제 보호 유지. 기존 Secret 삭제·Valkey 선언/활성화·실제 Sync는 하지 않음 |
 | **팀원 D: Registry** | [D 원 보고](https://github.com/seokpan/seokpan-hybrid-gitops/issues/14#issuecomment-6016144794): FE/BE Index Digest 보존 복사와 워커2×Image2/default SA Pull4건. Image Source46e21a74는 현재 App main과 구분 | 최종 실행 SA·Pruner 보존·사용창 확인은 직전 확인. Harbor 망 연결/Cloud ECR은 lab 직접 대기에서 제외 |
 | **팀원 D/C: lab Valkey** | [Image 원 기록](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6#issuecomment-6014194818)·[TLS 원 기록](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6#issuecomment-6016508869) + D 메시지의 AUTH/Runtime Secret 공급 완료 보고 수신. 선택 DNS lab-redis.seokpan-argotest.svc | **D 초안 작성 → C Data/B Source·권한 리뷰의2안 제안**. D 수락은 미확인. StatefulSet/Service/config Source가 아직 없으므로 DNS/Pod Ready가 아님. AUTH 공급의 비민감 개정·동일 Token 검사 결과는 D가 #6 보완 |
 | **내 일: 활성화** | 초기자원 후보/단계 순서 유지 | Valkey 초안에 TLS-only·AUTH·noeviction·저장off/emptyDir·valkey binary·REDISCLI_AUTH+VALKEYCLI_AUTH·restricted UID·Probe/쓰기경로 적용. 같은 App이면 StatefulSet Kind만 AppProject에 제한 허용 검토 → DB/Route/권한/사용창/live Diff 수락 → Valkey1 → 필요한 단일 Migration → BE1 → FE1 → 새Run |
 | **병행: ROSA/비용** | Data PR37/SLR 생성 보고 수신 상태 유지 | A/C의 실제 Network 출력/SG2, B Caller/Backend·지원·사양/Volume/LB·기간/가용성, D Cost 보완 → 전체Plan/Cost/실행창. OCP 종료나 모든 복구 자산을 일괄 기다리지 않음 |
 
-기록 정본: [GitOps10 B 후속](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10#issuecomment-6016940121)·[Infra19 B 금고 수신](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6016940538). 전달/수신은 사용자 확인을 기준으로 갱신하며 이번 답장 초안 전달 완료를 대신 표시하지 않는다.
+기록 정본: [GitOps10 B 후속](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10#issuecomment-6016940121)·[Infra19 B 금고 수신](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6016940538). 제출·수신은 실제 기록으로 갱신하며 답장 초안 작성과 전달 완료를 구분한다.
 
-**00–04·아키텍처 판단:** 이번 입력은 이미 승인된 내부 lab Registry·Valkey7.2·환경별 Secret/키 보관 설계의 실제 공급/소비 연결이다. 목표 플랫폼·엔진·TLS/AUTH·Data 영속성·격리/역할 경계를 바꾸지 않으므로 이번00–04/아키텍처 그림 추가 변경은 필요하지 않다. 설계/Source 완료를 실측 완료로 확대하지 않는다. 향후 Cloud HA/Pool·운영 정책의 실질 변경은 원 설계와 그림까지 다시 대조한다. GitHub Freeze milestone10/18 vs 승인10/16 메타데이터 정정은 여전히 별도 미완이다.
+**10/6 입력에 대한 한정 판단:** 공개키·암호문 공급과 내부 Registry 소비 연결 자체는 목표 플랫폼·엔진·TLS/AUTH·Data 영속성·격리/역할 경계를 바꾸지 않는다. 당시 이 입력만으로 새 아키텍처 변경은 필요하지 않다고 판단했다. 이 판단은 00–04·아키텍처 그림 전체에 남은 불일치가 없다는 전수조사 결과가 아니다. 후속 전체 대조와 발견 사항은 상단 10/7 기록·정합성 조사 대장을 따른다. GitHub Freeze milestone10/18 vs 승인10/16 메타데이터 정정은 별도 미완이다.
 
 ### 이전 시점의 기록 — 현재 상태는 위 표 우선
 
@@ -285,7 +302,7 @@ OCP의 사전검증 업무 완료와 정리 날짜는 별개다. 추천 운영 �
 | --- | --- | --- | --- | --- |
 | **지금~10/8** | §2 최초 lab 인계 묶음·실제 Image/입력수신, Cloud/Secret/Bundle·rosa 준비 병행 | 최소 새 조합 사전검증·실패수정. 필요한 조합을 WindowA에 넘기는 목표 | Source/Controller·지원·권한·필수Output·Plan/Cost 준비. 조건 충족 시 WindowA 후보 | 무엇이 준비완료/실측대기인지, 막는 입력/Owner/다음 확인시점 |
 | **10/12~15** | WindowA 통합·Migration·대표업무·Must수정·Backup/Release/Bundle | Cloud결함 재현/재시험·격리 복구 준비. 사전검증 수락과 실습정리는 별도 | 필요한 WindowA 가동·정상통합/중간정리, 실제 시간을 Cost에 기록 | 동결할 Source/Digest/Config/Schema와 남은결함 |
-| **10/16** | Technical Freeze | 핵심구현/조합동결·남은Case/자료gap | 핵심구현동결, 상시가동 뜻 아님 | Must/retest/누락자료와 실행계획 |
+| **10/16** | Technical Freeze | 핵심구현/조합동결·남은Case/자료gap | 핵심구현현동결, 상시가동 뜻 아님 | Must/retest/누락자료와 실행계획 |
 | **10/19~21** | TH16→TH17: 재생성·정상Baseline·분리장애·부하·비교 | 실자산준비 후 전체T18. ROSA창 밖에서도 수행 | WindowB 후보. 실제 생성/삭제시각은 Plan/Cost/가용창으로 확정 | T별Actual/판정·실패/한계·최종필요영상/자료 |
 | **10/22** | Demo Freeze·영상/시연흐름·증거보존 | 자료/해독/접근·재현검증, 실습잔존정리 | 최종 Cloud시험/자료확보 후 승인rosa삭제 가능. 10/22를 확정삭제일로 지정한 것은 아님 | 시연/예비영상·자료/Key 접근·남은시험 |
 | **10/23** | Presentation Ready·개인기여/대본/Q&A/리허설 | Runbook/Index/한계·보관수신 | 잔존/후속청구/보관확인. 필요한 추가가동은 Cost/창/정리범위 별도 | 발표준비와 실제정리/잔여상태 |
