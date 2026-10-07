@@ -787,6 +787,18 @@ State Lineage·Serial 차이의 원인과 내용 동일성은 [첫 코멘트](ht
 - 열린 항목: ① 백업 작업 VM → 복구 DB VM 사본 복사(15분 백업 스크립트에 포함), ② 복원 절차(사본 선택 → 해시 → 해독 · 가져오기 → 비교 → 계정), ③ 복구 App Pod의 실제 출발지 IP 확인, ④ recovery overlay 반영(정태훈), ⑤ 복원 예행 · RTO 측정(검증 목표 창 10/19~21)
 - 한계: VM · DB · TLS · 접근 경계 준비까지이며, 실제 사본 수신 · 복원 · 복구 App 연결 · RTO 측정은 아니다.
 
+### 8.17 Runbook Issue 운영 · RDS Stop/Start 절차 · `identity_svc` 권한 결론 · Recovery CA 오프라인 사본 (infra #44 · #45 · #46)
+
+- 일자: 2026-10-07 / 작성 김상희
+- Runbook 운영 방식: 이관 · RDS Stop/Start 절차와 복구 DB VM 구성 기록을 infra Issue로 관리한다. Issue 본문이 항상 최신 기준본이고(맨 위에 버전 표시), 바뀐 내용과 이유는 코멘트로 남긴다. 실제 실행으로 검증한 뒤 docs 저장소로 옮기고 Issue를 닫는다. 코멘트로만 고쳐 나가면 실행할 때 최신 절차가 여러 코멘트에 흩어지기 때문이다.
+- 이관 Runbook([Infra #44](https://github.com/seokpan/seokpan-hybrid-infra/issues/44), v1.3): 1차 Replica 덤프 → age 잠금 → controller 해독 스트림 → RDS 가져오기 → 행 수 · 해시 비교 → 목적별 계정 순서다. 게시 전 검토에서 실행 중 막힐 수 있는 곳 5군데를 고쳤다(임시 접속 파일 삭제 시점, 덤프가 실패해도 정상 이름으로 바뀌던 부분, 자동 생성 비밀번호의 특수문자 처리, RDS에서 보이는 출발지 IP 확인, 열린 결정 표시). 1차 Replica 사전 접속은 확인했다(8.15절).
+- RDS Stop/Start Runbook([Infra #45](https://github.com/seokpan/seokpan-hybrid-infra/issues/45), v1.1): 8.12절에서 정한 CLI 방식을 절차로 만들었다. 이관 목표 창과 검증 목표 창 사이(10/15 저녁~10/19 아침, 주말 포함)를 Stop 구간으로 두고, Stop 전에는 마지막 백업 사본이 복구 DB VM에 도착했는지 해시로 확인한다. RDS는 연속 7일째 자동으로 켜지므로 6일째에 수동으로 켜고, foundation Apply는 RDS가 켜져 있을 때만 한다. Start 뒤 백업 1회가 성공해야 재개로 본다. 10/22 이후 가동 여부는 이유빈 · 최유준과 정한다.
+- 백업 스크립트와의 약속(10/9 구현 기준): 15분 Timer는 Stop 중에도 끄지 않는다. Stop 구간에는 표시 파일을 보고 DB에 접속하지 않은 채 "계획 생략"을 기록하므로, 그 구간이 실패가 아니라 계획된 생략이었다는 기록이 15분마다 남는다(03 문서 3-D.10.6절). 전송 · 확보 실패는 계획 생략으로 바꾸지 않는다. 이름은 온프렘 VM 규칙에 맞춰 `seokpan-hybrid-backup` 계열로 정했고, 백업 작업 VM의 경로도 첫 백업 전에 같은 이름으로 바꿨다.
+- `identity_svc` 권한: PR #29 검토([Infra #17](https://github.com/seokpan/seokpan-hybrid-infra/issues/17))에서 남긴 권한 차이는 정태훈의 10-06 답변과 App 코드 대조로 결론 냈다. `identity_svc`는 `member`의 조회 · 가입만 쓰고, 랭킹 · 게임 기록은 `game_svc`가 허용된 컬럼 · 테이블로 처리한다. 운영 권한은 8.2절 그대로 유지하며, 이관 Runbook의 계정 생성 단계도 바꾸지 않는다.
+- Recovery CA 오프라인 사본: CA 개인키 · 인증서 · 확장 설정 · 일련번호를 묶어 암호 문구로 잠근 사본을 controller 밖에 두고, 원본과 해시가 같은 것을 확인했다(04 문서 5.3절의 주 · 예비 보관, 위치는 기록하지 않음). 인증서까지 함께 둔 것은 복구 App이 믿는 기준이 이 인증서이기 때문이다([Infra #46](https://github.com/seokpan/seokpan-hybrid-infra/issues/46)).
+- 열린 항목: ① 복원 Runbook Issue(10/8, Infra #46), ② 15분 백업 스크립트 · 복사 전용 키(10/9), ③ 10/22 이후 RDS 가동 여부, ④ 첫 실제 Stop · Start 실측(10/15 저녁 예정)
+- 한계: 절차 작성과 사전 확인까지이며, RDS Stop/Start · 이관 · 복원의 실제 실행과 측정은 아니다.
+
 ## 9 복구 예행과 목표 재검토 — 2026-10-02
 
 **2026-10-03 설계 우선순위 정정:** 이번 피드백의 목적과 대안 비교·수정 범위는 [03 §3-I.14](../design/03_DETAILED_DESIGN.md#recovery-design-review-20261003)를 기준으로 읽는다. 이 절은 최소 예행의 기존 입력·측정·부담 비교를 지원한다. 02의 기존 1차 Redis 재사용 설명과 03의 좁게 읽힐 수 있는 RTO 경계는 설계 문서에서 바로잡는다. 아래 코드·검사·Cloud/ROSA 후속은 각 시점/범위의 기록이며 설계 재검토보다 우선하는 전체 구현 요구가 아니다.
