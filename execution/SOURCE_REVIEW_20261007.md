@@ -1,4 +1,15 @@
-> **현재 재개 기준:** [§9](#b-review-resume-20261007). §1–8의 수치/상태는 해당 시점의 이력이다.
+> **현재 재개 기준:** [§11](#b-work-current-delta-20261007)·[work 인계](WORK_HANDOFF_20261007.md). §1–10의 수치/상태는 해당 시점의 이력이다.
+
+### 조사 중 추가된 실행 보고·수정 PR — 2026-10-07 18:09 KST
+
+[D 등록·선택 Sync 보고](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5#issuecomment-6034601393)는 SHA A의 Valkey 4객체 `Succeeded`·FE/BE 미생성을, [Pod 확인](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6#issuecomment-6034590906)은 검토 Digest의 amd64 하위 ImageID·허용 UID만 보고했다. 등록/Sync를 다시 미실행으로 되돌리지 않는다. 실제 TLS/AUTH/Hostname·Ready 전체 Run과 Prune/Delete 차단은 아직 근거가 없으며 공유 Owner 재확인·등록 Commit·B 공유 시각의 빈칸 및 사전 합의되지 않은 `oc patch operation.sync.resources` 경로는 원 #5에서 보완·수락한다. #21의 완료 체크만으로 이 잔여를 완료 처리하지 않는다. 이 조사자는 클러스터를 직접 재조회하지 않았다.
+
+현재 GitOps main의 [CI 37595556200](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37595556200)는 #24 등록값과 이전 checker allowlist 불일치로 실패했다. [Draft #25](https://github.com/seokpan/seokpan-hybrid-gitops/pull/25)는 checker/test/안내 3파일의 정합 수정이며 동일 도구에서 69검사·8 Render/26객체·고정 SHA 비교 PASS이며 [정확 PR HEAD6064311의 CI37598576166](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37598576166)도 completed/success다. 이는 미병합 PR의 검사이고 현재 main의 기존 CI 실패는 유지된다. Controller/Workload YAML과 실제 상태는 변경하지 않았고 main에 아직 병합되지 않았다. 전체 release Gate·공유 충돌·Prune/Delete 보호는 보존한다.
+
+[Infra Draft #43](https://github.com/seokpan/seokpan-hybrid-infra/pull/43)은 ROSA `workspace_key_prefix=phase2/rosa/env`와 목적 Role의 List 범위를 맞춘다. default State Key는 유지한다. 기존 harness/보존 검사 PASS, 보조 로컬 fmt/validate는 NOT RUN 이력이다. [정확 PR HEADd5aeddd의 CI37598580155](https://github.com/seokpan/seokpan-hybrid-infra/actions/runs/37598580155)는 Core1.16.4/AWS6.67.0/RHCS1.7.7의 fmt·backend=false/readonly init·validate(errors0/warnings0)·Schema13종·OIDC mock2·Source/Lock 불변 PASS다. 실제 Backend 인증·Workspace 조회·Cloud Plan/Apply는 NOT RUN이다. 누락만으로 기존 init 실패를 단정하지 않는다. 검토·병합 후 본인 clone/Workspace와 실제 Caller/Backend를 확인한다.
+
+Codex의 첫 읽기·작업 위치·사용량·다음 직접 조건은 [CODEX_ENTRYPOINT_20261007.md](CODEX_ENTRYPOINT_20261007.md)를 따른다. 원 보고와 이 Source 수정의 수신/검토·실행은 별개다.
+
 
 # S1–S4 Source 검토 — 2026-10-07
 
@@ -175,3 +186,15 @@ Artifact11467549120 / ZIP SHA256 `5bca559ae4368a192d91a1ccb652ca22f58a23922df685
 GitOps20의 b13ae957/58PASS/A·D 재리뷰 요청은 유지한다. Infra40의 병합·브랜치 삭제는 완료다. Docs69는 main 대비 ahead0/files0이라 삭제 가능하지만 질문에 대한 판단만 했으며 보존한다. Docs72는 새 main7114e837의 C Prefix 결정/기록을 결합하고 병합 대기한다. C의 Docs74 설계 결정과 미병합 Infra42 Source/실제 백업 상태는 별도다. 03을 Infra2로 변경하지 않고 Cost PARTIAL/미정 입력을 유지한다.
 
 이번 종료 범위는 리뷰 대응·가능한 병합/브랜치 정리·실제 결합 CI·개인 실패 절차/문서·인계다. 남은 Room start_*·identity/Frontend·Recovery/CI·과거 diff/CI/thread/참조와 실행/비용/발표/종료는 [work 인계 W01–W13](WORK_HANDOFF_20261007.md)에 담당·입력·명령/검사·종료 기준으로 남긴다. Q10 전체 수렴이나 TH/T의 실제 완료를 추가하지 않는다.
+
+
+<a id="b-work-current-delta-20261007"></a>
+## 11. work 재개 원격 변경 대조와 현재 실행 입력
+
+§1–10의 Source/검사·리뷰 대기와 Runtime 관측은 해당 시점 이력으로 보존한다. 현재 검토 기준은 [실행판 상단](TJUNG03_EXECUTION_BOARD.md)과 [work W01–W13](WORK_HANDOFF_20261007.md)다. 이번에는 기존 App17/18/19 수정을 재작성하거나 1762검사를 새로 수행한 결과로 기록하지 않고, 승인된 결합 Source a2afffb8605dafff1cb5b9af215aa0cf93aadcdb와 기존 CI·D Build 인계를 재사용한다. 새 Backend Build/Scan/Digest·App/별도 held Migration의 같은 승인 Image 연결은 남는다.
+
+GitOps20은5dc2bd546de1acbbeb47a380c85103ce2b31017f에 병합·브랜치 삭제되어 이전 재승인 대기가 해소됐다. GitOps22의 Stage-1/Gate Source는244b48b885d7ac645c402e561a032ae65a8f3461에, GitOps24의 등록 Source는a25172c7453b9d7999cb1f3cbeb1ef35774e3b63에 병합됐다. #24 targetRevision은 #22의 Workload SHA A다. Valkey1·FE/BE0·Migration suspend/current/300초·base/Recovery hold·전체 release Gate 보존을 소비하며 같은 Source를 다시 만든다는 안내를 종료한다. 실제 Controller 등록·보호 옵션·선택 Sync·Pull/Ready/TLS/AUTH/업무 Run은 원 #5/#6의 실제 결과에서 별도 판정한다.
+
+Infra42의36dc2403aa77e2896cc4ec3c545b92e0afb49205 병합으로 periodic/·backup_periodic_retention_days Source 대기는 해소됐다. 실제 tfvars·Plan/Apply·Backup은 별도다. C Valkey 본체 해독 보고/B 수신과 B SQL 금고 jth 확인/C 세 계정 확인은 완료 보고이며 Controller 밖 독립 키/암호문 사본·복원 검사는 남는다. 정확한 원 댓글·Docs77의a9b0207b563aa25be17d4a635f6cc903fbe0e74a 병합/공급 범위는 [W06/W09](WORK_HANDOFF_20261007.md)에 연결한다. 이 환경이 실제 금고/Runtime을 재실행한 결과는 아니다.
+
+기존 03·04 종료,DR10분/RPO30분/15분 계획 주기,CP3/Infra3/Worker3,Cost PARTIAL/$450/$500,TH81/실제 완료2를 유지한다. Source·리뷰·인계·실행·시험 판정은 계속 구분한다. Room/identity/Frontend·Recovery/CI·과거 이력의 남은 의미 검토와 실제 Runtime 검증을 전체 완료로 올리지 않으며 Q10은 미완료다.

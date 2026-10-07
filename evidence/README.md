@@ -45,7 +45,7 @@ python3 tools/recovery_metrics.py evidence/<test-id>/<run-id>/release.json --con
 <a id="recovery-design-review-inputs"></a>
 ## Recovery design review inputs
 
-현재 목표/주기 설계 변경안은 [03 §3-I.14.5](../design/03_DETAILED_DESIGN.md#recovery-design-decision-20261005)의 **RTO10분·영속 DB RPO30분·DB 운영 중 Portable Backup15분·기존 Backup/Restore 유지**다. 이 개정이 main에 병합되면 새 공식 설계로 전환하며 그 전 main의30분/90분/1시간 승인 이력과 구분한다. 이미 수행한 아래 두 부분 Run의10파일·빈 Target/null·NOT RUN 판정은 소급 수정하지 않는다. 실제 운영 Timer/Backup 경로·사고 시작부터 지정 클라이언트 업무/Data 완료의 전체 Run이 있어야 새 목표 달성을 판정한다.
+현재 승인된 목표/주기 설계는 [03 §3-I.14.5](../design/03_DETAILED_DESIGN.md#recovery-design-decision-20261005)의 **RTO10분·영속 DB RPO30분·DB 운영 중 Portable Backup15분·기존 Backup/Restore 유지**다. 이 개정은 [Docs #30](https://github.com/seokpan/seokpan-hybrid-docs/pull/30)으로 main에 병합됐으며 이전30분/90분/1시간 승인 이력과 구분한다. 이미 수행한 아래 두 부분 Run의10파일·빈 Target/null·NOT RUN 판정은 소급 수정하지 않는다. 실제 운영 Timer/Backup 경로·사고 시작부터 지정 클라이언트 업무/Data 완료의 전체 Run이 있어야 새 목표 달성을 판정한다.
 
 정상 성공 경로에서는 실제 성공 Data 최대 간격G＋Data→로컬 사용 가능한 완성본 지연D＋시점/시계 불확실성U≤30분을 관측한다. nominal15분을 G≤15분 또는 D≤15분 보장으로 대체하지 않는다. jitter/생략·전송/Storage/VM 장애·이전 사본 선택은 실제 사용 Data 나이와 손실로 기록하고 초과는 미달, 시점 미확인은 null/미판정으로 남긴다.30분은 채택된 프로젝트 시험 요구사항이며 실제 사업 사용자의 손실 허용 승인이나 상용 SLA가 아니다.
 

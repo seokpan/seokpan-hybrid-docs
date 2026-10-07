@@ -1,6 +1,17 @@
 # 2차 저장소 정합성 조사·수정 대장
 
-> **현재 인계:** 이번 리뷰 처리 종료·결합 main 검증은 [§13](#b-review-closeout-audit-20261007), 다음 실행은 [work 인계](WORK_HANDOFF_20261007.md)다. §9–12의 이전 관측·실패·Source는 당시 이력으로 보존한다. 전체 Q10은 미완료다.
+### 조사 중 추가된 실행 보고·수정 PR — 2026-10-07 18:09 KST
+
+[D 등록·선택 Sync 보고](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5#issuecomment-6034601393)는 SHA A의 Valkey 4객체 `Succeeded`·FE/BE 미생성을, [Pod 확인](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6#issuecomment-6034590906)은 검토 Digest의 amd64 하위 ImageID·허용 UID만 보고했다. 등록/Sync를 다시 미실행으로 되돌리지 않는다. 실제 TLS/AUTH/Hostname·Ready 전체 Run과 Prune/Delete 차단은 아직 근거가 없으며 공유 Owner 재확인·등록 Commit·B 공유 시각의 빈칸 및 사전 합의되지 않은 `oc patch operation.sync.resources` 경로는 원 #5에서 보완·수락한다. #21의 완료 체크만으로 이 잔여를 완료 처리하지 않는다. 이 조사자는 클러스터를 직접 재조회하지 않았다.
+
+현재 GitOps main의 [CI 37595556200](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37595556200)는 #24 등록값과 이전 checker allowlist 불일치로 실패했다. [Draft #25](https://github.com/seokpan/seokpan-hybrid-gitops/pull/25)는 checker/test/안내 3파일의 정합 수정이며 동일 도구에서 69검사·8 Render/26객체·고정 SHA 비교 PASS이며 [정확 PR HEAD6064311의 CI37598576166](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37598576166)도 completed/success다. 이는 미병합 PR의 검사이고 현재 main의 기존 CI 실패는 유지된다. Controller/Workload YAML과 실제 상태는 변경하지 않았고 main에 아직 병합되지 않았다. 전체 release Gate·공유 충돌·Prune/Delete 보호는 보존한다.
+
+[Infra Draft #43](https://github.com/seokpan/seokpan-hybrid-infra/pull/43)은 ROSA `workspace_key_prefix=phase2/rosa/env`와 목적 Role의 List 범위를 맞춘다. default State Key는 유지한다. 기존 harness/보존 검사 PASS, 보조 로컬 fmt/validate는 NOT RUN 이력이다. [정확 PR HEADd5aeddd의 CI37598580155](https://github.com/seokpan/seokpan-hybrid-infra/actions/runs/37598580155)는 Core1.16.4/AWS6.67.0/RHCS1.7.7의 fmt·backend=false/readonly init·validate(errors0/warnings0)·Schema13종·OIDC mock2·Source/Lock 불변 PASS다. 실제 Backend 인증·Workspace 조회·Cloud Plan/Apply는 NOT RUN이다. 누락만으로 기존 init 실패를 단정하지 않는다. 검토·병합 후 본인 clone/Workspace와 실제 Caller/Backend를 확인한다.
+
+Codex의 첫 읽기·작업 위치·사용량·다음 직접 조건은 [CODEX_ENTRYPOINT_20261007.md](CODEX_ENTRYPOINT_20261007.md)를 따른다. 원 보고와 이 Source 수정의 수신/검토·실행은 별개다.
+
+
+> **현재 인계:** 원격 변경 대조는 [§14](#b-work-current-delta-audit-20261007), 다음 실행은 [work 인계](WORK_HANDOFF_20261007.md)다. §3/§9–13의 이전 관측·실패·Source는 당시 이력으로 보존한다. 전체 Q10은 미완료다.
 
 > 개정: 2026-10-07 KST  
 > 상태: IN PROGRESS — 두 중단분의 게시·산출물 복원, PR 설명/리뷰 요청 정정, fixture 요약 후속 보완 및 등록용 소스 제공. 전체 코드/이력 의미 검토와 Q10 수렴은 미완료  
@@ -260,3 +271,19 @@ App17/18/19는 최신 D 재승인을 확인해 모두 병합·브랜치 삭제�
 새 main7114e837의 Docs74 C 변경은 03의 periodic/ 결정과 05의 해당 행을 보존해 결합한다. 등록 Project03와 그림/출처 식별정보의 후속 영향, Infra42의 코드 리뷰/실제 적용 여부는 [work W09](WORK_HANDOFF_20261007.md)로 인계한다. 이번 PR에서 C의 결정/주기/보관이나 CP3/Infra3/Worker3를 바꾸지 않는다.
 
 [WORK_HANDOFF_20261007.md](WORK_HANDOFF_20261007.md)는 W01–W13별 담당·시작점·입력·작업·보호 범위·종료/실패·병행 조건을 제공한다. 생성/파일 제공과 다른 작업 공간으로의 자동 등록은 구분한다. 개인키/Token·원장 원본·실제 Plan은 복제하지 않는다. Q02/03/04/05/10의 전체 의미 검토는 아직 미완료이며 기존 TH81/완료2·과거 실패/실행자·Q 체크를 유지한다. 이번 요청의 가능한 처리 종료와 리뷰/실환경 입력/전체 목표 달성은 별도다.
+
+
+<a id="b-work-current-delta-audit-20261007"></a>
+## 14. work 재개 현재 Source·공급 보고 정합화
+
+Docs72의 고정 게시 HEAD376afcb03849e2325c5a10e80a363081bb0cd2de 이후 원격 변화로 오래된 현재 대기를 정정한다. §3/§9–13의 PR HEAD·재리뷰 대기·실패·검사·담당별 수행은 해당 관측 이력이며 과거 값을 일괄 치환하지 않는다. 현재 원본·정확한 병합 SHA/다음 실행 조건은 [Source §11](SOURCE_REVIEW_20261007.md#b-work-current-delta-20261007)·[work 인계](WORK_HANDOFF_20261007.md)다.
+
+| 정정 대상 | 현재 상태 | 직접 남은 범위 |
+|---|---|---|
+| App17/18/19 | 재승인·병합·브랜치 삭제 및 결합 main a2afffb/기존1762검사 확인 범위 유지 | D의 새 Backend Build/Scan/Digest·Registry/Pull와 B의 App/held Migration 동일 Image 수락. 기존 Image에 수정 포함 주장 금지 |
+| GitOps20/22/24 | #20 재승인·병합/삭제, #22 Stage1/Gate Source 병합 SHA A244b48, #24 등록 Source a25172/targetRevision=SHA A | 실제 공유 Owner/사용창·Caller/live Diff·지정 Bootstrap·Stage1 Gate·선택 Sync·Ready/TLSAUTH/업무 Run 별도 |
+| Infra42 | periodic/·backup_periodic_retention_days Source36dc24 병합 | A tfvars/Root Plan·C Job/권한/보관 개정과 승인된 Apply/실제 Backup. Source/설계 병합과 Runtime 수락 구분 |
+| C/B Controller 금고 | Valkey 본체 해독 보고/B 수신, SQL 본체 jth 해독·4필드 형식/암호문 해시 및 C 세 계정 확인 보고 | Controller 밖 독립 Key/암호문 사본·복원. 이 조사 환경에서 재실행한 결과 아님 |
+| Docs77 | C의 05/Tracker 공급·확인 보고a9b0207b563aa25be17d4a635f6cc903fbe0e74a 병합 | 최신 C §8.15/Tracker 행 보존. 문서 병합과 서비스 계정/Secret/TLS·실제 공급·수신·Runtime을 구분. 직접 조회 없이 성공을 가산하지 않음 |
+
+실행판·학습·05·Tracker 현재 구획과 Work W01/W03–W06/W09를 위 상태로 연결하고 기존 C의05 §8.9–8.14·Tracker 행, A/D 비용·Shared Execution·과거 실패/Run·TH/Q 체크를 보존한다. 03/04 종료·승인 수량/DR·Cost PARTIAL·TH81/실제 완료2는 변경하지 않는다. Q10 전체 수렴은 주장하지 않으며 실제 새 Run/인계 수락은 원 기록에서 이어간다.
