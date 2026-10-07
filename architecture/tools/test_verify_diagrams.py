@@ -85,6 +85,18 @@ class ProvenanceTests(unittest.TestCase):
         del self.base['data_engine_followup']
         self.assertEqual(self.compose()['data_engine_followup'], self.old['data_engine_followup'])
 
+    def test_manifest_asset_path_is_portable(self):
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory)
+            asset = base / 'architecture' / 'fixture.svg'
+            asset.parent.mkdir()
+            asset.write_bytes(b'abc')
+            with patch.object(MODULE, 'REPO', base):
+                self.assertEqual(MODULE.identify(asset), {
+                    'path': 'architecture/fixture.svg', 'bytes': 3,
+                    'sha256': 'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad',
+                })
+
     def test_source_identity_refresh(self):
         self.assertEqual(self.compose()['source_files'], self.base['files'])
 

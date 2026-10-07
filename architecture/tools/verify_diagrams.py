@@ -35,7 +35,7 @@ def require(condition, message):
 
 def identify(path):
     raw = path.read_bytes()
-    return {'path': str(path.relative_to(REPO)), 'bytes': len(raw),
+    return {'path': path.relative_to(REPO).as_posix(), 'bytes': len(raw),
             'sha256': hashlib.sha256(raw).hexdigest()}
 
 
