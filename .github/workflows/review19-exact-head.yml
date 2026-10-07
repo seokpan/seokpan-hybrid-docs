@@ -13,14 +13,14 @@ jobs:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
           repository: seokpan/seokpan-hybrid-app
-          ref: 8f68eb187e72dcc5583f22e6ee04a0f8a0692c58
+          ref: f548f921c436d614a3fe0b3969161b8d1433ab5f
           fetch-depth: 0
           persist-credentials: false
       - name: Pinned tools and original-code regression
         shell: bash
         run: |
           set -euo pipefail
-          test "$(git rev-parse HEAD)" = 8f68eb187e72dcc5583f22e6ee04a0f8a0692c58
+          test "$(git rev-parse HEAD)" = f548f921c436d614a3fe0b3969161b8d1433ab5f
           test -z "$(git status --porcelain)"
           python3 -m pip install --quiet --target "$RUNNER_TEMP/pinned-uv" uv==0.12.5
           UV="$RUNNER_TEMP/pinned-uv/bin/uv"
@@ -49,7 +49,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test "$(git rev-parse HEAD)" = 8f68eb187e72dcc5583f22e6ee04a0f8a0692c58
+          test "$(git rev-parse HEAD)" = f548f921c436d614a3fe0b3969161b8d1433ab5f
           test -z "$(git status --porcelain)"
           unset SEOKPAN_REDIS_TEST_SERVER
           UV="$RUNNER_TEMP/pinned-uv/bin/uv"
