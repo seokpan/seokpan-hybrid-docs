@@ -1,3 +1,5 @@
+> **현재 재개 기준:** [§9](#b-review-resume-20261007). §1–8의 수치/상태는 해당 시점의 이력이다.
+
 # S1–S4 Source 검토 — 2026-10-07
 
 > 담당: B 정태훈(tjung03)  
@@ -127,3 +129,27 @@ S2는 Recovery 선언/renderer와 실제 Valkey Image·binary·TLS/AUTH Probe·S
 수집 Run37564888138의03:02:47~03:03:48 UTC 순차 관측은144페이지·명시적 오류0, Branch16·일반Issue48·PR99·일반댓글208·inline댓글0·Review제출81·WorkflowRun129다. 목록/페이지 연결과 PR HEAD refs·42개 파일/Bundle 해시를 확인했다. Artifact11458298273 ZIP SHA256은 `551df71dd5b7048acdfcb608a70d1409400a5b6682c3c89be6061e9adac45141`이다. 이후 신규 PR/Branch/Run은 별도 조회다. 지난431개 commit 색인을 현재 완료 건수로 재사용하지 않는다. 모든 과거 diff·CI 로그/산출물·GraphQL thread 해결 상태의 의미 검토는 아직 아니다.
 
 이번 수정의 Source→시험→원 Issue/인계→현재 문서 파급을 재검증하되 Q02/03/04/05/10 전체는 미완료다. 다음 시작점은 위 잔여 App/Frontend·Recovery/CI 시험 대응, 과거 diff/CI/참조 의미 검토와 최종 원격 변경 대조다. 본인 독립 키·Caller·Data/Route/비용 입력은 별도 직접 조건이며 이 조사 전체를 대기시키지 않는다. 00–04·그림·과거 Evidence·TH81/실제 완료2는 유지한다.
+
+
+<a id="b-review-resume-20261007"></a>
+## 9. 중단된 재리뷰 대응의 게시·산출물·현재 입력 확인
+
+이 절은 §8 이후의 개정이다. 이전 Source/시험/리뷰는 고정 이력으로 보존하며 전체 S1–S4 완료를 뜻하지 않는다.
+
+| 원 작업 | 최신 Source/상태 | 검증과 남은 조건 |
+|---|---|---|
+| App17 | 367938f08e735fe123827b3c9362307b5d59408f, open | 기존 APPROVED commit_id가 동일한 사실과 보완 결과에 대한 새 제출 미확인을 구분. 원 댓글6032849213의 재검토 요청 유지 |
+| App18 | d624c83081f18ad81c793cfe39e81ce6075abfba, 재리뷰 대기 | Run37583252239: 전체1752/부분집합47/별도Lua9·failure/error/skip0·clean. Artifact11465476865 ZIP7430b6ee49f3d3cb96a3842115b6ac250baa51d75e3ca12450966e9a5240828f 재확인 |
+| App19 | f548f921c436d614a3fe0b3969161b8d1433ab5f, 재리뷰 대기 | Run37584439948: 이전1cc717+새8Case에서4FAIL/4PASS→최종8PASS, 전체1760/부분집합47·clean. Artifact11465659044 ZIPbc51bad5ac7b6025ed4e7e5ad1cc1383c6b697825d56a8178f53e8c0bafc09f1 재확인 |
+| GitOps20 | b13ae9575206a335a9e6f87efc34dd4c198884f7, A/D 재리뷰 대기 | Run37583920937 전체58PASS·8진단Render/26객체. Artifact11465856605 ZIP9e1056f9f37e6fa4fc113ff1176d0160e127c366a3ddfc856481589e50be925b, Source/8YAML hash 대조 |
+| Infra40 | a0da58c345f877659e522a5b4ab5392b1d0626d3 병합, 브랜치 삭제 | C 승인5438510467·Source3파일·기존10단위검사. 삭제Run37583271261·branches 재조회 확인. 실제 Data/T18은 별도 |
+
+App18은 D의 중복 push/PR CI·로컬 opt-in 순서 제안을 수용했고 필수검사 전환/캐시 추가는 별도 범위로 유지했다. App19는 RedisError가 취소를 가리는 경계를 실제 대역 회귀로 재현해 RedisError만 억제하고 원 취소를 전파한다. 정리 시도1회가 정리 성공을 보장하지 않는다. 첫 Run37583804408의 Ruff SIM105 실패는 정책 비활성화 없이 suppress 표현으로 정정한 뒤 재시험했다. GitOps20은 A의 metadata 지적에 annotation exact allowlist·빈 labels·추가 metadata 음성 검사를 보완했다. 기존 승인/Changes requested를 임의로 최신 승인으로 바꾸지 않았다.
+
+세 ZIP의 실제 바이트 SHA256·CRC, App JUnit/summary·clean Source, GitOps Render hash를 재검증했다. App19의 Docs workflow trigger61874395와 검사 대상 Appf548f921은 다르다. 개별 Source CI를 결합 main/새 Image/실제 Valkey·Controller·전체 업무 PASS로 합치지 않는다.
+
+lab의 최신 D작성/B리뷰·Stage1 전용Gate·SHA A/B 순서는 [원 #5 인계](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5#issuecomment-6032629690)로 연결한다. Stage1 PR에서는 unittest뿐 아니라 기존 Source workflow의 진단 Render에도 모든 Workload replicas0 검사라는 직접 의존이 있다. 이 검사를 삭제/우회하지 말고 승인 Stage1 경계를 반영한다. FE/BE/base/Recovery/Migration 보류를 보존하며 실제 Stage1 Gate 구현은 D의 후속 PR이다.
+
+Cost는 [원 #43 대조](https://github.com/seokpan/seokpan-hybrid-docs/issues/43#issuecomment-6033030041)를 따른다. 파일(3) SHA2561e7186febf71e16f72d6a92c406b9d1709e8e64839a8101fb913c4f126644383, 저장 판정 PARTIAL/미완19/입력오류0/기타4다. CP3/Infra3/Worker3 유지, 필수 disk와 실제 LB/Volume/Window/Destroy·가용시간은 미확인이다. 읽기 도구의 일부 수식 해석 차이를 원본 파일 오류로 단정하거나 재저장하지 않았다. 과거 단가를 새 검증 가격으로 승격하지 않는다.
+
+본인 금고 시도는 복원 파일 검사에서, clone 시도는 경로/필수파일 초기 검사에서 중단돼 실제 복호화/Cloud 권한 실패로 판정하지 않는다. [직접 실행 안내](TJUNG03_WORKFLOW_AND_LEARNING_GUIDE.md#b-direct-actions-20261007)에 준비·전송·정확한 파일명·누락 진단·검사·회신을 반영했다. 명령의 문법/합성 검사는 본인 Runtime 성공이 아니다. 00–04/Project v3/그림/TH81·완료2는 변경하지 않는다.

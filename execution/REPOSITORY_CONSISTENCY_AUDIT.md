@@ -1,6 +1,6 @@
 # 2차 저장소 정합성 조사·수정 대장
 
-> **현재 인계:** 최신 리뷰·경로 A·Source 후속은 [§11](#b-review-followup-audit-20261007), 이전 실행 입력/두 결함은 §9–10의 당시 이력으로 보존한다. 기존 Q 체크와 실제 수행 기록은 유지한다.
+> **현재 인계:** 최신 재리뷰·lab/비용·본인 진단은 [§12](#b-review-resume-audit-20261007), 이전 리뷰·경로 A·Source 후속은 [§11](#b-review-followup-audit-20261007), 이전 실행 입력/두 결함은 §9–10의 당시 이력으로 보존한다. 기존 Q 체크와 실제 수행 기록은 유지한다.
 
 > 개정: 2026-10-07 KST  
 > 상태: IN PROGRESS — 두 중단분의 게시·산출물 복원, PR 설명/리뷰 요청 정정, fixture 요약 후속 보완 및 등록용 소스 제공. 전체 코드/이력 의미 검토와 Q10 수렴은 미완료  
@@ -238,3 +238,13 @@ Pool 크기 환경변수는 현재 App에서 소비하지 않는다. 실제 glob
 원 작업·Build·등록·C 수신 링크, 정확한 SHA/Run/Artifact 해시, 실패/제외·시험 범위와 다음 파일은 Source §8에 연결했다. 새 수집144페이지·오류0/PR99/Review81 등은 목록·내용 확보 수준이며 전체 diff/CI의 의미 검토 완료가 아니다. 삭제·접근 불가 이력의 부재를 증명하지 않는다. encoded branch 단일 GET은 커넥터 URL 검사에서400으로 거부돼 전체 branches 조회로 확인했으며 Branch 부재로 판정하지 않았다.
 
 Q02/Q03/Q04/Q05/Q10은 미완료다. 다음은 Room start_*·identity 보상/시험·Frontend·Recovery/CI 잔여 연결→과거 diff/CI/참조 의미 검토→원격 변경 파급 재검증이다. 이미 검증한 취소/null 수정을 반복 작성하지 않는다. 본인 직접 작업은 [실행 명령](TJUNG03_WORKFLOW_AND_LEARNING_GUIDE.md#b-direct-actions-20261007)으로 분리하며 실제 키·Caller·배포 성공으로 가산하지 않는다. TH81/실제 완료2·기존 체크·00–04·그림은 유지한다.
+
+
+<a id="b-review-resume-audit-20261007"></a>
+## 12. 재리뷰 대응 재개·Docs72 반영·본인 실행 안내
+
+[Source §9](SOURCE_REVIEW_20261007.md#b-review-resume-20261007)에 최신5개PR·리뷰 원문·3개ZIP/시험·Infra40 병합/삭제·lab Stage1/2·Cost 원장(3)·금고/clone 실패 단계를 대조했다. 이미 게시된 App18/19/GitOps20 수정을 중복 생성하지 않았다. Docs69 보존 브랜치는 main 대비 ahead0/files0라 삭제 가능하지만 이번에는 실제 삭제하지 않는다. Docs72는 관련 PR 상태 변동을 반영한 뒤 병합 대기를 유지한다.
+
+문서4개의 단일 현재 구획을 갱신하고 학습 안내의 직접 실행 구획을 보완했다. 나머지 원본문·C의05 §8.9–8.14·Tracker 원행·Shared Execution·기존TH/Q 체크·설계/그림·Evidence는 보존한다. 새 Runtime 결과가 없으므로 TH81/실제 완료2를 바꾸지 않는다. D의 Stage1 후속에는 테스트뿐 아니라 CI 진단의 replicas0 조건도 함께 인계한다.
+
+이번 요청의 미처리 상태/안내 보완과 전체 전수 의미 검토는 구분한다. Q02/Q03/Q04/Q05/Q10은 미완료다. 다음 출발점은 S1 Room/Session/연결세대·Frontend의 남은 Source/시험 → S2 Recovery/Writer/Promotion 직접 연결 → S3 도달 diff/CI/참조 의미 검토 → S4 최종 원격 변화 대조다. 금고 독립 복원·ROSA 본인 도구/Caller·lab 입력과 비용 준비는 직접 조건에 따라 병행한다.
