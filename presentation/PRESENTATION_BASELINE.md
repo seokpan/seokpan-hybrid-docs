@@ -157,7 +157,7 @@ Requirement
 
 [Docs #30](https://github.com/seokpan/seokpan-hybrid-docs/pull/30)으로 병합된 [03 §3-I.14.5](../design/03_DETAILED_DESIGN.md#recovery-design-decision-20261005)의 승인 기준을 적용한다. 현재 목표는 RTO 10분·영속 DB RPO 30분·DB 운영 중 Portable Backup 15분 계획 주기다. 이전 30분·90분·1시간과 실제 Run의 목표/판정은 당시 기록으로 보존한다. 실제 전체 목표 달성은 해당 운영 Run에서 별도 확인한다.
 
-| Metric | 설계 개정안의 목표 — 리뷰·병합 후 적용 |
+| Metric | 현재 승인된 DR 설계 요구사항 — PR #30 병합 완료 |
 | --- | --- |
 | Offline Recovery RTO | 10분 이내 |
 | 영속 DB Offline Recovery RPO | 30분 이내 |
