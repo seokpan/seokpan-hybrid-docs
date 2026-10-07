@@ -25,7 +25,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test "$(git rev-parse HEAD^)" = ce5555159d5741161a986e8fe754ddeaf2e31fce
+          test "$(git rev-parse HEAD^)" = 4b27de9ea2d662a69257a9af3fb14f7016e18e73
           mkdir -p "$RUNNER_TEMP/docs-source-review"
           python3 - <<'PY'
           from pathlib import Path
@@ -38,7 +38,7 @@ jobs:
           path.write_text(''.join(line for line in lines if line not in rejected))
           compile(path.read_text(),str(path),'exec')
           PY
-          python3 .github/maintenance/source-review-followup.py | tee "$RUNNER_TEMP/docs-source-review/application.log"
+          python3 .github/maintenance/source-review-followup.py 2>&1 | tee "$RUNNER_TEMP/docs-source-review/application.log"
       - name: Verify preservation and publish only reviewed files
         shell: bash
         run: |
@@ -62,13 +62,16 @@ jobs:
               assert 'de130af839626c9d0a030580693a4060c41c9abd' in current
               assert 'SOURCE_REVIEW_20261007.md' in current
           subprocess.run(['git','add','--',*expected],check=True)
+          # The plan was edited by this run. Restore that temporary path only,
+          # then delete the three temporary inputs without force or product reset.
+          subprocess.run(['git','restore','--source=HEAD','--worktree','--','.github/maintenance/source-review-followup.py'],check=True)
           subprocess.run(['git','rm','.github/maintenance/source-review-followup.py','.github/workflows/s1-s4-audit-temporary.yml','.github/workflows/source-review-publish-temporary.yml'],check=True)
           actual=set(subprocess.check_output(['git','diff','--cached','--name-only',os.environ['BASE_SHA']],text=True).splitlines())
           assert actual==set(expected),actual
           subprocess.run(['git','diff','--cached','--exit-code',os.environ['BASE_SHA'],'--','design','architecture','evidence'],check=True)
           (report/'changes.patch').write_bytes(subprocess.check_output(['git','diff','--cached',os.environ['BASE_SHA']]))
           (report/'all-output-hashes.json').write_text(json.dumps(expected,indent=2)+'\n')
-          (report/'scope.json').write_text(json.dumps({'changed_files':6,'postimage_hashes':6,'original_checkboxes_preserved':True,'q_states_preserved':True,'c_section8_preserved':True,'design_architecture_evidence_unchanged':True,'runtime_test':'NOT_PERFORMED','global_q10':'INCOMPLETE'},indent=2)+'\n')
+          (report/'scope.json').write_text(json.dumps({'changed_files':6,'postimage_hashes':6,'original_checkboxes_preserved':True,'q_states_preserved':True,'c_section8_preserved':True,'design_architecture_evidence_unchanged':True,'runtime_test':'NOT_PERFORMED','global_q10':'INCOMPLETE','previous_publication_run':37560736306,'previous_failure':'temporary plan removal rejected its own working-tree edit; no publication'},indent=2)+'\n')
           PY
           git -c core.whitespace=-blank-at-eol,blank-at-eof,space-before-tab diff --cached --check
           test "$(git ls-remote origin "refs/heads/$TARGET_BRANCH" | cut -f1)" = "$GITHUB_SHA"
