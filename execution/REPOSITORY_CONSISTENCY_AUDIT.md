@@ -1,7 +1,7 @@
 # 2차 저장소 정합성 조사·수정 대장
 
 > 개정: 2026-10-07 KST  
-> 상태: IN PROGRESS — 두 중단분의 게시·산출물 복원, PR 설명/리뷰 요청 정정, fixture 요약 후속 보완 및 등록용 소스 제공. 전체 코드/이력 의미 검토와 Q10 수렴은 미완료  
+> 상태: IN PROGRESS — S1 startup/Lua 결함 2건 재현·수정·회귀·PR 제출, S2 lab #19 병합/직접 의존 대조, S3 PR refs 이력 색인 보완. 전체 의미 검토와 Q10 수렴은 미완료  
 > 담당: B 정태훈(tjung03). 다른 담당자의 실제 실행·승인·수신은 해당 원 기록으로 구분한다.  
 > 원 작업: [개인 #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21), [팀 #8](https://github.com/seokpan/seokpan-hybrid-docs/issues/8)
 
@@ -11,11 +11,11 @@ Source 존재·리뷰·병합·인계 제출·수신·실제 실행·시험 판�
 
 이 문서는 현재 상태와 다음 확인 지점을 정리한다. [초기 조사 F01~F10](https://github.com/seokpan/seokpan-hybrid-docs/blob/d2371a44f4c9b35cf8082991ec9700ccea2ec524/execution/REPOSITORY_CONSISTENCY_AUDIT.md)과 [두 중단분의 이전 체크포인트 전문](https://github.com/seokpan/seokpan-hybrid-docs/blob/3354bfff616685459d1586238239095109ebf64f/execution/REPOSITORY_CONSISTENCY_AUDIT.md)은 고정 Commit에서 보존한다. 과거 Evidence·측정·실행자·승인을 최신 값으로 소급 변경하지 않는다. TH 81개와 실제 완료 2개는 이 조사 때문에 변경하지 않는다.
 
-이번 종료 단위는 **중단 작업의 실제 게시 확인과 남은 제출/검증/전달 마무리**다. 범위 안의 새 불일치는 수정했으나, 전체 코드·과거 이력의 의미 검토가 끝났다는 판정은 아니다. 다음 작업은 §8의 미완료 단위에서 이어간다.
+이전 중단분의 게시/전달 마무리 이후 S1–S4 검토를 진행했다. 이번에는 실제 재현된 Source 결함 두 건을 수정·재검증하고 새 lab 선언·Image 인계 영향을 연결했다. [이번 검토 전문](SOURCE_REVIEW_20261007.md)과 §9를 우선하며 전체 코드·과거 이력 의미 검토의 미완료를 유지한다.
 
 ## 2. 고정 체크리스트
 
-Q06은 이전에 완료한 현재 12장·생성/출처 경로의 대조와 필요한 그림04 수정·시각 검증이다. 이번 재개에서는 해시·XML/PNG·manifest를 재검증했으며 새 전체 시각 검토를 했다고 기록하지 않는다. Q07은 7개 비교와 개정본 제공이며 실제 Project 첨부 교체는 아니다. Q08은 수집한 B 명의 공개 기록과 현재 문서의 작성 과정 메타 정리 범위다. Q09는 발견한 수정의 B 범위 처리·보존·원 작업 인계이며 팀원 리뷰 수신을 대신하지 않는다. 새 발견이 생기면 영향 항목을 다시 진행 상태로 관리한다.
+Q06은 이전에 완료한 현재 12장·생성/출처 경로의 대조와 필요한 그림04 수정·시각 검증이다. 이번 재개에서는 해시·XML/PNG·manifest를 재검증했으며 새 전체 시각 검토를 했다고 기록하지 않는다. Q07은 7개 비교·개정본 제공 후 [등록 확인](https://github.com/seokpan/seokpan-hybrid-docs/issues/21#issuecomment-6028672058)까지 연결됐다. 설계 내용 변경이 없으므로 상태 변화만으로 재등록하지 않는다. Q08은 수집한 B 명의 공개 기록과 현재 문서의 작성 과정 메타 정리 범위다. Q09는 발견한 수정의 B 범위 처리·보존·원 작업 인계이며 팀원 리뷰 수신을 대신하지 않는다. 새 발견이 생기면 영향 항목을 다시 진행 상태로 관리한다.
 
 - [x] Q01 — GitOps #17의 병합·브랜치 삭제를 확인하고, Docs #64의 실행판·학습 안내·WORK_TRACKER·05와 PR 기록에 반영한 뒤 변경·리뷰 상태를 검증한다.
 - [ ] Q02 — 네 저장소의 전체 문서·구현 코드·설정·시험·주석·관련 파일을 목록화하고, 활성 원본·재사용 원본·과거 이력·생성물을 구분하여 내용을 조사한다.
@@ -32,6 +32,8 @@ Q06은 이전에 완료한 현재 12장·생성/출처 경로의 대조와 필�
 
 ## 3. 병합·수정 PR과 Source
 
+**현재 정정:** 아래 #68/#38/#16/#18 제출 표는 이전 체크포인트 이력이다. 네 PR은 모두 병합·작업 브랜치 삭제됐다. Docs main fff5ac2·Infra main0f47617·App mainbdaa9df·GitOps #18 main12d78ac이며, 이후 GitOps #19도 main de130af에 병합됐다. Project v3 등록은 실제 확인했다. 현재 리뷰 대상은 이번 Source 결함의 App #17/#18과 별도 Docs 검토 PR이다. 전체 SHA·근거는 [이번 검토](SOURCE_REVIEW_20261007.md#1-사용-source와-수집-범위)에 연결한다.
+
 Docs #64는 `94d5955612f589f40343360709513568bc5f0dc0`, #67은 `d2371a44f4c9b35cf8082991ec9700ccea2ec524`에 병합됐다. 작업 브랜치 삭제 이력을 유지하며 병합 상태를 이번 재개에서 다시 조회했다. GitOps #17은 `fa3cea313e2cb1533d9703082619b085a3de25cc`에 병합됐다. 이 상태를 리뷰 대기로 되돌리지 않는다.
 
 | 후속 PR | 현재 검토 Source 및 범위 | 이번 조치 |
@@ -41,7 +43,7 @@ Docs #64는 `94d5955612f589f40343360709513568bc5f0dc0`, #67은 `d2371a44f4c9b35c
 | [App #16](https://github.com/seokpan/seokpan-hybrid-app/pull/16) | `708ea3fafec95f68319fea7b7b966ecf97e4689c`; `MIGRATION_SEED.md`·연결 안내 2개 | PR 본문의 한 파일/옛 HEAD 표시를 실제 Patch와 맞춤. 코드·Lock·Image 변경 없음, C/D 요청 유지 |
 | [GitOps #18](https://github.com/seokpan/seokpan-hybrid-gitops/pull/18) | `f956346184a3eff9fb558d64324c8414a9ee8f0b`; apps 안내·인계 문서 3개 | 이전 게시 `062f17b...`와 파일 차이 0개 확인 후 본문 HEAD 정정. Manifest·renderer·기동 보류 유지, C/D 요청 유지 |
 
-각 PR의 사람 승인·병합은 아직 완료로 기록하지 않는다. 리뷰 요청은 실제 리뷰 수락이 아니다. 다음 작업은 별도 채팅 통보를 기다리지 않고 HEAD·리뷰·검사·병합·브랜치를 재조회한다. Runtime 원 이슈는 문서 PR 병합만으로 닫지 않는다.
+위 제출 당시의 리뷰/병합 대기는 현재 해소됐다. 새 Source PR의 리뷰·병합과 기존 네 PR의 완료를 구분하며 다음 작업 전에 실제 상태를 재조회한다. Runtime 원 이슈는 문서 PR 병합만으로 닫지 않는다.
 
 ## 4. 자료 수집·검토 수준
 
@@ -130,7 +132,7 @@ ZIP SHA256: `d0a42dbfba483f3566d54410010fd95b14d1a2428335f9ee55a29563d546c4f5`
 | 경로 | B의 다음 행동 | 직접 입력·원 작업 |
 |---|---|---|
 | Cloud AUTH | jth 계정에서 값 출력 없는 복호화·암호문 해시 대조, C 회신·독립 키 보관/복구 확인 | [Infra #19](https://github.com/seokpan/seokpan-hybrid-infra/issues/19). 공개키 전달·공급 보고 완료. 본인 실행 결과는 미수신 |
-| lab | D 선언 수락/PR → C Data·B Source/AppProject/UID/Probe·자원 검토 → 실제 Service/Ready·DB/Schema·CA/Secret·Route·권한·사용창·live Diff 수락 → 필요한 단일 Migration·BE·FE·같은 조합 Run | [GitOps #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10)·[#6](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6). 기존 DB/Redis/PVC 보호, replicas0/suspend 유지 |
+| lab | GitOps #19 선언·AppProject Kind Source 병합 → C Data/실제 공급 개정·B 적용 범위/권한·사용창 확인 → 실제 Service/Ready·DB/Schema·CA/Secret·Route·권한·사용창·live Diff 수락 → 필요한 단일 Migration·BE·FE·같은 조합 Run | [GitOps #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10)·[#6](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6). 기존 DB/Redis/PVC 보호, replicas0/suspend 유지 |
 | ROSA | 본인 clone·도구·Caller/Backend·지원·사양·기간·가용성·비용 입력 | [Infra #25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25). 실제 Plan에는 A 제한 출력/공통 prerequisite·C Data SG2, 생성에는 전체 Plan/Cost/실행창 수락 |
 | Pool/새 Image | 실제 연결 상한·종료 중 연결·예약/부하 합의 → 필요한 App 코드 → D Build/Digest | [App #1](https://github.com/seokpan/seokpan-hybrid-app/issues/1)·[#4](https://github.com/seokpan/seokpan-hybrid-app/issues/4). 3+2/60은 미채택 시나리오 |
 | Recovery | Valkey 승인 Image·binary·TLS/AUTH Probe·Storage/UID를 선언/renderer/검사와 함께 개정 | GitOps #10·Infra #17. 기존 held redis-server/TCP Probe·미확정 Digest/PVC를 실제 Valkey 수락으로 사용하지 않음 |
@@ -143,9 +145,22 @@ Cloud 금고 확인은 lab 검토의 선행조건이 아니다. OCP 철거·팀�
 
 | 순서 | 남은 검토 단위 | 남길 결과 |
 |---|---|---|
-| S1 | App `test_hybrid_connections.py` 나머지, DB 시간/Pool·서비스 생성/종료, 공유 상태/Lua·최종화 분기 | 파일/함수별 확인 수준·기존 검사 대응·결함/미확인. §4.1을 전체 App 완료로 확대하지 않음 |
+| S1 | 이번 연결·시간/Pool·최종화·startup/vote Lua 검토 이후 Room/Session/연결 세대·WS의 남은 Source/시험 분기 | 파일/함수별 확인 수준·기존 검사 대응·결함/미확인. §4.1을 전체 App 완료로 확대하지 않음 |
 | S2 | GitOps Recovery `redis.yaml`/`redis.conf`·renderer·검사, CI Writer/Promotion 입력/범위·실행 보류 | 실제 담당 인계와 코드의 직접 의존. 승인되지 않은 Image/저장/Pool 값은 입력 대기로 유지 |
 | S3 | 수집한 Issue/PR/댓글·도달 가능 Commit diff·CI log/artifact·참조 anchor/외부 자료 | 조회/검토/미확인/접근 제한·유효한 과거 근거를 항목별로 기록 |
 | S4 | S1~S3에서 발생한 수정·회귀·원 작업/Tracker/05·등록본 영향, 종료 직전 원격 변경 | 확인 가능한 미검토·미해결이 없어질 때만 Q02/03/04/05 및 Q10 전체 수렴 판정 |
 
 현재 문서·기록 주체·그림·등록용 파일의 지정 수정/제공과 두 중단분의 게시 정리는 끝냈다. 전체 코드·과거 이력의 의미 검토, 팀원 리뷰/병합, 본인·팀의 실제 Runtime 입력은 남아 있다. 이 잔여 범위를 숨기거나 조사 체크를 구현·시험 완료로 전환하지 않는다.
+
+
+## 9. S1–S4 검토 및 F11/F12 후속 — 2026-10-07
+
+[Source 검토 기록](SOURCE_REVIEW_20261007.md)에 실제 사용 SHA·수집/검토 수준·두 결함·red/green·기존 CI·게시/리뷰·인계와 한계를 보존했다. 새 원 결과는 [App4](https://github.com/seokpan/seokpan-hybrid-app/issues/4#issuecomment-6029248805), [Build 인계](https://github.com/seokpan/seokpan-hybrid-app/issues/2#issuecomment-6029292025), [GitOps10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10#issuecomment-6029297406)이다.
+
+- F11: App #17 — startup 취소 경로에서 runner 정리 책임이 첫 await보다 늦게 시작하는 문제. 기존1FAIL/1PASS → 수정2PASS, 기본1754·별도47 PASS.
+- F12: App #18 — Lua의 기한 거부 전에 board를 쓰는 문제. 기존 실제Lua3PASS/새2FAIL → 수정5PASS, 기본1752·별도47 PASS. Script9→10/Schema 유지. 회귀용 Redis 결과와 선택 Valkey 실환경을 구분.
+- S2: GitOps #19의 lab 선언·제한 StatefulSet Kind·롤백 보완은 병합돼 D 초안 대기가 해소됐다. 실제 활성화/CA/Secret·DB/Schema·사용창은 별도. Recovery 선언/renderer/테스트는 승인 실제 입력과 함께 개정한다.
+- S3: 저장된 PR HEAD refs까지 복원해 App98/Infra110/GitOps48/Docs175의431개 도달 이력을 부모·경로·diff 해시로 색인했다. 모든 과거 diff/CI 의미 검토 완료를 뜻하지 않는다.
+- S4: source→새 검사→수정→회귀/기존 검사→게시 바이트→원 Issue/리뷰/Build→실행 문서 영향을 확인했다. 나머지 Source/이력 검토가 남아 Q02/03/04/05/10은 유지하며 두 결함 수정만으로 전체 수렴을 선언하지 않는다.
+
+00–04·그림/manifest·C의 기존05 §8·Evidence·TH81/완료2는 변경하지 않는다. 실제 Runtime Run·비용·승인 Image 개정은 이번 기록으로 추가하지 않는다.

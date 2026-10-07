@@ -4,13 +4,17 @@
 
 Docs #64·#67은 각각 `94d5955612f589f40343360709513568bc5f0dc0`·`d2371a44f4c9b35cf8082991ec9700ccea2ec524`에 병합됐고 두 작업 브랜치는 삭제됐다. GitOps #17의 내부 Registry 소비 Source는 `fa3cea313e2cb1533d9703082619b085a3de25cc`에 반영됐다. 현재 안내와 과거 관측을 구분한다.
 
+
+**추가 병합·등록 확인:** Docs #68(`fff5ac222243a231e5473f4ab39f87aa6cc10f6f`)·Infra #38(`0f47617816b74365f5911ba2e273013ae82d6612`)·App #16(`bdaa9dfa0a09e5d8efb1714ccf62860315b1346e`)·GitOps #18(`12d78ac547729f0e314abfb2ac6238c95b1f3bd7`) 병합·작업 브랜치 삭제, Project v3 등록 확인을 수신했다. 그 뒤 #19 lab Source도 병합됐으며 실제 활성화는 별도다. [원 체크포인트](https://github.com/seokpan/seokpan-hybrid-docs/issues/21#issuecomment-6028672058)와 [S1–S4 검토](SOURCE_REVIEW_20261007.md)를 따른다.
+
 | 병행 작업 | 완료된 범위와 직접 조건 |
 |---|---|
 | lab 이미지 | 승인 FE/BE Digest·별도 Migration의 내부 Registry 경로 연결 완료. D의 워커 Pull4건 보고 유지. 실제 적용 직전 최종 SA·보존·사용창 확인 |
-| lab Valkey/App | 서버 선언은 아직 main에 없음. D 초안 제안의 실제 수락/PR → C Data·B StatefulSet 허용/UID/Probe/자원 검토. Service/Ready와 DB/Schema·CA/목적 Secret·Route·권한·사용창·live Diff 수락 → 필요한 단일 Migration → Backend → Frontend → 새 Run |
+| lab Valkey/App | [GitOps #19](https://github.com/seokpan/seokpan-hybrid-gitops/pull/19) main `de130af839626c9d0a030580693a4060c41c9abd` 병합으로 선언·StatefulSet Kind 허용 Source 대기 해소. C Data/실제 공급 개정·AppProject 등록/권한·Service/Ready·DB/Schema·CA/목적 Secret·Route·사용창·live Diff 수락 → 필요한 단일 Migration → Backend → Frontend → 새 Run |
 | Cloud 금고 | 공개키 전달·C 암호문 공급은 완료. C 계정별 확인 보고와 B 본인 복호화·암호문 해시 대조·독립 사본 확인은 별도. Cloud 금고를 lab 작업의 선행조건으로 묶지 않음 |
 | ROSA 준비 | 본인 도구·Caller/Backend·지원·가용시간/사양·비용 입력은 독립 준비. 실제 Plan은 A의 제한 출력·공통 prerequisite·C Data SG2 필요. OCP 철거·전체 A 업무·전체 Recovery 완료를 일괄 선행조건으로 두지 않음 |
 | Pool·비용 | Engine2·process·종료 중 연결·예약 예산을 B/C가 확인한 뒤 소비 코드→D 새 Build/Digest. 후보3+2/60은 미채택. Cost PARTIAL, B 비용 입력19~24행·실제 가동/재시험/삭제 시각은 별도 |
+| App 수정·Image | S1에서 startup 취소 시 runner 누수와 Lua 거부 시 board 변경을 재현·수정해 [App #17](https://github.com/seokpan/seokpan-hybrid-app/pull/17)·[#18](https://github.com/seokpan/seokpan-hybrid-app/pull/18) 리뷰 제출. 실제 병합 → D Backend Build/Scan/Digest → B의 App/held Migration 동일 조합 연결. 기존 승인 Image에 수정이 포함됐다고 승계하지 않음 |
 | DR·기록 | RTO10분·영속 DB RPO30분·DB 운영 중 Backup15분 계획 주기. 예약 주기와 실제 G+D+U·전체 T18 달성은 구분. 원 Issue/PR/Run과 TH81·실제 완료2를 유지 |
 
 원 작업: [Docs21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21), [GitOps10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10), [App1](https://github.com/seokpan/seokpan-hybrid-app/issues/1)·[App4](https://github.com/seokpan/seokpan-hybrid-app/issues/4), [Infra25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25). FE/BE replicas0·Migration suspend/current/300초·단일 실행·삭제 보호는 유지한다. Cloud ECR·Recovery Harbor와 lab 내부 Registry는 서로 다른 경로다.
@@ -417,3 +421,12 @@ App10은 기존 B 승인 뒤 병합됐으며 이번에 새 APPROVE를 올린 것
 **읽는 순서:** [개인 상위 Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21) → [현재 실행판](TJUNG03_EXECUTION_BOARD.md) → 원 이슈. 첫 안내만 지난 전체 작업을 소개하며 이후에는 **이번 변경·영향·대기·다음 행동**을 설명한다. 완료 체크는 원 이슈를 따른다.
 
 </details>
+
+
+## 이번 Source 검토에서 확인할 두 경계
+
+`asyncio.create_task` 이후 첫 await도 취소될 수 있다. 만든 Task의 정리 책임을 그 await 뒤에서 잡으면 provider가 먼저 닫힐 수 있으므로 실제 생성/종료 순서를 검사한다. [App #17](https://github.com/seokpan/seokpan-hybrid-app/pull/17)은 정상/취소 두 경우를 같은 lifespan으로 확인했다.
+
+Lua 실행 중 다른 명령이 끼어들지 않는 것과 거부한 연산이 이미 수행한 쓰기를 되돌리는 것은 다르다. [App #18](https://github.com/seokpan/seokpan-hybrid-app/pull/18)은 잘못된 다음 기한을 board HSET보다 앞에서 검사하고, 거부 후 상태 불변·정상 재시도를 확인했다. 회귀용 Redis7.2.4에서의 결과와 실제 Valkey/클러스터 업무 수락을 구분한다.
+
+기존 전체 검사 통과→새 경계 검사에서 실패→최소 수정→같은 검사와 기존 검사 재실행의 근거는 [S1–S4 검토 기록](SOURCE_REVIEW_20261007.md)에 연결한다. 이 두 결함의 수정 완료와 모든 Source/과거 이력의 전수 검토 종료는 별개다.
