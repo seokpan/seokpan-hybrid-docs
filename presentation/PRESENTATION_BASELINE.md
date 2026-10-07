@@ -155,7 +155,7 @@ Requirement
 
 ### Recovery
 
-[03 §3-I.14.5](../design/03_DETAILED_DESIGN.md#recovery-design-decision-20261005)의 2026-10-05 설계 개정안을 참조한다. 아래 새 목표는 변경안의 리뷰·병합 후 적용하며, 그 전 공식 기준은 기존 RTO 30분·영속 DB RPO 90분·1시간 Backup이다. 이전 승인·실제 Run의 목표/판정은 새 수치로 덮어쓰지 않는다.
+[Docs #30](https://github.com/seokpan/seokpan-hybrid-docs/pull/30)으로 병합된 [03 §3-I.14.5](../design/03_DETAILED_DESIGN.md#recovery-design-decision-20261005)의 승인 기준을 적용한다. 현재 목표는 RTO 10분·영속 DB RPO 30분·DB 운영 중 Portable Backup 15분 계획 주기다. 이전 30분·90분·1시간과 실제 Run의 목표/판정은 당시 기록으로 보존한다. 실제 전체 목표 달성은 해당 운영 Run에서 별도 확인한다.
 
 | Metric | 설계 개정안의 목표 — 리뷰·병합 후 적용 |
 | --- | --- |

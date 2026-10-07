@@ -1,0 +1,13 @@
+metric,value,unit,result
+app20_linux_backend,1774,tests,PASS
+app20_windows_source_combination,174,tests,PASS
+frontend_unit,269,tests,PASS
+frontend_tool,81,tests,PASS
+frontend_ui_repeated,36,runs,PASS
+gitops_pr25_linux,69,tests,PASS
+gitops_windows_combination_pass,70,tests,PASS
+gitops_windows_combination_existing_fail,3,tests,FAIL_PLATFORM_FIXTURE
+docs_architecture_default_encoding,14,tests,PASS
+docs_recovery_metrics,16,tests,PASS
+service_rto,,seconds,NOT_RUN
+database_rpo,,seconds,NOT_RUN

@@ -703,3 +703,12 @@ App17–19 최신 승인·병합/삭제 및 결합 main 검사/Build 입력은 [
 [App #4](https://github.com/seokpan/seokpan-hybrid-app/issues/4)·[Draft #20](https://github.com/seokpan/seokpan-hybrid-app/pull/20)·[정확 HEAD CI](https://github.com/seokpan/seokpan-hybrid-app/actions/runs/37605414615)·[새 Source 부분 Run](../evidence/T09/provider-cleanup-20261007-01/summary.md)를 연결한다. 수행자 Codex/CI GitHub Actions, 배정 B. 오류 뒤 PubSub 정리 RedisError가 Provider 오류 변환을 가리는 결함6Case를 재현·수정했고 관련28PASS, Linux 기본1774/부분집합runner47/별도Lua9 PASS다. Windows 전체1FAIL/4SKIP/동일Case setup·teardown2ERROR와 원 main 별도사본 재현은 Run에 보존했다. App #20 HEAD=e3488953b0f51b1a54dc7899a8a57c8024c54c13는 미병합·사람 리뷰 대기이며 D 새 Build/Scan/Digest와 B App/held Migration 소비 개정이 필요하다. 기존 승인 Image를 승계하지 않는다.
 
 [GitOps 보고 수신](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5#issuecomment-6035851057)은 실제 Runtime 재조회가 아니다. Stage1 SHA A·Valkey1/FE·BE0/Migration suspend·base/Recovery hold, Stage2 #26의 남은 Data/Route/Image/Gate, 본체 금고 완료/독립사본 미완료와 ROSA/Cost 입력 대기를 유지한다. Docs #72/GitOps #25/Infra #43은 시작/후속 조회에서 미병합이며 새 검사 성공도 Source 범위다. 이번 Source Run/Docs 연결은 TH81/기존 완료2·Q 전체 미완료·공식 T/Must 판정을 가산하지 않는다. D Index 리뷰/수신과 팀원 결과 수락은 확인 전이다.
+
+<a id="repository-full-audit-20261007"></a>
+## B 최초 저장소 전수 조사·변경분 기준 — 2026-10-07
+
+- [종합 조사](REPOSITORY_AUDIT_20261007.md)·[Source Run](../evidence/T09/source-audit-20261007-01/summary.md)·[05 §9.47](05_IMPLEMENTATION_AND_VALIDATION.md#repository-full-audit-20261007) 연결.
+- App/Infra main a2afffb/36dc240 유지, GitOps main b8cf323·Docs main7e3dbd8 추가 검토. #25 최신 b30e978의 Linux69 및 Artifact 독립 검증 성공. 새 App/Lab/Recovery/Docs 수정은 소스 후속이며 리뷰·main 병합·실제 배포는 별도.
+- 현재 Root 소스 B/FE·BE1과 마지막 수신 Runtime A/FE·BE0 분리. GitOps26의 실제 DB·형식/GRANT·출처·Route/Origin·Owner/사용창·Gate/live Diff·B 등록 적용 근거 대기.
+- Infra44/45 실패 차단 보완, App Guest/captured 시작, 새 Backend Build/Scan/Digest, 독립 복원 Identity·ROSA 실행 입력은 원 작업에 인계. C §8.16·TH81/완료2·Q 미완료·Cost PARTIAL 보존.
+- Issue/PR 복사용 안내와 Ready·리뷰·병합·branch 정리 순서 제공. 공개 게시 미수행.

@@ -141,9 +141,9 @@ OCP에서 확인 가능한 해당 Case는 먼저 수행해 유료 시간의 문�
 | 정상 HTTP/WS | 대표 HTTP 업무 p95 ≤1초, Client가 업무 결과를 확인하는 WS p95 ≤1초 |
 | 오류/정확성 | 예기치 않은 업무 첫 시도 오류율 <1%. 시험에서 중복 효과·무권한 성공·확정 데이터 불일치 0건, 시도 수/경쟁 조건 보존 |
 | WS 재접속 | 정상 의존 서비스 가용 후 상태 수렴 ≤30초. 장애 시작 이후 시간도 별도 기록 |
-| Offline RTO | 장애 발생/접속 불가 시작부터 판단·DB/새 Redis/App·Host 안내·대표 업무/Data 확인까지≤10분 —03 §3-I.14.5의 변경안, 부분 Fixture 시간을 RTO로 사용하지 않음 |
-| Offline RPO | 사고 시각−사용한 검증 Backup의 Data 기준 시각≤30분 —현재 변경안. 시점 미확인은 null/미판정, 파일 수정/덤프 종료 시각으로 대체하지 않음 |
-| Backup | 운영 중15분 변경안,7일 및 최종/마지막 검증본 보호. 실제 성공 간격＋로컬 확보 지연＋시계/시점 불확실성≤30분 확인; jitter/전송/무결성/복원·실패 기록 |
+| Offline RTO | 장애 발생/접속 불가 시작부터 판단·DB/새 Redis/App·Host 안내·대표 업무/Data 확인까지≤10분 —Docs #30으로 병합된03 §3-I.14.5의 승인 기준, 부분 Fixture 시간을 RTO로 사용하지 않음 |
+| Offline RPO | 사고 시각−사용한 검증 Backup의 Data 기준 시각≤30분 —Docs #30으로 병합된 승인 기준. 시점 미확인은 null/미판정, 파일 수정/덤프 종료 시각으로 대체하지 않음 |
+| Backup | 운영 중15분 계획 주기,7일 및 최종/마지막 검증본 보호. 실제 성공 간격＋로컬 확보 지연＋시계/시점 불확실성≤30분 확인; jitter/전송/무결성/복원·실패 기록 |
 | 비용 | 계획 ≤$450, $50 여유 포함 총 $500. 생성·삭제 대기·실패/재시험·비Window·잔존을 포함 |
 
 수치는 운영 SLA/제품 보장이 아닌 승인된 프로젝트 시험 목표다. Worker 1대 장애를 AZ 전체 장애로, Restore 기반 Recovery를 자동 Failover/Warm DR로, 새 Redis를 진행 게임 상태의 완전 복구로 표현하지 않는다. 1차와 조건이 다르거나 Baseline이 없으면 개선률을 만들지 않는다.
@@ -2010,8 +2010,18 @@ C의 §8.9–8.14·과거 시험/체크/그림·설계/TH 상태는 유지한다
 
 
 <a id="b-provider-cleanup-source-20261007"></a>
-### 9.43 App #4 W10의 PubSub Provider 오류 처리 후속 — 2026-10-07
+### 9.46 App #4 W10의 PubSub Provider 오류 처리 후속 — 2026-10-07
 
 [App #4](https://github.com/seokpan/seokpan-hybrid-app/issues/4)·[Draft #20](https://github.com/seokpan/seokpan-hybrid-app/pull/20)·[정확 HEAD CI](https://github.com/seokpan/seokpan-hybrid-app/actions/runs/37605414615)·[새 Source 부분 Run](../evidence/T09/provider-cleanup-20261007-01/summary.md)에 제품2파일 변경·정확 Source·환경·실제 수행자·실패/재시험·도구/Lock·다음 입력을 기록했다. App #19 D의 비차단 의견을 이어 subscribe/버전 오류 뒤 cleanup RedisError만 억제하고 기존 RealtimeUnavailable 계약을 유지한다. 기존 취소8 + 새 오류12에서 main 제품코드6FAIL/14PASS→수정20PASS, 기존 Adapter8을 포함한 관련28PASS다. 정확 PR HEAD `e3488953b0f51b1a54dc7899a8a57c8024c54c13`의 Linux 기존정식1774/부분집합47/별도 소유 Redis Lua9 PASS, Windows 정식실패·원 main 별도사본 재현은 같은 Run에 분리했다. Artifact 서버metadata/digest와 원 Job은 읽었지만 ZIP 독립 다운로드는403으로 미검증이다.
 
 배정 B, 실제 Source 작성/로컬 실행/기록 Codex, Linux 실행 GitHub Actions다. 리뷰·병합과 D 새 Backend Build/Scan/Digest·플랫폼/Pull→B App/별도 held Migration 소비 수락이 남는다. 실제 Valkey/TLS/AUTH·DB/WSS/클러스터·연결회수·전체 T09/T18·비용 성공은 미실행이다. [D 보고 수신](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5#issuecomment-6035851057)은 보고 범위이며 성공한 등록/Sync를 반복하지 않았다. 다른 담당자의 §8 기록·기존 Run,03/04 종료·DR10/30/15·CP3/Infra3/Worker3·Cost PARTIAL/$450/$500·TH81/완료2·Q 미완료를 보존한다.
+
+<a id="repository-full-audit-20261007"></a>
+### 9.47 최초 저장소 전수 조사와 소스 검사 후속 — 2026-10-07
+
+- [종합 조사](REPOSITORY_AUDIT_20261007.md)·[새 Source Run](../evidence/T09/source-audit-20261007-01/summary.md): 현재 소스·원 토론·고유 이력·CI/보존 산출물·그림·연쇄 참조·변경분, 실제 시험·한계·다음 입력 연결.
+- 기존 §9.46 Provider Run의 당시 실패·ZIP403·실제 수행 기록 보존. 이번 Artifact 독립 검증 성공은 별도 후속 기록.
+- GitOps main b8cf323의 Root SHA B=bfee2669e62bf823969ce224e5599eccace5d024·FE/BE1 소스와 마지막 수신 Runtime SHA A·FE/BE0 분리. #28/29/30 병합은 실제 B 등록 적용·Stage2 Sync의 성공 근거 아님. 기존 선택 Sync·금고 본체 성공 유지, 실제 Stage2는 원 #26에서 후속.
+- C §8.16·Infra46 Recovery VM 준비 보고와 기존 담당 기록 보존. App174 격리 조합·Frontend269/UI36·GitOps25 Linux69·Docs14+16 검사 결과 연결. GitOps 소스 조합은 Windows73 중70PASS/기존POSIX3FAIL이며 새 조합 Linux는 미실행.
+- Infra44/45 실패 판정 반례·옛 tfvars 경고/기본값 차이·현재 카드 정정안 인계. 승인03/04 종료·DR10/30/15·CP3/Infra3/Worker3·Cost PARTIAL/$450/$500·TH81/완료2·Q 미완료 유지.
+- Git 계정 tjung03, 실행 환경 Windows 격리 도구/GitHub Actions Linux. 실제 Cloud·금고·lab 실행 및 공개 Issue/PR 게시 미수행.

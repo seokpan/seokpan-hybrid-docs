@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "scope": "SOURCE_AUDIT_ONLY_NOT_T09_OR_T18_ACCEPTANCE",
+  "recorded_at_utc": "2026-10-07T13:16:18.221489+00:00",
+  "recorded_at_kst": "2026-10-07T22:16:18.221489+09:00",
+  "git_account": "tjung03",
+  "execution_environments": [
+    "Windows PowerShell/Git Bash/Python/Node isolated source",
+    "GitHub Actions Linux source CI"
+  ],
+  "reviewer": null,
+  "docs_base_sha": "94c8092290008a09084435ff7d0d3eb0d7a2df00",
+  "docs_result_commit": null,
+  "main_shas": {
+    "app": "a2afffb8605dafff1cb5b9af215aa0cf93aadcdb",
+    "infra": "36dc2403aa77e2896cc4ec3c545b92e0afb49205",
+    "gitops": "b8cf3235dd44f74dd4ed831449cfedfa08eb34ae",
+    "docs": "7e3dbd870bb10f13e8b5f1b5f3a8b401ac378910"
+  },
+  "app_sources": {
+    "pr20": "e3488953b0f51b1a54dc7899a8a57c8024c54c13",
+    "development_startup": "9e42d286620175be2896b91ccf6a73ed01e6feab",
+    "chat_startup": "666dad6260746f7ed570808f0f4d93c760dfec2c"
+  },
+  "gitops_sources": {
+    "pr25": "b30e9784d5da5225f9cf61edb7d597e5269b2d9f",
+    "lab_config": "2c22e0acfc14568a971a3992128d027c0ce3911a",
+    "recovery_config": "fc3d95031945c1bbd3819c541409c7621dd7cd62",
+    "local_combination": "f09a222829d8198f614ba5028c7ea1412ce8df99"
+  },
+  "runtime_last_received": {
+    "sha_a": "244b48b885d7ac645c402e561a032ae65a8f3461",
+    "valkey_replicas": 1,
+    "frontend_replicas": 0,
+    "backend_replicas": 0,
+    "source_b": "bfee2669e62bf823969ce224e5599eccace5d024",
+    "source_b_runtime_acceptance": "NOT_RECEIVED"
+  },
+  "checks": {
+    "app20_linux_run": 37605414615,
+    "pr25_linux_run": 37624059074,
+    "docs_architecture": {
+      "tests": 14,
+      "pass": 14
+    },
+    "docs_recovery_metrics": {
+      "tests": 16,
+      "pass": 16
+    }
+  },
+  "runtime": "NOT_RUN",
+  "cloud_plan": "NOT_RUN",
+  "vault_restore": "NOT_RUN",
+  "image_build": "NOT_RUN",
+  "rto_seconds": null,
+  "rpo_seconds": null,
+  "th_total": 81,
+  "th_completed": 2,
+  "cost": "PARTIAL",
+  "public_issue_pr_mutations": "NOT_PERFORMED",
+  "windows_os_user": "soldesk",
+  "app_local_combination": "3ac02baba6ba4ecf6857d68b61b660391ae23448"
+}
