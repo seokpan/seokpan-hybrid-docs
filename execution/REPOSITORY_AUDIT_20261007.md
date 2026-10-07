@@ -19,6 +19,7 @@
 - 12:33–12:34 UTC 변경분: Issue/PR175개(일반 Issue57·PR118). 새 Issue Infra46·Docs78, 새 PR GitOps29/30·Docs79의 원 토론·소스·결과 연결.
 - 13:31 UTC 추가 변경분: App21/22·Docs80/81로 Issue/PR179개(일반 Issue59·PR120), GitOps26 C DB 보고6038214247. 이후 변경분만 추가 검토.
 - 14:19–14:20 UTC 재조회: 네 main·사람 토론/리뷰 변경 없음. App22의 승인된 소스 후속 push만 추가 확인. 열린 본인 PR5개, 전체179개 항목·25개 원격 branch 유지.
+- 부가 목록: 각 저장소 Tag/Release/Deployments/Environments는 읽기 API200·0건. Label47개·Milestone4개·Workflow목록41개·Artifact111개 대조. Artifact111개 모두 보존 Run에 연결, 만료0. Workflow 목록의 active는 현재 main의 파일/실행 가능을 뜻하지 않으며 실제 main은 App/Infra/GitOps 각1개·Docs0개. GitHub Pages404는 공개 여부/접근 제한과 구분해 성공으로 처리하지 않음.
 - 현재 main 추적 파일: App396·Infra57·GitOps58·Docs73. App22 HEAD는402파일·main 대비18파일 변경. 별도 열린 PR와 신규 수정·GitOps 보존 원본41파일도 검토 대상.
 - 초기 도달 이력 App127·Infra119·GitOps69·Docs216에서 출발. 삭제된 CI 임시 HEAD·보존 bundle의 PR 시험용 merge·조사 중 새 commit을 별도 참조로 확보해 후속 검토.
 - 같은 원문·같은 변경은 원 commit/파일/토론에 연결해 재사용. 파일 목록·구문·Hash 확인을 함수/시험/토론의 의미 검토로 대신하지 않음.
@@ -102,7 +103,7 @@
 - 현재 소스/시험→승인03/04→원 토론→과거 고유 변경→CI/산출물/보존 bundle→저장소 간 링크→새 원격 변경→수정 조합 재시험 순으로 재대조.
 - 접근 가능한 자료에서 새 고유 자료 검토·수정·재시험을 반복하고, 마지막 변경분 대조와 후속6파일 독립 검토에서 추가 미검토 변경/새 결함0을 확인해 해당 관측 범위의 최초 조사 종료. 미해결 항목이 모두 해결됐거나 프로젝트가 완료됐다는 뜻은 아님. 다음부터 이 기준 이후 변경분을 우선 검토. 고유 원문별 검토 근거와 정확 중복 연결은 로컬 coverage 기록으로 보존.
 - 확인 불가: 초기 오래된/취소 Job 로그9건, Docs의 삭제된 손상 Base64 입력1건, App21의 비공개 과거 Sites 디자인 참조, 비공개 Harbor Layer/Runtime·보호 State/전체Output/SavedPlan·실제 개인 입력/금고/Cloud. 부재·권한 없음·성공으로 추정하지 않음.
-- 연쇄 링크 검사: GitHub 링크799개(외부 연결126개 포함), 상대 경로918건·문서 anchor750건 대조. 옛 삭제 branch1개는 원 commit으로 연결하고 현재 대상의 누락0 확인. 사용자 첨부13PNG·저장소12PNG·App SVG 시각검토는 과거/소스 자료이며 현장 상태 수락과 별도.
+- 연쇄 링크 검사: GitHub 링크800개(외부 연결126개 포함), 상대 경로918건·문서 anchor750건 대조. 옛 삭제 branch1개는 원 commit으로 연결하고 현재 대상의 누락0 확인. 사용자 첨부13PNG·저장소12PNG·App SVG 시각검토는 과거/소스 자료이며 현장 상태 수락과 별도.
 - 1차 외부 저장소·공식 기술자료는 연결된 관련 범위만 대조. 4개 2차 저장소 밖 모든 인터넷 자료의 전수 검토를 주장하지 않음.
 - 승인03/04 종료, DR10분·DB RPO30분·운영 Backup15분, CP3/Infra3/Worker3, Cost PARTIAL/$450계획/$500한도, TH81·기존 완료2, Q02/03/04/05/10 미완료 보존.
 - 공개 Issue/PR 작성·댓글·리뷰 요청·Ready 전환·병합·branch 삭제는 사용자 작업. 소스 변경·검사·commit/push와 원 작업용 복사안을 구분해 인계.

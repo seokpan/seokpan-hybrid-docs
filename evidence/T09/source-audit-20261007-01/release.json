@@ -98,5 +98,16 @@
     "ci_zip_files": 111,
     "accessible_source_recursive_review": "COMPLETE_WITH_RECORDED_LIMITS",
     "runtime_acceptance": "NOT_RUN"
+  },
+  "post_push_remote_verification_snapshot": "20261007T142702Z",
+  "adjacent_repository_metadata": {
+    "tags_releases_deployments_environments": "HTTP200_EMPTY_EACH_REPOSITORY",
+    "labels": 47,
+    "milestones": 4,
+    "workflow_catalog": 41,
+    "workflow_files_on_current_main": 3,
+    "artifacts": 111,
+    "unlinked_artifacts": 0,
+    "pages": "HTTP404_NOT_FOUND_OR_NOT_ACCESSIBLE"
   }
 }
