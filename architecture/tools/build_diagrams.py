@@ -181,7 +181,7 @@ class Canvas:
              f'<desc id="desc">{escape(self.meta[2]+'. '+self.meta[4]+'. 실제 구축/시험 결과가 아닌 승인 설계 기준.')}</desc>\n'
              '<defs>'+''.join(markers)+'</defs>\n<style>'+style+'</style>\n'+ '\n'.join(self.parts)+'\n</svg>\n')
         out=ROOT/'diagrams'/f'{self.meta[0]}.svg'
-        out.write_text(svg)
+        out.write_text(svg, encoding='utf-8')
         return {'id':f'{self.number:02d}','slug':self.meta[0],'title':self.meta[1],'height':self.h,
                 'source_refs':self.meta[3],'pending':self.meta[4],'texts':self.audit,'cards':self.cards}
 
@@ -491,10 +491,10 @@ def main():
                     if attempt == 1:
                         raise
     qa=ROOT/'tools/layout-audit.json'
-    old=json.loads(qa.read_text()) if qa.exists() else []
+    old=json.loads(qa.read_text(encoding='utf-8')) if qa.exists() else []
     combined={a['id']:a for a in old}
     combined.update({a['id']:a for a in audits})
-    qa.write_text(json.dumps([combined[k] for k in sorted(combined)],ensure_ascii=False,indent=2)+'\n')
+    qa.write_text(json.dumps([combined[k] for k in sorted(combined)],ensure_ascii=False,indent=2)+'\n', encoding='utf-8')
     print(f'Built {len(audits)} diagrams with editable text and embedded font.')
 
 

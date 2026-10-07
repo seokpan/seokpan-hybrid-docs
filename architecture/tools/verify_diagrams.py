@@ -111,8 +111,8 @@ def verify(integrity_only=False):
     from fontTools.ttLib import TTFont
 
     manifest_path = ROOT / 'diagram-manifest.json'
-    baseline = json.loads((REPO / 'design/source-manifest.json').read_text())
-    previous = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
+    baseline = json.loads((REPO / 'design/source-manifest.json').read_text(encoding='utf-8'))
+    previous = json.loads(manifest_path.read_text(encoding='utf-8')) if manifest_path.exists() else {}
     require(len(baseline['files']) == 5, 'Expected the five design source identities')
     for source in baseline['files']:
         actual = identify(REPO / source['path'])
@@ -126,7 +126,7 @@ def verify(integrity_only=False):
         layout = ROOT / 'tools/layout-audit.json'
         require(layout.exists(), 'Missing build layout-audit.json; build all layouts first '
                 'or explicitly use --integrity-only for unchanged assets')
-        specs = json.loads(layout.read_text())
+        specs = json.loads(layout.read_text(encoding='utf-8'))
     require([s['id'] for s in specs] == [f'{i:02d}' for i in range(1, 13)],
             'Expected exactly twelve ordered diagram specifications')
 
@@ -143,7 +143,7 @@ def verify(integrity_only=False):
             svg = ROOT / 'diagrams' / f'{spec["slug"]}.svg'
             png = ROOT / 'exports' / f'{spec["slug"]}.png'
             height = spec['height']
-        raw = svg.read_text()
+        raw = svg.read_text(encoding='utf-8')
         xml = ET.fromstring(raw)
         require(xml.get('viewBox') == f'0 0 1800 {height}', f'Invalid viewBox: {svg}')
         require(xml.find('s:title', NS) is not None and xml.find('s:desc', NS) is not None,
@@ -180,7 +180,7 @@ def verify(integrity_only=False):
                       'svg_size': [1800, height], 'png_size': [3600, height * 2],
                       'embedded_font_glyphs_checked': True})
         assets.append(asset)
-    physical = (ROOT / 'diagrams/02-physical-architecture.svg').read_text()
+    physical = (ROOT / 'diagrams/02-physical-architecture.svg').read_text(encoding='utf-8')
     for number in range(64, 73):
         require(f'192.168.{number}.0/24' in physical, f'Missing subnet .{number}')
     require(len(list((ROOT / 'diagrams').glob('*.svg'))) == 12, 'Unexpected SVG count')
