@@ -672,7 +672,7 @@ ZIP의 2026-09-29 기록은 승인00 §30.1/03 §3-B의 기존 PoC를 설명하�
 | Data SG | RDS·Redis SG 분리. 규칙은 모두 별도 Rule 리소스, ROSA Worker → Data SG 규칙은 rosa State가 추가. 온프렘 → RDS는 Data VM `/32` 확정 전 규칙 없음 | 03 3-B.9.6~9.7절 |
 | RDS | MariaDB 11.8.9 Multi-AZ, db.t4g.small, gp3 20GiB(자동 확장 끔). 파라미터 그룹 `time_zone = Asia/Seoul`·`sql_mode` 1차 동일·`require_secure_transport = 1`·utf8mb4_unicode_ci | 03 3-D.10.3절, 이 문서 8.7절 |
 | Redis | Redis OSS 7.1, cache.t4g.small 2개(Primary+Replica, Multi-AZ), `noeviction`, TLS + AUTH. 2026-10-06 엔진을 Valkey 7.2로 변경(8.13절) | 03 3-D.9.7절, 3-D.10.4절 |
-| Backup S3 | `hourly/` 7일 후 삭제, `protected/` 자동 삭제 없음, 버전 관리. HTTPS 강제는 초안에서는 Bucket Policy였으나 foundation Role의 버킷 정책 권한을 제거해 Backup User Boundary의 explicit Deny로 바뀜(8.10절) | 03 3-D.9.5~9.6절 |
+| Backup S3 | `hourly/` 7일 후 삭제(2026-10-07 경로 이름을 `periodic/`으로 변경, Infra PR #42), `protected/` 자동 삭제 없음, 버전 관리. HTTPS 강제는 초안에서는 Bucket Policy였으나 foundation Role의 버킷 정책 권한을 제거해 Backup User Boundary의 explicit Deny로 바뀜(8.10절) | 03 3-D.9.5~9.6절 |
 | Backup User | 이름 `seokpan-fnd-backup`(경로 없음). 업로드·다운로드·목록만, 삭제는 bootstrap 소유 Boundary의 explicit Deny. Access Key는 Terraform 밖에서 발급 | 03 3-C.13절, 이 문서 8.10절 |
 
 **비밀값과 State.** RDS 마스터 비밀번호는 RDS가 만들어 Secrets Manager에 보관하는 방식, Redis Token은 State에 저장되지 않는 write-only 인자를 쓴다. Backup User Access Key는 Terraform으로 만들지 않는다. 세 가지 모두 비밀값이 Terraform State에 남지 않게 하려는 선택이며, RDS 방식은 이유빈 확인을 기다린다.
