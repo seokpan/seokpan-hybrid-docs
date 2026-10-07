@@ -760,7 +760,7 @@ State Lineage·Serial 차이의 원인과 내용 동일성은 [첫 코멘트](ht
 - 비용 입력 갱신: [Docs #43](https://github.com/seokpan/seokpan-hybrid-docs/issues/43)의 Data 입력에서 캐시 엔진을 Valkey 7.2로 바꾸고, RDS · Valkey 생성 시점을 "foundation Apply 날짜"로 고쳤다. Valkey 단가 재계산은 최유준 담당이다.
 - 정리 PR: [Infra PR #39](https://github.com/seokpan/seokpan-hybrid-infra/pull/39)로 bootstrap의 `CreateDataServiceLinkedRoles` 권한을 뺐다(RDS · ElastiCache 서비스 연결 Role은 10-06에 미리 만들었고 10-07 10:34 KST에 다시 조회해 확인). 함께 foundation README의 비밀번호 공급 명령을 대입과 `export` 두 줄로 나눴다 — 한 줄로 쓰면 sops가 파일을 못 열어도 `export`가 성공해 중간에 멈추지 않는다. bootstrap plan(확인만)은 0 add / 1 change / 0 destroy였고, 리뷰 승인 후 main `ceb6fad`로 병합했고, 이유빈이 bootstrap을 적용한 뒤 다시 Plan을 돌려 `No changes`를 확인했다(배정 실행자 · 실제 수행자 이유빈, [PR #39 코멘트](https://github.com/seokpan/seokpan-hybrid-infra/pull/39)). 서비스 연결 Role 자체는 지우지 않았다.
 - Infra PR #38 Data 관점 검토: 병합 후 시험 9개를 직접 실행해 모두 통과했다. 과거 개별 결과 화면을 "알려진 한계"로 옮긴 것은 03 문서 3-I.14.4절과 맞고, 실제 운영 데이터 검토 항목은 실제 이관 · 백업 때 진행하므로 남겨 두는 것이 맞다. 보완 제안 2개(근거 절 번호, 운영과의 버전 차이를 결과 파일에도 기록)를 PR 코멘트로 남겼다.
-- 열린 항목: ① (완료) PR #39 bootstrap 적용과 No changes 확인(이유빈, 10-07), ② 10/8 Plan의 Data 자원 17개 · 보안 그룹 2개 `Component=data` 태그 · AccessDenied 확인, ③ Apply 후 실제 값 인계와 Valkey CA 확인, ④ 백업 작업 VM 생성, ⑤ 복구 DB VM 사양 · 주소, ⑥ Valkey 단가 재계산(최유준) → ④는 8.15절에서 완료, ⑤는 8.15절에서 배치 결정(서버 자원 · 주소 확인 남음)
+- 열린 항목: ① (완료) PR #39 bootstrap 적용과 No changes 확인(이유빈, 10-07), ② 10/8 Plan의 Data 자원 17개 · 보안 그룹 2개 `Component=data` 태그 · AccessDenied 확인, ③ Apply 후 실제 값 인계와 Valkey CA 확인, ④ 백업 작업 VM 생성, ⑤ 복구 DB VM 사양 · 주소, ⑥ Valkey 단가 재계산(최유준) → ④는 8.15절에서 완료, ⑤는 8.15절에서 배치 · 주소 결정(생성 남음)
 - 한계: 해독 확인 · 인계 · 권한 축소 · 기록까지이며, foundation Plan · Apply, RDS · Valkey 생성 · 접속, 이관 · Backup/Restore 측정은 아니다.
 
 ### 8.15 백업 작업 VM · 백업 해독 키 · RDS CA · SQL 계정 비밀번호 · Backup S3 경로 (infra #19 · #41 / PR #42)
@@ -772,8 +772,8 @@ State Lineage·Serial 차이의 원인과 내용 동일성은 [첫 코멘트](ht
 - RDS CA: AWS 서울 리전 번들을 두 경로로 받아 같은 파일인지 확인하고 VM에 두었다. Data 코드가 고정한 `rds-ca-rsa2048-g1`의 루트가 들어 있다. 같은 파일을 정태훈의 `backend-database-ca`에도 쓴다(Data 계약 5절 6번, Apply 후 인계).
 - SQL 계정 비밀번호: RDS에 만들 4개 계정(`identity_svc` · `game_svc` · `db_admin` · `backup_dump`)의 비밀번호를 새로 만들어 SOPS로 잠갔다. 받는 사람은 Valkey 비밀번호와 같은 3명이고, 세 계정에서 모두 열리는 것을 확인했다. 1차 · lab과 공유하지 않는다. 테이블 단위 권한은 테이블이 있어야 줄 수 있으므로, 계정 생성은 `db_admin` · `backup_dump` → 덤프 가져오기 → `identity_svc` · `game_svc` 순서로 한다.
 - Backup S3 경로: 일반 사본 경로를 `hourly/`에서 주기와 관계없는 `periodic/`으로 바꿨다([Infra PR #42](https://github.com/seokpan/seokpan-hybrid-infra/pull/42)). 리뷰에서 03 · 05 문서의 `hourly/` 문장이 남아 있다는 지적을 받아 docs PR #74 · #75로 함께 맞췄다. 첫 실제 백업 전이라 옮길 객체는 없다.
-- 복구 DB VM 배치: 백업 작업 VM과 다른 서버(Server-04)에 두고, 장애 전에 받아 둘 암호화 사본도 이 VM의 디스크에 보관한다. 복구 때는 개인키를 VM으로 옮기지 않고 controller에서 해독한 내용을 바로 DB로 흘려 넣는다(평문을 디스크에 저장하지 않음). Recovery 전용 TLS 인증서는 김상희가 발급한다. 서버 자원 · 주소는 이유빈 확인 후 정한다(04 문서 5.5절). controller도 Server-04에 있어 Server-04 전체 장애까지 막는 구성은 아니다.
-- 열린 항목: ① 복구 DB VM 자원 · 주소 확인과 생성(이유빈과), ② 백업 작업 VM → RDS 경로(이유빈, #16), ③ Apply 후 SQL 계정 생성 · 가져오기 · 비교(이관 목표 창 10/12~15), ④ 백업 스크립트 · 15분 측정 설계(10/9), ⑤ Recovery CA 생성
+- 복구 DB VM 배치: 백업 작업 VM과 다른 서버(Server-04)에 두고, 장애 전에 받아 둘 암호화 사본도 이 VM의 디스크에 보관한다. 복구 때는 개인키를 VM으로 옮기지 않고 controller에서 해독한 내용을 바로 DB로 흘려 넣는다(평문을 디스크에 저장하지 않음). Recovery 전용 TLS 인증서는 김상희가 발급한다. Server-04 자원은 이유빈이 확인했고(RAM 여유 약 38GB · 디스크 여유 약 320GB), 주소는 `192.168.54.60`으로 정했다. `192.168.54.40`은 1차 확장 설계에서 두 번째 MaxScale 자리로 남아 있어 쓰지 않았다(04 문서 5.5절). controller도 Server-04에 있어 Server-04 전체 장애까지 막는 구성은 아니다.
+- 열린 항목: ① 복구 DB VM 생성(Server-04 · `192.168.54.60`), ② 백업 작업 VM → RDS 경로(이유빈, #16), ③ Apply 후 SQL 계정 생성 · 가져오기 · 비교(이관 목표 창 10/12~15), ④ 백업 스크립트 · 15분 측정 설계(10/9), ⑤ Recovery CA 생성
 - 한계: VM · 키 · 인증서 · 비밀번호 준비와 사전 접속 확인까지이며, RDS 접속 · 이관 · Backup/Restore 실행과 측정은 아니다.
 
 ## 9 복구 예행과 목표 재검토 — 2026-10-02
