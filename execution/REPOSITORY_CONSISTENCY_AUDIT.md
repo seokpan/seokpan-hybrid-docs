@@ -1,6 +1,6 @@
 # 2차 저장소 정합성 조사·수정 대장
 
-> **현재 인계:** 후속 PR 병합·Project 등록·jth 해독 보고·lab Valkey Source 및 Backend 검사의 최신 결과는 [§9](#b-runtime-input-followup-20261007)를 따른다. 아래 §1~8은 이전 조사 체크포인트이며 Q 체크 상태는 유지한다.
+> **현재 인계:** 실행 입력은 [§9](#b-runtime-input-followup-20261007), 이번 Source 결함 재현·수정·검증·후속 인계는 [§10](#b-s1-source-findings-20261007)을 따른다. 이전 체크포인트·Q 체크·실제 수행 이력을 보존한다.
 
 > 개정: 2026-10-07 KST  
 > 상태: IN PROGRESS — 두 중단분의 게시·산출물 복원, PR 설명/리뷰 요청 정정, fixture 요약 후속 보완 및 등록용 소스 제공. 전체 코드/이력 의미 검토와 Q10 수렴은 미완료  
@@ -204,3 +204,19 @@ Pool 크기 환경변수는 현재 App에서 소비하지 않는다. 실제 glob
 이번 변경은 네 실행 문서의 오래된 직접 대기를 한 번 교체하고 이 대장에 근거를 연결하는 범위다. 다른 트랙의 audit/b-s1-s4-20261007·App #17·Infra #39는 존재/범위를 확인해 보존하며 임의로 덮어쓰거나 실제 Apply를 대신하지 않는다.01~04·그림·TH/Q체크·기존 Evidence와 C의 실행 기록은 변경하지 않는다.
 
 이번 묶음의 PR19 재검토·main 병합 수신, App 기존 suite 재검증, 새 App17/이미지 영향 수신, 금고·ROSA·Pool의 직접 인계는 원 기록에 연결했다. 다음은 App17 C/D 리뷰·실제 Build 연결, Valkey 단독 활성화의 실제 입력, 본인 독립 키/Caller·가용성 확인과 Pool 값 합의다. 미검토 게임 상태/Lua·기타 Source/과거 Commit/CI·참조는 §8의 해당 지점에서 이어간다. Q02/03/04/05/10을 완료로 올리지 않으며 신규 Run 없이 Runtime/비용 PASS를 추가하지 않는다.
+
+
+<a id="b-s1-source-findings-20261007"></a>
+## 10. S1–S4 검토 및 F11/F12 후속 — 2026-10-07
+
+[Source 검토 기록](SOURCE_REVIEW_20261007.md)에 실제 사용 SHA·수집/검토 수준·두 결함·red/green·기존 CI·게시/리뷰·인계와 한계를 보존했다. 새 원 결과는 [App4](https://github.com/seokpan/seokpan-hybrid-app/issues/4#issuecomment-6029248805), [Build 인계](https://github.com/seokpan/seokpan-hybrid-app/issues/2#issuecomment-6029292025), [GitOps10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10#issuecomment-6029297406)이다.
+
+- F11: App #17 — startup 취소 경로에서 runner 정리 책임이 첫 await보다 늦게 시작하는 문제. 기존1FAIL/1PASS → 수정2PASS, 기본1754·별도47 PASS.
+- F12: App #18 — Lua의 기한 거부 전에 board를 쓰는 문제. 기존 실제Lua3PASS/새2FAIL → 수정5PASS, 기본1752·별도47 PASS. Script9→10/Schema 유지. 회귀용 Redis 결과와 선택 Valkey 실환경을 구분.
+- S2: GitOps #19의 lab 선언·제한 StatefulSet Kind·롤백 보완은 병합돼 D 초안 대기가 해소됐다. 실제 활성화/CA/Secret·DB/Schema·사용창은 별도. Recovery 선언/renderer/테스트는 승인 실제 입력과 함께 개정한다.
+- S3: 저장된 PR HEAD refs까지 복원해 App98/Infra110/GitOps48/Docs175의431개 도달 이력을 부모·경로·diff 해시로 색인했다. 모든 과거 diff/CI 의미 검토 완료를 뜻하지 않는다.
+- S4: source→새 검사→수정→회귀/기존 검사→게시 바이트→원 Issue/리뷰/Build→실행 문서 영향을 확인했다. 나머지 Source/이력 검토가 남아 Q02/03/04/05/10은 유지하며 두 결함 수정만으로 전체 수렴을 선언하지 않는다.
+
+00–04·그림/manifest·C의 기존05 §8·Evidence·TH81/완료2는 변경하지 않는다. 실제 Runtime Run·비용·승인 Image 개정은 이번 기록으로 추가하지 않는다.
+
+최종 인계 대조에서 Docs #71 main `5b8c529e50e480ce1aa6e83a95caee8d9c877908`의 C §8.14·Tracker 변경과 기존 #69의 현재 입력을 결합했다. 금고 해독 보고/B 수신 완료를 다시 미수신으로 되돌리지 않으며, 독립 키 사본은 별도다. 새 문서 PR 대신 #69에 Source 검토를 연결한다. 감사 작업 브랜치의 산출물은 원 Commit/Run으로 보존하며 임의 삭제하지 않는다.

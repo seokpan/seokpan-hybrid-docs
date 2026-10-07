@@ -9,12 +9,14 @@ Docs #68(`fff5ac222243a231e5473f4ab39f87aa6cc10f6f`), Infra #38(`0f47617816b7436
 | Cloud 금고 | [C의 10/7 jth 해독·형식·암호문 해시 일치 보고](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6028766924), [B 수신](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6028919355) | Controller 밖 독립 키 사본·복원한 identity로 해독 확인. 이 기록 작성 환경에서 직접 복호화한 결과가 아니며 새 키를 만들거나 완료한 공개키 전달을 반복하지 않음 |
 | lab Valkey | [#19 Source 병합](https://github.com/seokpan/seokpan-hybrid-gitops/pull/19), [B 승인](https://github.com/seokpan/seokpan-hybrid-gitops/pull/19#pullrequestreview-5436531268), 검토 HEAD2215aff의 CI40개/진단8경로26객체 확인 | C Data 검토·실제 Image/Secret 개정·UID/자원·B 권한/대행·공유 사용창·AppProject/live Diff 수락 후 Valkey만1로 여는 활성화 변경. DB Schema·Cloud 금고·Cloud Pool 전체 합의를 Valkey 단독 준비의 조건으로 추가하지 않음 |
 | lab App | FE/BE·Migration 내부 Registry와 승인 Digest 유지. Valkey 서버 선언 부재는 해소 | Valkey Service/Ready·실제 TLS/AUTH/Hostname 확인 및 DB/Schema·목적 Secret/CA·Route 등 App 입력 수락 → 필요한 단일 Migration → BE1 → FE1 → 동일 조합 Run. [원 실행 인계](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10#issuecomment-6029054228) |
-| App Source·새 이미지 | main bdaa의 고정 Python/Lock Backend1752검사·Ruff/mypy/coverage PASS. 작업 중 새 [App #17](https://github.com/seokpan/seokpan-hybrid-app/pull/17)의 기동 취소 정리 수정과1754검사 결과 수신 | #17 C/D 리뷰·병합 뒤 사용할 Backend에는 새 Build/Scan/Digest 필요. 기존 이미지가 수정 포함이라고 주장하지 않음. Valkey만의 기동 준비와 별도 |
+| App Source·새 이미지 | main bdaa의 기존1752검사와 [App #17](https://github.com/seokpan/seokpan-hybrid-app/pull/17) startup 취소 수정(수정2Case·기본1754), [App #18](https://github.com/seokpan/seokpan-hybrid-app/pull/18) Lua 거부 시 board 불변 수정(실제 회귀용 Redis5Case·기본1752)의 red/green·CI 확인 | 두 PR의 C/D 리뷰·실제 병합 → 같은 Backend Build/Scan/Digest → App·held Migration 연결. 기존 Image에 수정이 포함됐다고 승계하지 않음. Valkey만의 기동 준비는 독립. [Source 검토](SOURCE_REVIEW_20261007.md) |
 | Pool | 두 Runtime Engine·Migration NullPool·기존 생성/정리 테스트와 구성값 미소비 확인 | 실제 DB/사용자별 연결 한도·idle 시간·예약·종료 중 연결/연속 Rolling 겹침 합의 → 필요한 소비 코드/검사 → D Build/Digest. 3+2/60은 미채택 시나리오. [App 원 결과](https://github.com/seokpan/seokpan-hybrid-app/issues/1#issuecomment-6029039957) |
 | ROSA·비용 | Source/Lock 보존·기존 OIDC harness 생성 확인. [Infra25 결과](https://github.com/seokpan/seokpan-hybrid-infra/issues/25#issuecomment-6029050081) | 본인 clone/도구/Caller/Backend·지원·구독/Quota·실제 가용성/비용 입력. 첫 Plan에 A 제한 출력·공통 prerequisite와 C Data SG2 필요. OCP 철거·전체 Data/Recovery 종료는 일괄 조건 아님. Cost PARTIAL 유지 |
 | 추가 보관 인계 | A의 WireGuard A 주/B 예비 합의 보고 수신 | 실제 키 생성·독립 사본은 미수신. Cloud AUTH·Backup Key와 다른 목적이며 A 실행 책임 유지 |
 
 FE/BE/Valkey replicas0, Migration suspend/current/300초·단일 실행·삭제 보호를 이번 문서 변경으로 해제하지 않는다. 진단 artifact는 실행용이 아니며 실제 활성화는 해당 입력과 변경을 검토한 뒤 진행한다. DR10분/영속 DB RPO30분/운영 중 Backup15분 계획 주기, TH81/기존 완료2와 Q02/03/04/05/10 미완료를 유지한다. 상세 조사·검증·한계는 [조사 대장 §9](REPOSITORY_CONSISTENCY_AUDIT.md#b-runtime-input-followup-20261007)를 따른다.
+
+**Data 인계 최신화:** [Docs #71](https://github.com/seokpan/seokpan-hybrid-docs/pull/71)의 C 기록과 [Infra #39](https://github.com/seokpan/seokpan-hybrid-infra/pull/39) 병합을 확인했다. C의 jth 해독/해시 보고와 B 수신은 완료, 독립 키 사본/복원 확인은 별도다. 10/8 foundation은 Plan만 수행하는 인계이며 Apply는 전체 Plan·리뷰·Cost 이후 날짜 미확정이다. C의 기존 §8.14·Tracker 행은 보존한다.
 
 ## 0 팀 전체의 05 진입 안내
 
@@ -743,8 +745,23 @@ State Lineage·Serial 차이의 원인과 내용 동일성은 [첫 코멘트](ht
 - 서비스 연결 Role: 첫 RDS · ElastiCache 생성 때 필요한 `AWSServiceRoleForRDS` · `AWSServiceRoleForElastiCache`를 foundation Role 권한을 늘리지 않고 CLI로 미리 만들었다(21:02:29/31 KST, 배정 실행자 이유빈 동의 / 실제 수행자 김상희, [PR #37 코멘트](https://github.com/seokpan/seokpan-hybrid-infra/pull/37#issuecomment-6015927016)).
 - Redis AUTH Token: SOPS 3.13.3 + age v1.3.2로 암호화한 원본을 controller에 두고, 수신자를 김상희 · 이유빈 · 정태훈 3명으로 제한했다(04 §5.3). 이유빈 · 정태훈 계정에서 같은 파일이 해독되는 것을 확인했고 Token 값은 어디에도 출력하지 않았다. Terraform에는 infra README의 공급 절차(subshell · 종료 시 unset)로만 넘긴다.
 - 10/8 통합 Plan의 Data 선행 조건(코드 main 반영 · 서비스 연결 Role · Token)은 모두 준비됐다. Plan · Apply 실행은 이유빈이다.
-- 열린 항목: ① 10/8 첫 Plan의 Data AccessDenied 확인, ② Apply 후 Endpoint · Port · SG ID · Secret 참조 인계와 Valkey CA 체인 확인, ③ Data VM(`192.168.52.50`) 생성 · `onprem_job_host_cidrs` 값 입력, ④ 후속 bootstrap PR(`CreateDataServiceLinkedRoles` 제거 · README `export` 분리 · `iam.tf` 주석 정정), ⑤ Cost Gate Redis 단가를 Valkey 기준으로 재계산(D)
+- 열린 항목: ① 10/8 첫 Plan의 Data AccessDenied 확인, ② Apply 후 Endpoint · Port · SG ID · Secret 참조 인계와 Valkey CA 체인 확인, ③ Data VM(`192.168.52.50`) 생성 · `onprem_job_host_cidrs` 값 입력, ④ 후속 bootstrap PR(`CreateDataServiceLinkedRoles` 제거 · README `export` 분리 · `iam.tf` 주석 정정), ⑤ Cost Gate Redis 단가를 Valkey 기준으로 재계산(최유준) → ④는 8.14절에서 완료(Infra PR #39), ③은 값을 10/8 Plan에 넣기로 정해졌고 VM 생성이 남음, ①②⑤는 8.14절에서 이어서 관리
 - 한계: 코드 병합 · 계정 수준 Role 생성 · 암호화 원본 준비까지이며, RDS · Valkey 실제 생성 · 접속 시험 · 이관 · Backup/Restore 측정은 아니다.
+
+### 8.14 Valkey 접속 비밀번호 해독 확인 · foundation 통합 인계 · 정리 PR (infra #19 · #23 / PR #39)
+
+- 일자: 2026-10-07 / 작성 김상희
+- 해독 확인: Valkey 접속 비밀번호(AUTH Token)를 담은 SOPS 파일이 열 수 있는 세 사람(김상희 · 이유빈 · 정태훈) 계정에서 모두 열리는 것을 확인했다. 정태훈 계정은 10-07에 확인했고, 세 계정의 암호문 확인값(SHA-256 앞 12자리 `9a86f90e6ba6`)과 파일 수정 시각(2026-10-06T12:42:44Z)이 같다. `ansible` 계정은 이유빈 단독 사용 계정이다. 비밀번호 값은 출력하지 않았다. 팀 설명 글(그림 2장)과 확인 기록은 [Infra #19](https://github.com/seokpan/seokpan-hybrid-infra/issues/19)에 있다.
+- foundation 통합 인계: [Infra #23](https://github.com/seokpan/seokpan-hybrid-infra/issues/23)에 10/8 통합 Plan에 필요한 입력 · 확인할 Data 자원 목록 · Apply 후 전달할 출력 9개를 모아 인계했다. 이유빈 답변으로 다음이 정해졌다.
+  - 10/8 Plan에 백업 작업 VM 주소(`192.168.52.50/32`)를 넣는다. RDS 보안 그룹에 3306 허용 규칙 1개만 생기고, 실제 접속 검증은 VPN 작업(Infra #16)에서 한다. 따라서 Plan의 Data 자원은 추가 17개가 정상이다.
+  - 10/8에는 Plan만 하고, Apply는 전체 Plan · 팀 리뷰 · 비용 확인(Cost Gate) 후에 한다. Apply 날짜는 아직 정해지지 않았다.
+  - Data 출력은 계정 번호가 섞일 수 있어 Issue가 아니라 팀 채팅으로 전달한다.
+- 온프렘 신규 VM 2대 구분: **백업 작업 VM**(1차 DB → RDS 이관과 15분 백업, AWS에 접속함, `192.168.52.50`)과 **복구 DB VM**(AWS 없이 백업으로 MariaDB를 새로 복원, AWS에 접속하지 않음)은 04 문서 5.5절(확정된 복구 DB 전용 VM 배치)대로 별도 VM이다. 복구 DB VM의 서버 여유 확인과 주소 결정은 10/8 Plan 후 이유빈과 함께 한다.
+- 비용 입력 갱신: [Docs #43](https://github.com/seokpan/seokpan-hybrid-docs/issues/43)의 Data 입력에서 캐시 엔진을 Valkey 7.2로 바꾸고, RDS · Valkey 생성 시점을 "foundation Apply 날짜"로 고쳤다. Valkey 단가 재계산은 최유준 담당이다.
+- 정리 PR: [Infra PR #39](https://github.com/seokpan/seokpan-hybrid-infra/pull/39)로 bootstrap의 `CreateDataServiceLinkedRoles` 권한을 뺐다(RDS · ElastiCache 서비스 연결 Role은 10-06에 미리 만들었고 10-07 10:34 KST에 다시 조회해 확인). 함께 foundation README의 비밀번호 공급 명령을 대입과 `export` 두 줄로 나눴다 — 한 줄로 쓰면 sops가 파일을 못 열어도 `export`가 성공해 중간에 멈추지 않는다. bootstrap plan(확인만)은 0 add / 1 change / 0 destroy였고, 리뷰 승인 후 main `ceb6fad`로 병합했고, 이유빈이 bootstrap을 적용한 뒤 다시 Plan을 돌려 `No changes`를 확인했다(배정 실행자 · 실제 수행자 이유빈, [PR #39 코멘트](https://github.com/seokpan/seokpan-hybrid-infra/pull/39)). 서비스 연결 Role 자체는 지우지 않았다.
+- Infra PR #38 Data 관점 검토: 병합 후 시험 9개를 직접 실행해 모두 통과했다. 과거 개별 결과 화면을 "알려진 한계"로 옮긴 것은 03 문서 3-I.14.4절과 맞고, 실제 운영 데이터 검토 항목은 실제 이관 · 백업 때 진행하므로 남겨 두는 것이 맞다. 보완 제안 2개(근거 절 번호, 운영과의 버전 차이를 결과 파일에도 기록)를 PR 코멘트로 남겼다.
+- 열린 항목: ① (완료) PR #39 bootstrap 적용과 No changes 확인(이유빈, 10-07), ② 10/8 Plan의 Data 자원 17개 · 보안 그룹 2개 `Component=data` 태그 · AccessDenied 확인, ③ Apply 후 실제 값 인계와 Valkey CA 확인, ④ 백업 작업 VM 생성, ⑤ 복구 DB VM 사양 · 주소, ⑥ Valkey 단가 재계산(최유준)
+- 한계: 해독 확인 · 인계 · 권한 축소 · 기록까지이며, foundation Plan · Apply, RDS · Valkey 생성 · 접속, 이관 · Backup/Restore 측정은 아니다.
 
 ## 9 복구 예행과 목표 재검토 — 2026-10-02
 
@@ -1918,3 +1935,17 @@ C [Infra34](https://github.com/seokpan/seokpan-hybrid-infra/pull/34)은 A 승인
 앞선 첫 코드 작업은 **정태훈 담당 App 연결·GitOps base/Overlay**이며 §7에 보존한다. 현재 진입 정리는 네 사람의 진행을 통합하는 범위다. PR #12는 이번 Metadata 조회에서 병합을 확인했으며 과거 읽기 검토를 현재 미해결 작업으로 취급하지 않는다. 당시 이력은 §3.3에 남긴다.
 
 </details>
+
+
+<a id="b-source-startup-lua-review-20261007"></a>
+### 9.42 S1 Source 결함 재현과 lab 선언 병합의 인계 — 2026-10-07 KST
+
+[App #4 원 기록](https://github.com/seokpan/seokpan-hybrid-app/issues/4#issuecomment-6029248805)에 생성/종료와 Lua 거부 경로의 결함 2건, [App #2](https://github.com/seokpan/seokpan-hybrid-app/issues/2#issuecomment-6029292025)에 새 Backend Build 인계를 제출했다. [GitOps #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10#issuecomment-6029297406)에는 #18/#19 병합·제한 AppProject·실제 활성화의 직접 조건을 연결했다. 상세 Source·파일/함수·재현·검증·한계는 [S1–S4 검토](SOURCE_REVIEW_20261007.md)에서 추적한다.
+
+| 변경 | 실제 Source 검사 | 다음 입력 |
+|---|---|---|
+| App #17 startup finally 범위 | 기존 취소1FAIL/정상1PASS → 수정2PASS, 전체1754·별도47 PASS. Run37557811841 | C/D 리뷰·병합·새 Backend Image. 실제 OCP/ROSA 종료 검증은 별도 |
+| App #18 Lua 기한 선검사 | 기존 실제Lua3PASS/새2FAIL → 수정5PASS, 기본1752·별도47 PASS. Run37559151544 | Script9→10·Schema 유지, 실제 Valkey 조합에서 재시험. 기존 회귀용 Redis7.2.4 결과를 Valkey PASS로 사용하지 않음 |
+| GitOps #19 lab Source | 기존 B 승인·40검사 보고 수신, main de130af의 3-way tree 보존 대조 | 선언 작성 대기는 해소, 실제 Data/CA/Secret·Owner/사용창·AppProject/live Diff와 활성화는 대기 |
+
+서로 중복되는 runner47을 기본suite에 더해 고유 시험 수로 쓰지 않는다. Run의 trigger·검사한 작업 트리·게시 SHA와 Image/실제 배포 개정을 구분한다. C의 §8 기록·과거 Evidence·TH81/완료2·00–04·Project v3와 DR10/30/15·Pool 후보·Cost PARTIAL은 보존한다. 전체 Source/과거 이력의 미검토가 남아 있어 Q10은 완료하지 않는다.
