@@ -25,3 +25,6 @@
 - B/D/C: Stage2 원GitOps26의DB형식/GRANT/출처·Route/Origin·Owner/사용창/Gate/liveDiff 수락과지정실행자.
 - 독립사본/복원Identity·ROSACaller/Backend/지원/Quota/비용은기존보호Workspace에서별도. 성공한키전달·본체해독·선택Sync반복없음.
 - RTO/RPO=null,TH81/기존완료2,Q미완료,CostPARTIAL 보존.
+
+* Source Run 무결성 후속
+- 최초702fb88의 CSV/JSON3파일은 생성 시 CRLF Hash와 Git LF 바이트가 달라 체크섬 불일치. 데이터 값·시험 결과는 동일하며 LF 바이트로 정규화 후4파일 체크섬 재검증.
