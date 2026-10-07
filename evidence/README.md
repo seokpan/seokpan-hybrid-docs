@@ -1,6 +1,6 @@
 # Evidence Index and Run Guide
 
-실제 실행 결과는 승인04 §5.4·§10.4에 따라 `evidence/<test-id>/<run-id>/`에 남깁니다. 각 실행 담당자가 자기 결과를 작성하고 최유준이 Index/형식을 연결합니다. **현재 Index에는 아래의 독립 합성 Data 부분 예행과 Backend 업무 연결 부분 예행의 실제 Run 2개가 연결돼 있습니다.** 사용자 정태훈의 요청으로 Codex가 실행·기록하고 Index를 임시 연결했으며, C/B 영역 리뷰와 D Index 검토·수신은 대기합니다. 기존 lab 보고와05의 부분 검사 이력을 여기 새 Run으로 수행했다고 표시하지 않습니다.
+실제 실행 결과는 승인04 §5.4·§10.4에 따라 `evidence/<test-id>/<run-id>/`에 남깁니다. 각 실행 담당자가 자기 결과를 작성하고 최유준이 Index/형식을 연결합니다. **현재 Index에는 아래의 독립 합성 Data 부분 예행과 Backend 업무 연결 부분 예행의 실제 Run 2개가 연결돼 있습니다.** Codex 실행 환경에서 실행·기록하고 Index를 임시 연결했으며, C/B 영역 리뷰와 D Index 검토·수신은 대기합니다. 기존 lab 보고와05의 부분 검사 이력을 여기 새 Run으로 수행했다고 표시하지 않습니다.
 
 ## Create a Run
 
@@ -47,7 +47,7 @@ python3 tools/recovery_metrics.py evidence/<test-id>/<run-id>/release.json --con
 
 현재 목표/주기 설계 변경안은 [03 §3-I.14.5](../design/03_DETAILED_DESIGN.md#recovery-design-decision-20261005)의 **RTO10분·영속 DB RPO30분·DB 운영 중 Portable Backup15분·기존 Backup/Restore 유지**다. 이 개정이 main에 병합되면 새 공식 설계로 전환하며 그 전 main의30분/90분/1시간 승인 이력과 구분한다. 이미 수행한 아래 두 부분 Run의10파일·빈 Target/null·NOT RUN 판정은 소급 수정하지 않는다. 실제 운영 Timer/Backup 경로·사고 시작부터 지정 클라이언트 업무/Data 완료의 전체 Run이 있어야 새 목표 달성을 판정한다.
 
-정상 성공 경로에서는 실제 성공 Data 최대 간격G＋Data→로컬 사용 가능한 완성본 지연D＋시점/시계 불확실성U≤30분을 관측한다. nominal15분을 G≤15분 또는 D≤15분 보장으로 대체하지 않는다. jitter/생략·전송/Storage/VM 장애·이전 사본 선택은 실제 사용 Data 나이와 손실로 기록하고 초과는 미달, 시점 미확인은 null/미판정으로 남긴다.30분은 프로젝트 시험 후보이며 실제 사업 사용자의 손실 허용 승인이나 상용 SLA가 아니다.
+정상 성공 경로에서는 실제 성공 Data 최대 간격G＋Data→로컬 사용 가능한 완성본 지연D＋시점/시계 불확실성U≤30분을 관측한다. nominal15분을 G≤15분 또는 D≤15분 보장으로 대체하지 않는다. jitter/생략·전송/Storage/VM 장애·이전 사본 선택은 실제 사용 Data 나이와 손실로 기록하고 초과는 미달, 시점 미확인은 null/미판정으로 남긴다.30분은 채택된 프로젝트 시험 요구사항이며 실제 사업 사용자의 손실 허용 승인이나 상용 SLA가 아니다.
 
 복구 목표의 설계 판단은 [03 §3-I.14](../design/03_DETAILED_DESIGN.md#recovery-design-review-20261003), 최소 예행의 입력·측정은 [05 §9.2~9.6](../execution/05_IMPLEMENTATION_AND_VALIDATION.md#recovery-objective-review-20261002)를 따른다. 기존 Run 다섯 파일과 [HANDOFF](../execution/HANDOFF_TEMPLATE.md)를 사용하며 새 스키마·시험 ID·상시 자동화를 추가하지 않는다.
 

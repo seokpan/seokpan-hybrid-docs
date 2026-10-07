@@ -34,7 +34,7 @@ META = [
     ('03-hybrid-network', 'Hybrid 네트워크와 경로', 'RDS 사설 왕복과 인터넷 HTTPS 경로의 분리',
      '03 §3-B.1 / §3-B.5 / §3-B.8~9 / §3-D.9.3 · 04 §1', '실제 Host /32·Gateway·ENI·SG·DNS와 수신 Source IP 확인 필요'),
     ('04-service-traffic-tls', '사용자 트래픽과 TLS', '같은 공개 Host의 FE · HTTP API · WSS 분기',
-     '03 §3-B.8.3 / §3-E.3~7 · 04 §1', '실제 Host·Path·Port·Route·Probe·Timeout은 Source 확인 후 반영'),
+     '03 §3-B.8.3 / §3-E.3~7 · 04 §1', '실제 Host·배포·연결·Probe/Timeout 동작은 환경별 확인'),
     ('05-state-reconnect-consistency', '상태 책임과 재접속·업무 확정', '공유 Runtime · 영속 확정 · 사용자 통지를 별도 책임으로 관리',
      '03 §3-D.5 / §3-D.10.7 / §3-E.10~14', '인증·Schema·요청 식별·원자성·재접속의 실제 구현은 확인 대기'),
     ('06-cicd-release-flow', 'CI/CD와 Release 전달', 'Image 후보에서 검토·배포·Recovery 보존까지',
@@ -152,7 +152,9 @@ class Canvas:
 
     def finish(self):
         self.rect(64,self.h-122,1672,1,'#CED9E3',radius=0)
-        if self.number in {1, 2, 4, 12}:
+        if self.number == 4:
+            provenance = '기준: 승인 설계 · GitOps #17 Source 선언  |  제작: 2026-10-02 · 접속 계약 개정: 2026-10-07 KST'
+        elif self.number in {1, 2, 12}:
             provenance = '기준: Project Source 00~04 · Data Engine 목표 개정 2026-10-06  |  제작: 2026-10-02 · 개정: 2026-10-06 KST'
         elif self.number == 10:
             provenance = '기준: Project Source 00~04 · DR 개정 2026-10-05  |  제작·개정: 2026-10-05 KST'
@@ -276,7 +278,7 @@ def traffic(c):
     c.parts.append('<path d="M900 746H1460" fill="none" stroke="#7461A8" stroke-width="2.8"/>')
     c.text(88,824,'BE 전체의 Data 연결',22,'#7461A8',weight=700)
     c.para(88,858,'두 BE 칸은 HTTP/WSS 역할 표현이며\n별도 제품·Deployment 추가를 뜻하지 않음',510,20)
-    c.note(954,'관리 API는 사용자 서비스와 별도','관리자 → Public API 6443 → Cluster API  |  실제 /api·/ws 등의 Path나 Service Port는 아직 정하지 않음',h=120)
+    c.note(954,'관리 API는 사용자 서비스와 별도','관리자 → Public API 6443  |  Source 선언: FE / → 8080 · API /api/v1 · WSS /ws/v1 → BE 8000',h=120)
 
 
 def state(c):

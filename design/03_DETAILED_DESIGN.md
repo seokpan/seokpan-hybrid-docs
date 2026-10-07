@@ -3,7 +3,7 @@
 > **문서 단계:** 03 상세설계 승인 완료 / 후속 05 구현·검증의 설계 기준  
 > **기준일:** 최초 2026-10-01 KST / 설계 정합성 개정 2026-10-07 KST  
 > **상태:** CONFIRMED DESIGN — 2026-10-01 상세설계 승인, 2026-10-05 DR 목표·주기 및 2026-10-06 Valkey 선택 반영. 실제 구현·시험 결과는 05와 원 Issue·PR·Run에서 관리  
-> **상위 기준:** `01_PROJECT_CHARTER.md`, `02_TARGET_ARCHITECTURE.md`, `PROJECT_INSTRUCTIONS.md` 및 사용자의 최신 명시적 결정  
+> **상위 기준:** `01_PROJECT_CHARTER.md`, `02_TARGET_ARCHITECTURE.md`, `PROJECT_INSTRUCTIONS.md` 및 기록된 최신 승인 결정  
 > **기간 / AWS 지원 한도:** 2026-09-28~2026-10-26 / $500
 
 > **현재 DR 설계 기준:** [§3-I.14.5](#recovery-design-decision-20261005)의 **RTO 10분·영속 DB RPO 30분·DB 운영 중 Portable Backup 15분 계획 주기, 기존 Backup/Restore 구조 유지**를 적용한다. [PR #30](https://github.com/seokpan/seokpan-hybrid-docs/pull/30)은 main에 병합됐으며 30분/90분/1시간은 이전 승인 이력이다. 설계 선택과 실제 운영 달성은 별개다. 전체 T18은 미검증이며 05/ROSA 전체 완료를 설계 선택의 선행조건으로 두지 않는다.
@@ -20,7 +20,7 @@
 - [x] B01~B07 작업 전제 사용자 컨펌 및 연쇄 반영 — 2026-10-01, §3-I.12.2
 - [x] 승인 반영본·지침 연쇄 보완 후 추가 변경 없는 재검증 — §3-I.12.3
 - [x] 승인 반영본 전체03·개정 지침 사용자 최종 컨펌 — 2026-10-01
-- [x] 최종 승인 상태 반영·프로젝트 소스 등록 완료 사용자 확인 — §3-I.12.4
+- [x] 최종 승인 상태 반영·프로젝트 소스 등록 완료 보고 — §3-I.12.4
 - [x] 추가 팀원 자료·Issue 결과의 범위 대조 및 구현 준비 인계 — §3-I.13
 - [x] 두 독립 부분 Run·고정 App Source와 제약 비교에 따른 DR 목표/주기/구조 변경 후보 정리 — §3-I.14.5
 - [x] DR 설계 요구 채택·PR #30 병합. 후속 문구·출처 정합성 보완과 실제 운영 경로 Acceptance는 별도
@@ -187,9 +187,9 @@ Bootstrap 실행 코드가 동일 Manifest를 별도로 복사하여 계속 관�
 
 ### 3-A.11. Source 계보 및 검증 상태
 
-`00_PROJECT_STARTING_POINT.md`는 역사적 출발점으로 보존한다. `01_PROJECT_CHARTER.md`와 `02_TARGET_ARCHITECTURE.md`는 현재 승인된 상위 프로젝트/Architecture 기준이다. 상위 문서 작성 당시 미확정이었던 Repository topology는 이후 사용자에게 승인받은 이 문서의 3-A 작업 전제를 따른다. 지침 개정본에도 이 상태를 반영했다. 전체03의 최종 컨펌과 프로젝트 소스 등록 완료는 2026-10-01 사용자 확인으로 반영했다(§3-I.12.4). GitOps 내부 구조는 B04 작업 전제로 승인되었으며, Release Metadata의 실제 저장 형식·대용량 Evidence 위치는 구현 입력으로 확인한다.
+`00_PROJECT_STARTING_POINT.md`는 역사적 출발점으로 보존한다. `01_PROJECT_CHARTER.md`와 `02_TARGET_ARCHITECTURE.md`는 현재 승인된 상위 프로젝트/Architecture 기준이다. 상위 문서 작성 당시 미확정이었던 Repository topology는 이후 사용자에게 승인받은 이 문서의 3-A 작업 전제를 따른다. 지침 개정본에도 이 상태를 반영했다. 전체03의 최종 컨펌과 프로젝트 소스 등록 완료는 2026-10-01 전달 확인에 따라 반영했다(§3-I.12.4). GitOps 내부 구조는 B04 작업 전제로 승인되었으며, Release Metadata의 실제 저장 형식·대용량 Evidence 위치는 구현 입력으로 확인한다.
 
-관련 근거는 3-A 비교 제안 및 2026-10-01 KST 사용자의 명시적 동의다. 3-A 설계 작성 당시에는 GitHub 저장소 상태를 조회하거나 생성하지 않았다. 이후 이번 구현 준비에서 수행한 읽기 전용 Repo/Issue/지정 Commit 조회는 §3-I.13에 따로 기록한다. Runtime을 직접 조회하거나 Repo를 변경한 것은 아니다.
+관련 근거는 3-A 비교 제안 및 2026-10-01 KST의 명시적 승인다. 3-A 설계 작성 당시에는 GitHub 저장소 상태를 조회하거나 생성하지 않았다. 이후 이번 구현 준비에서 수행한 읽기 전용 Repo/Issue/지정 Commit 조회는 §3-I.13에 따로 기록한다. Runtime을 직접 조회하거나 Repo를 변경한 것은 아니다.
 
 - [x] 주요 대안 비교
 - [x] 사용자 소단계 승인
@@ -197,7 +197,7 @@ Bootstrap 실행 코드가 동일 Manifest를 별도로 복사하여 계속 관�
 - [x] 상위 Architecture / 1차 보호 / Seed / Ownership 경계 대조
 - [x] 전체03 문서 연쇄 검토·보완 및 재검증
 - [x] 사용자 전체03 최종 컨펌 및 상세설계 승인 상태 반영
-- [x] Project Source 등록 완료 사용자 확인
+- [x] Project Source 등록 완료 보고
 - [ ] GitHub Docs 반영 여부·개인별 권한/Branch 보호 실제 확인
 - [ ] 저장소 생성·코드 이관·구현·Runtime 검증
 
@@ -338,7 +338,7 @@ AWS Egress / DNS가 학원 Gateway를 필수 의존성으로 갖지 않도록 �
 
 #### 3-B.8.1 검토 전제와 기존 논의
 
-상위 Architecture는 ROSA Classic Multi-AZ, Cloud Primary, Private Data Service 및 Cloud 정상 서비스의 On-Prem 비의존성을 정했다. API Public/Private, Ingress, NAT 수량·Lifecycle, DNS는 상세설계 대상으로 남겼다. 이전 시작 문서의 HCP Worker↔Control Plane PrivateLink 설명을 Classic의 Private API 승인으로 가져오지 않는다. 제안 검토 당시 제공된 기준 자료에서 별도의 Public/Private API 팀 합의는 확인되지 않았고, 이후 사용자가 Public API 안을 작업 전제로 승인했다. 추가 팀 합의가 제시되면 비교에 반영한다.
+상위 Architecture는 ROSA Classic Multi-AZ, Cloud Primary, Private Data Service 및 Cloud 정상 서비스의 On-Prem 비의존성을 정했다. API Public/Private, Ingress, NAT 수량·Lifecycle, DNS는 상세설계 대상으로 남겼다. 이전 시작 문서의 HCP Worker↔Control Plane PrivateLink 설명을 Classic의 Private API 승인으로 가져오지 않는다. 제안 검토 당시 제공된 기준 자료에서 별도의 Public/Private API 팀 합의는 확인되지 않았고, 이후 Public API 안이 작업 전제로 승인됐다. 추가 팀 합의가 제시되면 비교에 반영한다.
 
 아래는 주요 대안 비교이며 가능한 모든 제품·조합을 열거한 것은 아니다. Account 조회, CLI Plan/Apply, 실제 Route·인증·DNS·장애 시험은 수행하지 않았다.
 
@@ -612,7 +612,7 @@ Gateway 손상과 AWS 전체 장애의 복구는 다르다. AWS 장애 선언 �
 
 Network 설계 정리는 새 제안 승인과 미확인 입력의 관리 방법·검증 기준을 갖추었을 때 다음 상세설계로 넘길 수 있다. Runtime PASS는 실제 Account·OS·ROSA 환경에서 위 시험 Evidence가 확보된 뒤 판단한다. 아직 VM/Host 주소, Peer Key 보관, SSM, 실제 Worker SG·Source, Account/Provider 조건, 비용·Runtime Window 및 데이터 작업 주체가 미확인이다.
 
-**사용자가 승인한 작업 전제 범위:** ① 목적별 Route Table + Host /32 범위 + RDS 우선 Hybrid 후보 ② 사설 왕복 Route·Source 보존·AllowedIPs 분리 ③ Data SG/Workload/Host Firewall 중심 제한 및 초기 Default NACL ④ UDP 51820 Public 단일 예외 + Keepalive/MTU 시작값 ⑤ 수동 IaC 재구축·EIP/ENI/Route·Key 복원 경계.  
+**승인된 작업 전제 범위:** ① 목적별 Route Table + Host /32 범위 + RDS 우선 Hybrid 후보 ② 사설 왕복 Route·Source 보존·AllowedIPs 분리 ③ Data SG/Workload/Host Firewall 중심 제한 및 초기 Default NACL ④ UDP 51820 Public 단일 예외 + Keepalive/MTU 시작값 ⑤ 수동 IaC 재구축·EIP/ENI/Route·Key 복원 경계.  
 **영향 영역:** 3-C 인증·Key·SSM, 3-D 이관/Backup 주체, 3-E Client/TLS, 3-F State/Ansible/Rule Lifecycle, 3-G 장애 Evidence, 3-H 담당·시간·예산.  
 **재검토 조건:** 실제 Route/NAT 또는 Source가 예상과 다름, 전용 Gateway 확보 불가, UDP/출구 CIDR 제약, Worker SG 분리·지원 입력 제약, 비용/일정 초과, 업무 통신 목적 변경.  
 **Issue / PR / Runtime Evidence:** 이번 새 설계에 대해 생성·조회한 Runtime Evidence 없음.
@@ -675,7 +675,7 @@ Route / SG / Gateway Recovery까지 작업 전제 승인을 받았고 Network �
 3-C IAM/Secret, 3-D Migration, 3-E Interface, 3-F Terraform/GitOps, 3-G Test/Evidence, 3-H WBS까지 연결한 전체03 검토·최종 컨펌을 완료했다. 문서 검토에서는 Address Conflict, Ownership, Runtime/Recovery 의존성, Secret 복구, 비용, 일정, Test 가능성을 함께 검토한다.
 
 - [x] 연결 모델 사용자 소단계 승인
-- [x] 최신 사용자 지시에 따른 Working Draft 상태 기록
+- [x] 당시 승인에 따른 Working Draft 상태 기록
 - [x] Region / CIDR / VPC 주요 후보 비교
 - [x] 알려진 주소 범위의 계산상 검증
 - [x] Region / IPAM / Subnet 작업 전제 승인
@@ -729,7 +729,7 @@ Route / SG / Gateway Recovery까지 작업 전제 승인을 받았고 Network �
 
 3-A 저장소 경계, 3-B 연결·Region/IPAM/Subnet·Public API/Ingress·AZ별 NAT/S3 Endpoint/DNS·Route/SG/Gateway 복구는 후속 설계의 작업 전제로 승인되었다. Network는 기본 선택과 검증 기준을 정리했으며 실제 Host·Account·Source·Quota·비용·Runtime Gate는 남아 있다.
 
-2026-10-01 사용자의 최신 지시에 따라 3-C-1 작업 전제를 다음과 같이 기록한다.
+2026-10-01 승인된 3-C-1 작업 전제를 다음과 같이 기록한다.
 
 1. AWS Human 인증: Root로 초기 IAM User 4개 생성, 팀원별 하나씩 사용, 각 사용자에 AdministratorAccess 부여. 기존 연합 로그인 우선 제안을 사용자 지정 단순 운영안으로 변경. 최소 확인사항은 §3-C.3에 기록하며 실제 설정 완료와 구분.
 2. Terraform 실행: bootstrap/foundation/rosa 실행 권한과 State 접근 범위 분리.
@@ -737,7 +737,7 @@ Route / SG / Gateway Recovery까지 작업 전제 승인을 받았고 Network �
 4. ROSA 권한: 제한된 Platform 관리와 Namespace/Resource별 업무 권한, 인증과 RBAC의 분리.
 5. 자동화 주체: Jenkins·GitOps·Backup·Runtime별 Principal과 Credential 목적 분리.
 
-기존 지침 §30~31에는 IAM User ×4 + AdministratorAccess의 단순 운영 후보와 Minimum Gate가 이미 기록되어 있었다. 앞선 제안은 이 후보를 충분히 반영하지 못했으며 이번 사용자 지시로 사람 계정의 작업 전제를 갱신한다. CI의 제한된 IAM Principal과 Secret Bootstrap Gate는 유지하며, CI 최초 인증은 3-C-2의 제한된 CI IAM User Key 안으로 작업 전제 승인되었다. Secret 저장·공급·복구는 3-C-3의 SOPS + age 및 담당자 초기 공급 절차를 작업 전제로 승인했다. 실제 구현·설정 검증은 아직 진행 전이다. 기존 팀의 별도 Security 합의나 계정 정책이 추가 제시되면 비교에 반영한다. 1차 팀 역할을 2차 AWS/ROSA 권한 배정으로 자동 승격하지 않는다. 실제 사람별 배정은 업무 확인 및 3-H WBS와 연결한다.
+기존 지침 §30~31에는 IAM User ×4 + AdministratorAccess의 단순 운영 후보와 Minimum Gate가 이미 기록되어 있었다. 앞선 제안은 이 후보를 충분히 반영하지 못했으며 2026-10-01 승인으로 사람 계정의 작업 전제를 갱신했다. CI의 제한된 IAM Principal과 Secret Bootstrap Gate는 유지하며, CI 최초 인증은 3-C-2의 제한된 CI IAM User Key 안으로 작업 전제 승인되었다. Secret 저장·공급·복구는 3-C-3의 SOPS + age 및 담당자 초기 공급 절차를 작업 전제로 승인했다. 실제 구현·설정 검증은 아직 진행 전이다. 기존 팀의 별도 Security 합의나 계정 정책이 추가 제시되면 비교에 반영한다. 1차 팀 역할을 2차 AWS/ROSA 권한 배정으로 자동 승격하지 않는다. 실제 사람별 배정은 업무 확인 및 3-H WBS와 연결한다.
 
 ### 3-C.2. 상위 불변조건과 구분할 권한
 
@@ -867,7 +867,7 @@ Purpose별 Role/Principal을 분리하되 실제 쓰지 않는 Role을 미리 �
 
 ECR Authorization Token은 발급 Principal의 권한 범위를 따르며 유효기간이 있다. Token을 매 실행 발급해도 AWS API Token 발급용 최초 Credential이 자동으로 없어지는 것은 아니다. 최초 인증용 장기 Key는 §3-C.11에서 별도의 작업 전제로 승인되었고 실제 발급·보관·회수 설정은 검증 전이다.
 
-On-Prem Jenkins 인증은 IAM Roles Anywhere, 실제 Token을 발급하는 OIDC Federation, 제한된 IAM User Key + STS 예외를 주요 후보로 조사한다. Roles Anywhere는 X.509 Certificate/Trust Anchor·갱신·회수 관리가 필요하다. OIDC는 실제 Jenkins 실행 주체가 신뢰 가능한 Token을 얻는 경로가 있어야 한다. GitHub 저장소를 사용한다는 이유만으로 On-Prem Jenkins가 GitHub Actions OIDC Token을 받는다고 가정하지 않는다. 2026-10-01 사용자가 3-C-2의 다섯 가지에 동의함에 따라 제한된 ECR CI IAM User Access Key 안을 작업 전제로 선택했다. Roles Anywhere/OIDC는 재검토 대안이며 실제 Key 발급·CI 적용을 수행하지 않았다. CI 위치는 On-Prem으로 유지한다.
+On-Prem Jenkins 인증은 IAM Roles Anywhere, 실제 Token을 발급하는 OIDC Federation, 제한된 IAM User Key + STS 예외를 주요 후보로 조사한다. Roles Anywhere는 X.509 Certificate/Trust Anchor·갱신·회수 관리가 필요하다. OIDC는 실제 Jenkins 실행 주체가 신뢰 가능한 Token을 얻는 경로가 있어야 한다. GitHub 저장소를 사용한다는 이유만으로 On-Prem Jenkins가 GitHub Actions OIDC Token을 받는다고 가정하지 않는다. 2026-10-01 3-C-2의 다섯 가지 작업 전제 승인으로 제한된 ECR CI IAM User Access Key 안을 작업 전제로 선택했다. Roles Anywhere/OIDC는 재검토 대안이며 실제 Key 발급·CI 적용을 수행하지 않았다. CI 위치는 On-Prem으로 유지한다.
 
 ROSA의 Workload ServiceAccount→AWS 권한은 실제 AWS API 호출 요구가 있을 때 별도로 설계한다. DB/Redis에 일반 Protocol로 연결하는 Backend에 모든 AWS API 권한을 자동 부여하지 않는다. ECR 이미지 Pull 인증·재발급은 Node/Kubelet/ROSA 지원 경로와 별도로 검토해야 하며 CI Push Token을 장기 ImagePullSecret으로 복사해 해결하지 않는다.
 
@@ -903,7 +903,7 @@ ROSA의 Workload ServiceAccount→AWS 권한은 실제 AWS API 호출 요구가 
 **결정 ID:** PH2-3C-IDENTITY-PRINCIPAL / PH2-3C-HUMAN-IAM-SIMPLE  
 **기록일:** 2026-10-01 KST  
 **상태:** 3-C-1 나머지 네 항목은 사용자 작업 전제 승인. AWS Human은 사용자 지정 IAM User ×4 + AdministratorAccess로 변경 반영. 실제 Minimum Gate 통과·구현 완료·3단계 최종 승인과 구분한다.  
-**근거:** 최신 사용자 지시와 기존 지침 §30~31의 구현 속도·복잡도 및 Minimum Gate.  
+**근거:** 당시 승인 결정과 기존 지침 §30~31의 구현 속도·복잡도 및 Minimum Gate.  
 **변경 영향:** 기존 연합 로그인 우선·사람 목적별 제한권한 제안은 현재 기본안에서 제외. TF Role은 실행 분리이며 사람 Admin의 기술적 격리를 보장하지 않음. CI 제한 Principal·ROSA IDP/RBAC·공식 Operator Role 유지.  
 **재검토 조건:** Account 상위 정책과 충돌, Credential 노출, 실제 작업·회수·복구 불가, 일정·비용 또는 3단계 통합 검토의 변경 필요.  
 **Issue / PR / Runtime Evidence:** 새 생성·조회한 자료 없음.
@@ -912,7 +912,7 @@ ROSA의 Workload ServiceAccount→AWS 권한은 실제 AWS API 호출 요구가 
 
 **결정 ID:** PH2-3C-CI-AUTH  
 **승인일:** 2026-10-01 KST  
-**근거:** 직전 3-C-2 다섯 가지 제안에 대한 사용자의 “오케이. 동의해. 계속해서 이번 작업을 이어서 진행하자.”  
+**근거:** 2026-10-01 3-C-2의 다섯 가지 작업 전제에 대한 명시적 승인.  
 **상태:** 다섯 가지를 다음 Secret 설계의 작업 전제로 승인. 실제 CI User/Key/Policy/Jenkins Credential 생성·Runtime 검증 또는 3단계 최종 승인을 뜻하지 않는다. 기존 On-Prem Jenkins와 프로젝트 일정을 기준으로 최소 운영 복잡도를 우선한다.
 
 | 번호 | 제안 | 범위 / 판단 근거 |
@@ -953,7 +953,7 @@ ROSA의 Workload ServiceAccount→AWS 권한은 실제 AWS API 호출 요구가 
 **제안 ID:** PH2-3C-SECRET-SUPPLY  
 **작성일:** 2026-10-01 KST  
 **승인일:** 2026-10-01 KST  
-**상태:** 사용자가 3-C-3 신규 작업 전제 제안에 동의함에 따라 다섯 가지를 후속 설계의 작업 전제로 승인했다. 실제 Secret 값·암호화 파일·Key를 생성하거나 조회하지 않았으며 03 전체 최종 승인과 구분한다.  
+**상태:** 3-C-3의 다섯 가지 신규 제안이 후속 설계의 작업 전제로 승인됐다. 실제 Secret 값·암호화 파일·Key를 생성하거나 조회하지 않았으며 03 전체 최종 승인과 구분한다.  
 **표현 지침:** 기술 용어의 직역보다 실제 동작을 설명하는 표현을 우선한다. 비밀번호·Key 교체, 암호화 Key 변경, 초기 설정·공급 절차처럼 목적·행동이 드러나게 쓰고 정식 제품명·명령·정책 속성명은 유지한다.
 
 #### 3-C.12.1 작업 전제 승인된 다섯 가지
@@ -2137,7 +2137,7 @@ ElastiCache Valkey는 비동기 복제로 일부 최신 상태를 잃을 수 있
 
 #### 3-E.16.1 접수 범위
 
-**자료:** `terraform-version-guide.md` — 사용자 제공 팀원 자료, 2026-10-01 접수.  
+**자료:** `terraform-version-guide.md` — 팀원 작성 자료, 2026-10-01 접수.  
 **분류:** TEAM DRAFT + PENDING DECISION. 공용 서버 설치값은 팀원 제공 현황이며 직접 확인한 OBSERVED EVIDENCE로 분류하지 않는다. 운영안이 프로젝트 공식 조건으로 지시되거나 실행 증거가 확보되면 해당 부분만 다시 분류한다.
 
 자료 원본은 변경하지 않는다. Project Source를 자료 전체로 덮어쓰지 않고 현재 판단에 필요한 버전·고정 방법·작업 환경·실행 권한·협업 조건만 3-F의 참고 입력으로 추출한다. 이번 3-E-1 승인에는 Terraform 버전·팀원 운영안의 채택이 포함되지 않는다.
@@ -2478,7 +2478,7 @@ State 경계는 자원의 소유권이고 Runtime 비용절감은 자원별 가�
 
 일곱 개는 독립적인 선택 묶음을 세었기 때문이며 고정 개수 규칙이 아니다. B01~B07을 작은 승인 단계로 다시 분해하지 않는다. 정확한 ARN/Host/패치·측정에 따른 Pool/Probe 튜닝은 승인된 범위의 실행 입력으로 확인한다. 새로운 계정·상시 서비스·비용/권한 확대·Architecture 변경·성공 기준 완화가 필요해지는 경우에만 그 변경과 영향을 다시 결정한다.
 
-사용자는 2026-10-01 B01~B07을 우선 컨펌하고, 반영 후 전체를 다시 검토하겠다고 명시했다. 당시 B01~B07은 작업 전제로 먼저 승인되었고 전체03은 검토 대기였다. 이후 사용자의 두 문서 전체 최종 컨펌과 등록 완료 확인은 §3-I.12.4에 반영했다. 조건부 후보의 실제 지원·시험 성공·비용 충족·구축 승인을 추가하지 않는다. 이번 승인 반영 기록은 §3-I.12.2에 있다.
+2026-10-01 B01~B07의 우선 승인이 기록됐으며, 반영 후 전체 문서 검토는 별도 단계로 남았다. 당시 B01~B07은 작업 전제로 먼저 승인되었고 전체03은 검토 대기였다. 이후 두 문서 전체 최종 승인과 등록 완료 보고는 §3-I.12.4에 반영했다. 조건부 후보의 실제 지원·시험 성공·비용 충족·구축 승인을 추가하지 않는다. 이번 승인 반영 기록은 §3-I.12.2에 있다.
 
 ### 3-F.14. 버전 후보와 확인 순서 — B01
 
@@ -3030,7 +3030,7 @@ Runbook/시험/WBS와 연쇄 영향은 **3-I의 전체 통합 검토**에 일괄
 | 3-E | 작업 전제 승인 | 같은 Host의 FE/API/WSS·Edge TLS·설정/Secret·Probe/종료·인증·재접속·중복/불명 결과·부분 실패 |
 | 3-F-1 | 작업 전제 승인 | 세 Root/State Key·bootstrap 실행 Role 소유·제한 Output 전달·Ansible 최초 GitOps 설치/인계 |
 | 3-F·3-G·3-H | B01~B07 작업 전제 승인 — 2026-10-01 | 버전·Backend 인증·Runtime Pull·배포/Offline·Replica·시험 수치·작업/비용 운영 |
-| 전체03 문서·지침 | 두 문서 전체 최종 컨펌·소스 등록 완료 사용자 확인 — 2026-10-01 | 승인된 설계 기준. 실제 입력/지원·가격/구현·시험은 별도 |
+| 전체03 문서·지침 | 두 문서 전체 최종 컨펌·소스 등록 완료 보고 — 2026-10-01 | 승인된 설계 기준. 실제 입력/지원·가격/구현·시험은 별도 |
 | 실제 구축/시험 | ROSA 최종 시험 NOT RUN | 읽기 전용 GitHub Repo/Issue/지정 Source 조회 완료, demo2는 팀원 보고 Evidence. AWS/ROSA/DB/Controller 직접 조회·생성/변경·시험 수행은 미실행 |
 
 소단계 승인과 최종 설계 확정을 구분한다. 최종 설계 확정도 실제 Runtime PASS를 미리 확정하지 않는다. 이후 실제 지원·Source·측정 결과가 변경을 요구하면 이유·의존 문서·시험·비용과 함께 개정한다.
@@ -3185,7 +3185,7 @@ Release 인계에는 `App/Infra/GitOps Commit`, `FE/BE ECR·Harbor Digest 및 �
 
 ### 3-I.10. 전체03 검토와 이후 처리
 
-B01~B07 우선 작업 전제 승인 이후, 사용자가 두 문서 전체를 최종 컨펌하고 프로젝트 소스 등록 완료를 알렸다. 전체03과 지침의 승인 상태·구현 인계에 이를 반영했다(§3-I.12.4). 문서 승인과 실제 지원/구현/시험 결과는 별도로 유지한다.
+B01~B07 우선 작업 전제 승인 이후, 두 문서 전체 최종 승인과 프로젝트 소스 등록 완료가 보고됐다. 전체03과 지침의 승인 상태·구현 인계에 이를 반영했다(§3-I.12.4). 문서 승인과 실제 지원/구현/시험 결과는 별도로 유지한다.
 
 전체 검토 체크리스트:
 
@@ -3254,7 +3254,7 @@ Repository/Source부터 WBS/비용까지 3-A~3-H의 세부 설계와 3-I의 통�
 
 통합 후에는 내부 절 번호와 다른 분야 참조, 상위 00/01/02/지침의 외부 절 참조, 공식 참고 자료 식별자, IF/IM/NET/T·WBS/Cost 대응을 재대조했다. 통합 과정에서 발견한 Redis 재사용 잔여 문구를 승인된 별도 새 Recovery Redis로 맞추고, Bootstrap 참조의 분야와 외부 Source 절 번호를 정리했다. 통합 당시에는 B01~B07 및 전체03 컨펌 전 상태를 유지했다. 이후 B01~B07 작업 전제 승인은 §3-I.12.2에 반영했다. 당시 전체03 컨펌 대기 상태와 구분한 최신 최종 컨펌은 §3-I.12.4, 팀원 사전시험과 실제 ROSA 시험의 경계는 §3-I.13을 따른다. $500/Freeze 조건은 유지한다.
 
-문서 작성/통합과 원본 파일의 보존을 확인했으며 사용자의 Project Source 등록을 수행하거나 확인한 상태는 아니다. 제공 원본과 기존 작업 기록은 변경하지 않았다. 이 문서는 전체03 컨펌 범위를 반영한 뒤 최종 등록본으로 사용할 수 있다.
+문서 작성/통합과 원본 파일의 보존을 확인했으며 Project Source 등록을 직접 수행하거나 확인한 상태는 아니었다. 제공 원본과 기존 작업 기록은 변경하지 않았다. 이 문서는 전체03 컨펌 범위를 반영한 뒤 최종 등록본으로 사용할 수 있다.
 
 #### 3-I.12.1 단일 통합본과 지침의 재귀 검토 결과
 
@@ -3282,13 +3282,13 @@ Repository/Source부터 WBS/비용까지 3-A~3-H의 세부 설계와 3-I의 통�
 
 최종 대조에서 9개 분야 절, IF 18개·IM 9개·NET 10개·T 23개·WBS 10개·Charter 성공축 12개의 문서 대응과 코드 예시/공식 근거 링크 보존을 확인했다. 내부 절 대상·외부 상위 절·표 구조·상하단 진행 체크도 확인했다. 제공 원본 네 문서와 기존 분야별 작업 기록은 검토 전후 내용이 같으며 수정하지 않았다.
 
-**프로젝트 소스 구성 결론:** 기존 00/01/02를 유지한 상태에서 상세설계는 이 단일 `03_DETAILED_DESIGN.md`, 진행 지침은 개정 `PROJECT_INSTRUCTIONS.md`를 사용하면 된다. 기존 분야별 작업 파일을 모두 등록해야 읽을 수 있는 의존성은 없다. 사용자의 최종 컨펌 범위를 반영한 뒤 최종 등록본으로 정리하며, 현재 등록 완료를 주장하지 않는다.
+**프로젝트 소스 구성 결론:** 기존 00/01/02를 유지한 상태에서 상세설계는 이 단일 `03_DETAILED_DESIGN.md`, 진행 지침은 개정 `PROJECT_INSTRUCTIONS.md`를 사용하면 된다. 기존 분야별 작업 파일을 모두 등록해야 읽을 수 있는 의존성은 없다. 최종 승인 범위를 반영한 뒤 최종 등록본으로 정리하며, 현재 등록 완료를 주장하지 않는다.
 
 실제 Source/Seed·계정/지원·권한·가격/Credit·로컬 자산·측정값과 코드/Plan/Apply·이관/복구/부하 시험은 확인/실행 전이다. 이 재귀 검토 당시 B01~B07은 제안 상태였다. 이후 작업 전제 승인 반영은 §3-I.12.2에 기록한다. 문서 검토 종료를 실제 적용 가능성·예산 충족·Runtime PASS의 보증으로 확대하지 않는다.
 
 #### 3-I.12.2 B01~B07 작업 전제 승인 반영 기록
 
-**승인일 / 근거:** 2026-10-01 KST, 사용자가 B01~B07을 우선 컨펌하고 반영 후 다시 전체 검토하겠다고 명시함.  
+**승인일 / 근거:** 2026-10-01 KST, B01~B07 우선 승인과 반영 후 전체 재검토의 구분.  
 **반영 범위:** 단일 `03_DETAILED_DESIGN.md`와 개정 `PROJECT_INSTRUCTIONS.md`. 기존 00/01/02·제공 지침 원본과 통합 이전 작업 기록은 수정하지 않음.  
 **현재 상태:** B01~B07 작업 전제 승인·문서 반영 완료. 전체03 사용자 재검토·최종 컨펌 대기, WORKING DRAFT 유지.
 
@@ -3304,13 +3304,13 @@ Repository/Source부터 WBS/비용까지 3-A~3-H의 세부 설계와 3-I의 통�
 
 버전·규모 후보를 승인했다고 지원/구현 검증이 끝난 것은 아니다. B06 수치는 승인된 프로젝트 목표이며 운영 SLA·제품 보장이나 실제 달성 결과가 아니다. B07 계획선/여유 승인도 실제 비용 충족이나 추가 지출 승인을 뜻하지 않는다. 승인된 값·요구·시험 범위를 이번 상태 반영으로 완화하거나 새 선택을 추가하지 않았다.
 
-**승인 반영 당시 문서 검증:** 승인 상태→분야별 본문/체크리스트→Owner·Release/복구→시험 목표/판정→WBS/비용→지침/전체03 상태의 연결을 대조했다. 이전 검토의 제안/미승인 표기는 당시 기록으로 명시하고 현재 승인 기록과 분리했다. 시험 식별자·코드 예시·공식 참고 링크·주요 버전/수치·상위 제공 원본 보존을 확인했다. 이 검증은 당시 승인 반영의 정합성 확인이며 사용자의 예정된 전체03 검토를 대신하지 않는다. 이후 요청에 따른 연쇄 재검토와 보완은 §3-I.12.3에 기록한다.
+**승인 반영 당시 문서 검증:** 승인 상태→분야별 본문/체크리스트→Owner·Release/복구→시험 목표/판정→WBS/비용→지침/전체03 상태의 연결을 대조했다. 이전 검토의 제안/미승인 표기는 당시 기록으로 명시하고 현재 승인 기록과 분리했다. 시험 식별자·코드 예시·공식 참고 링크·주요 버전/수치·상위 제공 원본 보존을 확인했다. 이 검증은 당시 승인 반영의 정합성 확인이며 당시 예정된 전체03 검토를 대신하지 않는다. 이후 연쇄 재검토와 보완은 §3-I.12.3에 기록한다.
 
-다음 단계는 사용자가 승인 반영본 전체를 검토하고 전체03의 최종 확정·변경·보류 범위를 알려주는 것이다. B01~B07을 다시 작은 승인 단계로 나누어 묻지 않는다. 실제 구현·가격/지원 확인·Cost Gate·시험은 별도의 실제 상태로 기록한다.
+당시 다음 단계는 승인 반영본 전체 검토 후 전체03의 최종 확정·변경·보류 범위를 기록하는 것이었다. B01~B07을 다시 작은 승인 단계로 나누어 묻지 않는다. 실제 구현·가격/지원 확인·Cost Gate·시험은 별도의 실제 상태로 기록한다.
 
 #### 3-I.12.3 B01~B07 승인 반영본의 연쇄·재귀 검토
 
-**검토일 / 요청:** 2026-10-01 KST, 직전 승인 반영 완료 답변을 연쇄 추적하고 추가 보완/변경이 발견되지 않을 때까지 재귀 검증하라는 사용자 요청.  
+**검토일 / 범위:** 2026-10-01 KST, 승인 반영 결과에서 관련 근거·영향을 추적하고 새 보완/변경이 발견되지 않을 때까지 재검증.  
 **범위:** 승인 반영본 전체의 상태/참조/시험 대응·코드 예시·수치·원본 보존, 변경 항목의 설계→Owner→구현→시험→WBS/Runbook/비용→지침 연결, 제공 00/01/02/지침 원본과 관련 공식 자료.  
 **판정:** 아래 보완을 반영한 뒤 같은 문서 검토 범위를 다시 대조해 추가 보완/변경이 발견되지 않아 이번 재귀 검토를 종료했다. B01~B07 작업 전제 승인·전체03 사용자 최종 컨펌 대기·실제 시험 NOT RUN을 유지한다.
 
@@ -3338,12 +3338,12 @@ Repository/Source부터 WBS/비용까지 3-A~3-H의 세부 설계와 3-I의 통�
 #### 3-I.12.4 두 문서 전체 최종 컨펌·등록 완료 반영
 
 **기록 ID / 일자:** PH2-03-FINAL-CONFIRM-01 / 2026-10-01 KST.  
-**근거:** 사용자가 “네가 제공해 준 두 문서를 컨펌한다. 또한 이어서 프로젝트 소스 등록까지 완료했다”고 명시함.  
+**근거:** 2026-10-01 두 문서 전체 최종 승인과 프로젝트 소스 등록 완료 보고.  
 **범위:** 직전 제공한 `03_DETAILED_DESIGN.md` 전체와 개정 `PROJECT_INSTRUCTIONS.md` 전체. 별도 변경/보류 범위는 제시되지 않음. 승인 직전 03 SHA-256은 `dfae209fd0fc16e462fa59caa377a8cef0c96e51c11757b46895a2edfcd3f2f2`, 지침은 `b8c8eba1952e52759700f9b900681a54ee5964a1654dd278c69424252624368f`.
 
 최종 컨펌 범위 반영은 WORKING DRAFT/최종 검토 대기였던 현재 상태를 승인된 설계 기준으로 변경하고, 분야별 승인 상태·W01·진행표·지침·구현 인계를 일치시키는 작업이다. 실제 값/지원/가격 검증·코드/Plan/Apply·Runtime 시험의 미확인 상태는 유지한다. 당시 소단계 승인과 과거 재귀 검토 이력은 당시 기록으로 보존한다. 기존 설계 선택·버전/규모 후보·시험 목표·$500 한도·Freeze를 이번 상태 반영으로 바꾸지 않았다.
 
-프로젝트 소스 등록 완료는 사용자의 직접 확인을 근거로 기록한다. ChatGPT의 프로젝트 소스 목록을 직접 조회하거나 수정한 것으로 기록하지 않는다. 이번 승인 상태 정리와 추가 자료의 준비 기록을 작성했다고 이미 등록한 사본에 자동 동기화되었다고 주장하지 않는다. 상세설계는 계속 단일 03이며 추가 팀원 자료 전문을 새 필수 Project Source로 등록할 필요는 없다. `00/01/02`·제공 지침/가이드 원본과 통합 전 작업 파일은 수정하지 않았다.
+프로젝트 소스 등록 완료는 등록 담당자의 직접 확인 보고를 근거로 기록한다. 별도 목록 조회·수정 또는 자동 동기화를 수행한 것으로 기록하지 않는다. 이번 승인 상태 정리와 추가 자료의 준비 기록을 작성했다고 이미 등록한 사본에 자동 동기화되었다고 주장하지 않는다. 상세설계는 계속 단일 03이며 추가 팀원 자료 전문을 새 필수 Project Source로 등록할 필요는 없다. `00/01/02`·제공 지침/가이드 원본과 통합 전 작업 파일은 수정하지 않았다.
 
 최종 컨펌과 함께 후속 작업을 계속하라는 지시를 반영해 구현 준비를 진행한다. 새 실질적 선택이 없으면 재승인을 반복 요청하지 않는다. 실제 지원/Source/가격이 승인 기준과 충돌하면 해당 의존 작업을 보류하고 원인·대안·시험/비용 영향을 연결한다.
 
@@ -3353,7 +3353,7 @@ Repository/Source부터 WBS/비용까지 3-A~3-H의 세부 설계와 3-I의 통�
 
 현재 진행 현황:
 
-- [x] 03·개정 지침 전체 최종 컨펌·프로젝트 소스 등록 완료 사용자 확인 반영
+- [x] 03·개정 지침 전체 최종 컨펌·프로젝트 소스 등록 완료 보고 반영
 - [x] 추가 가이드 세 개와 Issue #1 본문/코멘트 대조
 - [x] 보고 Commit의 DB/Redis 연결 코드·CI/Job 템플릿 읽기 전용 확인
 - [x] 승인 설계 충돌·발견사항 11건의 후속 영향·시험·인계 정리
@@ -3393,7 +3393,7 @@ Repository/Source부터 WBS/비용까지 3-A~3-H의 세부 설계와 3-I의 통�
 
 같은 Commit의 `Jenkinsfile.image-pipeline`에는 Harbor 후보 Build·Trivy Scan·Health Smoke·Digest 검증·Metadata 기록·GitOps PR 코드가 있다. Source 코드의 기존 정책은 CRITICAL 또는 수정 가능한 HIGH가 있으면 승격 차단하는 방식이다. 이는 발견한 기존 코드 조건이며 이번에 새로운 취약점 목표/Should→Must 승격을 결정한 것이 아니다. 실제 Jenkins/Trivy 설치·인증·실행 결과·스캐너 DB 개정은 미확인이다. ECR Push/Cloud Pull·Harbor Recovery 보존·2차 경로/권한의 변경이 필요하므로 가이드의 “Jenkins 변경 없음”을 채택하지 않는다.
 
-네 Repo Metadata는 2026-10-01 조회에서 모두 존재·public·기본 Branch main·archived=false였다. 조회 연결 주체에는 pull/push/admin이 표시되지만 팀원 네 사람의 권한을 확인한 것은 아니다. Repo size만으로 빈 저장소 또는 Base 완료를 판정하지 않는다. Branch 보호·Tree·열린 PR·실제 Code·Docs 반영 상태는 미확인이다. 사용자의 ChatGPT 프로젝트 소스 등록 완료와 GitHub Docs 반영 완료는 별개다.
+네 Repo Metadata는 2026-10-01 조회에서 모두 존재·public·기본 Branch main·archived=false였다. 조회 연결 주체에는 pull/push/admin이 표시되지만 팀원 네 사람의 권한을 확인한 것은 아니다. Repo size만으로 빈 저장소 또는 Base 완료를 판정하지 않는다. Branch 보호·Tree·열린 PR·실제 Code·Docs 반영 상태는 미확인이다. Project 소스 등록 완료 보고와 GitHub Docs 반영 완료는 별개다.
 
 #### 3-I.13.3 발견사항 11건의 연쇄 영향과 처리 조건
 
@@ -3447,7 +3447,7 @@ Base와 lab Overlay 인계는 Cloud 생성보다 먼저 준비할 수 있다. B 
 
 남은 작업 — 실제 구현 단계 직전:
 
-- [x] 전체03·지침 최종 컨펌·승인 상태·등록 완료 사용자 확인 반영
+- [x] 전체03·지침 최종 컨펌·승인 상태·등록 완료 보고 반영
 - [x] 추가 자료와 Issue 11건의 영향·재검증·담당 트랙·인계 조건 정리
 - [ ] 실제 작업자/Reviewer·개인별 Repo 권한/Branch 보호·Base PR Branch/Commit 및 ocp-lab Overlay 확보
 - [ ] App 이관 직전 최신 검증 Source·전체 Seed SHA·미반영 Maintenance·대상 Repo 이력 충돌 확인
@@ -3566,7 +3566,7 @@ Data 주기·최신성/실패 처리·Storage/비용·시험/G7/B06·W04, 04 준
 ## 남은 작업과 다음 단계
 
 - [x] B01~B07 작업 전제 승인 및 전체03·개정 지침 최종 컨펌 반영
-- [x] 프로젝트 소스 등록 완료 사용자 확인
+- [x] 프로젝트 소스 등록 완료 보고
 - [x] 추가 자료·Issue·지정 Source의 근거/충돌·시험/인계 정리
 - [x] 현재 DR10분/30분/15분·Backup/Restore 유지 설계 변경안과 근거/실행 Gate 기록 — §3-I.14.5
 - [x] DR 설계 요구 채택·PR #30 병합. 후속 정합성 보완과 실제 운영 목표 달성은 별도

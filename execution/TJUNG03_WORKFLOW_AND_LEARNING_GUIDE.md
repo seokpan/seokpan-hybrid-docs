@@ -1,20 +1,19 @@
 # 정태훈 작업·흐름·학습 안내
 
-<a id="gitops17-merged-checkpoint-20261007"></a>
-## 2026-10-07 현재 작업 기준 — GitOps #17 병합
+## 현재 실행 기준 — 2026-10-07 병합 후
 
-[GitOps #17](https://github.com/seokpan/seokpan-hybrid-gitops/pull/17)은 2026-10-06 23:45:46 KST에 main `fa3cea313e2cb1533d9703082619b085a3de25cc`로 병합됐고 작업 브랜치가 삭제됐다. 검토 HEAD `adacf6fffd9d179eef4715e92a3fed721759db55`와 병합 SHA, 승인 Image Source `46e21a74dd608b41f2c12a0a57d76bddfcf25949`와 현재 App main은 각각 구분한다.
+Docs #64·#67은 각각 `94d5955612f589f40343360709513568bc5f0dc0`·`d2371a44f4c9b35cf8082991ec9700ccea2ec524`에 병합됐고 두 작업 브랜치는 삭제됐다. GitOps #17의 내부 Registry 소비 Source는 `fa3cea313e2cb1533d9703082619b085a3de25cc`에 반영됐다. 현재 안내와 과거 관측을 구분한다.
 
-| 구분 | 현재 결과와 다음 조건 |
+| 병행 작업 | 완료된 범위와 직접 조건 |
 |---|---|
-| Source | FE/BE·별도 Migration Job의 내부 Registry 주소·기존 Digest·lab Redis URL/기대 Host 연결이 병합됐다. lab Harbor Pull 참조 제거는 실제 Secret 삭제가 아니다. Cloud ECR·Recovery Harbor는 유지한다 |
-| 실제 실행 | FE/BE replicas 0·Migration suspend/current/300초·단일 실행을 유지한다. 검토된 Valkey 선언과 Service/Ready 확인, DB/Schema·CA/목적 Secret·Route·권한·공유 사용창·live Diff 수락 뒤 필요한 단일 Migration → Backend → Frontend → 동일 조합 시험으로 진행한다 |
-| Cloud 금고 | B 공개키 전달·C 암호문 공급 안내 수신은 완료다. Docs #66의 C 계정별 해독 확인 보고와 B 본인 확인·수신·독립 사본 검증은 구분해 대조한다. 비밀값을 기록하지 않는다 |
-| 조사 범위 | 이번 Source 병합 반영은 네 저장소 전수조사 완료가 아니다. 설계·주석·그림·등록본의 발견과 남은 검토는 [정합성 조사 대장](REPOSITORY_CONSISTENCY_AUDIT.md) Q01~Q12를 따른다 |
+| lab 이미지 | 승인 FE/BE Digest·별도 Migration의 내부 Registry 경로 연결 완료. D의 워커 Pull4건 보고 유지. 실제 적용 직전 최종 SA·보존·사용창 확인 |
+| lab Valkey/App | 서버 선언은 아직 main에 없음. D 초안 제안의 실제 수락/PR → C Data·B StatefulSet 허용/UID/Probe/자원 검토. Service/Ready와 DB/Schema·CA/목적 Secret·Route·권한·사용창·live Diff 수락 → 필요한 단일 Migration → Backend → Frontend → 새 Run |
+| Cloud 금고 | 공개키 전달·C 암호문 공급은 완료. C 계정별 확인 보고와 B 본인 복호화·암호문 해시 대조·독립 사본 확인은 별도. Cloud 금고를 lab 작업의 선행조건으로 묶지 않음 |
+| ROSA 준비 | 본인 도구·Caller/Backend·지원·가용시간/사양·비용 입력은 독립 준비. 실제 Plan은 A의 제한 출력·공통 prerequisite·C Data SG2 필요. OCP 철거·전체 A 업무·전체 Recovery 완료를 일괄 선행조건으로 두지 않음 |
+| Pool·비용 | Engine2·process·종료 중 연결·예약 예산을 B/C가 확인한 뒤 소비 코드→D 새 Build/Digest. 후보3+2/60은 미채택. Cost PARTIAL, B 비용 입력19~24행·실제 가동/재시험/삭제 시각은 별도 |
+| DR·기록 | RTO10분·영속 DB RPO30분·DB 운영 중 Backup15분 계획 주기. 예약 주기와 실제 G+D+U·전체 T18 달성은 구분. 원 Issue/PR/Run과 TH81·실제 완료2를 유지 |
 
-아래 날짜별 기록은 해당 시점의 이력이다. 과거 대기 표시를 현재의 새 선행조건으로 되살리지 않는다. 기존 TH 81개·실제 완료 표시, C의 05 §8.13과 담당별 기록, 비용·Run 원본은 보존한다. Docs #64의 실제 병합 여부는 다음 작업 시작 시 GitHub에서 확인한다.
-
-**읽는 순서:** [개인 상위 Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21) → [현재 실행판](TJUNG03_EXECUTION_BOARD.md) → 원 이슈. 첫 안내만 지난 전체 작업을 소개하며 이후에는 **이번 변경·영향·대기·다음 행동**을 설명한다. 완료 체크는 원 이슈를 따른다.
+원 작업: [Docs21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21), [GitOps10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10), [App1](https://github.com/seokpan/seokpan-hybrid-app/issues/1)·[App4](https://github.com/seokpan/seokpan-hybrid-app/issues/4), [Infra25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25). FE/BE replicas0·Migration suspend/current/300초·단일 실행·삭제 보호는 유지한다. Cloud ECR·Recovery Harbor와 lab 내부 Registry는 서로 다른 경로다.
 
 ## 1. 지금 무엇을 만드는가
 
@@ -68,9 +67,9 @@ path: apps/overlays/lab
 
 `replicas: 0`은 파일에 적은 원하는 실행 수 0개, `INPUT_REQUIRED`는 승인 입력 미반영이라는 뜻이다. 현재 클러스터의 실제 Pod 수를 조회한 결과는 아니다. `reuse`는 기존 승인 Application 대조용이며 중복 등록하지 않는다. 실제 Owner·Image Digest·Secret/CA·Schema 수락 → 활성화 변경 검토 → 수동 Sync로 진행한다. **파일 존재·Synced·Ready·업무 PASS는 각각 다르다.**
 
-## 4. B의 지난 작업과 아직 하지 않은 실행
+## 4. B의 이전 작업·당시 실행 상태 — 현재는 상단 기준 적용
 
-아래는 지난 작업의 개요다. 작성·검사 지원은 Codex, 배정 책임은 B이며 실제 팀 서버 수행자를 대신 표시하지 않는다.
+아래는 지난 Source 작업과 당시 검사 범위의 개요다. 실제 실행 환경·수행자·리뷰·수신은 연결된 원 PR·Run에서 확인한다. 이후 공급·병합 상태는 상단 현재 기준을 따른다.
 
 | 영역·변경 위치 | 이미 준비·검사한 것 | 연결 담당·아직 남은 것 |
 |---|---|---|
@@ -83,7 +82,7 @@ path: apps/overlays/lab
 
 근거는 [05 §9](05_IMPLEMENTATION_AND_VALIDATION.md)와 원 이슈/PR에 있다. 과거 SHA·목표·Draft는 당시 이력으로 읽고 현재 실행판을 우선한다.
 
-## 5. 지금 진행하는 두 갈래
+## 5. 단계별 작업·학습 이력 — 당시 대기와 현재 조건 구분
 
 | 목적·원본 | B가 지금 준비하는 것 | 누구의 무엇을 기다리며 어디가 막히는가 | 다음 가지 |
 |---|---|---|---|
@@ -92,7 +91,7 @@ path: apps/overlays/lab
 
 **A 전체 업무·OCP 삭제·완성 Recovery Bundle을 기다리지 않는다.** 두 갈래를 병행하며 입력 수락·실행·결과 수신을 구분한다. 수신 미확인은 자원이 없다고 실측한 뜻이 아니다.
 
-**현재 기준 — 2026-10-06 KST:** [D Run#3](https://github.com/seokpan/seokpan-hybrid-app/pull/10#issuecomment-6009053898) SUCCESS·Harbor-only·`linux/amd64` 보고와 FE/BE Final Index Digest를 [B 수락 답변](https://github.com/seokpan/seokpan-hybrid-app/pull/10#issuecomment-6009213599)에서 제공 개정으로 수락했다. App Source는 `46e21a74dd608b41f2c12a0a57d76bddfcf25949`, Final tag는 `git-46e21a74dd60`다. 초기 frontend Alpine 경고는 최신 D 스캔 정정으로 공급 대기에서 해소했다. Private Harbor 원본 metadata/bytes를 B/AI가 독립 조회한 것은 아니며 cp-03 Podman Pull/Smoke 보고도 OCP Workload Pull/Ready 판정과 구분한다. [GitOps PR #13](https://github.com/seokpan/seokpan-hybrid-gitops/pull/13)은 검토 HEAD `c798ed28d516533d5ffb984ad58332e3a5e5829d`의 [D 최신 승인](https://github.com/seokpan/seokpan-hybrid-gitops/pull/13#pullrequestreview-5424398322) 후 main `fc175a7002ad567e9d5206b6e4b6642e8416eea2`로 병합됐고 작업 브랜치 삭제를 확인했다. [Source CI #40](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37420661610)의 39개 검사 통과(skip0)는 기존 검증 결과이며 이번에 새 검사/실행을 추가하지 않았다. 이전 e757 승인 `DISMISSED`·c798 `blocked`/재검토 요청은 [보완 답변](https://github.com/seokpan/seokpan-hybrid-gitops/pull/13#issuecomment-6010256873) 당시 이력이고 현재 Source 승인·병합 대기는 해소됐다. [Docs #53](https://github.com/seokpan/seokpan-hybrid-docs/pull/53)도 main `17b601b1e4dc2db82efaf8e82df78a39ae9c1376`로 병합·브랜치 삭제됐다. Source 준비 완료와 실제 입력 공급·활성화·실행 수락은 별개다. 현재 변경의 원리는 §5.8·[05 §9.36](05_IMPLEMENTATION_AND_VALIDATION.md#b-image-receipt-held-source-pullsecret-20261006)에서 본다. 이전 Source/Run 대기·학습은 당시 이력이며 C 기록/체크는 보존한다.
+**현재 기준 — 2026-10-06 KST:** [D Run#3](https://github.com/seokpan/seokpan-hybrid-app/pull/10#issuecomment-6009053898) SUCCESS·Harbor-only·`linux/amd64` 보고와 FE/BE Final Index Digest를 [B 수락 답변](https://github.com/seokpan/seokpan-hybrid-app/pull/10#issuecomment-6009213599)에서 제공 개정으로 수락했다. App Source는 `46e21a74dd608b41f2c12a0a57d76bddfcf25949`, Final tag는 `git-46e21a74dd60`다. 초기 frontend Alpine 경고는 최신 D 스캔 정정으로 공급 대기에서 해소했다. Private Harbor 원본 metadata/bytes를 독립 조회로 검증한 것은 아니며 cp-03 Podman Pull/Smoke 보고도 OCP Workload Pull/Ready 판정과 구분한다. [GitOps PR #13](https://github.com/seokpan/seokpan-hybrid-gitops/pull/13)은 검토 HEAD `c798ed28d516533d5ffb984ad58332e3a5e5829d`의 [D 최신 승인](https://github.com/seokpan/seokpan-hybrid-gitops/pull/13#pullrequestreview-5424398322) 후 main `fc175a7002ad567e9d5206b6e4b6642e8416eea2`로 병합됐고 작업 브랜치 삭제를 확인했다. [Source CI #40](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37420661610)의 39개 검사 통과(skip0)는 기존 검증 결과이며 이번에 새 검사/실행을 추가하지 않았다. 이전 e757 승인 `DISMISSED`·c798 `blocked`/재검토 요청은 [보완 답변](https://github.com/seokpan/seokpan-hybrid-gitops/pull/13#issuecomment-6010256873) 당시 이력이고 현재 Source 승인·병합 대기는 해소됐다. [Docs #53](https://github.com/seokpan/seokpan-hybrid-docs/pull/53)도 main `17b601b1e4dc2db82efaf8e82df78a39ae9c1376`로 병합·브랜치 삭제됐다. Source 준비 완료와 실제 입력 공급·활성화·실행 수락은 별개다. 현재 변경의 원리는 §5.8·[05 §9.36](05_IMPLEMENTATION_AND_VALIDATION.md#b-image-receipt-held-source-pullsecret-20261006)에서 본다. 이전 Source/Run 대기·학습은 당시 이력이며 C 기록/체크는 보존한다.
 
 병합 main [Run 37330480298](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37330480298)의 39개 검사와 실제 Render8 다운로드/Hash·목록 대조를 확인했다. 현재 artifact는 main6ea 개정이며 **10/13 00:09:31 KST**에 만료된다. D Run3 Image 제공/B 개정 수락은 확인됐고 D/C의 파일 수신/별도 보존·실제 Namespace Secret/lab/Data/Migration 준비와 활성화 후 Pull/Ready/업무 수락은 후속이다. 실제 클러스터/API를 조회한 자원 부재 판정은 아니다.
 
@@ -242,7 +241,7 @@ App10은 기존 B 승인 뒤 병합됐으며 이번에 새 APPROVE를 올린 것
 
 **앞선 검토/CI 이력:** `02215c823bbbe7e74cabccf54e9a61b81b34f401`의 [Native CI](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37436964045)는 39검사 PASS·8경로/22객체 Render 생성이다. 이전 `db0251baf7283de5529c0bfd43cad82950e8f3b1`의 [Native CI](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37435158422)39검사 PASS·8경로/22객체 Render 생성과6d626c5/Run37434254592·54952bf/Run37433341860은 구 HEAD 이력이다. 당시 main은 fc175a70이며 실제 OCP/AWS/Registry/Image 명령·호환 Run은 미실행이다.
 
-**C v2 전체 파일 수신·B §6 대응:** 사용자가 제공한 `data-contract-v2-20261006.md`의 §0~7 전체를 읽었다. SHA256은 `8679c46b80b1fe93b2083aea584a47e65cf4882d0c976a7cd9218159fe8f4616`다. [Infra19 v2 원 기록](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6011904645)·[§6 수락 요청](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6011914737)·[GitOps6 연결](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6#issuecomment-6011931355)과 연결한다. C는 원 댓글도2026-10-06 17:14:34 KST에 §0~7 전체로 갱신했다. 최초 공개 조회의 소개/§0 관측은 당시 이력이며 파일/원 댓글 전체 수신·공유는 완료다. 실제 공급값·Run 수락은 별도다.
+**C v2 전체 파일 수신·B §6 대응:** 제공된 `data-contract-v2-20261006.md`의 §0~7 전체를 읽었다. SHA256은 `8679c46b80b1fe93b2083aea584a47e65cf4882d0c976a7cd9218159fe8f4616`다. [Infra19 v2 원 기록](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6011904645)·[§6 수락 요청](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6011914737)·[GitOps6 연결](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6#issuecomment-6011931355)과 연결한다. C는 원 댓글도2026-10-06 17:14:34 KST에 §0~7 전체로 갱신했다. 최초 공개 조회의 소개/§0 관측은 당시 이력이며 파일/원 댓글 전체 수신·공유는 완료다. 실제 공급값·Run 수락은 별도다.
 
 | C §6의 B 요청 | B 수신·Source 판단 | 내 일 또는 팀 공급으로 남는 실제 확인 |
 | --- | --- | --- |
@@ -273,9 +272,9 @@ App10은 기존 B 승인 뒤 병합됐으며 이번에 새 APPROVE를 올린 것
 
 **17:27~17:30 KST 추가 수신 이력 — 현재는 위 v2.2/lab v1.1 기준 우선:** [C v2.1 후속](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6012401242)에서 lab Redis 설정 원칙을 받았다. C는 complete `redis.conf`·인증서 조건·Probe 실행 기준을 **10/7 오전 제공 예정**이며, D가 인증서 발급/Kubernetes 구성·배포·시험을 맡고 B는 소비 선언·임의 UID/쓰기 경로·TLS/AUTH Probe를 리뷰한다. C의 `port0`, server TLS+별도AUTH, noeviction·저장off/emptyDir·Key0440·AUTH 환경변수/TLS execProbe 원칙은 수신했고 완성 공급/실행은 아직 아니다. D가 Service 이름을 정해 SAN에 `.svc`/`.svc.cluster.local` 두이름을 넣고 소비 Host를 하나와 정확히 맞춘다. Redis7.x 권장은 정확 version/digest 공급이 아니며 Cloud7.1/client8.1 지원 전략·실제 호환 대기는 유지한다. 같은 Recovery 설정 원칙도 환경별 CA/Token/DNS를 섞지 않고 적용한다.
 
-**D의17:30 읽기 보고:** [GitOps6 현재 카드](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6)에서 대상 Namespace의 기본 SA/CA 외 객체 없음, Quota/LimitRange/NetworkPolicy 없음·default Project의 넓은 허용·Applications0·Controller 정상 보고를 수신했다. D Caller system:admin과 B 권한은 별도이며 실제 적용 직전 Owner/권한/사용창·선택 범위/live Diff 수락을 유지한다. D는 CA CN seokpan-lab-ca의 만료도2026-10-31 05:54:12 GMT로 보고했다. 이는 추가 CA metadata 보고이고 B/AI의 CA bytes/Hash·TLS 독립검증 완료가 아니다. DB서버 인증서와 CA 만료를 같은 관측으로 합치지 않는다. 기존 demo2/DB/평문Redis/PVC·Argo 내부Redis를 변경하지 않는다.
+**D의17:30 읽기 보고:** [GitOps6 현재 카드](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6)에서 대상 Namespace의 기본 SA/CA 외 객체 없음, Quota/LimitRange/NetworkPolicy 없음·default Project의 넓은 허용·Applications0·Controller 정상 보고를 수신했다. D Caller system:admin과 B 권한은 별도이며 실제 적용 직전 Owner/권한/사용창·선택 범위/live Diff 수락을 유지한다. D는 CA CN seokpan-lab-ca의 만료도2026-10-31 05:54:12 GMT로 보고했다. 이는 추가 CA metadata 보고이고 CA bytes/Hash·TLS 독립검증 완료가 아니다. DB서버 인증서와 CA 만료를 같은 관측으로 합치지 않는다. 기존 demo2/DB/평문Redis/PVC·Argo 내부Redis를 변경하지 않는다.
 
-**기록·전달·수신 구분:** Registry 판단은 [GitOps14](https://github.com/seokpan/seokpan-hybrid-gitops/issues/14)·[10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10)에 작성했다. 사용자 18:44:47 KST 확인으로 Registry·Data·최신 비용 답장 3건의 전달·수신은 완료됐다. 사용자 이번 확인으로 C·D 메시지 2건은 전달 완료, 두 메시지의 수신·응답은 미확인이다. 앞선 18:44:47 KST의 3건 전달·수신 완료와 구분한다. 4조의10/6 사용 수락 보고는 받았고 이후 사용창·연락/중단 담당·노드 재시작 수반 변경 재안내는 별도다. C 계약 B5 응답은 [Infra19](https://github.com/seokpan/seokpan-hybrid-infra/issues/19)에 기록한 부분 수락/보완이며 Runtime 수락이 아니다. [Docs43](https://github.com/seokpan/seokpan-hybrid-docs/issues/43)의 개정 원장 독립 감사 피드백은 D 수신 확인까지 완료됐으며 수식 보완·Cost Gate PASS는 남았다. [A Network IAM 적용 보고](https://github.com/seokpan/seokpan-hybrid-infra/pull/36#issuecomment-6013414243)의 복구 Apply2 add/0 change/0 destroy·정책/Role 연결·재Plan No changes를 수신했다. 실제 Network/Full foundation 출력·SG2·ROSA 권한 수락은 남았다.
+**기록·전달·수신 구분:** Registry 판단은 [GitOps14](https://github.com/seokpan/seokpan-hybrid-gitops/issues/14)·[10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10)에 작성했다. 18:44:47 KST 전달 확인으로 Registry·Data·최신 비용 답장 3건의 전달·수신은 완료됐다. 이번 전달 확인에 따라 C·D 메시지 2건은 전달 완료, 두 메시지의 수신·응답은 미확인이다. 앞선 18:44:47 KST의 3건 전달·수신 완료와 구분한다. 4조의10/6 사용 수락 보고는 받았고 이후 사용창·연락/중단 담당·노드 재시작 수반 변경 재안내는 별도다. C 계약 B5 응답은 [Infra19](https://github.com/seokpan/seokpan-hybrid-infra/issues/19)에 기록한 부분 수락/보완이며 Runtime 수락이 아니다. [Docs43](https://github.com/seokpan/seokpan-hybrid-docs/issues/43)의 개정 원장 독립 감사 피드백은 D 수신 확인까지 완료됐으며 수식 보완·Cost Gate PASS는 남았다. [A Network IAM 적용 보고](https://github.com/seokpan/seokpan-hybrid-infra/pull/36#issuecomment-6013414243)의 복구 Apply2 add/0 change/0 destroy·정책/Role 연결·재Plan No changes를 수신했다. 실제 Network/Full foundation 출력·SG2·ROSA 권한 수락은 남았다.
 
 **B 설명 연습:** “Git에 배포 선언을 넣어도 Argo가 수락한 범위로 API에 적용해야 클러스터가 바뀝니다. Pod를 실행하려면 Worker가 Registry와 Data에 실제로 접근해야 하므로, 지금은 등록 준비와 업무 시험의 대기를 나누고 있습니다.”
 
@@ -397,3 +396,24 @@ App10은 기존 B 승인 뒤 병합됐으며 이번에 새 APPROVE를 올린 것
 실패하면 성공으로 회신하지 않고 C에게 단계/오류만 전달하며 Token/개인키·명령 출력 전체를 복사하지 않는다. 개인키의 독립 사본/복구 확인, 나중에 같은 승인 Token을 Cloud backend-redis-runtime Secret에 무노출 공급하는 것은 각각 후속이다. lab의 별도 Token을 이 파일로 덮어쓰지 않는다. `ansible` 계정 전용 여부는 A가 답한다.
 
 **판정 범위:** GitOps #17의 기존 Source39/진단Render8 검사와 Source 병합은 완료다. 활성 Release·실제 Sync/Pod/DB/TLS/업무는 남은 입력과 별도 시험이 필요하다. 이 인계만으로 00–04·그림 전체의 정합성 검토를 완료 처리하지 않는다. Cloud 금고의 공급자 확인 보고와 본인 확인은 상단 현재 기준으로 대조한다.
+
+<details>
+<summary>이전 시점의 관측·검토 이력 — 현재 실행 지시와 구분</summary>
+
+<a id="gitops17-merged-checkpoint-20261007"></a>
+## 2026-10-07 현재 작업 기준 — GitOps #17 병합
+
+[GitOps #17](https://github.com/seokpan/seokpan-hybrid-gitops/pull/17)은 2026-10-06 23:45:46 KST에 main `fa3cea313e2cb1533d9703082619b085a3de25cc`로 병합됐고 작업 브랜치가 삭제됐다. 검토 HEAD `adacf6fffd9d179eef4715e92a3fed721759db55`와 병합 SHA, 승인 Image Source `46e21a74dd608b41f2c12a0a57d76bddfcf25949`와 현재 App main은 각각 구분한다.
+
+| 구분 | 현재 결과와 다음 조건 |
+|---|---|
+| Source | FE/BE·별도 Migration Job의 내부 Registry 주소·기존 Digest·lab Redis URL/기대 Host 연결이 병합됐다. lab Harbor Pull 참조 제거는 실제 Secret 삭제가 아니다. Cloud ECR·Recovery Harbor는 유지한다 |
+| 실제 실행 | FE/BE replicas 0·Migration suspend/current/300초·단일 실행을 유지한다. 검토된 Valkey 선언과 Service/Ready 확인, DB/Schema·CA/목적 Secret·Route·권한·공유 사용창·live Diff 수락 뒤 필요한 단일 Migration → Backend → Frontend → 동일 조합 시험으로 진행한다 |
+| Cloud 금고 | B 공개키 전달·C 암호문 공급 안내 수신은 완료다. Docs #66의 C 계정별 해독 확인 보고와 B 본인 확인·수신·독립 사본 검증은 구분해 대조한다. 비밀값을 기록하지 않는다 |
+| 조사 범위 | 이번 Source 병합 반영은 네 저장소 전수조사 완료가 아니다. 설계·주석·그림·등록본의 발견과 남은 검토는 [정합성 조사 대장](REPOSITORY_CONSISTENCY_AUDIT.md) Q01~Q12를 따른다 |
+
+아래 날짜별 기록은 해당 시점의 이력이다. 과거 대기 표시를 현재의 새 선행조건으로 되살리지 않는다. 기존 TH 81개·실제 완료 표시, C의 05 §8.13과 담당별 기록, 비용·Run 원본은 보존한다. Docs #64의 실제 병합 여부는 다음 작업 시작 시 GitHub에서 확인한다.
+
+**읽는 순서:** [개인 상위 Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21) → [현재 실행판](TJUNG03_EXECUTION_BOARD.md) → 원 이슈. 첫 안내만 지난 전체 작업을 소개하며 이후에는 **이번 변경·영향·대기·다음 행동**을 설명한다. 완료 체크는 원 이슈를 따른다.
+
+</details>
