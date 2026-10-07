@@ -755,9 +755,9 @@ State Lineage·Serial 차이의 원인과 내용 동일성은 [첫 코멘트](ht
   - Data 출력은 계정 번호가 섞일 수 있어 Issue가 아니라 팀 채팅으로 전달한다.
 - 온프렘 신규 VM 2대 구분: **백업 작업 VM**(1차 DB → RDS 이관과 15분 백업, AWS에 접속함, `192.168.52.50`)과 **복구 DB VM**(AWS 없이 백업으로 MariaDB를 새로 복원, AWS에 접속하지 않음)은 04 문서 5.5절(확정된 복구 DB 전용 VM 배치)대로 별도 VM이다. 복구 DB VM의 서버 여유 확인과 주소 결정은 10/8 Plan 후 이유빈과 함께 한다.
 - 비용 입력 갱신: [Docs #43](https://github.com/seokpan/seokpan-hybrid-docs/issues/43)의 Data 입력에서 캐시 엔진을 Valkey 7.2로 바꾸고, RDS · Valkey 생성 시점을 "foundation Apply 날짜"로 고쳤다. Valkey 단가 재계산은 최유준 담당이다.
-- 정리 PR: [Infra PR #39](https://github.com/seokpan/seokpan-hybrid-infra/pull/39)로 bootstrap의 `CreateDataServiceLinkedRoles` 권한을 뺐다(RDS · ElastiCache 서비스 연결 Role은 10-06에 미리 만들었고 10-07 10:34 KST에 다시 조회해 확인). 함께 foundation README의 비밀번호 공급 명령을 대입과 `export` 두 줄로 나눴다 — 한 줄로 쓰면 sops가 파일을 못 열어도 `export`가 성공해 중간에 멈추지 않는다. bootstrap plan(확인만)은 0 add / 1 change / 0 destroy였고, 리뷰 승인 후 main `ceb6fad`로 병합했다. bootstrap 적용은 이유빈 담당이다.
+- 정리 PR: [Infra PR #39](https://github.com/seokpan/seokpan-hybrid-infra/pull/39)로 bootstrap의 `CreateDataServiceLinkedRoles` 권한을 뺐다(RDS · ElastiCache 서비스 연결 Role은 10-06에 미리 만들었고 10-07 10:34 KST에 다시 조회해 확인). 함께 foundation README의 비밀번호 공급 명령을 대입과 `export` 두 줄로 나눴다 — 한 줄로 쓰면 sops가 파일을 못 열어도 `export`가 성공해 중간에 멈추지 않는다. bootstrap plan(확인만)은 0 add / 1 change / 0 destroy였고, 리뷰 승인 후 main `ceb6fad`로 병합했고, 이유빈이 bootstrap을 적용한 뒤 다시 Plan을 돌려 `No changes`를 확인했다(배정 실행자 · 실제 수행자 이유빈, [PR #39 코멘트](https://github.com/seokpan/seokpan-hybrid-infra/pull/39)). 서비스 연결 Role 자체는 지우지 않았다.
 - Infra PR #38 Data 관점 검토: 병합 후 시험 9개를 직접 실행해 모두 통과했다. 과거 개별 결과 화면을 "알려진 한계"로 옮긴 것은 03 문서 3-I.14.4절과 맞고, 실제 운영 데이터 검토 항목은 실제 이관 · 백업 때 진행하므로 남겨 두는 것이 맞다. 보완 제안 2개(근거 절 번호, 운영과의 버전 차이를 결과 파일에도 기록)를 PR 코멘트로 남겼다.
-- 열린 항목: ① PR #39 bootstrap 적용과 No changes 확인(이유빈), ② 10/8 Plan의 Data 자원 17개 · 보안 그룹 2개 `Component=data` 태그 · AccessDenied 확인, ③ Apply 후 실제 값 인계와 Valkey CA 확인, ④ 백업 작업 VM 생성, ⑤ 복구 DB VM 사양 · 주소, ⑥ Valkey 단가 재계산(최유준)
+- 열린 항목: ① (완료) PR #39 bootstrap 적용과 No changes 확인(이유빈, 10-07), ② 10/8 Plan의 Data 자원 17개 · 보안 그룹 2개 `Component=data` 태그 · AccessDenied 확인, ③ Apply 후 실제 값 인계와 Valkey CA 확인, ④ 백업 작업 VM 생성, ⑤ 복구 DB VM 사양 · 주소, ⑥ Valkey 단가 재계산(최유준)
 - 한계: 해독 확인 · 인계 · 권한 축소 · 기록까지이며, foundation Plan · Apply, RDS · Valkey 생성 · 접속, 이관 · Backup/Restore 측정은 아니다.
 
 ## 9 복구 예행과 목표 재검토 — 2026-10-02
