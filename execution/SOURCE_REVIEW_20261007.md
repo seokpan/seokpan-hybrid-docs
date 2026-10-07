@@ -95,3 +95,35 @@ Artifact `11455536698`, ZIP SHA256 `dd9b2ef9224239fcf7bf79286177b97a2a15c8335829
 첫 문서 게시 Run37560736306은 수정된 임시 스크립트를 제거하는 단계에서 git rm이 거부해 게시 전 중단됐다. 검토한6파일의 내용 검사는 통과했고 제품 코드 실패가 아니다. 임시 스크립트만 원상 복원 후 제거하도록 고쳐 Run37561183514가 성공했으며, 산출물 Commit `ee0f3158c91af858d39b89a7cd47c2c681ff16aa`를 이번 통합의 고정 입력으로 사용했다. 이전 실패와 성공을 합치지 않는다.
 
 통합 검사 Run37561651049는 Tracker에 김상희 행이 하나뿐이라고 잘못 가정한 검사에서 게시 전 중단됐다. 실제로는 권한·입력·작업의 세 표에 각 행이 있으므로 세 행 전체의 바이트 보존을 검사하도록 정정했다. Source/문서 손실로 판정하거나 실패를 성공에 포함하지 않는다.
+
+
+<a id="b-review-followup-20261007"></a>
+## 8. 승인 제안·PubSub·경로 A·Recovery 후속 — 2026-10-07
+
+§1–7은 이전 체크포인트다. Docs69는 main078d9e에 병합됐고 기존 d7f0e619 브랜치는 보존한다. 현재 작업은 다음 원 PR과 실행 문서의 단일 현재 구획으로 연결한다.
+
+| PR / 정확한 Source | 검증과 인계 |
+|---|---|
+| [App17](https://github.com/seokpan/seokpan-hybrid-app/pull/17) `367938f08e735fe123827b3c9362307b5d59408f` | 제품 Source 불변. 최종 HEAD의 Run37564888138에서1754/부분집합47 PASS·dirty=false. registry 단일/다중 참조와 Source/배포 rollback 설명을 보완하고 D 재검토 요청 |
+| [App18](https://github.com/seokpan/seokpan-hybrid-app/pull/18) `5a8a8de85400687ca53ab286cbe96658935983f4` | close_turn(None)의 Lua 오류/ProviderUnavailable 오분류 수정, cjson.null·Script11·지속 Source CI. 최종 Run37566223434에서1752/부분집합47/별도회귀9 PASS·dirty=false. 최신 D 재리뷰 필요 |
+| [App19](https://github.com/seokpan/seokpan-hybrid-app/pull/19) `1cc717ba4e6c7bc14d7778a6d2e2b0417d8332fc` | PubSub 소유권 이전 전 취소 정리. Lobby/Room×subscribe/버전 읽기의 기존4FAIL→수정4PASS. Run37566764240에서 최종1756/부분집합47 PASS·dirty=false. C/D 리뷰 요청 |
+| [GitOps20](https://github.com/seokpan/seokpan-hybrid-gitops/pull/20) `b671871d2914b0a2bb541acbca19fd75601473d5` | 경로 A 등록 비교13개+기존40=53 PASS, Run37567731179. 진단8Render/26객체·Source 불변. 실제 Manifest/입력/등록값은 변경하지 않음. D 리뷰 |
+| [Infra40](https://github.com/seokpan/seokpan-hybrid-infra/pull/40) `c1a495bc2569c745d84dbcac27dc055596e8b5b1` | C38 제안 반영: 기능14.4/목표14.5 구분·운영 차이 Metadata·오래된 설계 대기 README 정정. Run37568085720의 결과 생성기10 PASS. C/D 리뷰 |
+
+App은 Python3.13.15·uv0.12.5·기존 Lock/format/lint/mypy/coverage 기준을 유지했다. 최종 JUnit failure/error/skip0이며 runner47은 기본 suite의 부분집합이라 합산하지 않는다. App18 회귀9 중 Apply(None)1개는 기존 Python guard,8개는 Adapter/Lua 경로다. 첫 Run37565398120은 실제8PASS/close_turn(None)1FAIL이었지만 검사 계획이2FAIL을 예상해 게시 전 중단됐다. 이 가정을 정정한 Run37565832829에서 red/green과 clean 후보를 확인했고 최종 PR CI도 통과했다. 이를 두 Lua 결함으로 기록하지 않는다.
+
+각 Run의 Artifact를 내려받아 CRC·Source/도구·JUnit/로그·출력 해시를 확인했다. App 수정/Infra 출력은 포함된 Git Bundle의 blob과 로컬 검토 바이트도 대조했다. null 후보의 숨김.github 파일은 별도 업로드되지 않아 Bundle에서 확인했다. 정확한 Artifact ID/ZIP 해시는 원 PR에 기록했다. GitOps는 Python3.12.3/PyYAML6.0.2/Kustomize5.7.1과8개 YAML 체크섬, Infra는 Python3.12.3의 Metadata 시험이다. 회귀용 Redis7.2.4·합성 PubSub 시험은 선택 Valkey7.2 실제 Image/TLS/AUTH/Cloud 검증이 아니다. Infra도 실제 백업/복원 Run을 새로 실행하지 않았고 C_OPERATIONAL_DATA_REVIEW·RTO/RPO null·전체T18 NOT RUN을 유지한다.
+
+### 8.1 이번 Source 대응과 남은 의미 검토
+
+session_scripts의 create/touch/rotate/restore/revoke에서 raw CAS·절대/idle TTL·보상 시각을, room_scripts/presence_scripts와 disconnects에서 서버TIME·Generation/Lease·낡은 disconnect·입장/퇴장·owner/tombstone 후속을 대조했다. api/realtime·stream_access·snapshots·realtime_scripts/adapter에서는 session/binding/generation 재검사와 버전·통지공백·소유권을 연결했다. PubSub 이전 취소만 App19로 수정했다. 나머지 Room start_intent/start_capture/start_completion/start_closure/runtime·identity 응용 보상/경쟁·Frontend 전체와 시험 대응은 남는다. 현재 읽은 경로가 전체 App 수작업 검토 완료를 뜻하지 않는다.
+
+S2는 Recovery 선언/renderer와 실제 Valkey Image·binary·TLS/AUTH Probe·Storage 입력, C의 합성 검토와 운영 검토, App15 Promotion/App14 Writer의 Source/mock 준비와 실제 자격/Push/PR를 구분한다. 경로 A의 등록 비교는 [#5 B 동의](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5#issuecomment-6030172661)를 따른다. D의11:53 KST4조 조건부 사용 수락은 수신했고 실제 등록 시 유효 조건을 확인한다. Workload 입력 PR→확정 전체 SHA→별도 등록값 PR로 진행하며 새 Root/Controller는 없다. Valkey 준비의 독립성을 미해결 lab 전체 Overlay Sync 허가로 읽지 않는다.
+
+원 결과는 [App4](https://github.com/seokpan/seokpan-hybrid-app/issues/4#issuecomment-6030568884), 실제 병합 조합의 Build/Scan/Digest는 [App2](https://github.com/seokpan/seokpan-hybrid-app/issues/2#issuecomment-6030574985), 등록/실제 입력은 [GitOps10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10#issuecomment-6030599770), C 제안 수신은 [Infra38](https://github.com/seokpan/seokpan-hybrid-infra/pull/38#issuecomment-6030602922)에 기록했다. App17/18/19는 독립 HEAD 검사이며 승인 후 실제 병합 조합·Image·Runtime은 별도다.
+
+### 8.2 S3 수집과 S4 종료 경계
+
+수집 Run37564888138의03:02:47~03:03:48 UTC 순차 관측은144페이지·명시적 오류0, Branch16·일반Issue48·PR99·일반댓글208·inline댓글0·Review제출81·WorkflowRun129다. 목록/페이지 연결과 PR HEAD refs·42개 파일/Bundle 해시를 확인했다. Artifact11458298273 ZIP SHA256은 `551df71dd5b7048acdfcb608a70d1409400a5b6682c3c89be6061e9adac45141`이다. 이후 신규 PR/Branch/Run은 별도 조회다. 지난431개 commit 색인을 현재 완료 건수로 재사용하지 않는다. 모든 과거 diff·CI 로그/산출물·GraphQL thread 해결 상태의 의미 검토는 아직 아니다.
+
+이번 수정의 Source→시험→원 Issue/인계→현재 문서 파급을 재검증하되 Q02/03/04/05/10 전체는 미완료다. 다음 시작점은 위 잔여 App/Frontend·Recovery/CI 시험 대응, 과거 diff/CI/참조 의미 검토와 최종 원격 변경 대조다. 본인 독립 키·Caller·Data/Route/비용 입력은 별도 직접 조건이며 이 조사 전체를 대기시키지 않는다. 00–04·그림·과거 Evidence·TH81/실제 완료2는 유지한다.

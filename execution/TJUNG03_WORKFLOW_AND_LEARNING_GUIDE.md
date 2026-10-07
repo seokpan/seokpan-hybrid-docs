@@ -1,22 +1,20 @@
 # 정태훈 작업·흐름·학습 안내
 
-## 현재 실행 기준 — 2026-10-07 인계 수신 후
+## 현재 실행 기준 — 2026-10-07 리뷰 후속·경로 A 합의
 
-Docs #68(`fff5ac222243a231e5473f4ab39f87aa6cc10f6f`), Infra #38(`0f47617816b74365f5911ba2e273013ae82d6612`), App #16(`bdaa9dfa0a09e5d8efb1714ccf62860315b1346e`), GitOps #18(`12d78ac547729f0e314abfb2ac6238c95b1f3bd7`)은 병합·작업 브랜치 삭제를 확인했다. Project v3 등록도 확인했으며 같은 설계 파일의 재등록을 요구하지 않는다. 이후 D의 GitOps #19는 B 재검토 승인 뒤 `de130af839626c9d0a030580693a4060c41c9abd`에 병합됐다.
+[Docs #69](https://github.com/seokpan/seokpan-hybrid-docs/pull/69)는 main `078d9e0007e82aa45d1fe1a81a2e1ca4fbec6a6b`에 병합됐다. 해당 브랜치 `docs/b-runtime-input-followup-20261007`의 `d7f0e619bfed462985f931502b00d639ac4d34b4`는 사용자 요청대로 보존하고 수정·삭제하지 않는다. 후속 문서는 새 Branch/PR에서 검토한다.
 
-| 병행 작업 | 완료·수신 범위 | 직접 남은 조건 |
+| 경로 | 이번 완료·수신 | 직접 남은 조건 |
 |---|---|---|
-| Cloud 금고 | [C의 10/7 jth 해독·형식·암호문 해시 일치 보고](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6028766924), [B 수신](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6028919355) | Controller 밖 독립 키 사본·복원한 identity로 해독 확인. 이 기록 작성 환경에서 직접 복호화한 결과가 아니며 새 키를 만들거나 완료한 공개키 전달을 반복하지 않음 |
-| lab Valkey | [#19 Source 병합](https://github.com/seokpan/seokpan-hybrid-gitops/pull/19), [B 승인](https://github.com/seokpan/seokpan-hybrid-gitops/pull/19#pullrequestreview-5436531268), 검토 HEAD2215aff의 CI40개/진단8경로26객체 확인 | C Data 검토·실제 Image/Secret 개정·UID/자원·B 권한/대행·공유 사용창·AppProject/live Diff 수락 후 Valkey만1로 여는 활성화 변경. DB Schema·Cloud 금고·Cloud Pool 전체 합의를 Valkey 단독 준비의 조건으로 추가하지 않음 |
-| lab App | FE/BE·Migration 내부 Registry와 승인 Digest 유지. Valkey 서버 선언 부재는 해소 | Valkey Service/Ready·실제 TLS/AUTH/Hostname 확인 및 DB/Schema·목적 Secret/CA·Route 등 App 입력 수락 → 필요한 단일 Migration → BE1 → FE1 → 동일 조합 Run. [원 실행 인계](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10#issuecomment-6029054228) |
-| App Source·새 이미지 | main bdaa의 기존1752검사와 [App #17](https://github.com/seokpan/seokpan-hybrid-app/pull/17) startup 취소 수정(수정2Case·기본1754), [App #18](https://github.com/seokpan/seokpan-hybrid-app/pull/18) Lua 거부 시 board 불변 수정(실제 회귀용 Redis5Case·기본1752)의 red/green·CI 확인 | 두 PR의 C/D 리뷰·실제 병합 → 같은 Backend Build/Scan/Digest → App·held Migration 연결. 기존 Image에 수정이 포함됐다고 승계하지 않음. Valkey만의 기동 준비는 독립. [Source 검토](SOURCE_REVIEW_20261007.md) |
-| Pool | 두 Runtime Engine·Migration NullPool·기존 생성/정리 테스트와 구성값 미소비 확인 | 실제 DB/사용자별 연결 한도·idle 시간·예약·종료 중 연결/연속 Rolling 겹침 합의 → 필요한 소비 코드/검사 → D Build/Digest. 3+2/60은 미채택 시나리오. [App 원 결과](https://github.com/seokpan/seokpan-hybrid-app/issues/1#issuecomment-6029039957) |
-| ROSA·비용 | Source/Lock 보존·기존 OIDC harness 생성 확인. [Infra25 결과](https://github.com/seokpan/seokpan-hybrid-infra/issues/25#issuecomment-6029050081) | 본인 clone/도구/Caller/Backend·지원·구독/Quota·실제 가용성/비용 입력. 첫 Plan에 A 제한 출력·공통 prerequisite와 C Data SG2 필요. OCP 철거·전체 Data/Recovery 종료는 일괄 조건 아님. Cost PARTIAL 유지 |
-| 추가 보관 인계 | A의 WireGuard A 주/B 예비 합의 보고 수신 | 실제 키 생성·독립 사본은 미수신. Cloud AUTH·Backup Key와 다른 목적이며 A 실행 책임 유지 |
+| App | #17 최종367938f 재검사1754 PASS/설명, #18 새5a8a8de null·지속CI1752+회귀9 PASS, #19 새1cc717b PubSub 취소4Case/전체1756 PASS | #17/#18 D 재검토·#19 C/D 리뷰 → 실제 병합 조합 검사 → D Backend Build/Scan/Digest → App·별도 Migration 대응. 각 독립 HEAD 성공을 합산하지 않음 |
+| lab 경로 A | 기존 openshift-gitops에 제한 AppProject/Application 각1개, 새 Root/Controller 없음. #20 b671871 등록 비교/인계·기존CI53 PASS. D의11:53 KST4조 조건부 사용 수락 수신 | Workload 입력 PR 먼저(B 작성, Route/Origin D·Owner·DB/Schema C) → 병합/수락된 전체 SHA를 소비하는 등록값 PR(B 작성/D 리뷰). 실제 등록 시 Owner/RBAC/충돌/사용창, Sync 전 전체 release-manifest·입력·live Diff 확인 |
+| Cloud 금고 | C의 jth 해독·형식·암호문 보고/B 수신 완료 | Controller 밖 독립 키·암호문 사본과 복원 사용 확인. 새 키·공개키 재전달이나 본체 해독 미수신으로 되돌리지 않음 |
+| Recovery | C의 Infra38 합성 검토 수신, #40 c1a495b 기능 근거·운영 차이 Metadata/README10단위 PASS | C/D 리뷰, 실제 운영 Data·Recovery Valkey Image/binary/Probe/Storage·TLS·Bundle·전체T18. 과거 결과 HTTP/UI 신설은 Must 아님 |
+| ROSA·Pool·비용 | 기존 Source/Lock·LOCAL_PREPARATION 유지, Pool3+2/60 미채택 | 본인 clone/도구·Caller/Backend·지원/가용시간/예비 비용, A 제한 출력/prerequisite·C SG2. 실제 Pool 한도/종료 연결/예약 합의 후 소비 코드/Image. 10/8 foundation은 Plan만, Apply는 전체 Plan/리뷰/Cost 이후 |
 
-FE/BE/Valkey replicas0, Migration suspend/current/300초·단일 실행·삭제 보호를 이번 문서 변경으로 해제하지 않는다. 진단 artifact는 실행용이 아니며 실제 활성화는 해당 입력과 변경을 검토한 뒤 진행한다. DR10분/영속 DB RPO30분/운영 중 Backup15분 계획 주기, TH81/기존 완료2와 Q02/03/04/05/10 미완료를 유지한다. 상세 조사·검증·한계는 [조사 대장 §9](REPOSITORY_CONSISTENCY_AUDIT.md#b-runtime-input-followup-20261007)를 따른다.
+Valkey Source 준비는 DB Schema·Cloud 금고·Cloud Pool 전체 완료와 독립이다. 그러나 **현재 release-manifest는 lab Overlay 전체를 검사**하므로 미해결 Route/DB 입력을 무시한 전체 Sync나 진단 Render Apply는 하지 않는다. 부분 기동은 해당 검토된 Source/실행 범위가 먼저 필요하다. 실제 namespace/SHA placeholder·replicas0·Migration suspend·자동 Sync/Prune 보류는 이번 기록으로 해제하지 않는다.
 
-**Data 인계 최신화:** [Docs #71](https://github.com/seokpan/seokpan-hybrid-docs/pull/71)의 C 기록과 [Infra #39](https://github.com/seokpan/seokpan-hybrid-infra/pull/39) 병합을 확인했다. C의 jth 해독/해시 보고와 B 수신은 완료, 독립 키 사본/복원 확인은 별도다. 10/8 foundation은 Plan만 수행하는 인계이며 Apply는 전체 Plan·리뷰·Cost 이후 날짜 미확정이다. C의 기존 §8.14·Tracker 행은 보존한다.
+정확한 PR/전체SHA/Run·원 인계는 [Source 검토 §8](SOURCE_REVIEW_20261007.md#b-review-followup-20261007), 조사 재개는 [대장 §11](REPOSITORY_CONSISTENCY_AUDIT.md#b-review-followup-audit-20261007), 본인 실행 장소·명령은 [직접 실행 절](TJUNG03_WORKFLOW_AND_LEARNING_GUIDE.md#b-direct-actions-20261007)을 따른다. TH81/실제 완료2·기존 Q 체크·00–04·그림·과거 Evidence는 유지한다. Q02/03/04/05/10 전체 수렴은 미완료다.
 
 ## 1. 지금 무엇을 만드는가
 
@@ -429,3 +427,104 @@ App10은 기존 B 승인 뒤 병합됐으며 이번에 새 APPROVE를 올린 것
 Lua 실행 중 다른 명령이 끼어들지 않는 것과 거부한 연산이 이미 수행한 쓰기를 되돌리는 것은 다르다. [App #18](https://github.com/seokpan/seokpan-hybrid-app/pull/18)은 잘못된 다음 기한을 board HSET보다 앞에서 검사하고, 거부 후 상태 불변·정상 재시도를 확인했다. 회귀용 Redis7.2.4에서의 결과와 실제 Valkey/클러스터 업무 수락을 구분한다.
 
 기존 전체 검사 통과→새 경계 검사에서 실패→최소 수정→같은 검사와 기존 검사 재실행의 근거는 [S1–S4 검토 기록](SOURCE_REVIEW_20261007.md)에 연결한다. 이 두 결함의 수정 완료와 모든 Source/과거 이력의 전수 검토 종료는 별개다.
+
+
+<a id="b-direct-actions-20261007"></a>
+## 본인 직접 실행 — 장소·계정·명령과 회신
+
+S1–S4는 저장소 조사 순서이며 공유 서버에서 실행하는 설치 명령이 아니다. 이 절은 그 조사와 분리된 본인 확인이다. 아래 코드는 안내 작성 환경에서 Bash 문법만 검사했으며 jth/독립매체/실제 AWS 결과는 아직 없다. 키·Token·State·전체Plan을 채팅/Git에 보내지 않는다.
+
+### A. 독립 키 사본과 복원 사용 확인
+
+**장소:** 평소 접속하는 공유 Controller, **계정:** jth. 실제 개인키 파일 경로는 수신된 자료에 없으므로 임의로 확정하지 않는다. 기존 복호화에 사용한 본인 age 개인키를 재사용하고 새 키를 만들지 않는다. 먼저 기존 SFTP 접속으로 본인의 해당 키만 Controller와 분리된 암호화된 오프라인 매체에 보관한다. C가 준 `~/secrets/seokpan/foundation-data.sops.yaml`도 Controller 외부 보호 위치에 사본을 둔다. 타인의 키나 ~/.aws 전체는 복사하지 않는다. 매체의 암호 해제 수단도 같은 소실 Controller/AWS에만 의존하지 않게 보관한다. 새매체 포맷이나 권한 확대를 지시하는 절차가 아니다.
+
+보관한 매체를 실제로 열어 다시 복원할 빈 경로를 jth 셸에서 만든다.
+
+```bash
+(
+  set -eu
+  test "$(id -un)" = jth
+  umask 077
+  test -d "$HOME/secrets/seokpan"
+  mktemp -d "$HOME/secrets/seokpan/restore-check.XXXXXX"
+)
+```
+
+출력된 절대경로를 적어 둔다. **독립 매체에서 꺼낸 사본**을 SFTP로 그 폴더에 올린다. 파일 이름은 개인키 `restored-age-key.txt`, 암호문 `foundation-data.sops.yaml`로 한다. 기존 Controller 원본에서 새 폴더로 cp한 것을 독립 사본 검증으로 대체하지 않는다. 그 뒤 같은 jth 터미널에서 아래를 실행하고 방금 폴더의 절대경로를 입력한다.
+
+```bash
+(
+set +x
+set -euo pipefail
+umask 077
+[[ $(id -un) == jth ]] || { echo 'BLOCKED: jth 계정에서 실행하세요.'; exit 1; }
+read -r -p '독립 매체에서 복원한 폴더의 절대경로: ' DIR
+[[ $DIR == /* && -d $DIR && ! -L $DIR && -O $DIR ]] || exit 1
+KEY="$DIR/restored-age-key.txt"
+CIPHER="$DIR/foundation-data.sops.yaml"
+for tool in sops age-keygen sha256sum python3; do
+  command -v "$tool" >/dev/null || { echo "BLOCKED: $tool 없음"; exit 1; }
+done
+for file in "$KEY" "$CIPHER"; do
+  [[ -f $file && ! -L $file && -O $file ]] || { echo 'BLOCKED: 복원 파일·소유자를 확인하세요.'; exit 1; }
+  chmod 600 -- "$file"
+done
+PUBLIC=$(age-keygen -y "$KEY" 2>/dev/null)
+[[ $PUBLIC == age159cw58jmknv4qmpsq8dx7k3jqu0gt7dggk6ltthmgjc65csfdyas6w8ark ]] || { echo 'BLOCKED: 본인 키와 다릅니다.'; exit 1; }
+HASH=$(sha256sum -- "$CIPHER"); HASH=${HASH%% *}
+[[ ${HASH:0:12} == 9a86f90e6ba6 ]] || { echo 'BLOCKED: C의 현재 암호문 개정을 확인하세요.'; exit 1; }
+SOPS_BIN=$(command -v sops)
+[[ $SOPS_BIN == /* && -x $SOPS_BIN ]] || exit 1
+ISOLATED=$(mktemp -d)
+trap 'rm -rf -- "$ISOLATED"' EXIT
+env -i PATH="$PATH" HOME="$ISOLATED" XDG_CONFIG_HOME="$ISOLATED/.config" \
+  SOPS_AGE_KEY_FILE="$KEY" "$SOPS_BIN" decrypt \
+  --extract '["redis_auth_token"]' "$CIPHER" 2>/dev/null |
+  python3 -c 'import re,sys; v=sys.stdin.read(); raise SystemExit(0 if re.fullmatch(r"[0-9a-f]{64}\n?", v) else 1)'
+printf '본인 복원 키·해독·형식: OK\n암호문 확인값: %s\n' "${HASH:0:12}"
+)
+```
+
+성공 출력은 본인 복원 키·해독·형식 OK와 암호문 확인값뿐이다. 해시가 다르면 C 공급 개정부터 확인한다. 평소 HOME/XDG와 다른 identity 환경을 비우고 복원 키만 지정하므로 Controller 원본 키의 자동 선택으로 성공을 잘못 판단하지 않도록 했다. 스크립트는 임시 격리 HOME만 정리하고 복원한 키·암호문은 자동 삭제하지 않는다. 결과 확인 후 복원용 개인키 사본은 기존 보호 정책으로 정리하되 원래 키·유일한 독립 백업은 삭제하지 않는다.
+
+**회신:** Controller 외부 암호화 매체 보관 완료/미완료, 복원 키 해독·형식 OK/실패, 암호문 확인값. 매체의 독립성·암호 해제·접근 권한은 별도로 확인한다. 이 명령은 복원 키의 사용 가능성을 검사하며 Controller 상실 시 전체 운영 복구 성공을 증명하지 않는다. C의 본체 해독 보고와 B 수신은 이미 완료이므로 다시 미수신으로 되돌리지 않는다.
+
+### B. ROSA 본인 Source·도구 준비
+
+**장소:** 공유 Controller의 jth 터미널. **작업 디렉터리:** 본인이 사용하는 seokpan-hybrid-infra clone 최상위. 아래 명령이 실제 절대경로를 묻는다. 현재 개인 clone 위치는 미확인이므로 임의 경로로 고정하지 않는다.
+
+```bash
+(
+set +x
+set -euo pipefail
+[[ $(id -un) == jth ]] || { echo 'BLOCKED: jth 계정에서 실행하세요.'; exit 1; }
+read -r -p '본인 seokpan-hybrid-infra clone의 절대경로: ' REPO
+[[ $REPO == /* && -d $REPO ]] || exit 1
+cd "$REPO"
+[[ -f terraform/rosa/LOCAL_PREPARATION.md && -f scripts/tf-session.sh ]] || exit 1
+git status --short --branch
+git fetch origin main
+git rev-parse HEAD origin/main
+git diff --stat HEAD origin/main -- terraform/rosa scripts/tf-session.sh
+git diff --name-status -- terraform/rosa scripts/tf-session.sh
+git diff --cached --name-status -- terraform/rosa scripts/tf-session.sh
+printf '\nLocal Lock / origin-main Lock\n'
+git hash-object terraform/rosa/.terraform.lock.hcl
+git rev-parse origin/main:terraform/rosa/.terraform.lock.hcl
+for tool in python3 bash git terraform aws rosa oc jq; do
+  if command -v "$tool" >/dev/null 2>&1; then
+    printf '%s: PRESENT\n' "$tool"
+  else
+    printf '%s: MISSING\n' "$tool"
+  fi
+done
+if command -v terraform >/dev/null 2>&1; then CHECKPOINT_DISABLE=1 terraform version -json; fi
+if command -v aws >/dev/null 2>&1; then aws --version; fi
+bash -n scripts/tf-session.sh
+printf '\n로컬 Source/도구 확인 종료. Caller/Backend/Plan/Apply는 실행하지 않았습니다.\n'
+)
+```
+
+기준은 Infra `terraform/rosa/LOCAL_PREPARATION.md`다. fetch는 원격 참조만 갱신하며 개인 작업·Branch·reset·stash를 변경하지 않는다. Core1.16.4·Source/Lock AWS6.67.0·RHCS1.7.7을 대조하고 차이가 있어도 자동 upgrade하지 않는다. 없는 도구는 MISSING으로 기록한다.
+
+**회신:** HEAD와 origin/main, 두 Lock 식별값 일치 여부, 개인 변경 유무, 도구 MISSING 목록/TF·AWS 버전, 실제 작업 가능한 일시. 인증·보호 입력은 그다음 단계이며 이 명령에 tf-session source/init/plan/apply를 추가하지 않는다. 목적 Caller/Backend·A 출력/prerequisite·C SG2·실제 지원/예비 비용 수락 없이 Plan 성공을 미리 기록하지 않는다. 실제 lab Bootstrap/Sync는 D 또는 공유 Owner와 확인된 실행자가 수행하므로 이 개인 명령에 oc apply를 넣지 않는다.

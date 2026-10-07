@@ -1,6 +1,6 @@
 # 2차 저장소 정합성 조사·수정 대장
 
-> **현재 인계:** 실행 입력은 [§9](#b-runtime-input-followup-20261007), 이번 Source 결함 재현·수정·검증·후속 인계는 [§10](#b-s1-source-findings-20261007)을 따른다. 이전 체크포인트·Q 체크·실제 수행 이력을 보존한다.
+> **현재 인계:** 최신 리뷰·경로 A·Source 후속은 [§11](#b-review-followup-audit-20261007), 이전 실행 입력/두 결함은 §9–10의 당시 이력으로 보존한다. 기존 Q 체크와 실제 수행 기록은 유지한다.
 
 > 개정: 2026-10-07 KST  
 > 상태: IN PROGRESS — 두 중단분의 게시·산출물 복원, PR 설명/리뷰 요청 정정, fixture 요약 후속 보완 및 등록용 소스 제공. 전체 코드/이력 의미 검토와 Q10 수렴은 미완료  
@@ -220,3 +220,21 @@ Pool 크기 환경변수는 현재 App에서 소비하지 않는다. 실제 glob
 00–04·그림/manifest·C의 기존05 §8·Evidence·TH81/완료2는 변경하지 않는다. 실제 Runtime Run·비용·승인 Image 개정은 이번 기록으로 추가하지 않는다.
 
 최종 인계 대조에서 Docs #71 main `5b8c529e50e480ce1aa6e83a95caee8d9c877908`의 C §8.14·Tracker 변경과 기존 #69의 현재 입력을 결합했다. 금고 해독 보고/B 수신 완료를 다시 미수신으로 되돌리지 않으며, 독립 키 사본은 별도다. 새 문서 PR 대신 #69에 Source 검토를 연결한다. 감사 작업 브랜치의 산출물은 원 Commit/Run으로 보존하며 임의 삭제하지 않는다.
+
+
+<a id="b-review-followup-audit-20261007"></a>
+## 11. 리뷰 제안·경로 A·PubSub와 Recovery 기록 후속 — 2026-10-07
+
+상세 근거는 [Source 검토 §8](SOURCE_REVIEW_20261007.md#b-review-followup-20261007)과 네 실행 문서의 단일 현재 구획이다. Docs69는078d9e main에 병합됐고, d7f0e619 브랜치는 사용자 보존 요청에 따라 수정·삭제하지 않는다. 후속 변경은 새 Docs PR로 관리한다. §9–10의 당시 미병합 상태·검사·수치와 실제 수행자는 이력으로 보존한다.
+
+| 추적 단위 | 이번 조치 | 다음 직접 조건 |
+|---|---|---|
+| App17 | Source367938 불변, 정확한 최종 HEAD1754/부분집합47 재검사. registry 단일/다중 참조와 배포 rollback 설명 보완 | D 재검토 |
+| App18 | 5a8a8de의 null 처리·Script11·지속CI·회귀9. close_turn(None)만 새 Lua 실패이며 ApplyNone은 기존 Python guard | 최신 HEAD 재리뷰 |
+| App19 | 1cc717b의 PubSub 소유권 이전 전 취소4FAIL→4PASS, 전체1756/부분집합47 | C/D 리뷰와 실제 병합 조합·Image 검증 |
+| GitOps20 | b671871의 경로 A 등록 비교13개+기존40=53PASS. 현재 Manifest는 보류 상태 | Workload 입력 PR→확정 SHA 등록값 PR, 실제 Owner/RBAC/사용창·전체 release 검사 |
+| Infra40 | c1a495b의 C 제안 수용·기능14.4/목표14.5 구분·운영 차이 Metadata/README,10개 단위검사 PASS | C/D 리뷰. C 운영 Data 검토와 전체 T18은 별도 |
+
+원 작업·Build·등록·C 수신 링크, 정확한 SHA/Run/Artifact 해시, 실패/제외·시험 범위와 다음 파일은 Source §8에 연결했다. 새 수집144페이지·오류0/PR99/Review81 등은 목록·내용 확보 수준이며 전체 diff/CI의 의미 검토 완료가 아니다. 삭제·접근 불가 이력의 부재를 증명하지 않는다. encoded branch 단일 GET은 커넥터 URL 검사에서400으로 거부돼 전체 branches 조회로 확인했으며 Branch 부재로 판정하지 않았다.
+
+Q02/Q03/Q04/Q05/Q10은 미완료다. 다음은 Room start_*·identity 보상/시험·Frontend·Recovery/CI 잔여 연결→과거 diff/CI/참조 의미 검토→원격 변경 파급 재검증이다. 이미 검증한 취소/null 수정을 반복 작성하지 않는다. 본인 직접 작업은 [실행 명령](TJUNG03_WORKFLOW_AND_LEARNING_GUIDE.md#b-direct-actions-20261007)으로 분리하며 실제 키·Caller·배포 성공으로 가산하지 않는다. TH81/실제 완료2·기존 체크·00–04·그림은 유지한다.
