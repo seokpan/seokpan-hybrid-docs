@@ -1,0 +1,115 @@
+name: B runtime-input follow-up verification
+on:
+  push:
+    branches: [docs/b-runtime-input-followup-20261007]
+    paths: [.github/workflows/b-runtime-followup-temporary.yml]
+permissions:
+  contents: write
+concurrency:
+  group: b-runtime-input-followup-20261007
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: ${{ github.repository == 'seokpan/seokpan-hybrid-docs' && github.event.repository.private == false && github.actor == 'tjung03' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      BASE: fff5ac222243a231e5473f4ab39f87aa6cc10f6f
+      TARGET: docs/b-runtime-input-followup-20261007
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - name: Apply verified current-section edits without changing historical tails
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD^)" = c63fff9c0d6a0540dd4b5a7cfa35c47ad57a000d
+          mkdir -p "$RUNNER_TEMP/followup-report"
+          python3 - <<'PY'
+          import hashlib,json,os,re,subprocess
+          from pathlib import Path
+          p=Path('.github/maintenance/b-runtime-followup.json')
+          spec=json.loads(p.read_text())
+          expected={
+            'execution/TJUNG03_EXECUTION_BOARD.md':'ac61e7dae3def48daa2f1188fa37215249688840',
+            'execution/TJUNG03_WORKFLOW_AND_LEARNING_GUIDE.md':'c2a3fb6b074ed67130e40a23ad8ab443f6ce1c11',
+            'execution/WORK_TRACKER.md':'4b1e5ab45b3300bc06a49569a3793b20ddf3ed4e',
+            'execution/05_IMPLEMENTATION_AND_VALIDATION.md':'64f83df70e6980ac4855946c7593d6592baf2f99',
+            'execution/REPOSITORY_CONSISTENCY_AUDIT.md':'cc3b947ef732d98f457b4052067d3785cb27bf21',
+          }
+          def blob(raw):
+              return hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()
+          def checks(text):
+              return [s for s in text.splitlines() if re.match(r'^\s*- \[[ xX~]\]',s)]
+          records={};outputs={}
+          old_marker='## 현재 실행 기준 — 2026-10-07 병합 후\n'
+          for name,preimage in expected.items():
+              path=Path(name);raw=path.read_bytes()
+              assert blob(raw)==preimage, 'Source moved: '+name
+              assert raw==subprocess.check_output(['git','show',os.environ['BASE']+':'+name])
+              text=raw.decode()
+              if name.endswith('REPOSITORY_CONSISTENCY_AUDIT.md'):
+                  assert 'id="b-runtime-input-followup-20261007"' not in text
+                  first,rest=text.split('\n',1)
+                  notice='\n> **현재 인계:** 후속 PR 병합·Project 등록·jth 해독 보고·lab Valkey Source 및 Backend 검사의 최신 결과는 [§9](#b-runtime-input-followup-20261007)를 따른다. 아래 §1~8은 이전 조사 체크포인트이며 Q 체크 상태는 유지한다.\n'
+                  output=first+'\n'+notice+rest+spec['audit_followup']
+                  assert output.split(notice,1)[1].removesuffix(spec['audit_followup'])==rest
+              else:
+                  assert text.count(old_marker)==1,name
+                  start=text.index(old_marker)
+                  end=text.index('\n## ',start+len(old_marker))+1
+                  output=text[:start]+spec['current_block']+text[end:]
+                  assert output[:start]==text[:start]
+                  assert output[start+len(spec['current_block']):]==text[end:]
+                  assert output.count('## 현재 실행 기준')==1,name
+              assert checks(output)==checks(text), 'Checklist changed: '+name
+              assert output.count('```')==text.count('```'), 'Fence structure changed: '+name
+              data=output.encode();outputs[path]=data
+              records[name]={'before_blob':preimage,'after_blob':blob(data),
+                             'sha256':hashlib.sha256(data).hexdigest(),
+                             'checkbox_lines_preserved':len(checks(text)),
+                             'historical_tail_preserved':True}
+          for path,data in outputs.items():path.write_bytes(data)
+          report=Path(os.environ['RUNNER_TEMP'])/'followup-report'
+          (report/'files.json').write_text(json.dumps(records,indent=2)+'\n')
+          (report/'scope.json').write_text(json.dumps({'base':os.environ['BASE'],
+              'trigger':os.environ['GITHUB_SHA'],'files':len(records),
+              'historical_tails_and_C_records':'UNCHANGED',
+              'checklists':'UNCHANGED','design_images_evidence_code':'UNCHANGED',
+              'runtime':'NOT_RUN','full_audit_convergence':False},indent=2)+'\n')
+          print('PASS: five exact preimages, four unique current sections, historical tails/checks/fences unchanged')
+          PY
+      - name: Commit only reviewed documentation and remove temporary inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json,os,subprocess,shutil
+          from pathlib import Path
+          report=Path(os.environ['RUNNER_TEMP'])/'followup-report'
+          paths=list(json.loads((report/'files.json').read_text()))
+          subprocess.run(['git','add','--',*paths],check=True)
+          subprocess.run(['git','rm','.github/maintenance/b-runtime-followup.json','.github/workflows/b-runtime-followup-temporary.yml'],check=True)
+          changed=set(subprocess.check_output(['git','diff','--cached','--name-only',os.environ['BASE']],text=True).splitlines())
+          assert changed==set(paths),changed
+          (report/'changes.patch').write_bytes(subprocess.check_output(['git','diff','--cached',os.environ['BASE']]))
+          for name in paths:
+              out=report/'files'/name;out.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(name,out)
+          PY
+          git -c core.whitespace=-blank-at-eol,blank-at-eof,space-before-tab diff --cached --check
+          test "$(git ls-remote origin "refs/heads/$TARGET" | cut -f1)" = "$GITHUB_SHA"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit --author='tjung03 <73955817+tjung03@users.noreply.github.com>' -m 'docs: connect merged lab source, vault receipt and pinned backend checks'
+          git push origin "HEAD:refs/heads/$TARGET"
+          git rev-parse HEAD > "$RUNNER_TEMP/followup-report/published-commit.txt"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: ${{ always() }}
+        with:
+          name: b-runtime-input-followup-${{ github.run_id }}
+          path: ${{ runner.temp }}/followup-report
+          if-no-files-found: error
+          retention-days: 14
+          include-hidden-files: false
