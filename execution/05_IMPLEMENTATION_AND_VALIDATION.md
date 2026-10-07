@@ -1,21 +1,23 @@
 # 石나가는 판단 2차 프로젝트 05 구현·통합·검증 진행 기록
 
-## 현재 실행 기준 — 2026-10-07 재리뷰 대응·단계별 lab 활성화
+## 현재 실행 기준 — 2026-10-07 리뷰 처리 종료·work 인계
 
-| 경로 | 확인한 상태 | 직접 다음 조건 |
+| 경로 | 이번 완료·확인 | 직접 남은 조건 |
 |---|---|---|
-| App #17 | Source367938f 불변·전체1754/부분집합47 PASS. 조회된 승인은 기존 D 리뷰1건, 보완 결과의 새 제출은 미확인 | 기존 재검토 요청에 대한 제출 확인. 새 승인으로 꾸미지 않으며 병합·브랜치 삭제 보류 |
-| App #18/#19 | #18 d624c830의 CI 중복/명령 순서 보완·1752/47/별도Lua9 PASS. #19 f548f921의 cleanup RedisError/취소 전파 보완·1760/47/부분집합8 PASS | 최신 HEAD 재리뷰. 실제 승인·병합 조합 전체 검사 → D Build/Scan/Digest → B App·별도 Migration 소비 |
-| GitOps #20 | b13ae957 metadata allowlist·음성 회귀 보완, 전체58 PASS. A Changes requested 대응 후 A/D 재리뷰 요청 | Controller 등록 비교와 Valkey Stage-1 Gate는 별도. 아래 단계와 원 #5 인계 적용 |
-| Infra #40 | C 승인 HEAD c1a495bc → main a0da58c3 병합·작업 브랜치 삭제 확인 | Source/Metadata 수정 완료. 실제 운영 Data·Valkey·Backup/Recovery·전체 T18은 미검증 |
-| Cloud 금고 | 기존 본체 해독 보고/B 수신 완료. 독립 복원 시도는 파일 검사에서 BLOCKED | 독립 매체의 키/암호문을 복원 폴더에 실제 복사한 뒤 본인 jth로 재검사. 새 키 생성/Token 노출 금지 |
-| ROSA·비용 | clone 확인 시 경로/필수 파일 단계에서 진단 없이 중단. 원장(3)은 PARTIAL·미완19·기타미확인4 | clone 준비/진단 → Caller/Backend·지원·예비 비용. 실제 Plan에 A 제한 출력/prerequisite와 C SG2. CP/Infra/Worker3 유지, 실제 사양·기간 임의 입력 금지 |
+| App #17/#18/#19 | 최신 D 재승인 후 모두 squash 병합·작업 브랜치 삭제. 결합 main `a2afffb8605dafff1cb5b9af215aa0cf93aadcdb`의 정식 CI에서 Backend1762·부분집합runner47·별도Lua9 PASS, dirty=false | [App2 Build 인계](https://github.com/seokpan/seokpan-hybrid-app/issues/2#issuecomment-6033610765) → D Build/Scan/Digest·Registry/Pull → B의 App/별도 Migration 소비 검토. 실제 Image/Runtime 성공은 별도 |
+| GitOps #20 | `b13ae9575206a335a9e6f87efc34dd4c198884f7`, metadata allowlist·음성 Case 보완/58PASS·A/D 재리뷰 요청 완료 | A Changes requested의 최신 재승인 확인. 등록 checker와 D의 Valkey Stage-1 Gate 구현은 다름. 이번에 병합/삭제하지 않음 |
+| Infra #40 | `a0da58c345f877659e522a5b4ab5392b1d0626d3` 병합·브랜치 삭제 완료 | 운영 Data·Backup/Valkey·전체 T18은 별도. 이 Source/Metadata 작업을 다시 재리뷰 대기로 되돌리지 않음 |
+| Docs #69/#72 | #69 보존 브랜치는 main보다 앞선 Commit0·변경파일0, 삭제 가능하나 실제로는 보존. #72는 최신 main의 C 변경을 결합하고 이 종료·인계 기록을 반영 | #72는 새 결과 리뷰와 병합 대기 유지. #69 브랜치에 후속 작업을 쓰지 않음 |
+| Cloud 금고·개인 clone | 본체 해독 보고/B 수신은 완료. 독립 복원은 파일 존재/소유자 검사에서, clone은 경로/필수파일 검사에서 중단 | [직접 실행 안내](TJUNG03_WORKFLOW_AND_LEARNING_GUIDE.md#b-direct-actions-20261007)의 전송/진단과 v4 helper를 본인 jth에서 수행. 실제 결과는 아직 미수신 |
+| ROSA·Cost | CP3/Infrastructure3/Worker3 유지. 원장(3) 저장 판정 PARTIAL·미완19·입력오류0·기타미확인4 | 본인 Caller/Backend·지원·실제 사양/시간·A 제한 출력/prerequisite·C SG2. disk300 등 일반값 임의 입력 금지, $450 계획선/$500 한도 유지 |
 
-D가 lab Stage-1 실행 입력 PR과 Controller 등록 PR을 작성하고 B가 Source·배포 경계를 리뷰할 수 있다. Stage1은 **lab Valkey만 replicas1/source-reviewed-runtime-unverified**, FE/BE는0/input-required다. base/Recovery hold와 기존 전체 release-manifest는 보존한다. 별도의 Valkey Stage-1 Preflight Gate를 Source에 구현·검증한 뒤 해당 Valkey 리소스만 선택 수동 Sync한다. #20 등록 checker가 Stage-1 Gate를 대신하지 않는다.
+D가 Stage-1 활성화 및 등록의 lab 실행 입력 PR을 작성하고 B가 Source·배포 경계를 리뷰할 수 있다. Stage1은 lab Valkey만1/source-reviewed-runtime-unverified, FE/BE는0/input-required이며 base/Recovery hold와 기존 전체 release-manifest를 유지한다. 별도 Valkey Stage-1 Preflight Gate의 Source 구현·검증 후에만 정확한 SHA/Render의 Valkey 리소스를 선택 수동 Sync한다. unittest뿐 아니라 기존 CI의 무조건 replicas0 진단도 staged 경계로 개정하며 삭제/우회하지 않는다.
 
-Workload PR 병합 SHA A → 등록 PR targetRevision SHA A → 실제 공유 사용창/등록·Stage1 Gate/live Diff·Valkey 선택 Sync → DB/Secret/CA/Route 수락 → FE/BE 활성화 SHA B → 등록 Source targetRevision 갱신 → 전체 release-manifest 정상 통과 → 최초 FE/BE 수동 Sync다. 등록 PR 자기 SHA 참조, 자동 Sync/Prune/finalizer, 전체 Runtime PASS 승격은 하지 않는다.
+Stage1 병합 SHA A → 별도 등록 PR targetRevision SHA A → 실제 Owner/사용창·Bootstrap → Stage1 Gate/live Diff·Valkey 선택 Sync → DB/Secret/CA/Route 수락 → FE/BE 활성화 SHA B → 등록 targetRevision 갱신 → 기존 전체 Gate 정상 통과 → FE/BE 최초 수동 Sync다. 등록 Source 자신의 SHA 자기참조와 자동 Sync/Prune/finalizer는 사용하지 않는다. Synced/Valkey Ready를 전체 lab PASS로 올리지 않는다.
 
-원본: [GitOps #5 최신 인계](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5#issuecomment-6032629690)·[Cost #43 대조](https://github.com/seokpan/seokpan-hybrid-docs/issues/43#issuecomment-6033030041)·[Source §9](SOURCE_REVIEW_20261007.md#b-review-resume-20261007)·[본인 직접 실행](TJUNG03_WORKFLOW_AND_LEARNING_GUIDE.md#b-direct-actions-20261007). Docs #69는 병합됐고 보존 브랜치가 main보다 앞선 Commit0·변경파일0이므로 삭제 가능하다. 실제 삭제는 별도이며 이번에는 보존한다. Docs #72는 관련 PR 상태를 반영하되 병합 대기한다. TH81/실제 완료2와 기존 Q 체크를 유지하며 Q02/03/04/05/10 전체 수렴은 아직 미완료다.
+새 main [Docs #74](https://github.com/seokpan/seokpan-hybrid-docs/pull/74)의 일반 Backup Prefix `periodic/` 결정과 C의 05 행을 보존했다. 대응 Infra #42의 코드 PR/실제 입력 상태, 등록 Project03·그림 출처 식별값 영향은 [work 인계 W09](WORK_HANDOFF_20261007.md)의 후속이다. 설계 결정 병합을 Infra 코드/실제 백업 완료로 바꾸지 않는다.
+
+[원 GitOps5 결정](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5#issuecomment-6032629690)·[Cost43 대조](https://github.com/seokpan/seokpan-hybrid-docs/issues/43#issuecomment-6033030041)·[Source §10](SOURCE_REVIEW_20261007.md#b-review-closeout-20261007)·[대장 §13](REPOSITORY_CONSISTENCY_AUDIT.md#b-review-closeout-audit-20261007)·[work 인계 전체](WORK_HANDOFF_20261007.md)를 따른다. 이번 리뷰 처리 묶음은 종료하되 TH81/실제 완료2·기존 Q 체크는 유지한다. Q02/03/04/05/10과 실제 개인/공유 실행은 미완료로 인계한다.
 
 ## 0 팀 전체의 05 진입 안내
 
@@ -671,7 +673,7 @@ ZIP의 2026-09-29 기록은 승인00 §30.1/03 §3-B의 기존 PoC를 설명하�
 | Data SG | RDS·Redis SG 분리. 규칙은 모두 별도 Rule 리소스, ROSA Worker → Data SG 규칙은 rosa State가 추가. 온프렘 → RDS는 Data VM `/32` 확정 전 규칙 없음 | 03 3-B.9.6~9.7절 |
 | RDS | MariaDB 11.8.9 Multi-AZ, db.t4g.small, gp3 20GiB(자동 확장 끔). 파라미터 그룹 `time_zone = Asia/Seoul`·`sql_mode` 1차 동일·`require_secure_transport = 1`·utf8mb4_unicode_ci | 03 3-D.10.3절, 이 문서 8.7절 |
 | Redis | Redis OSS 7.1, cache.t4g.small 2개(Primary+Replica, Multi-AZ), `noeviction`, TLS + AUTH. 2026-10-06 엔진을 Valkey 7.2로 변경(8.13절) | 03 3-D.9.7절, 3-D.10.4절 |
-| Backup S3 | `hourly/` 7일 후 삭제, `protected/` 자동 삭제 없음, 버전 관리. HTTPS 강제는 초안에서는 Bucket Policy였으나 foundation Role의 버킷 정책 권한을 제거해 Backup User Boundary의 explicit Deny로 바뀜(8.10절) | 03 3-D.9.5~9.6절 |
+| Backup S3 | `hourly/` 7일 후 삭제(2026-10-07 경로 이름을 `periodic/`으로 변경, Infra PR #42), `protected/` 자동 삭제 없음, 버전 관리. HTTPS 강제는 초안에서는 Bucket Policy였으나 foundation Role의 버킷 정책 권한을 제거해 Backup User Boundary의 explicit Deny로 바뀜(8.10절) | 03 3-D.9.5~9.6절 |
 | Backup User | 이름 `seokpan-fnd-backup`(경로 없음). 업로드·다운로드·목록만, 삭제는 bootstrap 소유 Boundary의 explicit Deny. Access Key는 Terraform 밖에서 발급 | 03 3-C.13절, 이 문서 8.10절 |
 
 **비밀값과 State.** RDS 마스터 비밀번호는 RDS가 만들어 Secrets Manager에 보관하는 방식, Redis Token은 State에 저장되지 않는 write-only 인자를 쓴다. Backup User Access Key는 Terraform으로 만들지 않는다. 세 가지 모두 비밀값이 Terraform State에 남지 않게 하려는 선택이며, RDS 방식은 이유빈 확인을 기다린다.
@@ -1961,3 +1963,9 @@ C의 §8.9–8.14·과거 시험/체크/그림·설계/TH 상태는 유지한다
 ### 9.44 재리뷰 대응 재개와 단계별 lab·비용·본인 진단
 
 [Source §9](SOURCE_REVIEW_20261007.md#b-review-resume-20261007)·[대장 §12](REPOSITORY_CONSISTENCY_AUDIT.md#b-review-resume-audit-20261007)와 상단 현재 구획을 따른다. Infra40 병합/삭제, App18/19/GitOps20 재리뷰, App17 새 제출 확인, D Stage1 Gate/등록 입력과 B 리뷰, Cost PARTIAL 및 본인 복원/clone 진단을 원 작업에 연결한다. 실제 사용창·본인 키/Caller·배포·T18·비용 수락은 별도다. C 기록·과거 결과/체크/Shared Execution은 보존한다.
+
+
+<a id="b-review-closeout-implementation-20261007"></a>
+### 9.45 승인된 App 결합 Source와 작업 인계 — 2026-10-07
+
+[Source §10](SOURCE_REVIEW_20261007.md#b-review-closeout-20261007)의 실제 App17–19 병합·브랜치 삭제·결합 main CI와 [App2 Build 인계](https://github.com/seokpan/seokpan-hybrid-app/issues/2#issuecomment-6033610765)를 연결한다. C의 Docs74/periodic 기록·§8.9–8.14를 보존했다. 남은 리뷰/개인 입력·Stage1/2·ROSA/Cost·감사/검증/발표·종료 조건은 [work 인계](WORK_HANDOFF_20261007.md)로 이어간다. 실제 클러스터·Cloud·Backup·T18 PASS나 새 TH 완료는 추가하지 않는다.

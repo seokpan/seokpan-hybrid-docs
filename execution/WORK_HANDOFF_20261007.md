@@ -85,7 +85,7 @@ W02의 새 Backend Image를 포함해 FE/BE 활성화는 lab Overlay의 replica/
 
 ### W07. 본인 clone·도구 → ROSA 인증·입력 / B, A/C 협업
 
-현재 clone 실패 로그는 경로/필수 파일 검사에서 진단 없이 종료됐으므로 `/home/jth/work/seokpan-hybrid-infra` 부재 또는 필수 파일 부재를 구분해야 한다。 제공 `rosa-local-check-v4.sh`를 jth로 실행한다. 명시적 `--create-if-missing`에서만 최초 clone을 만들고 기존 폴더·개인 변경·Branch/Lock은 덮어쓰지 않는다. 필요한 파일은 terraform/rosa/LOCAL_PREPARATION.md·scripts/tf-session.sh·rosa Lock이다.
+현재 clone 실패 로그는 경로/필수 파일 검사에서 진단 없이 종료됐으므로 `/home/jth/work/seokpan-hybrid-infra` 부재 또는 필수 파일 부재를 구분해야 한다. 제공 `rosa-local-check-v4.sh`를 jth로 실행한다. 명시적 `--create-if-missing`에서만 최초 clone을 만들고 기존 폴더·개인 변경·Branch/Lock은 덮어쓰지 않는다. 필요한 파일은 terraform/rosa/LOCAL_PREPARATION.md·scripts/tf-session.sh·rosa Lock이다.
 
 Source HEAD/origin-main·개인 변경·Lock 차이·도구 버전을 보고한다. MISSING은 기록하고 공유 Controller의 패키지를 일괄 설치/업그레이드하지 않는다. 이어서 원 Infra25 안내에 따라 개인 MFA→목적 rosa Caller/Backend·지원/구독/Quota를 확인한다. bootstrap 성공을 rosa 권한 성공으로 사용하지 않는다. 실제 Plan에는 A 제한 출력/공통 prerequisite·C Data SG2와 올바른 Root/State/보호 입력이 필요하다. 이 helper는 Caller/Backend/Plan/Apply를 실행하지 않는다.
 

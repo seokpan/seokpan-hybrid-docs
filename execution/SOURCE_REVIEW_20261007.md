@@ -153,3 +153,25 @@ lab의 최신 D작성/B리뷰·Stage1 전용Gate·SHA A/B 순서는 [원 #5 인�
 Cost는 [원 #43 대조](https://github.com/seokpan/seokpan-hybrid-docs/issues/43#issuecomment-6033030041)를 따른다. 파일(3) SHA2561e7186febf71e16f72d6a92c406b9d1709e8e64839a8101fb913c4f126644383, 저장 판정 PARTIAL/미완19/입력오류0/기타4다. CP3/Infra3/Worker3 유지, 필수 disk와 실제 LB/Volume/Window/Destroy·가용시간은 미확인이다. 읽기 도구의 일부 수식 해석 차이를 원본 파일 오류로 단정하거나 재저장하지 않았다. 과거 단가를 새 검증 가격으로 승격하지 않는다.
 
 본인 금고 시도는 복원 파일 검사에서, clone 시도는 경로/필수파일 초기 검사에서 중단돼 실제 복호화/Cloud 권한 실패로 판정하지 않는다. [직접 실행 안내](TJUNG03_WORKFLOW_AND_LEARNING_GUIDE.md#b-direct-actions-20261007)에 준비·전송·정확한 파일명·누락 진단·검사·회신을 반영했다. 명령의 문법/합성 검사는 본인 Runtime 성공이 아니다. 00–04/Project v3/그림/TH81·완료2는 변경하지 않는다.
+
+
+<a id="b-review-closeout-20261007"></a>
+## 10. 리뷰 처리 종료와 승인된 결합 main 검증
+
+이 절은 §8–9 이후의 실제 결과다. 중단 로그에서 App17의 새 리뷰를 확인하지 못했던 상태는 D의 5438988132(검토 HEAD367938f), App18은5438973472(HEADd624c830), App19는5438977533(HEADf548f921)의 재승인으로 해소됐다. 새 의견의 필수 제품 수정은 없었다. raw payload의 apply_resolution null 직접 Lua 시험과 정상 Provider 오류 경로에서 cleanup RedisError가 원 오류를 가리는 경계는 선택/후속 검토로 [work W10](WORK_HANDOFF_20261007.md)에 남겼다. 실제 코드 변경 없이 리뷰 수신과 후속 범위를 기록했다.
+
+| PR | 실제 squash 병합 SHA | 결과 |
+|---|---|---|
+| App17 | `5e2bdc1490ebe6baf53e303db55a3aac42771976` | 기존 runner 기동 취소 정리 및 2개 Case 보존 |
+| App18 | `4dd1213315edff97a3ecb4286eae058de90de157` | board 거부 순서/null·Script11·지속 CI 및 명령 순서 보존 |
+| App19 | `a2afffb8605dafff1cb5b9af215aa0cf93aadcdb` | PubSub 이전 취소/cleanup RedisError 경계와 8개 Case 보존 |
+
+정확한 결합 main **a2afffb8605dafff1cb5b9af215aa0cf93aadcdb**에서 [Run37589421928](https://github.com/seokpan/seokpan-hybrid-app/actions/runs/37589421928)의 정식 workflow를 실행했다. Backend1762 PASS·부분집합 runner47 PASS·별도 Lua9 PASS, 각 최종 JUnit failure/error/skip0, 기존 Lock/sync·format/lint·mypy·coverage PASS, Python3.13.15/uv0.12.5·dirty=false다. 이 값은 개별 PR 검사 수의 합산이 아니다.
+
+Artifact11467549120 / ZIP SHA256 `5bca559ae4368a192d91a1ccb652ca22f58a23922df68540dd9fbb9b43d2158e`의 CRC·summary·세 JUnit·Source SHA를 다운로드 후 대조했다. [정리 Run37589531720](https://github.com/seokpan/seokpan-hybrid-app/actions/runs/37589531720)은 세 PR의 merged/head/merge SHA와 결합 main의 파일 동일성을 확인한 뒤 exact ref lease로 세 작업 브랜치를 삭제했다. 정리용 Branch도 삭제했고 main/다른 Branch/과거 Run은 보존했다.
+
+[App2 실제 Build 인계](https://github.com/seokpan/seokpan-hybrid-app/issues/2#issuecomment-6033610765)에 결합 Source·Run·Artifact 보존 기한을 연결했다. 실제 Build/Scan/Digest·Valkey Image/TLS/AUTH·lab/Cloud 업무/T18/비용 수락은 별도다. 기존 회귀용 Redis7.2.4·대역 Provider/PubSub 시험을 실제 Valkey 배포 시험으로 확대하지 않는다.
+
+GitOps20의 b13ae957/58PASS/A·D 재리뷰 요청은 유지한다. Infra40의 병합·브랜치 삭제는 완료다. Docs69는 main 대비 ahead0/files0이라 삭제 가능하지만 질문에 대한 판단만 했으며 보존한다. Docs72는 새 main7114e837의 C Prefix 결정/기록을 결합하고 병합 대기한다. C의 Docs74 설계 결정과 미병합 Infra42 Source/실제 백업 상태는 별도다. 03을 Infra2로 변경하지 않고 Cost PARTIAL/미정 입력을 유지한다.
+
+이번 종료 범위는 리뷰 대응·가능한 병합/브랜치 정리·실제 결합 CI·개인 실패 절차/문서·인계다. 남은 Room start_*·identity/Frontend·Recovery/CI·과거 diff/CI/thread/참조와 실행/비용/발표/종료는 [work 인계 W01–W13](WORK_HANDOFF_20261007.md)에 담당·입력·명령/검사·종료 기준으로 남긴다. Q10 전체 수렴이나 TH/T의 실제 완료를 추가하지 않는다.
