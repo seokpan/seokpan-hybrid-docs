@@ -30,7 +30,7 @@ CI Artifact11474896267의 서버 메타데이터는 64914bytes·digest `sha256:1
 
 ## 재개 delta·직접 입력·보고 수신
 
-이번 기록을 PR에 추가하기 전 시작·후속 대조에서 네 main은 사용자 기준 그대로였다: App `a2afffb8605dafff1cb5b9af215aa0cf93aadcdb`, Infra `36dc2403aa77e2896cc4ec3c545b92e0afb49205`, GitOps `a25172c7453b9d7999cb1f3cbeb1ef35774e3b63`, Docs `a9b0207b563aa25be17d4a635f6cc903fbe0e74a`. 순차 조회이며 원자적 Snapshot으로 주장하지 않는다. 기록 추가 전 Docs #72는 open/미병합 HEAD `b2bd48e3bf420a7d9374465a09608ee9d6f59dc6`, GitOps Draft #25는 `60643111f45a4a6cf66788551308fcf566ded4ea`, Infra Draft #43은 `d5aeddd4ca36f9c4265954d21507bd6a35264827`다. #25 CI37599479178, #43 CI37599480959의 새 success도 확인했으며 리뷰 없음·미병합 Source와 main 상태를 구분한다.
+이번 기록을 PR에 추가하기 전 시작·후속 대조에서 네 main은 조사 기준 SHA와 일치했다: App `a2afffb8605dafff1cb5b9af215aa0cf93aadcdb`, Infra `36dc2403aa77e2896cc4ec3c545b92e0afb49205`, GitOps `a25172c7453b9d7999cb1f3cbeb1ef35774e3b63`, Docs `a9b0207b563aa25be17d4a635f6cc903fbe0e74a`. 순차 조회이며 원자적 Snapshot으로 주장하지 않는다. 기록 추가 전 Docs #72는 open/미병합 HEAD `b2bd48e3bf420a7d9374465a09608ee9d6f59dc6`, GitOps Draft #25는 `60643111f45a4a6cf66788551308fcf566ded4ea`, Infra Draft #43은 `d5aeddd4ca36f9c4265954d21507bd6a35264827`다. #25 CI37599479178, #43 CI37599480959의 새 success도 확인했으며 리뷰 없음·미병합 Source와 main 상태를 구분한다.
 
 현재 Windows 작업 경로는 시작 시 비어 있어 새 clone4개를 생성했고 처음 개인 변경은 없었다. 다른 PC/Controller clone·개인 변경·State/키는 조사하지 않았다. AGENTS.md 검색은 이 네 clone에서 없음. 실제 Git2.54.0.windows.1·Node24.19.0·Bash5.3.9·PowerShell7.6.5, 번들 Python3.12.14와 이 작업용 고정 Python3.13.15/uv0.12.5를 구분한다. Terraform/AWS/ROSA/oc/kubectl/age/Docker는 현재 PATH 미발견이다. ROSA Lock Blob668098ad0f1e293982e9bcf8e931128346a00049는 main과 일치하며 AWS6.67.0/RHCS1.7.7을 읽었다. Cloud Caller/Backend/지원/Quota·A/C 보호 입력·실제 사용창은 확인하지 않았다. ZIP 지침과 별도10/7v3 지침은 텍스트가 동일했다. 외부 v4 helper의 Controller 실파일은 미확인이다.
 

@@ -14,12 +14,12 @@
 
 ## 1. 첫 작업에서 읽을 순서
 
-1. 사용자가 제공한 `PROJECT_INSTRUCTIONS.md`와 개인 실행계획을 먼저 읽는다. 두 파일은 Project 보조 소스이며 저장소와 자동 동기화되는 파일이 아니다. 이 요청에 제공된 지침은10/7 v3다.
+1. `PROJECT_INSTRUCTIONS.md`와 개인 실행계획을 먼저 읽는다. 두 파일은 Project 보조 소스이며 저장소와 자동 동기화되는 파일이 아니다. 인계 기준 지침 개정은10/7 v3다.
 2. 본 문서→[실행 인계 W01–W13](WORK_HANDOFF_20261007.md)→[실행판](TJUNG03_EXECUTION_BOARD.md)→원 Issue/PR의 최신 댓글을 읽는다.
 3. 해당 작업에 필요한 승인 설계03·준비04 절과 실제 코드·검사·Lock을 읽는다. 00은 역사적 출발점, 03/04 문서 종료와 Runtime 완료는 별개다.
 4. `git status`와 원격 변화·개인 변경·미병합 PR을 확인한다. 기존 clone/Branch/State/키를 초기화하지 않는다. 전체 저장소의 변경 목록은 작업 묶음 전후 확인하고, 의미 검토는 영향받는 파일·입력·시험·인계로 확장한다.
 
-프로젝트 대화·Project 파일·개인 Key·VPN·kubeconfig·실제 보호 입력이 다른 작업 환경으로 자동 전달된다고 가정하지 않는다. 이번 첨부는 원 CI Artifact/Render/Harness의 부분집합이므로 원 SHA와 Run을 참조한다. Backend1752와 중복 runner47을 합산하지 않는다.
+Project 파일·개인 Key·VPN·kubeconfig·실제 보호 입력이 다른 작업 환경으로 자동 전달된다고 가정하지 않는다. 2026-10-07 인계 첨부는 원 CI Artifact/Render/Harness의 부분집합이므로 원 SHA와 Run을 참조한다. Backend1752와 중복 runner47을 합산하지 않는다.
 
 ## 2. Source 기준선과 최신 변화
 
@@ -45,7 +45,7 @@
 
 [GitOps #26](https://github.com/seokpan/seokpan-hybrid-gitops/issues/26)은 후속 조회에서 Stage2의 실제 추적 Issue로 확인됐다. [D의 backend-db-runtime 공급 보고](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6#issuecomment-6034843156)는 두 URL 키·계약 Host/DB 이름과 기존 lab 계정 비밀번호 공유를 명시한다. Secret 미공급으로 되돌리지 않되 실제 새 URL 접속·C 형식/GRANT·데이터 출처 수락은 대기다. Route/Origin·새 Backend Image·Stage2 활성화/전체 Gate도 미완료다.
 
-첫 읽기·작업 위치·실행 조건은 [실행 인계](CODEX_ENTRYPOINT_20261007.md)를 따른다. 원 보고와 이 Source 수정의 수신/검토·실행은 별개다.
+첫 읽기·작업 위치·실행 조건은 [실행 인계](EXECUTION_ENTRYPOINT_20261007.md)를 따른다. 원 보고와 이 Source 수정의 수신/검토·실행은 별개다.
 
 ## 3. 실행 위치 판단
 
@@ -67,7 +67,7 @@
 
 작업 위치나 명령 실행 방식 변경만으로 사용량·비용 절감을 보장하지 않는다. 서비스 사용 한도와 별도 API 과금은 실제 계정 조건으로 확인한다.
 
-작업을 기존 원 Issue 단위로 좁히고, 첫 실행에 지침·승인 경계를 읽은 뒤 정확 SHA·변경 경로·필요 입력·현재 결함·검사·다음 시작점만 이어간다. 매 명령마다 모든 설계·대화·이력을 다시 넣지 않는다. 큰 원문 로그 대신 보호 원본의 논리 참조와 필요한 판정만 기록한다. 각 작업 묶음의 시작/끝·공유 실행 직전에는 네 저장소의 변화와 직접 의존을 확인한다. 이 방식은 반복 맥락을 줄이는 제안이며 절감률 실측은 아니다.
+작업을 기존 원 Issue 단위로 좁히고, 첫 실행에 지침·승인 경계를 읽은 뒤 정확 SHA·변경 경로·필요 입력·현재 결함·검사·다음 시작점만 이어간다. 해당 Issue의 설계·코드·검사에 필요한 범위만 확인한다. 큰 원문 로그 대신 보호 원본의 논리 참조와 필요한 판정만 기록한다. 각 작업 묶음의 시작/끝·공유 실행 직전에는 네 저장소의 변화와 직접 의존을 확인한다. 작업 범위 축소에 따른 시간·비용 절감률은 미측정이다.
 
 ## 5. 다음 작업 묶음
 
@@ -81,7 +81,7 @@
 | Pool·Recovery·CI 후속 | 기존 원 Issue에서 코드/정적 준비 병행 | 두 Runtime Engine/Migration NullPool 유지. C 실제 한도·예약·종료 겹침 합의; 승인 Recovery Valkey Image/Probe/UID/Storage; D Writer/Promotion/ECR 실제 입력 |
 | 비용·최종 시험·정리 | Source/사양·가용 시간·원장 입력·시험/삭제 계획 | Cost PARTIAL 유지. Full Plan·누적/가동/재시험/삭제지연/잔존 포함 $450계획/$500한도·유료 범위 수락→Window A/B·전체 T18·보존/삭제/종료 |
 
-첨부의 `check-restored-cloud-vault.sh`는 복원 Identity와 암호문 파일의 두 절대 경로를 인자로 받는 안내다. 인계 카드에 언급한 외부 v4 검사 Script는 이번 ZIP에 없으므로 사용자의 실제 파일 유무/정본을 확인하기 전 실행하지 않는다. ROSA 준비는 저장소의 LOCAL_PREPARATION 명령으로 진행할 수 있다.
+첨부의 `check-restored-cloud-vault.sh`는 복원 Identity와 암호문 파일의 두 절대 경로를 인자로 받는 안내다. 인계 카드에 언급한 외부 v4 검사 Script는 인계 ZIP에 없으므로 담당자의 보호 경로에서 실파일 유무/개정을 확인하기 전 실행하지 않는다. ROSA 준비는 저장소의 LOCAL_PREPARATION 명령으로 진행할 수 있다.
 
 ## 6. 검사와 종료 경계
 

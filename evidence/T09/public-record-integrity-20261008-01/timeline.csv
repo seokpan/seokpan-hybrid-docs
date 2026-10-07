@@ -1,0 +1,2 @@
+event_id,timestamp_utc,timestamp_kst,actor_ref,event,result,evidence_ref
+source-integrity-01,2026-10-07T18:23:05.926255+00:00,2026-10-08T03:23:05.926255+09:00,Windows-local-source-verification,source_checks_completed,PASS,summary.md

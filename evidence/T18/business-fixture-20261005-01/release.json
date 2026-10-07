@@ -52,7 +52,7 @@
   "next_run_ref": null,
   "render_ref": null,
   "assigned_execution_owner": "kshi1313-gif C/Data; tjung03 B/App; cyj200115-prog D/evidence",
-  "actual_operator": "Codex, user-authorized contribution for tjung03",
+  "actual_operator": null,
   "reviewer": null,
   "collaborators": [],
   "observed_principal_ref": "fixture-owned root plus disposable purpose-scoped SSL-required service accounts",
@@ -85,5 +85,6 @@
   "custodian_ref": "tjung03; source and aggregate evidence only",
   "access_policy_ref": "synthetic checks/hashes/timing only; no private SQL/backup/key/cookies",
   "retention_ref": "public evidence retained; disposable runtime material cleanup status: verified: all owned temporary material removed",
-  "availability_integrity": "verified: all owned temporary material removed"
+  "availability_integrity": "verified: all owned temporary material removed",
+  "execution_environment": "isolated local synthetic fixture"
 }

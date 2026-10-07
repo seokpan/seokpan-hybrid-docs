@@ -39,7 +39,7 @@
 | Valkey Lab 설정 검사 | 대소문자·후순위 덮어쓰기·지원하지 않는 inline 댓글/escape를 잘못 승인 | fix/valkey-stage1-config-validation-20261007 @bcb7bd18bf7d7c55a0c59bc45a7ae6c7783dbbaf(원 수정2c22e0ac·새 main 통합). 보수적 literal 문법·정확 값/횟수/순서 검사. [GitOps21](https://github.com/seokpan/seokpan-hybrid-gitops/issues/21)·[GitOps6](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6) 연결 |
 | Recovery 설정 검사 | 같은 셸 문법 오해가 Recovery 검사에도 남음 | fix/recovery-config-validation-20261007 @fc3d95031945c1bbd3819c541409c7621dd7cd62. Lab parser 재사용·회귀2건, Lab 수정 선행 병합 필요 |
 | Docs Windows 도구 | Windows 경로 구분자 및 기본 cp949 인코딩으로 검사 실패 | portable path0efe597·명시 UTF-8 17b9e203. 현재 브랜치에 포함, 기본 인코딩 환경14회귀PASS |
-| App22 UI 회귀 | 강퇴 취소 후 포커스 복귀 실패·모바일600px 확대 제거·390px 로비 채팅 높이 변동 | feat/desktop-ui-polish @abb648350084c9ebe6c63ee7668921de66f5b03f. 후속6파일 수정·기존 입력/DOM/쓰기/모바일 확대 단언 보존. 사용자 선택대로 단계별 남는 공간 자동맞춤 검사 |
+| App22 UI 회귀 | 강퇴 취소 후 포커스 복귀 실패·모바일600px 확대 제거·390px 로비 채팅 높이 변동 | feat/desktop-ui-polish @abb648350084c9ebe6c63ee7668921de66f5b03f. 후속6파일 수정·기존 입력/DOM/쓰기/모바일 확대 단언 보존. 단계별 남는 공간 자동맞춤 검사 |
 | 현행 안내 지연 | 승인 완료 DR 기준의 병합 대기 표현·Provider 후속9.43 중복 | 발표 기준·팀 인계 안내·05 현행 목표 정정, Provider 후속9.46으로 변경. 기존 Run·03/04 원문 보존 |
 | 원 Issue의 현재 카드 지연 | App2/4·GitOps10/21·Infra25·Docs21이 이후 보고/병합보다 뒤처짐 | 최신 댓글과 완료 범위만 갱신할 복사안 준비. 특히 GitOps21 Closed/전체 체크가 실제 TLS/AUTH/Ready/삭제 보호 근거를 대신하지 않음 |
 | 보존 참조 Hash | GitOps 원본 SHA256SUMS의 자기 파일 행 불일치 | 원본 그대로 보존. 인덱스 자기 행을 제외한 payload40개와 고정 commit 대조 |
@@ -64,7 +64,7 @@
 | Docs 그림·검사 | Source5·SVG12·PNG12·font12·CIDR9 무결성 PASS, PNG12·App SVG 및 댓글 PNG13 시각검토 | 기존 Git LF 사본. 새 Inkscape Render·실제 구축 결과판·Runtime PASS 없음 |
 | CI 보존 자료 | 전체181Run·111ZIP의 Hash/CRC·JUnit·Source 연결, bundle16·tar4 내부 대조 | tar571파일 모두 Git blob 연결. 제공하지 않는 로그와 삭제된 손상 payload는 아래 제한 |
 
-- App22 실패 이력: ui01 6PASS/1FAIL/29미실행(숨은 상세 패널 진입 흐름), ui02·03 8/1/27(모달 포커스, ui03은 로컬 패치 경로 오류로 같은 소스 반복), ui04 13/1/22(모바일 확대), ui05 13/1/22(옛 단계 간 고정 픽셀 비교), chat01 2/1/5(로비 높이). 사용자 자동맞춤 선택을 반영한 새 단언·수정 뒤 chat02 8PASS, ui06 36PASS, 확정 commit ui07 36PASS. 중간 타입 검사 실패도 보존 후 Node용 브라우저 평가 방식 보완·전체 verify 재통과. skip/쓰기·DOM 단언 축소 없음.
+- App22 실패 이력: ui01 6PASS/1FAIL/29미실행(숨은 상세 패널 진입 흐름), ui02·03 8/1/27(모달 포커스, ui03은 로컬 패치 경로 오류로 같은 소스 반복), ui04 13/1/22(모바일 확대), ui05 13/1/22(옛 단계 간 고정 픽셀 비교), chat01 2/1/5(로비 높이). 남는 공간 자동맞춤을 확인하는 새 단언·수정 뒤 chat02 8PASS, ui06 36PASS, 확정 commit ui07 36PASS. 중간 타입 검사 실패도 보존 후 Node용 브라우저 평가 방식 보완·전체 verify 재통과. skip/쓰기·DOM 단언 축소 없음.
 - Windows clone의 CRLF 변환은 Kustomize ConfigMap Hash와 source_sha256을 바꿀 수 있음. 고정 revision 선택 목록은 정확 Git Blob LF 또는 해당 Linux 산출물 기준. 기존 clone의 줄바꿈/개인 변경을 초기화하지 않음.
 - GitOps Source 진단 산출물은 실행용 승인 YAML이 아님. 실제 실행 전 Gate/live Diff·현재 대상·선택 리소스·Owner/사용창 수락 필요.
 - Windows 로그인 계정 soldesk·Git 기록 계정 tjung03, 격리 실행 Python/Bash/Node 및 GitHub Actions Linux. 실제 lab/금고/ROSA 실행은 본 조사에서 수행하지 않음.
@@ -97,14 +97,14 @@
 - App/Infra/GitOps main은 승인 최소1·새 push 뒤 이전 승인 무효화·squash만 허용하는 Ruleset 적용. 현재 다섯 PR 모두 제출된 승인0이므로 재승인보다 첫 리뷰 단계.
 - Docs는 활성 main Ruleset 없음. 프로젝트의 사람 검토와 실제 수신을 생략하는 근거로 사용하지 않음.
 - CI 성공과 review request 존재는 승인 아님. Ready 전환 뒤 발생한 새 Run도 같은 HEAD와 conclusion 확인.
-- main/reference 및 열린 PR·후속 base 의존 branch 보존. squash 뒤 `--merged` 결과만으로 변경 미반영/삭제 가능 판정 금지. 필요한 patch/Run·고정 참조·개인 미push·실제 배포 revision 확인 뒤 사용자 삭제.
+- main/reference 및 열린 PR·후속 base 의존 branch 보존. squash 뒤 `--merged` 결과만으로 변경 미반영/삭제 가능 판정 금지. 필요한 patch/Run·고정 참조·개인 미push·실제 배포 revision 확인 뒤 브랜치 소유자가 삭제.
 
 * 재검토 종료 범위와 다음 입력
 - 현재 소스/시험→승인03/04→원 토론→과거 고유 변경→CI/산출물/보존 bundle→저장소 간 링크→새 원격 변경→수정 조합 재시험 순으로 재대조.
 - 접근 가능한 자료에서 새 고유 자료 검토·수정·재시험을 반복하고, 마지막 변경분 대조와 후속6파일 독립 검토에서 추가 미검토 변경/새 결함0을 확인해 해당 관측 범위의 최초 조사 종료. 미해결 항목이 모두 해결됐거나 프로젝트가 완료됐다는 뜻은 아님. 다음부터 이 기준 이후 변경분을 우선 검토. 고유 원문별 검토 근거와 정확 중복 연결은 로컬 coverage 기록으로 보존.
 - 확인 불가: 초기 오래된/취소 Job 로그9건, Docs의 삭제된 손상 Base64 입력1건, App21의 비공개 과거 Sites 디자인 참조, 비공개 Harbor Layer/Runtime·보호 State/전체Output/SavedPlan·실제 개인 입력/금고/Cloud. 부재·권한 없음·성공으로 추정하지 않음.
-- 연쇄 링크 검사: GitHub 링크800개(외부 연결126개 포함), 상대 경로918건·문서 anchor750건 대조. 옛 삭제 branch1개는 원 commit으로 연결하고 현재 대상의 누락0 확인. 사용자 첨부13PNG·저장소12PNG·App SVG 시각검토는 과거/소스 자료이며 현장 상태 수락과 별도.
+- 연쇄 링크 검사: GitHub 링크800개(외부 연결126개 포함), 상대 경로918건·문서 anchor750건 대조. 옛 삭제 branch1개는 원 commit으로 연결하고 현재 대상의 누락0 확인. 인계 첨부13PNG·저장소12PNG·App SVG 시각검토는 과거/소스 자료이며 현장 상태 수락과 별도.
 - 1차 외부 저장소·공식 기술자료는 연결된 관련 범위만 대조. 4개 2차 저장소 밖 모든 인터넷 자료의 전수 검토를 주장하지 않음.
 - 승인03/04 종료, DR10분·DB RPO30분·운영 Backup15분, CP3/Infra3/Worker3, Cost PARTIAL/$450계획/$500한도, TH81·기존 완료2, Q02/03/04/05/10 미완료 보존.
-- 공개 Issue/PR 작성·댓글·리뷰 요청·Ready 전환·병합·branch 삭제는 사용자 작업. 소스 변경·검사·commit/push와 원 작업용 복사안을 구분해 인계.
+- 공개 Issue/PR·댓글·리뷰·병합·branch 정리 상태는 원 작업에 기록한다. 소스 변경·검사 개정과 실제 실행·수신 범위를 구분해 인계.
 - 증거: [Source 조사 Run](../evidence/T09/source-audit-20261007-01/summary.md)·[05 추가 기록](05_IMPLEMENTATION_AND_VALIDATION.md#repository-full-audit-20261007)·[Tracker](WORK_TRACKER.md#repository-full-audit-20261007).

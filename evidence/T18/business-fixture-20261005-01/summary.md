@@ -3,7 +3,7 @@
 ## Scope
 
 - Partial T18 only. App source c12b3d15a4dd2c806fac4326a9eb30ed6e8a81b3; source verified without modifying App. No approved Image/Release, OCP/Pod, Harbor/PVC, actual RDS/S3/VPN, operator detection/decision, Host guidance, browser/FE/WSS or service RTO/RPO achievement.
-- Data owner C/김상희, App B/정태훈, Image/evidence D/최유준, real Host A/이유빈 remain responsible. Actual execution is Codex contribution authorized by tjung03. None of those teammates performed/reviewed this Run unless their separate review is recorded.
+- Data owner C/김상희, App B/정태훈, Image/evidence D/최유준, real Host A/이유빈 remain responsible. Execution environment: isolated local loopback TCP/TLS synthetic fixture. None of those teammates performed/reviewed this Run unless their separate review is recorded.
 - All source/restore datadirs and Redis are new temporary owned processes, loopback only. Redis plaintext port is 0; TLS/AUTH is required. Python verifies explicit CA and localhost hostname to DB/Redis/HTTPS Backend. Fixture root access is local administrative plumbing, not proof of production account/host isolation.
 - Dedicated synthetic identity_svc/game_svc accounts require SSL; Passwords, age identities, SQL dumps, ciphertext, sessions and process logs remain private temporary material intended for removal. Actual cleanup status is recorded below; removal is not claimed when cleanup is incomplete. Operational C credentials, storage policy, supported tool/version and Host capacity are unverified.
 - A quiescent fictional dataset uses the approved eight-table DDL. Its invented draws/moves are row-comparison fixtures, not proof of semantically valid historical games. Existing completed row counts/hashes and rating values are checked without rebuilding old Redis rooms.

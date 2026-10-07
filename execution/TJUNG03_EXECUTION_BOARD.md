@@ -12,7 +12,7 @@
 
 [GitOps #26](https://github.com/seokpan/seokpan-hybrid-gitops/issues/26)은 후속 조회에서 Stage2의 실제 추적 Issue로 확인됐다. [D의 backend-db-runtime 공급 보고](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6#issuecomment-6034843156)는 두 URL 키·계약 Host/DB 이름과 기존 lab 계정 비밀번호 공유를 명시한다. Secret 미공급으로 되돌리지 않되 실제 새 URL 접속·C 형식/GRANT·데이터 출처 수락은 대기다. Route/Origin·새 Backend Image·Stage2 활성화/전체 Gate도 미완료다.
 
-첫 읽기·작업 위치·실행 조건은 [실행 인계](CODEX_ENTRYPOINT_20261007.md)를 따른다. 원 보고와 이 Source 수정의 수신/검토·실행은 별개다.
+첫 읽기·작업 위치·실행 조건은 [실행 인계](EXECUTION_ENTRYPOINT_20261007.md)를 따른다. 원 보고와 이 Source 수정의 수신/검토·실행은 별개다.
 
 
 ## 현재 실행 기준 — 2026-10-07 원격 변경 대조·구현 인계
@@ -54,7 +54,7 @@ TH17은 App4의 App/Pool, GitOps10의 선언/관측, Infra25의 ROSA/SG/재생�
 
 막힌 실행은 필요한 입력/개정·공급 Issue/담당·제출/수신/보완·다음 확인 시점·지금 계속할 준비를 남깁니다. 한 PR의 Source 병합이 전체 Runtime 범위 완료를 뜻하지 않으면 `Refs`로 연결해 자동 종료를 피합니다. 문서 현행화와 실제 Run/PASS·다른 담당의 수신은 구분합니다.
 
-이번 이슈 탐색 감사와 직전 안내 검토는 [05 §9.24](05_IMPLEMENTATION_AND_VALIDATION.md#b-issue-navigation-audit-20261005)에 기록합니다. 기존 범위에서 B의 마지막 정리까지 연결되어 있어 새 중복 이슈는 만들지 않았습니다.
+이슈 추적 경로와 실행 안내의 검토 결과는 [05 §9.24](05_IMPLEMENTATION_AND_VALIDATION.md#b-issue-navigation-audit-20261005)에 기록합니다. 기존 범위에서 B의 마지막 정리까지 연결되어 있어 새 중복 이슈는 만들지 않았습니다.
 
 
 ## 1 전체 작업 진행 현황과 B의 현재 위치
@@ -131,7 +131,7 @@ TH17은 App4의 App/Pool, GitOps10의 선언/관측, Infra25의 ROSA/SG/재생�
 
 | 우선 | B의 구체적인 행동 | 남길 결과/관련 담당 | 기다리는 범위 | 원본·TH |
 | --- | --- | --- | --- | --- |
-| 1 | 본인 clone의 HEAD·개인 변경을 보존하고 App/GitOps/Infra 병합 SHA·도구를 읽기 확인 | 본인 환경에서 확인한 전체 SHA·변경/도구·확인 시각. 에이전트 복원 공간 결과와 구분 | A/C/D 전체 완료 대기 없음. 본인 PC 접근 확인만 본인 수행 | Docs21, TH01/02 |
+| 1 | 본인 clone의 HEAD·개인 변경을 보존하고 App/GitOps/Infra 병합 SHA·도구를 읽기 확인 | 본인 환경에서 확인한 전체 SHA·변경/도구·확인 시각. 별도 조사용 작업 공간의 결과와 구분 | A/C/D 전체 완료 대기 없음. 본인 PC 접근 확인만 본인 수행 | Docs21, TH01/02 |
 | 2 | 병합 #12의 최신 main artifact를 별도 승인 경로에 보존하고 ZIP/Hash·Source 개정 수신 기록 | 만료10/13 00:09:31 KST 전 보존 위치/개정·수신/보완. GitOps10↔D GitOps5/6 | Source PR 리뷰/병합 대기 해소. ZIP 직접 수신/보존은 아직 기록 미확인 | GitOps10/5/6, TH08 |
 | 3 | D의 AppSHA→Build/Scan/Digest/Pull·lab Owner/권한, C의 DB/Redis/TLS/CA/Secret/Schema·Migration 보호 공급 개정 대조 | 제출·수신/보완·실입력 수락 범위. 값/Token/Key 원문은 공개하지 않음 | 실제 공급 개정을 쓰는 시험만 대기. 필요한 입력/Case 대조는 지금 가능 | App1/2·GitOps5/6/10, TH03~08/14.1 |
 | 4 | 최소 입력 수락 후 별도 lab 활성화 PR에서 Replica/Digest·Renderer/보류 검사 함께 검토 | 같은 BE Digest/Config·필요 Schema/단일 Migration 수락 → D/B/C 수동 Sync·동일 조합 새 Run | 현재 보류 artifact는 실행용이 아님. 실제 Image/Context/Data/Migration 수락 필요 | GitOps5/6/10·App1/4, TH08.4 |
@@ -308,7 +308,7 @@ OCP의 사전검증 업무 완료와 정리 날짜는 별개다. 추천 운영 �
 | TH-17.1 | 지금Case계획/후속실측: 정상후 분리시험순서 | D순서/주입자/중단조건·실제Baseline | [h-docs Issue #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21) B 시험순서 |
 | TH-17.2 | 후속실측: 공식장애/단절/Pull/관측/부하 B범위 | D조율·실제Cloud/보호/되돌림 | 해당 자원 [h-app Issue #4](https://github.com/seokpan/seokpan-hybrid-app/issues/4)/[h-gitops Issue #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10)/[h-infra Issue #25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25) |
 | TH-17.3 | 후속실측: Resource/Pool/업무/성능/시간/차이 | 실제수치·실패/새Run재시험 | [h-app Issue #4](https://github.com/seokpan/seokpan-hybrid-app/issues/4) App/Pool 업무 |
-| TH-17.4 | 후속실측: B실제Run→Index/D집계 | D 수신확인·팀전체PASS대필금지 | [h-docs Issue #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21) B 수행 집계 |
+| TH-17.4 | 후속실측: B실제Run→Index/D집계 | D 수신확인·팀 전체 PASS는 별도 근거 필요 | [h-docs Issue #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21) B 수행 집계 |
 | TH-18.1 | 지금: 구현/검증/판단/Troubleshooting 구분·후보 | 실제기여/근거 범위만 Docs6연결 | [h-docs Issue #6](https://github.com/seokpan/seokpan-hybrid-docs/issues/6) |
 | TH-18.2 | 지금구조/후속실측: 조건/수치/한계/비교/기여 | ROSAActual·실제Run 뒤 내용확정 | [h-docs Issue #6](https://github.com/seokpan/seokpan-hybrid-docs/issues/6) |
 | TH-18.3 | 후속실측: 시연/예비영상/대본/Q&A/리허설 | 10/22DemoFreeze·10/23Ready 목표 | [h-docs Issue #6](https://github.com/seokpan/seokpan-hybrid-docs/issues/6) |

@@ -12,7 +12,7 @@
 
 [GitOps #26](https://github.com/seokpan/seokpan-hybrid-gitops/issues/26)은 후속 조회에서 Stage2의 실제 추적 Issue로 확인됐다. [D의 backend-db-runtime 공급 보고](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6#issuecomment-6034843156)는 두 URL 키·계약 Host/DB 이름과 기존 lab 계정 비밀번호 공유를 명시한다. Secret 미공급으로 되돌리지 않되 실제 새 URL 접속·C 형식/GRANT·데이터 출처 수락은 대기다. Route/Origin·새 Backend Image·Stage2 활성화/전체 Gate도 미완료다.
 
-첫 읽기·작업 위치·실행 조건은 [실행 인계](CODEX_ENTRYPOINT_20261007.md)를 따른다. 원 보고와 이 Source 수정의 수신/검토·실행은 별개다.
+첫 읽기·작업 위치·실행 조건은 [실행 인계](EXECUTION_ENTRYPOINT_20261007.md)를 따른다. 원 보고와 이 Source 수정의 수신/검토·실행은 별개다.
 
 
 > 기준일: 2026-10-07 KST. 담당: B 정태훈(tjung03).
@@ -124,7 +124,7 @@ Source HEAD/origin-main·개인 변경·Lock 차이·도구 버전을 보고한�
 
 A는 기존 tfvars의 `backup_hourly_retention_days` 사용 여부와 새 변수 소비를 확인한다. C의 Job·Lifecycle·Policy·대장 경로를 같은 개정으로 수락하고 실제 Root Plan/승인된 Apply·Backup의 결과를 별도로 기록한다. 기존 객체가 없다는 내용은 첫 실제 Backup 전 C 보고 범위다. Source 병합을 기존 운영 객체 변경/실제 백업 성공으로 해석하지 않는다.
 
-[Docs77](https://github.com/seokpan/seokpan-hybrid-docs/pull/77)의 C 10/7 Data 공급·확인 보고는 **`a9b0207b563aa25be17d4a635f6cc903fbe0e74a`**에 병합됐다. 원 공급 댓글과 C/B의 SQL·Valkey 본체 금고 확인 범위를 수신하고, 독립 Key 사본/복원과 실제 SQL 계정 생성·App Secret/CA 공급·연결 수락을 각각 확인한다. C의 최신 05 §8.14/8.15·Tracker 후속과 기존 A/D 비용·Run은 정상 main 결합에서 그대로 보존하며 같은 C 결과를 B의 새 실행으로 대필하지 않는다.
+[Docs77](https://github.com/seokpan/seokpan-hybrid-docs/pull/77)의 C 10/7 Data 공급·확인 보고는 **`a9b0207b563aa25be17d4a635f6cc903fbe0e74a`**에 병합됐다. 원 공급 댓글과 C/B의 SQL·Valkey 본체 금고 확인 범위를 수신하고, 독립 Key 사본/복원과 실제 SQL 계정 생성·App Secret/CA 공급·연결 수락을 각각 확인한다. C의 최신 05 §8.14/8.15·Tracker 후속과 기존 A/D 비용·Run은 정상 main 결합에서 그대로 보존하며 C 보고 수신과 B의 별도 실행·검증 범위를 구분한다.
 
 등록 Project03·그림 출처 manifest는 periodic/ 한 줄 이후 Source 식별 차이가 있을 수 있다. 03/04 종료·승인 수량/DR 요구는 유지하고 필요한 사본/출처 정합만 확인한다. 자동 Project 교체나 직접 Runtime 재조회 완료를 주장하지 않는다.
 
@@ -169,7 +169,7 @@ Docs72 최종 HEAD/검사·병합과 사용할 GitOps Workload·등록 Source/�
 - [ ] Q05 — Valkey 전환, OCP–Harbor 연결 제약과 내부 Registry 소비, DR RTO 10분·영속 DB RPO 30분·백업 계획 주기 15분을 설계·코드·가이드·시험·비용·주석에 걸쳐 대조하고 필요한 불일치를 수정한다.
 - [x] Q06 — 그림 생성 원본·manifest·출처 기록·SVG·PNG와 이를 참조하는 문서를 대조하고, 영향을 받은 생성물만 재생성·시각 검증한다.
 - [x] Q07 — 등록된 프로젝트 소스 7개를 저장소 정본과 내용·버전·해시로 대조하고, 필요한 등록용 개정본과 교체 대상을 제공한다. 실제 프로젝트 소스 교체는 별도로 확인한다.
-- [x] Q08 — B 명의 문서·Issue·PR·댓글의 대화 의존·자기 요청 중계·불필요한 AI 작업 홍보를 목적·변경·근거·결과·한계 중심으로 정리하고, 실제 수행·승인·시험 이력은 보존한다.
+- [x] Q08 — B 명의 기록의 목적·변경·근거·결과·한계와 원 실행·승인·시험 이력 연결을 점검한다.
 - [x] Q09 — 실제 필요한 수정만 B 범위에서 처리하고, 다른 담당자의 변경을 보존하며 해당 담당자의 검토·입력·수신이 필요한 사항을 원 작업에 인계한다.
 - [ ] Q10 — 발견→직접/후속 영향→수정→재검증을 반복하고, 종료 직전 원격 변경을 다시 대조하여 확인 가능한 전체 범위에서 새로운 확인·보완 사항이 없을 때 최종 수렴을 판정한다.
 - [x] Q11 — 조사 대상·관측 SHA·근거·발견·조치·검증·미확인·다음 순서를 이 대장과 원 작업에 보존하여 다음 작업 공간에서도 연속성을 유지한다.

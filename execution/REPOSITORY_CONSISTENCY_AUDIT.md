@@ -10,7 +10,7 @@
 
 [GitOps #26](https://github.com/seokpan/seokpan-hybrid-gitops/issues/26)은 후속 조회에서 Stage2의 실제 추적 Issue로 확인됐다. [D의 backend-db-runtime 공급 보고](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6#issuecomment-6034843156)는 두 URL 키·계약 Host/DB 이름과 기존 lab 계정 비밀번호 공유를 명시한다. Secret 미공급으로 되돌리지 않되 실제 새 URL 접속·C 형식/GRANT·데이터 출처 수락은 대기다. Route/Origin·새 Backend Image·Stage2 활성화/전체 Gate도 미완료다.
 
-첫 읽기·작업 위치·실행 조건은 [실행 인계](CODEX_ENTRYPOINT_20261007.md)를 따른다. 원 보고와 이 Source 수정의 수신/검토·실행은 별개다.
+첫 읽기·작업 위치·실행 조건은 [실행 인계](EXECUTION_ENTRYPOINT_20261007.md)를 따른다. 원 보고와 이 Source 수정의 수신/검토·실행은 별개다.
 
 
 > **현재 인계:** 원격 변경 대조는 [§14](#b-work-current-delta-audit-20261007), 다음 실행은 [work 인계](WORK_HANDOFF_20261007.md)다. §3/§9–13의 이전 관측·실패·Source는 당시 이력으로 보존한다. 전체 Q10은 미완료다.
@@ -39,7 +39,7 @@ Q06은 이전에 완료한 현재 12장·생성/출처 경로의 대조와 필�
 - [ ] Q05 — Valkey 전환, OCP–Harbor 연결 제약과 내부 Registry 소비, DR RTO 10분·영속 DB RPO 30분·백업 계획 주기 15분을 설계·코드·가이드·시험·비용·주석에 걸쳐 대조하고 필요한 불일치를 수정한다.
 - [x] Q06 — 그림 생성 원본·manifest·출처 기록·SVG·PNG와 이를 참조하는 문서를 대조하고, 영향을 받은 생성물만 재생성·시각 검증한다.
 - [x] Q07 — 등록된 프로젝트 소스 7개를 저장소 정본과 내용·버전·해시로 대조하고, 필요한 등록용 개정본과 교체 대상을 제공한다. 실제 프로젝트 소스 교체는 별도로 확인한다.
-- [x] Q08 — B 명의 문서·Issue·PR·댓글의 대화 의존·자기 요청 중계·불필요한 AI 작업 홍보를 목적·변경·근거·결과·한계 중심으로 정리하고, 실제 수행·승인·시험 이력은 보존한다.
+- [x] Q08 — B 명의 기록의 목적·변경·근거·결과·한계와 원 실행·승인·시험 이력 연결을 점검한다.
 - [x] Q09 — 실제 필요한 수정만 B 범위에서 처리하고, 다른 담당자의 변경을 보존하며 해당 담당자의 검토·입력·수신이 필요한 사항을 원 작업에 인계한다.
 - [ ] Q10 — 발견→직접/후속 영향→수정→재검증을 반복하고, 종료 직전 원격 변경을 다시 대조하여 확인 가능한 전체 범위에서 새로운 확인·보완 사항이 없을 때 최종 수렴을 판정한다.
 - [x] Q11 — 조사 대상·관측 SHA·근거·발견·조치·검증·미확인·다음 순서를 이 대장과 원 작업에 보존하여 다음 작업 공간에서도 연속성을 유지한다.
@@ -238,7 +238,7 @@ Pool 크기 환경변수는 현재 App에서 소비하지 않는다. 실제 glob
 <a id="b-review-followup-audit-20261007"></a>
 ## 11. 리뷰 제안·경로 A·PubSub와 Recovery 기록 후속 — 2026-10-07
 
-상세 근거는 [Source 검토 §8](SOURCE_REVIEW_20261007.md#b-review-followup-20261007)과 네 실행 문서의 단일 현재 구획이다. Docs69는078d9e main에 병합됐고, d7f0e619 브랜치는 사용자 보존 요청에 따라 수정·삭제하지 않는다. 후속 변경은 새 Docs PR로 관리한다. §9–10의 당시 미병합 상태·검사·수치와 실제 수행자는 이력으로 보존한다.
+상세 근거는 [Source 검토 §8](SOURCE_REVIEW_20261007.md#b-review-followup-20261007)과 네 실행 문서의 단일 현재 구획이다. Docs69는078d9e main에 병합됐고, d7f0e619 브랜치는 보존 방침에 따라 수정·삭제하지 않는다. 후속 변경은 새 Docs PR로 관리한다. §9–10의 당시 미병합 상태·검사·수치와 실제 수행자는 이력으로 보존한다.
 
 | 추적 단위 | 이번 조치 | 다음 직접 조건 |
 |---|---|---|
@@ -260,7 +260,7 @@ Q02/Q03/Q04/Q05/Q10은 미완료다. 다음은 Room start_*·identity 보상/시
 
 문서4개의 단일 현재 구획을 갱신하고 학습 안내의 직접 실행 구획을 보완했다. 나머지 원본문·C의05 §8.9–8.14·Tracker 원행·Shared Execution·기존TH/Q 체크·설계/그림·Evidence는 보존한다. 새 Runtime 결과가 없으므로 TH81/실제 완료2를 바꾸지 않는다. D의 Stage1 후속에는 테스트뿐 아니라 CI 진단의 replicas0 조건도 함께 인계한다.
 
-이번 요청의 미처리 상태/안내 보완과 전체 전수 의미 검토는 구분한다. Q02/Q03/Q04/Q05/Q10은 미완료다. 다음 출발점은 S1 Room/Session/연결세대·Frontend의 남은 Source/시험 → S2 Recovery/Writer/Promotion 직접 연결 → S3 도달 diff/CI/참조 의미 검토 → S4 최종 원격 변화 대조다. 금고 독립 복원·ROSA 본인 도구/Caller·lab 입력과 비용 준비는 직접 조건에 따라 병행한다.
+실행 상태·안내 보완과 전체 Source 의미 검토의 완료 범위는 구분한다. Q02/Q03/Q04/Q05/Q10은 미완료다. 다음 출발점은 S1 Room/Session/연결세대·Frontend의 남은 Source/시험 → S2 Recovery/Writer/Promotion 직접 연결 → S3 도달 diff/CI/참조 의미 검토 → S4 최종 원격 변화 대조다. 금고 독립 복원·ROSA 본인 도구/Caller·lab 입력과 비용 준비는 직접 조건에 따라 병행한다.
 
 
 <a id="b-review-closeout-audit-20261007"></a>
@@ -268,11 +268,11 @@ Q02/Q03/Q04/Q05/Q10은 미완료다. 다음은 Room start_*·identity 보상/시
 
 중단 전에 끝난 App18/19·GitOps20 보완과 Infra40 병합/삭제, Docs72의877ce979 문서 게시를 실제 Source/검사/Artifact에서 복원했다. 같은 수정을 중복 생성하지 않고 새 리뷰와 직접 후속만 처리했다.
 
-App17/18/19는 최신 D 재승인을 확인해 모두 병합·브랜치 삭제했고, 실제 결합 main a2afffb8605dafff1cb5b9af215aa0cf93aadcdb의 정식 Run37589421928에서1762/부분집합47/별도Lua9 PASS를 확인했다. Artifact와 정리 Run·전체 SHA·원 인계는 [Source §10](SOURCE_REVIEW_20261007.md#b-review-closeout-20261007)에 있다. GitOps20은 보완·58PASS·재리뷰 대기이며 이번 요청에서는 병합하지 않는다. Docs69는 삭제 가능하나 실제 보존, Docs72는 병합 대기다.
+App17/18/19는 최신 D 재승인을 확인해 모두 병합·브랜치 삭제했고, 실제 결합 main a2afffb8605dafff1cb5b9af215aa0cf93aadcdb의 정식 Run37589421928에서1762/부분집합47/별도Lua9 PASS를 확인했다. Artifact와 정리 Run·전체 SHA·원 인계는 [Source §10](SOURCE_REVIEW_20261007.md#b-review-closeout-20261007)에 있다. GitOps20은 보완·58PASS·재리뷰 대기이며 해당 기록 시점에 미병합이다. Docs69는 삭제 가능하나 실제 보존, Docs72는 병합 대기다.
 
 새 main7114e837의 Docs74 C 변경은 03의 periodic/ 결정과 05의 해당 행을 보존해 결합한다. 등록 Project03와 그림/출처 식별정보의 후속 영향, Infra42의 코드 리뷰/실제 적용 여부는 [work W09](WORK_HANDOFF_20261007.md)로 인계한다. 이번 PR에서 C의 결정/주기/보관이나 CP3/Infra3/Worker3를 바꾸지 않는다.
 
-[WORK_HANDOFF_20261007.md](WORK_HANDOFF_20261007.md)는 W01–W13별 담당·시작점·입력·작업·보호 범위·종료/실패·병행 조건을 제공한다. 생성/파일 제공과 다른 작업 공간으로의 자동 등록은 구분한다. 개인키/Token·원장 원본·실제 Plan은 복제하지 않는다. Q02/03/04/05/10의 전체 의미 검토는 아직 미완료이며 기존 TH81/완료2·과거 실패/실행자·Q 체크를 유지한다. 이번 요청의 가능한 처리 종료와 리뷰/실환경 입력/전체 목표 달성은 별도다.
+[WORK_HANDOFF_20261007.md](WORK_HANDOFF_20261007.md)는 W01–W13별 담당·시작점·입력·작업·보호 범위·종료/실패·병행 조건을 제공한다. 생성/파일 제공과 다른 작업 공간으로의 자동 등록은 구분한다. 개인키/Token·원장 원본·실제 Plan은 복제하지 않는다. Q02/03/04/05/10의 전체 의미 검토는 아직 미완료이며 기존 TH81/완료2·과거 실패/실행자·Q 체크를 유지한다. Source 작업 완료와 리뷰/실환경 입력/전체 목표 달성은 별도다.
 
 
 <a id="b-work-current-delta-audit-20261007"></a>
