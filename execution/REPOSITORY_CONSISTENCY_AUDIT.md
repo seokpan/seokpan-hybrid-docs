@@ -1,5 +1,7 @@
 # 2차 저장소 정합성 조사·수정 대장
 
+> **현재 인계:** 실행 입력은 [§9](#b-runtime-input-followup-20261007), 이번 Source 결함 재현·수정·검증·후속 인계는 [§10](#b-s1-source-findings-20261007)을 따른다. 이전 체크포인트·Q 체크·실제 수행 이력을 보존한다.
+
 > 개정: 2026-10-07 KST  
 > 상태: IN PROGRESS — 두 중단분의 게시·산출물 복원, PR 설명/리뷰 요청 정정, fixture 요약 후속 보완 및 등록용 소스 제공. 전체 코드/이력 의미 검토와 Q10 수렴은 미완료  
 > 담당: B 정태훈(tjung03). 다른 담당자의 실제 실행·승인·수신은 해당 원 기록으로 구분한다.  
@@ -149,3 +151,72 @@ Cloud 금고 확인은 lab 검토의 선행조건이 아니다. OCP 철거·팀�
 | S4 | S1~S3에서 발생한 수정·회귀·원 작업/Tracker/05·등록본 영향, 종료 직전 원격 변경 | 확인 가능한 미검토·미해결이 없어질 때만 Q02/03/04/05 및 Q10 전체 수렴 판정 |
 
 현재 문서·기록 주체·그림·등록용 파일의 지정 수정/제공과 두 중단분의 게시 정리는 끝냈다. 전체 코드·과거 이력의 의미 검토, 팀원 리뷰/병합, 본인·팀의 실제 Runtime 입력은 남아 있다. 이 잔여 범위를 숨기거나 조사 체크를 구현·시험 완료로 전환하지 않는다.
+
+
+<a id="b-runtime-input-followup-20261007"></a>
+
+## 9. 실행 입력 수신·Backend 고정 검사·lab 선언 재검토 — 2026-10-07
+
+### 9.1 현재 상태와 기존 체크포인트의 관계
+
+§1~8의 중단 재개·미병합/등록 대기는 그 기록 시점의 이력이다. Docs #68=fff5ac222243a231e5473f4ab39f87aa6cc10f6f, Infra #38=0f47617816b74365f5911ba2e273013ae82d6612, App #16=bdaa9dfa0a09e5d8efb1714ccf62860315b1346e, GitOps #18=12d78ac547729f0e314abfb2ac6238c95b1f3bd7의 실제 병합과 각 작업 브랜치 삭제를 확인했다. Project7개 v3 등록·00~04 병합본 일치는 [Docs21 원 확인](https://github.com/seokpan/seokpan-hybrid-docs/issues/21#issuecomment-6028672058)을 따른다. 같은 파일을 다시 등록하지 않는다.
+
+새 [GitOps #19](https://github.com/seokpan/seokpan-hybrid-gitops/pull/19)는 검토 HEAD2215aff8d4e49bcde0d5e66ce6a0769870a76605에 B가 [승인 리뷰5436531268](https://github.com/seokpan/seokpan-hybrid-gitops/pull/19#pullrequestreview-5436531268)를 남긴 뒤 main de130af839626c9d0a030580693a4060c41c9abd에 병합됐다. D의 초안 작성 수락·선언 공급·B 기존 변경 요청 대기는 해소됐고 C Data 수락·실제 Sync/Ready/업무는 별도다. 이 기록의 작업에서는 PR 병합이나 실제 클러스터 명령을 대신 실행하지 않았다.
+
+### 9.2 lab 검토·검증과 활성화 분리
+
+기존 B 변경 요청은 제한 AppProject의 apps/StatefulSet 누락과 Sync 뒤 되돌림 설명이다. 최신 Source/테스트는 Kind 하나만 추가하고 Namespace/목적지·Cluster 자원·Secret/PVC/Job 경계를 유지한다. Kind 허용은 이름 lab-redis 한 개만 허용하는 정책이 아니다. Sync 후0Replica 객체도 남으므로 Git revert만으로 자동 삭제된다고 가정하지 않는다.
+
+TLS-only·AUTH include와 두 CLI 환경변수·0440·임의 UID·읽기전용 Root·emptyDir·noeviction·startup TCP/readiness PONG/liveness 없음·내부 Registry Digest를 대조했다. SNI/PONG을 Backend의 실제 Hostname 검증으로 확대하지 않는다.128Mi 요청/256Mi 제한/192mb는 최초 후보이며 OOM 안전의 측정값이 아니다.
+
+[Run37556270961](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37556270961)의 정확 HEAD 로그에서40개 PASS·Source 불변·8개 진단 Render/26객체(lab12)를 확인했다. Artifact11455380463의 ZIP SHA256은 cb2335319fbb1ca644acc73b74e1f62ddd562c1d8cf2ff4d04c1dab9615250df다. 다운로드 후 CRC·8 YAML 체크섬·Source SHA·생성 ConfigMap 참조·held replica/Job·동일 Backend Digest·정확 Project Kind/목적지를 검사했다. 이는 실제 클러스터 시험이 아니다.
+
+[GitOps10 인계](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10#issuecomment-6029054228)에 Valkey 단독 준비→Valkey Service/Ready/연결→App Data/Schema→필요한 단일 Migration→BE→FE 단계를 연결했다. Valkey 단독 준비에 Cloud 금고·Cloud Pool·DB Schema 완료를 잘못 묶지 않으며, 실제1Replica 변경은 해당 입력/권한/공유 사용창·live Diff 수락 후 별도 검토한다.
+
+### 9.3 App 연결/생명주기 Source와 기존 전체 suite 재실행
+
+Source bdaa9dfa0a09e5d8efb1714ccf62860315b1346e는 이전2003fe9d와 비교해 MD2개만 변경됐다. 연결 계약/환경설정, MariaDB/Redis 연결·설정, production.py·production_app.py·clock.py와 연결/자원/생명주기 테스트6개를 전문 대조했다. Runtime Engine2개·Migration NullPool, 생성 중 실패·정상/예외/취소와 Client/Pool 정리의 기존 검사 범위를 확인했다. game_adapter의 시각 변환 helper는 한정 대조했으며 전체 Adapter/게임 상태/Lua/종료 경쟁 의미 검토를 완료로 올리지 않았다.
+
+[Run37557724369](https://github.com/seokpan/seokpan-hybrid-app/actions/runs/37557724369)에서 기존 backend/scripts/verify_ci.py를 Python3.13.15·uv0.12.5·기존 uv.lock으로 실행했다. Lock/sync·Ruff format250파일/lint·mypy119파일·1752테스트가 통과했고 JUnit failure/error/skip0이다. Room/Game/Vote domain100%와 별도 Runner47개/기존80% 커버리지 기준도 통과했다.47개는 기본 suite의 부분집합 재검사이므로 고유 Case 총수로 더하지 않는다.
+
+Artifact11455548206의 ZIP SHA256 a881648d06ade58dd1fd13f83b94c1658febb5e79abaaae851f691b07a1582d0, CRC·source/lock·summary/JUnit/coverage를 다운로드 후 확인했다. trigger1cd72cf3510e9a5b8a3ff223366e4a4d66fbac1e와 실제 checkout bdaa를 구분한다. 임시 workflow는 제거했고 정리 Commit13076301064c03dd056b76338ed74aa7fe37e6cb의 파일 Tree는 bdaa와 같다. audit/b-backend-locked-20261007 브랜치는 검사 이력 참조로 남아 있으며 병합할 코드 변경은 없다.
+
+첫37557295253은 job env의 runner context 오류로 실행 전 실패,37557565189는 uv 배너의 build metadata 문자열 비교로 Backend 검사 전 중단됐다. 임시 실행 정의만 정정했고 두 실패를 App 제품 결함이나 테스트 PASS로 포함하지 않는다. 새 정상 실행 결과와 과거 실행을 구분해 [App1](https://github.com/seokpan/seokpan-hybrid-app/issues/1#issuecomment-6029039957)에 기록했다.
+
+### 9.4 작업 중 새 App 수정과 재검토 파급
+
+작업 중 별도 [App #17](https://github.com/seokpan/seokpan-hybrid-app/pull/17)이 게시됐다. HEAD367938f08e735fe123827b3c9362307b5d59408f는 runner 생성 뒤 첫 await가 cleanup try/finally 밖에 있던 기동 취소 경로를 수정한다. 기존1752 PASS만으로 새 누락 Case를 안전하다고 결론내리지 않는다. 같은 수정을 중복 작성하지 않고 실제 Patch·86줄 회귀를 검토했다.
+
+기존 [Run37557811841](https://github.com/seokpan/seokpan-hybrid-app/actions/runs/37557811841)의 Artifact11455364455 ZIP SHA2560e1f7864d82af842c8e1416ec0778c0c5f23aab619842a983366f02c1764ba05와 before/after JUnit·1754/47 결과를 수신 대조했다. 기존 Source+새 회귀는 취소1FAIL/정상1PASS, 수정 Source는2PASS이며 최종1754/47 각각 failure/error/skip0이다. 이 작업에서 해당 PR의 코드·Run을 새로 만든 결과가 아니다. B 명의 PR의 C/D 리뷰·병합은 별도이며 본인 승인으로 대신하지 않는다.
+
+문서/기준선 검사만으로는 새 Build가 필요 없지만 #17 Runtime 수정을 배포하려면 병합 후 새 Backend Build/Scan/Digest가 필요하다. [추가 인계](https://github.com/seokpan/seokpan-hybrid-app/issues/1#issuecomment-6029077498)에 정정했으며 기존 승인 이미지에 수정이 들어 있다고 기록하지 않는다. Valkey만 기동하는 준비와 Backend 교체는 다른 단계다.
+
+### 9.5 Pool·ROSA·금고의 직접 입력
+
+Pool 크기 환경변수는 현재 App에서 소비하지 않는다. 실제 global/user 연결 한도·idle 시간·예약·종료 중 연결/연속 Rolling 겹침을 C/B가 합의한 뒤 Source/검사→D 새 Build/Digest로 연결한다. [SQLAlchemy Pool](https://docs.sqlalchemy.org/en/20/core/pooling.html)의5+10 기본을 Engine2개에 적용한30/프로세스는 구성상 후보이며 선할당30개가 아니다.3+2는10/프로세스·(활성4+종료중1)×10+예약10=60 시나리오일 뿐이다. [Deployment terminating](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)의 수와 [Engine disposal](https://docs.sqlalchemy.org/en/20/core/connections.html#engine-disposal)의 checked-out 연결은 독립 확인 대상이다. 이 후보를 실제 연결 상한 보장으로 사용하지 않는다.
+
+기존 ROSA LOCAL_PREPARATION/INPUT_CONTRACT/REVIEW_AND_EXECUTION_GATES를 재사용했다. 보조 사본의 bash-n과 OIDC harness9파일 생성·4개 Resource/정규화·원본 Lock 보존만 확인했고 Terraform validate/test/실제 Plan·본인 Caller/Backend는 미실행이다. Lock SHA256b7034e236305de9a67786cfdcd302a589e7cb7ada92d5cbea4286c871cea7831. [Infra25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25#issuecomment-6029050081)에 A 제한 출력/공통 Role·Policy/Backend와 C SG2, B 지원/구독/Quota·사양/시간/비용·실제 가용성을 연결했다. Cost PARTIAL·$450/$500을 유지한다.
+
+[C10/7jth 금고 보고](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6028766924)는 [B 수신](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6028919355) 완료다. Controller 밖 독립 키 사본과 복원한 identity의 해독 확인만 별도다. 이 기록 작성 환경에서 Token을 열거나 키를 보관하지 않았다. [A WireGuard A주/B예비 합의](https://github.com/seokpan/seokpan-hybrid-infra/issues/16#issuecomment-6028757705)도 실제 키 생성·독립 사본 공급과 구분해 수신했다.
+
+### 9.6 현재 수렴 범위와 다음 시작점
+
+이번 변경은 네 실행 문서의 오래된 직접 대기를 한 번 교체하고 이 대장에 근거를 연결하는 범위다. 다른 트랙의 audit/b-s1-s4-20261007·App #17·Infra #39는 존재/범위를 확인해 보존하며 임의로 덮어쓰거나 실제 Apply를 대신하지 않는다.01~04·그림·TH/Q체크·기존 Evidence와 C의 실행 기록은 변경하지 않는다.
+
+이번 묶음의 PR19 재검토·main 병합 수신, App 기존 suite 재검증, 새 App17/이미지 영향 수신, 금고·ROSA·Pool의 직접 인계는 원 기록에 연결했다. 다음은 App17 C/D 리뷰·실제 Build 연결, Valkey 단독 활성화의 실제 입력, 본인 독립 키/Caller·가용성 확인과 Pool 값 합의다. 미검토 게임 상태/Lua·기타 Source/과거 Commit/CI·참조는 §8의 해당 지점에서 이어간다. Q02/03/04/05/10을 완료로 올리지 않으며 신규 Run 없이 Runtime/비용 PASS를 추가하지 않는다.
+
+
+<a id="b-s1-source-findings-20261007"></a>
+## 10. S1–S4 검토 및 F11/F12 후속 — 2026-10-07
+
+[Source 검토 기록](SOURCE_REVIEW_20261007.md)에 실제 사용 SHA·수집/검토 수준·두 결함·red/green·기존 CI·게시/리뷰·인계와 한계를 보존했다. 새 원 결과는 [App4](https://github.com/seokpan/seokpan-hybrid-app/issues/4#issuecomment-6029248805), [Build 인계](https://github.com/seokpan/seokpan-hybrid-app/issues/2#issuecomment-6029292025), [GitOps10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10#issuecomment-6029297406)이다.
+
+- F11: App #17 — startup 취소 경로에서 runner 정리 책임이 첫 await보다 늦게 시작하는 문제. 기존1FAIL/1PASS → 수정2PASS, 기본1754·별도47 PASS.
+- F12: App #18 — Lua의 기한 거부 전에 board를 쓰는 문제. 기존 실제Lua3PASS/새2FAIL → 수정5PASS, 기본1752·별도47 PASS. Script9→10/Schema 유지. 회귀용 Redis 결과와 선택 Valkey 실환경을 구분.
+- S2: GitOps #19의 lab 선언·제한 StatefulSet Kind·롤백 보완은 병합돼 D 초안 대기가 해소됐다. 실제 활성화/CA/Secret·DB/Schema·사용창은 별도. Recovery 선언/renderer/테스트는 승인 실제 입력과 함께 개정한다.
+- S3: 저장된 PR HEAD refs까지 복원해 App98/Infra110/GitOps48/Docs175의431개 도달 이력을 부모·경로·diff 해시로 색인했다. 모든 과거 diff/CI 의미 검토 완료를 뜻하지 않는다.
+- S4: source→새 검사→수정→회귀/기존 검사→게시 바이트→원 Issue/리뷰/Build→실행 문서 영향을 확인했다. 나머지 Source/이력 검토가 남아 Q02/03/04/05/10은 유지하며 두 결함 수정만으로 전체 수렴을 선언하지 않는다.
+
+00–04·그림/manifest·C의 기존05 §8·Evidence·TH81/완료2는 변경하지 않는다. 실제 Runtime Run·비용·승인 Image 개정은 이번 기록으로 추가하지 않는다.
+
+최종 인계 대조에서 Docs #71 main `5b8c529e50e480ce1aa6e83a95caee8d9c877908`의 C §8.14·Tracker 변경과 기존 #69의 현재 입력을 결합했다. 금고 해독 보고/B 수신 완료를 다시 미수신으로 되돌리지 않으며, 독립 키 사본은 별도다. 새 문서 PR 대신 #69에 Source 검토를 연결한다. 감사 작업 브랜치의 산출물은 원 Commit/Run으로 보존하며 임의 삭제하지 않는다.
