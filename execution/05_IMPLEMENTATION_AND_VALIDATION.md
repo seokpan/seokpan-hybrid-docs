@@ -742,8 +742,23 @@ State Lineage·Serial 차이의 원인과 내용 동일성은 [첫 코멘트](ht
 - 서비스 연결 Role: 첫 RDS · ElastiCache 생성 때 필요한 `AWSServiceRoleForRDS` · `AWSServiceRoleForElastiCache`를 foundation Role 권한을 늘리지 않고 CLI로 미리 만들었다(21:02:29/31 KST, 배정 실행자 이유빈 동의 / 실제 수행자 김상희, [PR #37 코멘트](https://github.com/seokpan/seokpan-hybrid-infra/pull/37#issuecomment-6015927016)).
 - Redis AUTH Token: SOPS 3.13.3 + age v1.3.2로 암호화한 원본을 controller에 두고, 수신자를 김상희 · 이유빈 · 정태훈 3명으로 제한했다(04 §5.3). 이유빈 · 정태훈 계정에서 같은 파일이 해독되는 것을 확인했고 Token 값은 어디에도 출력하지 않았다. Terraform에는 infra README의 공급 절차(subshell · 종료 시 unset)로만 넘긴다.
 - 10/8 통합 Plan의 Data 선행 조건(코드 main 반영 · 서비스 연결 Role · Token)은 모두 준비됐다. Plan · Apply 실행은 이유빈이다.
-- 열린 항목: ① 10/8 첫 Plan의 Data AccessDenied 확인, ② Apply 후 Endpoint · Port · SG ID · Secret 참조 인계와 Valkey CA 체인 확인, ③ Data VM(`192.168.52.50`) 생성 · `onprem_job_host_cidrs` 값 입력, ④ 후속 bootstrap PR(`CreateDataServiceLinkedRoles` 제거 · README `export` 분리 · `iam.tf` 주석 정정), ⑤ Cost Gate Redis 단가를 Valkey 기준으로 재계산(D)
+- 열린 항목: ① 10/8 첫 Plan의 Data AccessDenied 확인, ② Apply 후 Endpoint · Port · SG ID · Secret 참조 인계와 Valkey CA 체인 확인, ③ Data VM(`192.168.52.50`) 생성 · `onprem_job_host_cidrs` 값 입력, ④ 후속 bootstrap PR(`CreateDataServiceLinkedRoles` 제거 · README `export` 분리 · `iam.tf` 주석 정정), ⑤ Cost Gate Redis 단가를 Valkey 기준으로 재계산(최유준) → ④는 8.14절에서 완료(Infra PR #39), ③은 값을 10/8 Plan에 넣기로 정해졌고 VM 생성이 남음, ①②⑤는 8.14절에서 이어서 관리
 - 한계: 코드 병합 · 계정 수준 Role 생성 · 암호화 원본 준비까지이며, RDS · Valkey 실제 생성 · 접속 시험 · 이관 · Backup/Restore 측정은 아니다.
+
+### 8.14 Valkey 접속 비밀번호 해독 확인 · foundation 통합 인계 · 정리 PR (infra #19 · #23 / PR #39)
+
+- 일자: 2026-10-07 / 작성 김상희
+- 해독 확인: Valkey 접속 비밀번호(AUTH Token)를 담은 SOPS 파일이 열 수 있는 세 사람(김상희 · 이유빈 · 정태훈) 계정에서 모두 열리는 것을 확인했다. 정태훈 계정은 10-07에 확인했고, 세 계정의 암호문 확인값(SHA-256 앞 12자리 `9a86f90e6ba6`)과 파일 수정 시각(2026-10-06T12:42:44Z)이 같다. `ansible` 계정은 이유빈 단독 사용 계정이다. 비밀번호 값은 출력하지 않았다. 팀 설명 글(그림 2장)과 확인 기록은 [Infra #19](https://github.com/seokpan/seokpan-hybrid-infra/issues/19)에 있다.
+- foundation 통합 인계: [Infra #23](https://github.com/seokpan/seokpan-hybrid-infra/issues/23)에 10/8 통합 Plan에 필요한 입력 · 확인할 Data 자원 목록 · Apply 후 전달할 출력 9개를 모아 인계했다. 이유빈 답변으로 다음이 정해졌다.
+  - 10/8 Plan에 백업 작업 VM 주소(`192.168.52.50/32`)를 넣는다. RDS 보안 그룹에 3306 허용 규칙 1개만 생기고, 실제 접속 검증은 VPN 작업(Infra #16)에서 한다. 따라서 Plan의 Data 자원은 추가 17개가 정상이다.
+  - 10/8에는 Plan만 하고, Apply는 전체 Plan · 팀 리뷰 · 비용 확인(Cost Gate) 후에 한다. Apply 날짜는 아직 정해지지 않았다.
+  - Data 출력은 계정 번호가 섞일 수 있어 Issue가 아니라 팀 채팅으로 전달한다.
+- 온프렘 신규 VM 2대 구분: **백업 작업 VM**(1차 DB → RDS 이관과 15분 백업, AWS에 접속함, `192.168.52.50`)과 **복구 DB VM**(AWS 없이 백업으로 MariaDB를 새로 복원, AWS에 접속하지 않음)은 04 문서 5.5절(확정된 복구 DB 전용 VM 배치)대로 별도 VM이다. 복구 DB VM의 서버 여유 확인과 주소 결정은 10/8 Plan 후 이유빈과 함께 한다.
+- 비용 입력 갱신: [Docs #43](https://github.com/seokpan/seokpan-hybrid-docs/issues/43)의 Data 입력에서 캐시 엔진을 Valkey 7.2로 바꾸고, RDS · Valkey 생성 시점을 "foundation Apply 날짜"로 고쳤다. Valkey 단가 재계산은 최유준 담당이다.
+- 정리 PR: [Infra PR #39](https://github.com/seokpan/seokpan-hybrid-infra/pull/39)로 bootstrap의 `CreateDataServiceLinkedRoles` 권한을 뺐다(RDS · ElastiCache 서비스 연결 Role은 10-06에 미리 만들었고 10-07 10:34 KST에 다시 조회해 확인). 함께 foundation README의 비밀번호 공급 명령을 대입과 `export` 두 줄로 나눴다 — 한 줄로 쓰면 sops가 파일을 못 열어도 `export`가 성공해 중간에 멈추지 않는다. bootstrap plan(확인만)은 0 add / 1 change / 0 destroy였고, 리뷰 승인 후 main `ceb6fad`로 병합했고, 이유빈이 bootstrap을 적용한 뒤 다시 Plan을 돌려 `No changes`를 확인했다(배정 실행자 · 실제 수행자 이유빈, [PR #39 코멘트](https://github.com/seokpan/seokpan-hybrid-infra/pull/39)). 서비스 연결 Role 자체는 지우지 않았다.
+- Infra PR #38 Data 관점 검토: 병합 후 시험 9개를 직접 실행해 모두 통과했다. 과거 개별 결과 화면을 "알려진 한계"로 옮긴 것은 03 문서 3-I.14.4절과 맞고, 실제 운영 데이터 검토 항목은 실제 이관 · 백업 때 진행하므로 남겨 두는 것이 맞다. 보완 제안 2개(근거 절 번호, 운영과의 버전 차이를 결과 파일에도 기록)를 PR 코멘트로 남겼다.
+- 열린 항목: ① (완료) PR #39 bootstrap 적용과 No changes 확인(이유빈, 10-07), ② 10/8 Plan의 Data 자원 17개 · 보안 그룹 2개 `Component=data` 태그 · AccessDenied 확인, ③ Apply 후 실제 값 인계와 Valkey CA 확인, ④ 백업 작업 VM 생성, ⑤ 복구 DB VM 사양 · 주소, ⑥ Valkey 단가 재계산(최유준)
+- 한계: 해독 확인 · 인계 · 권한 축소 · 기록까지이며, foundation Plan · Apply, RDS · Valkey 생성 · 접속, 이관 · Backup/Restore 측정은 아니다.
 
 ## 9 복구 예행과 목표 재검토 — 2026-10-02
 
