@@ -10,10 +10,10 @@
 
 [GitOps #26](https://github.com/seokpan/seokpan-hybrid-gitops/issues/26)은 후속 조회에서 Stage2의 실제 추적 Issue로 확인됐다. [D의 backend-db-runtime 공급 보고](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6#issuecomment-6034843156)는 두 URL 키·계약 Host/DB 이름과 기존 lab 계정 비밀번호 공유를 명시한다. Secret 미공급으로 되돌리지 않되 실제 새 URL 접속·C 형식/GRANT·데이터 출처 수락은 대기다. Route/Origin·새 Backend Image·Stage2 활성화/전체 Gate도 미완료다.
 
-Codex의 첫 읽기·작업 위치·사용량·다음 직접 조건은 [CODEX_ENTRYPOINT_20261007.md](CODEX_ENTRYPOINT_20261007.md)를 따른다. 원 보고와 이 Source 수정의 수신/검토·실행은 별개다.
+첫 읽기·작업 위치·실행 조건은 [실행 인계](CODEX_ENTRYPOINT_20261007.md)를 따른다. 원 보고와 이 Source 수정의 수신/검토·실행은 별개다.
 
 
-## 현재 실행 기준 — 2026-10-07 원격 변경 대조·Codex 인계
+## 현재 실행 기준 — 2026-10-07 원격 변경 대조·구현 인계
 
 | 경로 | 완료·수신 범위 | 직접 남은 조건 |
 |---|---|---|
@@ -700,7 +700,7 @@ App17–19 최신 승인·병합/삭제 및 결합 main 검사/Build 입력은 [
 <a id="b-provider-cleanup-source-20261007"></a>
 ## B App #4 W10 Source 후속 — 2026-10-07
 
-[App #4](https://github.com/seokpan/seokpan-hybrid-app/issues/4)·[Draft #20](https://github.com/seokpan/seokpan-hybrid-app/pull/20)·[정확 HEAD CI](https://github.com/seokpan/seokpan-hybrid-app/actions/runs/37605414615)·[새 Source 부분 Run](../evidence/T09/provider-cleanup-20261007-01/summary.md)를 연결한다. 수행자 Codex/CI GitHub Actions, 배정 B. 오류 뒤 PubSub 정리 RedisError가 Provider 오류 변환을 가리는 결함6Case를 재현·수정했고 관련28PASS, Linux 기본1774/부분집합runner47/별도Lua9 PASS다. Windows 전체1FAIL/4SKIP/동일Case setup·teardown2ERROR와 원 main 별도사본 재현은 Run에 보존했다. App #20 HEAD=e3488953b0f51b1a54dc7899a8a57c8024c54c13는 미병합·사람 리뷰 대기이며 D 새 Build/Scan/Digest와 B App/held Migration 소비 개정이 필요하다. 기존 승인 Image를 승계하지 않는다.
+[App #4](https://github.com/seokpan/seokpan-hybrid-app/issues/4)·[Draft #20](https://github.com/seokpan/seokpan-hybrid-app/pull/20)·[정확 HEAD CI](https://github.com/seokpan/seokpan-hybrid-app/actions/runs/37605414615)·[새 Source 부분 Run](../evidence/T09/provider-cleanup-20261007-01/summary.md)를 연결한다. 소스 담당 B, 검증 환경 Windows/GitHub Actions Linux. 오류 뒤 PubSub 정리 RedisError가 Provider 오류 변환을 가리는 결함6Case를 재현·수정했고 관련28PASS, Linux 기본1774/부분집합runner47/별도Lua9 PASS다. Windows 전체1FAIL/4SKIP/동일Case setup·teardown2ERROR와 원 main 별도사본 재현은 Run에 보존했다. App #20 HEAD=e3488953b0f51b1a54dc7899a8a57c8024c54c13는 미병합·사람 리뷰 대기이며 D 새 Build/Scan/Digest와 B App/held Migration 소비 개정이 필요하다. 기존 승인 Image를 승계하지 않는다.
 
 [GitOps 보고 수신](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5#issuecomment-6035851057)은 실제 Runtime 재조회가 아니다. Stage1 SHA A·Valkey1/FE·BE0/Migration suspend·base/Recovery hold, Stage2 #26의 남은 Data/Route/Image/Gate, 본체 금고 완료/독립사본 미완료와 ROSA/Cost 입력 대기를 유지한다. Docs #72/GitOps #25/Infra #43은 시작/후속 조회에서 미병합이며 새 검사 성공도 Source 범위다. 이번 Source Run/Docs 연결은 TH81/기존 완료2·Q 전체 미완료·공식 T/Must 판정을 가산하지 않는다. D Index 리뷰/수신과 팀원 결과 수락은 확인 전이다.
 

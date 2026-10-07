@@ -10,10 +10,10 @@
 
 [GitOps #26](https://github.com/seokpan/seokpan-hybrid-gitops/issues/26)은 후속 조회에서 Stage2의 실제 추적 Issue로 확인됐다. [D의 backend-db-runtime 공급 보고](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6#issuecomment-6034843156)는 두 URL 키·계약 Host/DB 이름과 기존 lab 계정 비밀번호 공유를 명시한다. Secret 미공급으로 되돌리지 않되 실제 새 URL 접속·C 형식/GRANT·데이터 출처 수락은 대기다. Route/Origin·새 Backend Image·Stage2 활성화/전체 Gate도 미완료다.
 
-Codex의 첫 읽기·작업 위치·사용량·다음 직접 조건은 [CODEX_ENTRYPOINT_20261007.md](CODEX_ENTRYPOINT_20261007.md)를 따른다. 원 보고와 이 Source 수정의 수신/검토·실행은 별개다.
+첫 읽기·작업 위치·실행 조건은 [실행 인계](CODEX_ENTRYPOINT_20261007.md)를 따른다. 원 보고와 이 Source 수정의 수신/검토·실행은 별개다.
 
 
-## 현재 실행 기준 — 2026-10-07 원격 변경 대조·Codex 인계
+## 현재 실행 기준 — 2026-10-07 원격 변경 대조·구현 인계
 
 | 경로 | 완료·수신 범위 | 직접 남은 조건 |
 |---|---|---|
@@ -2026,7 +2026,7 @@ C의 §8.9–8.14·과거 시험/체크/그림·설계/TH 상태는 유지한다
 
 [App #4](https://github.com/seokpan/seokpan-hybrid-app/issues/4)·[Draft #20](https://github.com/seokpan/seokpan-hybrid-app/pull/20)·[정확 HEAD CI](https://github.com/seokpan/seokpan-hybrid-app/actions/runs/37605414615)·[새 Source 부분 Run](../evidence/T09/provider-cleanup-20261007-01/summary.md)에 제품2파일 변경·정확 Source·환경·실제 수행자·실패/재시험·도구/Lock·다음 입력을 기록했다. App #19 D의 비차단 의견을 이어 subscribe/버전 오류 뒤 cleanup RedisError만 억제하고 기존 RealtimeUnavailable 계약을 유지한다. 기존 취소8 + 새 오류12에서 main 제품코드6FAIL/14PASS→수정20PASS, 기존 Adapter8을 포함한 관련28PASS다. 정확 PR HEAD `e3488953b0f51b1a54dc7899a8a57c8024c54c13`의 Linux 기존정식1774/부분집합47/별도 소유 Redis Lua9 PASS, Windows 정식실패·원 main 별도사본 재현은 같은 Run에 분리했다. Artifact 서버metadata/digest와 원 Job은 읽었지만 ZIP 독립 다운로드는403으로 미검증이다.
 
-배정 B, 실제 Source 작성/로컬 실행/기록 Codex, Linux 실행 GitHub Actions다. 리뷰·병합과 D 새 Backend Build/Scan/Digest·플랫폼/Pull→B App/별도 held Migration 소비 수락이 남는다. 실제 Valkey/TLS/AUTH·DB/WSS/클러스터·연결회수·전체 T09/T18·비용 성공은 미실행이다. [D 보고 수신](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5#issuecomment-6035851057)은 보고 범위이며 성공한 등록/Sync를 반복하지 않았다. 다른 담당자의 §8 기록·기존 Run,03/04 종료·DR10/30/15·CP3/Infra3/Worker3·Cost PARTIAL/$450/$500·TH81/완료2·Q 미완료를 보존한다.
+소스 담당 B. 로컬 검증 환경은 Windows, Linux 검증은 GitHub Actions다. 리뷰·병합과 D 새 Backend Build/Scan/Digest·플랫폼/Pull→B App/별도 held Migration 소비 수락이 남는다. 실제 Valkey/TLS/AUTH·DB/WSS/클러스터·연결회수·전체 T09/T18·비용 성공은 미실행이다. [D 보고 수신](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5#issuecomment-6035851057)은 보고 범위이며 성공한 등록/Sync를 반복하지 않았다. 다른 담당자의 §8 기록·기존 Run,03/04 종료·DR10/30/15·CP3/Infra3/Worker3·Cost PARTIAL/$450/$500·TH81/완료2·Q 미완료를 보존한다.
 
 <a id="repository-full-audit-20261007"></a>
 ### 9.47 최초 저장소 전수 조사와 소스 검사 후속 — 2026-10-07

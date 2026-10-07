@@ -10,10 +10,10 @@
 
 [GitOps #26](https://github.com/seokpan/seokpan-hybrid-gitops/issues/26)은 후속 조회에서 Stage2의 실제 추적 Issue로 확인됐다. [D의 backend-db-runtime 공급 보고](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6#issuecomment-6034843156)는 두 URL 키·계약 Host/DB 이름과 기존 lab 계정 비밀번호 공유를 명시한다. Secret 미공급으로 되돌리지 않되 실제 새 URL 접속·C 형식/GRANT·데이터 출처 수락은 대기다. Route/Origin·새 Backend Image·Stage2 활성화/전체 Gate도 미완료다.
 
-Codex의 첫 읽기·작업 위치·사용량·다음 직접 조건은 [CODEX_ENTRYPOINT_20261007.md](CODEX_ENTRYPOINT_20261007.md)를 따른다. 원 보고와 이 Source 수정의 수신/검토·실행은 별개다.
+첫 읽기·작업 위치·실행 조건은 [실행 인계](CODEX_ENTRYPOINT_20261007.md)를 따른다. 원 보고와 이 Source 수정의 수신/검토·실행은 별개다.
 
 
-## 현재 실행 기준 — 2026-10-07 원격 변경 대조·Codex 인계
+## 현재 실행 기준 — 2026-10-07 원격 변경 대조·구현 인계
 
 | 경로 | 완료·수신 범위 | 직접 남은 조건 |
 |---|---|---|

@@ -1,7 +1,7 @@
 event_id,timestamp_utc,timestamp_kst,actor_ref,event,result,evidence_ref
-before,2026-10-07T10:05:59.431807+00:00,2026-10-07T19:05:59.431807+09:00,Codex,Existing main product code + new boundary tests,6FAIL/14PASS,local:app4-before-junit
-focused_after,2026-10-07T10:06:36.611170+00:00,2026-10-07T19:06:36.611170+09:00,Codex,Candidate focused suite started; outcome retained,28PASS,local:app4-focused-after-junit
-windows_full_started,2026-10-07T10:06:40.904159+00:00,2026-10-07T19:06:40.904159+09:00,Codex,Existing formal policy started on dirty candidate worktree,started,local:app4-windows-full-summary
-linux_started,2026-10-07T10:08:36+00:00,2026-10-07T19:08:36+09:00,GitHub Actions,Exact HEAD Linux CI Job started,started,https://github.com/seokpan/seokpan-hybrid-app/actions/runs/37605414615
-windows_full_finished,2026-10-07T10:09:52.686278+00:00,2026-10-07T19:09:52.686278+09:00,Codex,Windows full policy terminated,FAIL; 1768PASS/1FAIL/4SKIP/2ERROR,local:app4-windows-full-summary
-linux_finished,2026-10-07T10:10:55+00:00,2026-10-07T19:10:55+09:00,GitHub Actions,Formal policy + Lua + Artifact upload completed,PASS,https://github.com/seokpan/seokpan-hybrid-app/actions/runs/37605414615
+before,2026-10-07T10:05:59.431807+00:00,2026-10-07T19:05:59.431807+09:00,Windows isolated local,Existing main product code + new boundary tests,6FAIL/14PASS,local:app4-before-junit
+focused_after,2026-10-07T10:06:36.611170+00:00,2026-10-07T19:06:36.611170+09:00,Windows isolated local,Candidate focused suite started; outcome retained,28PASS,local:app4-focused-after-junit
+windows_full_started,2026-10-07T10:06:40.904159+00:00,2026-10-07T19:06:40.904159+09:00,Windows isolated local,Existing formal policy started on dirty candidate worktree,started,local:app4-windows-full-summary
+linux_started,2026-10-07T10:08:36+00:00,2026-10-07T19:08:36+09:00,GitHub Actions Linux,Exact HEAD Linux CI Job started,started,https://github.com/seokpan/seokpan-hybrid-app/actions/runs/37605414615
+windows_full_finished,2026-10-07T10:09:52.686278+00:00,2026-10-07T19:09:52.686278+09:00,Windows isolated local,Windows full policy terminated,FAIL; 1768PASS/1FAIL/4SKIP/2ERROR,local:app4-windows-full-summary
+linux_finished,2026-10-07T10:10:55+00:00,2026-10-07T19:10:55+09:00,GitHub Actions Linux,Formal policy + Lua + Artifact upload completed,PASS,https://github.com/seokpan/seokpan-hybrid-app/actions/runs/37605414615

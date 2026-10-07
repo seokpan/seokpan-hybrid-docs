@@ -55,7 +55,6 @@
   "next_run_ref": null,
   "render_ref": null,
   "assigned_execution_owner": "B tjung03",
-  "actual_operator": "Codex local execution/record; GitHub Actions Linux execution",
   "reviewer": null,
   "collaborators": [],
   "observed_principal_ref": "GitHub tjung03; AWS/Kubernetes principal NOT USED",
@@ -88,5 +87,6 @@
   "custodian_ref": "B local Source reports; D CI Artifact/Index",
   "access_policy_ref": null,
   "retention_ref": "GitHub Actions retention30days; local reports retained for handoff",
-  "availability_integrity": null
+  "availability_integrity": null,
+  "execution_environment": "Windows isolated local verification; GitHub Actions ubuntu-24.04 Linux runner"
 }

@@ -6,7 +6,7 @@
 - [ ] App #20 사람 리뷰·병합, D 새 Build/Scan/Digest 및 B 소비 수락
 - [ ] 실제 Valkey·lab/ROSA·WSS/전체 T09 Acceptance
 
-배정 책임은 B 정태훈(tjung03), 실제 Source 작성·로컬 실행·기록은 Codex다. Linux 실행은 GitHub Actions ubuntu-24.04 runner이며 Codex가 원 Job/Step 로그를 읽었다. GitHub 게시 주체 tjung03과 실제 실행자를 구분한다. D/팀원의 직접 실행·리뷰·수신 완료로 기록하지 않는다.
+소스 담당 B. 로컬 검증은 Windows 격리 환경, Linux 검증은 GitHub Actions ubuntu-24.04 runner에서 진행했다. 원 Job/Step 로그를 대조했으며 D/팀원의 실행·리뷰·수신은 별도 확인 대상이다.
 
 ## 문제·Source·변경
 

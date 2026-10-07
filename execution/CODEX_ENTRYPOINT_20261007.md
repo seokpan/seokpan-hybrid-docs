@@ -1,9 +1,9 @@
-# Codex 실행 인계 — 2026-10-07
+# 구현·검증 실행 인계 — 2026-10-07
 
 > **최신 조사 후속 — 2026-10-07:** [전수 조사](REPOSITORY_AUDIT_20261007.md)·[05§9.47](05_IMPLEMENTATION_AND_VALIDATION.md#repository-full-audit-20261007) 참조. GitOps main의 Root SHA B/FE·BE1은 소스 병합 상태이며, 마지막 수신 Runtime은 SHA A/FE·BE0이다. 성공한 등록/선택Sync·금고 본체 확인을 반복하지 않는다. C의 GitOps26/6038214247 DB 형식·GRANT·TLS 접속·합성 출처 수락 보고는 수신했고 실제 Stage2 적용·Route/업무는 원 #26에서 후속 확인한다. 아래 시점별 인계 보존.
 
 > 목적: 승인 설계와 최신 Source를 유지하면서 구현·검증을 다음 작업 환경에서 이어간다.
-> 관측: 저장소별 순차 조회이며 전체가 한 순간의 원자적 Snapshot은 아니다. 시작 시 이 문서의 SHA 이후 변경분을 확인한다.
+조회는 저장소별 시각을 구분하고, 시작 시 아래 SHA 이후 변경분을 확인한다.
 > 원 작업: [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)·[인계 PR #72](https://github.com/seokpan/seokpan-hybrid-docs/pull/72). 상세 실행 카드는 [WORK_HANDOFF_20261007.md](WORK_HANDOFF_20261007.md).
 
 - [x] 첨부 NextInputs ZIP 무결성 확인: CRC 정상, SHA256 항목12개 일치
@@ -19,7 +19,7 @@
 3. 해당 작업에 필요한 승인 설계03·준비04 절과 실제 코드·검사·Lock을 읽는다. 00은 역사적 출발점, 03/04 문서 종료와 Runtime 완료는 별개다.
 4. `git status`와 원격 변화·개인 변경·미병합 PR을 확인한다. 기존 clone/Branch/State/키를 초기화하지 않는다. 전체 저장소의 변경 목록은 작업 묶음 전후 확인하고, 의미 검토는 영향받는 파일·입력·시험·인계로 확장한다.
 
-프로젝트 대화·Project 파일·개인 Key·VPN·kubeconfig·실제 보호 입력이 다른 Codex 환경으로 자동 전달된다고 가정하지 않는다. 이번 첨부는 원 CI Artifact/Render/Harness의 부분집합이므로 원 SHA와 Run을 참조한다. Backend1752와 중복 runner47을 합산하지 않는다.
+프로젝트 대화·Project 파일·개인 Key·VPN·kubeconfig·실제 보호 입력이 다른 작업 환경으로 자동 전달된다고 가정하지 않는다. 이번 첨부는 원 CI Artifact/Render/Harness의 부분집합이므로 원 SHA와 Run을 참조한다. Backend1752와 중복 runner47을 합산하지 않는다.
 
 ## 2. Source 기준선과 최신 변화
 
@@ -45,27 +45,27 @@
 
 [GitOps #26](https://github.com/seokpan/seokpan-hybrid-gitops/issues/26)은 후속 조회에서 Stage2의 실제 추적 Issue로 확인됐다. [D의 backend-db-runtime 공급 보고](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6#issuecomment-6034843156)는 두 URL 키·계약 Host/DB 이름과 기존 lab 계정 비밀번호 공유를 명시한다. Secret 미공급으로 되돌리지 않되 실제 새 URL 접속·C 형식/GRANT·데이터 출처 수락은 대기다. Route/Origin·새 Backend Image·Stage2 활성화/전체 Gate도 미완료다.
 
-Codex의 첫 읽기·작업 위치·사용량·다음 직접 조건은 [CODEX_ENTRYPOINT_20261007.md](CODEX_ENTRYPOINT_20261007.md)를 따른다. 원 보고와 이 Source 수정의 수신/검토·실행은 별개다.
+첫 읽기·작업 위치·실행 조건은 [실행 인계](CODEX_ENTRYPOINT_20261007.md)를 따른다. 원 보고와 이 Source 수정의 수신/검토·실행은 별개다.
 
 ## 3. 실행 위치 판단
 
-권고는 **로컬 Codex를 주 실행 환경으로 두고, Cloud를 Source·검사·PR 작업에 사용하는 것**이다. 이는 승인 설계의 운영 조건에 대한 판단이며 Codex 제품 선택을 새 아키텍처 결정으로 확정한 것이 아니다.
+소스 수정·검사는 로컬 PC 또는 격리 원격 환경에서 진행할 수 있다. 실제 금고·lab·ROSA 실행은 기존 승인 Controller·본인 보호 Workspace와 지정 계정/사용창에서 진행한다.
 
 | 작업 | 우선 위치 | 직접 조건 |
 |---|---|---|
-| Source 수정·정적 검사·Render·PR 검토·합성 예행 | 로컬 또는 Codex Cloud | 정확 Repo/SHA·도구·Lock·격리 환경. 실제 Credential 불필요한 범위부터 진행 |
+| Source 수정·정적 검사·Render·PR 검토·합성 예행 | 로컬 PC 또는 격리 원격 환경 | 정확 Repo/SHA·도구·Lock·격리 환경. 실제 Credential 불필요한 범위부터 진행 |
 | 본인 금고·키 보관·Secret 공급 | 승인 Controller의 본인 계정과 독립 보호 매체 | 값 없는 결과, 키/Token의 화면·argv·history·로그 노출 방지 |
 | lab 등록·선택 Sync·실제 업무 | lab 접근 가능한 기존 승인 실행 위치 | D/공유 Owner의 실제 실행 범위·사용창·권한·live Diff. B는 Source/경계 리뷰 |
 | ROSA 실제 Caller/Backend·Plan/Apply/삭제 | B의 승인 보호 Workspace/Controller 접근 흐름 | 개인 MFA/STS·목적 Role·같은 Backend/Provider Caller·RHCS 인증·A/C 입력·지원/비용/실행창 |
-| 전체 Offline Recovery | 승인 On-Prem 복구 Host | 사전 Backup/Image/Manifest/Secret/Key/도구·Runbook. Codex 서비스 가용성을 복구 필수 경로로 추가하지 않음 |
+| 전체 Offline Recovery | 승인 On-Prem 복구 Host | 사전 Backup/Image/Manifest/Secret/Key/도구·Runbook. 외부 보조 서비스의 가용성을 복구 필수 경로로 추가하지 않음 |
 
 근거:03 §3-F.4/5/8/15.2의 State·제한 입력·실행,04 §2의 Owner/단일 공유 실행자·§5의 보호 자산,03 §3-I.14.5의 Offline 복구다. ROSA Public API 때문에 Cloud 실행 자체가 불가능한 것은 아니다. Cloud가 실제 실행을 하려면 기존 개인 보호·네트워크·권한·비용 경계를 별도로 성립시켜야 하며 이번에 그러한 설정을 수행하지 않았다.
 
-공식 제품 확인(10/7): [CLI](https://learn.chatgpt.com/docs/codex/cli)는 실행 Host의 파일/도구를 사용한다. [Cloud 환경](https://learn.chatgpt.com/docs/environments/cloud-environments)은 여러 저장소·도구를 준비한 별도 작업 환경이다. [환경 구분](https://learn.chatgpt.com/docs/environments/modes)에 따라 PC 파일·VPN은 자동 전달되지 않는다. 현재 Cloud에는 HTTPS443용 Network Secret와 별도 직접 환경 변수, Tailscale 사설 서비스 연결이 있으므로 과거 Legacy의 setup-only Secret 설명을 현행 전체 제약으로 사용하지 않는다. 이런 제품 기능이 개인 age Identity나 DB/SSH/API 연결의 승인·지원·접근을 대신 증명하지는 않는다.
+작업 환경 간 PC 파일·VPN·개인 Identity·DB/SSH/API 연결은 자동 공유되지 않는다. 원격 연결은 실제 환경에서 별도 확인하며 지원·권한·보호 조건을 수락해야 한다.
 
 ## 4. 사용량을 줄이는 인계 방식
 
-[공식 요금 설명](https://learn.chatgpt.com/docs/pricing)에 따르면 Work와 Codex는 사용량을 공유하고 로컬/Cloud도 같은 사용 한도를 소비한다. CLI 이전만으로 별도 한도나 정량 절감이 보장되지 않는다. API Key 사용은 별도 API 과금이며 기존 구독 사용량과 혼동하지 않는다.
+작업 위치나 명령 실행 방식 변경만으로 사용량·비용 절감을 보장하지 않는다. 서비스 사용 한도와 별도 API 과금은 실제 계정 조건으로 확인한다.
 
 작업을 기존 원 Issue 단위로 좁히고, 첫 실행에 지침·승인 경계를 읽은 뒤 정확 SHA·변경 경로·필요 입력·현재 결함·검사·다음 시작점만 이어간다. 매 명령마다 모든 설계·대화·이력을 다시 넣지 않는다. 큰 원문 로그 대신 보호 원본의 논리 참조와 필요한 판정만 기록한다. 각 작업 묶음의 시작/끝·공유 실행 직전에는 네 저장소의 변화와 직접 의존을 확인한다. 이 방식은 반복 맥락을 줄이는 제안이며 절감률 실측은 아니다.
 
