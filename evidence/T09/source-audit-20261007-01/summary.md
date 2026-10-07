@@ -22,9 +22,17 @@
 * 다음 입력
 - 사용자: 본문현행화·Ready/사람리뷰·동일HEAD검사·병합·필요한브랜치정리. 공개Issue/PR쓰기 미실행.
 - C/A: Infra44/45 실패차단 보완·실제Data/SG2/제한출력. D: 필요한App수정반영새Build/Scan/Digest·플랫폼/Pull.
-- B/D/C: Stage2 원GitOps26의DB형식/GRANT/출처·Route/Origin·Owner/사용창/Gate/liveDiff 수락과지정실행자.
+- B/D/C: GitOps26 DB 형식/GRANT/접속/합성 출처 수락 보고6038214247 수신(D 실행/C 판정), 직접 재조회 없음. B 등록 적용/선택 Sync·Route/Origin·Owner/사용창/Gate/live Diff·지정 실행은 후속.
 - 독립사본/복원Identity·ROSACaller/Backend/지원/Quota/비용은기존보호Workspace에서별도. 성공한키전달·본체해독·선택Sync반복없음.
 - RTO/RPO=null,TH81/기존완료2,Q미완료,CostPARTIAL 보존.
 
 * Source Run 무결성 후속
 - 최초702fb88의 CSV/JSON3파일은 생성 시 CRLF Hash와 Git LF 바이트가 달라 체크섬 불일치. 데이터 값·시험 결과는 동일하며 LF 바이트로 정규화 후4파일 체크섬 재검증.
+
+* App22 UI 후속과 최종 대조
+- 정확 Source: abb648350084c9ebe6c63ee7668921de66f5b03f / feat/desktop-ui-polish. Windows soldesk·Git 계정 tjung03, Node24.19.0/npm12.0.2 fresh 설치. main a2 불변, Backend/Lock/CI/배포 설정 변경0.
+- 후속6파일: 열린 dialog의 포커스 이동 때 상세 패널 유지, 모바일600px 확대 복원, 로비 채팅 예약 공간 복원, 관련 unit/E2E 보완. 현재 main 대비18파일.
+- API/format/lint/type·도구81·unit278/21파일·build67모듈 PASS. clean commit의 ui07=36PASS(18Case2회,skip/flaky0), Source SHA256=98a50c5500f2aa232652e3c497eecfdcf8a01e00a9ea0b27b244956e66bbcc10. 대기/진행/결과1299×864·1440×9006모의화면 검토.
+- 이전 ui01=6/1/29, ui02·03=8/1/27, ui04·05=13/1/22, chat01=2/1/5(PASS/FAIL/미실행). ui03 패치 경로 오류·단계 고정 픽셀 단언 및 중간 Node 타입 오류는 이력 보존. 모달 포커스/모바일 확대/로비 높이3개 제품 회귀 수정, 사용자 선택의 자동맞춤 검증 반영. 최종 chat02=8PASS·ui06=36PASS·ui07=36PASS. 기존 DOM·확정돌·쓰기 횟수·확대 단언 유지.
+- 원격 Frontend 전용 CI 없음. 위 로컬 Source 시험을 GitHub CI·실제 Backend/Route·Image 성공으로 표시하지 않음.
+- 마지막 원격 조회14:19–14:20UTC: 새 사람 본문/댓글/리뷰·네 main 이동 없음. 접근 가능한 원문·이력·CI/111ZIP·그림·연쇄 링크와 수정 조합 검토 완료, 범위 밖 접근 제한/남은 결함 유지.

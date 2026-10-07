@@ -708,7 +708,9 @@ App17–19 최신 승인·병합/삭제 및 결합 main 검사/Build 입력은 [
 ## B 최초 저장소 전수 조사·변경분 기준 — 2026-10-07
 
 - [종합 조사](REPOSITORY_AUDIT_20261007.md)·[Source Run](../evidence/T09/source-audit-20261007-01/summary.md)·[05 §9.47](05_IMPLEMENTATION_AND_VALIDATION.md#repository-full-audit-20261007) 연결.
-- App/Infra main a2afffb/36dc240 유지, GitOps main b8cf323·Docs main7e3dbd8 추가 검토. #25 최신 b30e978의 Linux69 및 Artifact 독립 검증 성공. 새 App/Lab/Recovery/Docs 수정은 소스 후속이며 리뷰·main 병합·실제 배포는 별도.
-- 현재 Root 소스 B/FE·BE1과 마지막 수신 Runtime A/FE·BE0 분리. GitOps26의 실제 DB·형식/GRANT·출처·Route/Origin·Owner/사용창·Gate/live Diff·B 등록 적용 근거 대기.
-- Infra44/45 실패 차단 보완, App Guest/captured 시작, 새 Backend Build/Scan/Digest, 독립 복원 Identity·ROSA 실행 입력은 원 작업에 인계. C §8.16·TH81/완료2·Q 미완료·Cost PARTIAL 보존.
+- App/Infra main a2afffb/36dc240 유지, GitOps main b8cf323·Docs main10dd13d 추가 검토. #25 최신 b30e978의 Linux69 및 Artifact 독립 검증 성공. 새 App/Lab/Recovery/Docs 수정은 소스 후속이며 리뷰·main 병합·실제 배포는 별도.
+- 현재 Root 소스 B/FE·BE1과 마지막 수신 Runtime A/FE·BE0 분리. GitOps26의 DB 형식/GRANT/접속/합성 출처 수락 보고는 수신. Route/Origin·Owner/사용창·Gate/live Diff·B 등록 적용 근거 대기.
+- Infra44/45 실패 차단 보완, App Guest/captured 시작, 새 Backend Build/Scan/Digest, 독립 복원 Identity·ROSA 실행 입력은 원 작업에 인계. C §8.16–8.17·TH81/완료2·Q 미완료·Cost PARTIAL 보존.
 - Issue/PR 복사용 안내와 Ready·리뷰·병합·branch 정리 순서 제공. 공개 게시 미수행.
+
+- **마지막 변경분 수신:** Docs81의 C §8.17·Tracker 기록을 보존해 최신 main10dd13d 통합. GitOps26/6038214247의 DB 형식·GRANT·TLS1.3/이름 검증 접속·합성 데이터 출처 수락 보고 수신(D 실행/C 판정), 직접 Runtime 재조회 미수행. Root B 실제 적용·선택 Sync·Route/Origin·WSS/업무·새 Image는 별도. App22 abb6483의 UI 후속6파일 수정·main 대비18파일 검토, API/정적/도구81/unit278/build·clean UI36 성공과 첫 리뷰를 추가 인계. 모의 시험이며 새 Image/실제 Backend·Route 미검증.
