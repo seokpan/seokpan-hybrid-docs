@@ -80,3 +80,10 @@ python3 tools/recovery_metrics.py evidence/<test-id>/<run-id>/release.json --con
 - DB 영속 Data와 Redis Runtime 손실을 구분합니다. 복구 명령 성공만으로 업무 복구 PASS가 아닙니다.
 - 모든 Run에 적용되지 않는 항목은 summary의 제외 범위에 이유를 남깁니다. N/A는 전체 성공축을 생략하는 수단으로 쓰지 않습니다.
 - JSON은 조합/실행 정보, CSV는 수치/시간선, Markdown은 해석을 맡습니다. 실제 값은 원본에서 연결하고 중복 기록이 충돌하면 원본·대상·개정·시점을 확인합니다.
+
+
+## Source 부분 검사 Run — 전체 Runtime Acceptance와 구분
+
+| Test 준비 | Run/환경·실제 수행자 | Source/원 결과 | 판정·제한·다음 입력 |
+|---|---|---|---|
+| T09 준비의 구독 오류 경계 | [provider-cleanup-20261007-01](T09/provider-cleanup-20261007-01/summary.md), Codex Windows·GitHub Actions Linux. 배정 B; D Index 리뷰/수신 대기 | [App Draft #20](https://github.com/seokpan/seokpan-hybrid-app/pull/20) `e3488953b0f51b1a54dc7899a8a57c8024c54c13`, [CI37605414615](https://github.com/seokpan/seokpan-hybrid-app/actions/runs/37605414615) | Source 부분28PASS·Linux 기본1774/부분집합47/별도Lua9 PASS. Windows 정식FAIL과 baseline 재현 보존. 실제 Valkey/WSS/T09 Acceptance NOT RUN. 사람 리뷰/병합·새 Image·B 소비 수락 필요 |

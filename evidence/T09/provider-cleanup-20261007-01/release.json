@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "record_kind": "run",
+  "completeness": "INCOMPLETE",
+  "release_id": null,
+  "source": {
+    "app_sha": "e3488953b0f51b1a54dc7899a8a57c8024c54c13",
+    "infra_sha": null,
+    "gitops_sha": null
+  },
+  "images": {
+    "frontend": {
+      "ecr_digest": null,
+      "harbor_digest": null,
+      "platform": null
+    },
+    "backend": {
+      "ecr_digest": null,
+      "harbor_digest": null,
+      "platform": null
+    }
+  },
+  "revisions": {
+    "schema": null,
+    "config": null,
+    "secret": null,
+    "tool_manifest": "Python3.13.15/uv0.12.5/pytest9.1.1/redis-py8.1.0; uv.lock=bda7c5d967997f5e5475c211b375b1967b947704",
+    "recovery_bundle": null
+  },
+  "review_refs": [
+    "https://github.com/seokpan/seokpan-hybrid-app/pull/20",
+    "https://github.com/seokpan/seokpan-hybrid-app/actions/runs/37605414615",
+    "https://github.com/seokpan/seokpan-hybrid-app/issues/4",
+    "https://github.com/seokpan/seokpan-hybrid-gitops/issues/5#issuecomment-6035851057"
+  ],
+  "verification": {
+    "render": "NOT RUN",
+    "deployment": "NOT RUN",
+    "acceptance": "NOT RUN"
+  },
+  "missing_inputs": [
+    "HUMAN_REVIEW_AND_MERGE",
+    "NEW_BACKEND_BUILD_SCAN_DIGEST",
+    "REAL_VALKEY_LAB_WSS_ACCEPTANCE"
+  ],
+  "run_id": "provider-cleanup-20261007-01",
+  "test_id": "T09",
+  "case_ids": [
+    "subscription-setup-provider-cleanup-source"
+  ],
+  "requirement_ids": [],
+  "environment": "Windows local + GitHub Actions ubuntu-24.04 isolated Source checks",
+  "scope": "SOURCE REGRESSION ONLY; full T09 acceptance NOT RUN",
+  "previous_run_ref": null,
+  "next_run_ref": null,
+  "render_ref": null,
+  "assigned_execution_owner": "B tjung03",
+  "actual_operator": "Codex local execution/record; GitHub Actions Linux execution",
+  "reviewer": null,
+  "collaborators": [],
+  "observed_principal_ref": "GitHub tjung03; AWS/Kubernetes principal NOT USED",
+  "account_management_owner_ref": null,
+  "borrowing_handover_ref": null,
+  "started_at_utc": "2026-10-07T10:05:59.431807+00:00",
+  "finished_at_utc": "2026-10-07T10:10:55+00:00",
+  "started_at_kst": "2026-10-07T19:05:59.431807+09:00",
+  "finished_at_kst": "2026-10-07T19:10:55+09:00",
+  "conditions_ref": "summary.md",
+  "measurements_ref": "metrics.csv",
+  "timeline_ref": "timeline.csv",
+  "recovery": {
+    "backup_id": null,
+    "encrypted_backup_sha256": null,
+    "data_reference_time_utc": null,
+    "data_reference_level": null,
+    "incident_at_utc": null,
+    "dump_started_at_utc": null,
+    "dump_finished_at_utc": null,
+    "import_started_at_utc": null,
+    "import_finished_at_utc": null,
+    "business_resumed_at_utc": null,
+    "rto_seconds": null,
+    "rpo_seconds": null,
+    "persistent_data_losses": null,
+    "redis_runtime_losses": null
+  },
+  "raw_artifact_ref": "https://api.github.com/repos/seokpan/seokpan-hybrid-app/actions/artifacts/11474896267",
+  "custodian_ref": "B local Source reports; D CI Artifact/Index",
+  "access_policy_ref": null,
+  "retention_ref": "GitHub Actions retention30days; local reports retained for handoff",
+  "availability_integrity": null
+}

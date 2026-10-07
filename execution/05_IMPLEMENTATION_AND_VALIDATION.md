@@ -1996,3 +1996,11 @@ C의 §8.9–8.14·과거 시험/체크/그림·설계/TH 상태는 유지한다
 ### 9.45 승인된 App 결합 Source와 작업 인계 — 2026-10-07
 
 [Source §10](SOURCE_REVIEW_20261007.md#b-review-closeout-20261007)의 실제 App17–19 병합·브랜치 삭제·결합 main CI와 [App2 Build 인계](https://github.com/seokpan/seokpan-hybrid-app/issues/2#issuecomment-6033610765)를 연결한다. C의 Docs74/periodic 기록·§8.9–8.14를 보존했다. 남은 리뷰/개인 입력·Stage1/2·ROSA/Cost·감사/검증/발표·종료 조건은 [work 인계](WORK_HANDOFF_20261007.md)로 이어간다. 실제 클러스터·Cloud·Backup·T18 PASS나 새 TH 완료는 추가하지 않는다.
+
+
+<a id="b-provider-cleanup-source-20261007"></a>
+### 9.43 App #4 W10의 PubSub Provider 오류 처리 후속 — 2026-10-07
+
+[App #4](https://github.com/seokpan/seokpan-hybrid-app/issues/4)·[Draft #20](https://github.com/seokpan/seokpan-hybrid-app/pull/20)·[정확 HEAD CI](https://github.com/seokpan/seokpan-hybrid-app/actions/runs/37605414615)·[새 Source 부분 Run](../evidence/T09/provider-cleanup-20261007-01/summary.md)에 제품2파일 변경·정확 Source·환경·실제 수행자·실패/재시험·도구/Lock·다음 입력을 기록했다. App #19 D의 비차단 의견을 이어 subscribe/버전 오류 뒤 cleanup RedisError만 억제하고 기존 RealtimeUnavailable 계약을 유지한다. 기존 취소8 + 새 오류12에서 main 제품코드6FAIL/14PASS→수정20PASS, 기존 Adapter8을 포함한 관련28PASS다. 정확 PR HEAD `e3488953b0f51b1a54dc7899a8a57c8024c54c13`의 Linux 기존정식1774/부분집합47/별도 소유 Redis Lua9 PASS, Windows 정식실패·원 main 별도사본 재현은 같은 Run에 분리했다. Artifact 서버metadata/digest와 원 Job은 읽었지만 ZIP 독립 다운로드는403으로 미검증이다.
+
+배정 B, 실제 Source 작성/로컬 실행/기록 Codex, Linux 실행 GitHub Actions다. 리뷰·병합과 D 새 Backend Build/Scan/Digest·플랫폼/Pull→B App/별도 held Migration 소비 수락이 남는다. 실제 Valkey/TLS/AUTH·DB/WSS/클러스터·연결회수·전체 T09/T18·비용 성공은 미실행이다. [D 보고 수신](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5#issuecomment-6035851057)은 보고 범위이며 성공한 등록/Sync를 반복하지 않았다. 다른 담당자의 §8 기록·기존 Run,03/04 종료·DR10/30/15·CP3/Infra3/Worker3·Cost PARTIAL/$450/$500·TH81/완료2·Q 미완료를 보존한다.
