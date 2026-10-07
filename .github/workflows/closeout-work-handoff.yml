@@ -23,53 +23,41 @@ jobs:
         with:
           ref: ${{ github.sha }}
           fetch-depth: 0
-      - name: Reconcile only the identified main changes without replacing C records
+      - name: Reconcile exact main delta and verify all seven output files
         shell: bash
         run: |
           set -euo pipefail
-          test "$(git rev-parse HEAD^)" = 5ff19c468f537b61be25c66ef383753e7474e61a
+          test "$(git rev-parse HEAD^)" = ed08218a9204ac01f51de8b700dbc9346b93db95
           test "$(git ls-remote origin refs/heads/main | cut -f1)" = "$MAIN"
           test "$(git ls-remote origin refs/heads/docs/b-runtime-input-followup-20261007 | cut -f1)" = "$RETAINED"
           mkdir "$RUNNER_TEMP/closeout-report"
           git fetch --quiet origin "$MAIN"
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          python3 - <<'PY'
-          import json,os,subprocess
+          python3 - <<'PY' 2>&1 | tee "$RUNNER_TEMP/closeout-report/verification.log"
+          import hashlib,json,os,re,shutil,subprocess
           from pathlib import Path
           plan=json.loads(Path('.github/maintenance/closeout-summary.json').read_text())
+          report=Path(os.environ['RUNNER_TEMP'])/'closeout-report'
           assert plan['prior_head']==os.environ['OLD'] and plan['incoming_main']==os.environ['MAIN']
           rows=subprocess.check_output(['git','diff','--numstat',plan['old_main'],plan['incoming_main']],text=True).splitlines()
           assert set(rows)=={'1\t1\tdesign/03_DETAILED_DESIGN.md','1\t1\texecution/05_IMPLEMENTATION_AND_VALIDATION.md'},rows
           incoming=subprocess.check_output(['git','show',plan['incoming_main']+':execution/05_IMPLEMENTATION_AND_VALIDATION.md'],text=True)
           assert incoming.count(plan['c05_new'])==1
           result=subprocess.run(['git','merge','--no-ff','--no-commit',plan['incoming_main']],capture_output=True,text=True)
-          report=Path(os.environ['RUNNER_TEMP'])/'closeout-report'
           (report/'merge.log').write_text(result.stdout+result.stderr)
           conflicts=subprocess.check_output(['git','diff','--name-only','--diff-filter=U'],text=True).splitlines()
-          assert result.returncode in (0,1),result.stderr
+          assert result.returncode in (0,1)
           assert not conflicts or conflicts==['execution/05_IMPLEMENTATION_AND_VALIDATION.md'],conflicts
-          assert (result.returncode==0) or bool(conflicts)
-          print('Main merge inspected; bounded conflict paths:',conflicts)
-          PY
-      - name: Verify exact output bytes, prior bodies and new handoff
-        shell: bash
-        run: |
-          set -euo pipefail
-          python3 - <<'PY' 2>&1 | tee "$RUNNER_TEMP/closeout-report/verification.log"
-          import hashlib,json,os,re,shutil,subprocess
-          from pathlib import Path
-          plan=json.loads(Path('.github/maintenance/closeout-summary.json').read_text())
-          report=Path(os.environ['RUNNER_TEMP'])/'closeout-report'
-          originals={}; hashes={}
+          assert result.returncode==0 or bool(conflicts)
+          originals={};hashes={}
           for index,row in enumerate(plan['files']):
               path=Path(row['path']);assert path.parent==Path('execution')
               raw=subprocess.check_output(['git','show',plan['prior_head']+':'+str(path)])
               assert hashlib.sha256(raw).hexdigest()==row['before'],str(path)
               old=raw.decode();originals[path.name]=old;text=old
               if index<4:
-                  a=text.index('## 현재 실행 기준');b=text.index('\n## ',a+3)
-                  oldtail=text[b:]
+                  a=text.index('## 현재 실행 기준');b=text.index('\n## ',a+3);oldtail=text[b:]
                   text=text[:a]+plan['current']+text[b:]
               if path.name=='05_IMPLEMENTATION_AND_VALIDATION.md':
                   assert text.count(plan['c05_old'])==1
@@ -81,7 +69,7 @@ jobs:
               text+=plan['appends'].get(str(path),'')
               assert hashlib.sha256(text.encode()).hexdigest()==row['after'],str(path)
               assert re.findall(r'^\s*- \[[ x~]\].*$',old,re.M)==re.findall(r'^\s*- \[[ x~]\].*$',text,re.M),str(path)
-              if index<4: assert oldtail in text,str(path)
+              if index<4:assert oldtail in text,str(path)
               path.write_text(text);hashes[str(path)]=row['after']
           path=Path('execution/WORK_HANDOFF_20261007.md');text=path.read_text()
           assert text.count('구분해야 한다。')==1
@@ -101,13 +89,13 @@ jobs:
           guide=Path('execution/TJUNG03_WORKFLOW_AND_LEARNING_GUIDE.md').read_text()
           direct=guide[guide.index('<a id="b-direct-actions-20261007">'):]
           blocks=re.findall(r'```bash\n(.*?)\n```',direct,re.S)
-          assert len(blocks)==2,len(blocks)
+          assert len(blocks)==3,len(blocks)
           for code in blocks:subprocess.run(['bash','-n'],input=code,text=True,check=True)
           for name,digest in hashes.items():
               dst=report/'files'/name;dst.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(name,dst)
           (report/'output-hashes.json').write_text(json.dumps(hashes,indent=2)+'\n')
-          (report/'verification.json').write_text(json.dumps({'exact_outputs':7,'current_sections':4,'old_tails_preserved_except_C_main_row':4,'C_8_9_to_8_14_preserved':True,'C_tracker_rows':3,'C_main_design03_exact':True,'old_checkboxes_preserved':True,'bash_syntax_only_blocks':2,'new_anchors':3,'main_and_retained69_not_written':True,'Q10':'INCOMPLETE','personal_or_shared_runtime':'NOT RUN'},indent=2)+'\n')
-          print('PASS: seven exact outputs; four current sections; original bodies/checks; C main/sections/rows; two Bash syntax checks; work handoff')
+          (report/'verification.json').write_text(json.dumps({'exact_outputs':7,'current_sections':4,'old_tails_preserved_except_C_main_row':4,'C_8_9_to_8_14_preserved':True,'C_tracker_rows':3,'C_main_design03_exact':True,'old_checkboxes_preserved':True,'bash_syntax_only_blocks':3,'new_anchors':3,'main_and_retained69_not_written':True,'Q10':'INCOMPLETE','personal_or_shared_runtime':'NOT RUN'},indent=2)+'\n')
+          print('PASS: seven exact outputs; four current sections; original bodies/checks; C main/sections/rows; three Bash blocks including initial diagnostics; work handoff')
           PY
       - name: Commit and publish only this PR branch after lease checks
         shell: bash
