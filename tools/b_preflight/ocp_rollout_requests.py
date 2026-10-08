@@ -30,7 +30,11 @@ def workload(row):
     if pod.get('initContainers') or pod.get('overhead') or pod.get('resources'):
         raise Unsupported('INIT_OVERHEAD_OR_POD_RESOURCES_REQUIRE_REVIEW')
     strategy=spec.get('strategy',{})
-    if strategy.get('type')!='RollingUpdate' or strategy.get('rollingUpdate')!={'maxSurge':1,'maxUnavailable':0}:
+    rolling=strategy.get('rollingUpdate')
+    if (strategy.get('type')!='RollingUpdate' or not isinstance(rolling,dict)
+            or set(rolling)!={'maxSurge','maxUnavailable'}
+            or type(rolling['maxSurge']) is not int or type(rolling['maxUnavailable']) is not int
+            or rolling!={'maxSurge':1,'maxUnavailable':0}):
         raise Unsupported('CURRENT_ROLLOUT_STRATEGY_CHANGED')
     containers=pod.get('containers')
     if not isinstance(containers,list) or not containers: raise Unsupported('CONTAINERS_REQUIRED')

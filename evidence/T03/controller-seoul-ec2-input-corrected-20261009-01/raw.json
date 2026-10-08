@@ -1,0 +1,37 @@
+{
+  "run_id": "controller-seoul-ec2-input-corrected-20261009-01",
+  "test_id": "T03",
+  "overall_result": "PARTIAL",
+  "performed_by": "B / jth@ansible",
+  "record_basis": "received Controller verdicts; no new Controller/API execution during documentation",
+  "recorded_at_utc": "2026-10-08T18:12:42.153571+00:00",
+  "evidence": "B user Controller verdict received; raw response/credentials/command not retained",
+  "source_head": "ef424da0a6bfcdd56079ab5be249f429fa0b9c36",
+  "lock_blob": "668098ad0f1e293982e9bcf8e931128346a00049",
+  "script_sha256": "e8c8823946bcbe05b9e6064a5d6fa2891863f9eab869202dfb16805799281398",
+  "offline_regular_file_input": "PASS",
+  "read_start_controller_utc": "2026-10-08T15:51:36.995087+00:00",
+  "read_end_controller_utc": "2026-10-08T15:51:38.623044+00:00",
+  "instance_pages_complete": 1,
+  "reservation_pages_complete": 1,
+  "running_standard_on_demand_count": 0,
+  "running_default_type_vcpu_sum": 0,
+  "standard_reservation_count": 0,
+  "owned_active_unused_default_type_vcpu_subtotal": 0,
+  "aws_cli_read_invocations": 2,
+  "request_temp_files": "removed per call; code specifies directory700/file600; no response files",
+  "result": "QUERY_DELIVERY_ERROR_RESOLVED / scoped inventory obtained",
+  "not_verified": [
+    "project AWS account ID match to A handoff",
+    "whole quota current usage/free capacity",
+    "service-managed hidden resource visibility",
+    "single-timepoint snapshot and clock match",
+    "AZ placement",
+    "purpose Role/backend/support/first Plan gates"
+  ],
+  "not_run": [
+    "MFA/session issuance",
+    "IAM/resource/Quota changes",
+    "State/CloudPlan/Apply"
+  ]
+}
