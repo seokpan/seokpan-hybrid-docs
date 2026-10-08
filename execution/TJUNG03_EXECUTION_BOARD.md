@@ -1,6 +1,6 @@
 # 정태훈 실행판 — 지금 할 일·입력 대기·OCP와 ROSA 수명
 
-> **현재 확인 — 2026-10-08 Docs #92 병합 후:** [Full·Controller 후속](FULL_E2E_CONTROLLER_FOLLOWUP_20261008.md) 연결. 실제 B/jth@ansible의 Source c5d8/Lock·격리 Root validate 및 입력 교정 후 OIDC mock2/2 PASS, A 정책 사본 수신·무결성 보고 수신. App34 clean3126ae28의 Full2·UI36·unit278 PASS·D 리뷰 요청. App30/GitOps33은 이전 승인 DISMISSED·새 승인 미표시, 세 Source PR 미병합. Infra ef424da0의 추가8파일은 C Data Ansible이며 ROSA 코드/Lock 동일. 실제 IAM/ARN·DataSG2·Caller/Backend·구독/지원/Quota/disk·예비비용/Owner/창·Cloud Plan과 OCP 후속은 미완료. 아래 날짜별 기록은 당시 이력.
+> **현재 확인 — 2026-10-08 Docs #95 병합 후:** [병합·Controller 인증·실행 대기](MERGED_SOURCE_PLAN_READINESS_20261008.md). App30/34·GitOps33 승인·병합·PR 브랜치 삭제 완료, 현재 App18819963 새 Build 입력을 D32에 연결. B/jth의 Infra ef424da0 ff-only/Lock 보존 및 기본 IAM User 인증·Source Trust 대상·MFA 장치1개 읽기 PASS. 로컬 프로필0은 실제 Role/MFA 부재 판정이 아님. A 실제 역할/ARN·SG2·목적 세션/Backend·조직/지원/Quota/disk·예비 비용/Owner/창·전체 Plan·새 Image/Runtime은 미완료. 아래 날짜별 기록은 당시 이력.
 
 > **최신 조사 후속 — 2026-10-07:** [전수 조사](REPOSITORY_AUDIT_20261007.md)·[05§9.47](05_IMPLEMENTATION_AND_VALIDATION.md#repository-full-audit-20261007) 참조. GitOps main의 Root SHA B/FE·BE1은 소스 병합 상태이며, 마지막 수신 Runtime은 SHA A/FE·BE0이다. 성공한 등록/선택Sync·금고 본체 확인을 반복하지 않는다. C의 GitOps26/6038214247 DB 형식·GRANT·TLS 접속·합성 출처 수락 보고는 수신했고 실제 Stage2 적용·Route/업무는 원 #26에서 후속 확인한다. 아래 시점별 인계 보존.
 
@@ -518,8 +518,10 @@ OCP의 사전검증 업무 완료와 정리 날짜는 별개다. 추천 운영 �
 - [x] 실제 Operator6개/보관정책ID대조·Core1.16.4·origin/개인변경 결과 수신
 - [x] 개인App2/GitOps2수정의최신main통합·App30/GitOps33 정확HEAD Linux CI 확인
 - [x] D32새공급Issue·추가진단ZIP일치·PoolSource예산 확인
-- [ ] B새Controller묶음: 정책보관본·Sourceff-only/Lock·격리Providervalidate/mock·지원목록·추가로컬도구
-- [ ] A수신·실제Role/권한/제한기반/Backend·C/A SG2·B목적세션/지원/Quota/disk·비용/창 → 첫CloudPlan
-- [ ] App30/GitOps33 사람리뷰·병합→D새Image수신·OCP/ROSA실제교체/시험
+- [x] Controller Source/Lock·격리 validate/교정 mock·지원후보 목록 및 A 정책 사본 수신 보고 확인
+- [x] App30/34·GitOps33 승인/병합·PR 브랜치 삭제, 기본 IAM User 인증·본인 MFA 장치1개 읽기 확인
+- [ ] 지금 가능: B 개인 Caller 서울/용량 읽기, D32 새 Source18819963 Build/Scan/Smoke/Digest
+- [ ] 선행 입력 대기: A 실제 역할/권한/제한 기반/Backend·C/A SG2·프로젝트 계정/지원/Quota/disk·예비 비용/Owner/창 → 첫 Cloud Plan
+- [ ] 실행 조건 수락 후: 새 Image 수락·OCP 최신 자원/Owner 창·실제 교체/시험
 
 [연결](CONTROLLER_SOURCE_CATALOG_FOLLOWUP_20261008.md). 기존독립작업의잔여와멘토링보류 유지.

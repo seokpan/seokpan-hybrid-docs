@@ -1,6 +1,6 @@
 # 石나가는 판단 2차 프로젝트 05 구현·통합·검증 진행 기록
 
-> **현재 확인 — 2026-10-08 Docs #92 병합 후:** [Full·Controller 후속](FULL_E2E_CONTROLLER_FOLLOWUP_20261008.md) 연결. 실제 B/jth@ansible의 Source c5d8/Lock·격리 Root validate 및 입력 교정 후 OIDC mock2/2 PASS, A 정책 사본 수신·무결성 보고 수신. App34 clean3126ae28의 Full2·UI36·unit278 PASS·D 리뷰 요청. App30/GitOps33은 이전 승인 DISMISSED·새 승인 미표시, 세 Source PR 미병합. Infra ef424da0의 추가8파일은 C Data Ansible이며 ROSA 코드/Lock 동일. 실제 IAM/ARN·DataSG2·Caller/Backend·구독/지원/Quota/disk·예비비용/Owner/창·Cloud Plan과 OCP 후속은 미완료. 아래 날짜별 기록은 당시 이력.
+> **현재 확인 — 2026-10-08 Docs #95 병합 후:** [병합·Controller 인증·실행 대기](MERGED_SOURCE_PLAN_READINESS_20261008.md). App30/34·GitOps33 승인·병합·PR 브랜치 삭제 완료, 현재 App18819963 새 Build 입력을 D32에 연결. B/jth의 Infra ef424da0 ff-only/Lock 보존 및 기본 IAM User 인증·Source Trust 대상·MFA 장치1개 읽기 PASS. 로컬 프로필0은 실제 Role/MFA 부재 판정이 아님. A 실제 역할/ARN·SG2·목적 세션/Backend·조직/지원/Quota/disk·예비 비용/Owner/창·전체 Plan·새 Image/Runtime은 미완료. 아래 날짜별 기록은 당시 이력.
 
 ### 조사 중 추가된 실행 보고·수정 PR — 2026-10-07 후속 조회
 
@@ -2181,3 +2181,12 @@ A의 원본/사본18개·manifest17개 해시/권한 검사 보고 수신. 실�
 App30/GitOps33의 이전 승인은 DISMISSED·새 승인 미표시. 두 App PR 병합 뒤 최종 SHA로 D32 단일 Build, Image/Scan/Digest·교체 실행 조건 별도. 기존 C 기록·설계 종료·TH/Q/DR/Cost 범위 보존, Index 연결 제출과 D 수신 구분. 실제 Caller/Backend·지원·비용·사용창·첫 Cloud Plan 미완료.
 
 - 최종 20:26 KST delta: D App #36의 release-source 생성기/시험2파일 추가로 main3dc31d72, 기존 App30/34·Frontend/Backend/Migration/Lock/CI 겹침0. 시험 SHA3126과 당시 main6c 유지, 추가 Full 반복 없음. App30·GitOps33 현재 HEAD 새 승인 미등록 확인, App34 리뷰 대기. 상세: [최종 원격 변경 대조](FULL_E2E_CONTROLLER_FOLLOWUP_20261008.md#최종-원격-변경-대조--2026-10-08-2026-kst).
+
+<a id="merged-source-controller-auth-20261008"></a>
+### 9.57 Source 병합·Controller 최신화·기본 AWS 인증 — 2026-10-08
+
+[후속 안내](MERGED_SOURCE_PLAN_READINESS_20261008.md), [T03 Source/설정](../evidence/T03/controller-source-local-access-20261008-01/summary.md)·[T03 Caller/MFA](../evidence/T03/controller-base-caller-mfa-20261008-01/summary.md). App30/34·GitOps33·Docs95 실제 병합·PR 브랜치 삭제, C 승인·Source/CI 범위 확인. 현재 App18819963과 Migration7개 Blob/head 대조를 D32 새 Build 입력으로 연결. 기존 PR/실패 Run/승인 Image 성공을 새 main Image에 승계하지 않음.
+
+B/jth의 ef424 ff-only·Lock 보존 PASS, 로컬 프로필0을 실제 Role/MFA 부재로 해석하지 않음. 기본 IAM User 인증·현재 Source B Trust 대상 일치·본인 MFA 장치1개 읽기 PASS, MFA 세션/목적 Role/Backend 및 Account 제한 출력 대조는 별도 대기. 실제 Cloud Plan/생성·전체 T03/TH/Q/Cost/DR 완료 가산 없음.
+
+C는 SG 대조/Pool 시점/당일 순서에 동의, Apply 직후 실제 SG 판정은 Infra19 연결 예정. 1차 계정·위치는 이관 날짜 결정 시 함께 조율하며 첫 ROSA Plan의 전체 선행조건이 아님. 지금 개인 Caller 용량 읽기·D Build·현재 자원/창 조율 가능, A 실제 역할/SG2·목적 권한/Backend·조직/지원/비용 입력 뒤 첫 전체 Plan. 기존 C/팀 기록·03/04와 수치 보존.

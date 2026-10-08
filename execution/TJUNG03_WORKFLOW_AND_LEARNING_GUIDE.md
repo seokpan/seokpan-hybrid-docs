@@ -1,6 +1,6 @@
 # 정태훈 작업·흐름·학습 안내
 
-> **현재 확인 — 2026-10-08 Docs #92 병합 후:** [Full·Controller 후속](FULL_E2E_CONTROLLER_FOLLOWUP_20261008.md) 연결. 실제 B/jth@ansible의 Source c5d8/Lock·격리 Root validate 및 입력 교정 후 OIDC mock2/2 PASS, A 정책 사본 수신·무결성 보고 수신. App34 clean3126ae28의 Full2·UI36·unit278 PASS·D 리뷰 요청. App30/GitOps33은 이전 승인 DISMISSED·새 승인 미표시, 세 Source PR 미병합. Infra ef424da0의 추가8파일은 C Data Ansible이며 ROSA 코드/Lock 동일. 실제 IAM/ARN·DataSG2·Caller/Backend·구독/지원/Quota/disk·예비비용/Owner/창·Cloud Plan과 OCP 후속은 미완료. 아래 날짜별 기록은 당시 이력.
+> **현재 확인 — 2026-10-08 Docs #95 병합 후:** [병합·Controller 인증·실행 대기](MERGED_SOURCE_PLAN_READINESS_20261008.md). App30/34·GitOps33 승인·병합·PR 브랜치 삭제 완료, 현재 App18819963 새 Build 입력을 D32에 연결. B/jth의 Infra ef424da0 ff-only/Lock 보존 및 기본 IAM User 인증·Source Trust 대상·MFA 장치1개 읽기 PASS. 로컬 프로필0은 실제 Role/MFA 부재 판정이 아님. A 실제 역할/ARN·SG2·목적 세션/Backend·조직/지원/Quota/disk·예비 비용/Owner/창·전체 Plan·새 Image/Runtime은 미완료. 아래 날짜별 기록은 당시 이력.
 
 ### 조사 중 추가된 실행 보고·수정 PR — 2026-10-07 후속 조회
 

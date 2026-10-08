@@ -1,10 +1,12 @@
 # Full e2e·Controller 후속 — 2026-10-08
 
+> **현재 후속:** [병합·Controller 인증·실행 대기](MERGED_SOURCE_PLAN_READINESS_20261008.md). Docs95·App30/34·GitOps33 병합 완료. 아래 최초 Run·20:26 조회는 당시 이력.
+
 ## 진행 현황
 
 | 작업 | 현재 근거 | 다음 작업 |
 |---|---|---|
-| Full e2e 보완 | [App #34](https://github.com/seokpan/seokpan-hybrid-app/pull/34), clean HEAD3126ae28. Full2·UI36·unit278·tooling81·정적/빌드 PASS. [검증 Run](../evidence/T09/full-e2e-ui-followup-20261008-01/summary.md) | 리뷰·병합 → 최종 main SHA → D #32 단일 새 Build |
+| Full e2e 보완 | [App #34](https://github.com/seokpan/seokpan-hybrid-app/pull/34), clean HEAD3126ae28. Full2·UI36·unit278·tooling81·정적/빌드 PASS. [검증 Run](../evidence/T09/full-e2e-ui-followup-20261008-01/summary.md) | 병합 완료, 현재 App18819963 → D #32 단일 새 Build |
 | Controller 최초 검사 | c5d8/Lock6680 최신화·격리 Root init/validate PASS, 최초 mock BLOCKED. [최초 Run](../evidence/T03/controller-source-provider-20261008-01/summary.md) | 당시 실패와 실행 SHA 보존 |
 | Controller 교정 | 필수 입력 오류7개 확인. 합성 입력 공급 후 exit0·mock2/2·Source/Lock/원 로그 보존 PASS. [교정 Run](../evidence/T03/controller-oidc-mock-retry-20261008-01/summary.md) | 실제 Caller·Backend·지원·비용·입력 수락 |
 | A 정책 수신 | [Infra #47](https://github.com/seokpan/seokpan-hybrid-infra/issues/47#issuecomment-6057625147): 원본/사본18개·manifest17개 해시 및 권한 검사 보고 수신 | 정책/신뢰 검토·실제 역할4개·ARN Map·권한 적용·제한 출력 |
@@ -53,7 +55,7 @@ C는 [Pool 예산 준비](DB_CONNECTION_BUDGET_PREPARATION.md)에 동의했고 �
 
 제공 HTML은 당시 참고 자료다. 관리 추정70/88%를 공식 WBS/TH 완료율로 사용하지 않는다. 최신 원 Issue/PR/Run 우선, TH81/기존완료2·Q 미완료·설계03/04 종료·DR10/RPO30/Backup15·CP3/Infra3/Worker3·Cost PARTIAL/$450/$500 유지. 멘토링/OADP 보류, Index 연결 제출과 D 수신 구분.
 
-## 다음 로컬 확인 묶음 — 준비 완료·Controller 미실행
+## 이전 로컬 확인 묶음 — 최초 준비 이력
 
 논리 참조 controller-source-local-access-20261008 / Source SHA25697aa4567429ea80ad21bce0e7cb3e01426fc9bcea2e868eb8ffad3d60cc0e44a.
 검토된 Infra ef424da0의 ansible/data 변경만 개인 변경·새 원격 변경·ignored 파일 충돌이 없는 경우 ff-only, 기존 ROSA Lock 보존. jth의 보호 AWS config에서 목적 Role/MFA 설정 유무를 값 없이 확인하고 credentials 파일은 존재·소유자/권한만 확인한다.

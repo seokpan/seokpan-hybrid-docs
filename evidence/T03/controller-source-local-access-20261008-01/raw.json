@@ -1,0 +1,29 @@
+{
+  "received_at_utc": "2026-10-08T11:59:22.201623+00:00",
+  "executor": "B / jth@ansible",
+  "source": "ef424da0a6bfcdd56079ab5be249f429fa0b9c36",
+  "lock": "668098ad0f1e293982e9bcf8e931128346a00049",
+  "verdicts": [
+    "REVIEWED_SOURCE_FF_ONLY: PASS",
+    "SOURCE_HEAD: ef424da0a6bfcdd56079ab5be249f429fa0b9c36",
+    "ROSA_LOCK_PRESERVED: PASS / 668098ad0f1e293982e9bcf8e931128346a00049",
+    "CUSTOM_AWS_CONFIG_ENV: UNSET",
+    "CUSTOM_AWS_CREDENTIALS_ENV: UNSET",
+    "AWS_PROFILE_PRESENCE: UNSET",
+    "AWS_ACCESS_KEY_ID_PRESENCE: UNSET",
+    "AWS_SECRET_ACCESS_KEY_PRESENCE: UNSET",
+    "AWS_SESSION_TOKEN_PRESENCE: UNSET",
+    "HOME_AWS_CONFIG: PRESENT / OWNER_MODE_PASS",
+    "ROSA_PURPOSE_ROLE_PROFILE_COUNT: 0",
+    "MFA_CONFIGURED_PROFILE_COUNT: 0",
+    "HOME_AWS_CREDENTIALS_FILE: PRESENT / OWNER_MODE_PASS (contents not read)",
+    "AWS_AUTH_ROLE_BACKEND_PERMISSIONS: NOT VERIFIED",
+    "NOT RUN: AWS/RHCS API, credentials contents, State/Output/Plan, init/validate/mock repeat, cluster access"
+  ],
+  "scope": "reviewed source ff-only and local setup metadata; credential contents not read; no API/state/plan",
+  "aws_mfa_interpretation": "0 configured profiles is local configuration only; no assertion about IAM device status",
+  "C_agreement": "SG mapping/Pool decision timing/migration order agreed; C Apply-after verdict recorded in Infra19; first-cluster identity/location coordinated when migration date set",
+  "run_id": "controller-source-local-access-20261008-01",
+  "overall_T03": "PARTIAL",
+  "full_rosa_plan": "NOT RUN"
+}
