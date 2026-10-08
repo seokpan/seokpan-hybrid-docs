@@ -1,6 +1,6 @@
 # Work and Input Tracker
 
-> **현재 확인 — 2026-10-08 PR88 병합 후:** Docs88 main d881df14·작업 브랜치 삭제/마무리 확인. [Image·이관·ROSA 묶음](IMAGE_MIGRATION_ROSA_PREFLIGHT_20261008.md) 연결. 새 Image 대상 App `5df2ce28`·Source Alembic head `20260902_0002`·Migration 6개 파일 동일, 실제 Build/Scan/Digest는 D 후속. 진단 ZIP 현재 PC 추가 사본/8개 체크섬 확인. B의 1차 쓰기 중지 준비·당일 실행·이관 후 current/App를 독립 항목으로 관리. Controller clone/Lock·실제 Operator/Policy Map·A 수신·목적 Caller/Backend·지원/Quota·비용/창 및 실제 Plan은 미완료. GitOps #26의 lab Stage2 완료 보고와 미완료 후속 시험은 GitOps #10/App #4에 연결. Recovery CA 해시 일치 확인 유지, ConfigMap·실제 DB 연결/복원은 미실행. 아래 날짜별 기록은 당시 이력.
+> **현재 확인 — 2026-10-08 Docs #91 병합 후:** [Controller 후속](CONTROLLER_SOURCE_CATALOG_FOLLOWUP_20261008.md)·[새 T03 부분 Run](../evidence/T03/controller-source-catalog-20261008-01/summary.md) 연결. Core 1.16.4·실제 Operator 6개/보관 정책 ID 대조 PASS, clone 21커밋 지연·로컬 Lock 없음. App #30/GitOps #33의 정확 HEAD Linux CI PASS, 아직 미병합. D 새 공급은 GitOps #32의 App 5df2ce28 고정. Source 최신화·격리 Provider·A 보호 수신/실제 IAM·Caller/Backend·지원/Quota/비용/창·Cloud Plan은 미완료. 기존 C 기록·Recovery CA/금고 본체·Stage2 완료 보고 및 TH/Q/DR/Cost 경계 유지. 아래 날짜별 기록은 당시 이력.
 
 ### 조사 중 추가된 실행 보고·수정 PR — 2026-10-07 후속 조회
 
@@ -758,3 +758,14 @@ App17–19 최신 승인·병합/삭제 및 결합 main 검사/Build 입력은 [
 | B ROSA사전검증/Plan | 인증/정책/사본17해시PASS·읽기묶음문법/합성3개검사 | 본인clone/Lock·실제Operator/PolicyMap·A보호수신/실제IAM/출력·C/A SG2·목적Caller/Backend·지원/Quota/Cost/창·첫 전체 Plan |
 
 기존 C의 §8/Tracker·기존 Run 및 Shared Execution 기록 보존. 새 Runtime/TH/Q/Cost/DR 완료 가산 없음. 원 결과와 [묶음](IMAGE_MIGRATION_ROSA_PREFLIGHT_20261008.md)을 연결하고 실제 팀 전달/수신은 구분.
+
+## Controller 결과·독립 Source 후속 — 2026-10-08
+
+| 작업 | 완료 범위 | 다음 담당·입력 |
+|---|---|---|
+| Controller Source/Catalog | [실제6개목록·정책ID 대조](../evidence/T03/controller-source-catalog-20261008-01/summary.md),Core1.16.4·원격/개인변경 확인 | B Source최신화/Lock·격리Provider·정책보관본/지원목록 → A보호수신/실제IAM·A/C기반/SG2·목적Caller/Backend·비용/창 → 첫CloudPlan |
+| 개인4개Source변경 | [App30](https://github.com/seokpan/seokpan-hybrid-app/pull/30)·[GitOps33](https://github.com/seokpan/seokpan-hybrid-gitops/pull/33),각Linux CI/Artifact PASS | 사람리뷰·병합,기존브랜치보존. D32의고정Source에미병합수정포함금지 |
+| 새Image/진단보존 | D32생성·추가ZIP동일/8체크섬 확인 | DBuildScanDigest/실제heads/mapping/Pull·B수락/교체Owner창. 같은PC추가경로는독립장치 아님 |
+| Pool준비 | [Source/기본상한예산](DB_CONNECTION_BUDGET_PREPARATION.md) | 실제Process·RDS상한/예약·B/C합의→구현/시험/새Image,첫ROSAPlan전체선행아님 |
+
+[담당별직접입력](CONTROLLER_SOURCE_CATALOG_FOLLOWUP_20261008.md) 유지. 1차중지/복귀 준비·당일이관·OCP후속/Recovery·금고독립사본/복원Identity·Cost/TH/Q는각원Issue/Run에서수신.

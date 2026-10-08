@@ -1,0 +1,9 @@
+check,result,scope
+origin_worktree,PASS,MATCH/CLEAN/main; old source retained
+source_freshness,BLOCKED,0 ahead/21 behind; ff-only pending
+local_lock,MISSING,remote blob present; local update pending
+core1164,PASS,actual supplied check
+operator_count_guard,PASS,6 actual catalog roles
+stored_policy_id_match,PASS,six ids available; not actual IAM ARN/policy permission
+A_transfer_receipt,NOT CONFIRMED,protected handoff pending
+cloud_plan,NOT RUN,support/input/caller/backend/cost/window pending

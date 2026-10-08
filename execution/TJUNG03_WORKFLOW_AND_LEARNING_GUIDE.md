@@ -1,6 +1,6 @@
 # 정태훈 작업·흐름·학습 안내
 
-> **현재 확인 — 2026-10-08 PR88 병합 후:** Docs88 main d881df14·작업 브랜치 삭제/마무리 확인. [Image·이관·ROSA 묶음](IMAGE_MIGRATION_ROSA_PREFLIGHT_20261008.md) 연결. 새 Image 대상 App `5df2ce28`·Source Alembic head `20260902_0002`·Migration 6개 파일 동일, 실제 Build/Scan/Digest는 D 후속. 진단 ZIP 현재 PC 추가 사본/8개 체크섬 확인. B의 1차 쓰기 중지 준비·당일 실행·이관 후 current/App를 독립 항목으로 관리. Controller clone/Lock·실제 Operator/Policy Map·A 수신·목적 Caller/Backend·지원/Quota·비용/창 및 실제 Plan은 미완료. GitOps #26의 lab Stage2 완료 보고와 미완료 후속 시험은 GitOps #10/App #4에 연결. Recovery CA 해시 일치 확인 유지, ConfigMap·실제 DB 연결/복원은 미실행. 아래 날짜별 기록은 당시 이력.
+> **현재 확인 — 2026-10-08 Docs #91 병합 후:** [Controller 후속](CONTROLLER_SOURCE_CATALOG_FOLLOWUP_20261008.md)·[새 T03 부분 Run](../evidence/T03/controller-source-catalog-20261008-01/summary.md) 연결. Core 1.16.4·실제 Operator 6개/보관 정책 ID 대조 PASS, clone 21커밋 지연·로컬 Lock 없음. App #30/GitOps #33의 정확 HEAD Linux CI PASS, 아직 미병합. D 새 공급은 GitOps #32의 App 5df2ce28 고정. Source 최신화·격리 Provider·A 보호 수신/실제 IAM·Caller/Backend·지원/Quota/비용/창·Cloud Plan은 미완료. 기존 C 기록·Recovery CA/금고 본체·Stage2 완료 보고 및 TH/Q/DR/Cost 경계 유지. 아래 날짜별 기록은 당시 이력.
 
 ### 조사 중 추가된 실행 보고·수정 PR — 2026-10-07 후속 조회
 

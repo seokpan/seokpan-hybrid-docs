@@ -1,0 +1,42 @@
+{
+  "run_id": "controller-source-catalog-20261008-01",
+  "status": "PARTIAL",
+  "date": "2026-10-08",
+  "recorded_at_utc": "2026-10-08T09:25:22.245671+00:00",
+  "actual_execution_timestamp": "not supplied",
+  "executor": "B / existing Controller jth@ansible",
+  "evidence_type": "Controller output received; no independent runtime requery",
+  "source_helper": "controller-readonly-preflight",
+  "clone_logical_ref": "HOME_WORK",
+  "origin": "MATCH",
+  "worktree": "CLEAN",
+  "branch": "main",
+  "local_head": "18c3a275a98b0f68226d5bcfba4aa7cf2984d1d2",
+  "remote_main": "c5d8c4242cf62bcc995715c9f8b6964c2f40dc7a",
+  "local_ahead": 0,
+  "local_behind": 21,
+  "local_rosa_lock": "MISSING",
+  "remote_rosa_lock": "668098ad0f1e293982e9bcf8e931128346a00049",
+  "core1164": "PASS",
+  "operator_catalog_count": 6,
+  "operator_guard": "PASS",
+  "catalog_stored_policy_ids": "PASS",
+  "catalog_missing_ids": [],
+  "expected_foundation_policy_map_keys": [
+    "seokpan-fnd-rosa-openshift-cloud-credential-operator-cloud-crede",
+    "seokpan-fnd-rosa-openshift-cloud-network-config-controller-cloud",
+    "seokpan-fnd-rosa-openshift-cluster-csi-drivers-ebs-cloud-credent",
+    "seokpan-fnd-rosa-openshift-image-registry-installer-cloud-creden",
+    "seokpan-fnd-rosa-openshift-ingress-operator-cloud-credentials",
+    "seokpan-fnd-rosa-openshift-machine-api-aws-cloud-credentials"
+  ],
+  "actual_iam_arns_permissions_A_receipt": "NOT VERIFIED",
+  "not_run": [
+    "checkout/reset/stash/init",
+    "support/subscription/quota",
+    "AWS/IAM",
+    "production backend/state",
+    "Cloud Plan/Apply"
+  ],
+  "historical_full_policy_list_missing": "openshift_aws_vpce_operator_avo_aws_creds_policy; not part of received six-role catalog"
+}
