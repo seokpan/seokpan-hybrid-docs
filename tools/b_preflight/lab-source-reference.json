@@ -1,0 +1,53 @@
+{
+  "source_head": "26f7d63d64b5f67fe7042c7867ed358dbf40c814",
+  "files": [
+    {
+      "path": "apps/base/backend.yaml",
+      "sha256": "ba88bce3dbd8033ffbcea2434f285a8ea919c7d69197c262ae65fc63f5842617"
+    },
+    {
+      "path": "apps/base/frontend.yaml",
+      "sha256": "fd116c93cacab86c68fe5e546f6cc776f0eaa47f8749a43f9dbcb738dae0621c"
+    },
+    {
+      "path": "apps/base/kustomization.yaml",
+      "sha256": "7fe0ea47db3108b529a07a83dbbc0911f63b7d6ad3edc117a7dce5f7b4be1e97"
+    },
+    {
+      "path": "apps/base/runtime.env",
+      "sha256": "20089a6ec6f976fa547d0a05fc67868bdced50bc976f2f83be43fd3f795eb17b"
+    },
+    {
+      "path": "apps/base/services.yaml",
+      "sha256": "10778d449493962976c5adc8f5a981ab5dfd26110e9de5f77a1108c85d2cc8e6"
+    },
+    {
+      "path": "apps/overlays/lab/kustomization.yaml",
+      "sha256": "409e375a5dee1e7a7ea96bad4a6472d3f76f28c980a693ecd6f3edeef4e23ea1"
+    },
+    {
+      "path": "apps/overlays/lab/redis-runtime.conf",
+      "sha256": "9c7ad3bdd80ba46cf7545cd6112c74a19a78d6d68445a6ccc8a411bf27b17247"
+    },
+    {
+      "path": "apps/overlays/lab/redis.conf",
+      "sha256": "edb2816db9631cc7c20048cd9e6bd8c869609e7802e995757fc1805a7b8bd8a7"
+    },
+    {
+      "path": "apps/overlays/lab/redis.yaml",
+      "sha256": "c9df0b3aa866e9ca50d702a7bf6a8a572aa92bc4f3b3648c63103339449a51f0"
+    },
+    {
+      "path": "apps/overlays/lab/routes.yaml",
+      "sha256": "bd451460db16d3371670175ec7db1877ff14a91fa69eb77a1f0dd6ee805a9d2c"
+    },
+    {
+      "path": "apps/overlays/lab/runtime.env",
+      "sha256": "91045afe5babdb9c67fcc499e5610f6efefc895b7abcc81e0fe90b9de3d3c28f"
+    }
+  ],
+  "kustomize_version": "v5.7.1",
+  "render_sha256": "295951ee612021c238220c473ddf3ac843cb5e1582718509143f15273955940d",
+  "fixture_scope": "limited declared FE/BE requests/strategy; no runtime evidence",
+  "fixture_sha256": "5b7ca145a376be478f1e2d5d58f056e07aa82e228e1240d605855a8d48dde130"
+}

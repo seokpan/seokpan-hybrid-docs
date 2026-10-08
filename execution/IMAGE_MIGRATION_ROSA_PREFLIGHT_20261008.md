@@ -1,3 +1,18 @@
+# 새 Image·이관 준비·ROSA 사전검증 연결
+
+## 현재 기준 — 2026-10-09
+
+- 새 공급 대상은 App `188199630ceb5fd67d8fe57d4d5650694e2e00e3`, D `a09-5-188199630ceb` Run #5다. Backend/Frontend Build·Scan·Smoke·Evidence 성공과 [GitOps #32의 B 공급 수락](https://github.com/seokpan/seokpan-hybrid-gitops/issues/32#issuecomment-6060263976)을 연결한다. 실패한 Run #4의 `5df2ce28`을 재빌드 대상으로 사용하지 않는다.
+- Backend `sha256:ab0e141abbdf43c5589f9b0af7df38f168044541deec1e10ec7295cb394f4290`, Frontend `sha256:d26d5385a02ed557863abcba9b3e3cde1fac3ceaf2671f170cdc081729620ac4`. App SHA label 누락은 이번 공급에서 Run·`image-metadata.json`·Digest 추적으로 수락했다. 내부 Registry 공급·index/amd64 child mapping·실제 Pull/교체는 아직 수락하지 않았다.
+- App #30/#34, GitOps #31/#33은 병합됐다. 앞선 개인 변경 대기를 그대로 사용하지 않는다. 현재 GitOps main `26f7d63d64b5f67fe7042c7867ed358dbf40c814`의 lab Image는 기존 공급 Digest이며, 위 새 Harbor Digest를 이미 배포한 것으로 표시하지 않는다.
+- 새 SHA의 Migration/Alembic Source 대조와 D의 Image head `20260902_0002` 확인을 수신했다. 실제 DB `current`·held Migration 실행과 이관 후 App 검증은 별도다.
+- GitOps #14는 최초 인계 범위로 종료됐다. 새 공급·Registry mapping·OCP 교체 조건은 [GitOps #32](https://github.com/seokpan/seokpan-hybrid-gitops/issues/32)에서 추적한다. 진단 ZIP의 PC 추가 사본/체크섬은 아래 당시 기록을 보존하며 최신 Release를 대체하지 않는다.
+- 272Mi 및 10/08 18:00경 Worker requests 99%/95%·실사용 82%/85%는 과거 관측이다. 실행 전에 양 Worker의 현재 admitted requests·실사용·종료 중 Pod·Pruner/Quota·Owner 창을 대조한다. [선행 검사와 순차 교체 requests 계산](B_OFFLINE_PREPARATION_REVIEW_20261009.md)은 실제 배치 승인이 아니다.
+- 1차 서비스의 신규 데이터 입력·변경 차단 및 Backend 중지 절차는 [기존 준비 Runbook](FIRST_SERVICE_WRITE_STOP_PREPARATION.md)을 따른다. 실제 접근 경로·실행자·이관 창 확정 뒤 현행 제어를 확인한다. ROSA 입력/목적 인증·State 저장소·지원/Quota·비용/전체 Plan은 [병합 후 실행 준비 기준](MERGED_SOURCE_PLAN_READINESS_20261008.md)과 원 Infra #25에서 별도로 진행한다.
+
+<details>
+<summary>2026-10-08 초기 준비 기록 — 당시 SHA·미병합·조회 상태 보존</summary>
+
 # 새 Image·이관 준비·ROSA 사전검증 연결 — 2026-10-08
 
 FE(Frontend, 사용자 화면)·BE(Backend, 서버 처리)의 새 이미지 공급, 1차 이관 준비, ROSA(Red Hat OpenShift Service on AWS) 첫 Plan 준비를 분리해 연결한다.
@@ -48,3 +63,5 @@ C의 실사용자 취급 판단·복제/Data 사전 확인 보고는 원 #17/#44
 읽기 블록은 Git fetch로 원격 참조만 갱신하고 Core version·Red Hat sts_credential_requests를 조회. AWS/IAM·파일 수정/State/init·Plan/Apply 없음. 실제 Catalog 역할 6개 Guard와 제공 정책 ID 대조, A의 account_role_prefix `seokpan-fnd-rosa`·RHCS 1.7.7의 64자 규칙으로 예상 Map Key 생성. 실제 ARN/권한/조직 연결 수락 아님. API 목록 변화·정책 누락/키 충돌은 Source/Owner 검토로 처리하고 Guard를 약화하지 않음.
 
 문서 Source/읽기 준비 완료를 실환경 사전검증 전체 PASS로 사용하지 않음. OCP 철거·전체 이관/Recovery를 첫 Plan 선행조건으로 만들지 않으며 같은 State 쓰기·Restore/장애/삭제는 지정 실행자/창으로 조율. 멘토링/OADP는 보류.
+
+</details>

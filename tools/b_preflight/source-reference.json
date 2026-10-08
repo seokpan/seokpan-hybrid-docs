@@ -1,0 +1,42 @@
+{
+  "source_head": "aaa8cff09cd70298b142afdba5faf15d73664cc3",
+  "root": "terraform/rosa",
+  "files": [
+    {
+      "file": "inputs.tf",
+      "sha256": "7b7ef3da503f8b353d6c41838ffe37198ecb2ba0c20f31e19d5828d43ce12b1b",
+      "git_blob": "fb45e85d4343d2e3de2378d4099683c251ef30e8"
+    },
+    {
+      "file": "oidc.tf",
+      "sha256": "2c9597ea302bebc5e965cb20fbdaf4da81ac7da4b6be4e9fe46809b83de4cc7f",
+      "git_blob": "4e53bfd0fe9176aab8118a87226c59f7dd661fa2"
+    },
+    {
+      "file": "cluster.tf",
+      "sha256": "cad0afd565e5e40cb969551341b772b33d6107ae57bfaebd22f43e9315f91897",
+      "git_blob": "74d13092a6cea05cd963779215a24417be3b03cc"
+    },
+    {
+      "file": "bindings.tf",
+      "sha256": "f1727f082251f1573cc2876cbcc0730a7d05470b70ec2681c599bea145ca00e8",
+      "git_blob": "b0288ba515207445956e7283afa0a1acf34348e3"
+    },
+    {
+      "file": ".terraform.lock.hcl",
+      "sha256": "b7034e236305de9a67786cfdcd302a589e7cb7ada92d5cbea4286c871cea7831",
+      "git_blob": "668098ad0f1e293982e9bcf8e931128346a00049"
+    }
+  ],
+  "managed_resource_declarations": [
+    "aws_iam_openid_connect_provider.cluster",
+    "aws_iam_role.operator",
+    "aws_iam_role_policy_attachment.operator",
+    "aws_vpc_security_group_ingress_rule.worker_to_data",
+    "rhcs_cluster_rosa_classic.cluster",
+    "rhcs_rosa_oidc_config.cluster",
+    "terraform_data.input_contract"
+  ],
+  "operator_count_guard": 6,
+  "actual_plan_or_sg_handoff_received": false
+}
