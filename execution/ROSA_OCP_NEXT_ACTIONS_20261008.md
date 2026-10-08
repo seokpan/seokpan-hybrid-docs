@@ -2,20 +2,22 @@
 
 * 현재 판단
 
-- App #20/#22·Infra #43·GitOps #25 병합과 해당 원격 PR 브랜치 삭제 완료. Docs #72의 현재 상태 보완 대상이며 새 설계 변경 없음.
+- App #20/#22·Infra #43·GitOps #25 병합과 해당 원격 PR 브랜치 삭제 완료. Docs #72/#84도 병합·해당 원격 PR 브랜치 삭제 확인. 이후 결과는 새 문서 변경으로 연결하며 설계 기준 유지.
 - 병합 Infra의 fmt·세션 helper 문법·기존 OIDC 시험 사본 생성/보존 PASS. 병합 GitOps의 Root 등록 SHA B 비교 및 전체 lab release Gate PASS. [새 검사 기록](../evidence/T01/plan-source-readiness-20261008-01/summary.md).
-- 본인 Controller의 Caller/Backend·지원/Quota·실제 보호 입력·Cloud Plan은 NOT RUN. OCP 철거·전체 Data 이관/Backup/Recovery는 첫 ROSA Plan의 일괄 선행조건이 아님.
-- GitOps #26의 C DB 형식/GRANT/TLS 접속·합성 출처 수락과 D 로그인·방 생성/접속·게임 종료 보고 수신. Vote 및 ERR 원인 미확인. 직접 Runtime 재조회·전체 OCP 수락과 구분.
+- B의 기존 `jth@ansible` 세션과 Recovery CA 전체 해시 일치 검사 결과 수신. Terraform1.16.4(Core 일치)·AWS CLI2.37.5·Python3.9.25·jq1.6 확인. 개인 clone HEAD18c3a275·ROSA Lock 없음, 저장소 연결/원격 갱신·Source 대조 대기. RHCS_TOKEN 미설정·ROSA/OCM CLI 미설치. 목적 Caller/Backend·지원/Quota·실제 보호 입력·Cloud Plan은 NOT RUN. OCP 철거·전체 Data 이관/Backup/Recovery는 첫 ROSA Plan의 일괄 선행조건이 아님.
+- GitOps #26의 C DB 형식/GRANT/TLS 접속·합성 출처 수락과 D 로그인·방 생성/접속·게임 종료 보고 수신. D의 TLS/AUTH·Route/Origin 및 ERR 협상 원인 후속 보고도 수신. Vote·연결 유지/재접속/Timeout 등 잔여는 아래 구분. 직접 Runtime 재조회·전체 OCP 수락과 구분.
 
 * 현재 소스와 원 기록
 
 | 대상 | 확인한 병합 개정 | 원본·마무리 |
 |---|---|---|
 | App #20 | `c35509155886739f987b265d003a6ce7e95caf92` | [마무리](https://github.com/seokpan/seokpan-hybrid-app/pull/20#issuecomment-6050175642), 병합 verify success |
-| App #22 / 현재 App main | `1e99e36ed2f8b116fad5db9a6333a71f2c2bdec3` | [마무리](https://github.com/seokpan/seokpan-hybrid-app/pull/22#issuecomment-6050176304), Frontend 병합 CI 없음 |
+| App #22 / 당시 App main | `1e99e36ed2f8b116fad5db9a6333a71f2c2bdec3` | [마무리](https://github.com/seokpan/seokpan-hybrid-app/pull/22#issuecomment-6050176304), Frontend 병합 CI 없음 |
+| App #23 / 최종 조회 App main | `070c699c119d2972f551bdfc4fe390678ad45c44` | [D PR23](https://github.com/seokpan/seokpan-hybrid-app/pull/23) 작업 중 병합 추가 확인. Image 변경안 계산 planner/시험이며 annotation·Release JSON·Cloud/Writer는 범위 밖. 새 Image/Runtime 수락 별도 |
 | Infra #43 / 현재 Infra main | `6849c32d5b24a0e4994b7fbe849a1032211dc9a3` | [마무리](https://github.com/seokpan/seokpan-hybrid-infra/pull/43#issuecomment-6050176904), validate success |
 | GitOps #25 / 현재 GitOps main | `61edd0fd60e1004260c0b5082dc792fce847616b` | [마무리](https://github.com/seokpan/seokpan-hybrid-gitops/pull/25#issuecomment-6050200412), validate success |
-| Docs main | `0cb6a95d72884778452b4c96ae7383dad258db0e` | C #83의05 §8.18/Tracker 기록 병합 완료. #72 현재 후속은 미병합 |
+| Docs #72/#84 / 조사 시 Docs main | `a355ee1cfdee7804fc214c7f05bb439e847ae6ba` | [72 마무리](https://github.com/seokpan/seokpan-hybrid-docs/pull/72#issuecomment-6050693657)·[84 마무리](https://github.com/seokpan/seokpan-hybrid-docs/pull/84#issuecomment-6050694153), 해당 원격 브랜치 삭제 확인 |
+| Recovery Host 변경 / 미병합 | `6c3de8d75f12754ece2cfeb9a1347de66e8cbafe` | [GitOps31](https://github.com/seokpan/seokpan-hybrid-gitops/pull/31), C/D 리뷰 대기·정확 HEAD Linux69PASS. main 병합으로 소비하지 않음 |
 
 Runtime Workload의 정확 SHA/Image와 위 저장소 main은 별도로 기록. 현재 Root 선언 targetRevision은 SHA B `bfee2669e62bf823969ce224e5599eccace5d024`. Stage1 SHA A 등록·Valkey4객체 선택 Sync는 완료 이력 유지. 새 App 소스가 기존 승인 lab Image에 포함됐다고 사용하지 않음.
 
@@ -23,26 +25,25 @@ Runtime Workload의 정확 SHA/Image와 위 저장소 main은 별도로 기록. 
 
 | 순서 | 담당·작업 | 필요한 입력·종료 조건 | 막는 단계 |
 |---|---|---|---|
-| 1 | B: 기존 Controller·jth·clone/Lock/도구 확인 | 현재 접속·작업 위치·개인 변경·정확 Source/도구 확인 | 실제 인증·Plan |
-| 2 | A: Infra #23 기반 출력/공통 prerequisite, bootstrap 목적 서비스 권한 | 실제 VPC·Public3/ROSA Private3·AZ·Classic Account Role4/Operator Policy Map·Backend의 보호 개정, B 수락. 목적 Role의 실제 유효 권한 확인·필요 차이 반영 | 실제 첫 Plan |
+| 1 | B: 기존 Controller·jth·clone/Lock/도구 확인 | jth@ansible 세션·CA 해시 일치 결과 수신 완료. Core1.16.4·AWS CLI2.37.5·Python3.9.25·jq1.6 확인. 개인 clone HEAD18c3a275/ROSA Lock 없음, 저장소 연결·fetch·Source 대조 대기 | 실제 인증·Plan |
+| 1-A | B: Red Hat 인증·Classic 공식 IAM 정책 조회/보호 인계 | 기존 본인 Red Hat 계정으로 읽기 정책 조회 가능. 프로젝트 ROSA 관리 조직은 아직 미정이며 조회 계정으로 자동 확정하지 않음 | A #47 정책 원본 준비. 프로젝트 조직/연결 수락은 실제 실행 전 별도 |
+| 2 | A: Infra #47 Account Role4·정책/Trust 및 Infra #23 기반 출력, bootstrap 목적 서비스 권한 | 실제 VPC·Public3/ROSA Private3·AZ·Classic Account Role4/Operator Policy Map·Backend의 보호 개정, B 수락. 목적 Role의 실제 유효 권한 확인·필요 차이 반영 | 실제 첫 Plan |
 | 3 | C/A: Infra #19 Data SG2 공급/통합 | 실제 서로 다른 MariaDB/Redis SG·VPC·Owner/기반 Rule·개정 수락. 생성 전에도 필수 | 실제 첫 Plan |
 | 4 | B: 목적 세션·Backend·지원/구독/Quota·Worker disk, B/D 예비 비용·Owner/창 | 정확 조합 수락, execution_review와 기반 개정 일치. 현재 보호 입력 공급/수락은 원 기록에서 미확인 | 실제 첫 Plan |
 | 5 | B: 같은 rosa Root의 전체 Plan, A 리뷰 | Code/Lock/입력/Caller 고정, 수량·삭제/교체·기반 보존 영향 확인 | 생성 전 비용/실행 수락 |
-| 병행 | D/B/C: OCP #26/#5 잔여 수락 | 실행 Source/Image/Run·Route/Origin·TLS/AUTH/Hostname·Ready·사용창/Gate/live Diff·Prune/Delete 보호, Vote와 ERR 조사 | 해당 OCP 수락, ROSA Plan 전체는 막지 않음 |
+| 병행 | D/B/C: OCP #26/#5 잔여 수락 | D의 TLS/AUTH·Route/Origin·ERR 협상 원인 보고는 수신 유지. 남은 Vote·연결 유지/재접속/Timeout·실행 Source/Image/Run·Ready·사용창/Gate/live Diff·Prune/Delete 보호 수락 | 해당 OCP 수락, ROSA Plan 전체는 막지 않음 |
 | 병행 | D App #2 → B App #4/GitOps #10 | 병합 App Source의 새 Backend/Frontend Build·Scan·Digest·플랫폼/Pull·App/held Migration 대응 | 새 소스의 실제 배포 수락 |
 
 Backend 정책 소스만으로 rosa 서비스 권한 완료나 권한 부재를 단정하지 않음. Source의 필요한 호출 범위는 Infra `terraform/rosa/REVIEW_AND_EXECUTION_GATES.md`를 사용하고, 실제 거부는 목적 세션으로 좁혀 확인. A/C/D의 보호 출력·권한·원장을 대신 생성하지 않음.
 
-* 1. Controller 접속 확인 — Windows PC / 본인
+* 1. Controller 위치와 Red Hat 계정 구분
 
-1차 최신 인벤토리([Infra main `3af8911`](https://github.com/seokpan/seokpan-infra/blob/3af8911be68e7f1c1e8950b5bd6a009049ebf768/ansible/inventory/hosts.yml))의 Controller는 `192.168.54.70`. [1차 안내](https://github.com/seokpan/seokpan-infra/blob/3af8911be68e7f1c1e8950b5bd6a009049ebf768/README.md)는 일반 사용자 jth의 개인 checkout을 지원. 인벤토리의 원격 대상 `ansible_user: root`를 Controller 로그인 계정으로 사용하지 않음.
-
-```powershell
-Test-NetConnection -ComputerName 192.168.54.70 -Port 22 -InformationLevel Quiet
-ssh -o StrictHostKeyChecking=yes jth@192.168.54.70
-```
-
-현재 작업 PC의 TCP22는 연결 실패, SSH 로그인 미시도. 현장 망/VPN·VM 가동·현재 IP·Route/Firewall을 확인. SSH Host Key가 새롭거나 바뀌었다면 기존 fingerprint/VM Console로 대조 후 정상 등록, 검증 해제 옵션이나 기존 known_hosts 일괄 삭제 금지. 접속 실패만으로 Controller 인증·ROSA 권한 실패를 판정하지 않음.
+- B의 기존 `jth@ansible` SSH 세션 확인. Windows PC에서192.168.54.70 TCP22 연결은 실패했지만, Linux VM에서 이미 접속한 세션을 이용하므로 Windows 재시도는 현재 준비의 선행조건이 아님. PC/VM의 망·Route/Firewall 차이는 별도 미확인.
+- 1차 Kubernetes 자산이 있는 Controller에서도 승인된 개인 보호 Workspace를 사용할 수 있음. CA 검사·도구 확인·Red Hat 정책 조회는 Kubernetes 객체 변경이 아니며 OCP 웹 UI/Node에서 실행할 필요 없음.
+- Linux `jth` 로그인, OCP 웹 UI 인증, Red Hat Hybrid Cloud Console 계정, 목적 AWS 실행 Role은 서로 다른 인증. 이름이 같거나 앞 단계가 성공했다는 이유로 다음 인증을 완료 처리하지 않음.
+- 프로젝트 ROSA 관리 Red Hat 계정·조직은 아직 미선정. 기존 본인 Red Hat 계정의 공식 정책 읽기 조회는 가능하지만 이 결과를 프로젝트 조직/AWS 계정 연결·구독 승인으로 사용하지 않음. 실제 프로젝트 인증·지원/구독·Plan 준비에서 조직/권한·AWS 연결을 별도 수락.
+- RHCS_TOKEN 입력은 `set +x` 상태의 `read -r -s` 프롬프트로 받고 셸 환경변수에만 export. 웹 계정/조직은 보호 환경에서 확인하며 Token을 명령 인자·파일·Terraform 변수/State·공개 로그로 복제하지 않음.
+- 공식 정책 조회 경로는 RHCS1.7.7 Classic 구현의 `GET /api/clusters_mgmt/v1/aws_inquiries/sts_policies`. 반환된 Classic 권한 정책4개와 Support Trust 원본을 보호 사본으로 인계. Installer Trust는 고정 Provider의 운영 환경 참조와 공식 Classic 소스로 대조하며 실제 IAM Trust 확인은 A 후속. 정책 조회가 지원 patch·Quota·프로젝트 조직 연결·실제 Role 존재를 검증하지 않음.
 
 * 2. 본인 checkout·도구 — Controller / jth
 
@@ -73,7 +74,7 @@ for rosa_tool in python3 bash git terraform aws rosa jq; do
 done
 CHECKPOINT_DISABLE=1 terraform version -json
 aws --version
-rosa version
+if command -v rosa >/dev/null 2>&1; then rosa version; else printf 'rosa version: NOT RUN (MISSING)\n'; fi
 python3 --version
 bash -n scripts/tf-session.sh
 ```
@@ -81,6 +82,8 @@ bash -n scripts/tf-session.sh
 main/개인 변경/Lock 차이를 수락한 뒤 다음 단계. reset·stash·키/State 초기화·공유 패키지 일괄 업그레이드 없음. 최신 승인 Core1.16.4/AWS6.67.0/RHCS1.7.7 고정. 표준입력 없는 버전 조회로 인증 완료를 판정하지 않음. 기존 `LOCAL_PREPARATION.md`의 오프라인 harness 명령 재사용 가능. oc/sops/age의 확인은 실제 lab/금고 작업에서 별도이며 첫 Plan의 새 일괄 조건으로 만들지 않음.
 
 * 3. 실제 읽기 중심 사전검사 — Controller / jth / 목적 rosa 세션
+
+현재 ROSA/OCM CLI가 없으므로 아래 rosa 명령은 아직 미실행. 먼저 기존 공급·설치 담당과 지원 버전을 확정하고 실제 설치 뒤 실행. 정책 원본 읽기 조회에 CLI 설치를 일괄 선행조건으로 추가하지 않음. CLI 설치나 단순 인증 성공을 지원/구독·Quota·실행 준비 완료로 사용하지 않음.
 
 먼저 A/B가 기존 Backend 초기화 상태·선택 Workspace·기존 State 위치와 목적 Role을 확인. 기존 default Key는 `phase2/rosa/terraform.tfstate`; non-default는 새 prefix `phase2/rosa/env`와 기존 위치 차이를 검토. 기존 State를 버리고 새 빈 State로 연결하지 않음. 보호 입력/Backend 파일·RHCS 인증은 기존 승인 경로로 공급하며 공개 기록에는 논리 참조만 사용.
 
@@ -127,8 +130,14 @@ Plan 원문/Saved Plan은 보호 디렉터리에서 A와 수량·삭제/교체·
 - 성공한 SHA A 등록·Valkey4객체 Sync 반복 없음. 기존 실제 SHA B 적용/Sync 여부와 Source/Image를 원 Run·댓글에 연결해 먼저 수락.
 - C의 DB 형식/GRANT/TLS 접속·합성 출처 수락은 다시 미공급으로 되돌리지 않음. D 최신 부분 업무 보고와 #26 본문 미체크의 차이는 원 담당이 실행 개정/근거 연결로 보완.
 - Vote·게임 종료 후 UI·재접속, Route FE/API/WSS와 허용/거부 Origin·TLS/Hostname·Ready·Owner/사용창/Gate/live Diff·실제 삭제 보호 근거 확인. 살아 있는 업무 객체로 임의 Delete/Prune 시험하지 않음.
-- Valkey ERR 증가 원인: D 보고의 EVALSHA failed_calls16/NOSCRIPT16 및 비사용 시간 증가만으로 App Lua 오류나 무해한 초기 협상으로 단정하지 않음. 동일 Source/Image/서버 버전의 짧은 시각별 INFO errorstats/commandstats·클라이언트 재연결/Probe 기록에서 오류 명령을 좁혀 확인. MONITOR·Secret 조회·전체 명령 인자 로그는 수집하지 않음.
-- B는 원인/재현·업무 영향이 확인된 부분만 좁은 코드 수정/회귀, D는 현장 측정·Vote/실행 근거 공급. 이 미해결은 해당 업무 판정이며 ROSA 첫 Plan의 일괄 선행조건 아님.
+- [D #26의 편집된 최신 보고](https://github.com/seokpan/seokpan-hybrid-gitops/issues/26#issuecomment-6050000112): redis-py8.1.0/RESP3 초기 CLIENT MAINT_NOTIFICATIONS 협상으로 ERR 증가, RESP2 또는 협상 비활성화 비교에서 증가0·업무 영향 없음 확인 보고 수신. 비긴급 `MaintNotificationsConfig(enabled=False)` 후보는 별도 후속이며 즉시 프로토콜/코드 변경 없음. ROSA 실제 Engine에서 재측정. EVALSHA 실패16/NOSCRIPT16 초기 fallback은 별도 원 기록 유지.
+- [D #10 Route/Origin 보고](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10#issuecomment-6050495638): FE `/`·API `/api/v1`·WSS `/ws/v1` Route Admitted, Host/TLS·HTTPS·허용 Origin101/거부403·브라우저WSS101 확인 보고 수신. 남은 Vote·장시간 연결/재접속/Timeout·정확 Source/Image/Run 및 보호 수락을 확인하며 성공한 기본 검사를 다시 대기로 만들지 않음. ROSA Host/인증서/Origin은 해당 환경에서 별도 검증.
+
+* Recovery·Pool의 직접 후속
+
+- Recovery Host Source는 GitOps31 리뷰/병합 대기. CA 전체 해시 일치 결과 수신 완료. ConfigMap 생성은 Namespace 확정 후이며 DB Name/목적 계정·Secret·Redis·Registry/Image/Bundle 수락 후 연결 검증. Infra48의10/9 Data-only 예행과10/19–21 전체 Recovery 업무/RTO 검증 구분.
+- C가 Data 기준v2.2 §2.6의 예약 연결10을 전달. 실제 RDS `@@max_connections`는 생성 후 C 공급. Pool 예산은 Engine2 × Process 수 × 동시 Pod 수 × `(pool_size + max_overflow)` + 예약10으로 검토하며 Rolling 중 종료 대기 Pod를 포함. 실제 Process/동시 Pod와 RDS 상한 미확인, 임의3+2 확정/미구현 환경변수 추가 없음.
+- 현재 Dockerfile의 uvicorn 기본 실행만으로 실제 Process/Runtime Override를 확정하지 않음. B/C 합의 후 App 설정·Source Test → D 새 Build/Scan/Digest → App/held Migration 대응 → 실제 부하/종료/재접속 측정 순서.
 
 * 전체 잔여 묶음
 

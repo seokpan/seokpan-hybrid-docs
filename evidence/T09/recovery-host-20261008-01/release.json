@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "record_kind": "source-verification-with-received-controller-check",
+  "run_id": "recovery-host-20261008-01",
+  "test_id": "T09",
+  "recorded_at_utc": "2026-10-08T02:22:25.759318+00:00",
+  "recorded_at_kst": "2026-10-08T11:22:25.759318+09:00",
+  "source": {
+    "gitops_base_sha": "61edd0fd60e1004260c0b5082dc792fce847616b",
+    "gitops_sha": "6c3de8d75f12754ece2cfeb9a1347de66e8cbafe"
+  },
+  "source_owner": "B",
+  "actual_operator": null,
+  "execution_environment": "Windows isolated source checks; GitHub Actions Linux exact-HEAD checks",
+  "linux_ci": {
+    "run": 37716571091,
+    "job": 113114271158,
+    "executed": 69,
+    "passed": 69,
+    "status": "PASS"
+  },
+  "windows_utf8_suite": {
+    "total": 69,
+    "passed": 64,
+    "failed": 5,
+    "limits": [
+      "2 CRLF comparison failures",
+      "3 POSIX fake command failures"
+    ]
+  },
+  "initial_windows_suite": {
+    "passed": 62,
+    "failed": 5,
+    "errors": 2,
+    "encoding_errors": "cp949 errors separated by UTF-8 run"
+  },
+  "verification": {
+    "recovery_host_test": "PASS",
+    "base_lab_render_unchanged": true,
+    "recovery_render": "PASS",
+    "recovery_release_gate": "BLOCKED_EXPECTED_EXIT_2_NO_ARTIFACT",
+    "runtime": "NOT RUN"
+  },
+  "controller_check_received": {
+    "operator": "B / jth",
+    "host": "ansible",
+    "recovery_ca_full_file_sha256_match": "PASS; user-executed result received",
+    "rhcs_token": "MISSING at check",
+    "tools": {
+      "terraform": "1.16.4 linux_amd64; Core matches current baseline",
+      "aws": "aws-cli/2.37.5",
+      "jq": "1.6",
+      "rosa": "MISSING",
+      "ocm": "MISSING",
+      "python3": "3.9.25"
+    },
+    "ca_configmap": "NOT RUN; Namespace pending",
+    "rhcs_auth": "NOT RUN",
+    "cloud_plan": "NOT RUN",
+    "observed_at_utc": null,
+    "personal_clone_check": {
+      "local_head": "18c3a275a98b0f68226d5bcfba4aa7cf2984d1d2",
+      "branch": "main",
+      "worktree_changes": "none shown in received git status",
+      "local_rosa_lock": "MISSING",
+      "origin_repo_identity": "NOT VERIFIED",
+      "origin_main_freshness": "NOT VERIFIED; fetch pending"
+    },
+    "provider_selections_note": "Empty map from HOME version command; not a provider availability result"
+  },
+  "review_status": "C_D_REQUESTED_APPROVAL_PENDING",
+  "refs": {
+    "pr": "https://github.com/seokpan/seokpan-hybrid-gitops/pull/31",
+    "ci": "https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37716571091"
+  },
+  "rto_seconds": null,
+  "rpo_seconds": null
+}

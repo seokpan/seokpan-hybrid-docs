@@ -1,6 +1,6 @@
 # 石나가는 판단 2차 프로젝트 05 구현·통합·검증 진행 기록
 
-> **현재 상태 — 2026-10-08:** App20/22·Infra43·GitOps25 병합·원격 PR 브랜치 삭제와 마무리 기록 확인. [ROSA Plan/OCP 후속](ROSA_OCP_NEXT_ACTIONS_20261008.md)·[05 §9.50](05_IMPLEMENTATION_AND_VALIDATION.md#merged-pr-plan-readiness-20261008) 우선. D #26의 부분 업무/ERR·Vote 보고 수신, 실제 Controller/Cloud Plan은 NOT RUN. 아래 날짜별 근거·당시 상태 보존.
+> **현재 확인 — 2026-10-08:** Docs72/84 병합·해당 원격 브랜치 삭제 확인. Recovery Host [GitOps31](https://github.com/seokpan/seokpan-hybrid-gitops/pull/31)은 C/D 리뷰 대기, 정확 HEAD Linux69PASS. B의 `jth@ansible` CA 전체 해시 일치 결과 수신. Core1.16.4·AWS CLI2.37.5·Python3.9.25·jq1.6 확인, 개인 clone18c3a275/ROSA Lock 없음·연결/fetch 대조 대기. RHCS_TOKEN 미설정·ROSA/OCM CLI 미설치, 실제 인증/Plan 대기. D의 TLS/AUTH·Route/Origin과 ERR 협상 원인 보고 수신. [오늘 실행 순서](ROSA_OCP_NEXT_ACTIONS_20261008.md)·[05 §9.51](05_IMPLEMENTATION_AND_VALIDATION.md#controller-recovery-followup-20261008) 우선. 아래 날짜별 상태는 당시 이력.
 
 ### 조사 중 추가된 실행 보고·수정 PR — 2026-10-07 후속 조회
 
@@ -2073,3 +2073,16 @@ C의 §8.9–8.14·과거 시험/체크/그림·설계/TH 상태는 유지한다
 - D GitOps26/6050000112의 부분 업무·ERR/Vote 보고와 C DB 수락 수신. 실제 Source/Image/Run·Route/Origin/TLS/Ready·등록/보호 근거·Vote/ERR 후속은 원 #26/#5, 새 App Image 공급은 D App2에서 별도.
 - 본인 상위 이슈 현재 안내의 Valkey 선언/본체 금고 대기 및 최신 PR 상태 정정. 실제 첫 Plan은 B Controller/Caller/Backend/지원·A 실제 기반/목적 권한·C SG2·예비 비용/Owner/창 수락 후. Docs83의 C §8.18/Tracker는 조사 중 main0cb6a95에 병합됐으며 정상 main 결합으로 원문/담당 기록 보존.
 - 03/04 종료·DR10/30/15·CP3/Infra3/Worker3·Cost PARTIAL/$450/$500·TH81/기존완료2 유지. 금고 독립 사본·Cloud/Recovery·전체 시험·발표/최종 정리는 후속.
+
+<a id="controller-recovery-followup-20261008"></a>
+### 9.51 Controller CA 확인·Recovery Host·오늘 ROSA 입력 순서 — 2026-10-08
+
+- [Docs72 병합 마무리](https://github.com/seokpan/seokpan-hybrid-docs/pull/72#issuecomment-6050693657)·[Docs84 병합 마무리](https://github.com/seokpan/seokpan-hybrid-docs/pull/84#issuecomment-6050694153), main `a355ee1cfdee7804fc214c7f05bb439e847ae6ba`·해당 PR 원격 브랜치 삭제 확인. 삭제된 작업 브랜치에 후속 추가 없음.
+- [Recovery Host 새 검증 기록](../evidence/T09/recovery-host-20261008-01/summary.md): GitOps31의 정확 HEAD Linux69PASS, Windows64PASS/5FAIL 이력 보존, base/lab 동일·Recovery Gate BLOCKED. B의 기존 `jth@ansible` CA 전체 해시 일치 검사 결과 수신, Namespace/ConfigMap·DB 연결·복원은 별도 대기.
+- [Infra25 A 문의](https://github.com/seokpan/seokpan-hybrid-infra/issues/25#issuecomment-6050485076) → B RHCS 인증·Classic 공식 정책 읽기 조회/보호 인계 → A [Infra47](https://github.com/seokpan/seokpan-hybrid-infra/issues/47) Account Role4·목적 서비스 권한/기반 준비 → 실제 출력 및 C/A SG2 수락 → B Caller/Backend·지원/Quota·비용/창 → 실제 전체 Plan. 인증·조회·Plan은 아직 미실행.
+- [D GitOps26](https://github.com/seokpan/seokpan-hybrid-gitops/issues/26#issuecomment-6050000112)의 편집된 최신 보고에서 ERR 증가 원인은 redis-py8.1.0/RESP3의 CLIENT MAINT_NOTIFICATIONS 협상으로 확인 보고. 업무 영향 없음, 협상 비활성화는 비긴급 별도 후보. B의 직접 재현·ROSA 엔진 검증을 뜻하지 않음.
+- [D GitOps10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10#issuecomment-6050495638)의 FE/API/WSS Route·Admitted·TLS Host·허용/거부 Origin·WSS101 보고 수신. Vote·연결 유지/재접속/Timeout·정확 배포 Source/Image/Run·Ready/Gate/live Diff·Prune/Delete 보호 수락은 별도. 성공 등록/Sync·본체 금고 확인 반복 없음.
+- C [Infra48](https://github.com/seokpan/seokpan-hybrid-infra/issues/48)의10/9 Data 예행과10/19–21 전체 Recovery 창 구분. Pool 예약 연결10은 C의 Data 기준으로 수신했으며 실제 RDS 상한과 B/C 설정 합의 대기. 구현되지 않은 Pool 환경변수·임의3+2 반영 없음.
+- [오늘 실행 순서](ROSA_OCP_NEXT_ACTIONS_20261008.md)에 직접 입력·담당·중단 조건 연결. Source 검사·수신 결과로 TH81/기존 완료2·Q·전체T/DR/Cost 수락 추가 없음. Index 연결은 제출이며 D 수신 대기.
+
+- 후속 조회 중 App [PR23](https://github.com/seokpan/seokpan-hybrid-app/pull/23)이 main `070c699c119d2972f551bdfc4fe390678ad45c44`에 추가 병합됨. D의 Image 변경안 계산 planner/시험이며 annotation·Release JSON·Cloud 편집/Writer·실제 배포는 포함하지 않음. 기존 App20/22와 새 Image 수락을 구분. 원 기록은 [GitOps10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10#issuecomment-6050997327)·[Infra25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25#issuecomment-6050998183)·[Docs21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21#issuecomment-6050968250)에 연결.

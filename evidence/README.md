@@ -101,3 +101,5 @@ python3 tools/recovery_metrics.py evidence/<test-id>/<run-id>/release.json --con
 [T09/registration-review-followup-20261008-01](T09/registration-review-followup-20261008-01/summary.md)에 GitOps25의 SHA B 비교 PASS/A 불일치 BLOCKED·Windows66PASS/3FAIL·정확53314d3 Linux69PASS와 재리뷰 요청을 연결한다. App20/22·Infra43은 현재 HEAD 승인·Source 추가 수정 없음, 병합 후 새 Image/실환경 수락은 별도다. Controller/State/Cloud/DB 실행·새 TH/Q 완료 없음. 병합·브랜치 삭제 결과와 새 승인 수신은 원 PR에서 후속 확인한다.
 
 - [병합 Source ROSA/OCP 준비 검사](T01/plan-source-readiness-20261008-01/summary.md): fmt/helper/harness 보존·등록 비교/전체lab Gate PASS, Controller TCP22 연결 실패·실제 Plan NOT RUN. 공식 T01/Runtime 완료와 별도.
+
+- [Recovery Host Source·Controller CA 확인 결과 수신](T09/recovery-host-20261008-01/summary.md): GitOps31 정확 HEAD Linux69PASS, Windows64PASS/5FAIL, Recovery Gate BLOCKED. B의 jth@ansible CA 해시 일치 결과 수신; ConfigMap/DB 연결·복원/실제 ROSA Plan 미실행. 새 Index 연결 제출, D 수신 대기.
