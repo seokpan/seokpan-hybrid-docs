@@ -1,6 +1,6 @@
 # 石나가는 판단 2차 프로젝트 05 구현·통합·검증 진행 기록
 
-> **현재 확인 — 2026-10-08 정책 조회 후:** GitOps31·Docs85 병합 및 해당 원격 PR 브랜치 삭제 확인. B의 기존 Controller jth@ansible에서 Red Hat 인증·Classic 필수 정책5/5·Operator 정책7/8·OCM 참조 정책4/4 조회 및 보호 사본 생성. [원 Infra25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25#issuecomment-6053637165)·[부분 검증 Run](../evidence/T03/redhat-policy-read-20261008-01/summary.md) 연결. 현재 사본 권한/해시17개 PASS, 누락 AWS VPCE 정책 ID 확인. [새 읽기 Run](../evidence/T03/policy-bundle-readback-20261008-01/summary.md) 연결; 실제 Operator/Policy Map 대조 및 A 보호 인계/수신 대기. 프로젝트 Red Hat 조직/AWS 연결·Controller clone/원격/Lock·목적 Caller/Backend·지원/Quota·A 제한 입력/C-A SG2·예비 비용/Owner/창 수락 후 첫 Plan. Recovery CA 일치 확인 유지, ConfigMap/DB 접속·복원/실제 Plan 미실행. 아래 날짜별 기록은 당시 이력. GitOps26은 lab Stage2 완료로 종료, DB 입력·FE/BE Ready·Route/WSS·Valkey 보고 수신. 다중 투표·WS idle/재접속·Rolling/장애·Prune/Delete 실제 차단·ROSA 재측정은 본인 GitOps10/App4 후속으로 분리.
+> **현재 확인 — 2026-10-08 PR88 병합 후:** Docs88 main d881df14·작업 브랜치 삭제/마무리 확인. [Image·이관·ROSA 묶음](IMAGE_MIGRATION_ROSA_PREFLIGHT_20261008.md) 연결. 새 Image 대상 App `5df2ce28`·Source Alembic head `20260902_0002`·Migration 6개 파일 동일, 실제 Build/Scan/Digest는 D 후속. 진단 ZIP 현재 PC 추가 사본/8개 체크섬 확인. B의 1차 쓰기 중지 준비·당일 실행·이관 후 current/App를 독립 항목으로 관리. Controller clone/Lock·실제 Operator/Policy Map·A 수신·목적 Caller/Backend·지원/Quota·비용/창 및 실제 Plan은 미완료. GitOps #26의 lab Stage2 완료 보고와 미완료 후속 시험은 GitOps #10/App #4에 연결. Recovery CA 해시 일치 확인 유지, ConfigMap·실제 DB 연결/복원은 미실행. 아래 날짜별 기록은 당시 이력.
 
 ### 조사 중 추가된 실행 보고·수정 PR — 2026-10-07 후속 조회
 
@@ -2116,3 +2116,12 @@ C의 §8.9–8.14·과거 시험/체크/그림·설계/TH 상태는 유지한다
 - [새 T03 부분 Run](../evidence/T03/policy-bundle-readback-20261008-01/summary.md): B/jth@ansible의 현재 소유자·700/600 권한 및 manifest 등록17파일 해시 일치 PASS. 앞선 API 조회 Run의 당시 미검증 기록 보존. 이번 검사에 API/AWS/IAM/Terraform·파일 수정 없음.
 - 누락 정책 `openshift_aws_vpce_operator_avo_aws_creds_policy` 확인. 현행 private=false/aws_private_link=false와 실제 Operator6개·정책 Map Guard 대조. 공식 정책 이름8개를 실제 필수 역할 수로 사용하지 않으며 실제 목록/ARN Map 대조 전 PASS/차단 확정 없음.
 - A 보호 인계/수신·본인 clone/Lock·목적 Caller/Backend·지원/Quota·A 제한 출력/C-A SG2·예비 비용/Owner/창은 별도. 실제 첫 Plan 미실행, D Index 수신·TH/Q/T/Cost/DR 완료 가산 없음.
+
+<a id="image-migration-preflight-20261008"></a>
+### 9.54 새 Image·이관 중지·ROSA 사전검증 묶음 — 2026-10-08
+
+[연결 문서](IMAGE_MIGRATION_ROSA_PREFLIGHT_20261008.md)에 D 새 Image Source `5df2ce28`와 기존`46e21a74`의 Migration 6개 파일/head 동일, 진단 ZIP 현재 PC/8개 체크섬 PASS, lab 순차 교체·live자원/Owner 조건 연결. 새 Image 승인/배포·Rolling PASS 아님. D 최초14와 새 공급 Issue 분리 기준은 회신 초안이며 새 Issue 생성/수신은 별도.
+
+B의 [1차 쓰기 중지 준비](FIRST_SERVICE_WRITE_STOP_PREPARATION.md)를 원 Infra17의 담당 확약·C44v1.5와 연결. Source Backend 2개/Argo AutoSync·SelfHeal/PDB 확인, 실제 Context/Parent/HPA/다른 쓰기 주체·제어 경로/실행자·사용창·중지 유지/복귀·RDS후current/App는 미실행. 실제 1차 DB/Workload·C 기록 변경 없음.
+
+Controller 읽기 사전검증 블록은 개인 clone/Lock·Core·실제STS Operator/기존정책 대조를 묶어 준비. 문법/합성3개 PASS, 실제Controller 실행과 구분. A/C 실제 입력·목적권한/Backend·지원/Quota/disk·예비비용/창 수락 후 첫 전체 Plan. Docs88 병합으로 사전검증/Plan 전체를 완료 처리하지 않음. TH 81/기존 완료 2·Q·DR 10분/RPO 30분/백업 15분·CP 3/Infra 3/Worker 3·Cost PARTIAL/$450/$500 유지.
