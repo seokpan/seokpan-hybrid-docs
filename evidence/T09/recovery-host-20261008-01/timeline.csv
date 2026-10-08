@@ -1,0 +1,5 @@
+timestamp_utc,event,result
+2026-10-08T02:10:47.8458784Z,linux_source_tests_69,PASS
+2026-10-08T02:10:48.0437602Z,linux_diagnostic_render_source_head,PASS
+,controller_ca_hash_match,RECEIVED_USER_EXECUTION_TIME_NOT_PROVIDED
+2026-10-08T02:22:25.759318+00:00,record_generated,source_and_received_controller_check

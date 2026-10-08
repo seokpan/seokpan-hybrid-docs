@@ -1,0 +1,11 @@
+metric,value,unit,status
+linux_source_tests,69,tests,PASS
+windows_utf8_source_tests_passed,64,tests,PASS
+windows_utf8_source_tests_failed,5,tests,PLATFORM_LIMIT
+recovery_host_test,1,check,PASS
+base_lab_render_unchanged,1,check,PASS
+recovery_release_exit,2,exit_code,BLOCKED_EXPECTED
+controller_recovery_ca_hash_match,1,check,RECEIVED_USER_EXECUTION
+actual_cloud_plan,,run,NOT RUN
+service_rto,,seconds,NOT RUN
+database_rpo,,seconds,NOT RUN

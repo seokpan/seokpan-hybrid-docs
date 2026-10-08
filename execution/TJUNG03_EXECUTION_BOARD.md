@@ -1,6 +1,6 @@
 # 정태훈 실행판 — 지금 할 일·입력 대기·OCP와 ROSA 수명
 
-> **현재 상태 — 2026-10-08:** App20/22·Infra43·GitOps25 병합·원격 PR 브랜치 삭제와 마무리 기록 확인. [ROSA Plan/OCP 후속](ROSA_OCP_NEXT_ACTIONS_20261008.md)·[05 §9.50](05_IMPLEMENTATION_AND_VALIDATION.md#merged-pr-plan-readiness-20261008) 우선. D #26의 부분 업무/ERR·Vote 보고 수신, 실제 Controller/Cloud Plan은 NOT RUN. 아래 날짜별 근거·당시 상태 보존.
+> **현재 확인 — 2026-10-08:** Docs72/84 병합·해당 원격 브랜치 삭제 확인. Recovery Host [GitOps31](https://github.com/seokpan/seokpan-hybrid-gitops/pull/31)은 C/D 리뷰 대기, 정확 HEAD Linux69PASS. B의 `jth@ansible` CA 전체 해시 일치 결과 수신. RHCS_TOKEN 미설정·ROSA/OCM CLI 미설치, 실제 인증/Plan 대기. D의 TLS/AUTH·Route/Origin과 ERR 협상 원인 보고 수신. [오늘 실행 순서](ROSA_OCP_NEXT_ACTIONS_20261008.md)·[05 §9.51](05_IMPLEMENTATION_AND_VALIDATION.md#controller-recovery-followup-20261008) 우선. 아래 날짜별 상태는 당시 이력.
 
 > **최신 조사 후속 — 2026-10-07:** [전수 조사](REPOSITORY_AUDIT_20261007.md)·[05§9.47](05_IMPLEMENTATION_AND_VALIDATION.md#repository-full-audit-20261007) 참조. GitOps main의 Root SHA B/FE·BE1은 소스 병합 상태이며, 마지막 수신 Runtime은 SHA A/FE·BE0이다. 성공한 등록/선택Sync·금고 본체 확인을 반복하지 않는다. C의 GitOps26/6038214247 DB 형식·GRANT·TLS 접속·합성 출처 수락 보고는 수신했고 실제 Stage2 적용·Route/업무는 원 #26에서 후속 확인한다. 아래 시점별 인계 보존.
 
