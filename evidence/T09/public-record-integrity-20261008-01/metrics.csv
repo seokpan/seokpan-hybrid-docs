@@ -1,0 +1,10 @@
+metric,value,unit,status
+source_identity,5,files,PASS
+svg_xml,12,files,PASS
+png_decode,12,files,PASS
+embedded_font_glyphs,12,files,PASS
+approved_subnet_cidrs,9,entries,PASS
+manifest_regressions,14,cases,PASS
+recovery_metrics_regressions,16,cases,PASS
+service_rto,,seconds,NOT RUN
+database_rpo,,seconds,NOT RUN

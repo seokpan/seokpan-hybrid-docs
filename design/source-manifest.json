@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "source_basis_date": "2026-10-06 KST",
-  "recorded_date": "2026-10-07 KST",
+  "recorded_date": "2026-10-08 KST",
   "source_type": "approved design decisions with current wording and provenance corrections",
   "copy_policy": "00/01 unchanged; original upload identities and decision/run history retained; 02/03/04 wording aligned with merged DR and Valkey decisions; project registration tracked separately.",
   "files": [
@@ -29,15 +29,15 @@
     {
       "path": "design/03_DETAILED_DESIGN.md",
       "uploaded_name": "03_DETAILED_DESIGN.md",
-      "bytes": 479138,
-      "sha256": "b1842d81acde89528698cde55b13f9edb60ebb45c1eafbd5c6d29b1c1349e635",
+      "bytes": 479201,
+      "sha256": "c857fb59aac254d8d9ac9fa90861110d90cdce1877fec54fdfb229b1a203005d",
       "source_header_date": "2026-10-01 KST"
     },
     {
       "path": "design/04_IMPLEMENTATION_READINESS.md",
       "uploaded_name": "04_IMPLEMENTATION_READINESS.md",
-      "bytes": 116333,
-      "sha256": "a99f974d7ca657421feb35323373ca5cb48887b98afc3ffabc3af45a55f07105",
+      "bytes": 116181,
+      "sha256": "cf00f6f015a14d730b0f5edfd7d0a25d10d1c1aab30702b9155b2b7400885cd5",
       "source_header_date": "2026-10-01 KST"
     }
   ],
@@ -116,7 +116,7 @@
         "infra_sha": "4a4ee1b6762502be1e2ddf12d451e45205fdca03",
         "scope": "partial T17/T18: synthetic MariaDB Dump/gzip/age/local-copy/decrypt/isolated import/data verification only",
         "partial_execution": "PASS",
-        "actual_operator": "Codex, user-authorized contribution for tjung03",
+        "actual_operator": null,
         "assigned_execution_owner": "kshi1313-gif (C/Data)",
         "reviewer": null,
         "verification": {
@@ -125,7 +125,8 @@
           "acceptance": "NOT RUN"
         },
         "rto_seconds": null,
-        "rpo_seconds": null
+        "rpo_seconds": null,
+        "execution_environment": "isolated local synthetic fixture"
       },
       {
         "reference": "evidence/T18/business-fixture-20261005-01/summary.md",
@@ -133,7 +134,7 @@
         "infra_sha": "29b4a1f01bd555edeebac946cd8ee174da4432ab",
         "scope": "partial synthetic Backup/Restore + new Redis TLS/AUTH + production Backend HTTPS login/ranking/new-game",
         "partial_execution": "PASS",
-        "actual_operator": "Codex, user-authorized contribution for tjung03",
+        "actual_operator": null,
         "assigned_execution_owner": "kshi1313-gif C/Data; tjung03 B/App; cyj200115-prog D/evidence",
         "reviewer": null,
         "verification": {
@@ -142,7 +143,8 @@
           "acceptance": "NOT RUN"
         },
         "rto_seconds": null,
-        "rpo_seconds": null
+        "rpo_seconds": null,
+        "execution_environment": "isolated local synthetic fixture"
       }
     ],
     "runtime_validation": "ACTUAL_OFFLINE_RECOVERY_UNVALIDATED",
@@ -181,8 +183,9 @@
         "scope": "Independent disposable synthetic MariaDB Dump/gzip/age/same-host copy/decrypt/new isolated import/data comparison only.",
         "partial_execution": "PASS",
         "assigned_execution_owner": "kshi1313-gif (C/Data)",
-        "actual_operator": "Codex under tjung03 authorization",
-        "data_and_index_review": "C Data review and D Index review/receipt pending"
+        "actual_operator": null,
+        "data_and_index_review": "C Data review and D Index review/receipt pending",
+        "execution_environment": "isolated local synthetic fixture"
       },
       "new_recovery_targets": "NOT_DECIDED",
       "baseline": "UNCHANGED: RTO 30 minutes, persistent DB RPO 90 minutes, hourly Portable Backup, Cloud Primary plus On-Prem Backup/Restore.",

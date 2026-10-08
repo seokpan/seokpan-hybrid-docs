@@ -1,6 +1,6 @@
 # Evidence Index and Run Guide
 
-실제 실행 결과는 승인04 §5.4·§10.4에 따라 `evidence/<test-id>/<run-id>/`에 남깁니다. 각 실행 담당자가 자기 결과를 작성하고 최유준이 Index/형식을 연결합니다. **현재 Index에는 아래의 독립 합성 Data 부분 예행과 Backend 업무 연결 부분 예행의 실제 Run 2개가 연결돼 있습니다.** Codex 실행 환경에서 실행·기록하고 Index를 임시 연결했으며, C/B 영역 리뷰와 D Index 검토·수신은 대기합니다. 기존 lab 보고와05의 부분 검사 이력을 여기 새 Run으로 수행했다고 표시하지 않습니다.
+실제 실행 결과는 승인04 §5.4·§10.4에 따라 `evidence/<test-id>/<run-id>/`에 남깁니다. 각 실행 담당자가 자기 결과를 작성하고 최유준이 Index/형식을 연결합니다. **현재 Index에는 아래의 독립 합성 Data 부분 예행과 Backend 업무 연결 부분 예행의 실제 Run 2개가 연결돼 있습니다.** 격리 로컬 환경에서 실행·기록한 Run의 Index를 임시 연결했으며, C/B 영역 리뷰와 D Index 검토·수신은 대기합니다. 기존 lab 보고와05의 부분 검사 이력을 여기 새 Run으로 수행했다고 표시하지 않습니다.
 
 ## Create a Run
 
@@ -45,7 +45,7 @@ python3 tools/recovery_metrics.py evidence/<test-id>/<run-id>/release.json --con
 <a id="recovery-design-review-inputs"></a>
 ## Recovery design review inputs
 
-현재 목표/주기 설계 변경안은 [03 §3-I.14.5](../design/03_DETAILED_DESIGN.md#recovery-design-decision-20261005)의 **RTO10분·영속 DB RPO30분·DB 운영 중 Portable Backup15분·기존 Backup/Restore 유지**다. 이 개정이 main에 병합되면 새 공식 설계로 전환하며 그 전 main의30분/90분/1시간 승인 이력과 구분한다. 이미 수행한 아래 두 부분 Run의10파일·빈 Target/null·NOT RUN 판정은 소급 수정하지 않는다. 실제 운영 Timer/Backup 경로·사고 시작부터 지정 클라이언트 업무/Data 완료의 전체 Run이 있어야 새 목표 달성을 판정한다.
+현재 승인된 목표/주기 설계는 [03 §3-I.14.5](../design/03_DETAILED_DESIGN.md#recovery-design-decision-20261005)의 **RTO10분·영속 DB RPO30분·DB 운영 중 Portable Backup15분·기존 Backup/Restore 유지**다. 이 개정은 [Docs #30](https://github.com/seokpan/seokpan-hybrid-docs/pull/30)으로 main에 병합됐으며 이전30분/90분/1시간 승인 이력과 구분한다. 이미 수행한 아래 두 부분 Run의10파일·빈 Target/null·NOT RUN 판정은 소급 수정하지 않는다. 실제 운영 Timer/Backup 경로·사고 시작부터 지정 클라이언트 업무/Data 완료의 전체 Run이 있어야 새 목표 달성을 판정한다.
 
 정상 성공 경로에서는 실제 성공 Data 최대 간격G＋Data→로컬 사용 가능한 완성본 지연D＋시점/시계 불확실성U≤30분을 관측한다. nominal15분을 G≤15분 또는 D≤15분 보장으로 대체하지 않는다. jitter/생략·전송/Storage/VM 장애·이전 사본 선택은 실제 사용 Data 나이와 손실로 기록하고 초과는 미달, 시점 미확인은 null/미판정으로 남긴다.30분은 채택된 프로젝트 시험 요구사항이며 실제 사업 사용자의 손실 허용 승인이나 상용 SLA가 아니다.
 
@@ -70,8 +70,8 @@ python3 tools/recovery_metrics.py evidence/<test-id>/<run-id>/release.json --con
 
 | Test/Case·Requirement | Run·환경 | 실행자·Reviewer | 실제 Source/Release | Render/Deployment/Acceptance | 증거 링크 | 실패/후속 Run·제한 |
 | --- | --- | --- | --- | --- | --- | --- |
-| T18의 Data 부분 예행 / 최종 T17·T18 미실행 | `fixture-20261005-01` / 새 임시 MariaDB의 로컬 TCP 합성 Fixture | 배정 책임 C 김상희. 요청 tjung03, 실행·기록 Codex. C 리뷰·D Index 검토/수신 대기 | App `c12b3d15a4dd2c806fac4326a9eb30ed6e8a81b3`, Infra `4a4ee1b6762502be1e2ddf12d451e45205fdca03`; 실제 Image/Release 없음 | 모두 NOT RUN; 합성 Data 부분 실행만 PASS | [Summary](T18/fixture-20261005-01/summary.md)·[Release](T18/fixture-20261005-01/release.json)·[Metric](T18/fixture-20261005-01/metrics.csv)·[Timeline](T18/fixture-20261005-01/timeline.csv)·[Checksum](T18/fixture-20261005-01/checksums.txt), Source [h-infra Draft PR #29](https://github.com/seokpan/seokpan-hybrid-infra/pull/29) | MariaDB 10.11.14이며 실제 기준 11.8.9와 다름. 동시 쓰기 없는 합성 데이터·동일 Host 복사, 실제 RDS/S3/VPN·TLS/목적 계정·App/Redis/접속·전체 RTO/RPO 미측정. 운영 Backup 자동화/최종 Acceptance 아님 |
-| T18의 합성 Backend 업무 연결 부분 예행 / 최종 T18 미실행 | `business-fixture-20261005-01` / 새 임시 DB·TLS/AUTH Redis·HTTPS Backend, loopback | 배정 책임 C Data/B App/D 증거, 실제 Host A. 요청 tjung03, 실행·기록 Codex. C/B 영역 리뷰·D Index 검토/수신 대기 | App `c12b3d15a4dd2c806fac4326a9eb30ed6e8a81b3`, Infra `29b4a1f01bd555edeebac946cd8ee174da4432ab`; 실제 Image/Release 없음 | 모두 NOT RUN; 합성 Backend 부분 실행만 PASS | [Summary](T18/business-fixture-20261005-01/summary.md)·[Release](T18/business-fixture-20261005-01/release.json)·[Metric](T18/business-fixture-20261005-01/metrics.csv)·[Timeline](T18/business-fixture-20261005-01/timeline.csv)·[Checksum](T18/business-fixture-20261005-01/checksums.txt), Source [h-infra Draft PR #29](https://github.com/seokpan/seokpan-hybrid-infra/pull/29) | Fixture MariaDB/Redis 버전·새 목적 SSL 계정/TLS의 부분 조건. age 복원→새 Redis→Backend HTTPS 로그인/랭킹→새 게임 FORFEIT 완료/현재 결과·SQL Rating 검증. FE/browser/WSS·Image/OCP/Host·RDS/S3/VPN·사고 탐지/판단/안내·과거 개별 결과 HTTP 미검증; 전체 RTO/RPO null |
+| T18의 Data 부분 예행 / 최종 T17·T18 미실행 | `fixture-20261005-01` / 새 임시 MariaDB의 로컬 TCP 합성 Fixture | 배정 책임 C 김상희. 격리 로컬 합성 시험. C 리뷰·D Index 검토/수신 대기 | App `c12b3d15a4dd2c806fac4326a9eb30ed6e8a81b3`, Infra `4a4ee1b6762502be1e2ddf12d451e45205fdca03`; 실제 Image/Release 없음 | 모두 NOT RUN; 합성 Data 부분 실행만 PASS | [Summary](T18/fixture-20261005-01/summary.md)·[Release](T18/fixture-20261005-01/release.json)·[Metric](T18/fixture-20261005-01/metrics.csv)·[Timeline](T18/fixture-20261005-01/timeline.csv)·[Checksum](T18/fixture-20261005-01/checksums.txt), Source [h-infra Draft PR #29](https://github.com/seokpan/seokpan-hybrid-infra/pull/29) | MariaDB 10.11.14이며 실제 기준 11.8.9와 다름. 동시 쓰기 없는 합성 데이터·동일 Host 복사, 실제 RDS/S3/VPN·TLS/목적 계정·App/Redis/접속·전체 RTO/RPO 미측정. 운영 Backup 자동화/최종 Acceptance 아님 |
+| T18의 합성 Backend 업무 연결 부분 예행 / 최종 T18 미실행 | `business-fixture-20261005-01` / 새 임시 DB·TLS/AUTH Redis·HTTPS Backend, loopback | 배정 책임 C Data/B App/D 증거, 실제 Host A. 격리 로컬 합성 시험. C/B 영역 리뷰·D Index 검토/수신 대기 | App `c12b3d15a4dd2c806fac4326a9eb30ed6e8a81b3`, Infra `29b4a1f01bd555edeebac946cd8ee174da4432ab`; 실제 Image/Release 없음 | 모두 NOT RUN; 합성 Backend 부분 실행만 PASS | [Summary](T18/business-fixture-20261005-01/summary.md)·[Release](T18/business-fixture-20261005-01/release.json)·[Metric](T18/business-fixture-20261005-01/metrics.csv)·[Timeline](T18/business-fixture-20261005-01/timeline.csv)·[Checksum](T18/business-fixture-20261005-01/checksums.txt), Source [h-infra Draft PR #29](https://github.com/seokpan/seokpan-hybrid-infra/pull/29) | Fixture MariaDB/Redis 버전·새 목적 SSL 계정/TLS의 부분 조건. age 복원→새 Redis→Backend HTTPS 로그인/랭킹→새 게임 FORFEIT 완료/현재 결과·SQL Rating 검증. FE/browser/WSS·Image/OCP/Host·RDS/S3/VPN·사고 탐지/판단/안내·과거 개별 결과 HTTP 미검증; 전체 RTO/RPO null |
 
 ## Required Boundaries
 
@@ -80,3 +80,24 @@ python3 tools/recovery_metrics.py evidence/<test-id>/<run-id>/release.json --con
 - DB 영속 Data와 Redis Runtime 손실을 구분합니다. 복구 명령 성공만으로 업무 복구 PASS가 아닙니다.
 - 모든 Run에 적용되지 않는 항목은 summary의 제외 범위에 이유를 남깁니다. N/A는 전체 성공축을 생략하는 수단으로 쓰지 않습니다.
 - JSON은 조합/실행 정보, CSV는 수치/시간선, Markdown은 해석을 맡습니다. 실제 값은 원본에서 연결하고 중복 기록이 충돌하면 원본·대상·개정·시점을 확인합니다.
+
+
+## Source 부분 검사 Run — 전체 Runtime Acceptance와 구분
+
+| Test 준비 | Run/환경·실제 수행자 | Source/원 결과 | 판정·제한·다음 입력 |
+|---|---|---|---|
+| T09 준비의 구독 오류 경계 | [provider-cleanup-20261007-01](T09/provider-cleanup-20261007-01/summary.md), Windows·GitHub Actions Linux. 배정 B; D Index 리뷰/수신 대기 | [App Draft #20](https://github.com/seokpan/seokpan-hybrid-app/pull/20) `e3488953b0f51b1a54dc7899a8a57c8024c54c13`, [CI37605414615](https://github.com/seokpan/seokpan-hybrid-app/actions/runs/37605414615) | Source 부분28PASS·Linux 기본1774/부분집합47/별도Lua9 PASS. Windows 정식FAIL과 baseline 재현 보존. 실제 Valkey/WSS/T09 Acceptance NOT RUN. 사람 리뷰/병합·새 Image·B 소비 수락 필요 |
+| 저장소 전수 Source 조사·T09/T18 최종판정 제외 | [source-audit-20261007-01](T09/source-audit-20261007-01/summary.md), Windows격리도구/GitHubActionsLinux, Git계정tjung03·사람리뷰미수신 | [종합조사](../execution/REPOSITORY_AUDIT_20261007.md)·[GitOps25 CI37624059074](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37624059074) | App174·Frontendunit269/UI36·GitOps25Linux69·Docs14+16PASS. GitOps조합Windows70PASS/3기존FAIL. 실제Runtime/새Image/전체T09/T18·Cost 미판정 |
+
+
+### 공개 기록·문서 출처 검사
+
+- [T09/public-record-integrity-20261008-01](T09/public-record-integrity-20261008-01/summary.md): 문구·환경 메타데이터·출처 해시·체크섬 및 기존 문서/지표 검사. 소스 검사 범위이며 실제 Runtime·배포·전체 T09/T18 미수행. [Docs72](https://github.com/seokpan/seokpan-hybrid-docs/pull/72) 리뷰·Index 수신은 별도 확인.
+
+
+<a id="registration-review-followup-20261008"></a>
+### 등록 리뷰 후속 Source 검사 — 2026-10-08
+
+[T09/registration-review-followup-20261008-01](T09/registration-review-followup-20261008-01/summary.md)에 GitOps25의 SHA B 비교 PASS/A 불일치 BLOCKED·Windows66PASS/3FAIL·정확53314d3 Linux69PASS와 재리뷰 요청을 연결한다. App20/22·Infra43은 현재 HEAD 승인·Source 추가 수정 없음, 병합 후 새 Image/실환경 수락은 별도다. Controller/State/Cloud/DB 실행·새 TH/Q 완료 없음. 병합·브랜치 삭제 결과와 새 승인 수신은 원 PR에서 후속 확인한다.
+
+- [병합 Source ROSA/OCP 준비 검사](T01/plan-source-readiness-20261008-01/summary.md): fmt/helper/harness 보존·등록 비교/전체lab Gate PASS, Controller TCP22 연결 실패·실제 Plan NOT RUN. 공식 T01/Runtime 완료와 별도.

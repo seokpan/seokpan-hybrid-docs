@@ -10,7 +10,7 @@
 
 이 문서는 승인된 03 상세설계를 실제 작업자, 입력, 인계, 일정과 구현 시작 조건으로 연결한다. 03의 설계 기준은 유지하고, 04에서 확정된 운영 결정과 아직 확인하지 못한 실제 값을 구분해 기록한다. 사람별 역할, 작성과 리뷰 책임, Root별 실행 책임, 복구 DB 직접 연결, AWS Provider 6.67.0 초기 후보, GitOps Writer PAT, Secret 주·예비 보관자와 Release/Evidence 운영 형식, 전용 새 복구 DB VM과 비상 관리·초기 인증 회수 모델이 확정됐다. 새 복구 VM 생성 가능은 확인 보고를 받았고 Host의 자원 여유는 아직 예상이다. 설계 확정을 코드 작성·배포·계정 변경·데이터 이전·시험·비용 확인의 완료로 표시하지 않는다. 팀원의 선행 Bootstrap 코드와 시험 보고는 별도 출처/범위로 기록한다. 추가 demo2 보고의 최유준 A/B/C 예제·관측·정책 검증과 부분 정리도 보고 범위로 접수하며 실제 base/ROSA 시험과 구분한다.
 
-**도입/이전 검토의 시점:** 위 설명과 §7의 미실행·Run 미확인은2026-10-01 문서 종료 시점의 기록이다.2026-10-05에는 [05 §9.20](../execution/05_IMPLEMENTATION_AND_VALIDATION.md#recovery-fixture-measurement-20261005)의 Codex 실제 Data/Backend 부분 Run2개가 추가됐다. 그 Source 작성·부분 DB 복원/업무 시험과 현재 [03 §3-I.14.5](03_DETAILED_DESIGN.md#recovery-design-decision-20261005)의 설계 변경안을 우선 연결하며, 실제 운영 DB/Cloud 배포·전체 RTO/RPO/최종T18·팀원 수행/리뷰/수신이 완료됐다는 의미는 아니다. 과거 문구를 모든 후속 실행의 부재로 읽지 않는다.
+**도입/이전 검토의 시점:** 위 설명과 §7의 미실행·Run 미확인은2026-10-01 문서 종료 시점의 기록이다.2026-10-05에는 [05 §9.20](../execution/05_IMPLEMENTATION_AND_VALIDATION.md#recovery-fixture-measurement-20261005)의 격리 로컬 환경의 실제 Data/Backend 부분 Run2개가 추가됐다. 그 Source 작성·부분 DB 복원/업무 시험과 현재 [03 §3-I.14.5](03_DETAILED_DESIGN.md#recovery-design-decision-20261005)의 설계 변경안을 우선 연결하며, 실제 운영 DB/Cloud 배포·전체 RTO/RPO/최종T18·팀원 수행/리뷰/수신이 완료됐다는 의미는 아니다. 과거 문구를 모든 후속 실행의 부재로 읽지 않는다.
 
 현재 진행 현황:
 
@@ -41,7 +41,7 @@
 
 ## 1 03 종료와 04 사용 범위
 
-2026-10-01 최신 등록 사본에서 03 §3-D.4는 `00_PROJECT_STARTING_POINT.md §5`로 정정됐고, §3-G.1은 일부 지정 Source 조회, 최종 Seed 미확인, Runtime 미검증과 ROSA 최종 시험 NOT RUN을 구분했다. 해당 사본은 수정된 첨부본과 바이트 단위로 일치했다. 사용자는 동일한 파일의 프로젝트 소스 업로드 완료를 확인했고, 이번 확인을 거쳐 03 문서 단계를 종료했다.
+2026-10-01 최신 등록 사본에서 03 §3-D.4는 `00_PROJECT_STARTING_POINT.md §5`로 정정됐고, §3-G.1은 일부 지정 Source 조회, 최종 Seed 미확인, Runtime 미검증과 ROSA 최종 시험 NOT RUN을 구분했다. 해당 사본은 수정된 첨부본과 바이트 단위로 일치했다. 동일 파일의 프로젝트 소스 등록 완료 확인을 거쳐 03 문서 단계를 종료했다.
 
 03의 당시 "실제 배정 확인 전" 기록은 작성 당시 상태다. 이 문서의 새 결정이 현재 사람별 배정을 제공하며, 완료된 03을 다시 작성 중으로 되돌리는 뜻은 아니다. 03 종료 뒤 04의 구현 준비를 진행하기로 결정됐으므로, 03 §3-H.1의 당시 준비 기록 방식에 이어 이 04 문서에서 후속 준비를 관리한다. 00의 `GATE 4 — Foundation Build`와 이 문서의 04 번호는 서로 다른 식별자다.
 
@@ -186,12 +186,12 @@ DB 접속 방식과 전용 VM 배치 모델은 각각 채택됐다. Endpoint, TL
 | 결정 기록 | 내용 |
 |---|---|
 | Decision ID | PH2-04-RECOVERY-DB-DIRECT |
-| 결정일과 승인 | 2026-10-01 KST. 사용자 "직접 연결안을 채택" |
+| 결정일과 승인 | 2026-10-01 KST. 직접 연결안 채택 |
 | 결정 | Recovery App이 새 격리 2차 MariaDB에 직접 TLS 연결. 복구 경로에 MaxScale를 추가하지 않음 |
 | 근거와 대안 | 단일 DB 복원과 업무 재개 목표에 맞춰 Proxy 의존성을 줄임. 별도 MaxScale와 기존 1차 MaxScale 활용을 비교 |
 | 확인된 조건 | 복구용 새 VM 생성 가능 — 확인 보고 |
 | 미확인 | 실제 Host와 CPU/RAM/디스크 여유, 채택한 VM의 용량/Endpoint/계정/CA와 Driver 호환, 수행 시간과 결과 |
-| 사용자 예상 | 현재 자원이 부족하지 않을 것 같다고 했으나 실측 확인은 아님 |
+| 자원 여유 예상 | 현재 자원 여유 예상. 실측 확인 전 |
 | 담당과 영향 | 김상희 DB/계정/CA/Restore, 이유빈 Host 자산, 정태훈 Recovery 설정, 최유준 T04/T18과 복구 시간선. W04/W08/Bundle/Secret 연결 |
 | 재검토 조건 | 필수 Proxy 기능, 직접 연결 호환성 문제, 복제/HA 요구 추가, 실제 자원 또는 시간/비용 제약 |
 
@@ -219,12 +219,12 @@ MaxScale의 Listener는 Service로 연결 요청을 전달하고 Router가 Backe
 
 ### 5.2 확정된 Jenkins GitOps Writer PAT
 
-**상태는 CONFIRMED DECISION이다.** 2026-10-01 사용자는 PAT 하나로 Push와 PR을 처리하는 안을 채택했다. 만료는 무기한을 우선하고, 조직/제품 정책이 이를 허용하지 않으면 허용되는 최대 수명을 적용하는 기준으로 기록한다. 실제 Token 발급이나 Jenkins 등록, 조직 정책 변경을 수행한 상태는 아니다.
+**상태는 CONFIRMED DECISION이다.** 2026-10-01 PAT 하나로 Push와 PR을 처리하는 안이 채택됐다. 만료는 무기한을 우선하고, 조직/제품 정책이 이를 허용하지 않으면 허용되는 최대 수명을 적용하는 기준으로 기록한다. 실제 Token 발급이나 Jenkins 등록, 조직 정책 변경을 수행한 상태는 아니다.
 
 | 결정 기록 | 내용 |
 |---|---|
 | Decision ID | PH2-04-GITOPS-WRITER-PAT |
-| 결정일과 승인 | 2026-10-01 KST. 사용자 PAT 하나로 Push·PR 채택, 무기한 우선/최대 만료 수명 선호 |
+| 결정일과 승인 | 2026-10-01 KST. PAT 하나로 Push·PR 채택, 무기한 우선/최대 만료 수명 적용 |
 | 결정 | GitOps Repo 전용 Fine-grained PAT 하나로 HTTPS Git Push와 PR REST API 처리 |
 | 만료 기준 | 무기한이 실제 허용되면 무기한. 제한이 있으면 제품과 조직 정책 안에서 허용되는 최대 수명. 실제 만료 설정/일자는 확인 후 기록 |
 | 권한 | seokpan의 seokpan-hybrid-gitops 한 개, Contents write·Pull requests write·기본 Metadata read. Administration/Workflows/Org 권한을 추가하지 않음 |
@@ -400,7 +400,7 @@ htpasswd 경로는 Cluster API/OAuth 전체 장애나 AWS 전체 접근 불가�
 | 진입점 | 시작 전에 필요한 확인 | 이번 문서의 현재 판정 |
 |---|---|---|
 | 코드 작업 | 해당 Repo/Branch/권한/리뷰, 작성과 실행 Owner, Source/Seed와 Secret 경계 | 담당 확정, 실제 권한/Branch/Source 입력 확인 전 |
-| 실제 base의 lab Argo | base/Overlay의 전체 Commit, 실제 Context/Namespace/Operator 책임, Secret/Registry, 단일 Owner와 삭제 보호 | 예제 Argo 동작은 추가 팀 보고 완료. 실제 base 인계/검증과 AI Runtime 확인은 미완료 |
+| 실제 base의 lab Argo | base/Overlay의 전체 Commit, 실제 Context/Namespace/Operator 책임, Secret/Registry, 단일 Owner와 삭제 보호 | 예제 Argo 동작은 추가 팀 보고 완료. 실제 base 인계/검증과 독립 Runtime 확인은 미완료 |
 | TF 정적/로컬 확인 | 검토할 Root 코드, 정확한 도구/Provider/Lock/Schema와 필요한 Module | 계정 전체 Preflight 완료를 선행하지 않음. 해당 코드/도구 준비 후 수행 |
 | 실제 TF Plan | 해당 Root 코드/Provider/Lock, 실제 입력/Caller/Role/Backend와 보호된 Plan 저장 | Root 담당 확정, 실제 코드/계정/Backend 입력 확인 전 |
 | 첫 Full Apply | 검토된 실제 Plan와 자원/삭제 범위, 계정/지원/Quota, Secret 초기화, 실제 가격/Credit/누적/Window/정리 비용 | NOT READY. 실제 Plan/비용과 실행 입력 미확인 |
@@ -411,7 +411,7 @@ htpasswd 경로는 Cluster API/OAuth 전체 장애나 AWS 전체 접근 불가�
 
 ## 7 확정 결정의 연쇄 영향과 검토
 
-아래 표와 검토 문단은2026-10-01 종료 시점의 영향/미확인 기록을 보존한다. “DB/Backup/RTO/RPO 실측 미실행”, “실제 Run 확인 전”, “AI가 DB 복원/시험을 수행하지 않았다”는 당시의 범위다. 현재는 [05 §9.20](../execution/05_IMPLEMENTATION_AND_VALIDATION.md#recovery-fixture-measurement-20261005)에 실제 Data/Backend 부분 Run2개·정확한 Source/기여/제한을 연결했고 [03 §3-I.14.5](03_DETAILED_DESIGN.md#recovery-design-decision-20261005)의 새 설계 변경안을 따른다. 실제 운영 Backup/지원 조합·FE/WSS/Image/Host·전체 RTO/RPO/최종T18은 미검증으로 유지한다.
+아래 표와 검토 문단은2026-10-01 종료 시점의 영향/미확인 기록을 보존한다. “DB/Backup/RTO/RPO 실측 미실행”, “실제 Run 확인 전”, “DB 복원/시험 미실행”는 당시의 범위다. 현재는 [05 §9.20](../execution/05_IMPLEMENTATION_AND_VALIDATION.md#recovery-fixture-measurement-20261005)에 실제 Data/Backend 부분 Run2개·정확한 Source/기여/제한을 연결했고 [03 §3-I.14.5](03_DETAILED_DESIGN.md#recovery-design-decision-20261005)의 새 설계 변경안을 따른다. 실제 운영 Backup/지원 조합·FE/WSS/Image/Host·전체 RTO/RPO/최종T18은 미검증으로 유지한다.
 
 | 변경 | 직접 연결 | 후속 연결과 상태 |
 |---|---|---|
@@ -430,7 +430,7 @@ htpasswd 경로는 Cluster API/OAuth 전체 장애나 AWS 전체 접근 불가�
 | 두 구조 결정 사용자 확정 | §5.5 복구 DB 전용 VM, §5.6 비상 경로와 초기 인증 회수 | I03/I05/I06·Secret/Runbook/T03/T04/T18/W04/W08로 연결. 모델은 확정이며 실제 자산·지원·전환·회수·복구 결과는 각 실행 Gate에서 확인 |
 | 공동 참여/계정 사용 설명 | 배정 책임·실제 수행자·관측 Principal·계정 관리 책임과 협업 내용 구분 | Run/기여 기록과 권한 시험 판정에 연결. 구체 Run의 수행/실효 분리는 아직 증거 없음 |
 
-이번 문서 검토에서는 사용자 채택 범위, 00의 팀 초안, 03의 Root/Ownership·관리 장애와 업무 장애·RTO/RPO, 실제 수행 이력, 담당/리뷰 표, 두 구조 결정과 입력/Runbook/문서 종료 조건을 대조했다. 역할 확정이 실제 권한/도구/Branch/Seed/과거 수행자 확인으로 확대되지 않도록 구분했다. 복구 직접 연결 확정과 새 VM 생성 가능/자원 여유 예상도 서로 다른 상태로 관리한다. AI는 실제 HCL/Manifest 작성, 계정 변경, GitHub 쓰기, Apply, DB 복원이나 시험을 수행하지 않았다. 팀의 기존 코드/실행 보고는 다음 절에서 별도로 대조한다.
+이번 문서 검토에서는 승인 범위, 00의 팀 초안, 03의 Root/Ownership·관리 장애와 업무 장애·RTO/RPO, 실제 수행 이력, 담당/리뷰 표, 두 구조 결정과 입력/Runbook/문서 종료 조건을 대조했다. 역할 확정이 실제 권한/도구/Branch/Seed/과거 수행자 확인으로 확대되지 않도록 구분했다. 복구 직접 연결 확정과 새 VM 생성 가능/자원 여유 예상도 서로 다른 상태로 관리한다. 이 문서 검토에서 실제 HCL/Manifest 작성, 계정 변경, GitHub 쓰기, Apply, DB 복원·시험은 미실행이었다. 팀의 기존 코드/실행 보고는 다음 절에서 별도로 대조한다.
 
 ## 8 추가 자료와 선행 Source 대조
 
@@ -484,7 +484,7 @@ htpasswd 경로는 Cluster API/OAuth 전체 장애나 AWS 전체 접근 불가�
 | Backend 복구 예시의 한계 | 경로 표기는 갱신됐지만 Local 전환/버킷 재생성 예시 유지 | 이유빈 실제 State 사본/Version·Lineage/Serial·자원 검증을 포함한 복구 인계. 버킷 재생성만으로 이전 State가 돌아오지 않음 |
 | Milestone 10/18과 승인 Freeze 10/16 차이 | PR #11의 구조 정렬로 일정 차이까지 해소된 것은 아님 | 승인 10/16 유지. 이유빈/최유준이 가용일/WBS 정합화. GitHub 일정 변경은 수행하지 않음 |
 
-Source 정합 완료와 TF Role/State 복원/개인 작업 사본/실제 Plan·Apply 준비는 별도로 판정한다. 팀원이 수행했다고 보고한 변경을 이번 AI 실행으로 기록하지 않는다.
+Source 정합 완료와 TF Role/State 복원/개인 작업 사본/실제 Plan·Apply 준비는 별도로 판정한다. 팀원이 보고한 변경과 독립 실행·검증 범위를 구분한다.
 
 ### 8.4 확정된 AWS Provider 초기 후보 조정
 
@@ -493,12 +493,12 @@ Source 정합 완료와 TF Role/State 복원/개인 작업 사본/실제 Plan·A
 | 결정 기록 | 내용 |
 |---|---|
 | Decision ID | PH2-04-AWS-PROVIDER-6-67 |
-| 결정일과 승인 | 2026-10-01 KST. 사용자 "AWS Provider 초기 후보는 권고안을 채택할게" |
+| 결정일과 승인 | 2026-10-01 KST. AWS Provider 초기 후보 조정안 채택 |
 | 결정 | hashicorp/aws 초기 검증 후보를 6.66.0에서 6.67.0으로 조정. 필요한 Root의 정확한 제약, 각각의 Lock와 도구 Manifest에 연결 |
 | 근거 | 현재 bootstrap Lock와 팀의 선행 보고 조합을 보존하고 초기 구현 후보를 정합화. 신규 Release라는 이유만으로 최신값을 추종하지 않음 |
 | 범위 | AWS Provider 후보만 변경. Core 1.16.4, RHCS 1.7.7, ROSA/GitOps의 승인 후보와 기존 Backend/State는 유지 |
 | 책임과 영향 | 이유빈 Infra 고정 작성, 정태훈 리뷰와 rosa 조합 대조. 각 영역 담당이 관련 Schema/Plan 검토, 최유준 시험/도구 Evidence Index 연결 |
-| 미확인 | Controller 실제 Core, 필요한 Root의 HCL/Schema/Lock/Plan, 통합/재생성 결과. 팀의 bootstrap 보고 외 AI Runtime 실행 없음 |
+| 미확인 | Controller 실제 Core, 필요한 Root의 HCL/Schema/Lock/Plan, 통합/재생성 결과. 팀의 bootstrap 보고 수신. 독립 Runtime 실행 없음 |
 | 재검토 조건 | 실제 Schema/지원 충돌, 회귀 또는 재생성 실패, 계정/Region 제약과 시간/비용 영향 |
 | 기준 연결 | 완료된 03 원문은 보존하고 이번 사용자 결정과 이 04 기록을 AWS 후보의 최신 기준으로 적용 |
 
@@ -508,7 +508,7 @@ Source 정합 완료와 TF Role/State 복원/개인 작업 사본/실제 Plan·A
 | 6.67.0을 AWS Provider 초기 후보로 조정 | 현재 Lock와 bootstrap 보고 조합을 이어가며 초기 구현 버전을 통일하기 쉬움 | foundation/rosa 지원 Schema/Lock/실제 Plan과 통합/재생성 시험은 새로 확인 필요 |
 | Root별 최종 검증까지 후보 조정 보류 | 추가 실제 조합 근거를 모을 수 있음 | 구현 팀이 어느 초기 버전으로 준비할지 혼선과 대기 발생 가능 |
 
-위 대안을 비교한 뒤 6.67.0 후보 조정안을 채택했다. 기존 bootstrap Source와 보고 조합을 보존해 불필요한 Downgrade를 피하고, 각 필요한 Root에서 실제 조합을 검증한다. 이번 AI가 코드/도구/Lock을 변경한 것은 아니다. 후속 PR #11의 bootstrap 정확 제약/Lock 변경은 Source에서 확인됐으며, 다른 Root의 구현과 실제 실행 검증은 계속 연결해야 한다.
+위 대안을 비교한 뒤 6.67.0 후보 조정안을 채택했다. 기존 bootstrap Source와 보고 조합을 보존해 불필요한 Downgrade를 피하고, 각 필요한 Root에서 실제 조합을 검증한다. 이 후보 비교 검토에서 코드/도구/Lock 변경은 미실행이었다. 후속 PR #11의 bootstrap 정확 제약/Lock 변경은 Source에서 확인됐으며, 다른 Root의 구현과 실제 실행 검증은 계속 연결해야 한다.
 
 ### 8.5 추가 demo2 관측·Argo·NetworkPolicy 검증 보고
 
@@ -549,14 +549,14 @@ Source 정합 완료와 TF Role/State 복원/개인 작업 사본/실제 Plan·A
 | seokpan-app App/대역 DB/Redis Ready, frontend 200/api 401 | 정태훈/최유준이 실제 base 검증과 인계 문서 8단계 정리를 조율. 단순 HTTP 응답은 대표 업무/Data 검증 전체를 뜻하지 않음 |
 | Redis requests 256Mi와 Overlay 반영 | 최유준이 실제 변경본/전체 Commit 인계, 정태훈 lab Overlay 통합. PVC 유지 보고만으로 진행 게임/Redis Runtime·DB 데이터 무손실을 증명하지 않음 |
 | seokpan-argotest 빈 Project와 managed-by | 최유준 실제 base 시험에서 재사용, 이후 라벨/Role/Binding/Finalizer/잔존 결과까지 확인 |
-| GitOps Operator 설치 유지 | 공유 환경 담당자와 필요 범위/정리 시점 확인 후 처리. AI가 삭제/공지하지 않음 |
+| GitOps Operator 설치 유지 | 공유 환경 담당자와 필요 범위/정리 시점 확인 후 처리. 이 검토에서 삭제/공지 미실행 |
 | Token 폐기, Issue 3건 결과 등록/Close와 공유 공지 미완료 | 최유준 후속 확인 책임. 이번 접수로 해당 외부 쓰기/전송을 대신 수행하거나 완료로 기록하지 않음 |
 
 메일/Resend는 보고자의 후속 제안이며 이번 접수만으로 서비스 선택이나 수신 PASS가 확정되지 않는다. 최유준은 실제 알림 요구·기존 서비스 계약/비용·receiver/Secret·Egress 조건을 확보해 필요한 ROSA 수신 시험으로 인계한다. 김상희는 비민감 GRANT 제공/임시 권한 교체와 정태훈의 Backend 재검증을 연결한다. 추가 보고의 Grafana 논의는 관측 화면 요구의 참고 사항이며, 이미 승인된 Cloud Native/UWM와 1차/복구 Grafana 보존 기준을 다시 후보로 되돌리지 않는다. Cloud Grafana를 새로 추가해야 하는 실제 요구가 확인되면 범위/비용/일정 영향을 별도로 비교한다. 이것을 이번 04 문서 종료의 세 번째 구조 Blocker로 만들지 않는다.
 
 ### 8.6 PR #11 구조 정렬·State 이전 공지 대조
 
-추가 공지는 **팀의 변경 완료/운영 조건 보고**다. [PR #11](https://github.com/seokpan/seokpan-hybrid-infra/pull/11)은 2026-10-01 18:48:40 KST merge 상태로 조회됐으며, 후속 조회 당시 main도 merge Commit `fbc502d3b2de7b6794d7b9d2fd5bbcd376fb9041`였다. 해당 Tree·README·bootstrap main/backend/Lock을 읽어 아래 정합을 확인했다. Source의 관리 대상 AWS Resource 정의 변경은 없지만 State 객체의 복사/삭제는 별도의 변경 작업으로 보고됐다. AWS Runtime에서 모든 변경 여부를 AI가 직접 확인한 것은 아니다.
+추가 공지는 **팀의 변경 완료/운영 조건 보고**다. [PR #11](https://github.com/seokpan/seokpan-hybrid-infra/pull/11)은 2026-10-01 18:48:40 KST merge 상태로 조회됐으며, 후속 조회 당시 main도 merge Commit `fbc502d3b2de7b6794d7b9d2fd5bbcd376fb9041`였다. 해당 Tree·README·bootstrap main/backend/Lock을 읽어 아래 정합을 확인했다. Source의 관리 대상 AWS Resource 정의 변경은 없지만 State 객체의 복사/삭제는 별도의 변경 작업으로 보고됐다. AWS Runtime의 전체 변경 여부는 직접 재조회하지 않았다.
 
 | 항목 | Source/팀 보고의 확인 범위 | 남은 실행 인계 |
 |---|---|---|
@@ -575,7 +575,7 @@ Source 정합 완료와 TF Role/State 복원/개인 작업 사본/실제 Plan·A
 
 구 `bootstrap/` 삭제 안내는 각 사본의 내용 보존 확인을 앞에 연결한다. 미커밋 변경·Git에 무시된 입력/Local State/Backup/Plan·사용자 자료가 없는지 확인해 필요한 보호 자료를 옮기고, 확인된 잔여 캐시만 정리하거나 구 폴더를 격리한다. git status만으로 ignored 파일까지 없는 것으로 판단하지 않는다. 과거 Root에서는 Plan/Apply를 이어가지 않으며, 새 Root에서 예상과 다른 Create/Destroy/Replace가 제안되면 Apply 없이 Root/정본/Caller와 입력을 확인한다.
 
-실제 TF Role/MFA AssumeRole은 PR B의 남은 범위다. Source 정합과 Bootstrap 성공 보고를 해당 Role 정책·Trust/MFA·Key별 거부/Lock 시험 완료로 바꾸지 않는다. 이번 공지를 팀에 재전송하거나 git pull/폴더 삭제/init/plan/apply/State 조작을 AI가 실행한 것은 아니다. 완료된03은 보존하고 최신 AWS 후보/Source 변경은 04 결정·실행 인계에서 연결한다.
+실제 TF Role/MFA AssumeRole은 PR B의 남은 범위다. Source 정합과 Bootstrap 성공 보고를 해당 Role 정책·Trust/MFA·Key별 거부/Lock 시험 완료로 바꾸지 않는다. 이 검토에서 팀 공지 재전송·git pull/폴더 삭제/init/plan/apply/State 조작은 미실행이었다. 완료된03은 보존하고 최신 AWS 후보/Source 변경은 04 결정·실행 인계에서 연결한다.
 
 ## 9 실행 인계와 WBS 구체화
 

@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "record_kind": "source-verification",
+  "run_id": "public-record-integrity-20261008-01",
+  "test_id": "T09",
+  "scope": "document wording, source provenance and existing source-check regressions only",
+  "recorded_at_utc": "2026-10-07T18:23:05.926255+00:00",
+  "recorded_at_kst": "2026-10-08T03:23:05.926255+09:00",
+  "input_docs_revision": "8b813992aa287bbdcbf1721882dcb1523a7224cc",
+  "checked_source_tree_before_record": "c5fb099d73926f88dffa232b1426d13862dd553d",
+  "execution_environment": "Windows isolated local source verification",
+  "actual_operator": null,
+  "observed_principal_ref": "local source checks; no project/cloud operational account",
+  "assigned_source_owner": "B",
+  "source_checks": {
+    "svg_xml": 12,
+    "png_decode": 12,
+    "embedded_font_glyphs": 12,
+    "approved_subnet_cidrs": 9,
+    "source_identity": 5,
+    "manifest_regressions": 14,
+    "recovery_metrics_regressions": 16
+  },
+  "verification": {
+    "render": "NOT RUN",
+    "deployment": "NOT RUN",
+    "acceptance": "NOT RUN"
+  },
+  "rto_seconds": null,
+  "rpo_seconds": null,
+  "runtime": "NOT RUN",
+  "reviewer": null,
+  "review_receipt": "NOT CONFIRMED"
+}

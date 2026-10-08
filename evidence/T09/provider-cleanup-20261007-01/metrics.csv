@@ -1,0 +1,11 @@
+metric_id,baseline,target,actual,unit,aggregation,sample_count,condition_ref,raw_artifact_ref
+before_failures,,,6,cases,pytest failure count,20,main product code + new tests,local:app4-before-junit
+focused_after_passed,,,28,cases,pytest passed count,28,candidate product code,local:app4-focused-after-junit
+windows_full_passed,,,1768,cases,pytest summary,1774,Windows; full run FAIL,local:app4-windows-full-junit
+windows_full_failures,,,1,cases,pytest failure count,1774,process metric unavailable,local:app4-windows-full-junit
+windows_full_errors,,,2,events,setup/teardown same case,1774,Windows env variable length limit,local:app4-windows-full-junit
+windows_full_skipped,,,4,cases,pytest skipped count,1774,OpenSSL not on local PATH,local:app4-windows-full-junit
+linux_backend_passed,,,1774,cases,pytest passed count,1774,exact clean PR HEAD,https://github.com/seokpan/seokpan-hybrid-app/actions/runs/37605414615
+linux_backend_duration,,,92.91,seconds,pytest reported duration,1,exact clean PR HEAD,https://github.com/seokpan/seokpan-hybrid-app/actions/runs/37605414615
+linux_runner_passed,,,47,cases,subset of full suite,47,separate runner coverage policy,https://github.com/seokpan/seokpan-hybrid-app/actions/runs/37605414615
+linux_lua_passed,,,9,cases,separate opt-in regression,9,owned Redis7.2.4; not Valkey acceptance,https://github.com/seokpan/seokpan-hybrid-app/actions/runs/37605414615

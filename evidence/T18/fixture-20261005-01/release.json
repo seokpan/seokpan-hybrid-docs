@@ -50,7 +50,7 @@
   "next_run_ref": null,
   "render_ref": null,
   "assigned_execution_owner": "kshi1313-gif (C/Data)",
-  "actual_operator": "Codex, user-authorized contribution for tjung03",
+  "actual_operator": null,
   "reviewer": null,
   "collaborators": [],
   "observed_principal_ref": "temporary isolated fixture root; no project/cloud account",
@@ -83,5 +83,6 @@
   "custodian_ref": "tjung03; public summaries in new Docs Run",
   "access_policy_ref": "synthetic aggregate/hash outputs only; temporary SQL/backup/key never published",
   "retention_ref": "public source/evidence retained; disposable material cleanup result in summary",
-  "availability_integrity": "five-file Run/four payload checksums; all temporary datadirs/processes/keys/backups removed"
+  "availability_integrity": "five-file Run/four payload checksums; all temporary datadirs/processes/keys/backups removed",
+  "execution_environment": "isolated local synthetic fixture"
 }

@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "scope": "SOURCE_AUDIT_ONLY_NOT_T09_OR_T18_ACCEPTANCE",
+  "recorded_at_utc": "2026-10-07T14:23:53.700840+00:00",
+  "recorded_at_kst": "2026-10-07T23:23:53.700840+09:00",
+  "git_account": "tjung03",
+  "execution_environments": [
+    "Windows PowerShell/Git Bash/Python/Node isolated source",
+    "GitHub Actions Linux source CI"
+  ],
+  "reviewer": null,
+  "docs_base_sha": "10dd13de78357d60b78dc5ee8e3a02aad815bd2c",
+  "docs_result_commit": null,
+  "main_shas": {
+    "app": "a2afffb8605dafff1cb5b9af215aa0cf93aadcdb",
+    "infra": "36dc2403aa77e2896cc4ec3c545b92e0afb49205",
+    "gitops": "b8cf3235dd44f74dd4ed831449cfedfa08eb34ae",
+    "docs": "10dd13de78357d60b78dc5ee8e3a02aad815bd2c"
+  },
+  "app_sources": {
+    "pr20": "e3488953b0f51b1a54dc7899a8a57c8024c54c13",
+    "development_startup": "9e42d286620175be2896b91ccf6a73ed01e6feab",
+    "chat_startup": "666dad6260746f7ed570808f0f4d93c760dfec2c",
+    "ui_pr22": "abb648350084c9ebe6c63ee7668921de66f5b03f",
+    "ui_pr22_initial": "639bd29814357b9b813388b492fb14981edb0572"
+  },
+  "gitops_sources": {
+    "pr25": "b30e9784d5da5225f9cf61edb7d597e5269b2d9f",
+    "lab_config": "bcb7bd18bf7d7c55a0c59bc45a7ae6c7783dbbaf",
+    "recovery_config": "fc3d95031945c1bbd3819c541409c7621dd7cd62",
+    "local_combination": "f09a222829d8198f614ba5028c7ea1412ce8df99",
+    "lab_config_original": "2c22e0acfc14568a971a3992128d027c0ce3911a"
+  },
+  "runtime_last_received": {
+    "sha_a": "244b48b885d7ac645c402e561a032ae65a8f3461",
+    "valkey_replicas": 1,
+    "frontend_replicas": 0,
+    "backend_replicas": 0,
+    "source_b": "bfee2669e62bf823969ce224e5599eccace5d024",
+    "source_b_runtime_acceptance": "NOT_RECEIVED"
+  },
+  "checks": {
+    "app20_linux_run": 37605414615,
+    "pr25_linux_run": 37624059074,
+    "docs_architecture": {
+      "tests": 14,
+      "pass": 14
+    },
+    "docs_recovery_metrics": {
+      "tests": 16,
+      "pass": 16
+    },
+    "app22": {
+      "commit": "abb648350084c9ebe6c63ee7668921de66f5b03f",
+      "source_sha256": "98a50c5500f2aa232652e3c497eecfdcf8a01e00a9ea0b27b244956e66bbcc10",
+      "unit_pass": 278,
+      "unit_files": 21,
+      "tooling_pass": 81,
+      "ui_cases": 18,
+      "ui_repetitions": 2,
+      "ui_pass": 36,
+      "ui_skip": 0,
+      "ui_flaky": 0,
+      "real_backend": "NOT_RUN",
+      "github_frontend_ci": "NOT_CONFIGURED",
+      "image_build": "NOT_RUN"
+    }
+  },
+  "runtime": "NOT_RUN",
+  "cloud_plan": "NOT_RUN",
+  "vault_restore": "NOT_RUN",
+  "image_build": "NOT_RUN",
+  "rto_seconds": null,
+  "rpo_seconds": null,
+  "th_total": 81,
+  "th_completed": 2,
+  "cost": "PARTIAL",
+  "public_issue_pr_mutations": "NOT_PERFORMED",
+  "windows_os_user": "soldesk",
+  "app_local_combination": "3ac02baba6ba4ecf6857d68b61b660391ae23448",
+  "stage2_db_report": {
+    "comment": 6038214247,
+    "executing_role": "D",
+    "accepting_role": "C",
+    "received": "ACCEPTED_REPORTED_SCOPE",
+    "direct_requery": "NOT_RUN",
+    "reported_data": "SYNTHETIC",
+    "source_b_runtime_acceptance": "NOT_RECEIVED"
+  },
+  "docs_original_audit_base_sha": "94c8092290008a09084435ff7d0d3eb0d7a2df00",
+  "last_remote_snapshot": "20261007T141945Z",
+  "coverage": {
+    "items": 179,
+    "regular_issues": 59,
+    "pull_requests": 120,
+    "remote_branches": 25,
+    "ci_runs": 181,
+    "ci_zip_files": 111,
+    "accessible_source_recursive_review": "COMPLETE_WITH_RECORDED_LIMITS",
+    "runtime_acceptance": "NOT_RUN"
+  },
+  "post_push_remote_verification_snapshot": "20261007T142702Z",
+  "adjacent_repository_metadata": {
+    "tags_releases_deployments_environments": "HTTP200_EMPTY_EACH_REPOSITORY",
+    "labels": 47,
+    "milestones": 4,
+    "workflow_catalog": 41,
+    "workflow_files_on_current_main": 3,
+    "artifacts": 111,
+    "unlinked_artifacts": 0,
+    "pages": "HTTP404_NOT_FOUND_OR_NOT_ACCESSIBLE"
+  }
+}

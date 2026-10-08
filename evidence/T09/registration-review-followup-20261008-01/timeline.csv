@@ -1,0 +1,2 @@
+event_id,timestamp_utc,timestamp_kst,actor_ref,event,result,evidence_ref
+review-followup-01,2026-10-08T00:23:54.876077+00:00,2026-10-08T09:23:54.876077+09:00,source-review-record,verification_and_review_followup_recorded,PASS,summary.md

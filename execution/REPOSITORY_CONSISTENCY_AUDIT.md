@@ -1,6 +1,21 @@
 # 2차 저장소 정합성 조사·수정 대장
 
-> **현재 인계:** 실행 입력은 [§9](#b-runtime-input-followup-20261007), 이번 Source 결함 재현·수정·검증·후속 인계는 [§10](#b-s1-source-findings-20261007)을 따른다. 이전 체크포인트·Q 체크·실제 수행 이력을 보존한다.
+> **현재 상태 — 2026-10-08:** App20/22·Infra43·GitOps25 병합·원격 PR 브랜치 삭제와 마무리 기록 확인. [ROSA Plan/OCP 후속](ROSA_OCP_NEXT_ACTIONS_20261008.md)·[05 §9.50](05_IMPLEMENTATION_AND_VALIDATION.md#merged-pr-plan-readiness-20261008) 우선. D #26의 부분 업무/ERR·Vote 보고 수신, 실제 Controller/Cloud Plan은 NOT RUN. 아래 날짜별 근거·당시 상태 보존.
+
+### 조사 중 추가된 실행 보고·수정 PR — 2026-10-07 후속 조회
+
+[D 등록·선택 Sync 보고](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5#issuecomment-6034601393)는 SHA A의 Valkey 4객체 `Succeeded`·FE/BE 미생성을, [Pod 확인](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6#issuecomment-6034590906)은 검토 Digest의 amd64 하위 ImageID·허용 UID만 보고했다. 등록/Sync를 다시 미실행으로 되돌리지 않는다. 실제 TLS/AUTH/Hostname·Ready 전체 Run과 Prune/Delete 차단은 아직 근거가 없으며 공유 Owner 재확인·등록 Commit·B 공유 시각의 빈칸 및 사전 합의되지 않은 `oc patch operation.sync.resources` 경로는 원 #5에서 보완·수락한다. #21의 완료 체크만으로 이 잔여를 완료 처리하지 않는다. 이 조사자는 클러스터를 직접 재조회하지 않았다.
+
+[GitOps #25](https://github.com/seokpan/seokpan-hybrid-gitops/pull/25)은 A 새 승인 후 `61edd0fd60e1004260c0b5082dc792fce847616b`에 병합·원격 PR 브랜치 삭제, 병합 validate success를 확인했다. checker 정책 #27과 회귀/안내2파일 보완 종료. 현재 Root는 SHA B `bfee2669e62bf823969ce224e5599eccace5d024`이며 최신 병합 main의 등록 비교/전체 lab release Gate는 Source PASS, 실제 적용/Sync/보호는 원 #5/#26의 별도 수락이다. 이전53314d3/69PASS·재리뷰 요청은 당시 근거로 보존.
+
+[Infra #43](https://github.com/seokpan/seokpan-hybrid-infra/pull/43)은 `6849c32d5b24a0e4994b7fbe849a1032211dc9a3` 병합·원격 PR 브랜치 삭제와 validate success를 확인했다. default State Key 유지, Workspace prefix/List 범위 정합 보완 완료. 기존 초기화/Workspace/State 위치 확인 뒤 목적 Caller/Backend·지원·A 기반/C SG2·예비 비용/창을 수락해 첫 Plan으로 진행한다. 병합 Source의 오프라인 fmt/helper/harness 보존 PASS와 실제 Controller/Cloud Plan NOT RUN을 구분.
+
+[GitOps #26](https://github.com/seokpan/seokpan-hybrid-gitops/issues/26#issuecomment-6050000112)의 D 최신 로그인·방 생성/접속·게임 종료·업무 영향 없음 보고와 C6038214247의 DB 형식/GRANT/TLS 접속·합성 출처 수락을 수신했다. Vote 미확인·Valkey ERR 증가 원인 조사는 후속. 정확한 실제 Source/Image/Run·Route/Origin·TLS/Hostname·Ready·Owner/사용창/Gate/live Diff·삭제 보호 수락은 별도로 남으며 직접 Runtime 재조회·전체 PASS로 사용하지 않는다.
+
+첫 읽기·작업 위치·실행 조건은 [실행 인계](EXECUTION_ENTRYPOINT_20261007.md)를 따른다. 원 보고와 이 Source 수정의 수신/검토·실행은 별개다.
+
+
+> **현재 인계:** 원격 변경 대조는 [§14](#b-work-current-delta-audit-20261007), 다음 실행은 [work 인계](WORK_HANDOFF_20261007.md)다. §3/§9–13의 이전 관측·실패·Source는 당시 이력으로 보존한다. 전체 Q10은 미완료다.
 
 > 개정: 2026-10-07 KST  
 > 상태: IN PROGRESS — 두 중단분의 게시·산출물 복원, PR 설명/리뷰 요청 정정, fixture 요약 후속 보완 및 등록용 소스 제공. 전체 코드/이력 의미 검토와 Q10 수렴은 미완료  
@@ -26,7 +41,7 @@ Q06은 이전에 완료한 현재 12장·생성/출처 경로의 대조와 필�
 - [ ] Q05 — Valkey 전환, OCP–Harbor 연결 제약과 내부 Registry 소비, DR RTO 10분·영속 DB RPO 30분·백업 계획 주기 15분을 설계·코드·가이드·시험·비용·주석에 걸쳐 대조하고 필요한 불일치를 수정한다.
 - [x] Q06 — 그림 생성 원본·manifest·출처 기록·SVG·PNG와 이를 참조하는 문서를 대조하고, 영향을 받은 생성물만 재생성·시각 검증한다.
 - [x] Q07 — 등록된 프로젝트 소스 7개를 저장소 정본과 내용·버전·해시로 대조하고, 필요한 등록용 개정본과 교체 대상을 제공한다. 실제 프로젝트 소스 교체는 별도로 확인한다.
-- [x] Q08 — B 명의 문서·Issue·PR·댓글의 대화 의존·자기 요청 중계·불필요한 AI 작업 홍보를 목적·변경·근거·결과·한계 중심으로 정리하고, 실제 수행·승인·시험 이력은 보존한다.
+- [x] Q08 — B 명의 기록의 목적·변경·근거·결과·한계와 원 실행·승인·시험 이력 연결을 점검한다.
 - [x] Q09 — 실제 필요한 수정만 B 범위에서 처리하고, 다른 담당자의 변경을 보존하며 해당 담당자의 검토·입력·수신이 필요한 사항을 원 작업에 인계한다.
 - [ ] Q10 — 발견→직접/후속 영향→수정→재검증을 반복하고, 종료 직전 원격 변경을 다시 대조하여 확인 가능한 전체 범위에서 새로운 확인·보완 사항이 없을 때 최종 수렴을 판정한다.
 - [x] Q11 — 조사 대상·관측 SHA·근거·발견·조치·검증·미확인·다음 순서를 이 대장과 원 작업에 보존하여 다음 작업 공간에서도 연속성을 유지한다.
@@ -220,3 +235,59 @@ Pool 크기 환경변수는 현재 App에서 소비하지 않는다. 실제 glob
 00–04·그림/manifest·C의 기존05 §8·Evidence·TH81/완료2는 변경하지 않는다. 실제 Runtime Run·비용·승인 Image 개정은 이번 기록으로 추가하지 않는다.
 
 최종 인계 대조에서 Docs #71 main `5b8c529e50e480ce1aa6e83a95caee8d9c877908`의 C §8.14·Tracker 변경과 기존 #69의 현재 입력을 결합했다. 금고 해독 보고/B 수신 완료를 다시 미수신으로 되돌리지 않으며, 독립 키 사본은 별도다. 새 문서 PR 대신 #69에 Source 검토를 연결한다. 감사 작업 브랜치의 산출물은 원 Commit/Run으로 보존하며 임의 삭제하지 않는다.
+
+
+<a id="b-review-followup-audit-20261007"></a>
+## 11. 리뷰 제안·경로 A·PubSub와 Recovery 기록 후속 — 2026-10-07
+
+상세 근거는 [Source 검토 §8](SOURCE_REVIEW_20261007.md#b-review-followup-20261007)과 네 실행 문서의 단일 현재 구획이다. Docs69는078d9e main에 병합됐고, d7f0e619 브랜치는 보존 방침에 따라 수정·삭제하지 않는다. 후속 변경은 새 Docs PR로 관리한다. §9–10의 당시 미병합 상태·검사·수치와 실제 수행자는 이력으로 보존한다.
+
+| 추적 단위 | 이번 조치 | 다음 직접 조건 |
+|---|---|---|
+| App17 | Source367938 불변, 정확한 최종 HEAD1754/부분집합47 재검사. registry 단일/다중 참조와 배포 rollback 설명 보완 | D 재검토 |
+| App18 | 5a8a8de의 null 처리·Script11·지속CI·회귀9. close_turn(None)만 새 Lua 실패이며 ApplyNone은 기존 Python guard | 최신 HEAD 재리뷰 |
+| App19 | 1cc717b의 PubSub 소유권 이전 전 취소4FAIL→4PASS, 전체1756/부분집합47 | C/D 리뷰와 실제 병합 조합·Image 검증 |
+| GitOps20 | b671871의 경로 A 등록 비교13개+기존40=53PASS. 현재 Manifest는 보류 상태 | Workload 입력 PR→확정 SHA 등록값 PR, 실제 Owner/RBAC/사용창·전체 release 검사 |
+| Infra40 | c1a495b의 C 제안 수용·기능14.4/목표14.5 구분·운영 차이 Metadata/README,10개 단위검사 PASS | C/D 리뷰. C 운영 Data 검토와 전체 T18은 별도 |
+
+원 작업·Build·등록·C 수신 링크, 정확한 SHA/Run/Artifact 해시, 실패/제외·시험 범위와 다음 파일은 Source §8에 연결했다. 새 수집144페이지·오류0/PR99/Review81 등은 목록·내용 확보 수준이며 전체 diff/CI의 의미 검토 완료가 아니다. 삭제·접근 불가 이력의 부재를 증명하지 않는다. encoded branch 단일 GET은 커넥터 URL 검사에서400으로 거부돼 전체 branches 조회로 확인했으며 Branch 부재로 판정하지 않았다.
+
+Q02/Q03/Q04/Q05/Q10은 미완료다. 다음은 Room start_*·identity 보상/시험·Frontend·Recovery/CI 잔여 연결→과거 diff/CI/참조 의미 검토→원격 변경 파급 재검증이다. 이미 검증한 취소/null 수정을 반복 작성하지 않는다. 본인 직접 작업은 [실행 명령](TJUNG03_WORKFLOW_AND_LEARNING_GUIDE.md#b-direct-actions-20261007)으로 분리하며 실제 키·Caller·배포 성공으로 가산하지 않는다. TH81/실제 완료2·기존 체크·00–04·그림은 유지한다.
+
+
+<a id="b-review-resume-audit-20261007"></a>
+## 12. 재리뷰 대응 재개·Docs72 반영·본인 실행 안내
+
+[Source §9](SOURCE_REVIEW_20261007.md#b-review-resume-20261007)에 최신5개PR·리뷰 원문·3개ZIP/시험·Infra40 병합/삭제·lab Stage1/2·Cost 원장(3)·금고/clone 실패 단계를 대조했다. 이미 게시된 App18/19/GitOps20 수정을 중복 생성하지 않았다. Docs69 보존 브랜치는 main 대비 ahead0/files0라 삭제 가능하지만 이번에는 실제 삭제하지 않는다. Docs72는 관련 PR 상태 변동을 반영한 뒤 병합 대기를 유지한다.
+
+문서4개의 단일 현재 구획을 갱신하고 학습 안내의 직접 실행 구획을 보완했다. 나머지 원본문·C의05 §8.9–8.14·Tracker 원행·Shared Execution·기존TH/Q 체크·설계/그림·Evidence는 보존한다. 새 Runtime 결과가 없으므로 TH81/실제 완료2를 바꾸지 않는다. D의 Stage1 후속에는 테스트뿐 아니라 CI 진단의 replicas0 조건도 함께 인계한다.
+
+실행 상태·안내 보완과 전체 Source 의미 검토의 완료 범위는 구분한다. Q02/Q03/Q04/Q05/Q10은 미완료다. 다음 출발점은 S1 Room/Session/연결세대·Frontend의 남은 Source/시험 → S2 Recovery/Writer/Promotion 직접 연결 → S3 도달 diff/CI/참조 의미 검토 → S4 최종 원격 변화 대조다. 금고 독립 복원·ROSA 본인 도구/Caller·lab 입력과 비용 준비는 직접 조건에 따라 병행한다.
+
+
+<a id="b-review-closeout-audit-20261007"></a>
+## 13. 두 중단분의 처리 종료·work 인계
+
+중단 전에 끝난 App18/19·GitOps20 보완과 Infra40 병합/삭제, Docs72의877ce979 문서 게시를 실제 Source/검사/Artifact에서 복원했다. 같은 수정을 중복 생성하지 않고 새 리뷰와 직접 후속만 처리했다.
+
+App17/18/19는 최신 D 재승인을 확인해 모두 병합·브랜치 삭제했고, 실제 결합 main a2afffb8605dafff1cb5b9af215aa0cf93aadcdb의 정식 Run37589421928에서1762/부분집합47/별도Lua9 PASS를 확인했다. Artifact와 정리 Run·전체 SHA·원 인계는 [Source §10](SOURCE_REVIEW_20261007.md#b-review-closeout-20261007)에 있다. GitOps20은 보완·58PASS·재리뷰 대기이며 해당 기록 시점에 미병합이다. Docs69는 삭제 가능하나 실제 보존, Docs72는 병합 대기다.
+
+새 main7114e837의 Docs74 C 변경은 03의 periodic/ 결정과 05의 해당 행을 보존해 결합한다. 등록 Project03와 그림/출처 식별정보의 후속 영향, Infra42의 코드 리뷰/실제 적용 여부는 [work W09](WORK_HANDOFF_20261007.md)로 인계한다. 이번 PR에서 C의 결정/주기/보관이나 CP3/Infra3/Worker3를 바꾸지 않는다.
+
+[WORK_HANDOFF_20261007.md](WORK_HANDOFF_20261007.md)는 W01–W13별 담당·시작점·입력·작업·보호 범위·종료/실패·병행 조건을 제공한다. 생성/파일 제공과 다른 작업 공간으로의 자동 등록은 구분한다. 개인키/Token·원장 원본·실제 Plan은 복제하지 않는다. Q02/03/04/05/10의 전체 의미 검토는 아직 미완료이며 기존 TH81/완료2·과거 실패/실행자·Q 체크를 유지한다. Source 작업 완료와 리뷰/실환경 입력/전체 목표 달성은 별도다.
+
+
+<a id="b-work-current-delta-audit-20261007"></a>
+## 14. work 재개 현재 Source·공급 보고 정합화
+
+Docs72의 고정 게시 HEAD376afcb03849e2325c5a10e80a363081bb0cd2de 이후 원격 변화로 오래된 현재 대기를 정정한다. §3/§9–13의 PR HEAD·재리뷰 대기·실패·검사·담당별 수행은 해당 관측 이력이며 과거 값을 일괄 치환하지 않는다. 현재 원본·정확한 병합 SHA/다음 실행 조건은 [Source §11](SOURCE_REVIEW_20261007.md#b-work-current-delta-20261007)·[work 인계](WORK_HANDOFF_20261007.md)다.
+
+| 정정 대상 | 현재 상태 | 직접 남은 범위 |
+|---|---|---|
+| App17/18/19 | 재승인·병합·브랜치 삭제 및 결합 main a2afffb/기존1762검사 확인 범위 유지 | D의 새 Backend Build/Scan/Digest·Registry/Pull와 B의 App/held Migration 동일 Image 수락. 기존 Image에 수정 포함 주장 금지 |
+| GitOps20/22/24 | #20 재승인·병합/삭제, #22 Stage1/Gate Source 병합 SHA A244b48, #24 등록 Source a25172/targetRevision=SHA A | 실제 공유 Owner/사용창·Caller/live Diff·지정 Bootstrap·Stage1 Gate·선택 Sync·Ready/TLSAUTH/업무 Run 별도 |
+| Infra42 | periodic/·backup_periodic_retention_days Source36dc24 병합 | A tfvars/Root Plan·C Job/권한/보관 개정과 승인된 Apply/실제 Backup. Source/설계 병합과 Runtime 수락 구분 |
+| C/B Controller 금고 | Valkey 본체 해독 보고/B 수신, SQL 본체 jth 해독·4필드 형식/암호문 해시 및 C 세 계정 확인 보고 | Controller 밖 독립 Key/암호문 사본·복원. 이 조사 환경에서 재실행한 결과 아님 |
+| Docs77 | C의 05/Tracker 공급·확인 보고a9b0207b563aa25be17d4a635f6cc903fbe0e74a 병합 | 최신 C §8.15/Tracker 행 보존. 문서 병합과 서비스 계정/Secret/TLS·실제 공급·수신·Runtime을 구분. 직접 조회 없이 성공을 가산하지 않음 |
+
+실행판·학습·05·Tracker 현재 구획과 Work W01/W03–W06/W09를 위 상태로 연결하고 기존 C의05 §8.9–8.14·Tracker 행, A/D 비용·Shared Execution·과거 실패/Run·TH/Q 체크를 보존한다. 03/04 종료·승인 수량/DR·Cost PARTIAL·TH81/실제 완료2는 변경하지 않는다. Q10 전체 수렴은 주장하지 않으며 실제 새 Run/인계 수락은 원 기록에서 이어간다.

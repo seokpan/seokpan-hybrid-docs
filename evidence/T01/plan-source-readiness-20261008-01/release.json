@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "record_kind": "source-verification",
+  "test_id": "T01",
+  "run_id": "plan-source-readiness-20261008-01",
+  "recorded_at_utc": "2026-10-08T01:32:16.842128+00:00",
+  "actual_operator": null,
+  "source_owner": "B",
+  "execution_environment": "Windows isolated source checks; GitHub read API and existing CI results",
+  "source": {
+    "infra_sha": "6849c32d5b24a0e4994b7fbe849a1032211dc9a3",
+    "gitops_sha": "61edd0fd60e1004260c0b5082dc792fce847616b"
+  },
+  "tools": {
+    "terraform": "1.16.4",
+    "git_bash": "5.3.9",
+    "python": "3.12.14",
+    "kustomize": "5.7.1"
+  },
+  "lock_sha256": "72ab1002dca9b1de7df233e5af5c197e789186949cb53eb1273a73d68ef81f0b",
+  "results": {
+    "infra_fmt": "PASS",
+    "session_helper_syntax": "PASS",
+    "oidc_harness_build_preservation": "PASS_SCOPED_ONLY",
+    "gitops_root_compare": "PASS_SOURCE_ONLY",
+    "lab_release_gate": "PASS_SOURCE_ONLY",
+    "controller_tcp22": "UNREACHABLE",
+    "ssh_login": "NOT RUN",
+    "actual_controller_preflight": "NOT RUN",
+    "actual_cloud_plan": "NOT RUN",
+    "formal_t01": "NOT RUN"
+  },
+  "runtime_report_ref": "https://github.com/seokpan/seokpan-hybrid-gitops/issues/26#issuecomment-6050000112",
+  "rto_seconds": null,
+  "rpo_seconds": null
+}

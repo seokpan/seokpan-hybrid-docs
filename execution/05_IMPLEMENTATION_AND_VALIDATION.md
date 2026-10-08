@@ -1,22 +1,39 @@
 # 石나가는 판단 2차 프로젝트 05 구현·통합·검증 진행 기록
 
-## 현재 실행 기준 — 2026-10-07 인계 수신 후
+> **현재 상태 — 2026-10-08:** App20/22·Infra43·GitOps25 병합·원격 PR 브랜치 삭제와 마무리 기록 확인. [ROSA Plan/OCP 후속](ROSA_OCP_NEXT_ACTIONS_20261008.md)·[05 §9.50](05_IMPLEMENTATION_AND_VALIDATION.md#merged-pr-plan-readiness-20261008) 우선. D #26의 부분 업무/ERR·Vote 보고 수신, 실제 Controller/Cloud Plan은 NOT RUN. 아래 날짜별 근거·당시 상태 보존.
 
-Docs #68(`fff5ac222243a231e5473f4ab39f87aa6cc10f6f`), Infra #38(`0f47617816b74365f5911ba2e273013ae82d6612`), App #16(`bdaa9dfa0a09e5d8efb1714ccf62860315b1346e`), GitOps #18(`12d78ac547729f0e314abfb2ac6238c95b1f3bd7`)은 병합·작업 브랜치 삭제를 확인했다. Project v3 등록도 확인했으며 같은 설계 파일의 재등록을 요구하지 않는다. 이후 D의 GitOps #19는 B 재검토 승인 뒤 `de130af839626c9d0a030580693a4060c41c9abd`에 병합됐다.
+### 조사 중 추가된 실행 보고·수정 PR — 2026-10-07 후속 조회
 
-| 병행 작업 | 완료·수신 범위 | 직접 남은 조건 |
+[D 등록·선택 Sync 보고](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5#issuecomment-6034601393)는 SHA A의 Valkey 4객체 `Succeeded`·FE/BE 미생성을, [Pod 확인](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6#issuecomment-6034590906)은 검토 Digest의 amd64 하위 ImageID·허용 UID만 보고했다. 등록/Sync를 다시 미실행으로 되돌리지 않는다. 실제 TLS/AUTH/Hostname·Ready 전체 Run과 Prune/Delete 차단은 아직 근거가 없으며 공유 Owner 재확인·등록 Commit·B 공유 시각의 빈칸 및 사전 합의되지 않은 `oc patch operation.sync.resources` 경로는 원 #5에서 보완·수락한다. #21의 완료 체크만으로 이 잔여를 완료 처리하지 않는다. 이 조사자는 클러스터를 직접 재조회하지 않았다.
+
+[GitOps #25](https://github.com/seokpan/seokpan-hybrid-gitops/pull/25)은 A 새 승인 후 `61edd0fd60e1004260c0b5082dc792fce847616b`에 병합·원격 PR 브랜치 삭제, 병합 validate success를 확인했다. checker 정책 #27과 회귀/안내2파일 보완 종료. 현재 Root는 SHA B `bfee2669e62bf823969ce224e5599eccace5d024`이며 최신 병합 main의 등록 비교/전체 lab release Gate는 Source PASS, 실제 적용/Sync/보호는 원 #5/#26의 별도 수락이다. 이전53314d3/69PASS·재리뷰 요청은 당시 근거로 보존.
+
+[Infra #43](https://github.com/seokpan/seokpan-hybrid-infra/pull/43)은 `6849c32d5b24a0e4994b7fbe849a1032211dc9a3` 병합·원격 PR 브랜치 삭제와 validate success를 확인했다. default State Key 유지, Workspace prefix/List 범위 정합 보완 완료. 기존 초기화/Workspace/State 위치 확인 뒤 목적 Caller/Backend·지원·A 기반/C SG2·예비 비용/창을 수락해 첫 Plan으로 진행한다. 병합 Source의 오프라인 fmt/helper/harness 보존 PASS와 실제 Controller/Cloud Plan NOT RUN을 구분.
+
+[GitOps #26](https://github.com/seokpan/seokpan-hybrid-gitops/issues/26#issuecomment-6050000112)의 D 최신 로그인·방 생성/접속·게임 종료·업무 영향 없음 보고와 C6038214247의 DB 형식/GRANT/TLS 접속·합성 출처 수락을 수신했다. Vote 미확인·Valkey ERR 증가 원인 조사는 후속. 정확한 실제 Source/Image/Run·Route/Origin·TLS/Hostname·Ready·Owner/사용창/Gate/live Diff·삭제 보호 수락은 별도로 남으며 직접 Runtime 재조회·전체 PASS로 사용하지 않는다.
+
+첫 읽기·작업 위치·실행 조건은 [실행 인계](EXECUTION_ENTRYPOINT_20261007.md)를 따른다. 원 보고와 이 Source 수정의 수신/검토·실행은 별개다.
+
+
+## 현재 실행 기준 — 2026-10-07 원격 변경 대조·구현 인계
+
+| 경로 | 완료·수신 범위 | 직접 남은 조건 |
 |---|---|---|
-| Cloud 금고 | [C의 10/7 jth 해독·형식·암호문 해시 일치 보고](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6028766924), [B 수신](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6028919355) | Controller 밖 독립 키 사본·복원한 identity로 해독 확인. 이 기록 작성 환경에서 직접 복호화한 결과가 아니며 새 키를 만들거나 완료한 공개키 전달을 반복하지 않음 |
-| lab Valkey | [#19 Source 병합](https://github.com/seokpan/seokpan-hybrid-gitops/pull/19), [B 승인](https://github.com/seokpan/seokpan-hybrid-gitops/pull/19#pullrequestreview-5436531268), 검토 HEAD2215aff의 CI40개/진단8경로26객체 확인 | C Data 검토·실제 Image/Secret 개정·UID/자원·B 권한/대행·공유 사용창·AppProject/live Diff 수락 후 Valkey만1로 여는 활성화 변경. DB Schema·Cloud 금고·Cloud Pool 전체 합의를 Valkey 단독 준비의 조건으로 추가하지 않음 |
-| lab App | FE/BE·Migration 내부 Registry와 승인 Digest 유지. Valkey 서버 선언 부재는 해소 | Valkey Service/Ready·실제 TLS/AUTH/Hostname 확인 및 DB/Schema·목적 Secret/CA·Route 등 App 입력 수락 → 필요한 단일 Migration → BE1 → FE1 → 동일 조합 Run. [원 실행 인계](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10#issuecomment-6029054228) |
-| App Source·새 이미지 | main bdaa의 기존1752검사와 [App #17](https://github.com/seokpan/seokpan-hybrid-app/pull/17) startup 취소 수정(수정2Case·기본1754), [App #18](https://github.com/seokpan/seokpan-hybrid-app/pull/18) Lua 거부 시 board 불변 수정(실제 회귀용 Redis5Case·기본1752)의 red/green·CI 확인 | 두 PR의 C/D 리뷰·실제 병합 → 같은 Backend Build/Scan/Digest → App·held Migration 연결. 기존 Image에 수정이 포함됐다고 승계하지 않음. Valkey만의 기동 준비는 독립. [Source 검토](SOURCE_REVIEW_20261007.md) |
-| Pool | 두 Runtime Engine·Migration NullPool·기존 생성/정리 테스트와 구성값 미소비 확인 | 실제 DB/사용자별 연결 한도·idle 시간·예약·종료 중 연결/연속 Rolling 겹침 합의 → 필요한 소비 코드/검사 → D Build/Digest. 3+2/60은 미채택 시나리오. [App 원 결과](https://github.com/seokpan/seokpan-hybrid-app/issues/1#issuecomment-6029039957) |
-| ROSA·비용 | Source/Lock 보존·기존 OIDC harness 생성 확인. [Infra25 결과](https://github.com/seokpan/seokpan-hybrid-infra/issues/25#issuecomment-6029050081) | 본인 clone/도구/Caller/Backend·지원·구독/Quota·실제 가용성/비용 입력. 첫 Plan에 A 제한 출력·공통 prerequisite와 C Data SG2 필요. OCP 철거·전체 Data/Recovery 종료는 일괄 조건 아님. Cost PARTIAL 유지 |
-| 추가 보관 인계 | A의 WireGuard A 주/B 예비 합의 보고 수신 | 실제 키 생성·독립 사본은 미수신. Cloud AUTH·Backup Key와 다른 목적이며 A 실행 책임 유지 |
+| App #17/#18/#19 | 최신 D 재승인 후 모두 squash 병합·작업 브랜치 삭제. 결합 main `a2afffb8605dafff1cb5b9af215aa0cf93aadcdb`의 기존 정식 CI에서 Backend1762·부분집합runner47·별도Lua9 PASS, dirty=false | [App2 Build 인계](https://github.com/seokpan/seokpan-hybrid-app/issues/2#issuecomment-6033610765) → D의 같은 Source Build/Scan·새 Backend Digest/플랫폼·Registry/Pull → B의 App/별도 held Migration 소비 검토. 기존 승인 Digest가 세 수정을 포함한다고 승계하지 않음 |
+| GitOps #20 | 검토 HEAD `b13ae9575206a335a9e6f87efc34dd4c198884f7`의 metadata allowlist·58PASS 후 재승인 수신, `5dc2bd546de1acbbeb47a380c85103ce2b31017f` 병합·작업 브랜치 삭제 | 재리뷰/병합 대기는 해소. Controller 등록 checker와 Stage-1 Gate·실제 등록/보호 동작은 별도 |
+| GitOps #22/#24 | Stage-1 Source SHA A=`244b48b885d7ac645c402e561a032ae65a8f3461`, 등록 Source=`a25172c7453b9d7999cb1f3cbeb1ef35774e3b63` 병합. #24의 `targetRevision`은 SHA A를 고정 | D의 실제 등록·Valkey 4객체 선택 Sync 성공 보고 수신. Owner 재확인/등록 Commit/공유 시각·Gate/live Diff 근거 보완, TLS/AUTH/Hostname·삭제 보호·Ready 전체 Run과 B 수락은 별도 |
+| Infra #40/#42 | #40=`a0da58c345f877659e522a5b4ab5392b1d0626d3`, #42=`36dc2403aa77e2896cc4ec3c545b92e0afb49205` 병합. #42는 일반 사본 `periodic/`와 `backup_periodic_retention_days`로 정합화 | A의 기존 tfvars/변수 소비·Root Plan, C의 Job/권한/Lifecycle·대장 개정 수락과 실제 Backup은 별도. 운영 Data/Valkey/전체 T18 완료 아님 |
+| Docs #69/#72/#77 | #69 보존 브랜치는 후속 작업에 사용하지 않음. #72는 기존 HEAD `376afcb03849e2325c5a10e80a363081bb0cd2de` 이후의현재 상태를 보완하는 리뷰 PR. [#77](https://github.com/seokpan/seokpan-hybrid-docs/pull/77)의 C Data 공급 보고는 `a9b0207b563aa25be17d4a635f6cc903fbe0e74a`에 병합 | #72 최신 main 정상 결합·재리뷰/병합. #77의 공급·확인 보고를 새 Runtime 재조회나 Foundation Apply·SQL 계정 생성으로 확대하지 않음. C의 05 §8.15·Tracker 기록 보존 |
+| Cloud 금고 | [C Valkey 해독/형식/암호문 해시 보고](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6028766924)·[B 수신](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6028919355), [B SQL 금고 jth 확인](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6033157659)·[C의 세 계정 확인](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6033174437) 완료 보고 | Controller 밖 독립 키/암호문 사본·복원한 identity로 해독 확인만 별도. 이 문서 작성 환경의 직접 복호화 결과가 아님. 완료한 공개키 전달·본체 해독을 반복하지 않음 |
+| 개인 clone·ROSA·Cost | clone의 경로/필수파일 검사 중단 이력, CP3/Infrastructure3/Worker3와 원장(3)의 PARTIAL·미완19·입력오류0·기타미확인4 유지 | [직접 실행 안내](TJUNG03_WORKFLOW_AND_LEARNING_GUIDE.md#b-direct-actions-20261007)의 현재 첨부/실파일 구분과 Infra 정본 LOCAL_PREPARATION의 읽기 중심 준비 → 본인 도구/Caller/Backend·지원·실제 사양/시간·A 제한 출력/prerequisite·C SG2. disk300 등 임의 입력 금지, $450/$500 유지 |
 
-FE/BE/Valkey replicas0, Migration suspend/current/300초·단일 실행·삭제 보호를 이번 문서 변경으로 해제하지 않는다. 진단 artifact는 실행용이 아니며 실제 활성화는 해당 입력과 변경을 검토한 뒤 진행한다. DR10분/영속 DB RPO30분/운영 중 Backup15분 계획 주기, TH81/기존 완료2와 Q02/03/04/05/10 미완료를 유지한다. 상세 조사·검증·한계는 [조사 대장 §9](REPOSITORY_CONSISTENCY_AUDIT.md#b-runtime-input-followup-20261007)를 따른다.
+Stage-1 작성/리뷰는 끝난 Source를 재사용한다. SHA A의 lab 선언은 Valkey만 replicas1/`source-reviewed-runtime-unverified`, FE/BE는0/`input-required`, Migration은 suspend/current/300초·단일 실행이다. base/Recovery hold와 기존 전체 `release-manifest`를 보존하고, 별도 Valkey Stage-1 Preflight Gate가 지정한 리소스/입력·보호 범위를 확인한 뒤 선택 수동 Sync한다. #20의 등록 checker를 Stage-1 Gate로 대신하지 않는다.
 
-**Data 인계 최신화:** [Docs #71](https://github.com/seokpan/seokpan-hybrid-docs/pull/71)의 C 기록과 [Infra #39](https://github.com/seokpan/seokpan-hybrid-infra/pull/39) 병합을 확인했다. C의 jth 해독/해시 보고와 B 수신은 완료, 독립 키 사본/복원 확인은 별도다. 10/8 foundation은 Plan만 수행하는 인계이며 Apply는 전체 Plan·리뷰·Cost 이후 날짜 미확정이다. C의 기존 §8.14·Tracker 행은 보존한다.
+#24의 등록 Source는 기존 `openshift-gitops` Controller와 제한 AppProject/Application 각1개, destination=`seokpan-argotest`, path=`apps/overlays/lab`, targetRevision=SHA A다. D의 등록·Valkey 선택 Sync 보고 이후 남은 범위는 상단 추가 보고의 근거 보완·실제 Service/Ready/TLS/AUTH/Hostname·삭제 보호 판정이다. DB/Secret/CA/Route와 새 Backend Image를 수락한 Stage2는 별도 FE/BE 활성화 SHA B → 등록 targetRevision 갱신/검토·지정 apply → 기존 전체 Gate 정상 통과 → 필요한 단일 Migration·FE/BE 수동 Sync → 같은 조합 업무 Run으로 이어진다. Source 병합·등록·Synced·Valkey Ready·전체 lab/ROSA/Cost PASS를 분리한다.
+
+[Docs #74](https://github.com/seokpan/seokpan-hybrid-docs/pull/74)/#75의 `periodic/` 결정·과거 `hourly/` 구분과 C의 05/Tracker 기록은 보존한다. Infra #42의 Source 병합 대기는 해소됐지만 실제 tfvars·Plan/Apply·백업 수락은 [work W09](WORK_HANDOFF_20261007.md)에서 확인한다. 03·04 설계 종료, DR10분/영속 DB RPO30분/DB 운영 중15분 계획 주기를 유지한다.
+
+[원 GitOps5 결정](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5#issuecomment-6032629690)·[Cost43 대조](https://github.com/seokpan/seokpan-hybrid-docs/issues/43#issuecomment-6033030041)·[Source 현재 대조](SOURCE_REVIEW_20261007.md#b-work-current-delta-20261007)·[대장 현재 대조](REPOSITORY_CONSISTENCY_AUDIT.md#b-work-current-delta-audit-20261007)·[work 인계](WORK_HANDOFF_20261007.md)를 따른다. 아래 과거 관측·실패·Run·리뷰는 해당 시점의 이력이다. TH81/실제 완료2·기존 Q 체크는 변경하지 않으며 Q02/03/04/05/10과 실제 개인/공유 실행·전체 목표 판정은 별도다.
 
 ## 0 팀 전체의 05 진입 안내
 
@@ -126,9 +143,9 @@ OCP에서 확인 가능한 해당 Case는 먼저 수행해 유료 시간의 문�
 | 정상 HTTP/WS | 대표 HTTP 업무 p95 ≤1초, Client가 업무 결과를 확인하는 WS p95 ≤1초 |
 | 오류/정확성 | 예기치 않은 업무 첫 시도 오류율 <1%. 시험에서 중복 효과·무권한 성공·확정 데이터 불일치 0건, 시도 수/경쟁 조건 보존 |
 | WS 재접속 | 정상 의존 서비스 가용 후 상태 수렴 ≤30초. 장애 시작 이후 시간도 별도 기록 |
-| Offline RTO | 장애 발생/접속 불가 시작부터 판단·DB/새 Redis/App·Host 안내·대표 업무/Data 확인까지≤10분 —03 §3-I.14.5의 변경안, 부분 Fixture 시간을 RTO로 사용하지 않음 |
-| Offline RPO | 사고 시각−사용한 검증 Backup의 Data 기준 시각≤30분 —현재 변경안. 시점 미확인은 null/미판정, 파일 수정/덤프 종료 시각으로 대체하지 않음 |
-| Backup | 운영 중15분 변경안,7일 및 최종/마지막 검증본 보호. 실제 성공 간격＋로컬 확보 지연＋시계/시점 불확실성≤30분 확인; jitter/전송/무결성/복원·실패 기록 |
+| Offline RTO | 장애 발생/접속 불가 시작부터 판단·DB/새 Redis/App·Host 안내·대표 업무/Data 확인까지≤10분 —Docs #30으로 병합된03 §3-I.14.5의 승인 기준, 부분 Fixture 시간을 RTO로 사용하지 않음 |
+| Offline RPO | 사고 시각−사용한 검증 Backup의 Data 기준 시각≤30분 —Docs #30으로 병합된 승인 기준. 시점 미확인은 null/미판정, 파일 수정/덤프 종료 시각으로 대체하지 않음 |
+| Backup | 운영 중15분 계획 주기,7일 및 최종/마지막 검증본 보호. 실제 성공 간격＋로컬 확보 지연＋시계/시점 불확실성≤30분 확인; jitter/전송/무결성/복원·실패 기록 |
 | 비용 | 계획 ≤$450, $50 여유 포함 총 $500. 생성·삭제 대기·실패/재시험·비Window·잔존을 포함 |
 
 수치는 운영 SLA/제품 보장이 아닌 승인된 프로젝트 시험 목표다. Worker 1대 장애를 AZ 전체 장애로, Restore 기반 Recovery를 자동 Failover/Warm DR로, 새 Redis를 진행 게임 상태의 완전 복구로 표현하지 않는다. 1차와 조건이 다르거나 Baseline이 없으면 개선률을 만들지 않는다.
@@ -176,11 +193,11 @@ ROSA 삭제만으로 foundation 비용이 끝났다고 판정하지 않는다. R
 | Docs의 Run·증거 Index | 실제 조합·환경·수행자·결과·수치·시간선·원본 참조 | 각 담당자가 자기 Run 작성, 최유준은 Index 연결 |
 | 단일05와 통합 진행표 | 작업/인계 링크·공유 실행 Gate·통합 상태·집계 시각·다음 행동 | Issue/PR/Raw 원문을 반복 복사하지 않음 |
 
-각 담당자는 자기 작업 Issue와 증거를 직접 갱신한다. 인계 수신자는 받은 개정·수락 범위·남은 제약을 기록하고 자기 후속 작업을 연결한다. 이유빈은 foundation, 정태훈은 ROSA/App, 김상희는 Data 전환/Restore, 최유준은 시험/증거 Index의 승인 책임을 유지한다. 최유준을 전체05 대필자나 전체 작업 승인자로 확대하지 않는다. 전체05 취합/Merge 전담자를 새로 임의 지정하지 않으며 관련 부분의 작성/리뷰·실제 Repo Merge 권한은 해당 변경에 기록한다.
+각 담당자는 자기 작업 Issue와 증거를 직접 갱신한다. 인계 수신자는 받은 개정·수락 범위·남은 제약을 기록하고 자기 후속 작업을 연결한다. 이유빈은 foundation, 정태훈은 ROSA/App, 김상희는 Data 전환/Restore, 최유준은 시험/증거 Index의 승인 책임을 유지한다. Evidence Index 담당과 전체 작업의 작성·승인 책임을 구분한다. 전체05 취합/Merge 전담자를 새로 임의 지정하지 않으며 관련 부분의 작성/리뷰·실제 Repo Merge 권한은 해당 변경에 기록한다.
 
 05를 함께 편집할 때도 기존 Repo의 Branch/PR·권한 규칙을 따른다. 변경 절과 근거 Issue/Run을 명시하고 Merge 전에 최신 정본의 다른 사람 변경을 반영해 대조한다. 충돌은 근거의 대상·개정·확인 시각으로 조정하며 새 기록을 과거 사본으로 덮어쓰지 않는다. 오래된 Run도 역사적 결과로 보존한다. 독립 코드 작성·증거 기록과 직접 인계는05 문서 Merge를 기다리지 않으며 다음 공유 실행 전에는 관련 통합 Gate의 최신 상태를 확인한다.
 
-작업 시작/차단/리뷰 요청/인계/실행 종료와 Source·입력 변경 때 상태를 갱신한다. 짧은 공동 점검에서는 다음 공유 실행·직접 Blocker·인계·시간/비용을 확인하고 결정은 Issue/진행표에 남긴다. 정태훈에게 구두 보고한 뒤 대필될 때까지 기다리는 방식으로 운영하지 않는다.
+작업 시작/차단/리뷰 요청/인계/실행 종료와 Source·입력 변경 때 상태를 갱신한다. 짧은 공동 점검에서는 다음 공유 실행·직접 Blocker·인계·시간/비용을 확인하고 결정은 Issue/진행표에 남긴다. 담당자가 원 Issue·PR·Run을 직접 갱신한다.
 
 **협업 사용본을 실제 공유할 때 확인할 것:** 공통 문서 위치와 개정, 네 사람의 읽기 접근, 각자의 기록/Repo 쓰기 경로, §0.10 첫 작업과 기존 Issue 연결, 공유 실행 대상/담당, 보호 원본 접근 책임을 확인한다. 설계 파일을 프로젝트 소스로 등록하거나 이 파일을 제공한 사실만으로 GitHub 등록·팀 배포·접근 성공을 주장하지 않는다. 이 저장소 공유용 진행본은 execution/ 안내·공통 진행표·인계 양식과 연결한다. main 병합·개인별 접근·실제 팀 도입은 별도 상태다.
 
@@ -273,7 +290,7 @@ foundation/ROSA 실제 생성에는 각 Root 실행·Cost Gate가 필요하다. 
 | 실행 상태 | 미실행·실행 중·실행 종료, 대상/시각과 현재 잔존 상태 |
 | 시험 결과 | 승인된 NOT RUN/PASS/PARTIAL/FAIL/N/A. N/A는 이유, 미실행 차단은 NOT RUN과 Blocker로 표시 |
 
-코드만 작성하는 Issue는 그 완료 조건을 충족하면 닫을 수 있으나 남은 Runtime 시험·인계 Gate는 05/T Matrix와 후속 작업에서 유지한다. Runtime/통합까지 포함한 Issue는 Merge만으로 닫지 않는다. 실패 Run과 부분 자원은 삭제하거나 성공으로 덮어쓰지 않는다. AI Source 조회·팀 보고·독립 Runtime 관측은 근거 유형/시점을 함께 기록한다.
+코드만 작성하는 Issue는 그 완료 조건을 충족하면 닫을 수 있으나 남은 Runtime 시험·인계 Gate는 05/T Matrix와 후속 작업에서 유지한다. Runtime/통합까지 포함한 Issue는 Merge만으로 닫지 않는다. 실패 Run과 부분 자원은 삭제하거나 성공으로 덮어쓰지 않는다. Source 조회·팀 보고·독립 Runtime 관측은 근거 유형/시점을 함께 기록한다.
 
 ### 0.12 인계 수신자의 확인과 변경 영향
 
@@ -315,15 +332,15 @@ ROSA Window 진입/추가·재시험은 최신 전체 비용·남은 시험·정
 | Full Apply/최종 Acceptance | 실제 준비/검증 완료를 주장하지 않음 | Plan·가격/Credit·Window·실제 Runtime/증거 |
 | 05 최종 종료 | 미완료 | 구현·통합·Must 판정·발표/보고·보존·불필요 유료 자원 정리와 잔존 책임 |
 
-AI는 이 협업 기준 안에서 정태훈의 후보 코드·검사·문서 연결을 지원하며 팀원의 실제 실행·인계와 구분한다. 앞선 24건 로컬 PASS는 §7 범위로 유지한다. 이번 보완은 작업 안내와 기록의 정합 검토이며 새 Cloud/lab/DB 실행 결과가 아니다. 이전 협업 검토에서 외부 Repo 변경·팀 메시지 전송·실제 팀 공유는 미실행이었다. 이번 Docs 공유용 변경은 실행 안내/양식의 저장소 반영 범위이며 개인별 접근·도입과 Runtime 결과를 구분한다.
+후보 코드·검사·문서 연결과 팀원의 실제 실행·인계를 구분한다. 앞선 24건 로컬 PASS는 §7 범위로 유지한다. 이 보완은 작업 안내와 기록의 정합 검토이며 새 Cloud/lab/DB 실행 결과가 아니다. 이전 협업 검토에서 외부 Repo 변경·팀 메시지 전송·실제 팀 공유는 미실행이었다. Docs 변경은 실행 안내/양식의 저장소 반영 범위이며 개인별 접근·도입과 Runtime 결과를 구분한다.
 
 ### 0.15 협업 보완의 연쇄 검토 기록
 
-이번 사용자 질문을 기준으로 직전 설명과05를 승인01~04·지침에 연결해 추적했다. 검토 범위는 공유 시점→첫 작업→기록 정본→작성/리뷰→수신자 인계→공유 실행→변경 영향/재시험→Freeze/비용→증거/발표→삭제·보존/종료다. 2026-10-02 01:27 Source 관측과 과거 실습/로컬 검사 범위는 유지하며 실제 Runtime 결과로 확대하지 않는다.
+05의 협업 절차를 승인01~04·지침에 연결해 검토했다. 검토 범위는 공유 시점→첫 작업→기록 정본→작성/리뷰→수신자 인계→공유 실행→변경 영향/재시험→Freeze/비용→증거/발표→삭제·보존/종료다. 2026-10-02 01:27 Source 관측과 과거 실습/로컬 검사 범위는 유지하며 실제 Runtime 결과로 확대하지 않는다.
 
 | 회차 | 발견과 보완 | 재검증 상태 |
 |---|---|---|
-| 1 직전 설명·05 추적 | 협업 사용본/최종본 구분, B 중앙 배정/대필 오해, 정본/직접 갱신, 역할별 첫 작업, 인계 확인, 공유 실행 충돌·변경 개정 연결의 공백을 확인 | §0.9~0.14와 Header/진행/후속 연결 보완 |
+| 1 협업 안내·05 추적 | 협업 사용본/최종본 구분, 담당별 직접 기록 범위, 정본/직접 갱신, 역할별 첫 작업, 인계 확인, 공유 실행 충돌·변경 개정 연결의 공백을 확인 | §0.9~0.14와 Header/진행/후속 연결 보완 |
 | 2 보완 후 전체 대조 | 승인04 역할/I01~I07·03 W/T·Source/Runtime·Secret·비용/Freeze·종료까지 대조. 동시05 편집 시 최신 인계/Run 기록 보존 규칙 1건 추가 확인 | §0.9에 최신 정본·다른 담당 변경·원본 개정/시각 대조와 독립 작업의 지속 반영 |
 | 3 동시 편집 보완 후 재검증 | 수정 규칙→직접 인계→공유 실행 Gate→변경/재시험→시간/비용→증거/삭제/최종 종료를 다시 대조. 세 검토 관점과 아래 시나리오에서 기존 승인/미확인 상태를 확인 | 추가 보완 0건으로 문서 검토 수렴. 승인 기준6개와 기존 범위·일정·측정·비용·구현 이력 보존, Markdown 구조 확인 |
 
@@ -398,7 +415,7 @@ AI는 이 협업 기준 안에서 정태훈의 후보 코드·검사·문서 연
 | [App](https://github.com/seokpan/seokpan-hybrid-app) | `6902f3a184b4f1f07ade782536335a88d72612fc` | README·.gitignore만 존재. 실제 App Source/빌드/테스트 이관은 main에서 확인되지 않음 | 없음 |
 | [Infra](https://github.com/seokpan/seokpan-hybrid-infra) | `fbc502d3b2de7b6794d7b9d2fd5bbcd376fb9041` | bootstrap main/backend/Lock, foundation/rosa/ansible README. foundation/rosa HCL·Ansible 실행 코드는 main에 없음 | #12, non-draft, main 대상 |
 | [GitOps](https://github.com/seokpan/seokpan-hybrid-gitops) | `523e9206dd6398adc6776855573890063b837a85` | README·.gitignore만 존재. 실제 base/Overlay/Release는 main에 없음 | 없음 |
-| [Docs](https://github.com/seokpan/seokpan-hybrid-docs) | `eb36bf10499d29b414a9e02c3f2569dde4d9ef1e` | README만 존재. AI 산출물의 Repo 등록/실제 Evidence 구현은 확인되지 않음 | 없음 |
+| [Docs](https://github.com/seokpan/seokpan-hybrid-docs) | `eb36bf10499d29b414a9e02c3f2569dde4d9ef1e` | README만 존재. 설계·실행 안내의 Repo 등록/실제 Evidence 구현은 확인되지 않음 | 없음 |
 
 App/Infra/GitOps의 Branch protected marker는 true, Docs는 false로 조회됐다. 이 marker만으로 Review/Required Check·Push/Bypass 제한이 원하는 수준으로 실효 적용됐다고 판정하지 않는다. 실제 Ruleset/권한은 I01/I04에서 확인한다. 메타데이터의 계정/Commit만으로 실제 수행자·전원 기여를 소급 배정하지 않는다.
 
@@ -430,7 +447,7 @@ PR #12는 지정 Head `b5b154bd751531be320bbbd111c977c06351c4b8`, Base `fbc502d3
 
 공식 근거를 2026-10-01 확인했다: [AWS PowerUserAccess](https://docs.aws.amazon.com/aws-managed-policy/latest/reference/PowerUserAccess.html)는 광역 서비스 권한과 일부 Service-linked Role 관리 예외를 포함하므로 “IAM 전체 제외” 주석도 보완한다. [HashiCorp S3 Backend](https://developer.hashicorp.com/terraform/language/backend/s3)는 기본 State Get/Put와 Lock Get/Put/Delete를 구분하고 State DeleteObject는 요구하지 않는다. [AWS S3 Prefix 조건](https://docs.aws.amazon.com/AmazonS3/latest/userguide/amazon-s3-policy-keys.html)은 List/Version 목록 범위를 조건으로 제한한다. [AWS IAM 정책 연결 제어](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_controlling.html)와 [PassRole](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_passrole.html)을 실제 정책/서비스 검토에 연결한다. 위 영향은 Source와 공식 정책 의미의 대조 결과이며 실제 AWS에서 거부/허용을 실행한 관측이 아니다.
 
-PR 본문은 fmt/validate 통과와 personal MFA Plan `9 add/1 change/0 destroy`를 팀 결과로 보고한다. AI가 그 Controller·Plan 보호 원본·Caller/세션을 재실행 확인하지 않았다. PR의 Apply 예정 계정 표기는 실제 수행자와 승인된 bootstrap 책임자를 바꾸는 근거가 아니다. 이유빈의 실행 책임을 유지하며 담당/actual operator/Principal·계정 관리 책임/협업·차용 인계를 04 §2.4대로 기록한다. 해당 권한/Policy 변경 자체의 영향과 현재 main Plan을 리뷰하기 전 실행 READY로 승격하지 않는다.
+PR 본문은 fmt/validate 통과와 personal MFA Plan `9 add/1 change/0 destroy`를 팀 결과로 보고한다. 그 Controller·Plan 보호 원본·Caller/세션은 독립 재실행으로 확인하지 않았다. PR의 Apply 예정 계정 표기는 실제 수행자와 승인된 bootstrap 책임자를 바꾸는 근거가 아니다. 이유빈의 실행 책임을 유지하며 담당/actual operator/Principal·계정 관리 책임/협업·차용 인계를 04 §2.4대로 기록한다. 해당 권한/Policy 변경 자체의 영향과 현재 main Plan을 리뷰하기 전 실행 READY로 승격하지 않는다.
 
 당시 읽기 검토 이후 PR 코멘트 작성·승인/Merge·Apply는 수행하지 않았다. 이 기록은 현재 후속 검토 요청이나 담당자에게 보내는 지시가 아니다.
 
@@ -471,18 +488,18 @@ PR 본문은 fmt/validate 통과와 personal MFA Plan `9 add/1 change/0 destroy`
 
 | 작업 ID | 실제 수행/산출 | 상태와 다음 인계 |
 |---|---|---|
-| ACT05-01 최초 관측 | AI가 지정 네 Repo의 공개 main/Tree·열린 PR·지정 README를 읽어 §3에 고정 SHA/범위를 기록 | 당시 읽기 점검 완료. 최신 관측은 §0.2 |
+| ACT05-01 최초 관측 | 지정 네 Repo의 공개 main/Tree·열린 PR·지정 README를 읽어 §3에 고정 SHA/범위를 기록 | 당시 읽기 점검 완료. 최신 관측은 §0.2 |
 | ACT05-02 과거 이력 | Infra PR #12 옛 Head를 읽기 검토함 | 사용자 범위 정정으로 현재 과제 제외. 담당자가 처리했다는 설명 접수. 당시 관측을 현재 미해결 과제로 승계하지 않음 |
 | ACT05-03 착수 당시 | 승인03/04→구현 단위·입력·시험/Cost Gate 대응표 작성 | 당시 준비 기록 완료. 이후 B 로컬 코드 초안은 §7, 최신 팀 Source는 §0.2 |
-| ACT05-04 진입 정리 | 2026-10-02 KST 네 Repo 현행 조회와 §0 팀 전체 진행 방법·역할·검증·증거·비용 종료 연결 | Source 읽기·진행 안내 보강 완료. 팀 Runtime 보고와 AI 관측을 구분하며 외부 변경 없음 |
-| ACT05-05 협업 보완 | 사용자 질문에 따라 협업 사용본/최종본·역할별 첫 작업·직접 기록·인계 확인·공유 실행·동시05 편집과 변경 영향을 연결 | 3회 연쇄 검토/보완 후 추가 보완 0건으로 수렴. 실제 팀 공유/Repo 반영·Runtime 완료는 별도 미확인 |
+| ACT05-04 진입 정리 | 2026-10-02 KST 네 Repo 현행 조회와 §0 팀 전체 진행 방법·역할·검증·증거·비용 종료 연결 | Source 읽기·진행 안내 보강 완료. 팀 Runtime 보고와 Source 관측을 구분하며 외부 변경 없음 |
+| ACT05-05 협업 보완 | 협업 절차 검토에서 협업 사용본/최종본·역할별 첫 작업·직접 기록·인계 확인·공유 실행·동시05 편집과 변경 영향을 연결 | 3회 연쇄 검토/보완 후 추가 보완 0건으로 수렴. 실제 팀 공유/Repo 반영·Runtime 완료는 별도 미확인 |
 | ACT05-06 저장소 공유 준비 | execution/05·읽기 안내·진행표·인계 양식과 evidence/Run 양식을 공유용 변경으로 연결 | PR에서 검토할 문서 반영 범위. main 병합·개인별 접근/기록·실제 팀 도입은 확인 후 갱신 |
 | ACT05-07 발표·현행 인계 연결 | PR #7/Issue #6을 확인해 §0.7 최소 참조를 추가하고 기존 작업/부분 보고·Docs B 권한·남은 입력을 진행표/Issue #8에 연결 | 공식 Test/실제 결과/발표 선별 경계 유지. 공유 반영은 PR #5 Metadata, 개인 접근·입력·Runtime 판정은 별도 |
 | ACT05-08 계정/인계 갱신 | 사용자 계정 매핑·네 사람/네 Repo 권한 16건 확인, Source 재조회, main 기준 링크와 첫 입력 인계 연결 | 계정/Repo 권한 확인 완료. 본인 환경 사용·미반영 Source·실제 입력/공유 실행은 해당 근거로 확인 |
 
 새 입력/실행은 `확인 시각·Source/입력 개정·배정 Owner·actual operator·관측 Principal 논리 참조·Reviewer·결과/제한·Evidence·Blocker·다음 인계`를 남긴다. 실패 Run을 보존하고 후속 Run을 연결하며 코드/조건 변경의 영향 시험을 다시 확인한다.
 
-현재 가능한 검증은 문서/Source 범위다. AWS/controller/Host/DB/Cluster 접속, Terraform init/validate/plan/apply/destroy, 실제 Build/Pipeline/PR Push, VM 생성·Backup/Restore·Token 발급/회수는 AI가 실행하지 않았다. 실습 팀 보고와 미커밋 자료는 제공된 범위를 넘겨 PASS 처리하지 않는다.
+현재 가능한 검증은 문서/Source 범위다. AWS/controller/Host/DB/Cluster 접속, Terraform init/validate/plan/apply/destroy, 실제 Build/Pipeline/PR Push, VM 생성·Backup/Restore·Token 발급/회수는 이 검토에서 미실행이었다. 실습 팀 보고와 미커밋 자료는 제공된 범위를 넘겨 PASS 처리하지 않는다.
 
 ## 7 등록 완료 후 재개한 구현 작업
 
@@ -817,7 +834,7 @@ State Lineage·Serial 차이의 원인과 내용 동일성은 [첫 코멘트](ht
 
 정태훈이 전달한 강사 피드백은 `architecture/exports/10-backup-offline-recovery.png`의 RTO 30분·RPO 90분이 사용자 관점에서 넓으며, RTO 5~10분 정도를 검토할 수 있다는 의견이다. RPO 수치나 일반 인터넷 사용자 전체의 복구를 필수로 확대한다는 결정은 전달되지 않았다. 분류는 **외부 피드백 / 목표 재검토 입력**이며 실제 성능 Evidence가 아니다.
 
-직전 AI 제안의 RTO 10분·RPO 15분·5분 백업은 검증 전 후보였고, 특정 수치를 먼저 정해 설계를 맞추는 우선 권고는 철회했다. 사용자는 실현 가능성·편의성·구현/학습/운영 부담·기간·비용·설계 정합성·멘토 설명 근거를 함께 고려하고 후속 작업을 진행하도록 지시했다. 당시 초기 검토는 기존 작업의 구체화였고 새 수치·구조·역할·상시 운영을 확정하지 않았다. 현재 목표/주기는 아래 변경안 행과03 §3-I.14.5를 우선하고 기존 검토 이력은 보존한다.
+초기 제안의 RTO 10분·RPO 15분·5분 백업은 검증 전 후보였고, 특정 수치를 먼저 정해 설계를 맞추는 우선 권고는 철회했다. 검토 기준은 실현 가능성·편의성·구현/학습/운영 부담·기간·비용·설계 정합성·멘토 설명 근거를 함께 고려하는 것이었다. 당시 초기 검토는 기존 작업의 구체화였고 새 수치·구조·역할·상시 운영을 확정하지 않았다. 현재 목표/주기는 아래 변경안 행과03 §3-I.14.5를 우선하고 기존 검토 이력은 보존한다.
 
 | 구분 | 현재 기준 / 처리 |
 | --- | --- |
@@ -827,7 +844,7 @@ State Lineage·Serial 차이의 원인과 내용 동일성은 [첫 코멘트](ht
 | 추가하지 않는 범위 / 미검증 | 지속 복제·Warm Standby·Public 자동 전환·과거 이력 새 기능을 추가하지 않음. 실제 운영 최신성/전체RTO·실제 Cost/Host/Image/FEWSS·팀원 리뷰/수신은 실행 Gate로 남음 |
 | 지킬 경계 | 1차 보호, 격리 복원·새 Redis, Terraform/GitOps/Secret Ownership, 사전 로컬 자료, 전체 복구 시간선과 데이터/업무 검증 |
 | 일정·비용 | 10/16 Technical Freeze·10/22 Demo Freeze·10/23 Presentation Ready·10/26 종료, $450 계획선/$500 한도 유지. 실제 가용시간·추가 비용은 I07에서 확인 |
-| 실행 근거 | 이전 Infra #17 사전 점검과 달리 §9.20에 Codex가 실제 실행한 새 Data/Backend 부분 Run2개 연결. 전체 Backup 경로·서비스 RTO/RPO는 여전히 미측정 |
+| 실행 근거 | 이전 Infra #17 사전 점검과 달리 §9.20에 격리 로컬 환경에서 실제 실행한 새 Data/Backend 부분 Run2개 연결. 전체 Backup 경로·서비스 RTO/RPO는 여전히 미측정 |
 
 목표는 업무 영향과 기술·자원 제약을 함께 고려한다. 근거 없이 느슨하거나 엄격한 목표를 정하지 않는다는 공식 참고는 [AWS REL13-BP01](https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/rel_planning_for_recovery_objective_defined_recovery.html)이다(2026-10-02 확인). 특정 분 단위 값은 AWS가 이 프로젝트에 지정한 기준이 아니다.
 
@@ -875,7 +892,7 @@ VPN 단절이나 한 운영자의 AWS 접속 실패만으로 Cloud 전체 장애
 
 | 판단 항목 | 필요한 근거 / 선택 제한 |
 | --- | --- |
-| 사용자 영향 | 허용할 업무 중단, 백업 이후 신규 회원·완료 결과·Rating 손실, 재로그인/진행 게임 중단, 접속/처리 규모. 강사 피드백과 이 범위를 대조하고 AI가 허용 손실을 임의 확정하지 않음 |
+| 사용자 영향 | 허용할 업무 중단, 백업 이후 신규 회원·완료 결과·Rating 손실, 재로그인/진행 게임 중단, 접속/처리 규모. 강사 피드백과 이 범위를 대조하고 허용 손실은 별도 승인 전 미확정 |
 | 가능한 개선 | 단계별 실측·수작업·필수 의존. 적은 변경으로 줄일 수 있는 구간과 남는 불확실성을 설명 |
 | 팀 부담·편의성 | 네 사람의 실제 가용시간 안에서 구현·학습·사용/유지·실패 처리·인계·재시험·문서/그림 반영·발표 준비까지 산정. 반복 사용과 예비 담당자의 실행 가능성을 확인 |
 | 추가 비용 | 실제 암호문 크기·운영 시간·주기별 건수·7일/보호/버전 사본·작업 임시/복원 공간·S3 요청/전송·DB 부하·Cloud 추가 가동/재시험·삭제 지연을 I07 전체 산식에 합산. DB 크기만으로 추가 비용 0 판정 금지 |
@@ -992,7 +1009,7 @@ CI #2는 B 최신 리뷰·D 수락의 A~F 구현 방향을 유지한다. 다만 
 
 최초 독립 검토 → 재현·수정 → 작성자가 아닌 검토자의 교차 검토에서 계측 중간값 누락 경로를 추가 보완 → 최종 Code/계약·묶음 명령·원격 Tree/기록 대조 순서로 진행했다. 마지막 대조에서 현재 확인 가능한 Source/인계 범위의 추가 필수 보완을 발견하지 않아 재귀를 종료한다. 새 Runtime 입력·리뷰·실제 실패가 생기면 해당 범위를 다시 검토한다.
 
-- [x] 직전 답변의 완료 범위·최신 원격 Source/리뷰·후속 영향 대조
+- [x] 이전 기록의 완료 범위·최신 원격 Source/리뷰·후속 영향 대조
 - [x] 재현한 결함/문구 보완·관련/전체 검사·독립 교차 검증
 - [x] 수정 묶음·열린 PR·원본 Issue/진행 기록 연결
 - [ ] App Branch Push/PR·Source 리뷰/사람 Merge, Docs/GitOps PR 검토·병합
@@ -1009,7 +1026,7 @@ CI #2는 B 최신 리뷰·D 수락의 A~F 구현 방향을 유지한다. 다만 
 
 | 실제 기록 위치 | 담당 범위와 기존 연결 |
 | --- | --- |
-| [Docs #21 상위](https://github.com/seokpan/seokpan-hybrid-docs/issues/21) | 전체 TH·완료 기준·현재/다음/Blocker·학습/발표·최종 종료의 원본 링크. 팀원 상세 결과를 대필하거나 모든 TH 완료로 표시하지 않음 |
+| [Docs #21 상위](https://github.com/seokpan/seokpan-hybrid-docs/issues/21) | 전체 TH·완료 기준·현재/다음/Blocker·학습/발표·최종 종료의 원본 링크. 팀원 원 결과를 연결하며 미완료 TH 상태 유지 |
 | [App #4 실행](https://github.com/seokpan/seokpan-hybrid-app/issues/4) | TH-02·06·07·14의 이력 보존 이관·사용자 경로/생명주기·검사/Release 인계·다중 Pod 안전. 기존 [App #1](https://github.com/seokpan/seokpan-hybrid-app/issues/1) Client/시간대·[App #2](https://github.com/seokpan/seokpan-hybrid-app/issues/2) CI·D [GitOps #6](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6) 검증 유지 |
 | [GitOps #10 실행](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10) | TH-08·09·15의 base/lab·Cloud/Recovery 선언·App 복구 인계. [Draft PR #9](https://github.com/seokpan/seokpan-hybrid-gitops/pull/9) 후속 작성과 D의 [#5](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5)·[#6](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6) 실제 검증을 구분 |
 | [Infra #25 실행](https://github.com/seokpan/seokpan-hybrid-infra/issues/25) | TH-10~13·16·19의 ROSA 입력/Root·관리/Secret·Plan/Cost·통합·재생성·최종 보존/정리. A [#23](https://github.com/seokpan/seokpan-hybrid-infra/issues/23)·D [#18](https://github.com/seokpan/seokpan-hybrid-infra/issues/18)·C [#19](https://github.com/seokpan/seokpan-hybrid-infra/issues/19)의 Owner/인계는 유지 |
@@ -1234,7 +1251,7 @@ Provider Schema는 별도 임시 디렉터리에 전체 `*.tf`와 같은 Lock을
 <a id="recovery-fixture-measurement-20261005"></a>
 ### 9.20 인계 없이 진행한 독립 합성 Data·Backend 부분 예행과 역할 기록 — 2026-10-05
 
-사용자는 C의 직접 인계를 받지 못하더라도 확보 가능한 공개 Source와 새 격리 로컬 자원에서 독립 예행을 진행하고, 다른 담당자와 겹친 기여·인계를 정확히 남기도록 요청했다. 원래 Data/Backup 연결은 [h-infra Issue #17](https://github.com/seokpan/seokpan-hybrid-infra/issues/17), 이번 최소 Fixture 구현 Source는 [h-infra Draft PR #29](https://github.com/seokpan/seokpan-hybrid-infra/pull/29)의 `4a4ee1b6762502be1e2ddf12d451e45205fdca03`이다. 기존 C Branch/main·공유 DB·실제 Backup/Key를 변경하지 않고 필요한 시험용 Source 4파일만 준비했다. 이 Source는 운영 Backup 자동화 전체나 C 작업 완료본이 아니다.
+C 직접 인계와 별도로 공개 Source·새 격리 로컬 자원에서 독립 예행을 진행했다. 담당별 책임·실행·검토·수신 범위를 해당 Run에서 구분한다. 원래 Data/Backup 연결은 [h-infra Issue #17](https://github.com/seokpan/seokpan-hybrid-infra/issues/17), 이번 최소 Fixture 구현 Source는 [h-infra Draft PR #29](https://github.com/seokpan/seokpan-hybrid-infra/pull/29)의 `4a4ee1b6762502be1e2ddf12d451e45205fdca03`이다. 기존 C Branch/main·공유 DB·실제 Backup/Key를 변경하지 않고 필요한 시험용 Source 4파일만 준비했다. 이 Source는 운영 Backup 자동화 전체나 C 작업 완료본이 아니다.
 
 실제 수행 결과의 정본은 [T18/fixture-20261005-01 Summary](../evidence/T18/fixture-20261005-01/summary.md)·[Release](../evidence/T18/fixture-20261005-01/release.json)·[Metric](../evidence/T18/fixture-20261005-01/metrics.csv)·[Timeline](../evidence/T18/fixture-20261005-01/timeline.csv)·[Checksum](../evidence/T18/fixture-20261005-01/checksums.txt)이다. 새 임시 TCP DB에서 3회 반복 작은 Fixture와 1회 확장 Fixture의 Dump/gzip/age/로컬 사본/해독/새 DB Import·Schema/행 비교를 실제 실행했고, 잘못된 Key·잘린 암호문·재사용 대상 거부도 확인했다. 다섯 파일의 원문/측정값은 Run에만 남기며 이 진행 문서에 재기록하지 않는다. 임시 DB·프로세스·Key·Backup 정리는 Run에 연결한다.
 
@@ -1243,8 +1260,8 @@ Provider Schema는 별도 임시 디렉터리에 전체 `*.tf`와 같은 Lock을
 | 책임 / 실제 기여 | 이번에 확인한 범위 | 수신·리뷰와 남은 작업 |
 | --- | --- | --- |
 | C 김상희 — Data/Backup/Restore 배정 책임 유지 | C의 공개 사전 점검은 참조. C 개인 자료·보호 사본·계정/Key를 인계받거나 C가 두 Run을 실행했다고 기록하지 않음 | Fixture DDL·Snapshot 가정·복원 비교와 목적 계정/TLS 부분 조건, 실제 버전/도구/계정·백업 경로에 대한 C 리뷰 대기 |
-| 정태훈 요청 / Codex 실제 실행·기록 | 공개 App `c12b3d15a4dd2c806fac4326a9eb30ed6e8a81b3`의 유도 합성 DDL·별도 임시 DB·TLS/AUTH Redis·Production Backend HTTPS를 두 새 Run으로 기록 | 실제 Migration CLI·운영 데이터/복구·C 수신 완료로 확대하지 않음. B의 기능/Transient 상태 리뷰와 전체 접속/업무 통합·선택 근거 보완은 별도 |
-| D 최유준 — Image/증거 Index 책임 유지 | Codex가 실제 두 Run의 Index를 임시 연결. D가 Build/Scan·Run 실행·Index 검토했다고 기록하지 않음 | D Index 형식 검토·수신과 검토된 새 Image/같은 조합 업무 증거 대기 |
+| 격리 로컬 합성 시험 실행·기록 | 공개 App `c12b3d15a4dd2c806fac4326a9eb30ed6e8a81b3`의 유도 합성 DDL·별도 임시 DB·TLS/AUTH Redis·Production Backend HTTPS를 두 새 Run으로 기록 | 실제 Migration CLI·운영 데이터/복구·C 수신 완료로 확대하지 않음. B의 기능/Transient 상태 리뷰와 전체 접속/업무 통합·선택 근거 보완은 별도 |
+| D 최유준 — Image/증거 Index 책임 유지 | 실제 두 Run의 Index를 임시 연결. D가 Build/Scan·Run 실행·Index 검토했다고 기록하지 않음 | D Index 형식 검토·수신과 검토된 새 Image/같은 조합 업무 증거 대기 |
 | A 이유빈 / B 정태훈 — 실제 Host·플랫폼 / App·GitOps 계약 | 기존 자산·선언과 담당은 변경 없음. 공유 실행 대신 폐기 가능한 독립 환경 사용 | 실제 격리 Host/공간·새 Redis·보존 Image·클라이언트 경로 및 전체 시간선의 직접 조건 확인 |
 
 **판정 범위:** MariaDB 10.11.14로 수행했으며 실제 사전 점검 버전11.8.9와 다르다. 동시 쓰기 없는 합성 데이터이고 동일 Host 복사가 실제 RDS→S3→On-Prem 전송을 대신했다. 최초 Data Run은 TLS/목적 계정·App/Redis/클라이언트 업무를 제외했다. 후속 Backend Run은 폐기 가능한 목적 SSL 계정·CA/Host 검증·새 TLS/AUTH Redis와 HTTPS Backend 업무를 부분 검증했으며 Fixture Redis 버전도 실제 프로젝트 조합 확인과 구분한다. FE/browser/WSS·승인 Image/Release·OCP/Host·실제 Data/Backup 경로·운영 부하/성공 사본 지연 보장·사고 탐지/판단/안내는 여전히 미측정이다. 두 부분 실행 PASS이며 Render/Deployment/Acceptance는 NOT RUN, 전체 RTO/RPO는 null이다. 스크립트 기동/해독부터 잰 부분 시간은 서비스 RTO가 아니며 실제 운영 복구·최종 T18 또는 새 DR 목표 달성으로 해석하지 않는다.
@@ -1253,7 +1270,7 @@ Provider Schema는 별도 임시 디렉터리에 전체 `*.tf`와 같은 Lock을
 
 - [x] 직접 인계 없는 독립 Fixture Source·부분 실행·새 다섯 파일 Run 작성
 - [x] 새 TLS/AUTH Redis·Production Backend HTTPS의 로그인/랭킹·새 게임 FORFEIT/현재 결과·SQL 검증을 별도 다섯 파일 Run으로 기록
-- [x] 배정 책임 / 요청자 / 실제 Codex 기여 구분과 Index 임시 연결
+- [x] 배정 책임 / 합성 시험 실행·검토 범위 구분과 Index 임시 연결
 - [ ] C Data 리뷰·D Index 검토/수신 및 실제 경로의 버전/권한/자산 차이 확인
 - [x]10분/30분/15분·Backup/Restore 유지 설계 변경안의 선택/근거와 관련 계약 반영 —03 §3-I.14.5
 - [ ] 관련 Source·문서·SVG/PNG/출처 필수 추가 보완0건 검증·PR 리뷰/병합, 실제 전체 업무/목표 달성은 별도
@@ -1267,7 +1284,7 @@ Provider Schema는 별도 임시 디렉터리에 전체 `*.tf`와 같은 Lock을
 
 설계 선택 완료와 두 합성 부분 예행 PASS를 실제 전체 목표 달성으로 합치지 않는다. 전체 운영 T18은 **NOT RUN**, 서비스 전체 RTO/RPO는 **null/미판정**이다. 15분 예약만으로 RPO 30분 PASS를 선언하지 않으며 실제 성공 사본 Data 간격 G + 로컬 완성본 확보 지연 D + 시각 불확실성 U ≤ 30분과 사고 시 사용 사본의 Data 나이를 확인한다. 일반 사본 7일·독립 보호 사본, 시간당 계획 4회에 따른 공간·부하·전송/잔존 비용을 실제 입력으로 확인한다.
 
-복구 Acceptance는 과거 완료 Game/Move/Result/Rating의 DB 보존·정합과 지정 클라이언트의 새 로그인·랭킹·새 게임·현재 방 결과를 구분한다. 과거 개별 결과 화면이 새 Redis에서 자동 복구됐다고 주장하지 않는다. 별도 새 Recovery Redis와 전용 격리 DB/TLS, A Host·B App/GitOps·C Data/Key·D Image/Index 배정은 유지한다. 두 Run의 실제 수행자는 Codex이며 C 리뷰·D 수신은 별도다.
+복구 Acceptance는 과거 완료 Game/Move/Result/Rating의 DB 보존·정합과 지정 클라이언트의 새 로그인·랭킹·새 게임·현재 방 결과를 구분한다. 과거 개별 결과 화면이 새 Redis에서 자동 복구됐다고 주장하지 않는다. 별도 새 Recovery Redis와 전용 격리 DB/TLS, A Host·B App/GitOps·C Data/Key·D Image/Index 배정은 유지한다. 두 Run은 격리 로컬 합성 시험이며 C 리뷰·D 수신은 별도다.
 
 | 작업 | 최신 Source 상태 | 직접 남은 조건 |
 | --- | --- | --- |
@@ -1311,9 +1328,9 @@ OCP검증종료와실습자원정리/공유클러스터삭제는별개이며 OCP
 <a id="b-issue-navigation-audit-20261005"></a>
 ### 9.24 B의 기존 이슈 범위·탐색·전체 종료 연결 감사 — 2026-10-05 KST
 
-**요청:** 정태훈이 PR34 병합·브랜치 삭제 후, 각 2차 저장소의 본인 작업과 프로젝트 완료까지 이슈를 보고 따라갈 수 있는지 확인하고 부족한 안내를 보완하도록 요청했다. Codex가 네 저장소의 현재 Issue 33개(열림17/닫힘16), 관련 댓글 15개 이슈, PR34 병합 후 main과 개인계획/승인 자료를 읽었다. 원격 Source 관측과 실제 Runtime·팀 수신을 구분한다.
+**검토 목적:** PR34 병합·브랜치 삭제 후 개인 작업과 프로젝트 종료까지 원 Issue로 추적 가능한지 점검하고 안내 공백을 보완했다. 네 저장소의 현재 Issue 33개(열림17/닫힘16), 관련 댓글 15개 이슈, PR34 병합 후 main과 개인계획/승인 자료를 읽었다. 원격 Source 관측과 실제 Runtime·팀 수신을 구분한다.
 
-[h-docs PR #34](https://github.com/seokpan/seokpan-hybrid-docs/pull/34)는 `2026-10-05T07:23:50Z`(16:23:50 KST)에 main `efb07db36c140d77702fe5e2854d6d44df0af198`로 병합됐고 브랜치 삭제도 확인했다. 직전 답변의 리뷰·병합 대기는 당시 상태이며 현재 안내에서 갱신한다. 기존 Source·새 Image/OCP 수락·실제 제한 출력·ROSA/전체 T18·최종 팀 종료는 별도 상태다.
+[h-docs PR #34](https://github.com/seokpan/seokpan-hybrid-docs/pull/34)는 `2026-10-05T07:23:50Z`(16:23:50 KST)에 main `efb07db36c140d77702fe5e2854d6d44df0af198`로 병합됐고 브랜치 삭제도 확인했다. 이전 기록의 리뷰·병합 대기는 당시 상태이며 병합 결과를 후속 상태로 연결한다. 기존 Source·새 Image/OCP 수락·실제 제한 출력·ROSA/전체 T18·최종 팀 종료는 별도 상태다.
 
 **판정:** [h-docs Issue #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의 기존 TH01~19 연결표와 81개 세부 체크는 개인 시작부터 발표·최종 보존/ROSA 정리/종료까지 이미 포함한다. [h-app Issue #1](https://github.com/seokpan/seokpan-hybrid-app/issues/1)·[h-app Issue #4](https://github.com/seokpan/seokpan-hybrid-app/issues/4)·[h-gitops Issue #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10)·[h-infra Issue #25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25)·[h-docs Issue #6](https://github.com/seokpan/seokpan-hybrid-docs/issues/6)와 협업 Issue가 해당 실행 범위를 담당하므로 새 중복 상위/19개/81개 이슈 생성은 필요 없다. 다만 상위 본문 56,130자와 누적 날짜별 안내 때문에 현재 행동·주 원본·수신·다음 실행을 찾기 어려웠다. Native Sub-issues는 등록되지 않았으며 실제 구조는 본문 양방향 링크다.
 
@@ -1329,7 +1346,7 @@ OCP검증종료와실습자원정리/공유클러스터삭제는별개이며 OCP
 
 **사용법:** Docs21 현재 안내 → 실행 이슈의 행동/최소 입력 → 해당 PR/실제 새 Run에 먼저 기록 → 담당 제출/수신/보완 확인 → 해당 TH 증거/체크 → Tracker/05·D Index에 원 링크 연결. 막히면 필요한 입력/개정·공급 이슈·담당·막힌 실행·다음 확인 시점·지금 가능한 준비를 남긴다. 한 Source PR만으로 전체 Runtime 범위가 끝나지 않으면 `Refs`로 연결하며 병합에 의한 자동 종료를 피한다. 공개 기록에는 논리 참조/개정만 남긴다.
 
-**직전 안내 검토:** A 전체 대기 없음·첫 Plan Data SG2 필수와 실제 Worker SG 이후 Stage2·OCP 삭제가 ROSA 선행 아님·목표 창과 실제 시각 분리·전체 T18의 ROSA 창 밖 실행 가능은 승인 기준과 맞다. 필요한 Migration만 단일 실행하고 기존 Schema에 불필요한 DDL을 강제하지 않는다. Window A 뒤 중간 정리는 검증 Backup의 로컬 완성본·Release/Bundle/Key 접근·App 쓰기/Data/Binding 보호·범위/비용/실행 확인 후의 조건부 실행이며 유지하면 실제 가동시간·비용을 기록한다.
+**실행 조건 검토:** A 전체 대기 없음·첫 Plan Data SG2 필수와 실제 Worker SG 이후 Stage2·OCP 삭제가 ROSA 선행 아님·목표 창과 실제 시각 분리·전체 T18의 ROSA 창 밖 실행 가능은 승인 기준과 맞다. 필요한 Migration만 단일 실행하고 기존 Schema에 불필요한 DDL을 강제하지 않는다. Window A 뒤 중간 정리는 검증 Backup의 로컬 완성본·Release/Bundle/Key 접근·App 쓰기/Data/Binding 보호·범위/비용/실행 확인 후의 조건부 실행이며 유지하면 실제 가동시간·비용을 기록한다.
 
 **종료 구분:** OCP 사전검증 수락≠승인 실습 대상 정리≠공유 Cluster 종료. ROSA 삭제≠AWS 잔존/후속 비용 종료≠B 개인 종료≠팀 프로젝트 전체 완료. B 개인 Docs21 종료는 자신의 필수 실행·증거·수신·TH19 범위 충족 후이며, 팀 완료는 공식 T01~T23/Must·결함/미실행 판정·05/Tracker/Index·발표/영상·보존/회수·자원/잔존 비용/후속 책임의 팀 수락으로 별도 판정한다. Docs8은 팀 입력/인계 허브이지 그것의 닫힘이 전체 완료를 보장하는 단일 Epic은 아니다.
 
@@ -1444,7 +1461,7 @@ OCP 새 조합 사전검증, 새 격리 Recovery 구성/부분 업무, 실제 �
 <a id="b-oidc-condition-review-followup-20261005"></a>
 ### 9.28 최신 A 리뷰의 대상 개정·Trust 조건 판단과 동일 PR 후속 — 2026-10-05 KST
 
-사용자는 GitOps #9의 기존 Runtime7 연결표를 원 PR 코멘트에 추가하고 새 리뷰까지 확인해 머지 여부를 판단하도록 요청했다. Infra #28의 추가 Request Changes는 수정 전 개정의 판단인지 확인하고 타당한 문제는 같은 PR에서 보완하도록 요청했다. 원 리뷰·시각·commit_id·실제 Source를 대조하며 리뷰 문구 전체를 그대로 설계나 새 실행 Gate로 확대하지 않는다. 기록은 기존 [h-docs PR #38](https://github.com/seokpan/seokpan-hybrid-docs/pull/38) 안에서 갱신한다.
+GitOps #9의 기존 Runtime7 연결표와 원 PR 댓글·최신 리뷰를 대조해 병합 조건을 검토했다. Infra #28의 Request Changes는 리뷰 시각·commit_id·실제 Source를 대조해 해당 개정의 문제인지 확인하고 같은 PR에서 필요한 보완 범위를 검토했다. 리뷰 문구를 그대로 설계나 새 실행 Gate로 확대하지 않는다. 기록은 기존 [h-docs PR #38](https://github.com/seokpan/seokpan-hybrid-docs/pull/38)에 연결한다.
 
 | 새 리뷰 | 실제 대상·판정 | 후속 |
 | --- | --- | --- |
@@ -1466,7 +1483,7 @@ OCP 새 조합 사전검증, 새 격리 Recovery 구성/부분 업무, 실제 �
 <a id="b-cloud-main-review-followup-20261005"></a>
 ### 9.29 GitOps #9·Docs #38 병합 후 Cloud #11의 main 전환·Source 리뷰 — 2026-10-05 KST
 
-사용자는 [h-gitops PR #9](https://github.com/seokpan/seokpan-hybrid-gitops/pull/9)와 [h-docs PR #38](https://github.com/seokpan/seokpan-hybrid-docs/pull/38)의 병합 및 Docs 브랜치 삭제를 알렸고, #11을 위해 #9 브랜치는 보존했다. 원 PR·main/Tree·브랜치와 기존 #11의 실제 Source 차이를 재대조한다. #9의 squash 병합 뒤 #11의 Draft가 자동 해제되지 않는 것은 남아 있던 **main 통합·base 전환·Cloud 차이·새 검사·사람 리뷰** 단계이며 실제 ROSA나 전체 Recovery 완료 대기가 아니다.
+[h-gitops PR #9](https://github.com/seokpan/seokpan-hybrid-gitops/pull/9)와 [h-docs PR #38](https://github.com/seokpan/seokpan-hybrid-docs/pull/38)의 병합 및 Docs 브랜치 삭제를 확인했고, #11을 위해 #9 브랜치는 보존했다. 원 PR·main/Tree·브랜치와 기존 #11의 실제 Source 차이를 재대조한다. #9의 squash 병합 뒤 #11의 Draft가 자동 해제되지 않는 것은 남아 있던 **main 통합·base 전환·Cloud 차이·새 검사·사람 리뷰** 단계이며 실제 ROSA나 전체 Recovery 완료 대기가 아니다.
 
 | 원본 | 최신 확인·직접 후속 | 유지하는 실행 경계 |
 | --- | --- | --- |
@@ -1647,7 +1664,7 @@ TH-01~19·세부 식별자81개·T01~T23 연결과 기존 완료 체크2개는 �
 <a id="b-lock-cost-receipt-phase-permission-followup-20261006"></a>
 ### 9.35. App lock 병합·D 비용 수신/추가 요청과 ROSA 단계별 목적 권한 — 2026-10-06 KST
 
-**App8 병합 당시 Source/실행 이력:** [App #8](https://github.com/seokpan/seokpan-hybrid-app/pull/8) 정확 HEAD `43567b7b85ad0b5d33143c5a29e3a6b84496eab6`에 [기존 B 승인](https://github.com/seokpan/seokpan-hybrid-app/pull/8#pullrequestreview-5423331533)이 있었고 main `e862a0f9e384f2e5539e69c31fbf0b4678c87a25`로 12:02:59 KST 병합·작업 브랜치 삭제를 확인했다. 이번 AI는 기존 승인과 독립 대조해 lock의 version/resolved/integrity 3필드·직접 consumer3개의 `^1.2.1` 요구와1.2.2 호환을 확인했다. 이번에 새 B APPROVE를 게시한 것이 아니다. D가 [App #7](https://github.com/seokpan/seokpan-hybrid-app/issues/7)에 첫 Jenkins main Run#1의 P1 Frontend npm audit HIGH1 실패를 보고했고 Build/Scan/Push 전에 중단됐다. D의 npm11 audit0 보고와 프로젝트 Node24/npm12의 `npm ci`·`verify:ci` 실제 재실행은 구분한다. **새 main Run·npm12 검사·승인 Image/Digest 공급은 미확인/미실행**이며 D 재실행 → GitOps 동일 조합 수락이 후속이다.
+**App8 병합 당시 Source/실행 이력:** [App #8](https://github.com/seokpan/seokpan-hybrid-app/pull/8) 정확 HEAD `43567b7b85ad0b5d33143c5a29e3a6b84496eab6`에 [기존 B 승인](https://github.com/seokpan/seokpan-hybrid-app/pull/8#pullrequestreview-5423331533)이 있었고 main `e862a0f9e384f2e5539e69c31fbf0b4678c87a25`로 12:02:59 KST 병합·작업 브랜치 삭제를 확인했다. 기존 승인과 독립 대조해 lock의 version/resolved/integrity 3필드·직접 consumer3개의 `^1.2.1` 요구와1.2.2 호환을 확인했다. 이번에 새 B APPROVE를 게시한 것이 아니다. D가 [App #7](https://github.com/seokpan/seokpan-hybrid-app/issues/7)에 첫 Jenkins main Run#1의 P1 Frontend npm audit HIGH1 실패를 보고했고 Build/Scan/Push 전에 중단됐다. D의 npm11 audit0 보고와 프로젝트 Node24/npm12의 `npm ci`·`verify:ci` 실제 재실행은 구분한다. **새 main Run·npm12 검사·승인 Image/Digest 공급은 미확인/미실행**이며 D 재실행 → GitOps 동일 조합 수락이 후속이다.
 
 package-lock의 패치 버전/URL/integrity 형식과 세 직접 소비자의 요구 범위는 정합했다. `npm ci`의 실제 설치/integrity·verify/build/browser·Image는 별도 실행이다. devDependency라도 최종 bundle/동작 변화가 없다고 보장하지 않는다. 새 main Run의 정확 Commit·단계별 결과와 FE/BE Digest/Platform·Scan/Smoke/Pull metadata를 D 원 Issue7/2→GitOps10/5/6에 수락해 B lab 활성화/필요 Migration/수동 Sync·같은 조합 새 Run으로 이어간다. npm12 기준/audit를 완화하거나 ECR/전체 Cloud를 OCP의 새 선행으로 만들지 않는다.
 
@@ -1907,7 +1924,7 @@ C [Infra34](https://github.com/seokpan/seokpan-hybrid-infra/pull/34)은 A 승인
 
 > **현재 단계:** 05 협업 진행본 — 저장소 공유와 현행 작업·입력 인계 연결
 > **기준일:** 2026-10-02 KST. 이전 01:27 KST Source 관측은 보존하며 후속 Source/권한 관측과 팀 보고는 공통 진행표에 별도 연결
-> **상태:** 사용자 04·개정 지침 등록 완료 확인. 네 저장소 main/Tree/Branch/PR/Issue 읽기 점검과 팀 전체 진행 안내 보강. 앞선 B 로컬 초안은 보존. 팀의 Infra 병합·OCP 보고와 AI의 Source 관측·로컬 검사·미실행 Runtime을 구분
+> **상태:** 04·개정 지침 등록 완료 확인. 네 저장소 main/Tree/Branch/PR/Issue 읽기 점검과 팀 전체 진행 안내 보강. 앞선 B 로컬 초안은 보존. 팀의 Infra 병합·OCP 보고와 Source 관측·로컬 검사·미실행 Runtime을 구분
 > **기준:** 승인된 01/02/03, 닫힌 `04_IMPLEMENTATION_READINESS.md`, 최종 개정 `PROJECT_INSTRUCTIONS.md`, 사용자 최신 명시적 결정
 > **기간/한도:** 2026-09-28~2026-10-26, 10/16 Technical Freeze, $450 계획선+$50 여유=$500 한도
 > **공유와 종료:** 공유 반영은 [PR #5](https://github.com/seokpan/seokpan-hybrid-docs/pull/5)의 병합 Metadata로 확인한다. 변경은 Branch/PR에서 검토하고 개인별 읽기/쓰기 접근·실제 팀 도입은 별도 확인한다. 05 최종 종료는 구현·검증·정리 후다.
@@ -1934,7 +1951,7 @@ C [Infra34](https://github.com/seokpan/seokpan-hybrid-infra/pull/34)은 A 승인
 
 **Recovery 직접 후속과 역할 정정:** [§9.19](#recovery-source-role-followup-20261004)에서 C Data/새 Redis 실제 입력·B App/GitOps 선언·D Image/증거·A Host의 책임과 독립 진행 순서를 구분한다. B 새 Recovery Redis의 입력 대기 선언·Render 의미 Guard와 고정 HEAD의18개/26개 Source CI를 완료했다. C의 실제 정책·공급/Runtime과 Dump/Import 실측을 구분하며 실측은 #9의 추가 Draft 조건으로 묶지 않는다.
 
-**2026-10-05 독립 Data·Backend 부분 예행:** Codex 실행 환경에서 새 임시 DB/합성 데이터의 Backup/Restore와, 별도 새 TLS/AUTH Redis·Production Backend HTTPS에서 로그인/랭킹·새 게임 FORFEIT 완료/현재 결과·SQL 검증을 수행했다. [§9.20](#recovery-fixture-measurement-20261005)·[Data Run](../evidence/T18/fixture-20261005-01/summary.md)·[Backend Run](../evidence/T18/business-fixture-20261005-01/summary.md)에 실제 실행·조건·제한을 연결한다. C/A/B/D 배정 책임은 유지하며 팀원의 실행/리뷰·수신 완료로 대필하지 않는다. FE/browser/WSS·Image/Host·실제 Backup 경로·전체 RTO/RPO 달성 검증은 남는다. 현재10분/30분/15분 설계 변경안의 선택/근거와 정합 범위는03 §3-I.14.5를 따른다.
+**2026-10-05 독립 Data·Backend 부분 예행:** 격리 로컬 환경에서 새 임시 DB/합성 데이터의 Backup/Restore와, 별도 새 TLS/AUTH Redis·Production Backend HTTPS에서 로그인/랭킹·새 게임 FORFEIT 완료/현재 결과·SQL 검증을 수행했다. [§9.20](#recovery-fixture-measurement-20261005)·[Data Run](../evidence/T18/fixture-20261005-01/summary.md)·[Backend Run](../evidence/T18/business-fixture-20261005-01/summary.md)에 실제 실행·조건·제한을 연결한다. C/A/B/D 배정 책임은 유지하며 팀원의 실제 실행/리뷰·수신 여부는 별도 확인 대상이다. FE/browser/WSS·Image/Host·실제 Backup 경로·전체 RTO/RPO 달성 검증은 남는다. 현재10분/30분/15분 설계 변경안의 선택/근거와 정합 범위는03 §3-I.14.5를 따른다.
 
 **별도 프로젝트 구현 이력:** [§9.13 Cloud·ROSA 구현과 App 경쟁 결함 후속](#cloud-rosa-app-followup-20261002), [§9.12](#tjung03-latest-source-20261002)의 승인/병합 관측과 [§9.11](#tjung03-registration-rosa-input-20261002)의 TH-01~19·81개 식별자는 보존한다. 기존 유효 코드/검사는 취소하지 않으며 이번 복구 목표 판단의 증거나 우선 완료 조건으로 확대하지 않는다.
 
@@ -1967,7 +1984,7 @@ C [Infra34](https://github.com/seokpan/seokpan-hybrid-infra/pull/34)은 A 승인
 
 **승인된 상세설계와 운영 결정·실행 인계 문서는 04 종료로 완료됐다.** 05는 네 사람의 구현·통합·검증과 발표 준비·자원 정리까지 연결하는 실행 기록이다. 실제 값·코드·시험 결과는 남아 있으며 별도 Gate로 판정한다. 현재 정의된 주 문서 흐름은 05까지다. 이후 번호를 추가하는 필수 계획은 확정되지 않았다.
 
-**팀은 05의 최종 완료를 기다리지 않는다.** 검토한 작업 안내를 먼저 공유하고, 각 담당자는 자기 작업의 입력·범위·완료 증거를 확인해 독립 준비를 진행한다. 결과는 각자가 Issue/PR/Run에 직접 남기며 수신자가 인계를 확인한다. 05는 이를 연결해 진행 중 계속 갱신하고 마지막에 최종 결과를 닫는다. 정태훈이 모든 사람의 일을 일일이 배정·수집·대필하는 운영을 전제로 하지 않는다.
+**팀은 05의 최종 완료를 기다리지 않는다.** 검토한 작업 안내를 먼저 공유하고, 각 담당자는 자기 작업의 입력·범위·완료 증거를 확인해 독립 준비를 진행한다. 결과는 각자가 Issue/PR/Run에 직접 남기며 수신자가 인계를 확인한다. 05는 이를 연결해 진행 중 계속 갱신하고 마지막에 최종 결과를 닫는다. 담당별 작업·기록·수신 책임은 04의 역할 분담을 따른다.
 
 | 작업 순서 | 현재 상태 | 무엇을 하면 끝나는가 |
 |---|---|---|
@@ -1995,3 +2012,64 @@ C [Infra34](https://github.com/seokpan/seokpan-hybrid-infra/pull/34)은 A 승인
 | GitOps #19 lab Source | 기존 B 승인·40검사 보고 수신, main de130af의 3-way tree 보존 대조 | 선언 작성 대기는 해소, 실제 Data/CA/Secret·Owner/사용창·AppProject/live Diff와 활성화는 대기 |
 
 서로 중복되는 runner47을 기본suite에 더해 고유 시험 수로 쓰지 않는다. Run의 trigger·검사한 작업 트리·게시 SHA와 Image/실제 배포 개정을 구분한다. C의 §8 기록·과거 Evidence·TH81/완료2·00–04·Project v3와 DR10/30/15·Pool 후보·Cost PARTIAL은 보존한다. 전체 Source/과거 이력의 미검토가 남아 있어 Q10은 완료하지 않는다.
+
+
+<a id="b-review-followup-implementation-20261007"></a>
+### 9.43 리뷰 제안 반영과 실시간 구독·경로 A·Recovery 기록 — 2026-10-07
+
+[Source §8](SOURCE_REVIEW_20261007.md#b-review-followup-20261007)에 App17 최종 HEAD 재검사/설명, App18 null 경계·지속 CI, App19 PubSub 취소, GitOps20 경로 A 등록 검사, Infra40 C 제안/운영 차이 Metadata의 정확한 Source·Run·한계·인계를 연결했다. 현재 입력은 상단 단일 구획과 [대장 §11](REPOSITORY_CONSISTENCY_AUDIT.md#b-review-followup-audit-20261007)을 따른다. Docs69의 병합본/보존 브랜치와 새 후속 PR은 구분한다.
+
+C의 §8.9–8.14·과거 시험/체크/그림·설계/TH 상태는 유지한다. 실제 Runtime 시험을 문서 갱신으로 추가하지 않는다. 최종 병합 조합·Image와 lab 입력/등록/업무 시험, Controller 외부 독립 사본·ROSA 본인 준비는 각 직접 조건을 남긴다. 전체 Q 수렴은 미완료이며 새로운 실행 근거 없이 실제 완료 수를 올리지 않는다.
+
+
+### 9.44 재리뷰 대응 재개와 단계별 lab·비용·본인 진단
+
+[Source §9](SOURCE_REVIEW_20261007.md#b-review-resume-20261007)·[대장 §12](REPOSITORY_CONSISTENCY_AUDIT.md#b-review-resume-audit-20261007)와 상단 현재 구획을 따른다. Infra40 병합/삭제, App18/19/GitOps20 재리뷰, App17 새 제출 확인, D Stage1 Gate/등록 입력과 B 리뷰, Cost PARTIAL 및 본인 복원/clone 진단을 원 작업에 연결한다. 실제 사용창·본인 키/Caller·배포·T18·비용 수락은 별도다. C 기록·과거 결과/체크/Shared Execution은 보존한다.
+
+
+<a id="b-review-closeout-implementation-20261007"></a>
+### 9.45 승인된 App 결합 Source와 작업 인계 — 2026-10-07
+
+[Source §10](SOURCE_REVIEW_20261007.md#b-review-closeout-20261007)의 실제 App17–19 병합·브랜치 삭제·결합 main CI와 [App2 Build 인계](https://github.com/seokpan/seokpan-hybrid-app/issues/2#issuecomment-6033610765)를 연결한다. C의 Docs74/periodic 기록·§8.9–8.14를 보존했다. 남은 리뷰/개인 입력·Stage1/2·ROSA/Cost·감사/검증/발표·종료 조건은 [work 인계](WORK_HANDOFF_20261007.md)로 이어간다. 실제 클러스터·Cloud·Backup·T18 PASS나 새 TH 완료는 추가하지 않는다.
+
+
+<a id="b-provider-cleanup-source-20261007"></a>
+### 9.46 App #4 W10의 PubSub Provider 오류 처리 후속 — 2026-10-07
+
+[App #4](https://github.com/seokpan/seokpan-hybrid-app/issues/4)·[Draft #20](https://github.com/seokpan/seokpan-hybrid-app/pull/20)·[정확 HEAD CI](https://github.com/seokpan/seokpan-hybrid-app/actions/runs/37605414615)·[새 Source 부분 Run](../evidence/T09/provider-cleanup-20261007-01/summary.md)에 제품2파일 변경·정확 Source·환경·실제 수행자·실패/재시험·도구/Lock·다음 입력을 기록했다. App #19 D의 비차단 의견을 이어 subscribe/버전 오류 뒤 cleanup RedisError만 억제하고 기존 RealtimeUnavailable 계약을 유지한다. 기존 취소8 + 새 오류12에서 main 제품코드6FAIL/14PASS→수정20PASS, 기존 Adapter8을 포함한 관련28PASS다. 정확 PR HEAD `e3488953b0f51b1a54dc7899a8a57c8024c54c13`의 Linux 기존정식1774/부분집합47/별도 소유 Redis Lua9 PASS, Windows 정식실패·원 main 별도사본 재현은 같은 Run에 분리했다. Artifact 서버metadata/digest와 원 Job은 읽었지만 ZIP 독립 다운로드는403으로 미검증이다.
+
+소스 담당 B. 로컬 검증 환경은 Windows, Linux 검증은 GitHub Actions다. 리뷰·병합과 D 새 Backend Build/Scan/Digest·플랫폼/Pull→B App/별도 held Migration 소비 수락이 남는다. 실제 Valkey/TLS/AUTH·DB/WSS/클러스터·연결회수·전체 T09/T18·비용 성공은 미실행이다. [D 보고 수신](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5#issuecomment-6035851057)은 보고 범위이며 성공한 등록/Sync를 반복하지 않았다. 다른 담당자의 §8 기록·기존 Run,03/04 종료·DR10/30/15·CP3/Infra3/Worker3·Cost PARTIAL/$450/$500·TH81/완료2·Q 미완료를 보존한다.
+
+<a id="repository-full-audit-20261007"></a>
+### 9.47 최초 저장소 전수 조사와 소스 검사 후속 — 2026-10-07
+
+- [종합 조사](REPOSITORY_AUDIT_20261007.md)·[새 Source Run](../evidence/T09/source-audit-20261007-01/summary.md): 현재 소스·원 토론·고유 이력·CI/보존 산출물·그림·연쇄 참조·변경분, 실제 시험·한계·다음 입력 연결.
+- 기존 §9.46 Provider Run의 당시 실패·ZIP403·실제 수행 기록 보존. 이번 Artifact 독립 검증 성공은 별도 후속 기록.
+- GitOps main b8cf323의 Root SHA B=bfee2669e62bf823969ce224e5599eccace5d024·FE/BE1 소스와 마지막 수신 Runtime SHA A·FE/BE0 분리. #28/29/30 병합은 실제 B 등록 적용·Stage2 Sync의 성공 근거 아님. 기존 선택 Sync·금고 본체 성공 유지, 실제 Stage2는 원 #26에서 후속.
+- C §8.16·Infra46 Recovery VM 준비 보고와 기존 담당 기록 보존. App174 격리 조합·Frontend269/UI36·GitOps25 Linux69·Docs14+16 검사 결과 연결. GitOps 소스 조합은 Windows73 중70PASS/기존POSIX3FAIL이며 새 조합 Linux는 미실행.
+- Infra44/45 실패 판정 반례·옛 tfvars 경고/기본값 차이·현재 카드 정정안 인계. 승인03/04 종료·DR10/30/15·CP3/Infra3/Worker3·Cost PARTIAL/$450/$500·TH81/완료2·Q 미완료 유지.
+- Git 계정 tjung03, 실행 환경 Windows 격리 도구/GitHub Actions Linux. 실제 Cloud·금고·lab 실행 및 공개 Issue/PR 게시 미수행.
+
+- **마지막 변경분 수신:** Docs81의 C §8.17·Tracker 기록을 보존해 최신 main10dd13d 통합. GitOps26/6038214247의 DB 형식·GRANT·TLS1.3/이름 검증 접속·합성 데이터 출처 수락 보고 수신(D 실행/C 판정), 직접 Runtime 재조회 미수행. Root B 실제 적용·선택 Sync·Route/Origin·WSS/업무·새 Image는 별도. App22 abb6483의 UI 후속6파일 수정·main 대비18파일 검토, API/정적/도구81/unit278/build·clean UI36 성공과 첫 리뷰를 추가 인계. 모의 시험이며 새 Image/실제 Backend·Route 미검증.
+
+
+<a id="public-record-integrity-20261008"></a>
+### 9.48 공개 기록·문서 출처 정합 — 2026-10-08
+
+[검사 Run](../evidence/T09/public-record-integrity-20261008-01/summary.md)에 문구·실행 환경 메타데이터·출처 해시·체크섬·연결 경로 정리와 문서 무결성/기존 회귀 검사를 기록했다. App #22의 세션 안내·Infra #43의 합성 복구 안내·Docs #72의 문서/증거에 반영하며 해당 원 PR의 변경·검사·리뷰 상태를 연결한다. 기존 C의 §8 기록·측정값·Source SHA·실제 수행/수신 범위와 03/04 종료·DR10/30/15·CP3/Infra3/Worker3·Cost PARTIAL/$450/$500·TH81/완료2·Q 미완료를 보존한다. 실제 Runtime·배포·새 Image·전체 T09/T18·RTO/RPO 검증은 미수행이다.
+
+
+<a id="registration-review-followup-20261008"></a>
+### 9.49 등록 리뷰 후속 — 2026-10-08
+
+[검증 Run](../evidence/T09/registration-review-followup-20261008-01/summary.md)에 GitOps25의 SHA B 비교 PASS/A 불일치 BLOCKED·Windows66PASS/3FAIL·정확53314d3 Linux69PASS와 재리뷰 요청을 연결한다. App20/22·Infra43은 현재 HEAD 승인·Source 추가 수정 없음, 병합 후 새 Image/실환경 수락은 별도다. Controller/State/Cloud/DB 실행·새 TH/Q 완료 없음. 병합·브랜치 삭제 결과와 새 승인 수신은 원 PR에서 후속 확인한다.
+
+
+<a id="merged-pr-plan-readiness-20261008"></a>
+### 9.50 병합 후 현재 안내와 ROSA·OCP 직접 준비 — 2026-10-08
+
+- App20/22·Infra43·GitOps25 병합·해당 원격 PR 브랜치 삭제 확인, 네 원 PR 마무리 댓글 연결. [현재 Source/실행 순서](ROSA_OCP_NEXT_ACTIONS_20261008.md).
+- [새 소스 검사 Run](../evidence/T01/plan-source-readiness-20261008-01/summary.md): Infra fmt/helper 문법/OIDC harness 보존과 GitOps Root SHA B 비교/전체 lab release Gate PASS. 현재 Windows의 Controller TCP22 연결 실패, SSH 로그인·Controller 인증·Cloud Plan은 NOT RUN. 공식 T01/TH/Q 완료 가산 없음.
+- D GitOps26/6050000112의 부분 업무·ERR/Vote 보고와 C DB 수락 수신. 실제 Source/Image/Run·Route/Origin/TLS/Ready·등록/보호 근거·Vote/ERR 후속은 원 #26/#5, 새 App Image 공급은 D App2에서 별도.
+- 본인 상위 이슈 현재 안내의 Valkey 선언/본체 금고 대기 및 최신 PR 상태 정정. 실제 첫 Plan은 B Controller/Caller/Backend/지원·A 실제 기반/목적 권한·C SG2·예비 비용/Owner/창 수락 후. Docs83의 C §8.18/Tracker는 조사 중 main0cb6a95에 병합됐으며 정상 main 결합으로 원문/담당 기록 보존.
+- 03/04 종료·DR10/30/15·CP3/Infra3/Worker3·Cost PARTIAL/$450/$500·TH81/기존완료2 유지. 금고 독립 사본·Cloud/Recovery·전체 시험·발표/최종 정리는 후속.

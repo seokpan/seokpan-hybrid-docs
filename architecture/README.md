@@ -80,6 +80,8 @@ python3 architecture/tools/verify_diagrams.py
 
 일부 그림만 다시 만들 때는 `--only 1 2`처럼 그림 번호를 지정합니다. 전체 layout 입력이 없는 새 작업 사본에서는 먼저 필요한 전체 생성 입력을 마련합니다. 그림 바이트를 변경하지 않는 출처·설계 메타 갱신은 `python3 architecture/tools/verify_diagrams.py --integrity-only`로 기존 SVG/PNG를 manifest 해시와 대조할 수 있습니다. 이 모드는 원 생성 layout의 선언 기하 검사를 생략하며 이를 PASS로 기록하지 않습니다. 기본 검증 모드는 layout 입력이 없으면 실패합니다. 회귀 검사는 `python3 -m unittest discover -s architecture/tools -p "test_*.py"`로 수행합니다.
 
+무결성 검사는 저장소 원문 바이트와 상대경로 표기를 대조한다. Windows에서 Git의 줄바꿈 변환이 적용된 작업 파일은 원문 해시와 다를 수 있다. 개인 clone의 설정·파일을 바꾸지 않고 검사하려면 별도 폴더에 `git -c core.autocrlf=false archive --format=zip --output=<별도 ZIP 절대경로> <검토한 전체 SHA>`로 원문 사본을 만든 뒤 그 사본에서 검사한다. 상대경로는 Windows·Linux 모두 `/` 표기를 사용한다. `--integrity-only`도 사본의 `architecture/diagram-manifest.json`을 갱신하므로 기존 clone 보존이 필요하면 반드시 별도 사본을 사용한다.
+
 최신 DR·Data 메타는 `design/source-manifest.json`에서 읽고 과거 검토·검사 이력과 알 수 없는 확장 필드는 보존합니다. 검증 실패 시 manifest를 덮어쓰지 않으며 같은 입력의 반복 실행은 같은 결과를 내야 합니다.
 
 자동 검사는 글자/출력 경계·폰트 글리프·파일/원문 동일성을 확인합니다. 의미와 화살표 방향, 겹침/가독성은 수정된 그림을 직접 렌더링해 다시 확인합니다. 사용자 편집으로 SVG를 변경하면 PNG와 Manifest도 같은 개정으로 갱신합니다.
