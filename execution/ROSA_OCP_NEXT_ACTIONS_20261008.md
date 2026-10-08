@@ -12,7 +12,8 @@
 | 대상 | 확인한 병합 개정 | 원본·마무리 |
 |---|---|---|
 | App #20 | `c35509155886739f987b265d003a6ce7e95caf92` | [마무리](https://github.com/seokpan/seokpan-hybrid-app/pull/20#issuecomment-6050175642), 병합 verify success |
-| App #22 / 현재 App main | `1e99e36ed2f8b116fad5db9a6333a71f2c2bdec3` | [마무리](https://github.com/seokpan/seokpan-hybrid-app/pull/22#issuecomment-6050176304), Frontend 병합 CI 없음 |
+| App #22 / 당시 App main | `1e99e36ed2f8b116fad5db9a6333a71f2c2bdec3` | [마무리](https://github.com/seokpan/seokpan-hybrid-app/pull/22#issuecomment-6050176304), Frontend 병합 CI 없음 |
+| App #23 / 최종 조회 App main | `070c699c119d2972f551bdfc4fe390678ad45c44` | [D PR23](https://github.com/seokpan/seokpan-hybrid-app/pull/23) 작업 중 병합 추가 확인. Image 변경안 계산 planner/시험이며 annotation·Release JSON·Cloud/Writer는 범위 밖. 새 Image/Runtime 수락 별도 |
 | Infra #43 / 현재 Infra main | `6849c32d5b24a0e4994b7fbe849a1032211dc9a3` | [마무리](https://github.com/seokpan/seokpan-hybrid-infra/pull/43#issuecomment-6050176904), validate success |
 | GitOps #25 / 현재 GitOps main | `61edd0fd60e1004260c0b5082dc792fce847616b` | [마무리](https://github.com/seokpan/seokpan-hybrid-gitops/pull/25#issuecomment-6050200412), validate success |
 | Docs #72/#84 / 조사 시 Docs main | `a355ee1cfdee7804fc214c7f05bb439e847ae6ba` | [72 마무리](https://github.com/seokpan/seokpan-hybrid-docs/pull/72#issuecomment-6050693657)·[84 마무리](https://github.com/seokpan/seokpan-hybrid-docs/pull/84#issuecomment-6050694153), 해당 원격 브랜치 삭제 확인 |
