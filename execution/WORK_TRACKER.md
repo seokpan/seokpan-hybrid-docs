@@ -1,6 +1,6 @@
 # Work and Input Tracker
 
-> **현재 확인 — 2026-10-08:** Docs72/84 병합·해당 원격 브랜치 삭제 확인. Recovery Host [GitOps31](https://github.com/seokpan/seokpan-hybrid-gitops/pull/31)은 C/D 리뷰 대기, 정확 HEAD Linux69PASS. B의 `jth@ansible` CA 전체 해시 일치 결과 수신. RHCS_TOKEN 미설정·ROSA/OCM CLI 미설치, 실제 인증/Plan 대기. D의 TLS/AUTH·Route/Origin과 ERR 협상 원인 보고 수신. [오늘 실행 순서](ROSA_OCP_NEXT_ACTIONS_20261008.md)·[05 §9.51](05_IMPLEMENTATION_AND_VALIDATION.md#controller-recovery-followup-20261008) 우선. 아래 날짜별 상태는 당시 이력.
+> **현재 확인 — 2026-10-08:** Docs72/84 병합·해당 원격 브랜치 삭제 확인. Recovery Host [GitOps31](https://github.com/seokpan/seokpan-hybrid-gitops/pull/31)은 C/D 리뷰 대기, 정확 HEAD Linux69PASS. B의 `jth@ansible` CA 전체 해시 일치 결과 수신. Core1.16.4·AWS CLI2.37.5·Python3.9.25·jq1.6 확인, 개인 clone18c3a275/ROSA Lock 없음·연결/fetch 대조 대기. RHCS_TOKEN 미설정·ROSA/OCM CLI 미설치, 실제 인증/Plan 대기. D의 TLS/AUTH·Route/Origin과 ERR 협상 원인 보고 수신. [오늘 실행 순서](ROSA_OCP_NEXT_ACTIONS_20261008.md)·[05 §9.51](05_IMPLEMENTATION_AND_VALIDATION.md#controller-recovery-followup-20261008) 우선. 아래 날짜별 상태는 당시 이력.
 
 ### 조사 중 추가된 실행 보고·수정 PR — 2026-10-07 후속 조회
 

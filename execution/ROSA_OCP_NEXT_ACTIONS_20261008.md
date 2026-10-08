@@ -4,7 +4,7 @@
 
 - App #20/#22·Infra #43·GitOps #25 병합과 해당 원격 PR 브랜치 삭제 완료. Docs #72/#84도 병합·해당 원격 PR 브랜치 삭제 확인. 이후 결과는 새 문서 변경으로 연결하며 설계 기준 유지.
 - 병합 Infra의 fmt·세션 helper 문법·기존 OIDC 시험 사본 생성/보존 PASS. 병합 GitOps의 Root 등록 SHA B 비교 및 전체 lab release Gate PASS. [새 검사 기록](../evidence/T01/plan-source-readiness-20261008-01/summary.md).
-- B의 기존 `jth@ansible` 세션과 Recovery CA 전체 해시 일치 검사 결과 수신. Terraform/AWS CLI/jq 존재 확인, 버전 대조 대기. RHCS_TOKEN 미설정·ROSA/OCM CLI 미설치. 목적 Caller/Backend·지원/Quota·실제 보호 입력·Cloud Plan은 NOT RUN. OCP 철거·전체 Data 이관/Backup/Recovery는 첫 ROSA Plan의 일괄 선행조건이 아님.
+- B의 기존 `jth@ansible` 세션과 Recovery CA 전체 해시 일치 검사 결과 수신. Terraform1.16.4(Core 일치)·AWS CLI2.37.5·Python3.9.25·jq1.6 확인. 개인 clone HEAD18c3a275·ROSA Lock 없음, 저장소 연결/원격 갱신·Source 대조 대기. RHCS_TOKEN 미설정·ROSA/OCM CLI 미설치. 목적 Caller/Backend·지원/Quota·실제 보호 입력·Cloud Plan은 NOT RUN. OCP 철거·전체 Data 이관/Backup/Recovery는 첫 ROSA Plan의 일괄 선행조건이 아님.
 - GitOps #26의 C DB 형식/GRANT/TLS 접속·합성 출처 수락과 D 로그인·방 생성/접속·게임 종료 보고 수신. D의 TLS/AUTH·Route/Origin 및 ERR 협상 원인 후속 보고도 수신. Vote·연결 유지/재접속/Timeout 등 잔여는 아래 구분. 직접 Runtime 재조회·전체 OCP 수락과 구분.
 
 * 현재 소스와 원 기록
@@ -25,7 +25,7 @@ Runtime Workload의 정확 SHA/Image와 위 저장소 main은 별도로 기록. 
 
 | 순서 | 담당·작업 | 필요한 입력·종료 조건 | 막는 단계 |
 |---|---|---|---|
-| 1 | B: 기존 Controller·jth·clone/Lock/도구 확인 | jth@ansible 세션·CA 해시 일치 결과 수신 완료. 개인 clone/변경·Source/Lock·도구 버전은 대기 | 실제 인증·Plan |
+| 1 | B: 기존 Controller·jth·clone/Lock/도구 확인 | jth@ansible 세션·CA 해시 일치 결과 수신 완료. Core1.16.4·AWS CLI2.37.5·Python3.9.25·jq1.6 확인. 개인 clone HEAD18c3a275/ROSA Lock 없음, 저장소 연결·fetch·Source 대조 대기 | 실제 인증·Plan |
 | 1-A | B: Red Hat 인증·Classic 공식 IAM 정책 조회/보호 인계 | 기존 본인 Red Hat 계정으로 읽기 정책 조회 가능. 프로젝트 ROSA 관리 조직은 아직 미정이며 조회 계정으로 자동 확정하지 않음 | A #47 정책 원본 준비. 프로젝트 조직/연결 수락은 실제 실행 전 별도 |
 | 2 | A: Infra #47 Account Role4·정책/Trust 및 Infra #23 기반 출력, bootstrap 목적 서비스 권한 | 실제 VPC·Public3/ROSA Private3·AZ·Classic Account Role4/Operator Policy Map·Backend의 보호 개정, B 수락. 목적 Role의 실제 유효 권한 확인·필요 차이 반영 | 실제 첫 Plan |
 | 3 | C/A: Infra #19 Data SG2 공급/통합 | 실제 서로 다른 MariaDB/Redis SG·VPC·Owner/기반 Rule·개정 수락. 생성 전에도 필수 | 실제 첫 Plan |

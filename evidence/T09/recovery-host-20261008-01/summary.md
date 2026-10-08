@@ -17,8 +17,8 @@
 
 - 수행 환경 `jth@ansible`, 실행 주체 B. 기존 SSH 세션과 CA 읽기 가능 확인 후 Python 해시 대조 결과 수신.
 - C 공개 CA 원본의 전체 파일 SHA-256 `0d6b4a51439a58c722100265ac43e3f7f39b2d0f44bdb2d23f9d4bb87dfbb4ab` 일치 PASS.
-- Terraform/AWS CLI/jq 존재 확인, 실제 버전 대조 대기. ROSA/OCM CLI 미설치, RHCS_TOKEN 미설정. 인증·구독·Quota·Backend/Caller·Cloud Plan은 미확인.
-- 이 기록 작성 환경의 직접 Controller 접속·CA 재조회 결과가 아님. 실제 검사 시각은 수신 출력에 없어 null 유지. CA 원문·Token·State/Plan은 기록하지 않음.
+- 후속 사용자 실행 결과: Terraform1.16.4 linux_amd64(Core 기준 일치), AWS CLI2.37.5, Python3.9.25, jq1.6 확인. 개인 clone HEAD18c3a275·main, ROSA Lock 파일 없음. 저장소 연결/원격 참조 갱신·Source 대조 대기. 홈 디렉터리 조회의 빈 Provider 선택 목록을 Provider 부재로 판정하지 않음. ROSA/OCM CLI 미설치, RHCS_TOKEN 미설정. 인증·구독·Quota·Backend/Caller·Cloud Plan은 미확인.
+- Controller 항목은 B가 수행해 전달한 출력에 근거하며 Source/CI 검사 범위와 분리. 실제 검사 시각은 수신 출력에 없어 null 유지. CA 원문·Token·State/Plan은 기록하지 않음.
 
 * 다음 입력·한계
 

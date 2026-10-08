@@ -47,16 +47,26 @@
     "recovery_ca_full_file_sha256_match": "PASS; user-executed result received",
     "rhcs_token": "MISSING at check",
     "tools": {
-      "terraform": "PRESENT; version pending",
-      "aws": "PRESENT; version pending",
-      "jq": "PRESENT; version pending",
+      "terraform": "1.16.4 linux_amd64; Core matches current baseline",
+      "aws": "aws-cli/2.37.5",
+      "jq": "1.6",
       "rosa": "MISSING",
-      "ocm": "MISSING"
+      "ocm": "MISSING",
+      "python3": "3.9.25"
     },
     "ca_configmap": "NOT RUN; Namespace pending",
     "rhcs_auth": "NOT RUN",
     "cloud_plan": "NOT RUN",
-    "observed_at_utc": null
+    "observed_at_utc": null,
+    "personal_clone_check": {
+      "local_head": "18c3a275a98b0f68226d5bcfba4aa7cf2984d1d2",
+      "branch": "main",
+      "worktree_changes": "none shown in received git status",
+      "local_rosa_lock": "MISSING",
+      "origin_repo_identity": "NOT VERIFIED",
+      "origin_main_freshness": "NOT VERIFIED; fetch pending"
+    },
+    "provider_selections_note": "Empty map from HOME version command; not a provider availability result"
   },
   "review_status": "C_D_REQUESTED_APPROVAL_PENDING",
   "refs": {
