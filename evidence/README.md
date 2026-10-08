@@ -116,3 +116,9 @@ python3 tools/recovery_metrics.py evidence/<test-id>/<run-id>/release.json --con
 - [App30 Linux Run37752274074](https://github.com/seokpan/seokpan-hybrid-app/actions/runs/37752274074),HEAD3c924927·Artifact11537878750·전체1786/부분집합47/Lua9 failure/error/skip0·Source만PASS.
 - [GitOps33 Linux Run37752286969](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37752286969),HEAD78ad1393·Artifact11537863510·발견=실행73/진단렌더8체크섬PASS·Source만PASS.
 - 공개RunIndex 연결과D수신확인 구분. 기존진단Source6ea2d9a의추가ZIP은같은PC경로이며Runtime/금고독립사본 대체 아님.
+
+### 동일 PR 리뷰 제안 보완의 새 Source 검사
+
+- [App30 Run37759276727](https://github.com/seokpan/seokpan-hybrid-app/actions/runs/37759276727): HEAD cf8ef2cae927bfc6d13da8e0c7a7f918e09974ca·Artifact11541900559·전체1798/부분집합47/Lua9 failure/error/skip0. ZIP SHA256 c9988031df9fb263cf9b24fd25f5c3e3dbcacde139159a2fba3ac3ecd547e890, 만료2026-11-07T09:51:03Z.
+- [GitOps33 Run37759280003](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37759280003): HEAD275cc640cad34532502beba453f109d5697f898c·Artifact11541945097·발견=실행76 PASS/진단렌더8체크섬PASS. ZIP SHA2561b27c8f0d0b7ad578cc52f704c24897d7abd199495adfb1a5a9379b9115cfb26, 만료2026-10-15T09:49:30Z.
+- 최초 두 Run과 승인은 당시 HEAD 이력. 새 커밋 D 재리뷰 요청 완료·승인/병합 대기. Controller T03 부분 Run의 실제 수신 기록을 재작성하지 않으며 Cloud/Runtime PASS 가산 없음.
