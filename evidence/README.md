@@ -93,3 +93,9 @@ python3 tools/recovery_metrics.py evidence/<test-id>/<run-id>/release.json --con
 ### 공개 기록·문서 출처 검사
 
 - [T09/public-record-integrity-20261008-01](T09/public-record-integrity-20261008-01/summary.md): 문구·환경 메타데이터·출처 해시·체크섬 및 기존 문서/지표 검사. 소스 검사 범위이며 실제 Runtime·배포·전체 T09/T18 미수행. [Docs72](https://github.com/seokpan/seokpan-hybrid-docs/pull/72) 리뷰·Index 수신은 별도 확인.
+
+
+<a id="registration-review-followup-20261008"></a>
+### 등록 리뷰 후속 Source 검사 — 2026-10-08
+
+[T09/registration-review-followup-20261008-01](T09/registration-review-followup-20261008-01/summary.md)에 GitOps25의 SHA B 비교 PASS/A 불일치 BLOCKED·Windows66PASS/3FAIL·정확53314d3 Linux69PASS와 재리뷰 요청을 연결한다. App20/22·Infra43은 현재 HEAD 승인·Source 추가 수정 없음, 병합 후 새 Image/실환경 수락은 별도다. Controller/State/Cloud/DB 실행·새 TH/Q 완료 없음. 병합·브랜치 삭제 결과와 새 승인 수신은 원 PR에서 후속 확인한다.

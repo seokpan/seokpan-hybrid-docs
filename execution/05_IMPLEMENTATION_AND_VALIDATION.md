@@ -4,7 +4,7 @@
 
 [D 등록·선택 Sync 보고](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5#issuecomment-6034601393)는 SHA A의 Valkey 4객체 `Succeeded`·FE/BE 미생성을, [Pod 확인](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6#issuecomment-6034590906)은 검토 Digest의 amd64 하위 ImageID·허용 UID만 보고했다. 등록/Sync를 다시 미실행으로 되돌리지 않는다. 실제 TLS/AUTH/Hostname·Ready 전체 Run과 Prune/Delete 차단은 아직 근거가 없으며 공유 Owner 재확인·등록 Commit·B 공유 시각의 빈칸 및 사전 합의되지 않은 `oc patch operation.sync.resources` 경로는 원 #5에서 보완·수락한다. #21의 완료 체크만으로 이 잔여를 완료 처리하지 않는다. 이 조사자는 클러스터를 직접 재조회하지 않았다.
 
-현재 GitOps main의 [CI 37595556200](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37595556200)는 #24 등록값과 이전 checker allowlist 불일치로 실패했다. [Draft #25](https://github.com/seokpan/seokpan-hybrid-gitops/pull/25)는 checker/test/안내 3파일의 정합 수정이며 동일 도구에서 69검사·8 Render/26객체·고정 SHA 비교 PASS이며 [정확 PR HEAD6064311의 CI37598576166](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37598576166)도 completed/success다. 이는 미병합 PR의 검사이고 현재 main의 기존 CI 실패는 유지된다. Controller/Workload YAML과 실제 상태는 변경하지 않았고 main에 아직 병합되지 않았다. 전체 release Gate·공유 충돌·Prune/Delete 보호는 보존한다.
+[GitOps #27](https://github.com/seokpan/seokpan-hybrid-gitops/pull/27)로 checker 정책이 main에 반영됐다. [#25](https://github.com/seokpan/seokpan-hybrid-gitops/pull/25)의 현재 변경은 회귀 테스트·등록 안내2파일이며 HEAD `53314d33fcc061e5de4da2f8d3570edd6d5a7273`의 [Linux CI37706970618](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37706970618)에서69PASS를 확인했다. 현재 등록 Source는 Workload SHA B=`bfee2669e62bf823969ce224e5599eccace5d024`를 참조한다. SHA B 비교는 선언 구조 PASS/Runtime NOT VERIFIED, SHA A=`244b48b885d7ac645c402e561a032ae65a8f3461` 입력은 불일치 BLOCKED다. 기존 #24 이후 checker 실패·3파일 변경·옛 HEAD 검증은 당시 이력이다. 최신 검증/범위의 PR 제목·본문과 안내를 정정해 A 재리뷰를 요청했다. Controller/Workload YAML·실제 등록/Sync·전체 release Gate·공유 충돌/Prune/Delete 보호는 유지한다.
 
 [Infra Draft #43](https://github.com/seokpan/seokpan-hybrid-infra/pull/43)은 ROSA `workspace_key_prefix=phase2/rosa/env`와 목적 Role의 List 범위를 맞춘다. default State Key는 유지한다. 기존 harness/보존 검사 PASS, 보조 로컬 fmt/validate는 NOT RUN 이력이다. [정확 PR HEADd5aeddd의 CI37598580155](https://github.com/seokpan/seokpan-hybrid-infra/actions/runs/37598580155)는 Core1.16.4/AWS6.67.0/RHCS1.7.7의 fmt·backend=false/readonly init·validate(errors0/warnings0)·Schema13종·OIDC mock2·Source/Lock 불변 PASS다. 실제 Backend 인증·Workspace 조회·Cloud Plan/Apply는 NOT RUN이다. 누락만으로 기존 init 실패를 단정하지 않는다. 검토·병합 후 본인 clone/Workspace와 실제 Caller/Backend를 확인한다.
 
@@ -2045,3 +2045,9 @@ C의 §8.9–8.14·과거 시험/체크/그림·설계/TH 상태는 유지한다
 ### 9.48 공개 기록·문서 출처 정합 — 2026-10-08
 
 [검사 Run](../evidence/T09/public-record-integrity-20261008-01/summary.md)에 문구·실행 환경 메타데이터·출처 해시·체크섬·연결 경로 정리와 문서 무결성/기존 회귀 검사를 기록했다. App #22의 세션 안내·Infra #43의 합성 복구 안내·Docs #72의 문서/증거에 반영하며 해당 원 PR의 변경·검사·리뷰 상태를 연결한다. 기존 C의 §8 기록·측정값·Source SHA·실제 수행/수신 범위와 03/04 종료·DR10/30/15·CP3/Infra3/Worker3·Cost PARTIAL/$450/$500·TH81/완료2·Q 미완료를 보존한다. 실제 Runtime·배포·새 Image·전체 T09/T18·RTO/RPO 검증은 미수행이다.
+
+
+<a id="registration-review-followup-20261008"></a>
+### 9.49 등록 리뷰 후속 — 2026-10-08
+
+[검증 Run](../evidence/T09/registration-review-followup-20261008-01/summary.md)에 GitOps25의 SHA B 비교 PASS/A 불일치 BLOCKED·Windows66PASS/3FAIL·정확53314d3 Linux69PASS와 재리뷰 요청을 연결한다. App20/22·Infra43은 현재 HEAD 승인·Source 추가 수정 없음, 병합 후 새 Image/실환경 수락은 별도다. Controller/State/Cloud/DB 실행·새 TH/Q 완료 없음. 병합·브랜치 삭제 결과와 새 승인 수신은 원 PR에서 후속 확인한다.

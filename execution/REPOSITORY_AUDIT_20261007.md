@@ -88,13 +88,13 @@
 
 | PR | 검토 상태 | 다음 행동·순서 |
 |---|---|---|
-| [App20](https://github.com/seokpan/seokpan-hybrid-app/pull/20) | Draft/e348895, 승인0·같은 HEAD Linux 성공 | 본문에 이번 Artifact 검증 후속 반영→Ready→D/C 등 첫 리뷰→정확 HEAD/검사/승인 확인→squash. 새 시작/Chat PR은 독립 변경으로 뒤이어 통합 검사 |
-| [Infra43](https://github.com/seokpan/seokpan-hybrid-infra/pull/43) | Draft/d5aeddd, 승인0·Source CI 성공 | Source 한정 Ready/첫 리뷰 가능. A Backend/List 권한·C Source 소비 관점 리뷰. 실제 Caller/Workspace는 병합 뒤 별도 |
-| [GitOps25](https://github.com/seokpan/seokpan-hybrid-gitops/pull/25) | Draft/b30e978, 승인0·새 main CI 성공 | 이전 checker 실패/A 표기의 PR 본문 정정→Ready/첫 리뷰→squash. Lab 설정 수정 PR→Recovery 수정 PR 순서 |
-| [App22](https://github.com/seokpan/seokpan-hybrid-app/pull/22) | Draft/abb6483, 승인0·main 대비18파일 | 고정 npm12.0.2 전체 검사·모의 화면 검토 완료→Ready/첫 리뷰. 기존17파일+이번6파일의 중복을 포함한 최종18파일 범위 확인. Backend PR들과 파일 독립, 새 Frontend Image 필요 |
-| [Docs72](https://github.com/seokpan/seokpan-hybrid-docs/pull/72) | Ready, 승인0; 최신 main10dd 통합·본 조사 후속 | 최신 main/C 기록 포함 상태와 전체 diff 확인→현재 HEAD 첫 리뷰. 코드 PR들과 독립 Source 기록이며 main 병합 상태를 앞서 기록하지 않음 |
+| [App20](https://github.com/seokpan/seokpan-hybrid-app/pull/20) | Ready/e348895, A 승인5449718861·동일 HEAD CI 성공 | Source 보완 없음. 병합 후 새 Backend Build/Scan/Digest·App/held Migration 수락 별도 |
+| [Infra43](https://github.com/seokpan/seokpan-hybrid-infra/pull/43) | Ready/7d89def, A 승인5449687427·CI 성공 | Source 보완 없음. 병합 후 기존 Workspace/State 위치 확인·Backend 재초기화 조건·실제 Caller/Plan 별도 |
+| [GitOps25](https://github.com/seokpan/seokpan-hybrid-gitops/pull/25) | Ready/53314d3, 변경요청5449781239 후 정정·A 재리뷰 요청 | 최신2파일 diff·SHA B 선언검사 PASS/A BLOCKED·Linux69PASS. 재승인 전 병합 대기 |
+| [App22](https://github.com/seokpan/seokpan-hybrid-app/pull/22) | Ready/663b522, A 승인5449755134·제품검사/Lock 동일 | Source 보완 없음. App20과 변경 경로 독립. 새 Frontend Image·실제 Backend/Route/UI 검증 별도 |
+| [Docs72](https://github.com/seokpan/seokpan-hybrid-docs/pull/72) | Ready, main10dd 통합·현재 리뷰 후속 연결 | 관련 PR의 새 HEAD·승인·병합/브랜치 정리 결과를 확인해 기록하며 열린 상태 유지 |
 
-- App/Infra/GitOps main은 승인 최소1·새 push 뒤 이전 승인 무효화·squash만 허용하는 Ruleset 적용. 현재 다섯 PR 모두 제출된 승인0이므로 재승인보다 첫 리뷰 단계.
+- App/Infra/GitOps main은 승인 최소1·새 push 뒤 이전 승인 무효화·squash만 허용하는 Ruleset 적용. App20/22·Infra43은 현재 HEAD 승인 완료. GitOps25는 정정 후 재리뷰 대기. Docs72는 현재 승인 없음.
 - Docs는 활성 main Ruleset 없음. 프로젝트의 사람 검토와 실제 수신을 생략하는 근거로 사용하지 않음.
 - CI 성공과 review request 존재는 승인 아님. Ready 전환 뒤 발생한 새 Run도 같은 HEAD와 conclusion 확인.
 - main/reference 및 열린 PR·후속 base 의존 branch 보존. squash 뒤 `--merged` 결과만으로 변경 미반영/삭제 가능 판정 금지. 필요한 patch/Run·고정 참조·개인 미push·실제 배포 revision 확인 뒤 브랜치 소유자가 삭제.
@@ -108,3 +108,8 @@
 - 승인03/04 종료, DR10분·DB RPO30분·운영 Backup15분, CP3/Infra3/Worker3, Cost PARTIAL/$450계획/$500한도, TH81·기존 완료2, Q02/03/04/05/10 미완료 보존.
 - 공개 Issue/PR·댓글·리뷰·병합·branch 정리 상태는 원 작업에 기록한다. 소스 변경·검사 개정과 실제 실행·수신 범위를 구분해 인계.
 - 증거: [Source 조사 Run](../evidence/T09/source-audit-20261007-01/summary.md)·[05 추가 기록](05_IMPLEMENTATION_AND_VALIDATION.md#repository-full-audit-20261007)·[Tracker](WORK_TRACKER.md#repository-full-audit-20261007).
+
+
+* 2026-10-08 리뷰 후속
+
+[검증 Run](../evidence/T09/registration-review-followup-20261008-01/summary.md)에 SHA B/A 비교·Windows66/3FAIL·정확 새 HEAD Linux69PASS와 원 리뷰 연결. 승인된 세 PR은 Source 보완 없이 병합 가능하며 새 Image/실환경 수락은 별도. GitOps25는 새53314d3의 재승인을 기다린다. 멘토링 후보의 설계·도구 도입은 이 리뷰 후속에 포함하지 않는다.

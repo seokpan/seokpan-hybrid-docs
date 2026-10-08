@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "record_kind": "source-verification",
+  "run_id": "registration-review-followup-20261008-01",
+  "test_id": "T09",
+  "source": {
+    "gitops_sha": "53314d33fcc061e5de4da2f8d3570edd6d5a7273"
+  },
+  "recorded_at_utc": "2026-10-08T00:23:54.876077+00:00",
+  "recorded_at_kst": "2026-10-08T09:23:54.876077+09:00",
+  "actual_operator": null,
+  "execution_environment": "Windows isolated local source checks; GitHub Actions Linux source checks",
+  "source_owner": "B",
+  "review_refs": [
+    "https://github.com/seokpan/seokpan-hybrid-gitops/pull/25#pullrequestreview-5449781239"
+  ],
+  "review_status": "REREVIEW_REQUESTED",
+  "workload_sha_b": "bfee2669e62bf823969ce224e5599eccace5d024",
+  "workload_sha_a": "244b48b885d7ac645c402e561a032ae65a8f3461",
+  "comparison": {
+    "sha_b": "PASS_SOURCE_ONLY_RUNTIME_NOT_VERIFIED",
+    "sha_a": "BLOCKED_EXPECTED_SHA_MISMATCH"
+  },
+  "windows_suite": {
+    "total": 69,
+    "passed": 66,
+    "failed": 3
+  },
+  "registration_tests": 21,
+  "linux_ci": {
+    "run": 37706970618,
+    "job": 113083529337,
+    "head": "53314d33fcc061e5de4da2f8d3570edd6d5a7273",
+    "executed": 69,
+    "status": "PASS"
+  },
+  "verification": {
+    "render": "LOCAL_SOURCE_COMPARISON_ONLY",
+    "deployment": "NOT RUN",
+    "acceptance": "NOT RUN"
+  },
+  "rto_seconds": null,
+  "rpo_seconds": null
+}

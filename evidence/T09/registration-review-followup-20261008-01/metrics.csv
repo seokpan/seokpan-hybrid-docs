@@ -1,0 +1,7 @@
+metric,value,unit,status
+registration_regressions,21,cases,PASS
+windows_source_passed,66,cases,PARTIAL
+windows_source_failed,3,cases,FAIL
+linux_source_tests,69,cases,PASS
+service_rto,,seconds,NOT RUN
+database_rpo,,seconds,NOT RUN
