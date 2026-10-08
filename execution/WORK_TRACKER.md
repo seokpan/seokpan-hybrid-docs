@@ -1,6 +1,6 @@
 # Work and Input Tracker
 
-> **현재 확인 — 2026-10-08 Docs #95 병합 후:** [병합·Controller 인증·실행 대기](MERGED_SOURCE_PLAN_READINESS_20261008.md). App30/34·GitOps33 승인·병합·PR 브랜치 삭제 완료, 현재 App18819963 새 Build 입력을 D32에 연결. B/jth의 Infra ef424da0 ff-only/Lock 보존 및 기본 IAM User 인증·Source Trust 대상·MFA 장치1개 읽기 PASS. 로컬 프로필0은 실제 Role/MFA 부재 판정이 아님. A 실제 역할/ARN·SG2·목적 세션/Backend·조직/지원/Quota/disk·예비 비용/Owner/창·전체 Plan·새 Image/Runtime은 미완료. 아래 날짜별 기록은 당시 이력.
+> **현재 확인 — 2026-10-08 Docs #95 병합 후:** [병합·Controller 인증·실행 대기](MERGED_SOURCE_PLAN_READINESS_20261008.md). App30/34·GitOps33 승인·병합·PR 브랜치 삭제 완료. App18819963의 D Run5 성공 보고와 새 FE/BE 공급 후보 수락, B/jth Infra ef424 Source/Lock·기본 IAM User/MFA 장치1개 및 서울 사양/Quota 부분 결과 확인. EBS 기준 차이·EC2 사용량 보충 첫호출 오류는 미해결. 실제 역할/SG2·목적 세션/Backend·프로젝트 조직/지원/비용 입력·전체 Plan, 내부 공급/Pull·Runtime은 별도 미완료. 아래 날짜별 기록은 당시 이력.
 
 ### 조사 중 추가된 실행 보고·수정 PR — 2026-10-07 후속 조회
 
@@ -763,9 +763,9 @@ App17–19 최신 승인·병합/삭제 및 결합 main 검사/Build 입력은 [
 
 | 작업 | 완료 범위 | 다음 담당·입력 |
 |---|---|---|
-| Controller Source/Catalog | 실제6개/정책ID·c5격리 validate/교정 mock2 및 ef424 ff-only/Lock, 기본 IAM User·MFA 장치1 읽기 PASS·A 사본 수신 보고 | B 독립 용량/지원 읽기, A 실제IAM·A/C기반/SG2·목적세션/Backend·계정/비용/창 → 첫CloudPlan |
+| Controller Source/Catalog | 실제6개/정책ID·c5격리 validate/교정 mock2·ef424 ff-only/Lock, 기본 IAM User/MFA 장치1 및 서울 사양/할당량13개 읽기 결과 수신·A 사본 수신 보고 | B 최소1호출 오류 진단·B/A EBS 기준 차이/기존 사용량/실제 소요 수락, A 실제IAM·A/C기반/SG2·목적세션/Backend·계정/비용/창 → 첫CloudPlan |
 | 개인4개Source변경 | App30·GitOps33 승인/병합·PR 브랜치 삭제, Linux CI/Artifact PASS·main 반영 확인. App34 Full 보완도 병합 | 현재 App18819963로 D32 새 Image 검증. 과거 로컬 브랜치·원 시험 이력 보존, 기존 Image 승계 없음 |
-| 새Image/진단보존 | D32생성·추가ZIP동일/8체크섬 확인 | DBuildScanDigest/실제heads/mapping/Pull·B수락/교체Owner창. 같은PC추가경로는독립장치 아님 |
+| 새Image/진단보존 | D32 Run5 성공·새 FE/BE Digest/head 보고 수신, B 공급 후보 수락·Source7Blob/head 대조. 추가ZIP동일/8체크섬 확인 | 보존해시/Index·Registry공급Gate→push→실제mapping/전체Child→Promotion/Pull→추가Worker자원/창·FE→BE교체. 같은PC추가경로는독립장치 아님 |
 | Pool준비 | [Source/기본상한예산](DB_CONNECTION_BUDGET_PREPARATION.md) | 실제Process·RDS상한/예약·B/C합의→구현/시험/새Image,첫ROSAPlan전체선행아님 |
 
 [담당별직접입력](CONTROLLER_SOURCE_CATALOG_FOLLOWUP_20261008.md) 유지. 1차중지/복귀 준비·당일이관·OCP후속/Recovery·금고독립사본/복원Identity·Cost/TH/Q는각원Issue/Run에서수신.

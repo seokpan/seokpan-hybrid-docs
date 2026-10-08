@@ -134,5 +134,8 @@ python3 tools/recovery_metrics.py evidence/<test-id>/<run-id>/release.json --con
 
 - [T03/controller-source-local-access-20261008-01](T03/controller-source-local-access-20261008-01/summary.md): B/jth 실제 ef424 ff-only·ROSA Lock 보존 PASS, AWS config/credentials 소유자·권한 및 설정 유무만. 프로필0은 실제 Role/MFA 부재 판정 아님.
 - [T03/controller-base-caller-mfa-20261008-01](T03/controller-base-caller-mfa-20261008-01/summary.md): B/jth 실제 기본 IAM User 인증·Source Trust 대상 일치·MFA 장치1개 읽기 PASS. Account 인계 대조·MFA 세션·ROSA 목적 Role/Backend·전체 Plan은 미검증.
+- [T03/controller-seoul-capacity-20261008-01](T03/controller-seoul-capacity-20261008-01/summary.md): B/jth 실제 서울 활성·m5.xlarge 사양/4개 AZ·Quota13개/17회 호출 보고 수신. CPU100 vCPU·EBS각50 TiB, 최근 CPU 자료 없음은 사용량0 아님. 문서EBS300↔CLI Source50/gp3 미등록 기준 차이·기존 사용량/실제 소요·지원/목적 권한·전체 Plan 미확인. 원 판정 보존, 전체 T03 PARTIAL.
 - App30 [병합 CI37773046440](https://github.com/seokpan/seokpan-hybrid-app/actions/runs/37773046440), GitOps33 [병합 CI37773028560](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37773028560) 성공. App34 기존 로컬 Run은 PR3126 수행 결과로 유지. 현재 main18819963 새 Image 검증은 D32 후속.
+- [T09/image-supply-acceptance-20261008-01](T09/image-supply-acceptance-20261008-01/summary.md): D Run5 성공·Source18819963/FE·BE OCI Index Digest 보고 수신, B Source7Blob/head 대조 뒤 Harbor 공급 후보 수락. 라벨 부재·checkout/metadata 추적·실제 보호 mapping/Pull/교체 미검증 구분. 전체 T09 PARTIAL.
+- [T03/controller-seoul-ec2-usage-20261008-01](T03/controller-seoul-ec2-usage-20261008-01/summary.md): 실제 B/jth Guard PASS 뒤 첫API1회 BLOCKED/API_OR_NETWORK_ERROR. 사용량 숫자 없음·원인 미확정·앞선 용량 결과 보존. 최소1호출 진단은 준비만 완료/실제 결과 대기, 사용량0 판정 없음.
 - Index 제출과 D 수신 구분, 원 실행 SHA/시점·기존 Run 보존. 전체 T03/TH/Q/Runtime PASS 가산 없음.

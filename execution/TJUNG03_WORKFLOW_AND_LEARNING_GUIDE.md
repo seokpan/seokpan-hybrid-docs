@@ -1,6 +1,6 @@
 # 정태훈 작업·흐름·학습 안내
 
-> **현재 확인 — 2026-10-08 Docs #95 병합 후:** [병합·Controller 인증·실행 대기](MERGED_SOURCE_PLAN_READINESS_20261008.md). App30/34·GitOps33 승인·병합·PR 브랜치 삭제 완료, 현재 App18819963 새 Build 입력을 D32에 연결. B/jth의 Infra ef424da0 ff-only/Lock 보존 및 기본 IAM User 인증·Source Trust 대상·MFA 장치1개 읽기 PASS. 로컬 프로필0은 실제 Role/MFA 부재 판정이 아님. A 실제 역할/ARN·SG2·목적 세션/Backend·조직/지원/Quota/disk·예비 비용/Owner/창·전체 Plan·새 Image/Runtime은 미완료. 아래 날짜별 기록은 당시 이력.
+> **현재 확인 — 2026-10-08 Docs #95 병합 후:** [병합·Controller 인증·실행 대기](MERGED_SOURCE_PLAN_READINESS_20261008.md). App30/34·GitOps33 승인·병합·PR 브랜치 삭제 완료. App18819963의 D Run5 성공 보고와 새 FE/BE 공급 후보 수락, B/jth Infra ef424 Source/Lock·기본 IAM User/MFA 장치1개 및 서울 사양/Quota 부분 결과 확인. EBS 기준 차이·EC2 사용량 보충 첫호출 오류는 미해결. 실제 역할/SG2·목적 세션/Backend·프로젝트 조직/지원/비용 입력·전체 Plan, 내부 공급/Pull·Runtime은 별도 미완료. 아래 날짜별 기록은 당시 이력.
 
 ### 조사 중 추가된 실행 보고·수정 PR — 2026-10-07 후속 조회
 
