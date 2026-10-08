@@ -49,5 +49,6 @@
   "kustomize_version": "v5.7.1",
   "render_sha256": "295951ee612021c238220c473ddf3ac843cb5e1582718509143f15273955940d",
   "fixture_scope": "limited declared FE/BE requests/strategy; no runtime evidence",
-  "fixture_sha256": "5b7ca145a376be478f1e2d5d58f056e07aa82e228e1240d605855a8d48dde130"
+  "fixture_sha256": "0f38f7db0cd649b028e5cbf1054a9dd745406dbb01a4172b02b201524fed0a5a",
+  "fixture_encoding": "UTF-8/LF; hash applies to committed fixture bytes"
 }

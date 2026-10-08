@@ -1,12 +1,15 @@
 from copy import deepcopy
 from decimal import Decimal
 from pathlib import Path
-import json,unittest,yaml
+import json,unittest,yaml,hashlib
 from ocp_rollout_requests import analyze,cpu_milli,memory_mib,Unsupported,serial
 HERE=Path(__file__).parent
 ROWS=json.loads((HERE/'lab-requests-fixture.json').read_text(encoding='utf-8'))
 class BudgetTests(unittest.TestCase):
  def test_actual_pinned_source_render(self):
+  reference=json.loads((HERE/'lab-source-reference.json').read_text(encoding='utf-8'))
+  self.assertEqual(reference['source_head'],'26f7d63d64b5f67fe7042c7867ed358dbf40c814')
+  self.assertEqual(hashlib.sha256((HERE/'lab-requests-fixture.json').read_bytes()).hexdigest(),reference['fixture_sha256'])
   result=serial(analyze(ROWS))
   self.assertEqual(result['per_pod'],{'backend':{'cpu_m':100,'memory_mib':128},'frontend':{'cpu_m':25,'memory_mib':32}})
   self.assertEqual(result['fe_be_steady_subtotal'],{'cpu_m':125,'memory_mib':160})
