@@ -1,19 +1,21 @@
 # 2차 저장소 최초 전수 조사 — 2026-10-07
 
+> **현재 상태 — 2026-10-08:** 네 PR 병합/정리 및 본인 상위 이슈 현행화 완료. [직접 준비·잔여](ROSA_OCP_NEXT_ACTIONS_20261008.md)를 우선하며10/7 조사 수집/측정은 해당 시점의 이력.
+
 * 현재 판단
 - 소스·원 토론·보존 이력·자동 검사·산출물·그림을 연결해 최초 조사 기준 확보. 실제 서비스 전체 성공이나 프로젝트 종료 판정과 별도.
 - 우선 보완: App Guest 이름 충돌·captured 시작의 연결 상태 차이, Infra 이관·RDS 제어의 실패 판정, GitOps 공개 설정 검사 문법.
 - App 시작/구독 정리 2건·GitOps 설정 검사 2건·Docs Windows 검사 도구 2건은 소스 수정과 격리 검증 완료. 새 소스의 Linux 검사·리뷰·병합·Image 연결은 아래 원 작업에서 확인. 새 App22 UI 변경은 동일 main 위의 독립 후속으로 검토. 포커스·모바일 확대·로비 채팅 높이 회귀3건 수정 후 정확 HEAD 재검증·push 완료.
 - 조회 결과는 저장소별 관측 시각과 전체 SHA로 관리. 조사 중 다른 담당자의 병합을 확인해 변경분을 다시 검토.
 
-* 조사 기준과 변경분
+* 조사 기준과 변경분 — 10/7 관측 이력
 
 | 저장소 | 조사 시작 기준 main | 마지막 검토 main | 확인한 변경 |
 |---|---|---|---|
-| App | a2afffb8605dafff1cb5b9af215aa0cf93aadcdb | 같은 SHA | #20 e348895·#22 abb6483 및 별도 시작/구독 수정 2개; main 병합 미완료 |
+| App | a2afffb8605dafff1cb5b9af215aa0cf93aadcdb | 1e99e36ed2f8b116fad5db9a6333a71f2c2bdec3 | #20/#22 병합·브랜치 삭제 완료. 별도 시작/구독 수정2개는 후속 PR 필요 |
 | Infra | 36dc2403aa77e2896cc4ec3c545b92e0afb49205 | 같은 SHA | #43 d5aeddd, #44 v1.3·#45 v1.1·#46 및 #16/#17/#19 최신 댓글 |
 | GitOps | a25172c7453b9d7999cb1f3cbeb1ef35774e3b63 | b8cf3235dd44f74dd4ed831449cfedfa08eb34ae | #27·#28·#29·#30 병합, #25 b30e978 새 main 통합 |
-| Docs | a9b0207b563aa25be17d4a635f6cc903fbe0e74a | 10dd13de78357d60b78dc5ee8e3a02aad815bd2c | #79·81 C Recovery/Runbook 보고 병합; #72 ba1b998 인계와 본 조사 후속은 main 미병합 |
+| Docs | a9b0207b563aa25be17d4a635f6cc903fbe0e74a | 0cb6a95d72884778452b4c96ae7383dad258db0e | #79/81 및 #83의 C05 §8.18/Tracker 병합. #72의 조사/현재 인계는 미병합 |
 
 - 최초 수집: Issue/PR 170개(일반 Issue55·PR115), 원격 branch20개, CI(Continuous Integration, 자동 검사) Run173개.
 - 12:33–12:34 UTC 변경분: Issue/PR175개(일반 Issue57·PR118). 새 Issue Infra46·Docs78, 새 PR GitOps29/30·Docs79의 원 토론·소스·결과 연결.
@@ -84,20 +86,19 @@
 - C Infra46/Docs79·81의 Recovery VM 생성·TLS/격리 준비·Recovery CA 오프라인 사본 보고 수신. Recovery CA 사본과 B의 SOPS 복원 Identity 검사는 서로 다른 범위. Server04의 Controller/복구VM 공통 Host 한계·실제 사본/15분 운영·복원계정/Data/업무·전체 RTO는 별도.
 - ROSA 첫 실제 Plan은 B 목적 Caller/Backend·지원/Quota, A 제한 출력/prerequisite, C SG2, 예비 비용·현재 사용창 수락 후 지정 실행자1명으로 진행.
 
-* 열린 본인 PR과 직접 순서
+* 본인 PR 병합·현재 잔여 — 2026-10-08
 
-| PR | 검토 상태 | 다음 행동·순서 |
+| PR | 확인한 상태 | 남은 작업 |
 |---|---|---|
-| [App20](https://github.com/seokpan/seokpan-hybrid-app/pull/20) | Ready/e348895, A 승인5449718861·동일 HEAD CI 성공 | Source 보완 없음. 병합 후 새 Backend Build/Scan/Digest·App/held Migration 수락 별도 |
-| [Infra43](https://github.com/seokpan/seokpan-hybrid-infra/pull/43) | Ready/7d89def, A 승인5449687427·CI 성공 | Source 보완 없음. 병합 후 기존 Workspace/State 위치 확인·Backend 재초기화 조건·실제 Caller/Plan 별도 |
-| [GitOps25](https://github.com/seokpan/seokpan-hybrid-gitops/pull/25) | Ready/53314d3, 변경요청5449781239 후 정정·A 재리뷰 요청 | 최신2파일 diff·SHA B 선언검사 PASS/A BLOCKED·Linux69PASS. 재승인 전 병합 대기 |
-| [App22](https://github.com/seokpan/seokpan-hybrid-app/pull/22) | Ready/663b522, A 승인5449755134·제품검사/Lock 동일 | Source 보완 없음. App20과 변경 경로 독립. 새 Frontend Image·실제 Backend/Route/UI 검증 별도 |
-| [Docs72](https://github.com/seokpan/seokpan-hybrid-docs/pull/72) | Ready, main10dd 통합·현재 리뷰 후속 연결 | 관련 PR의 새 HEAD·승인·병합/브랜치 정리 결과를 확인해 기록하며 열린 상태 유지 |
+| [App20](https://github.com/seokpan/seokpan-hybrid-app/pull/20) | c355091 병합·원격 브랜치 삭제·verify success | 새 Backend Build/Scan/Digest·App/held Migration 수락 |
+| [App22](https://github.com/seokpan/seokpan-hybrid-app/pull/22) | 1e99e36 병합·원격 브랜치 삭제·Frontend CI 없음 | 새 Frontend Image·실제 Backend/Route/UI 검증 |
+| [Infra43](https://github.com/seokpan/seokpan-hybrid-infra/pull/43) | 6849c32 병합·원격 브랜치 삭제·validate success | 기존 Workspace/State·목적 Caller/Backend·실제 입력/첫 Plan |
+| [GitOps25](https://github.com/seokpan/seokpan-hybrid-gitops/pull/25) | 53314d3 재승인 후61edd0f 병합·브랜치 삭제·validate success | 실제 등록 적용/Sync·Stage2/보호 수락은 원 #5/#26 |
+| [Docs72](https://github.com/seokpan/seokpan-hybrid-docs/pull/72) | Ready/open, main0cb6의C §8.18/Tracker와 병합 결과·현재 안내 보완 | 최신 HEAD 검사/본문·diff 확인 후 병합 가능. 실제 ROSA/OCP 종료와 별도 |
 
-- App/Infra/GitOps main은 승인 최소1·새 push 뒤 이전 승인 무효화·squash만 허용하는 Ruleset 적용. App20/22·Infra43은 현재 HEAD 승인 완료. GitOps25는 정정 후 재리뷰 대기. Docs72는 현재 승인 없음.
-- Docs는 활성 main Ruleset 없음. 프로젝트의 사람 검토와 실제 수신을 생략하는 근거로 사용하지 않음.
-- CI 성공과 review request 존재는 승인 아님. Ready 전환 뒤 발생한 새 Run도 같은 HEAD와 conclusion 확인.
-- main/reference 및 열린 PR·후속 base 의존 branch 보존. squash 뒤 `--merged` 결과만으로 변경 미반영/삭제 가능 판정 금지. 필요한 patch/Run·고정 참조·개인 미push·실제 배포 revision 확인 뒤 브랜치 소유자가 삭제.
+- App/Infra/GitOps의 승인 최소1·새 push 뒤 이전 승인 무효화·squash 규칙 유지. 네 완료 PR의 재리뷰/병합 대기 해소.
+- Docs 활성 main Ruleset 없음. #72와 C #83은05의 서로 다른 구획을 보완하며, 새 base 변경 시 mergeability/diff와 C 원문 보존 확인.
+- main/reference·실제 배포의 고정 revision·개인 미push·다른 후속 base 의존을 보존. 네 PR 브랜치 삭제 완료와 다른 보존 branch의 삭제 가능 여부는 별도.
 
 * 재검토 종료 범위와 다음 입력
 - 현재 소스/시험→승인03/04→원 토론→과거 고유 변경→CI/산출물/보존 bundle→저장소 간 링크→새 원격 변경→수정 조합 재시험 순으로 재대조.
@@ -112,4 +113,10 @@
 
 * 2026-10-08 리뷰 후속
 
-[검증 Run](../evidence/T09/registration-review-followup-20261008-01/summary.md)에 SHA B/A 비교·Windows66/3FAIL·정확 새 HEAD Linux69PASS와 원 리뷰 연결. 승인된 세 PR은 Source 보완 없이 병합 가능하며 새 Image/실환경 수락은 별도. GitOps25는 새53314d3의 재승인을 기다린다.
+[검증 Run](../evidence/T09/registration-review-followup-20261008-01/summary.md)에 SHA B/A 비교·Windows66/3FAIL·정확 새 HEAD Linux69PASS와 원 리뷰 연결. 승인된 세 PR은 Source 보완 없이 병합 가능하며 새 Image/실환경 수락은 별도. 그 뒤 A 새 승인과61edd0f 병합/브랜치 정리를 확인했으며 현재 재리뷰 대기는 해소됐다.
+
+
+* 2026-10-08 병합 후 현재 상태
+
+- App20/22·Infra43·GitOps25의 병합·원격 PR 브랜치 삭제·마무리 기록 확인. 현재 main/검사/잔여는 [ROSA_OCP_NEXT_ACTIONS_20261008.md](ROSA_OCP_NEXT_ACTIONS_20261008.md) 참조. 본문 중10/7·새 승인 전 미병합 표기는 당시 조사 이력.
+- 본인 상위 Issue App4·Infra25·GitOps10·Docs21/8/6의 현재 안내와 App21의 병합 기록 현행화. TH81/기존 완료2 보존, 다른 담당자의 Issue/소스 미수정.

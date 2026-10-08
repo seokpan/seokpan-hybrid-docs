@@ -1,0 +1,10 @@
+metric,value,unit,status
+infra_fmt,1,check,PASS
+session_helper_syntax,1,check,PASS
+oidc_harness_preservation,1,check,PASS
+gitops_root_compare,1,check,PASS
+lab_release_gate,1,check,PASS
+controller_tcp22,0,reachable,UNREACHABLE
+actual_cloud_plan,,run,NOT RUN
+service_rto,,seconds,NOT RUN
+database_rpo,,seconds,NOT RUN

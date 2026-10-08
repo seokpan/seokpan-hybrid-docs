@@ -1,0 +1,4 @@
+timestamp_utc,event,result
+2026-10-08T01:22:24.503433+00:00,infra_isolated_source_checks,PASS
+2026-10-08T01:23:28.229267+00:00,gitops_isolated_source_checks,PASS
+2026-10-08T01:32:16.842128+00:00,record_generated,source_only
