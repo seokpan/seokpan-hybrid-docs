@@ -7,6 +7,8 @@
 - GitOps31·Docs85 병합/브랜치 삭제 완료. 현재 조회 main은 App9b142a28·Infrac5d8c424·GitOps9d108349·Docsce0b4216. App25 Release 후보 생성기, Infra50/51 README, C Docs87 §8.19/Tracker 변경은 Source 범위로 소비하며 새 Image/실환경 검증으로 사용하지 않음.
 - B clone/원격/Lock·목적 Caller/Backend·지원/Quota·Worker disk·예비 비용/실행 창, A 실제 Role4/Policy Map/목적 권한/제한 출력, C/A Data SG2가 첫 Plan 직접 입력. 프로젝트 Red Hat 조직/AWS 연결은 생성/관리 전 수락 필요. Plan 미실행.
 
+- [GitOps26](https://github.com/seokpan/seokpan-hybrid-gitops/issues/26)은 lab Stage2 완료로 종료. DB 입력·FE/BE Ready·Route/WSS·Valkey 부분 업무 보고 수신. 이월 범위는 다중 투표·WS idle/재접속·Rolling/Pod 삭제·DB/Redis 장애 readiness·Prune/Delete 실제 차단·ROSA ERR 재측정. 본인 GitOps10/App4 후속이며 성공 Sync를 반복하거나 #26을 재개하지 않음.
+
 * 아래 준비 기록의 조회 시점
 
 아래 Source 표와 Token 미설정 표기는 정책 조회 전 준비 이력. 최신 상태는 위 카드와 원 Issue를 사용. 실행 명령은 해당 Source/개인 변경/입력·Owner/사용창을 확인한 뒤 사용하며 과거 미확인 항목을 임의로 완료 처리하지 않음.
