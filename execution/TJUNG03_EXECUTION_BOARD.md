@@ -1,6 +1,6 @@
 # 정태훈 실행판 — 지금 할 일·입력 대기·OCP와 ROSA 수명
 
-> **현재 확인 — 2026-10-08 PR88 병합 후:** Docs88 main d881df14·작업 브랜치 삭제/마무리 확인. [Image·이관·ROSA 묶음](IMAGE_MIGRATION_ROSA_PREFLIGHT_20261008.md) 연결. 새 Image 대상 App `5df2ce28`·Source Alembic head `20260902_0002`·Migration 6개 파일 동일, 실제 Build/Scan/Digest는 D 후속. 진단 ZIP 현재 PC 추가 사본/8개 체크섬 확인. B의 1차 쓰기 중지 준비·당일 실행·이관 후 current/App를 독립 항목으로 관리. Controller clone/Lock·실제 Operator/Policy Map·A 수신·목적 Caller/Backend·지원/Quota·비용/창 및 실제 Plan은 미완료. GitOps #26의 lab Stage2 완료 보고와 미완료 후속 시험은 GitOps #10/App #4에 연결. Recovery CA 해시 일치 확인 유지, ConfigMap·실제 DB 연결/복원은 미실행. 아래 날짜별 기록은 당시 이력.
+> **현재 확인 — 2026-10-08 Docs #91 병합 후:** [Controller 후속](CONTROLLER_SOURCE_CATALOG_FOLLOWUP_20261008.md)·[새 T03 부분 Run](../evidence/T03/controller-source-catalog-20261008-01/summary.md) 연결. Core 1.16.4·실제 Operator 6개/보관 정책 ID 대조 PASS, clone 21커밋 지연·로컬 Lock 없음. App #30(cf8ef2ca)/GitOps #33(275cc640)의 리뷰 제안 보완·정확 HEAD Linux CI PASS, D 재리뷰 요청 완료·새 승인/병합 대기. D 새 공급은 GitOps #32의 App 5df2ce28 고정. Source 최신화·격리 Provider·A 보호 수신/실제 IAM·Caller/Backend·지원/Quota/비용/창·Cloud Plan은 미완료. 기존 C 기록·Recovery CA/금고 본체·Stage2 완료 보고 및 TH/Q/DR/Cost 경계 유지. 아래 날짜별 기록은 당시 이력.
 
 > **최신 조사 후속 — 2026-10-07:** [전수 조사](REPOSITORY_AUDIT_20261007.md)·[05§9.47](05_IMPLEMENTATION_AND_VALIDATION.md#repository-full-audit-20261007) 참조. GitOps main의 Root SHA B/FE·BE1은 소스 병합 상태이며, 마지막 수신 Runtime은 SHA A/FE·BE0이다. 성공한 등록/선택Sync·금고 본체 확인을 반복하지 않는다. C의 GitOps26/6038214247 DB 형식·GRANT·TLS 접속·합성 출처 수락 보고는 수신했고 실제 Stage2 적용·Route/업무는 원 #26에서 후속 확인한다. 아래 시점별 인계 보존.
 
@@ -512,3 +512,14 @@ OCP의 사전검증 업무 완료와 정리 날짜는 별개다. 추천 운영 �
 - [ ] B/A/D 목적 Caller/Backend·지원/구독/Quota/disk·예비 비용/창 → 첫 전체 Plan
 
 실제 수행/수신은 원 Issue/Run에서 판정. 다중 투표·WS 유지/재접속·Rolling/장애·Prune/Delete, Recovery·금고 독립 사본 및 보존 중인 개인 변경은 기존 후속 범위 유지. 멘토링/OADP는 보류.
+
+## 2026-10-08 직접 결과 이후
+
+- [x] 실제 Operator6개/보관정책ID대조·Core1.16.4·origin/개인변경 결과 수신
+- [x] 개인App2/GitOps2수정의최신main통합·App30/GitOps33 정확HEAD Linux CI 확인
+- [x] D32새공급Issue·추가진단ZIP일치·PoolSource예산 확인
+- [ ] B새Controller묶음: 정책보관본·Sourceff-only/Lock·격리Providervalidate/mock·지원목록·추가로컬도구
+- [ ] A수신·실제Role/권한/제한기반/Backend·C/A SG2·B목적세션/지원/Quota/disk·비용/창 → 첫CloudPlan
+- [ ] App30/GitOps33 사람리뷰·병합→D새Image수신·OCP/ROSA실제교체/시험
+
+[연결](CONTROLLER_SOURCE_CATALOG_FOLLOWUP_20261008.md). 기존독립작업의잔여와멘토링보류 유지.
