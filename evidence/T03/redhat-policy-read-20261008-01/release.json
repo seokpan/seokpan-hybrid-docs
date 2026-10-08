@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "record_kind": "controller-api-policy-read-partial-verification",
+  "run_id": "redhat-policy-read-20261008-01",
+  "test_id": "T03",
+  "recorded_at_utc": "2026-10-08T06:52:01.437815+00:00",
+  "actual_operator": "tjung03 / existing Controller jth@ansible",
+  "environment": "on-prem Controller; Windows -> vroute-01 -> SSH -> jth",
+  "tools": {
+    "python3": "3.9.25",
+    "terraform": "1.16.4 linux_amd64; not executed in this run",
+    "aws_cli": "2.37.5; not executed in this run",
+    "rosa_cli": "MISSING",
+    "ocm_cli": "MISSING"
+  },
+  "source": {
+    "query_script": "read-rosa-classic-policy-bundle.py",
+    "query_script_sha256": "145743281ba1a222f5a7fe0ac5e4f1be5613c0e23e006b70c1d6447c5df4f4e7",
+    "reference_provider": "RHCS v1.7.7 Classic policy IDs; provider binary not executed",
+    "infra_main_observed": "c5d8c4242cf62bcc995715c9f8b6964c2f40dc7a",
+    "docs_base_sha": "ce0b4216201b24b870e1678a14480159e963065a"
+  },
+  "query": {
+    "endpoint": "https://api.openshift.com/api/clusters_mgmt/v1/aws_inquiries/sts_policies",
+    "current_account_read": "PASS",
+    "required_policy_count": 5,
+    "required_policies_available": 5,
+    "operator_policies_available": 7,
+    "operator_policy_names_considered": 8,
+    "missing_operator_policy_id": null,
+    "ocm_reference_policies_available": 4,
+    "bundle_ref": "rosa-policy-20261008T061153Z-6caf4295",
+    "controller_recorded_at_utc": "2026-10-08T06:11:53Z",
+    "controller_clock_sync": "NOT VERIFIED"
+  },
+  "protected_bundle": {
+    "creation_result": "CREATED; directory700/files600 reported",
+    "current_owner_permissions": "NOT RUN",
+    "file_hash_recomparison": "NOT RUN",
+    "external_source_independent_signature": "NOT VERIFIED",
+    "a_handoff_receipt": "NOT CONFIRMED"
+  },
+  "followup_checker": {
+    "script": "check-rosa-classic-policy-bundle.py",
+    "sha256": "7c78ed655015d57bcef2a160b48fdd46418a36bad89c4008648cc0da0c40ec8f",
+    "local_python39_syntax": "PASS",
+    "offline_fixture_checks": 7,
+    "actual_controller_execution": "NOT RUN"
+  },
+  "project_organization": "NOT SELECTED",
+  "aws_org_link": "NOT VERIFIED",
+  "operator_policy_arn_map": "NOT SUPPLIED_OR_ACCEPTED",
+  "not_run": [
+    "subscription/support/version/quota checks",
+    "AWS API",
+    "IAM change",
+    "Terraform Plan/Apply",
+    "ROSA creation",
+    "Runtime sync",
+    "DB connection/restore"
+  ],
+  "initial_attempt": "BLOCKED: RHCS_TOKEN_MISSING; no policy query or bundle creation in that attempt",
+  "refs": {
+    "original_issue_result": "https://github.com/seokpan/seokpan-hybrid-infra/issues/25#issuecomment-6053637165",
+    "foundation_iam": "https://github.com/seokpan/seokpan-hybrid-infra/issues/47"
+  },
+  "overall_t03_acceptance": "NOT COMPLETE",
+  "rto_seconds": null,
+  "rpo_seconds": null,
+  "new_th_completions": 0
+}

@@ -1,6 +1,6 @@
 # 정태훈 작업·흐름·학습 안내
 
-> **현재 상태 — 2026-10-08:** App20/22·Infra43·GitOps25 병합·원격 PR 브랜치 삭제와 마무리 기록 확인. [ROSA Plan/OCP 후속](ROSA_OCP_NEXT_ACTIONS_20261008.md)·[05 §9.50](05_IMPLEMENTATION_AND_VALIDATION.md#merged-pr-plan-readiness-20261008) 우선. D #26의 부분 업무/ERR·Vote 보고 수신, 실제 Controller/Cloud Plan은 NOT RUN. 아래 날짜별 근거·당시 상태 보존.
+> **현재 상태 — 2026-10-08 정책 조회 후:** GitOps31·Docs85 병합 및 해당 원격 PR 브랜치 삭제 확인. B의 기존 Controller jth@ansible에서 Red Hat 인증·Classic 필수 정책5/5·Operator 정책7/8·OCM 참조 정책4/4 조회 및 보호 사본 생성. [원 Infra25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25#issuecomment-6053637165)·[부분 검증 Run](../evidence/T03/redhat-policy-read-20261008-01/summary.md) 연결. 현재 사본 권한/해시·누락 정책 ID·A 보호 인계/수신은 대기. 프로젝트 Red Hat 조직/AWS 연결·Controller clone/원격/Lock·목적 Caller/Backend·지원/Quota·A 제한 입력/C-A SG2·예비 비용/Owner/창 수락 후 첫 Plan. Recovery CA 일치 확인 유지, ConfigMap/DB 접속·복원/실제 Plan 미실행. 아래 날짜별 기록은 당시 이력.
 
 ### 조사 중 추가된 실행 보고·수정 PR — 2026-10-07 후속 조회
 
