@@ -5,7 +5,8 @@
 - [x] App30/34·GitOps33·Docs95 병합·PR 브랜치 삭제 확인
 - [x] Controller Source/Lock·기본 IAM User/MFA 장치 읽기 및 서울 용량 부분 결과 수신
 - [x] D의 새 Run5 Build/Scan/Smoke·Digest 보고 수신
-- [ ] EC2 기존 사용량 보충: 첫API1회 뒤 BLOCKED, 원인 미확정·숫자 미확보
+- [x] EC2 진단v1/v2 결과 수신·추가 자동 API 재시도 종료
+- [ ] 사용량/원인 비공개 확인: B 현장·A/계정 Owner 입력 대기
 - [x] 새 Image 출처·FE/BE Index Digest의 Harbor 공급 후보 수락
 - [ ] 보호 보존 근거·내부 mapping/Child Digest·OCP 공급/교체 조건 대조
 - [ ] EBS 할당량 기준 차이·기존 사용량·목적 세션/Backend·지원/비용/전체 Plan 수락
@@ -30,7 +31,9 @@
 
 [공식 Classic §5.1](https://docs.redhat.com/en/documentation/red_hat_openshift_service_on_aws_classic_architecture/4/html-single/prepare_your_environment/index)의 Minimum required 열은 EBS3종각300 TiB인 반면 [고정 CLI Source](https://github.com/openshift/rosa/blob/c2e552d6d0ada5a50536507f54ceaeaa198df56e/pkg/aws/quota.go)는 gp2/io1 50 TiB를 검사하고 gp3 항목이 없다. 원 helper의 OPTIMAL_REFERENCE_ONLY 출력은 Run에 보존하되, 이 차이를 무시하고 수락하지 않는다. 현재 Controller의 ROSA CLI 버전은 미선정·미설치. A/B·계정 Owner가 적용할 지원/검사 기준을 확인하거나 증설을 조율한 뒤 해당 Gate를 판정한다.
 
-[EC2 사용량 보충 Run](../evidence/T03/controller-seoul-ec2-usage-20261008-01/summary.md): 범위Guard PASS, 첫API1회 뒤 API_OR_NETWORK_ERROR로 중단. 사용량 숫자 미확보·원인 미확정. 앞선 용량 읽기 결과 유지, 사용량0/가용CPU100으로 간주하지 않음. B의 최소1호출 오류 분류 진단은 준비 단계이며 실제 실행/원인 확인 대기.
+[EC2 사용량 보충 Run](../evidence/T03/controller-seoul-ec2-usage-20261008-01/summary.md): 범위Guard PASS, 첫API1회 뒤 API_OR_NETWORK_ERROR로 중단. 사용량 숫자 미확보·원인 미확정. 앞선 용량 읽기 결과 유지, 사용량0/가용CPU100으로 간주하지 않음. [진단v1/v2 Run](../evidence/T03/controller-seoul-ec2-diagnostic-20261008-01/summary.md) 수신: 각CLI1회에서 코드 비식별 BLOCKED, 정확한 원인 미확정. 추가 자동 API 재시도 종료. B 현장/A 계정 Owner 비공개 확인으로 안전한 코드/분류만 인계받고, A 준비표/실제 입력 수신 뒤 목적 세션 사전검증으로 연결.
+
+등록/공개 필터에서 식별되지 않았다는 사실만으로 IAM 권한·계정 문제·악성 출력·할당량 부족을 단정하지 않음. 기존 서울 용량/기본 Caller 수신 결과는 유지.
 
 AWS 사양/제공 AZ를 ROSA 지원·A의 실제3개 AZ/배치로 승계하지 않음. 총 CP3/Infra3/Worker3 machine·disk 예산, 프로젝트 계정·목적Role 권한·조직/구독·STS·patch·disk·비용/Owner/창·전체 Plan은 미확인. 기존 Source·Provider/mock·정책·Caller/MFA 성공은 반복하지 않음.
 
@@ -89,10 +92,11 @@ C의 [Infra19 합의](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#
 
 ### 지금 가능한 작업
 
-- [ ] B: EC2 사용량 보충의 최소1호출 오류 분류 진단·실제 결과 수신. 성공한 Caller/MFA/용량 목록 반복 없음
+- [ ] B 현장/A 계정 Owner: 비공개 오류 분류·실행/계정 범위 확인 입력, 안전한 판정 인계. 같은 API 자동 재시도 없음
+- [ ] B/A: 준비표·실제 보호 입력 수신 뒤 목적 세션 사전검증 연결. 성공한 Caller/MFA/용량 목록 반복 없음
 - [ ] B/A: 공식 EBS300 TiB와 CLI Source50 TiB의 기준 차이·적용 CLI/지원 개정 확인, CP/Infra/Worker별 machine·disk 소요 초안
 - [ ] B/D: 수락한 Run5의 보존 논리 참조·해시·내부 mapping/전체 Child Digest 대조, 현재 OCP 자원·Pruner/Quota·Owner 창 조율
-- [ ] B/Docs21·D: 새 증거 Run5개·원 Issue·Tracker/05/Index 연결과 Index 수신 확인
+- [ ] B/Docs21·D: 새 증거 Run6개·원 Issue·Tracker/05/Index 연결과 Index 수신 확인
 
 ### 선행 입력 대기
 

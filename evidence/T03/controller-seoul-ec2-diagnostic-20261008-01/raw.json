@@ -1,0 +1,77 @@
+{
+  "run_id": "controller-seoul-ec2-diagnostic-20261008-01",
+  "executor": "B / jth@ansible",
+  "source": "ef424da0a6bfcdd56079ab5be249f429fa0b9c36",
+  "source_lock_blob": "668098ad0f1e293982e9bcf8e931128346a00049",
+  "cases": {
+    "v1": {
+      "received_at_utc": "2026-10-08T13:11:32.010321+00:00",
+      "executor": "B / jth@ansible",
+      "source": "ef424da0a6bfcdd56079ab5be249f429fa0b9c36",
+      "source_lock_blob": "668098ad0f1e293982e9bcf8e931128346a00049",
+      "helper_ref": "controller-seoul-ec2-usage-diagnostic-20261008",
+      "helper_sha256": "ccd9409458e0dd842c34371f261e159f612e1f31cd9616ea1a51be6828515e3a",
+      "verdicts": {
+        "EC2_DIAGNOSTIC_SCOPE_GUARDS": "PASS",
+        "BASE_CALLER_MFA_RESULT": "PREVIOUS_RECEIPT_REUSED / NO_REPEAT",
+        "READ_ONLY_API": "EC2 DescribeInstances / SAME_FIRST_REQUEST_ONLY",
+        "CPU_QUOTA_PREVIOUS_RECEIPT": "100 VCPU / NO_REPEAT",
+        "MAX_AWS_CLI_INVOCATIONS": "1 / SDK_MAX_ATTEMPTS: 1 / CONCURRENCY: 1 / PROCESS_TIMEOUT_SECONDS: 25",
+        "DIAGNOSTIC_START_CONTROLLER_UTC": "2026-10-08T13:01:58.931264+00:00",
+        "DESCRIBE_INSTANCES_DIAGNOSTIC": "BLOCKED / AWS_SERVICE_ERROR / CODE_NOT_IN_ALLOWLIST",
+        "AWS_CLI_INVOCATIONS_ATTEMPTED": "1",
+        "ACTUAL_SERVICE_REQUEST_COUNT_AND_ERROR_ORIGIN": "NOT VERIFIED / LOCAL_CLASSIFICATION_ONLY",
+        "QUOTA_USAGE_FREE_CAPACITY_AND_ROSA_PLAN_READINESS": "NOT VERIFIED",
+        "NOT RUN": "additional pages/APIs, STS/MFA/token repeat, role/session, quota change, IAM/ROSA, credential value output/file edits, State/Plan access, raw error/response/ID/ARN/account save or output, CLI history"
+      },
+      "error_cause": "AWS service error pattern observed; exact code hidden by fixed 32-code allowlist; cause NOT DETERMINED",
+      "whole_quota_usage": "NOT VERIFIED",
+      "full_rosa_plan": "NOT RUN",
+      "overall_T03": "PARTIAL"
+    },
+    "v2": {
+      "received_at_utc": "2026-10-08T13:24:20.096783+00:00",
+      "executor": "B / jth@ansible",
+      "source": "ef424da0a6bfcdd56079ab5be249f429fa0b9c36",
+      "source_lock_blob": "668098ad0f1e293982e9bcf8e931128346a00049",
+      "helper_ref": "controller-seoul-ec2-usage-diagnostic-v2-20261008",
+      "helper_sha256": "da9708d3388fb6a1988e254a22ef79fa29e90e6441fa2afea5271244945fa1d4",
+      "execution_start_controller_utc": "2026-10-08T13:18:50.703071+00:00",
+      "verdicts": {
+        "EC2_DIAGNOSTIC_SCOPE_GUARDS": "PASS",
+        "BASE_CALLER_MFA_RESULT": "PREVIOUS_RECEIPT_REUSED / NO_REPEAT",
+        "READ_ONLY_API": "EC2 DescribeInstances / SAME_FIRST_REQUEST_ONLY / ERROR_VOCABULARY_V2",
+        "CPU_QUOTA_PREVIOUS_RECEIPT": "100 VCPU / NO_REPEAT",
+        "MAX_AWS_CLI_INVOCATIONS": "1 / SDK_MAX_ATTEMPTS: 1 / CONCURRENCY: 1 / PROCESS_TIMEOUT_SECONDS: 25",
+        "DIAGNOSTIC_START_CONTROLLER_UTC": "2026-10-08T13:18:50.703071+00:00",
+        "DESCRIBE_INSTANCES_DIAGNOSTIC": "BLOCKED / AWS_SERVICE_ERROR / UNREGISTERED_OR_UNSAFE_CODE_REDACTED",
+        "AWS_CLI_INVOCATIONS_ATTEMPTED": 1,
+        "ACTUAL_SERVICE_REQUEST_COUNT_AND_ERROR_ORIGIN": "NOT VERIFIED / LOCAL_CLASSIFICATION_ONLY",
+        "QUOTA_USAGE_FREE_CAPACITY_AND_ROSA_PLAN_READINESS": "NOT VERIFIED",
+        "NEXT_API_RETRY_IF_CODE_REDACTED": "STOP / LOCAL_OWNER_INSPECTION_REQUIRED",
+        "NOT RUN": "additional pages/APIs, STS/MFA/token repeat, role/session, quota change, IAM/ROSA, credential value output/file edits, State/Plan access, raw error/response/ID/ARN/account save or output, CLI history"
+      },
+      "overall_T03": "PARTIAL",
+      "full_rosa_plan": "NOT RUN",
+      "cause": "NOT DETERMINED / public error code not identified; not proof of account or IAM denial",
+      "next": "stop automatic API retries; designated B Controller/private account owner inspection; only safe error code/category to be handed over"
+    }
+  },
+  "overall_T03": "PARTIAL",
+  "usage_and_available_capacity": "NOT VERIFIED / no inventory data acquired",
+  "error_cause": "NOT DETERMINED; local error classification and code redaction only",
+  "automatic_api_retry": "STOP; designated B on-site and account Owner private inspection input required",
+  "no_inference": [
+    "missing code registration is not proof of IAM denial or account defect",
+    "unsafe/redacted classification is not proof of malicious output",
+    "no usage number is not zero usage",
+    "not proof of quota shortage or whole ROSA preflight failure"
+  ],
+  "next_inputs": [
+    "private local/account Owner scope and error category inspection",
+    "A preparation table and protected real IAM/Backend/SG inputs",
+    "then purpose-session preflight under accepted execution conditions"
+  ],
+  "full_rosa_plan": "NOT RUN",
+  "previous_five_runs": "preserved without modification"
+}
