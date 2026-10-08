@@ -1,0 +1,161 @@
+{
+  "source_head": "3126ae281b78ea04f047d8c3dd75f8675c0b5225",
+  "source_sha256": "9cdb7eee1921a36a72fe49258b6655bf1a1da10cc1445a4cf916558bee846507",
+  "runs": {
+    "full": {
+      "summary": {
+        "run_id": "full-e2e-ui-20261008-final",
+        "scope": "browser-full",
+        "os": "win32",
+        "node": "24.19.0",
+        "started_at": "2026-10-08T10:37:18.080Z",
+        "status": "passed",
+        "commit": "3126ae281b78ea04f047d8c3dd75f8675c0b5225",
+        "source_sha256": "9cdb7eee1921a36a72fe49258b6655bf1a1da10cc1445a4cf916558bee846507",
+        "dirty": false,
+        "phase": "report_validation",
+        "command_reason": "completed",
+        "command_exit_code": 0,
+        "tests": 2,
+        "exit_code": 0,
+        "finished_at": "2026-10-08T10:40:03.930Z"
+      },
+      "junit": {
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "stats": {
+        "startTime": "2026-10-08T10:37:18.716Z",
+        "duration": 164803.198,
+        "expected": 2,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    "ui": {
+      "summary": {
+        "run_id": "full-e2e-ui-20261008-final-ui",
+        "scope": "browser-ui",
+        "os": "win32",
+        "node": "24.19.0",
+        "started_at": "2026-10-08T10:40:51.804Z",
+        "status": "passed",
+        "commit": "3126ae281b78ea04f047d8c3dd75f8675c0b5225",
+        "source_sha256": "9cdb7eee1921a36a72fe49258b6655bf1a1da10cc1445a4cf916558bee846507",
+        "dirty": false,
+        "phase": "report_validation",
+        "command_reason": "completed",
+        "command_exit_code": 0,
+        "tests": 36,
+        "exit_code": 0,
+        "finished_at": "2026-10-08T10:41:25.593Z"
+      },
+      "junit": {
+        "tests": 36,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "stats": {
+        "startTime": "2026-10-08T10:40:52.494Z",
+        "duration": 32839.963,
+        "expected": 36,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    }
+  },
+  "frontend_verify_exit": 0,
+  "migration_blobs": [
+    {
+      "file": "backend/alembic.ini",
+      "head_blob": "ca8b3c291a82f2db46736c93156e9b9010c7a6e1",
+      "build5df_blob": "ca8b3c291a82f2db46736c93156e9b9010c7a6e1"
+    },
+    {
+      "file": "backend/migrations/audit/game_participant_identity.sql",
+      "head_blob": "e17508c02aa6cffc15eb91cb21d8a0ede1093c42",
+      "build5df_blob": "e17508c02aa6cffc15eb91cb21d8a0ede1093c42"
+    },
+    {
+      "file": "backend/migrations/audit/game_participant_identity_pre_expand.sql",
+      "head_blob": "2f1af2d570e3157981e6fb961ad2a7d738ce6a65",
+      "build5df_blob": "2f1af2d570e3157981e6fb961ad2a7d738ce6a65"
+    },
+    {
+      "file": "backend/migrations/env.py",
+      "head_blob": "77532cc6acd5da37a1ed50c2b0705eace823b04d",
+      "build5df_blob": "77532cc6acd5da37a1ed50c2b0705eace823b04d"
+    },
+    {
+      "file": "backend/migrations/script.py.mako",
+      "head_blob": "49a7df2bd836f4af7e2ce7dcb93333f08b970409",
+      "build5df_blob": "49a7df2bd836f4af7e2ce7dcb93333f08b970409"
+    },
+    {
+      "file": "backend/migrations/versions/20260901_0001_stone_game_v1.py",
+      "head_blob": "7f7536bacd28425a3c1a7728c8cd91258e0ccfce",
+      "build5df_blob": "7f7536bacd28425a3c1a7728c8cd91258e0ccfce"
+    },
+    {
+      "file": "backend/migrations/versions/20260902_0002_game_participant_identity_expand.py",
+      "head_blob": "e0e44099684ce755bfb5672d312e2a123caa3125",
+      "build5df_blob": "e0e44099684ce755bfb5672d312e2a123caa3125"
+    }
+  ],
+  "no_source_dirty": true,
+  "backend_tree_unchanged": true,
+  "run_id": "full-e2e-ui-followup-20261008-01",
+  "overall": "PARTIAL / source-isolated workflow PASS; deployment NOT RUN",
+  "executor": "B / local Windows soldesk",
+  "tools": {
+    "node": "24.19.0",
+    "npm": "12.0.2",
+    "python": "3.13.15",
+    "uv": "0.12.5",
+    "locks_sha256": {
+      "frontend\\package-lock.json": "62f4d9b793c275ffedf795aa15f8784db214446c1438f3a4c5322fd130574122",
+      "backend\\uv.lock": "60dec90ab91c111b6302126589487dcb1d681782759125f00dca010cf41266b3"
+    },
+    "locks_unchanged": true,
+    "browser_binary_cache": "existing scoped Playwright cache junction; no personal profile"
+  },
+  "red_before_fix": {
+    "run_id": "full-e2e-ui-20261008-red",
+    "scope": "browser-full",
+    "os": "win32",
+    "node": "24.19.0",
+    "started_at": "2026-10-08T10:28:41.547Z",
+    "status": "failed",
+    "commit": "6c224db54000d6d425d4e7a2bfed792709491561",
+    "source_sha256": "1a877d5f9139bed69105dbabfffb085dcf9a8eea857a3d5e67d49be76e1d86ce",
+    "dirty": false,
+    "phase": "port_cleanup_check",
+    "command_reason": "command_failed",
+    "command_exit_code": 1,
+    "reason": "command_port_or_report_failed",
+    "exit_code": 1,
+    "finished_at": "2026-10-08T10:29:05.408Z"
+  },
+  "red_failure": "first-success.spec.ts149 / black team selector timeout",
+  "static": {
+    "format_lint_api_type_build": "PASS",
+    "tooling": 81,
+    "unit": 278,
+    "unit_files": 21,
+    "build_modules": 67
+  },
+  "source_pr": "https://github.com/seokpan/seokpan-hybrid-app/pull/34",
+  "D_build_report": {
+    "run_id": "a09-4-5df2ce280188",
+    "jenkins": "hybrid/image-pipeline main #4",
+    "source": "5df2ce280188a7e3874fa370ec8116d50ca34af3",
+    "result": "FAILURE at Browser Full; user-delivered D report",
+    "new_image_digest": "NONE",
+    "image_scan_smoke_evidence": "SKIPPED"
+  }
+}

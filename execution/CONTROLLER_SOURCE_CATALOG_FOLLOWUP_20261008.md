@@ -2,9 +2,9 @@
 
 ## 현재 확인
 
-[새 T03 부분 Run](../evidence/T03/controller-source-catalog-20261008-01/summary.md)의 실제 Catalog 6개·정책 ID 대조 PASS와 clone 21커밋 지연/로컬 Lock 부재 수신. Docs #91 병합·브랜치 삭제 완료. Source 최신화·실제 IAM/권한/Owner 수신/지원/Plan은 별도 미완료.
+[최신 후속](FULL_E2E_CONTROLLER_FOLLOWUP_20261008.md): Docs92 병합, c5 Source 최신화/Lock·격리 Root validate·입력 교정 후 mock2/2 PASS, A 정책 사본 수신 보고 수신. 실제 IAM/Caller/Backend/지원/비용/Cloud Plan은 미완료. 아래21커밋 지연·원 블록 준비·최초Source PR 결과는 당시 이력으로 보존.
 
-## 본인 실행 묶음
+## 교정 전 준비 묶음 — 당시 이력
 
 기존 jth@ansible·본인 보호 영역에서 다음을 묶어 진행. 새 블록은 문법/합성·보존/환경 격리 검사 완료이며 실제 Controller 실행은 아직 NOT RUN.
 

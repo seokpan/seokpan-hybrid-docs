@@ -1,6 +1,6 @@
 # 정태훈 작업·흐름·학습 안내
 
-> **현재 확인 — 2026-10-08 Docs #91 병합 후:** [Controller 후속](CONTROLLER_SOURCE_CATALOG_FOLLOWUP_20261008.md)·[새 T03 부분 Run](../evidence/T03/controller-source-catalog-20261008-01/summary.md) 연결. Core 1.16.4·실제 Operator 6개/보관 정책 ID 대조 PASS, clone 21커밋 지연·로컬 Lock 없음. App #30(cf8ef2ca)/GitOps #33(275cc640)의 리뷰 제안 보완·정확 HEAD Linux CI PASS, D 재리뷰 요청 완료·새 승인/병합 대기. D 새 공급은 GitOps #32의 App 5df2ce28 고정. Source 최신화·격리 Provider·A 보호 수신/실제 IAM·Caller/Backend·지원/Quota/비용/창·Cloud Plan은 미완료. 기존 C 기록·Recovery CA/금고 본체·Stage2 완료 보고 및 TH/Q/DR/Cost 경계 유지. 아래 날짜별 기록은 당시 이력.
+> **현재 확인 — 2026-10-08 Docs #92 병합 후:** [Full·Controller 후속](FULL_E2E_CONTROLLER_FOLLOWUP_20261008.md) 연결. 실제 B/jth@ansible의 Source c5d8/Lock·격리 Root validate 및 입력 교정 후 OIDC mock2/2 PASS, A 정책 사본 수신·무결성 보고 수신. App34 clean3126ae28의 Full2·UI36·unit278 PASS·D 리뷰 요청. App30/GitOps33은 이전 승인 DISMISSED·새 승인 미표시, 세 Source PR 미병합. Infra ef424da0의 추가8파일은 C Data Ansible이며 ROSA 코드/Lock 동일. 실제 IAM/ARN·DataSG2·Caller/Backend·구독/지원/Quota/disk·예비비용/Owner/창·Cloud Plan과 OCP 후속은 미완료. 아래 날짜별 기록은 당시 이력.
 
 ### 조사 중 추가된 실행 보고·수정 PR — 2026-10-07 후속 조회
 

@@ -28,3 +28,9 @@ C의 예약 10개을 함께 쓰면 네 번째 행은130+30×T와 실제 상한�
 5. 실제 시험: Max_used_connections·계정/전체동시연결·대기/연결오류·Rolling/종료·재접속·예약여유 확인. Source계산을 RDS/성능 PASS로 사용하지 않음.
 
 원 [C v2.3 개정 예정](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6051212790)·[App4](https://github.com/seokpan/seokpan-hybrid-app/issues/4). 이 준비는 ROSA Root 첫 Plan의 전체 선행조건이 아니며 Cloud App 활성화 전에 실제 입력을 대조. 설계 수치·DB사양·Pool 값 채택/DDL/실제 접속 변경 없음.
+
+## C 수신·Cloud App 활성화 조건 — 2026-10-08
+
+C는 Data 수치기준 v2.2§2.6과 예산의 정합, 3+2/60 미채택, 실제 RDS 상한 뒤 B/C 결정, ROSA Plan과 분리에 동의했다. C의 기본식 예상은 max_connections85미만이며 실제 조회값이 아니다. 그 범위라면 정상3Pod의 기본 Pool 상한90만으로도 예산을 넘는다.
+
+Cloud Backend 활성화 전 실제 상한·예약10·Process/Engine·Rolling/종료 중 Pod 예산을 수락하고 필요한 Pool 구현/설정·새 Image·GitOps 소비를 완료한다. 현재 Cloud0/hold 유지, 임의3+2·60 확정/환경변수 추가 없음. 첫 ROSA Plan의 직접 입력과 Cloud App 활성화 입력을 구분한다.
