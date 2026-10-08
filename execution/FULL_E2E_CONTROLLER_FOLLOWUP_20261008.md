@@ -23,7 +23,7 @@ Provider·지원 patch·API 목록·PrivateLink 설계 변경 후 새 필수ID�
 
 ## 새 Image·병합 순서
 
-D의 Jenkins main4/a09-4-5df2ce280188은 Full 단계 FAILURE, 새 Image/Digest 없음. Backend1774·Frontend278·UI36·audit0 통과와 이후 Image/Scan/Smoke/Evidence skip은 D 수행 보고로 수신. 최신 main6c에서도 같은149행 실패를 재현했고 App34에서 스펙1파일만 보완했다.
+D의 Jenkins main4/a09-4-5df2ce280188은 Full 단계 FAILURE, 새 Image/Digest 없음. Backend1774·Frontend278·UI36·audit0 통과와 이후 Image/Scan/Smoke/Evidence skip은 D 수행 보고로 수신. 당시 main6c에서도 같은149행 실패를 재현했고 App34에서 스펙1파일만 보완했다.
 
 App30(기동 정리)과 App34(Full 스펙)는 파일 의존·충돌 없음. 새 승인을 받은 PR부터 병합 가능하지만 D 재빌드는 두 App 변경 병합 후 최종 main SHA 하나로 진행한다. 미병합 수정이 기존5df Image에 포함됐다고 승계하지 않는다.
 
@@ -59,3 +59,11 @@ C는 [Pool 예산 준비](DB_CONNECTION_BUDGET_PREPARATION.md)에 동의했고 �
 검토된 Infra ef424da0의 ansible/data 변경만 개인 변경·새 원격 변경·ignored 파일 충돌이 없는 경우 ff-only, 기존 ROSA Lock 보존. jth의 보호 AWS config에서 목적 Role/MFA 설정 유무를 값 없이 확인하고 credentials 파일은 존재·소유자/권한만 확인한다.
 
 실제 계정/프로필명·ARN·자격 값 출력/자격 파일 내용 조회·AWS/RHCS API·State/Output/Plan·기존 성공 시험 반복 없음. Role 프로필 존재가 인증·권한 PASS를 뜻하지 않음. Python3.9 구문·정적 조건 검사 완료, 실제 실행 판정은 다음 원 Infra25/새 Run으로 기록.
+
+## 최종 원격 변경 대조 — 2026-10-08 20:26 KST
+
+App main은 D의 [PR #36](https://github.com/seokpan/seokpan-hybrid-app/pull/36) 병합으로 6c224db5에서 3dc31d72531bae76bb2debc3bd3975f8472730d5로 변경됐다. 추가 파일은 scripts/release_source.py·scripts/test_release_source.py 두 개다. Frontend·Backend·Migration·Lock·CI·Image Pipeline 변경 및 App30/34 파일 겹침은 없다. 이 변경으로 기존 PR 최신화·승인 해제·Full 재시험은 불필요하다.
+
+App34의 실제 시험 SHA3126ae28과 당시 main6c 실패 재현은 그대로 보존한다. 새 main 또는 앞으로 병합될 main의 Image Build 성공으로 승계하지 않는다. App30/34 모두 승인·병합 후 최종 main SHA 하나로 D32의 새 Build/Scan/Smoke/Digest 검사를 진행한다.
+
+20:26 KST 원 PR 조회 기준 App30 cf8ef2ca·GitOps33 275cc640은 과거 승인이 DISMISSED이며 현재 HEAD 새 승인은 없다. Source 검사·보완 완료와 승인 대기를 구분한다. App34는 새 리뷰 대기, 문서 PR은 clean 상태다.

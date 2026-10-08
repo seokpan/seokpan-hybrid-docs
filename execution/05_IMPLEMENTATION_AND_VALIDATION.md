@@ -2179,3 +2179,5 @@ Controller 읽기 사전검증 블록은 개인 clone/Lock·Core·실제STS Oper
 A의 원본/사본18개·manifest17개 해시/권한 검사 보고 수신. 실제 역할4개·ARN·목적 권한·적용/출력 공급은 미완료. C의 SG 출력↔입력키↔GroupName 대조·Apply 뒤 실제 공급과 Pool의 Cloud App 활성화 조건 동의 수신. 실제 SG2·RDS 상한은 미공급, 3+2/60 미채택. Infra ef424da0은 C Data Ansible8파일 추가로 ROSA/Lock 동일, c5 시험을 ef 실행으로 재작성하지 않음.
 
 App30/GitOps33의 이전 승인은 DISMISSED·새 승인 미표시. 두 App PR 병합 뒤 최종 SHA로 D32 단일 Build, Image/Scan/Digest·교체 실행 조건 별도. 기존 C 기록·설계 종료·TH/Q/DR/Cost 범위 보존, Index 연결 제출과 D 수신 구분. 실제 Caller/Backend·지원·비용·사용창·첫 Cloud Plan 미완료.
+
+- 최종 20:26 KST delta: D App #36의 release-source 생성기/시험2파일 추가로 main3dc31d72, 기존 App30/34·Frontend/Backend/Migration/Lock/CI 겹침0. 시험 SHA3126과 당시 main6c 유지, 추가 Full 반복 없음. App30·GitOps33 현재 HEAD 새 승인 미등록 확인, App34 리뷰 대기. 상세: [최종 원격 변경 대조](FULL_E2E_CONTROLLER_FOLLOWUP_20261008.md#최종-원격-변경-대조--2026-10-08-2026-kst).
