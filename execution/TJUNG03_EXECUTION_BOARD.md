@@ -1,6 +1,6 @@
 # 정태훈 실행판 — 지금 할 일·입력 대기·OCP와 ROSA 수명
 
-> **현재 확인 — 2026-10-08 정책 조회 후:** GitOps31·Docs85 병합 및 해당 원격 PR 브랜치 삭제 확인. B의 기존 Controller jth@ansible에서 Red Hat 인증·Classic 필수 정책5/5·Operator 정책7/8·OCM 참조 정책4/4 조회 및 보호 사본 생성. [원 Infra25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25#issuecomment-6053637165)·[부분 검증 Run](../evidence/T03/redhat-policy-read-20261008-01/summary.md) 연결. 현재 사본 권한/해시17개 PASS, 누락 AWS VPCE 정책 ID 확인. [새 읽기 Run](../evidence/T03/policy-bundle-readback-20261008-01/summary.md) 연결; 실제 Operator/Policy Map 대조 및 A 보호 인계/수신 대기. 프로젝트 Red Hat 조직/AWS 연결·Controller clone/원격/Lock·목적 Caller/Backend·지원/Quota·A 제한 입력/C-A SG2·예비 비용/Owner/창 수락 후 첫 Plan. Recovery CA 일치 확인 유지, ConfigMap/DB 접속·복원/실제 Plan 미실행. 아래 날짜별 기록은 당시 이력. GitOps26은 lab Stage2 완료로 종료, DB 입력·FE/BE Ready·Route/WSS·Valkey 보고 수신. 다중 투표·WS idle/재접속·Rolling/장애·Prune/Delete 실제 차단·ROSA 재측정은 본인 GitOps10/App4 후속으로 분리.
+> **현재 확인 — 2026-10-08 PR88 병합 후:** Docs88 main d881df14·작업 브랜치 삭제/마무리 확인. [Image·이관·ROSA 묶음](IMAGE_MIGRATION_ROSA_PREFLIGHT_20261008.md) 연결. 새 Image 대상 App `5df2ce28`·Source Alembic head `20260902_0002`·Migration 6개 파일 동일, 실제 Build/Scan/Digest는 D 후속. 진단 ZIP 현재 PC 추가 사본/8개 체크섬 확인. B의 1차 쓰기 중지 준비·당일 실행·이관 후 current/App를 독립 항목으로 관리. Controller clone/Lock·실제 Operator/Policy Map·A 수신·목적 Caller/Backend·지원/Quota·비용/창 및 실제 Plan은 미완료. GitOps #26의 lab Stage2 완료 보고와 미완료 후속 시험은 GitOps #10/App #4에 연결. Recovery CA 해시 일치 확인 유지, ConfigMap·실제 DB 연결/복원은 미실행. 아래 날짜별 기록은 당시 이력.
 
 > **최신 조사 후속 — 2026-10-07:** [전수 조사](REPOSITORY_AUDIT_20261007.md)·[05§9.47](05_IMPLEMENTATION_AND_VALIDATION.md#repository-full-audit-20261007) 참조. GitOps main의 Root SHA B/FE·BE1은 소스 병합 상태이며, 마지막 수신 Runtime은 SHA A/FE·BE0이다. 성공한 등록/선택Sync·금고 본체 확인을 반복하지 않는다. C의 GitOps26/6038214247 DB 형식·GRANT·TLS 접속·합성 출처 수락 보고는 수신했고 실제 Stage2 적용·Route/업무는 원 #26에서 후속 확인한다. 아래 시점별 인계 보존.
 
@@ -499,3 +499,16 @@ OCP의 사전검증 업무 완료와 정리 날짜는 별개다. 추천 운영 �
 **이전 상단 기준의 시점 이력:** 기준 2026-10-06 KST: 개정 비용 원장을 수신해 실제 계산 엔진으로 독립 재검증했다. 현재 PARTIAL과 남은 수식 보완을 원 Issue에 연결한다. 아래 #33 Draft/2a5 검토는 당시 이력이고 최신은 Ready/062a371이다. 실제 출력·가동 시각·본인 가용성은 미확인이다.
 
 </details>
+
+## 2026-10-08 작업 묶음 — Docs #88 이후
+
+- [x] 정책 사본 권한·17개 파일 해시 수신, Docs #88 병합·브랜치 삭제 확인
+- [x] [새 Image Source·스키마·ZIP·ROSA 준비 연결](IMAGE_MIGRATION_ROSA_PREFLIGHT_20261008.md)
+- [x] [1차 쓰기 중지·복귀 준비 절차](FIRST_SERVICE_WRITE_STOP_PREPARATION.md)
+- [ ] D 새 공급 Issue·Build/Scan/Digest·내부 Registry mapping·신규 Pull/교체 창 수신
+- [ ] B 실제 1차 Context·Parent/HPA/쓰기 주체 확인 → 제어 경로·실행자/창 수락
+- [ ] B/C 이관 당일 쓰기 중지 유지·최종 Dump/Import/비교 → ROSA current/App 검증
+- [ ] B Controller clone/Lock·Operator/정책 대조 → A 보호 수신·실제 기반/권한·C/A SG2
+- [ ] B/A/D 목적 Caller/Backend·지원/구독/Quota/disk·예비 비용/창 → 첫 전체 Plan
+
+실제 수행/수신은 원 Issue/Run에서 판정. 다중 투표·WS 유지/재접속·Rolling/장애·Prune/Delete, Recovery·금고 독립 사본 및 보존 중인 개인 변경은 기존 후속 범위 유지. 멘토링/OADP는 보류.

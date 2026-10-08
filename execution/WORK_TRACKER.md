@@ -1,6 +1,6 @@
 # Work and Input Tracker
 
-> **현재 확인 — 2026-10-08 정책 조회 후:** GitOps31·Docs85 병합 및 해당 원격 PR 브랜치 삭제 확인. B의 기존 Controller jth@ansible에서 Red Hat 인증·Classic 필수 정책5/5·Operator 정책7/8·OCM 참조 정책4/4 조회 및 보호 사본 생성. [원 Infra25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25#issuecomment-6053637165)·[부분 검증 Run](../evidence/T03/redhat-policy-read-20261008-01/summary.md) 연결. 현재 사본 권한/해시17개 PASS, 누락 AWS VPCE 정책 ID 확인. [새 읽기 Run](../evidence/T03/policy-bundle-readback-20261008-01/summary.md) 연결; 실제 Operator/Policy Map 대조 및 A 보호 인계/수신 대기. 프로젝트 Red Hat 조직/AWS 연결·Controller clone/원격/Lock·목적 Caller/Backend·지원/Quota·A 제한 입력/C-A SG2·예비 비용/Owner/창 수락 후 첫 Plan. Recovery CA 일치 확인 유지, ConfigMap/DB 접속·복원/실제 Plan 미실행. 아래 날짜별 기록은 당시 이력. GitOps26은 lab Stage2 완료로 종료, DB 입력·FE/BE Ready·Route/WSS·Valkey 보고 수신. 다중 투표·WS idle/재접속·Rolling/장애·Prune/Delete 실제 차단·ROSA 재측정은 본인 GitOps10/App4 후속으로 분리.
+> **현재 확인 — 2026-10-08 PR88 병합 후:** Docs88 main d881df14·작업 브랜치 삭제/마무리 확인. [Image·이관·ROSA 묶음](IMAGE_MIGRATION_ROSA_PREFLIGHT_20261008.md) 연결. 새 Image 대상 App `5df2ce28`·Source Alembic head `20260902_0002`·Migration 6개 파일 동일, 실제 Build/Scan/Digest는 D 후속. 진단 ZIP 현재 PC 추가 사본/8개 체크섬 확인. B의 1차 쓰기 중지 준비·당일 실행·이관 후 current/App를 독립 항목으로 관리. Controller clone/Lock·실제 Operator/Policy Map·A 수신·목적 Caller/Backend·지원/Quota·비용/창 및 실제 Plan은 미완료. GitOps #26의 lab Stage2 완료 보고와 미완료 후속 시험은 GitOps #10/App #4에 연결. Recovery CA 해시 일치 확인 유지, ConfigMap·실제 DB 연결/복원은 미실행. 아래 날짜별 기록은 당시 이력.
 
 ### 조사 중 추가된 실행 보고·수정 PR — 2026-10-07 후속 조회
 
@@ -748,3 +748,13 @@ App17–19 최신 승인·병합/삭제 및 결합 main 검사/Build 입력은 [
 ## B 정책 사본 수락 후속 — 2026-10-08
 
 [새 읽기 Run](../evidence/T03/policy-bundle-readback-20261008-01/summary.md)의 현재 권한/해시17개 PASS와 누락 AWS VPCE 정책 ID 수신. 보호 사본 준비와 A에게 실제 전달/수신을 구분. A의 공통 Role4/정책·목적 권한/제한 출력, C/A SG2, B의 clone/Lock·Caller/Backend·지원/Quota·예비 비용/창 확인이 남은 첫 Plan 입력. 성공한 정책 조회/사본 생성을 반복하지 않음.
+
+## B 작업 묶음·직접 입력 — 2026-10-08 PR88 이후
+
+| 묶음 | 완료한 준비 | 아직 남은 실행/수신 |
+|---|---|---|
+| D 새Image 공급 | 고정Source `5df2ce28`·구신Migration 6개 파일/head 동일·ZIP추가사본검증·lab자원/순차교체 조건 | D새Issue/BuildScanDigest/내부mapping/신규Pull·현재Owner/창/노드자원·BSource수락·실제교체Run |
+| B 1차쓰기중지 | [준비절차](FIRST_SERVICE_WRITE_STOP_PREPARATION.md)·원Infra17/C44v1.5 역할·Source/복귀 경계 | 실제1차Context/Parent/HPA/쓰기주체·제어경로/실행자/창·당일중지유지·C최종Dump/Import/비교·ROSAcurrent/App·전환/재개 판단 |
+| B ROSA사전검증/Plan | 인증/정책/사본17해시PASS·읽기묶음문법/합성3개검사 | 본인clone/Lock·실제Operator/PolicyMap·A보호수신/실제IAM/출력·C/A SG2·목적Caller/Backend·지원/Quota/Cost/창·첫 전체 Plan |
+
+기존 C의 §8/Tracker·기존 Run 및 Shared Execution 기록 보존. 새 Runtime/TH/Q/Cost/DR 완료 가산 없음. 원 결과와 [묶음](IMAGE_MIGRATION_ROSA_PREFLIGHT_20261008.md)을 연결하고 실제 팀 전달/수신은 구분.
