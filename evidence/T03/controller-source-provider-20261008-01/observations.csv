@@ -1,0 +1,7 @@
+observation,result,scope
+Source ff-only/Lock,PASS,actual B Controller output received
+Isolated Root init/validate,PASS,errors0/warnings0; Cloud not called
+Original OIDC mock,BLOCKED,original failed run preserved; no process exit stored
+Version candidate list,39,4.20 GA enabled/rosa flags only; STS UNKNOWN
+Policy handoff archive,PASS,18 members/hash; not actual A automated transfer
+Local cluster tools/context,BLOCKED,kubectl/oc missing; kubeconfig unavailable

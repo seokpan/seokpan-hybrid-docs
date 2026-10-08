@@ -1,6 +1,6 @@
 # 石나가는 판단 2차 프로젝트 05 구현·통합·검증 진행 기록
 
-> **현재 확인 — 2026-10-08 Docs #91 병합 후:** [Controller 후속](CONTROLLER_SOURCE_CATALOG_FOLLOWUP_20261008.md)·[새 T03 부분 Run](../evidence/T03/controller-source-catalog-20261008-01/summary.md) 연결. Core 1.16.4·실제 Operator 6개/보관 정책 ID 대조 PASS, clone 21커밋 지연·로컬 Lock 없음. App #30(cf8ef2ca)/GitOps #33(275cc640)의 리뷰 제안 보완·정확 HEAD Linux CI PASS, D 재리뷰 요청 완료·새 승인/병합 대기. D 새 공급은 GitOps #32의 App 5df2ce28 고정. Source 최신화·격리 Provider·A 보호 수신/실제 IAM·Caller/Backend·지원/Quota/비용/창·Cloud Plan은 미완료. 기존 C 기록·Recovery CA/금고 본체·Stage2 완료 보고 및 TH/Q/DR/Cost 경계 유지. 아래 날짜별 기록은 당시 이력.
+> **현재 확인 — 2026-10-08 Docs #92 병합 후:** [Full·Controller 후속](FULL_E2E_CONTROLLER_FOLLOWUP_20261008.md) 연결. 실제 B/jth@ansible의 Source c5d8/Lock·격리 Root validate 및 입력 교정 후 OIDC mock2/2 PASS, A 정책 사본 수신·무결성 보고 수신. App34 clean3126ae28의 Full2·UI36·unit278 PASS·D 리뷰 요청. App30/GitOps33은 이전 승인 DISMISSED·새 승인 미표시, 세 Source PR 미병합. Infra ef424da0의 추가8파일은 C Data Ansible이며 ROSA 코드/Lock 동일. 실제 IAM/ARN·DataSG2·Caller/Backend·구독/지원/Quota/disk·예비비용/Owner/창·Cloud Plan과 OCP 후속은 미완료. 아래 날짜별 기록은 당시 이력.
 
 ### 조사 중 추가된 실행 보고·수정 PR — 2026-10-07 후속 조회
 
@@ -2170,3 +2170,14 @@ Controller 읽기 사전검증 블록은 개인 clone/Lock·Core·실제STS Oper
 보존된 App 2개/GitOps 2개 수정은 최신 main에 App #30/GitOps #33으로 각각 통합, 정확 HEAD의 Linux CI와 Artifact 확인. D 최초 승인 후 제안 보완으로 App cf8ef2ca·GitOps 275cc640 생성. 새 Linux CI는 App 전체 1798·부분집합 47·Lua 9 및 GitOps 76·렌더 8개 체크섬 PASS. 수정 전 회귀 실패와 수정 후 통과를 대조했고 D 재리뷰 요청 완료. 이전 HEAD 승인과 새 HEAD 승인/병합·새 Image·Runtime은 별도. D #32 생성 확인, 고정 Build 5df2ce28과 미병합 App #30 구분. D 추가 진단 ZIP은 동일 원본/같은 PC 경로로 확인.
 
 [Pool 예산](DB_CONNECTION_BUDGET_PREPARATION.md)은 고정 라이브러리/Source의 기본 상한과 종료 중 Pod 조건만 검토. 실제 Process·RDS 상한/예약·B/C 합의·구현/부하는 후속, 3+2 미채택 유지. C 기존 §8/Tracker·설계·TH/Q/DR/Cost 완료 가산 없음.
+
+<a id="full-e2e-controller-followup-20261008"></a>
+### 9.56 Full e2e·Controller 교정·A/C 입력 수신 — 2026-10-08
+
+[후속 안내](FULL_E2E_CONTROLLER_FOLLOWUP_20261008.md), [T09 Full](../evidence/T09/full-e2e-ui-followup-20261008-01/summary.md), [T03 최초](../evidence/T03/controller-source-provider-20261008-01/summary.md)·[T03 교정](../evidence/T03/controller-oidc-mock-retry-20261008-01/summary.md) 연결. App34 clean3126ae28의 Full2/UI36/unit278/tooling81·정적/빌드 PASS, D 리뷰 요청. 실제 B/jth@ansible의 c5 Source/Lock·Root validate PASS 및 최초 mock BLOCKED 보존. 합성 입력 옵션 교정 후 exit0·mock2/2·원 자료 보존 PASS.
+
+A의 원본/사본18개·manifest17개 해시/권한 검사 보고 수신. 실제 역할4개·ARN·목적 권한·적용/출력 공급은 미완료. C의 SG 출력↔입력키↔GroupName 대조·Apply 뒤 실제 공급과 Pool의 Cloud App 활성화 조건 동의 수신. 실제 SG2·RDS 상한은 미공급, 3+2/60 미채택. Infra ef424da0은 C Data Ansible8파일 추가로 ROSA/Lock 동일, c5 시험을 ef 실행으로 재작성하지 않음.
+
+App30/GitOps33의 이전 승인은 DISMISSED·새 승인 미표시. 두 App PR 병합 뒤 최종 SHA로 D32 단일 Build, Image/Scan/Digest·교체 실행 조건 별도. 기존 C 기록·설계 종료·TH/Q/DR/Cost 범위 보존, Index 연결 제출과 D 수신 구분. 실제 Caller/Backend·지원·비용·사용창·첫 Cloud Plan 미완료.
+
+- 최종 20:26 KST delta: D App #36의 release-source 생성기/시험2파일 추가로 main3dc31d72, 기존 App30/34·Frontend/Backend/Migration/Lock/CI 겹침0. 시험 SHA3126과 당시 main6c 유지, 추가 Full 반복 없음. App30·GitOps33 현재 HEAD 새 승인 미등록 확인, App34 리뷰 대기. 상세: [최종 원격 변경 대조](FULL_E2E_CONTROLLER_FOLLOWUP_20261008.md#최종-원격-변경-대조--2026-10-08-2026-kst).

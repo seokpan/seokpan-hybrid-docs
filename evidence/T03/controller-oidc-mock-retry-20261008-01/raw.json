@@ -1,0 +1,31 @@
+{
+  "run_id": "controller-oidc-mock-retry-20261008-01",
+  "overall": "PARTIAL",
+  "executor": "B / existing jth@ansible",
+  "recorded_at_utc": "2026-10-08T10:48:47.605231+00:00",
+  "source_head": "c5d8c4242cf62bcc995715c9f8b6964c2f40dc7a",
+  "lock_blob": "668098ad0f1e293982e9bcf8e931128346a00049",
+  "helper_sha256": "c8b9813c58c226748ed8d90044c52dc366c1a66db1736128c3792c8ef20822f0",
+  "original_error_class": "MISSING_REQUIRED_INPUT",
+  "original_error_count": 7,
+  "original_process_exit_code": "not stored",
+  "retry_scope_guards": "PASS",
+  "actual_retry_exit_code": 0,
+  "retry_error_classes": "NONE",
+  "summary_2_passed_0_failed": true,
+  "named_runs": {
+    "issuer_without_scheme": "PASS",
+    "issuer_with_https_scheme": "PASS"
+  },
+  "source_harness_lock_original_log_preserved": "PASS",
+  "result": "PASS / isolated synthetic mock only",
+  "logical_retry_ref": "oidc-mock-retry-20261008T104030Z-7eae7df3",
+  "protected_log_sha256": "9a69304f21e6e072c8e648489e53485ab76b52a6e0024dac137bd6a831ffd184",
+  "not_run": [
+    "init/download",
+    "policy/version API",
+    "AWS/RHCS API or credentials",
+    "production backend/State",
+    "Cloud Plan/Apply"
+  ]
+}

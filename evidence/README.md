@@ -122,3 +122,10 @@ python3 tools/recovery_metrics.py evidence/<test-id>/<run-id>/release.json --con
 - [App30 Run37759276727](https://github.com/seokpan/seokpan-hybrid-app/actions/runs/37759276727): HEAD cf8ef2cae927bfc6d13da8e0c7a7f918e09974ca·Artifact11541900559·전체1798/부분집합47/Lua9 failure/error/skip0. ZIP SHA256 c9988031df9fb263cf9b24fd25f5c3e3dbcacde139159a2fba3ac3ecd547e890, 만료2026-11-07T09:51:03Z.
 - [GitOps33 Run37759280003](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37759280003): HEAD275cc640cad34532502beba453f109d5697f898c·Artifact11541945097·발견=실행76 PASS/진단렌더8체크섬PASS. ZIP SHA2561b27c8f0d0b7ad578cc52f704c24897d7abd199495adfb1a5a9379b9115cfb26, 만료2026-10-15T09:49:30Z.
 - 최초 두 Run과 승인은 당시 HEAD 이력. 새 커밋 D 재리뷰 요청 완료·승인/병합 대기. Controller T03 부분 Run의 실제 수신 기록을 재작성하지 않으며 Cloud/Runtime PASS 가산 없음.
+
+## Full·Controller 실제 후속 — 2026-10-08
+
+- [T09/full-e2e-ui-followup-20261008-01](T09/full-e2e-ui-followup-20261008-01/summary.md): B 로컬 Windows·Memory Backend. clean3126 Full2/UI36·unit278/tooling81 PASS, 실제 Image/OCP/SQL/Valkey 미검증.
+- [T03/controller-source-provider-20261008-01](T03/controller-source-provider-20261008-01/summary.md): B/jth@ansible c5 Source/Lock·격리 Root validate PASS, 최초 mock BLOCKED·버전39후보/STS UNKNOWN. 실제 Cloud Plan 미실행.
+- [T03/controller-oidc-mock-retry-20261008-01](T03/controller-oidc-mock-retry-20261008-01/summary.md): 최초 필수 입력 오류7개 → 합성 var-file 교정 후 실제 exit0·named2/summary2 PASS, Source/Lock/원 로그 보존. AWS/RHCS·운영 Backend/State 미실행.
+- D Index 수신 대기. Source 정적/모의 시험을 전체 T03/TH/Q/DR/Cloud/Cost 수락으로 가산하지 않음.

@@ -1,0 +1,5 @@
+observation,result,scope
+Original failure classification,7 missing required inputs,actual Controller stored log
+Corrected mock process exit,0,same initialized harness; synthetic tfvars
+Named issuer runs,2/2 PASS,no real AWS/RHCS plan
+Source/harness/Lock/original log,PRESERVED,old log not overwritten

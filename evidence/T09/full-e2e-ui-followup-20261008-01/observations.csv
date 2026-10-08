@@ -1,0 +1,7 @@
+observation,result,scope
+Before fix latest main,FAIL,same team selector149; no skip workaround
+Exact final Full,2/2 PASS,Memory Backend/chromium; clean3126ae28
+Exact final Browser UI,36 PASS,clean3126ae28; synthetic UI
+Frontend static/tooling/unit/build,PASS,81tooling/278unit/21files/67modules
+Image Build/Scan/Smoke/Digest,NOT RUN,D main4 stopped before Image
+SQL/Valkey/OCP/Cloud business,NOT RUN,isolated Memory execution only
