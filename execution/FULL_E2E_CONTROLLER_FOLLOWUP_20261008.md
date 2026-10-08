@@ -52,3 +52,10 @@ C는 [Pool 예산 준비](DB_CONNECTION_BUDGET_PREPARATION.md)에 동의했고 �
 6. **D/B OCP:** Worker requests99/95%·실사용82/85%는10/8 18시 D 보고. 최신 자원·종료 중 Pod·Pruner·Quota·Owner 창·Gate/live Diff 확인 후 FE→BE. 272Mi/옛 보고만으로 실행 수락하지 않음.
 
 제공 HTML은 당시 참고 자료다. 관리 추정70/88%를 공식 WBS/TH 완료율로 사용하지 않는다. 최신 원 Issue/PR/Run 우선, TH81/기존완료2·Q 미완료·설계03/04 종료·DR10/RPO30/Backup15·CP3/Infra3/Worker3·Cost PARTIAL/$450/$500 유지. 멘토링/OADP 보류, Index 연결 제출과 D 수신 구분.
+
+## 다음 로컬 확인 묶음 — 준비 완료·Controller 미실행
+
+논리 참조 controller-source-local-access-20261008 / Source SHA25697aa4567429ea80ad21bce0e7cb3e01426fc9bcea2e868eb8ffad3d60cc0e44a.
+검토된 Infra ef424da0의 ansible/data 변경만 개인 변경·새 원격 변경·ignored 파일 충돌이 없는 경우 ff-only, 기존 ROSA Lock 보존. jth의 보호 AWS config에서 목적 Role/MFA 설정 유무를 값 없이 확인하고 credentials 파일은 존재·소유자/권한만 확인한다.
+
+실제 계정/프로필명·ARN·자격 값 출력/자격 파일 내용 조회·AWS/RHCS API·State/Output/Plan·기존 성공 시험 반복 없음. Role 프로필 존재가 인증·권한 PASS를 뜻하지 않음. Python3.9 구문·정적 조건 검사 완료, 실제 실행 판정은 다음 원 Infra25/새 Run으로 기록.
