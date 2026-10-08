@@ -816,6 +816,16 @@ State Lineage·Serial 차이의 원인과 내용 동일성은 [첫 코멘트](ht
 - 열린 항목: ① 복원 Runbook Issue(10/8, Infra #46), ② 15분 백업 스크립트 · 복사 전용 키(10/9), ③ 10/22 이후 RDS 가동 여부, ④ 첫 실제 Stop · Start 실측(10/15 저녁 예정)
 - 한계: 절차 작성과 사전 확인까지이며, RDS Stop/Start · 이관 · 복원의 실제 실행과 측정은 아니다.
 
+### 8.18 Stage 2 lab DB 실행 Gate — `backend-db-runtime` 정합 확인 (GitOps #26)
+
+- 일자: 2026-10-07 / 작성 김상희
+- 배경: OCP lab Backend · Frontend 2단계 활성화([GitOps #26](https://github.com/seokpan/seokpan-hybrid-gitops/issues/26))의 선택 Sync 전에, 최유준이 공급한 `backend-db-runtime` Secret이 Data 계약 v2.2와 맞는지 Data 담당 확인을 요청받았다(팀 메신저). 새 설계 결정이 아니라 기존 계약과 실제 공급값의 대조다.
+- 방법: Demo02는 4조와 함께 쓰는 서버라, 최유준이 조회 전용 스크립트를 실행하고 김상희가 결과로 판정했다(04 문서 2.4절의 실제 수행자와 판정자 구분). 비밀번호와 해시는 출력 · 기록하지 않았고, lab DB는 재시작 · 변경하지 않았다.
+- 결과: 키는 `SEOKPAN_IDENTITY_DATABASE_URL` · `SEOKPAN_GAME_DATABASE_URL` 2개이고, 두 URL 모두 `mysql+asyncmy` · `identity_svc` / `game_svc` · `mariadb.seokpan-app.svc:3306/stone_game` · `charset=utf8mb4`만 사용한다. 권한은 8.2절과 같다(`identity_svc`는 `member`만, `game_svc`는 게임 계열 6개 테이블과 `member`의 허용 컬럼만). 두 계정 모두 `REQUIRE SSL`이며, Secret 값으로 TLS 1.3 · 서버 이름 검증 · 로그인이 성공했다. 데이터는 OCP 테스트 계정으로 만든 합성 데이터다(1차 실데이터 아님, Infra #17 조건). `backend-database-ca`와 DB 서버 CA의 SHA-256이 같고 만료는 2026-10-31이다.
+- 판정: 정합. Stage 2 선택 Sync의 Data 쪽 조건은 충족했으며, 판정표는 GitOps #26 코멘트에 남겼다.
+- 열린 항목: ① GitOps #26 본문 "lab DB 데이터 출처 기록" 체크(최유준) ② Data 계약 v2.3에 lab DB CA 공급 완료 반영 ③ Sync 후 실제 Backend의 DB 접속 · 업무 결과(최유준 Run)
+- 한계: lab에 공급된 값이 계약과 맞는지 확인한 것이며, Backend 기동 · 업무 동작 · Cloud(RDS) 연결 검증은 아니다.
+
 ## 9 복구 예행과 목표 재검토 — 2026-10-02
 
 **2026-10-03 설계 우선순위 정정:** 이번 피드백의 목적과 대안 비교·수정 범위는 [03 §3-I.14](../design/03_DETAILED_DESIGN.md#recovery-design-review-20261003)를 기준으로 읽는다. 이 절은 최소 예행의 기존 입력·측정·부담 비교를 지원한다. 02의 기존 1차 Redis 재사용 설명과 03의 좁게 읽힐 수 있는 RTO 경계는 설계 문서에서 바로잡는다. 아래 코드·검사·Cloud/ROSA 후속은 각 시점/범위의 기록이며 설계 재검토보다 우선하는 전체 구현 요구가 아니다.
