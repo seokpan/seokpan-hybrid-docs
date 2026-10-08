@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "record_kind": "controller-local-bundle-integrity-verification",
+  "test_id": "T03",
+  "run_id": "policy-bundle-readback-20261008-01",
+  "recorded_at_utc": "2026-10-08T07:19:35.347139+00:00",
+  "actual_operator": "tjung03 / existing Controller jth@ansible",
+  "observed_at_utc": null,
+  "source": {
+    "checker": "check-rosa-classic-policy-bundle.py",
+    "checker_sha256": "7c78ed655015d57bcef2a160b48fdd46418a36bad89c4008648cc0da0c40ec8f",
+    "prior_run": "redhat-policy-read-20261008-01",
+    "reference_provider": "RHCS v1.7.7 Classic; provider binary not executed"
+  },
+  "bundle_ref": "rosa-policy-20261008T061153Z-6caf4295",
+  "results": {
+    "current_owner_permissions": "PASS;directory700/files600",
+    "file_hashes": "PASS;17files",
+    "hashed_file_count": 17,
+    "manifest_independently_signed": false,
+    "missing_operator_policy_ids": [
+      "openshift_aws_vpce_operator_avo_aws_creds_policy"
+    ],
+    "a_handoff_receipt": "NOT CONFIRMED"
+  },
+  "applicability": {
+    "current_source_private": false,
+    "current_source_aws_private_link": false,
+    "operator_role_count_guard": 6,
+    "actual_operator_role_catalog": "NOT QUERIED",
+    "actual_policy_arn_map": "NOT SUPPLIED_OR_ACCEPTED",
+    "missing_policy_blocks_first_plan": "NOT DETERMINED FROM COUNTS ALONE"
+  },
+  "not_run": [
+    "network/API",
+    "AWS IAM changes",
+    "Terraform Plan/Apply",
+    "external source authenticity",
+    "A receipt",
+    "full T03 acceptance"
+  ],
+  "rto_seconds": null,
+  "rpo_seconds": null,
+  "new_th_completions": 0
+}

@@ -3,7 +3,7 @@
 * 정책 조회 후 현재 상태
 
 - [원 Infra25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25#issuecomment-6053637165)·[T03 부분 Run](../evidence/T03/redhat-policy-read-20261008-01/summary.md): Controller 인증·필수5/5·Operator7/8·OCM 참조4/4 조회, 보호 사본 생성 완료. Token 재발급/성공 조회 반복 없음. Token 자체의 읽기 전용 권한 판정은 아님.
-- 다음 직접 실행은 저장 사본 권한/해시·누락 정책 ID 읽기 확인. Cloud 호출·파일 수정 없음. A에게는 보호 사본/출처/해시를 인계하고 공개 댓글에는 논리 참조·판정만 기록. 실제 A 수신/반영은 미확인.
+- [저장 사본 읽기 Run](../evidence/T03/policy-bundle-readback-20261008-01/summary.md): 현재 권한700/600·해시17개 일치 PASS, 누락 AWS VPCE 정책 ID 확인. A 보호 인계/수신과 실제 Operator 목록/Policy Map 대조는 대기. 다음 직접 실행은 본인 Infra clone의 origin/fetch·Branch/개인 변경·ROSA Lock 읽기 대조. fetch는 원격 참조 갱신이며 작업 파일/Branch/State 초기화 없음.
 - GitOps31·Docs85 병합/브랜치 삭제 완료. 현재 조회 main은 App9b142a28·Infrac5d8c424·GitOps9d108349·Docsce0b4216. App25 Release 후보 생성기, Infra50/51 README, C Docs87 §8.19/Tracker 변경은 Source 범위로 소비하며 새 Image/실환경 검증으로 사용하지 않음.
 - B clone/원격/Lock·목적 Caller/Backend·지원/Quota·Worker disk·예비 비용/실행 창, A 실제 Role4/Policy Map/목적 권한/제한 출력, C/A Data SG2가 첫 Plan 직접 입력. 프로젝트 Red Hat 조직/AWS 연결은 생성/관리 전 수락 필요. Plan 미실행.
 

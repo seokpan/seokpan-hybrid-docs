@@ -1,6 +1,6 @@
 # 石나가는 판단 2차 프로젝트 05 구현·통합·검증 진행 기록
 
-> **현재 확인 — 2026-10-08 정책 조회 후:** GitOps31·Docs85 병합 및 해당 원격 PR 브랜치 삭제 확인. B의 기존 Controller jth@ansible에서 Red Hat 인증·Classic 필수 정책5/5·Operator 정책7/8·OCM 참조 정책4/4 조회 및 보호 사본 생성. [원 Infra25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25#issuecomment-6053637165)·[부분 검증 Run](../evidence/T03/redhat-policy-read-20261008-01/summary.md) 연결. 현재 사본 권한/해시·누락 정책 ID·A 보호 인계/수신은 대기. 프로젝트 Red Hat 조직/AWS 연결·Controller clone/원격/Lock·목적 Caller/Backend·지원/Quota·A 제한 입력/C-A SG2·예비 비용/Owner/창 수락 후 첫 Plan. Recovery CA 일치 확인 유지, ConfigMap/DB 접속·복원/실제 Plan 미실행. 아래 날짜별 기록은 당시 이력. GitOps26은 lab Stage2 완료로 종료, DB 입력·FE/BE Ready·Route/WSS·Valkey 보고 수신. 다중 투표·WS idle/재접속·Rolling/장애·Prune/Delete 실제 차단·ROSA 재측정은 본인 GitOps10/App4 후속으로 분리.
+> **현재 확인 — 2026-10-08 정책 조회 후:** GitOps31·Docs85 병합 및 해당 원격 PR 브랜치 삭제 확인. B의 기존 Controller jth@ansible에서 Red Hat 인증·Classic 필수 정책5/5·Operator 정책7/8·OCM 참조 정책4/4 조회 및 보호 사본 생성. [원 Infra25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25#issuecomment-6053637165)·[부분 검증 Run](../evidence/T03/redhat-policy-read-20261008-01/summary.md) 연결. 현재 사본 권한/해시17개 PASS, 누락 AWS VPCE 정책 ID 확인. [새 읽기 Run](../evidence/T03/policy-bundle-readback-20261008-01/summary.md) 연결; 실제 Operator/Policy Map 대조 및 A 보호 인계/수신 대기. 프로젝트 Red Hat 조직/AWS 연결·Controller clone/원격/Lock·목적 Caller/Backend·지원/Quota·A 제한 입력/C-A SG2·예비 비용/Owner/창 수락 후 첫 Plan. Recovery CA 일치 확인 유지, ConfigMap/DB 접속·복원/실제 Plan 미실행. 아래 날짜별 기록은 당시 이력. GitOps26은 lab Stage2 완료로 종료, DB 입력·FE/BE Ready·Route/WSS·Valkey 보고 수신. 다중 투표·WS idle/재접속·Rolling/장애·Prune/Delete 실제 차단·ROSA 재측정은 본인 GitOps10/App4 후속으로 분리.
 
 ### 조사 중 추가된 실행 보고·수정 PR — 2026-10-07 후속 조회
 
@@ -2109,3 +2109,10 @@ C의 §8.9–8.14·과거 시험/체크/그림·설계/TH 상태는 유지한다
 - GitOps31 main9d108349·Docs85 main3b06e87e 병합·브랜치 삭제 확인. 조회 중 App25의 Release 후보 생성기가 main9b142a28에, Infra50/51 README 안내가 mainc5d8c424에, C Docs87의 §8.19·Tracker 기록이 maince0b4216에 병합. ROSA 코드/Lock와 GitOps31 이후 Source 변경 없음. 이 파일의 C 기록·측정·수신 범위 보존.
 - A #47은 원격 커밋/PR·실제 공통 IAM/권한 적용·제한 출력 공급 전 단계. C/A 실제 SG2와 B의 clone/Lock·목적 Caller/Backend·지원/Quota·Worker disk·예비 비용/Owner/사용창이 첫 Plan 직접 입력. OCP 철거/전체 Recovery를 선행조건으로 추가하지 않음.
 - 프로젝트 Red Hat 조직/AWS 연결·OCM Role 존재/연결/권한은 별도 확인. 개인 조회 Token을 프로젝트 소유권/생성 승인으로 소비하지 않음. AWS·IAM 변경·Terraform Plan/Apply·ROSA 생성/Runtime 미실행. Index 제출과 D 수신 구분, TH81/기존완료2·Q·03/04 종료·DR10/30/15·Cost PARTIAL/$450/$500 유지.
+
+<a id="policy-bundle-readback-20261008"></a>
+### 9.53 Controller 보호 정책 사본의 읽기 검증 — 2026-10-08
+
+- [새 T03 부분 Run](../evidence/T03/policy-bundle-readback-20261008-01/summary.md): B/jth@ansible의 현재 소유자·700/600 권한 및 manifest 등록17파일 해시 일치 PASS. 앞선 API 조회 Run의 당시 미검증 기록 보존. 이번 검사에 API/AWS/IAM/Terraform·파일 수정 없음.
+- 누락 정책 `openshift_aws_vpce_operator_avo_aws_creds_policy` 확인. 현행 private=false/aws_private_link=false와 실제 Operator6개·정책 Map Guard 대조. 공식 정책 이름8개를 실제 필수 역할 수로 사용하지 않으며 실제 목록/ARN Map 대조 전 PASS/차단 확정 없음.
+- A 보호 인계/수신·본인 clone/Lock·목적 Caller/Backend·지원/Quota·A 제한 출력/C-A SG2·예비 비용/Owner/창은 별도. 실제 첫 Plan 미실행, D Index 수신·TH/Q/T/Cost/DR 완료 가산 없음.

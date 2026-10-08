@@ -107,3 +107,5 @@ python3 tools/recovery_metrics.py evidence/<test-id>/<run-id>/release.json --con
 ## Controller 인증·정책 조회 부분 검증
 
 - [T03/redhat-policy-read-20261008-01](T03/redhat-policy-read-20261008-01/summary.md): 실제 실행 B/jth@ansible. API 인증·Classic 필수5/5·보호 사본 생성 성공, Operator7/8·OCM 참조4/4. 현재 파일 권한/해시·누락 ID·A 수신 대기. AWS/IAM 변경·Plan/Apply·전체 T03/ROSA 수락 미수행. [원 Infra25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25#issuecomment-6053637165) 연결, D Index 검토/수신 대기.
+
+- [T03/policy-bundle-readback-20261008-01](T03/policy-bundle-readback-20261008-01/summary.md): B/jth@ansible의 저장 사본 현재 권한·17파일 해시 일치 PASS, AWS VPCE 정책 누락 ID 확인. 앞선 조회 Run의 당시 미확인 기록 보존. 실제 Operator/ARN Map·A 전달/수신·외부 원본 진위·API/AWS/IAM/Terraform·전체 T03은 미확인/미실행. D Index 수신 대기.
