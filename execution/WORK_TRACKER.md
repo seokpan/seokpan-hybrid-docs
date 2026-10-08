@@ -1,6 +1,6 @@
 # Work and Input Tracker
 
-> **현재 확인 — 2026-10-08:** Docs72/84 병합·해당 원격 브랜치 삭제 확인. Recovery Host [GitOps31](https://github.com/seokpan/seokpan-hybrid-gitops/pull/31)은 C/D 리뷰 대기, 정확 HEAD Linux69PASS. B의 `jth@ansible` CA 전체 해시 일치 결과 수신. Core1.16.4·AWS CLI2.37.5·Python3.9.25·jq1.6 확인, 개인 clone18c3a275/ROSA Lock 없음·연결/fetch 대조 대기. RHCS_TOKEN 미설정·ROSA/OCM CLI 미설치, 실제 인증/Plan 대기. D의 TLS/AUTH·Route/Origin과 ERR 협상 원인 보고 수신. [오늘 실행 순서](ROSA_OCP_NEXT_ACTIONS_20261008.md)·[05 §9.51](05_IMPLEMENTATION_AND_VALIDATION.md#controller-recovery-followup-20261008) 우선. 아래 날짜별 상태는 당시 이력.
+> **현재 확인 — 2026-10-08 정책 조회 후:** GitOps31·Docs85 병합 및 해당 원격 PR 브랜치 삭제 확인. B의 기존 Controller jth@ansible에서 Red Hat 인증·Classic 필수 정책5/5·Operator 정책7/8·OCM 참조 정책4/4 조회 및 보호 사본 생성. [원 Infra25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25#issuecomment-6053637165)·[부분 검증 Run](../evidence/T03/redhat-policy-read-20261008-01/summary.md) 연결. 현재 사본 권한/해시17개 PASS, 누락 AWS VPCE 정책 ID 확인. [새 읽기 Run](../evidence/T03/policy-bundle-readback-20261008-01/summary.md) 연결; 실제 Operator/Policy Map 대조 및 A 보호 인계/수신 대기. 프로젝트 Red Hat 조직/AWS 연결·Controller clone/원격/Lock·목적 Caller/Backend·지원/Quota·A 제한 입력/C-A SG2·예비 비용/Owner/창 수락 후 첫 Plan. Recovery CA 일치 확인 유지, ConfigMap/DB 접속·복원/실제 Plan 미실행. 아래 날짜별 기록은 당시 이력. GitOps26은 lab Stage2 완료로 종료, DB 입력·FE/BE Ready·Route/WSS·Valkey 보고 수신. 다중 투표·WS idle/재접속·Rolling/장애·Prune/Delete 실제 차단·ROSA 재측정은 본인 GitOps10/App4 후속으로 분리.
 
 ### 조사 중 추가된 실행 보고·수정 PR — 2026-10-07 후속 조회
 
@@ -732,3 +732,19 @@ App17–19 최신 승인·병합/삭제 및 결합 main 검사/Build 입력은 [
 ### 병합 후 직접 준비 — 2026-10-08
 
 [05 §9.50](05_IMPLEMENTATION_AND_VALIDATION.md#merged-pr-plan-readiness-20261008)·[오늘 실행/직접 입력](ROSA_OCP_NEXT_ACTIONS_20261008.md)·[새 소스 검사 Run](../evidence/T01/plan-source-readiness-20261008-01/summary.md)에 네 PR 병합/정리·본인 상위 이슈 현행화·오프라인 검사·Controller TCP22 실패/미로그인·실제 Plan 미수행과 A/C/D/B별 후속 연결. 기존 Shared Execution의 지정 실행자/실제 사용창은 추가 수락 필요, 공개 기록으로 실행창을 임의 확정하지 않음.
+
+<a id="redhat-policy-read-20261008"></a>
+## B ROSA 정책 조회 후 직접 입력 — 2026-10-08
+
+| 작업 | 확인 결과 | 담당·다음 입력 |
+|---|---|---|
+| 인증·공식 정책 확보 | [Infra25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25#issuecomment-6053637165), [T03 부분 Run](../evidence/T03/redhat-policy-read-20261008-01/summary.md): 인증/필수5/5·보호 사본 생성 성공 | B 현재 권한/해시·누락 Operator ID 확인, A 보호 인계/수신 대기 |
+| 공통 IAM·ROSA 목적 서비스 권한 | [A Infra47](https://github.com/seokpan/seokpan-hybrid-infra/issues/47)의 로컬 준비 보고, 원격 커밋/PR·실제 적용/제한 출력 없음 | A 기존 자원/State 주체·Role4/Policy/권한·전체 Root 실행/출력; B 공급 개정 대조 |
+| 본인 Source·Caller·Backend | Core1.16.4, 개인 clone18c3a275/ROSA Lock 없음 확인 이력 | B origin/fetch·개인 변경·Source/Lock·목적 세션/State 위치 수락 |
+| 지원·비용·실행 창 | 실제 stable4.20 GA patch/구독/Quota·Worker disk·예비 비용/창 미확인 | B 준비, A/D 관련 수락. 첫 전체 Plan은 NOT RUN |
+
+이 절은 B의 실제 부분 실행 원본 연결. C의 기존 Tracker·공유 실행 기록과 TH/Q/T 판정 보존.
+
+## B 정책 사본 수락 후속 — 2026-10-08
+
+[새 읽기 Run](../evidence/T03/policy-bundle-readback-20261008-01/summary.md)의 현재 권한/해시17개 PASS와 누락 AWS VPCE 정책 ID 수신. 보호 사본 준비와 A에게 실제 전달/수신을 구분. A의 공통 Role4/정책·목적 권한/제한 출력, C/A SG2, B의 clone/Lock·Caller/Backend·지원/Quota·예비 비용/창 확인이 남은 첫 Plan 입력. 성공한 정책 조회/사본 생성을 반복하지 않음.

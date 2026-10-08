@@ -1,5 +1,19 @@
 # ROSA Plan·OCP 후속 실행 준비 — 2026-10-08
 
+* 정책 조회 후 현재 상태
+
+- [원 Infra25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25#issuecomment-6053637165)·[T03 부분 Run](../evidence/T03/redhat-policy-read-20261008-01/summary.md): Controller 인증·필수5/5·Operator7/8·OCM 참조4/4 조회, 보호 사본 생성 완료. Token 재발급/성공 조회 반복 없음. Token 자체의 읽기 전용 권한 판정은 아님.
+- [저장 사본 읽기 Run](../evidence/T03/policy-bundle-readback-20261008-01/summary.md): 현재 권한700/600·해시17개 일치 PASS, 누락 AWS VPCE 정책 ID 확인. A 보호 인계/수신과 실제 Operator 목록/Policy Map 대조는 대기. 다음 직접 실행은 본인 Infra clone의 origin/fetch·Branch/개인 변경·ROSA Lock 읽기 대조. fetch는 원격 참조 갱신이며 작업 파일/Branch/State 초기화 없음.
+- GitOps31·Docs85 병합/브랜치 삭제 완료. 현재 조회 main은 App9b142a28·Infrac5d8c424·GitOps9d108349·Docsce0b4216. App25 Release 후보 생성기, Infra50/51 README, C Docs87 §8.19/Tracker 변경은 Source 범위로 소비하며 새 Image/실환경 검증으로 사용하지 않음.
+- B clone/원격/Lock·목적 Caller/Backend·지원/Quota·Worker disk·예비 비용/실행 창, A 실제 Role4/Policy Map/목적 권한/제한 출력, C/A Data SG2가 첫 Plan 직접 입력. 프로젝트 Red Hat 조직/AWS 연결은 생성/관리 전 수락 필요. Plan 미실행.
+
+- [GitOps26](https://github.com/seokpan/seokpan-hybrid-gitops/issues/26)은 lab Stage2 완료로 종료. DB 입력·FE/BE Ready·Route/WSS·Valkey 부분 업무 보고 수신. 이월 범위는 다중 투표·WS idle/재접속·Rolling/Pod 삭제·DB/Redis 장애 readiness·Prune/Delete 실제 차단·ROSA ERR 재측정. 본인 GitOps10/App4 후속이며 성공 Sync를 반복하거나 #26을 재개하지 않음.
+
+* 아래 준비 기록의 조회 시점
+
+아래 Source 표와 Token 미설정 표기는 정책 조회 전 준비 이력. 최신 상태는 위 카드와 원 Issue를 사용. 실행 명령은 해당 Source/개인 변경/입력·Owner/사용창을 확인한 뒤 사용하며 과거 미확인 항목을 임의로 완료 처리하지 않음.
+
+
 * 현재 판단
 
 - App #20/#22·Infra #43·GitOps #25 병합과 해당 원격 PR 브랜치 삭제 완료. Docs #72/#84도 병합·해당 원격 PR 브랜치 삭제 확인. 이후 결과는 새 문서 변경으로 연결하며 설계 기준 유지.

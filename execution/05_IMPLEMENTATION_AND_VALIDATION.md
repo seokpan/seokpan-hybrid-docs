@@ -1,6 +1,6 @@
 # 石나가는 판단 2차 프로젝트 05 구현·통합·검증 진행 기록
 
-> **현재 확인 — 2026-10-08:** Docs72/84 병합·해당 원격 브랜치 삭제 확인. Recovery Host [GitOps31](https://github.com/seokpan/seokpan-hybrid-gitops/pull/31)은 C/D 리뷰 대기, 정확 HEAD Linux69PASS. B의 `jth@ansible` CA 전체 해시 일치 결과 수신. Core1.16.4·AWS CLI2.37.5·Python3.9.25·jq1.6 확인, 개인 clone18c3a275/ROSA Lock 없음·연결/fetch 대조 대기. RHCS_TOKEN 미설정·ROSA/OCM CLI 미설치, 실제 인증/Plan 대기. D의 TLS/AUTH·Route/Origin과 ERR 협상 원인 보고 수신. [오늘 실행 순서](ROSA_OCP_NEXT_ACTIONS_20261008.md)·[05 §9.51](05_IMPLEMENTATION_AND_VALIDATION.md#controller-recovery-followup-20261008) 우선. 아래 날짜별 상태는 당시 이력.
+> **현재 확인 — 2026-10-08 정책 조회 후:** GitOps31·Docs85 병합 및 해당 원격 PR 브랜치 삭제 확인. B의 기존 Controller jth@ansible에서 Red Hat 인증·Classic 필수 정책5/5·Operator 정책7/8·OCM 참조 정책4/4 조회 및 보호 사본 생성. [원 Infra25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25#issuecomment-6053637165)·[부분 검증 Run](../evidence/T03/redhat-policy-read-20261008-01/summary.md) 연결. 현재 사본 권한/해시17개 PASS, 누락 AWS VPCE 정책 ID 확인. [새 읽기 Run](../evidence/T03/policy-bundle-readback-20261008-01/summary.md) 연결; 실제 Operator/Policy Map 대조 및 A 보호 인계/수신 대기. 프로젝트 Red Hat 조직/AWS 연결·Controller clone/원격/Lock·목적 Caller/Backend·지원/Quota·A 제한 입력/C-A SG2·예비 비용/Owner/창 수락 후 첫 Plan. Recovery CA 일치 확인 유지, ConfigMap/DB 접속·복원/실제 Plan 미실행. 아래 날짜별 기록은 당시 이력. GitOps26은 lab Stage2 완료로 종료, DB 입력·FE/BE Ready·Route/WSS·Valkey 보고 수신. 다중 투표·WS idle/재접속·Rolling/장애·Prune/Delete 실제 차단·ROSA 재측정은 본인 GitOps10/App4 후속으로 분리.
 
 ### 조사 중 추가된 실행 보고·수정 PR — 2026-10-07 후속 조회
 
@@ -2100,3 +2100,19 @@ C의 §8.9–8.14·과거 시험/체크/그림·설계/TH 상태는 유지한다
 - [오늘 실행 순서](ROSA_OCP_NEXT_ACTIONS_20261008.md)에 직접 입력·담당·중단 조건 연결. Source 검사·수신 결과로 TH81/기존 완료2·Q·전체T/DR/Cost 수락 추가 없음. Index 연결은 제출이며 D 수신 대기.
 
 - 후속 조회 중 App [PR23](https://github.com/seokpan/seokpan-hybrid-app/pull/23)이 main `070c699c119d2972f551bdfc4fe390678ad45c44`에 추가 병합됨. D의 Image 변경안 계산 planner/시험이며 annotation·Release JSON·Cloud 편집/Writer·실제 배포는 포함하지 않음. 기존 App20/22와 새 Image 수락을 구분. 원 기록은 [GitOps10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10#issuecomment-6050997327)·[Infra25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25#issuecomment-6050998183)·[Docs21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21#issuecomment-6050968250)에 연결.
+
+<a id="redhat-policy-read-20261008"></a>
+### 9.52 Red Hat API 인증·Classic 정책 조회의 실제 부분 결과 — 2026-10-08
+
+- [Infra25 원 실행](https://github.com/seokpan/seokpan-hybrid-infra/issues/25#issuecomment-6053637165)·[새 부분 Run](../evidence/T03/redhat-policy-read-20261008-01/summary.md): B의 기존 Controller jth@ansible에서 인증/현재 계정 읽기 PASS, Classic 필수5/5·Operator7/8·OCM 참조4/4 조회, 보호 사본 생성. 전체 T03·ROSA 준비/Plan 판정과 분리.
+- 논리 사본 `rosa-policy-20261008T061153Z-6caf4295`; 생성 권한700/600 결과 수신. 현재 소유자/권한·해시 재대조·누락 정책 ID·A 보호 인계/수신은 아직 대기. Token/원문/실제 보호 경로 제외. 성공한 조회를 반복하지 않음.
+- GitOps31 main9d108349·Docs85 main3b06e87e 병합·브랜치 삭제 확인. 조회 중 App25의 Release 후보 생성기가 main9b142a28에, Infra50/51 README 안내가 mainc5d8c424에, C Docs87의 §8.19·Tracker 기록이 maince0b4216에 병합. ROSA 코드/Lock와 GitOps31 이후 Source 변경 없음. 이 파일의 C 기록·측정·수신 범위 보존.
+- A #47은 원격 커밋/PR·실제 공통 IAM/권한 적용·제한 출력 공급 전 단계. C/A 실제 SG2와 B의 clone/Lock·목적 Caller/Backend·지원/Quota·Worker disk·예비 비용/Owner/사용창이 첫 Plan 직접 입력. OCP 철거/전체 Recovery를 선행조건으로 추가하지 않음.
+- 프로젝트 Red Hat 조직/AWS 연결·OCM Role 존재/연결/권한은 별도 확인. 개인 조회 Token을 프로젝트 소유권/생성 승인으로 소비하지 않음. AWS·IAM 변경·Terraform Plan/Apply·ROSA 생성/Runtime 미실행. Index 제출과 D 수신 구분, TH81/기존완료2·Q·03/04 종료·DR10/30/15·Cost PARTIAL/$450/$500 유지.
+
+<a id="policy-bundle-readback-20261008"></a>
+### 9.53 Controller 보호 정책 사본의 읽기 검증 — 2026-10-08
+
+- [새 T03 부분 Run](../evidence/T03/policy-bundle-readback-20261008-01/summary.md): B/jth@ansible의 현재 소유자·700/600 권한 및 manifest 등록17파일 해시 일치 PASS. 앞선 API 조회 Run의 당시 미검증 기록 보존. 이번 검사에 API/AWS/IAM/Terraform·파일 수정 없음.
+- 누락 정책 `openshift_aws_vpce_operator_avo_aws_creds_policy` 확인. 현행 private=false/aws_private_link=false와 실제 Operator6개·정책 Map Guard 대조. 공식 정책 이름8개를 실제 필수 역할 수로 사용하지 않으며 실제 목록/ARN Map 대조 전 PASS/차단 확정 없음.
+- A 보호 인계/수신·본인 clone/Lock·목적 Caller/Backend·지원/Quota·A 제한 출력/C-A SG2·예비 비용/Owner/창은 별도. 실제 첫 Plan 미실행, D Index 수신·TH/Q/T/Cost/DR 완료 가산 없음.

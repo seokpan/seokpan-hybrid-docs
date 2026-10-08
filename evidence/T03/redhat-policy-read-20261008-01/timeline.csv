@@ -1,0 +1,5 @@
+timestamp_utc,event,result
+,initial_token_missing_attempt,BLOCKED; no policy query or bundle creation
+,token_reexport_and_current_account_read,PASS; exact event time not recorded
+2026-10-08T06:11:53Z,bundle_creation_controller_timestamp,CREATED; Controller clock sync not verified
+,bundle_readback_and_a_receipt,NOT RUN / NOT CONFIRMED

@@ -1,0 +1,8 @@
+metric,value,unit,status
+classic_required_policies_available,5,policies,PASS
+classic_required_policy_names_considered,5,policies,REFERENCE
+operator_policies_available,7,policies,PARTIAL; missing ID not yet read
+operator_policy_names_considered,8,policies,REFERENCE; not required Role count
+ocm_reference_policies_available,4,policies,AVAILABLE; actual IAM/link not verified
+bundle_file_hash_recomparison,,,NOT RUN
+terraform_plan,,,NOT RUN

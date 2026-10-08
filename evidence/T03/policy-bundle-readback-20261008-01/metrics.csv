@@ -1,0 +1,5 @@
+metric,value,unit,status
+bundle_owner_permissions,,,PASS
+bundle_hashed_files,17,files,PASS
+missing_operator_policy_names,1,names,IDENTIFIED; not actual required role count
+a_handoff_receipt,,,NOT CONFIRMED

@@ -1,0 +1,4 @@
+timestamp_utc,event,result
+,controller_local_bundle_readback,PASS; exact time not present in submitted output
+,missing_operator_policy_identified,openshift_aws_vpce_operator_avo_aws_creds_policy
+,a_protected_handoff_receipt,NOT CONFIRMED
