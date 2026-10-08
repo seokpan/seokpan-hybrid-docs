@@ -112,4 +112,4 @@
 
 * 2026-10-08 리뷰 후속
 
-[검증 Run](../evidence/T09/registration-review-followup-20261008-01/summary.md)에 SHA B/A 비교·Windows66/3FAIL·정확 새 HEAD Linux69PASS와 원 리뷰 연결. 승인된 세 PR은 Source 보완 없이 병합 가능하며 새 Image/실환경 수락은 별도. GitOps25는 새53314d3의 재승인을 기다린다. 멘토링 후보의 설계·도구 도입은 이 리뷰 후속에 포함하지 않는다.
+[검증 Run](../evidence/T09/registration-review-followup-20261008-01/summary.md)에 SHA B/A 비교·Windows66/3FAIL·정확 새 HEAD Linux69PASS와 원 리뷰 연결. 승인된 세 PR은 Source 보완 없이 병합 가능하며 새 Image/실환경 수락은 별도. GitOps25는 새53314d3의 재승인을 기다린다.
