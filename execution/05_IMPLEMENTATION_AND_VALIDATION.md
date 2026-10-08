@@ -1,6 +1,6 @@
 # 石나가는 판단 2차 프로젝트 05 구현·통합·검증 진행 기록
 
-> **현재 확인 — 2026-10-08 Docs #92 병합 후:** [Full·Controller 후속](FULL_E2E_CONTROLLER_FOLLOWUP_20261008.md) 연결. 실제 B/jth@ansible의 Source c5d8/Lock·격리 Root validate 및 입력 교정 후 OIDC mock2/2 PASS, A 정책 사본 수신·무결성 보고 수신. App34 clean3126ae28의 Full2·UI36·unit278 PASS·D 리뷰 요청. App30/GitOps33은 이전 승인 DISMISSED·새 승인 미표시, 세 Source PR 미병합. Infra ef424da0의 추가8파일은 C Data Ansible이며 ROSA 코드/Lock 동일. 실제 IAM/ARN·DataSG2·Caller/Backend·구독/지원/Quota/disk·예비비용/Owner/창·Cloud Plan과 OCP 후속은 미완료. 아래 날짜별 기록은 당시 이력.
+> **현재 확인 — 2026-10-08 Docs #95 병합 후:** [병합·Controller 인증·실행 대기](MERGED_SOURCE_PLAN_READINESS_20261008.md). App30/34·GitOps33 승인·병합·PR 브랜치 삭제 완료. App18819963의 D Run5 성공 보고·FE/BE Harbor 공급 후보 수락, B/jth의 Source/Lock·기본 Caller/MFA·서울 사양/Quota 부분 결과 유지. EC2 진단v1/v2는 코드 비식별·사용량 미확보·원인 미확정으로 자동 API 재시도 종료, B 현장/A 계정 Owner 비공개 확인 입력 대기. 실제 역할/SG2·목적 세션/Backend·프로젝트 조직/지원·EBS 기준/비용 입력·전체 Plan, 내부 공급/Pull·Runtime은 별도 미완료. 아래 날짜별 기록은 당시 이력.
 
 ### 조사 중 추가된 실행 보고·수정 PR — 2026-10-07 후속 조회
 
@@ -2181,3 +2181,20 @@ A의 원본/사본18개·manifest17개 해시/권한 검사 보고 수신. 실�
 App30/GitOps33의 이전 승인은 DISMISSED·새 승인 미표시. 두 App PR 병합 뒤 최종 SHA로 D32 단일 Build, Image/Scan/Digest·교체 실행 조건 별도. 기존 C 기록·설계 종료·TH/Q/DR/Cost 범위 보존, Index 연결 제출과 D 수신 구분. 실제 Caller/Backend·지원·비용·사용창·첫 Cloud Plan 미완료.
 
 - 최종 20:26 KST delta: D App #36의 release-source 생성기/시험2파일 추가로 main3dc31d72, 기존 App30/34·Frontend/Backend/Migration/Lock/CI 겹침0. 시험 SHA3126과 당시 main6c 유지, 추가 Full 반복 없음. App30·GitOps33 현재 HEAD 새 승인 미등록 확인, App34 리뷰 대기. 상세: [최종 원격 변경 대조](FULL_E2E_CONTROLLER_FOLLOWUP_20261008.md#최종-원격-변경-대조--2026-10-08-2026-kst).
+
+<a id="merged-source-controller-auth-20261008"></a>
+### 9.57 Source 병합·Controller 최신화·기본 AWS 인증 — 2026-10-08
+
+[후속 안내](MERGED_SOURCE_PLAN_READINESS_20261008.md), [T03 Source/설정](../evidence/T03/controller-source-local-access-20261008-01/summary.md)·[T03 Caller/MFA](../evidence/T03/controller-base-caller-mfa-20261008-01/summary.md). App30/34·GitOps33·Docs95 실제 병합·PR 브랜치 삭제, C 승인·Source/CI 범위 확인. 현재 App18819963과 Migration7개 Blob/head 대조를 D32 새 Build 입력으로 연결. 기존 PR/실패 Run/승인 Image 성공을 새 main Image에 승계하지 않음.
+
+B/jth의 ef424 ff-only·Lock 보존 PASS, 로컬 프로필0을 실제 Role/MFA 부재로 해석하지 않음. 기본 IAM User 인증·현재 Source B Trust 대상 일치·본인 MFA 장치1개 읽기 PASS, MFA 세션/목적 Role/Backend 및 Account 제한 출력 대조는 별도 대기. 실제 Cloud Plan/생성·전체 T03/TH/Q/Cost/DR 완료 가산 없음.
+
+C는 SG 대조/Pool 시점/당일 순서에 동의, Apply 직후 실제 SG 판정은 Infra19 연결 예정. 1차 계정·위치는 이관 날짜 결정 시 함께 조율하며 첫 ROSA Plan의 전체 선행조건이 아님. 서울/용량 부분 결과·D Run5 보고 수신과 공급 후보 수락 완료, 현재 자원/창·비공개 확인 입력 조율 가능, A 실제 역할/SG2·목적 권한/Backend·조직/지원/비용 입력 뒤 첫 전체 Plan. 기존 C/팀 기록·03/04와 수치 보존.
+
+[T03 서울 용량 부분 Run](../evidence/T03/controller-seoul-capacity-20261008-01/summary.md)을 추가 연결. 실제 B/jth@ansible의 서울 활성·m5.xlarge 4 vCPU/16 GiB·4개 제공 AZ·Quota13개/17회 호출 보고 수신. CPU100 vCPU·EBS3종각50 TiB는 할당량이며 최근 CPU 자료 없음은 사용량0이 아님. [Classic §5.1](https://docs.redhat.com/en/documentation/red_hat_openshift_service_on_aws_classic_architecture/4/html-single/prepare_your_environment/index)의 EBS Minimum required300 TiB와 [고정 CLI Source](https://github.com/openshift/rosa/blob/c2e552d6d0ada5a50536507f54ceaeaa198df56e/pkg/aws/quota.go)의 gp2/io1 50·gp3 미등록 차이는 A/B·계정 Owner의 지원/검사 기준 수락 또는 증설 조율 대상으로 유지. 원 OPTIMAL_REFERENCE_ONLY 판정·기존2Run 보존, 기존 사용량·실제 배치/계정·machine/disk·목적Role/Backend·조직/구독·STS·지원/비용/전체 Plan 수락 미완료.
+
+D의 [새 Run5 성공 보고](https://github.com/seokpan/seokpan-hybrid-gitops/issues/32#issuecomment-6060119161) 수신: App18819963의 Full2/UI36/Frontend278/Backend1798·Image/Scan/Smoke·FE/BE Digest, head20260902_0002. [B 공급 후보 수락](https://github.com/seokpan/seokpan-hybrid-gitops/issues/32#issuecomment-6060263976)·[T09 수락 Run](../evidence/T09/image-supply-acceptance-20261008-01/summary.md) 연결. Checkout전체SHA→Run/metadata→tag/IndexDigest 추적을 수락하고 nginx 상속 라벨은 App Source 근거에서 제외. 즉시 라벨 재빌드 불필요. B 직접Jenkins/Harbor·metadata파서 미실행. 지정 실행자/승인 경로·Registry 저장공간/Pruner/Quota/Owner창 확인→push→실제 내부Index/전체Childmapping 대조→Promotion/노드Pull, 추가 최신양Worker 자원/창 수락→FE→BE 교체. 미생성mapping을push선행조건으로 만들지 않으며 보존해시·실제공급/Pull·교체/Runtime은 미완료. 원 Source 시험·실패 Run·승인 Image를 새 실행 성공으로 재작성하지 않음.
+
+[T03 EC2 사용량 보충 실패 Run](../evidence/T03/controller-seoul-ec2-usage-20261008-01/summary.md): 실제 B/jth@ansible의 Guard PASS 뒤 첫API1회에서 API_OR_NETWORK_ERROR, 사용량 숫자 미확보·원인 미확정. 앞선 Capacity/Source/Caller 결과 보존, 사용량0·현재 잔여CPU100으로 처리하지 않음. 이 보충 결과의 최초 수신 당시 최소1호출 오류 분류 진단은 준비 후속이었다. 이어진 독립v1/v2는 아래 별도 Run으로 구분. 실제 사용량/배치·EBS 기준·목적 권한/지원·전체 Plan 수락은 계속 미완료.
+
+[T03 EC2 진단v1/v2 Run](../evidence/T03/controller-seoul-ec2-diagnostic-20261008-01/summary.md): 실제 B/jth의 각CLI1회·Guard PASS, v1 CODE_NOT_IN_ALLOWLIST·v2 UNREGISTERED_OR_UNSAFE_CODE_REDACTED 보고 수신. 사용량/가용량 숫자 없음·실제 서비스 요청/오류 출처·정확한 원인 미확정. 등록/공개 필터의 비식별만으로 IAM/계정·악성·쿼터 문제를 단정하지 않고 자동 API 재시도 종료. B 현장/A 계정 Owner 비공개 확인·A 준비표/실제 보호 입력 수신 뒤 목적 세션 사전검증으로 연결. 기존5Run/25파일·성공 범위·C/팀 기록·03/04/수치 보존, 새 전체 T03/Plan/Runtime 완료 가산 없음.

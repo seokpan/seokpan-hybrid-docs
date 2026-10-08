@@ -1,0 +1,92 @@
+{
+  "run_id": "image-supply-acceptance-20261008-01",
+  "recorded_at_utc": "2026-10-08T12:55:51.577916+00:00",
+  "d_reported_at_utc": "2026-10-08T12:43:06Z",
+  "b_acceptance_comment_at_utc": "2026-10-08T12:51:28Z",
+  "execution_timestamp": "D Run5 exact start/end not supplied; comment/record timestamps are separate",
+  "overall_T09": "PARTIAL",
+  "build_scan_smoke_executor": "D / Jenkins hybrid/image-pipeline main #5; report received",
+  "source_check_and_supply_candidate_acceptance": "B / GitHub Source blobs and AST; issue comment read back",
+  "d_report_ref": "https://github.com/seokpan/seokpan-hybrid-gitops/issues/32#issuecomment-6060119161",
+  "b_acceptance_ref": "https://github.com/seokpan/seokpan-hybrid-gitops/issues/32#issuecomment-6060263976",
+  "source_check": {
+    "source": "188199630ceb5fd67d8fe57d4d5650694e2e00e3",
+    "migration_blob_count": 7,
+    "migration_blobs_identical_to": {
+      "5df2ce280188a7e3874fa370ec8116d50ca34af3": true,
+      "46e21a74dd60": true
+    },
+    "source_head": "20260902_0002",
+    "comparison_kind": "GitHub Source blobs and AST only",
+    "actual_image_heads": "D Run5 report 20260902_0002",
+    "actual_database_revision": "NOT VERIFIED",
+    "held_migration_execution": "NOT RUN"
+  },
+  "image_source": "188199630ceb5fd67d8fe57d4d5650694e2e00e3",
+  "run_id_reported": "a09-5-188199630ceb",
+  "final_tag": "git-188199630ceb",
+  "ENABLE_ECR": false,
+  "reported_digests": {
+    "backend": "sha256:ab0e141abbdf43c5589f9b0af7df38f168044541deec1e10ec7295cb394f4290",
+    "frontend": "sha256:d26d5385a02ed557863abcba9b3e3cde1fac3ceaf2671f170cdc081729620ac4",
+    "kind": "OCI index",
+    "platform": "linux/amd64"
+  },
+  "d_report_summary": {
+    "result": "SUCCESS",
+    "backend_tests": 1798,
+    "frontend_tests": 278,
+    "browser_ui_tests": 36,
+    "browser_full_tests": 2,
+    "npm_audit_findings": 0,
+    "trivy_version": "0.72.0",
+    "backend_critical": 0,
+    "backend_fixable_high": 0,
+    "backend_reported_findings_total": 43,
+    "frontend_critical": 0,
+    "frontend_fixable_high": 0,
+    "frontend_reported_findings_total": 0,
+    "backend_smoke_http_status": 200,
+    "frontend_smoke_http_status": 200,
+    "candidate_final_digest_and_metadata_component_match": "reported PASS; not independently parsed by B",
+    "image_migration_heads": [
+      "20260902_0002"
+    ]
+  },
+  "source_provenance_acceptance": {
+    "backend_app_sha_label": "absent; reported null",
+    "frontend_app_sha_label": "absent; nginx inherited labels excluded",
+    "accepted_trace": "Checkout full SHA -> Run/image-metadata -> FE/BE final tag and index digest",
+    "immediate_rebuild_for_label": "not required for this supply",
+    "b_direct_jenkins_harbor_requery": "NOT RUN",
+    "b_metadata_parser": "NOT RUN"
+  },
+  "acceptance_scope": "Harbor new FE/BE supply candidates; preparation through the existing designated path only",
+  "pending_inputs": [
+    "Run5/metadata preservation logical references and hashes; D Evidence Index receipt",
+    "before registry push: designated executor, existing approved supply path, Registry storage/Pruner/Quota/Owner window",
+    "after registry push: actual source/internal repository and index mapping; full linux/amd64 child digests",
+    "before Promotion/worker Pull: compare the actual internal mapping",
+    "before FE/BE replacement: latest both-worker requests/actual memory/terminating pods and accepted Owner window"
+  ],
+  "not_accepted": [
+    "unconditional registry push without its supply gates",
+    "GitOps Promotion or worker Pull without actual mapping",
+    "FE/BE workload replacement without latest worker/window acceptance",
+    "actual DB Revision or held Migration execution",
+    "Backend/Route/WS/Prune/Delete/overall Ready Runtime",
+    "ECR/Cloud deployment"
+  ],
+  "preserved": [
+    "existing git-46e21a74dd60 and old digests",
+    "base/Recovery hold and Migration suspend",
+    "prior failed Run and Source test execution SHAs"
+  ],
+  "b_acceptance_comment_updated_at_utc": "2026-10-08T12:56:37Z",
+  "supply_order": [
+    "accepted Harbor candidate -> existing path supply preparation",
+    "registry supply gate -> internal Registry push",
+    "post-push actual index/child mapping -> GitOps Promotion and worker Pull",
+    "additional worker capacity/window acceptance -> FE then BE workload replacement"
+  ]
+}

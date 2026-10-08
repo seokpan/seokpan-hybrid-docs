@@ -1,0 +1,33 @@
+{
+  "received_at_utc": "2026-10-08T12:19:18.890638+00:00",
+  "executor": "B / jth@ansible",
+  "source": "ef424da0a6bfcdd56079ab5be249f429fa0b9c36",
+  "helper_ref": "controller-base-caller-mfa-20261008",
+  "helper_sha256": "4c2900c916409b015a234cdcca7be57933b963067a11b3cf3eaf5f7002661fe9",
+  "aws_credential_provenance": "user confirmed own B second-project credentials; no credential values collected",
+  "verdicts": {
+    "BASE_READ_SCOPE_GUARDS": "PASS",
+    "AWS_BASE_CALLER_AUTH": "PASS",
+    "AWS_BASE_CALLER_KIND": "IAM_USER",
+    "PROJECT_ACCOUNT_LIMITED_OUTPUT_MATCH": "NOT VERIFIED / A input not received",
+    "CURRENT_SOURCE_B_TRUST_PRINCIPAL": "MATCH",
+    "AWS_OWN_MFA_READ": "PASS",
+    "AWS_OWN_MFA_DEVICE_COUNT": 1,
+    "MFA_DEVICE_SELECTION_OTP_COMPATIBILITY": "NOT VERIFIED",
+    "MFA_AUTHENTICATED_SESSION": "NOT VERIFIED / device read only",
+    "ROSA_PURPOSE_ROLE_BACKEND_SERVICE_PERMISSIONS": "NOT VERIFIED"
+  },
+  "not_run": [
+    "MFA code input",
+    "session issuance/AssumeRole",
+    "IAM changes",
+    "credential contents/logs",
+    "resource queries",
+    "State/Output/Plan",
+    "AWS creation"
+  ],
+  "execution_timestamp": "not supplied; receipt timestamp is separate from execution time",
+  "run_id": "controller-base-caller-mfa-20261008-01",
+  "overall_T03": "PARTIAL",
+  "full_rosa_plan": "NOT RUN"
+}
