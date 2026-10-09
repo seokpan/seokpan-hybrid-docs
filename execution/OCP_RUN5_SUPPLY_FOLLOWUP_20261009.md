@@ -33,3 +33,7 @@ Promotion·노드 Pull은 실제 내부 mapping 대조 뒤, FE→BE 교체는 �
 PR #97 도구의 Infra5·GitOps11개 원격 파일 SHA-256, lab 렌더 및 fixture 필드 대응을 다시 대조했고 SG/Plan10·OCP계산5 시험 그룹 통과. Windows에서의 합성/Source 검증이며 실제 Linux Controller 시험은 별도다. 이 오프라인 시험은 PR 병합을 기다릴 기술적 이유가 없으므로 운영 clone을 건드리지 않는 고정 임시 사본으로 먼저 확인할 수 있다. A/C 실제 값·인증/Cloud/State 호출이나 설치는 필요하지 않으며, OCP 계산은 기존 PyYAML이 있을 때만 실행한다. 이후 기존 Controller의 Linux 파일3건·SG/Plan10·OCP계산5 시험 PASS와 임시 사본 제거 결과를 수신했다. [부분 검증 기록](../evidence/T03/controller-b-offline-tools-20261009-01/summary.md)에 연결했으며 재실행·설치는 필요하지 않다.
 
 [Infra #54](https://github.com/seokpan/seokpan-hybrid-infra/pull/54)는 B의 최신 HEAD `d82f09a4013d40ab754f85997f358a8a1fc44a64` 승인 및 A 병합 대기를 확인했다. B의 재리뷰를 반복하거나 A 구현을 B 작업에 넣지 않는다. bootstrap 실제 Plan/실효 권한 확인 → Foundation 전체 Plan/Cost Gate·실행 조건 → 실제 적용·보호 인계는 A의 후속이며 실제 ARN·권한·SG 인계를 완료한 것으로 승계하지 않는다.
+
+## C의 합의와 실제 결과 대기 구분
+
+C의 같은 회신은 앞서 대화에서 이미 전달받았다. [Infra #19의 SG 인계·Pool 결정 시점 합의](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6059291050)와 [Infra #44의 이관 순서·절차 준비/실제 확인 대기](https://github.com/seokpan/seokpan-hybrid-infra/issues/44#issuecomment-6059308630)도 확인했다. 동일 메신저 문구를 GitHub에서 발견했다고 주장하지 않는다. SG 대조 방식·Pool 결정 시점·이관 순서의 동의를 다시 기다리지 않는다. C의 실제 SG 판정은 Foundation Apply 직후 #19 기록으로, Pool 값은 RDS 실측 뒤로, 1차 접근 계정·위치는 이관 날짜와 함께 확정하는 후속으로 유지한다.
