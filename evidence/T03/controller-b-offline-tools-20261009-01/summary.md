@@ -1,6 +1,6 @@
 # Controller B 도구 오프라인 실행 수신 — PARTIAL
 
-사용자가 전달한 기존 `jth@ansible` 판정 결과를 기록했다. B의 새 Cloud/Cluster 직접 호출 기록이 아니다. 고정 PR #97 도구를 운영 clone 밖 임시 사본에서 실행했고 아래 범위는 PASS다.
+기존 `jth@ansible`에서 실행한 오프라인 검사 판정 결과를 기록했다. B의 새 Cloud/Cluster 직접 호출 기록이 아니다. 고정 PR #97 도구를 운영 clone 밖 임시 사본에서 실행했고 아래 범위는 PASS다.
 
 - 실제 Linux 파일: 소유600 일반 파일 읽기,644 거부, symlink 거부3건.
 - SG/Plan 합성 시험10그룹과 OCP Source 계산 시험5그룹.

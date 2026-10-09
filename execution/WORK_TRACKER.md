@@ -169,7 +169,7 @@ PR #19 병합·브랜치 삭제를 확인했다. 직전 구현·인계 전체의
 | [GitOps Draft PR #9](https://github.com/seokpan/seokpan-hybrid-gitops/pull/9)·[#5 수신/인계](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5#issuecomment-5950971514) | HEAD `f1e959d2f3ec5207cc42f0523cbd391930b247d7`, 실제 Kustomize base/lab/Recovery Build·선언/출력 보존/ConfigMap Hash 11검사. D 원 lab SHA `259e73b0fac1af40f7bb7b43bd1982410d1df150`의 참고 범위 수락. replicas0/미해결 입력 후보이며 Apply/Sync 보류 | Source 리뷰·새 Image, lab TLS Redis/DB/CA/Secret·자원/UID, Recovery 플랫폼/Namespace·새 Redis·직접 DB·진입 입력. D 실제 #5/#6·C Bundle 수신/예행 필요 |
 | [CI A~F B 리뷰](https://github.com/seokpan/seokpan-hybrid-app/issues/2#issuecomment-5950294428)·[D 수락](https://github.com/seokpan/seokpan-hybrid-app/issues/2#issuecomment-5950470901) | 승인/조건부 구현 경계 접수. A~F 재승인 질문 없음. F 수명은 승인04 무기한 허용 시 우선/제한 시 최대 허용 기준 유지 | D 실제 CI/보존/Preview·PAT/등록 재현, A foundation Worker Pull Owner. Source 후보와 실제 자격 발급/Push 성공을 구분 |
 
-B 담당 Source 작성·로컬 검사 범위이며 실제 서버/Image·Restore 수행은 별도다. App Git Push 인증이 없어 승인된 전체 이력 이관은 사용자 전달용 묶음으로 준비하고 Snapshot 전송으로 바꾸지 않았다. 기존 팀원 기록과 Source 개별 관측 시각을 보존한다. Shared Execution/Cost Gate·Cloud Apply·Restore·장애 주입을 실행하지 않았고 실제 Run Index도 추가하지 않았다.
+B 담당 Source 작성·로컬 검사 범위이며 실제 서버/Image·Restore 수행은 별도다. App Git Push 인증이 없어 승인된 전체 이력 이관은 인계용 묶음으로 준비하고 Snapshot 전송으로 바꾸지 않았다. 기존 팀원 기록과 Source 개별 관측 시각을 보존한다. Shared Execution/Cost Gate·Cloud Apply·Restore·장애 주입을 실행하지 않았고 실제 Run Index도 추가하지 않았다.
 
 남은 흐름: 인증된 App 원격 Source → 새 Image/정확한 환경 입력 → lab·Recovery Bundle/자산 수신 → 실제 Run의 탐지부터 업무 재개 및 Backup Data 최신성/손실·팀 부담 → 필요 변경 판단/채택 후 설계·코드·그림·발표 반영. 공식 목표·복원 구조·1차 경계·예산/Freeze는 유지한다.
 
@@ -301,7 +301,7 @@ DR 우선순위와 00–04 기존 설계 정합 완료는 유지한다. C의 백
 
 #9는 D 새 Image·C/D 실제 DB/새 Redis/TLS/Secret·lab/Recovery 같은 조합 입력과 D #5/#6 검증·수신/승인을 기다리는 Draft다. #11도 #9 위의 Draft Stack이며 #9 병합 후 main retarget 때 Cloud diff 보존을 확인한다. Root/Application/AppProject·NP/UWM·Migration·새 Recovery Redis/Bundle 구현과 Root/AppProject bootstrap 순서·승인 Namespace/CRD/Owner 확인은 기존 Owner/Gate로 남는다. 현재 Overlay 후보 CI 성공을 TH-08/09 전체 Source·Runtime/T01~T23·TH 전체 완료로 확대하지 않으며 새 Runtime Run/Index·Shared Execution 행을 추가하지 않았다.
 
-다음 DR 판단은 C의 백업 Data 시각/로컬 확보 지연·Dump·격리 Import 부분 측정을 각 단계의 직접 입력으로 시작하고 D 새 Image·새 Recovery Redis·클라이언트 접속 경로 후 전체 업무 재개 시간·손실·편의/작업량·비용을 비교한다. 전체 ROSA 생성은 최소 예행의 선행조건이 아니다. 00–04 기존 정합 보완 완료와 공식30분/90분/1시간 Backup/Restore는 유지하고 새 목표/주기/구조의 최종 선택은 실제 근거 대기다. 복구 목표 재검토·선택까지 최종 완료되면 유지/강화/구조 조정의 선택과 근거, 채택 내용의 관련 설계·코드·SVG/PNG 정합 반영 및 검증 결과를 확인해 사용자에게 완료 여부와 변경/유지 위치를 알린다. 현재는 그 최종 완료 전이다.
+다음 DR 판단은 C의 백업 Data 시각/로컬 확보 지연·Dump·격리 Import 부분 측정을 각 단계의 직접 입력으로 시작하고 D 새 Image·새 Recovery Redis·클라이언트 접속 경로 후 전체 업무 재개 시간·손실·편의/작업량·비용을 비교한다. 전체 ROSA 생성은 최소 예행의 선행조건이 아니다. 00–04 기존 정합 보완 완료와 공식30분/90분/1시간 Backup/Restore는 유지하고 새 목표/주기/구조의 최종 선택은 실제 근거 대기다. 복구 목표 재검토·선택까지 최종 완료되면 유지/강화/구조 조정의 선택과 근거, 채택 내용의 관련 설계·코드·SVG/PNG 정합 반영 및 검증 결과를 확인해 최종 판정과 변경/유지 위치를 작업 기록과 팀 인계에 반영한다. 현재는 그 최종 완료 전이다.
 
 <a id="recovery-source-role-followup-20261004"></a>
 ## Recovery 직접 Source 후속과 역할·Draft 조건 정정 — 2026-10-04
@@ -316,7 +316,7 @@ C의 백업 최신성 관측은 Data/로컬 완성 시각 근거, Dump는 실행
 
 C Dump/Import 실측·최종 DR 목표 선택은 #9의 추가 Draft 해제 조건이 아니다. #9는 B의 필요한 Source/계약 준비·사람 리뷰와 D 새 Image·C/D 실제 lab/Recovery 입력의 같은 조합 검증/수신을 확인한다. #11은 기존 Stack·향후 main retarget/diff 확인을 유지한다. 최종 T18·Warm Standby·전체 ROSA를 직접 조건으로 추가하지 않는다. 0 Replica/입력 대기 Source는 미기동이며 완성 Bundle/Runtime PASS가 아니다.
 
-[h-docs PR #28](https://github.com/seokpan/seokpan-hybrid-docs/pull/28)의 작업 Branch 삭제 후 당시 작업 시작 원격 목록에서 Docs main만 남은 것을 확인했다. 이번 작업에서 실제 유료 자원·배포·새 Runtime Run/Index·Shared Execution·TH 전체 완료는 만들지 않는다. 00–04 기존 보완 완료와 공식30분/90분/1시간 Backup/Restore는 유지하며 새 DR 선택은 실제 근거 대기다. 최종 선택과 관련 설계/코드/SVG/PNG 정합 반영·검증까지 완료되면 근거·변경/유지 위치를 사용자에게 알릴 기존 조건을 유지한다.
+[h-docs PR #28](https://github.com/seokpan/seokpan-hybrid-docs/pull/28)의 작업 Branch 삭제 후 당시 작업 시작 원격 목록에서 Docs main만 남은 것을 확인했다. 이번 작업에서 실제 유료 자원·배포·새 Runtime Run/Index·Shared Execution·TH 전체 완료는 만들지 않는다. 00–04 기존 보완 완료와 공식30분/90분/1시간 Backup/Restore는 유지하며 새 DR 선택은 실제 근거 대기다. 최종 선택과 관련 설계/코드/SVG/PNG 정합 반영·검증까지 완료되면 근거·변경/유지 위치를 작업 기록과 팀 인계에 반영할 기존 조건을 유지한다.
 
 
 <a id="recovery-fixture-measurement-20261005"></a>
@@ -336,7 +336,7 @@ C Dump/Import 실측·최종 DR 목표 선택은 #9의 추가 Draft 해제 조�
 
 MariaDB 10.11.14·동시 쓰기 없는 합성 데이터·동일 Host 복사로 한정한다. 실제 사전 점검11.8.9·RDS/S3/VPN·운영 부하는 검증하지 않았다. Data Run의 TLS/목적 계정·App/Redis 제외와 후속 Backend Run의 폐기 가능한 목적 SSL 계정·새 TLS/AUTH Redis·HTTPS Backend 검증을 구분한다. FE/browser/WSS·승인 Image/Release·OCP/Host·사고 탐지/판단/안내는 미측정이다. 두 부분 실행 PASS, Render/Deployment/Acceptance NOT RUN, 전체 RTO/RPO null이며 스크립트 부분 시간을 서비스 RTO로 쓰지 않는다. 공유 실행·C Branch/main·실제 프로젝트 Data/Backup/Key와 A/B/D 기존 기록은 변경하지 않았다. 최유준의 증거 책임은 유지하며 Index는 임시 연결 상태이므로 D 검토/수신을 별도로 남긴다.
 
-**새 DR 설계 변경안은 [03 §3-I.14.5](../design/03_DETAILED_DESIGN.md#recovery-design-decision-20261005)의10분/30분/15분·Backup/Restore 유지로 선택했고, 다음은 관련 Source·문서·SVG/PNG/출처의 최종 정합 검증·리뷰/병합이다.** 고정 App Source의 과거 DB 기록 보존과 새 Redis의 현재 방 결과/사용자 업무 경계도03 §3-I.14.4·04 §5.1/§10.2·05 §9.2~9.3에 반영했다.00/01/02의 역사/목적/구조와 네 사람 책임·$450/$500·Freeze는 유지한다. 실제15분 Timer/사본 완성/전송/최신성·Host/독립 사본·Image/FE/HTTPS/WSS·전체 사고 t0~업무/Data t1과 손실·Cost/기간은 해당 실행 전에 확인한다. 정태훈도 승인된 격리 환경의 C 기술 측정을 수행할 수 있으며 배정 책임·실제 수행자/리뷰/수신을 구분한다. nominal15분을 성공 간격G≤15분/전송D≤15분으로 보장하지 않고 실제G+D+시점 불확실성U≤30분을 관측한다. 지연/실패/이전 사본 선택은 실제 Data 나이·미달/null로 남기고 같은 Run의 목표를 완화하지 않는다. 관련 산출물의 필수 추가 보완0건이면 설계 변경안 완료·변경/유지 위치를 사용자에게 보고하며 PR의 공식 main 반영과 실제 전체 목표 달성/운영 T18/05 종료는 따로 밝힌다.
+**새 DR 설계 변경안은 [03 §3-I.14.5](../design/03_DETAILED_DESIGN.md#recovery-design-decision-20261005)의10분/30분/15분·Backup/Restore 유지로 선택했고, 다음은 관련 Source·문서·SVG/PNG/출처의 최종 정합 검증·리뷰/병합이다.** 고정 App Source의 과거 DB 기록 보존과 새 Redis의 현재 방 결과/사용자 업무 경계도03 §3-I.14.4·04 §5.1/§10.2·05 §9.2~9.3에 반영했다.00/01/02의 역사/목적/구조와 네 사람 책임·$450/$500·Freeze는 유지한다. 실제15분 Timer/사본 완성/전송/최신성·Host/독립 사본·Image/FE/HTTPS/WSS·전체 사고 t0~업무/Data t1과 손실·Cost/기간은 해당 실행 전에 확인한다. 정태훈도 승인된 격리 환경의 C 기술 측정을 수행할 수 있으며 배정 책임·실제 수행자/리뷰/수신을 구분한다. nominal15분을 성공 간격G≤15분/전송D≤15분으로 보장하지 않고 실제G+D+시점 불확실성U≤30분을 관측한다. 지연/실패/이전 사본 선택은 실제 Data 나이·미달/null로 남기고 같은 Run의 목표를 완화하지 않는다. 관련 산출물의 필수 추가 보완0건이면 설계 변경안의 최종 판정과 변경/유지 위치를 기록·인계하며 PR의 공식 main 반영과 실제 전체 목표 달성/운영 T18/05 종료는 따로 밝힌다.
 
 <a id="project-source-design-sync-20261005"></a>
 ## 갱신 프로젝트 소스 대조와 현재 직접 후속 — 2026-10-05 13:29 KST

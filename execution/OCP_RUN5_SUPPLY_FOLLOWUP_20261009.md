@@ -1,6 +1,6 @@
 # Run #5 OCP 공급 후속 수신·push 판단 — 2026-10-09
 
-이 문서는 B가 사용자에게 전달받은 D 보고와 기존 공개 기록을 대조한 결과다. B의 Harbor/bastion/Cluster 직접 실행·검증 결과가 아니다. 실제 공급 이슈는 [GitOps #32](https://github.com/seokpan/seokpan-hybrid-gitops/issues/32)이며 Infra #32는 다른 작업이다.
+D에게 받은 공급 보고를 기존 공개 기록과 대조했다. B의 Harbor/bastion/Cluster 직접 실행·검증 결과가 아니다. 실제 공급 이슈는 [GitOps #32](https://github.com/seokpan/seokpan-hybrid-gitops/issues/32)이며 Infra #32는 다른 작업이다.
 
 ## 새로 수신한 범위
 
