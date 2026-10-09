@@ -1,3 +1,5 @@
+> **현재 후속 — 2026-10-09:** A bootstrap Apply·재-Plan 변경 없음 보고 수신. Foundation 전체 Plan/Apply·B ROSA 서비스 권한은 대기다. [현재 인계 순서](B_SOURCE_BATCH_AND_HANDOFF_20261009.md)를 따른다. 아래 이전 실패/진단은 당시 기록이다.
+
 # 병합 후속·Controller 인증·실행 대기 — 2026-10-08
 
 현재 추가 수신: D의 Run #5 OCI 복사·bastion 반입/Registry·Worker requests 보고, A PR #54 B 승인·병합 대기를 [새 공급 후속](OCP_RUN5_SUPPLY_FOLLOWUP_20261009.md)에 연결했다. 실제 push·내부 mapping·Pull·교체나 ARN/SG 인계 완료를 뜻하지 않는다. Controller의 격리 오프라인 시험은 Linux 파일3건·SG/Plan10·OCP계산5 PASS를 수신했고 임시 사본 제거·설치 없음으로 마쳤다.
@@ -11,7 +13,7 @@
 - [x] Controller Source/Lock·기본 IAM User/MFA 장치 읽기 및 서울 용량 부분 결과 수신
 - [x] D의 새 Run5 Build/Scan/Smoke·Digest 보고 수신
 - [x] EC2 진단v1/v2 결과 수신·추가 자동 API 재시도 종료
-- [ ] 사용량/원인 비공개 확인: B 현장·A/계정 Owner 입력 대기
+- [x] EC2 원인 로컬 ParamValidation 확인·교정 조회 완료. 전체 Quota 잔여량은 미확인
 - [x] 새 Image 출처·FE/BE Index Digest의 Harbor 공급 후보 수락
 - [ ] 보호 보존 근거·내부 mapping/Child Digest·OCP 공급/교체 조건 대조
 - [ ] EBS 할당량 기준 차이·기존 사용량·목적 세션/Backend·지원/비용/전체 Plan 수락

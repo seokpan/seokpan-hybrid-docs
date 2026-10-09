@@ -2,38 +2,15 @@
 
 ## 전체 진행 현황 — 2026-10-09 KST
 
-- [x] App #30/#34·GitOps #33·Docs #95/#96 병합 및 마무리 기록 완료.
-- [x] EC2 로컬 JSON 전달 오류 해결·제한 조회 성공 기록 수신. 같은 진단 반복 불필요.
-- [x] SG/Plan·OCP 계산 도구 검증 및 실제 Controller 파일3건·SG/Plan10·OCP계산5 시험 그룹 PASS. 임시 사본 제거, 설치 없음.
-- [x] Run #5 공급 후보 수락 및 D의 OCI 복사·bastion 반입/Registry·Worker requests 보고 부분 수신.
-- [x] A PR #54 최신 B 승인 완료. B 구현 보완 또는 재리뷰 대기 항목 아님.
-- [x] C의 SG 대조 방식·Pool 결정 시점·이관 순서 합의 확인. 실제 SG/RDS 결과와 1차 접근 확정은 별도.
-- [x] [B 선행 도구·증거](B_OFFLINE_PREPARATION_REVIEW_20261009.md)와 [Run #5 공급 후속](OCP_RUN5_SUPPLY_FOLLOWUP_20261009.md)을 Docs PR #97에 반영·게시 검증.
-- [ ] Docs PR #97 검토·병합 후속, A 실제 기반/권한 인계 및 아래 실환경 검증.
+- [x] Docs #97/#98 병합·브랜치 삭제 및 공개 기록 표현 보완 완료.
+- [x] EC2 JSON 전달 오류 해결·제한 읽기 성공. 해당 오류에 대한 IAM 확대/반복 진단 불필요.
+- [x] Controller 파일3건·SG/Plan10·OCP계산5 오프라인 시험 PASS 수신.
+- [x] A bootstrap 실제 Apply·동일 입력 재-Plan 변경 없음·정책/연결 확인 보고 수신.
+- [x] Cloud 플랫폼/조회 권한·Recovery Bundle·관리 인증 수락 Source와 거부 사례 보완.
+- [x] C SG 대조/Pool 결정 시점/이관 순서 합의 수신; 새 Source·현장 실행 기여 근거 분리.
+- [ ] 신규 B Source 리뷰/병합, D 실제 공급·OCP 시험, A Foundation/ROSA 권한·출력과 전체 Plan, C 실측/이관/Recovery, 최종 발표/정리.
 
-현재 판단은 이 상단과 문서 끝의 **전체 남은 작업**을 기준으로 한다. 아래 시점별 기록·명령은 작성 당시의 이력/절차이며, 완료한 Controller 조회·오프라인 시험의 재실행 지시가 아니다.
-
-현재 추가 수신: D의 Run #5 OCI 복사·bastion 반입/Registry·Worker requests 보고, A PR #54 B 승인·병합 대기를 [새 공급 후속](OCP_RUN5_SUPPLY_FOLLOWUP_20261009.md)에 연결했다. 실제 push·내부 mapping·Pull·교체나 ARN/SG 인계 완료를 뜻하지 않는다. Controller의 격리 오프라인 시험은 Linux 파일3건·SG/Plan10·OCP계산5 PASS를 수신했고 임시 사본 제거·설치 없음으로 마쳤다.
-
-> **현재 확인 — 2026-10-09:** EC2 JSON 전달 오류는 로컬 `ParamValidation`으로 확인했고 정규 임시 파일 교정 후 기존 Controller의 제한 읽기2회가 성공했다. [교정 부분 Run](../evidence/T03/controller-seoul-ec2-input-corrected-20261009-01/summary.md)에서 조회 조건의 인스턴스0·예약0과 미확인 범위를 구분한다. 이 오류에 대한 A IAM 변경 요청/진단 반복은 필요 없다. 프로젝트 AWS 계정 ID·공통 Role/정책·ROSA 작업용 권한/State 저장소·SG2·지원/Quota·비용/사용창 입력은 계속 대기한다. [B 선행 검사·requests 계산](B_OFFLINE_PREPARATION_REVIEW_20261009.md)을 준비했고, 새 Image는 App18819963/Run #5/#32 수락 기준이다. 실제 전체 Plan·OCP 공급/교체·Pool·이관·Recovery는 각 조건 뒤 수행한다. 아래 이전 날짜의 안내는 당시 이력이다.
-
-
-> **시점 이력 — 2026-10-08 Docs #95 병합 후:** [병합·Controller 인증·실행 대기](MERGED_SOURCE_PLAN_READINESS_20261008.md). App30/34·GitOps33 승인·병합·PR 브랜치 삭제 완료. App18819963의 D Run5 성공 보고·FE/BE Harbor 공급 후보 수락, B/jth의 Source/Lock·기본 Caller/MFA·서울 사양/Quota 부분 결과 유지. EC2 진단v1/v2는 코드 비식별·사용량 미확보·원인 미확정으로 자동 API 재시도 종료, B 현장/A 계정 Owner 비공개 확인 입력 대기. 실제 역할/SG2·목적 세션/Backend·프로젝트 조직/지원·EBS 기준/비용 입력·전체 Plan, 내부 공급/Pull·Runtime은 별도 미완료. 아래 날짜별 기록은 당시 이력.
-
-> **최신 조사 후속 — 2026-10-07:** [전수 조사](REPOSITORY_AUDIT_20261007.md)·[05§9.47](05_IMPLEMENTATION_AND_VALIDATION.md#repository-full-audit-20261007) 참조. GitOps main의 Root SHA B/FE·BE1은 소스 병합 상태이며, 마지막 수신 Runtime은 SHA A/FE·BE0이다. 성공한 등록/선택Sync·금고 본체 확인을 반복하지 않는다. C의 GitOps26/6038214247 DB 형식·GRANT·TLS 접속·합성 출처 수락 보고는 수신했고 실제 Stage2 적용·Route/업무는 원 #26에서 후속 확인한다. 아래 시점별 인계 보존.
-
-### 조사 중 추가된 실행 보고·수정 PR — 2026-10-07 후속 조회
-
-[D 등록·선택 Sync 보고](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5#issuecomment-6034601393)는 SHA A의 Valkey 4객체 `Succeeded`·FE/BE 미생성을, [Pod 확인](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6#issuecomment-6034590906)은 검토 Digest의 amd64 하위 ImageID·허용 UID만 보고했다. 등록/Sync를 다시 미실행으로 되돌리지 않는다. 실제 TLS/AUTH/Hostname·Ready 전체 Run과 Prune/Delete 차단은 아직 근거가 없으며 공유 Owner 재확인·등록 Commit·B 공유 시각의 빈칸 및 사전 합의되지 않은 `oc patch operation.sync.resources` 경로는 원 #5에서 보완·수락한다. #21의 완료 체크만으로 이 잔여를 완료 처리하지 않는다. 이 조사자는 클러스터를 직접 재조회하지 않았다.
-
-[GitOps #25](https://github.com/seokpan/seokpan-hybrid-gitops/pull/25)은 A 새 승인 후 `61edd0fd60e1004260c0b5082dc792fce847616b`에 병합·원격 PR 브랜치 삭제, 병합 validate success를 확인했다. checker 정책 #27과 회귀/안내2파일 보완 종료. 현재 Root는 SHA B `bfee2669e62bf823969ce224e5599eccace5d024`이며 최신 병합 main의 등록 비교/전체 lab release Gate는 Source PASS, 실제 적용/Sync/보호는 원 #5/#26의 별도 수락이다. 이전53314d3/69PASS·재리뷰 요청은 당시 근거로 보존.
-
-[Infra #43](https://github.com/seokpan/seokpan-hybrid-infra/pull/43)은 `6849c32d5b24a0e4994b7fbe849a1032211dc9a3` 병합·원격 PR 브랜치 삭제와 validate success를 확인했다. default State Key 유지, Workspace prefix/List 범위 정합 보완 완료. 기존 초기화/Workspace/State 위치 확인 뒤 목적 Caller/Backend·지원·A 기반/C SG2·예비 비용/창을 수락해 첫 Plan으로 진행한다. 병합 Source의 오프라인 fmt/helper/harness 보존 PASS와 실제 Controller/Cloud Plan NOT RUN을 구분.
-
-[GitOps #26](https://github.com/seokpan/seokpan-hybrid-gitops/issues/26#issuecomment-6050000112)의 D 최신 로그인·방 생성/접속·게임 종료·업무 영향 없음 보고와 C6038214247의 DB 형식/GRANT/TLS 접속·합성 출처 수락을 수신했다. Vote 미확인·Valkey ERR 증가 원인 조사는 후속. 정확한 실제 Source/Image/Run·Route/Origin·TLS/Hostname·Ready·Owner/사용창/Gate/live Diff·삭제 보호 수락은 별도로 남으며 직접 Runtime 재조회·전체 PASS로 사용하지 않는다.
-
-첫 읽기·작업 위치·실행 조건은 [실행 인계](EXECUTION_ENTRYPOINT_20261007.md)를 따른다. 원 보고와 이 Source 수정의 수신/검토·실행은 별개다.
-
+현재 판단과 순서는 [B 독립 보완·실제 인계](B_SOURCE_BATCH_AND_HANDOFF_20261009.md)를 따른다. [관리 인증 수락 절차](B_MANAGEMENT_AUTH_ACCEPTANCE_20261009.md)에서 Role/Secret·기존 Token·Bootstrap 정리 조건을 확인한다. Source 검사 결과와 실환경 완료를 구분하며 아래 과거 시점의 병합 대기/진단 명령은 당시 이력이다. App41은 PLAN 원격 clone 경계의 보완 요청 상태로, 과거 B 승인 문구를 현재 병합 권고로 쓰지 않는다.
 
 ## 현재 실행 기준 — 2026-10-07 원격 변경 대조·구현 인계
 
@@ -563,3 +540,17 @@ OCP의 사전검증 업무 완료와 정리 날짜는 별개다. 추천 운영 �
 | [ ] 보류 | 멘토링/OADP 보류 해제 | 해제 전 유지 |
 
 각 병렬 경로는 자기 선행조건을 충족하면 진행한다. Controller 오프라인 시험과 EC2 진단은 완료했으며 이 목록에 다시 대기로 넣지 않는다. TH/Q·전체 실환경 검증은 미완료, CP3/Infra3/Worker3·비용 PARTIAL/$450계획/$500상한·DR10분/RPO30분/Backup15분 기준은 유지한다.
+
+## 전체 남은 작업 — 현재 후속
+
+
+- [ ] 신규 B Source PR 리뷰/CI·병합 및 승인 개정 보존.
+- [ ] D App41 PLAN 계약 수정/재리뷰·Jenkins/검증기 Source와 실제 CI 연결.
+- [ ] D 새 공급의 실제 내부 mapping·Pull·Owner창/자원→OCP 조합 시험.
+- [ ] A Foundation 보호 입력/서비스 권한/지원·비용·실행창→실제 Foundation 출력·ARN/Map/SG2 인계.
+- [ ] B 목적 인증/Backend→첫 ROSA 전체 Plan·수량/삭제/비용→별도 실행·Cluster 인계.
+- [ ] IdP/RBAC/Secret·Cloud 플랫폼/NetworkPolicy 실효 검증·캐시 없는 ECR Pull.
+- [ ] C RDS 실측→Pool 합의/구현→Cloud App·3Replica/롤링/장애 검증.
+- [ ] 1차 서비스 Writer 중단/최종 이관·비교/current/App/전환.
+- [ ] Recovery 나머지 입력·독립 사본/복원 Identity/복호화·실제 Restore와 RTO/RPO.
+- [ ] 재생성/비용·보존/삭제 보호·Evidence/발표/최종 정리.
