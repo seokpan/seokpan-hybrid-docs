@@ -1,5 +1,7 @@
 # 병합 후속·Controller 인증·실행 대기 — 2026-10-08
 
+현재 추가 수신: D의 Run #5 OCI 복사·bastion 반입/Registry·Worker requests 보고, A PR #54 B 승인·병합 대기를 [새 공급 후속](OCP_RUN5_SUPPLY_FOLLOWUP_20261009.md)에 연결했다. 실제 push·내부 mapping·Pull·교체나 ARN/SG 인계 완료를 뜻하지 않는다. Controller의 격리 오프라인 시험은 Linux 파일3건·SG/Plan10·OCP계산5 PASS를 수신했고 임시 사본 제거·설치 없음으로 마쳤다.
+
 > **현재 확인 — 2026-10-09:** EC2 JSON 전달 오류는 로컬 `ParamValidation`으로 확인했고 정규 임시 파일 교정 후 기존 Controller의 제한 읽기2회가 성공했다. [교정 부분 Run](../evidence/T03/controller-seoul-ec2-input-corrected-20261009-01/summary.md)에서 조회 조건의 인스턴스0·예약0과 미확인 범위를 구분한다. 이 오류에 대한 A IAM 변경 요청/진단 반복은 필요 없다. 프로젝트 AWS 계정 ID·공통 Role/정책·ROSA 작업용 권한/State 저장소·SG2·지원/Quota·비용/사용창 입력은 계속 대기한다. [B 선행 검사·requests 계산](B_OFFLINE_PREPARATION_REVIEW_20261009.md)을 준비했고, 새 Image는 App18819963/Run #5/#32 수락 기준이다. 실제 전체 Plan·OCP 공급/교체·Pool·이관·Recovery는 각 조건 뒤 수행한다. 아래 이전 날짜의 안내는 당시 이력이다.
 
 

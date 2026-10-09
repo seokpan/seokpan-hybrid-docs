@@ -4,7 +4,7 @@ ROSA·OCP·App·이관·Recovery의 실행 조건을 구분하고, 실제 입력
 
 ## 추적 범위와 확인 결과
 
-네 저장소 main 및 관련 17개 이슈/댓글을 대조했다. 기준 Source는 App `188199630ceb5fd67d8fe57d4d5650694e2e00e3`, GitOps `26f7d63d64b5f67fe7042c7867ed358dbf40c814`, Infra `aaa8cff09cd70298b142afdba5faf15d73664cc3`, Docs의 이 변경 전 `d00cb43154885797d913e948070807b9edd81652`다. A PR #54 구현/보완은 B 고유 작업에 넣지 않는다. A/C의 실제 인계, 프로젝트 지원/예산 결정, D의 Registry 공급·현재 자원/창은 아직 수신하지 않았다.
+네 저장소 main 및 관련 17개 이슈/댓글을 대조했다. 기준 Source는 App `188199630ceb5fd67d8fe57d4d5650694e2e00e3`, GitOps `26f7d63d64b5f67fe7042c7867ed358dbf40c814`, Infra `aaa8cff09cd70298b142afdba5faf15d73664cc3`, Docs의 이 변경 전 `d00cb43154885797d913e948070807b9edd81652`다. A PR #54 구현/보완은 B 고유 작업에 넣지 않는다. A/C의 실제 인계와 프로젝트 지원/예산 결정은 아직 미완료다. D의 OCI 복사·bastion 반입 및 Registry/Worker requests 보고는 추가 수신했고, 실제 내부 mapping·노드 Pull·교체 실행 조건과 구분한다. [새 공급 후속 수신·push 판단](OCP_RUN5_SUPPLY_FOLLOWUP_20261009.md)에 연결했다.
 
 | 경로 | 이미 준비했거나 이번에 보완한 범위 | 실제로 받아야 하는 조건 |
 |---|---|---|
@@ -23,7 +23,7 @@ ROSA·OCP·App·이관·Recovery의 실행 조건을 구분하고, 실제 입력
 
 첫 Plan 검사는 현재 Root의 초기 두 단계만 대상으로 한다. IAM/OIDC 준비는 Terraform input_contract 1·RHCS OIDC 1·AWS OIDC 1·Operator Role 6·Attachment 6, Cluster 생성 단계는 Classic Cluster 1 추가다. Binding은 null이다. 이 수량은 Terraform 관리 객체이며 CP/Infra/Worker의 실제 AWS 자원 수/비용이 아니다. 생성 후 Binding 및 삭제 단계에는 같은 기준을 재사용하지 않는다.
 
-삭제·양 순서의 교체·Update·이동/import·관리 범위 밖 객체·누락·Role/Attachment 키 불일치·실패/불완전 Plan을 차단한다. 기존 State/no-op과 조회 누락, unknown 조건은 검토 대기로 표시한다. 삭제/교체 집계의 중복을 수정했다. 파일 열기 전후 객체 대조·Linux 소유자/600·JSON 중복/overflow 검사와 값 없는 진단을 추가했다. Windows ACL 및 실제 Linux Controller 실행은 아직 검증하지 않았다.
+삭제·양 순서의 교체·Update·이동/import·관리 범위 밖 객체·누락·Role/Attachment 키 불일치·실패/불완전 Plan을 차단한다. 기존 State/no-op과 조회 누락, unknown 조건은 검토 대기로 표시한다. 삭제/교체 집계의 중복을 수정했다. 파일 열기 전후 객체 대조·Linux 소유자/600·JSON 중복/overflow 검사와 값 없는 진단을 추가했다. Windows ACL은 검증하지 않았다. 이후 실제 Controller에서 Linux 파일600 읽기·644 거부·symlink 거부3건과 SG/Plan10·OCP계산5 시험 PASS를 수신했다. [Controller 부분 Run](../evidence/T03/controller-b-offline-tools-20261009-01/summary.md)에 연결하며 실제 인계/Cloud Plan/배치 승인과 구분한다.
 
 확장 후 SG/Plan 검사 10개 시험 그룹 통과. 최초 오류 사례 29개에 추가 경계 시험을 연결했으며 실제 SG 인계·Cloud Plan PASS가 아니다. `NO_LISTED_ANOMALY_PENDING_REVIEW`도 실행 승인이 아니다. 실제 Source/Lock/입력 해시·전체 Root 명령(타깃 미사용)·권한/Trust 내용·지원·Quota·비용·창을 별도로 검토한다. [Terraform JSON 형식](https://developer.hashicorp.com/terraform/internals/json-format)을 기준으로 삼았다.
 
@@ -44,6 +44,7 @@ ROSA·OCP·App·이관·Recovery의 실행 조건을 구분하고, 실제 입력
 
 ## 다음 실행과 완료 판단
 
+- Controller의 새 도구 오프라인 시험은 PR 병합을 기다릴 기술적 이유가 없다. 운영 clone과 분리된 고정 임시 사본에서 실제 Linux 파일 권한 및 시험을 먼저 확인할 수 있다. 실제 Controller 파일 검사와 두 시험 묶음 PASS를 수신했으며 기존 PyYAML을 사용해 설치하지 않았다. 이미 마친 이 시험을 반복할 필요는 없다.
 - 부분 인계가 오면 그 범위를 먼저 대조한다. 전체 팀 작업 종료를 한꺼번에 기다리지 않는다.
 - A/C의 수신 조건 뒤 목적 인증·State 저장소 사전검증과 실제 전체 Plan을 진행한다. 예비 비용 후보 제안은 이미 전달했으며 채택되지 않았다.
 - OCP는 자체 공급·자원·창이 충족되면 ROSA와 독립적으로 FE→BE 교체/업무 시험을 진행한다.
@@ -69,4 +70,4 @@ python3 tools/b_preflight/offline_review.py plan --plan <보호Plan.json> --stag
 python3 tools/b_preflight/ocp_rollout_requests.py --render <검토한lab렌더.yaml>
 ```
 
-SG 결과는 내부 대응 확인, Plan 결과는 나열한 구조 검사, requests 결과는 선언 소계다. 비차단 종료 코드도 실행 승인으로 사용하지 않는다. 참조 Source가 바뀌거나 stage/Replica/strategy/Namespace 등이 달라지면 새 기준을 검토한다. 실제 Controller 도구 실행과 실제 자료 수신·Plan 생성·OCP 변경은 아직 수행하지 않았다.
+SG 결과는 내부 대응 확인, Plan 결과는 나열한 구조 검사, requests 결과는 선언 소계다. 비차단 종료 코드도 실행 승인으로 사용하지 않는다. 참조 Source가 바뀌거나 stage/Replica/strategy/Namespace 등이 달라지면 새 기준을 검토한다. 실제 Controller의 격리 도구 시험 PASS를 수신했다. 실제 자료 수신·Plan 생성·OCP 변경은 아직 수행하지 않았다.

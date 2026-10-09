@@ -152,3 +152,7 @@ python3 tools/recovery_metrics.py evidence/<test-id>/<run-id>/release.json --con
 ## 2026-10-09 EC2 입력 교정 후속
 
 - [T03/controller-seoul-ec2-input-corrected-20261009-01/summary](T03/controller-seoul-ec2-input-corrected-20261009-01/summary.md): B/jth의 원인 확인·오프라인 비교·정규 요청 파일 교정 후 제한 CLI 읽기2회 성공 보고. Instance/예약 각1페이지·조회 조건의 Standard On-Demand 인스턴스0/예약0. 기존 실패 Run 보존, 전체 Quota/프로젝트 계정/목적 권한/State/Plan은 미완료이며 전체 T03 PARTIAL 유지. 이번 문서 작업에서 새 API 실행 없음. D Index 수신 확인은 별도.
+
+## B 도구 Controller 오프라인 판정 추가 — 2026-10-09
+
+- [T03 Controller B 도구 오프라인 실행](T03/controller-b-offline-tools-20261009-01/summary.md): 실제 Linux 파일3건·SG/Plan10·OCP계산5 시험 PASS, 전체 환경 판정은 PARTIAL. 운영 clone 변경·설치·Cloud/Cluster/State/Plan 호출 없음. 사용자 판정 수신과 새 현장 실행을 구분하며 D Index 수신 확인은 별도.
