@@ -1,6 +1,24 @@
 # 정태훈 실행판 — 지금 할 일·입력 대기·OCP와 ROSA 수명
 
-> **현재 확인 — 2026-10-08 Docs #95 병합 후:** [병합·Controller 인증·실행 대기](MERGED_SOURCE_PLAN_READINESS_20261008.md). App30/34·GitOps33 승인·병합·PR 브랜치 삭제 완료. App18819963의 D Run5 성공 보고·FE/BE Harbor 공급 후보 수락, B/jth의 Source/Lock·기본 Caller/MFA·서울 사양/Quota 부분 결과 유지. EC2 진단v1/v2는 코드 비식별·사용량 미확보·원인 미확정으로 자동 API 재시도 종료, B 현장/A 계정 Owner 비공개 확인 입력 대기. 실제 역할/SG2·목적 세션/Backend·프로젝트 조직/지원·EBS 기준/비용 입력·전체 Plan, 내부 공급/Pull·Runtime은 별도 미완료. 아래 날짜별 기록은 당시 이력.
+## 전체 진행 현황 — 2026-10-09 KST
+
+- [x] App #30/#34·GitOps #33·Docs #95/#96 병합 및 마무리 기록 완료.
+- [x] EC2 로컬 JSON 전달 오류 해결·제한 조회 성공 기록 수신. 같은 진단 반복 불필요.
+- [x] SG/Plan·OCP 계산 도구 검증 및 실제 Controller 파일3건·SG/Plan10·OCP계산5 시험 그룹 PASS. 임시 사본 제거, 설치 없음.
+- [x] Run #5 공급 후보 수락 및 D의 OCI 복사·bastion 반입/Registry·Worker requests 보고 부분 수신.
+- [x] A PR #54 최신 B 승인 완료. B 구현 보완 또는 재리뷰 대기 항목 아님.
+- [x] C의 SG 대조 방식·Pool 결정 시점·이관 순서 합의 확인. 실제 SG/RDS 결과와 1차 접근 확정은 별도.
+- [x] [B 선행 도구·증거](B_OFFLINE_PREPARATION_REVIEW_20261009.md)와 [Run #5 공급 후속](OCP_RUN5_SUPPLY_FOLLOWUP_20261009.md)을 Docs PR #97에 반영·게시 검증.
+- [ ] Docs PR #97 검토·병합 후속, A 실제 기반/권한 인계 및 아래 실환경 검증.
+
+현재 판단은 이 상단과 문서 끝의 **전체 남은 작업**을 기준으로 한다. 아래 시점별 기록·명령은 작성 당시의 이력/절차이며, 완료한 Controller 조회·오프라인 시험의 재실행 지시가 아니다.
+
+현재 추가 수신: D의 Run #5 OCI 복사·bastion 반입/Registry·Worker requests 보고, A PR #54 B 승인·병합 대기를 [새 공급 후속](OCP_RUN5_SUPPLY_FOLLOWUP_20261009.md)에 연결했다. 실제 push·내부 mapping·Pull·교체나 ARN/SG 인계 완료를 뜻하지 않는다. Controller의 격리 오프라인 시험은 Linux 파일3건·SG/Plan10·OCP계산5 PASS를 수신했고 임시 사본 제거·설치 없음으로 마쳤다.
+
+> **현재 확인 — 2026-10-09:** EC2 JSON 전달 오류는 로컬 `ParamValidation`으로 확인했고 정규 임시 파일 교정 후 기존 Controller의 제한 읽기2회가 성공했다. [교정 부분 Run](../evidence/T03/controller-seoul-ec2-input-corrected-20261009-01/summary.md)에서 조회 조건의 인스턴스0·예약0과 미확인 범위를 구분한다. 이 오류에 대한 A IAM 변경 요청/진단 반복은 필요 없다. 프로젝트 AWS 계정 ID·공통 Role/정책·ROSA 작업용 권한/State 저장소·SG2·지원/Quota·비용/사용창 입력은 계속 대기한다. [B 선행 검사·requests 계산](B_OFFLINE_PREPARATION_REVIEW_20261009.md)을 준비했고, 새 Image는 App18819963/Run #5/#32 수락 기준이다. 실제 전체 Plan·OCP 공급/교체·Pool·이관·Recovery는 각 조건 뒤 수행한다. 아래 이전 날짜의 안내는 당시 이력이다.
+
+
+> **시점 이력 — 2026-10-08 Docs #95 병합 후:** [병합·Controller 인증·실행 대기](MERGED_SOURCE_PLAN_READINESS_20261008.md). App30/34·GitOps33 승인·병합·PR 브랜치 삭제 완료. App18819963의 D Run5 성공 보고·FE/BE Harbor 공급 후보 수락, B/jth의 Source/Lock·기본 Caller/MFA·서울 사양/Quota 부분 결과 유지. EC2 진단v1/v2는 코드 비식별·사용량 미확보·원인 미확정으로 자동 API 재시도 종료, B 현장/A 계정 Owner 비공개 확인 입력 대기. 실제 역할/SG2·목적 세션/Backend·프로젝트 조직/지원·EBS 기준/비용 입력·전체 Plan, 내부 공급/Pull·Runtime은 별도 미완료. 아래 날짜별 기록은 당시 이력.
 
 > **최신 조사 후속 — 2026-10-07:** [전수 조사](REPOSITORY_AUDIT_20261007.md)·[05§9.47](05_IMPLEMENTATION_AND_VALIDATION.md#repository-full-audit-20261007) 참조. GitOps main의 Root SHA B/FE·BE1은 소스 병합 상태이며, 마지막 수신 Runtime은 SHA A/FE·BE0이다. 성공한 등록/선택Sync·금고 본체 확인을 반복하지 않는다. C의 GitOps26/6038214247 DB 형식·GRANT·TLS 접속·합성 출처 수락 보고는 수신했고 실제 Stage2 적용·Route/업무는 원 #26에서 후속 확인한다. 아래 시점별 인계 보존.
 
@@ -521,8 +539,27 @@ OCP의 사전검증 업무 완료와 정리 날짜는 별개다. 추천 운영 �
 - [x] Controller Source/Lock·격리 validate/교정 mock·지원후보 목록 및 A 정책 사본 수신 보고 확인
 - [x] App30/34·GitOps33 승인/병합·PR 브랜치 삭제, 기본 IAM User 인증·본인 MFA 장치1개 읽기 확인
 - [x] B 개인 Caller 서울 사양/Quota 부분 읽기·D32 새 Source18819963 Run5 보고 수신 및 공급 후보 수락
-- [ ] 지금 가능: EC2 첫호출 오류 진단, D 보존 참조/내부 공급·mapping 준비와 Owner 사용창 조율
+- [ ] 당시 대기 항목(현재 EC2 진단은 해결·종료): D 보존 참조/내부 공급·mapping 준비와 Owner 사용창 조율
 - [ ] 선행 입력 대기: A 실제 역할/권한/제한 기반/Backend·C/A SG2·프로젝트 계정/지원/Quota/disk·예비 비용/Owner/창 → 첫 Cloud Plan
 - [ ] 실행 조건 수락 후: 새 Image 수락·OCP 최신 자원/Owner 창·실제 교체/시험
 
 [연결](CONTROLLER_SOURCE_CATALOG_FOLLOWUP_20261008.md). 기존독립작업의잔여와멘토링보류 유지.
+
+## 전체 남은 작업 — 2026-10-09 KST
+
+| 경로·순서 | 누구의 무엇을 기다리는가 | B가 받은 뒤 할 일과 결과 |
+|---|---|---|
+| [ ] 지금 · Docs | A/C/D PR #97 검토·승인 | 의견 처리 → 병합·Source 연결·브랜치 정리·마무리 기록 |
+| [ ] ROSA 1A | A PR #54 병합·bootstrap 검증 → Foundation 전체 Plan·비용 검토·Apply, A/C 실제 Role/정책/Backend/기반/SG 인계 | 부분 인계부터 계정·권한·SG 출력키/이름/VPC/태그/규칙 대조 → 실제 입력 수락 |
+| [ ] ROSA 1B · 1A와 병행 | A/B/D 프로젝트 조직·AWS 연결/구독·지원 버전·Machine/disk·Quota·비용·실행자/시작·종료 결정 | 후보와 근거 비교 → 실행값·사용창 확정. 후보값 임의 적용 없음 |
+| [ ] ROSA 2 · 1A/1B 조건 뒤 | 수락한 보호 입력·목적 MFA/Role 사용 조건·실행창 | 목적 인증/Caller·Backend 사전검증 → 첫 전체 ROSA Plan의 구조/수량/삭제/비용 검토 → 실행 판단. 실제 유료 Apply는 해당 실행 조건 수락 뒤 |
+| [ ] 병렬 OCP 1 | D/B 기존 endpoint/TLS·push 권한·Skopeo 도구·live trigger·Pruner·공급창 확인 | bastion OCI 직접 복사·새 태그 push → 전체 내부 Index/amd64 child/attestation 대응 인계·대조. 내부 mapping은 push 후 받음 |
+| [ ] 병렬 OCP 2 | D push 결과 및 최신 양Worker requests/실사용/Pressure/종료 Pod·Owner 사용창·감사 결과 | Promotion/Pull → FE old Pod 종료 확인 후 BE 교체 → 다중 투표·WS 유지/재접속·장애·Prune/Delete 차단 시험 |
+| [ ] 병렬 Pool | C RDS 실제 연결 상한·예약 연결과 B/C 프로세스/Replica/롤링 예산 합의 | Pool 구현·시험 → 새 Build/Digest 공급 → Cloud App 연결·부하·롤링 검증. 첫 ROSA Plan과 분리 |
+| [ ] 병렬 이관 | B/C 이관 날짜·1차 클러스터 접근 계정/위치·실행자/창 확정 | 신규 데이터 입력·변경 차단 및 Backend 중지·재기동 제어 → 최종 덤프/이관/비교 → ROSA Migration current·App/대표 업무 확인. 실제 전환·1차 재개 별도 판단 |
+| [ ] 병렬 Recovery | B/C/D 대상 Namespace·CA·나머지 보호 입력·Controller 외 독립 사본/복원 담당 | 공급 대조 → 독립 사본 접근·복원 Identity·연결·실제 복원 시험 |
+| [ ] 후속 통합 | 실제 실행 환경과 앞 단계 결과/시험창 | IAM 권한·CI/ECR 실제 Run·Promotion 검증과 정량 부하·장애·DR·CleanRecreate/Window B 비교 → 실환경 증거 확보 |
+| [ ] 최종 마감 | D Evidence Index 수신 확인·정량 결과·보존/종료 조건 | T22/T23 비교·문서/발표 → 데이터/자원 보존·정리·잔존 과금 확인 |
+| [ ] 보류 | 멘토링/OADP 보류 해제 | 해제 전 유지 |
+
+각 병렬 경로는 자기 선행조건을 충족하면 진행한다. Controller 오프라인 시험과 EC2 진단은 완료했으며 이 목록에 다시 대기로 넣지 않는다. TH/Q·전체 실환경 검증은 미완료, CP3/Infra3/Worker3·비용 PARTIAL/$450계획/$500상한·DR10분/RPO30분/Backup15분 기준은 유지한다.

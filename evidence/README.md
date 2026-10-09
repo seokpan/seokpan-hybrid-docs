@@ -1,6 +1,13 @@
 # Evidence Index and Run Guide
 
+실행 담당자가 새 Run을 작성하고 최유준이 Index/형식 수신을 확인한다. 아래 목록은 시점별 추가 기록이며 초기 합성 예행2개가 전체 Run 개수라는 뜻이 아니다. 이번 [EC2 입력 교정 부분 Run](T03/controller-seoul-ec2-input-corrected-20261009-01/summary.md)은 기존 성공 판정의 수신 기록이며 새 API 실행·전체 T03 수락이 아니다. Index 제출과 D의 각 Run 수신을 구분한다.
+
+<details>
+<summary>최초 Index 등록 설명 — 당시 부분 예행2개와 수신 상태 보존</summary>
+
 실제 실행 결과는 승인04 §5.4·§10.4에 따라 `evidence/<test-id>/<run-id>/`에 남깁니다. 각 실행 담당자가 자기 결과를 작성하고 최유준이 Index/형식을 연결합니다. **현재 Index에는 아래의 독립 합성 Data 부분 예행과 Backend 업무 연결 부분 예행의 실제 Run 2개가 연결돼 있습니다.** 격리 로컬 환경에서 실행·기록한 Run의 Index를 임시 연결했으며, C/B 영역 리뷰와 D Index 검토·수신은 대기합니다. 기존 lab 보고와05의 부분 검사 이력을 여기 새 Run으로 수행했다고 표시하지 않습니다.
+
+</details>
 
 ## Create a Run
 
@@ -140,3 +147,12 @@ python3 tools/recovery_metrics.py evidence/<test-id>/<run-id>/release.json --con
 - [T03/controller-seoul-ec2-usage-20261008-01](T03/controller-seoul-ec2-usage-20261008-01/summary.md): 실제 B/jth Guard PASS 뒤 첫API1회 BLOCKED/API_OR_NETWORK_ERROR. 사용량 숫자 없음·원인 미확정·앞선 용량 결과 보존. 사용량0 판정 없음. 후속 진단v1/v2는 아래 별도 Run으로 연결.
 - [T03/controller-seoul-ec2-diagnostic-20261008-01](T03/controller-seoul-ec2-diagnostic-20261008-01/summary.md): 실제 B/jth의 독립v1/v2·각CLI1회 분류 결과 수신. 코드 비식별·사용량 미확보·원인 미확정, 자동 API 재시도 종료·B 현장/A 계정 Owner 비공개 확인 대기. 기존5Run/25파일 보존, 전체 T03 PARTIAL.
 - Index 제출과 D 수신 구분, 원 실행 SHA/시점·기존 Run 보존. 전체 T03/TH/Q/Runtime PASS 가산 없음.
+
+
+## 2026-10-09 EC2 입력 교정 후속
+
+- [T03/controller-seoul-ec2-input-corrected-20261009-01/summary](T03/controller-seoul-ec2-input-corrected-20261009-01/summary.md): B/jth의 원인 확인·오프라인 비교·정규 요청 파일 교정 후 제한 CLI 읽기2회 성공 보고. Instance/예약 각1페이지·조회 조건의 Standard On-Demand 인스턴스0/예약0. 기존 실패 Run 보존, 전체 Quota/프로젝트 계정/목적 권한/State/Plan은 미완료이며 전체 T03 PARTIAL 유지. 이번 문서 작업에서 새 API 실행 없음. D Index 수신 확인은 별도.
+
+## B 도구 Controller 오프라인 판정 추가 — 2026-10-09
+
+- [T03 Controller B 도구 오프라인 실행](T03/controller-b-offline-tools-20261009-01/summary.md): 실제 Linux 파일3건·SG/Plan10·OCP계산5 시험 PASS, 전체 환경 판정은 PARTIAL. 운영 clone 변경·설치·Cloud/Cluster/State/Plan 호출 없음. 사용자 판정 수신과 새 현장 실행을 구분하며 D Index 수신 확인은 별도.

@@ -1,0 +1,41 @@
+{
+  "received_at_utc": "2026-10-09T10:25:29.236802+00:00",
+  "execution_report_source": "user supplied existing jth@ansible output; long invocation excluded",
+  "execution_observed_at_utc": null,
+  "source_docs_commit": "1de473540e627de6bb88409e5fdf114f0094f55b",
+  "helper_sha256": "4e9e0b2e4f53146e2f0fabc5ada9617a676d77d4c3a1e379df61a2f5c387b948",
+  "pinned_public_tool_hashes": {
+    "offline_review.py": "382d0085df55f246333042507649c3a9f20a0a35685a02db9413f46d3e7c4708",
+    "test_offline_review.py": "f18d99e807d15eb157bd7c7da12fca6976472f3a4ff4d0a12ef33f8cb564437f",
+    "source-reference.json": "980255cdc9164f6ab61eb2cc8b0435e615e21004886c2f12201401b2600419a1",
+    "ocp_rollout_requests.py": "ac3c22800e2c59ea15e89ba4397f141d29ba9ec4d554652b21cf04b9157b1ada",
+    "test_ocp_rollout_requests.py": "d8bb6cf0c9e8b368d207ce05bb42b5d1e99f6a0e18a8073b419a6feaa2ac71e2",
+    "lab-requests-fixture.json": "0f38f7db0cd649b028e5cbf1054a9dd745406dbb01a4172b02b201524fed0a5a",
+    "lab-source-reference.json": "df3772742955f47bf56d96f0860b7c3088258f9b602b0931260b2a1c3ca6138e"
+  },
+  "pinned_tools": "PASS",
+  "posix_file_checks": {
+    "regular_600": "PASS",
+    "unsafe_644_rejected": "PASS",
+    "symlink_rejected": "PASS"
+  },
+  "sg_plan_tests": {
+    "groups": 10,
+    "result": "PASS"
+  },
+  "ocp_calc_tests": {
+    "groups": 5,
+    "result": "PASS"
+  },
+  "temporary_tool_copy": "REMOVED",
+  "parent_environment_existing_clones": "PRESERVED",
+  "not_run": [
+    "AWS/RHCS/Cluster API",
+    "credential files read",
+    "Terraform/backend/State/Plan",
+    "git fetch/checkout",
+    "install"
+  ],
+  "overall_result": "PARTIAL",
+  "scope": "Controller offline tool execution only; actual SG/Plan/OCP runtime and overall project acceptance not verified"
+}
