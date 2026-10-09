@@ -4,6 +4,7 @@
 
 - [x] Docs #97/#98 병합·브랜치 삭제 보고 수신, EC2 입력 오류 교정/제한 조회 및 Controller 오프라인 시험 완료.
 - [x] A bootstrap 실제 Apply·동일 입력 재-Plan 변경 없음·AWS 정책/연결 확인 보고 수신.
+- [x] A Foundation Backend 초기화·지정 State/선택 자원 부재 조회 보고 수신. 조회 대상 밖의 부재나 새 State 생성 승인으로 확대하지 않음.
 - [x] B Cloud 플랫폼/조회 권한·Recovery Bundle·관리 인증 수락의 오프라인 Source 보완.
 - [ ] 신규 Source 리뷰·병합 및 환경별 실제 공급/실행 수락.
 - [ ] Foundation 전체 Plan/비용/Apply와 B ROSA 서비스 권한·목적 인증/Backend·첫 전체 Plan.
@@ -16,9 +17,19 @@ B05/B06/B08은 별도 현황 HTML이 만든 작업 그룹 이름이다. 원 승�
 
 [A #54 최종 bootstrap 결과](https://github.com/seokpan/seokpan-hybrid-infra/pull/54#issuecomment-6080922047)를 수신했다. bootstrap의 완료를 Foundation 전체 Apply나 B 목적 Role의 ROSA 실행 권한으로 확대하지 않는다. 보고된 B Role seokpan-tf-rosa는 지정 사용자/MFA Trust와 일치하지만 현재 inline1/managed0, 관측 Allow는 S3에 한정됐다. ROSA 서비스 권한·실제 목적 인증·Backend 접근 성공은 아직 미확인이다. EC2 ParamValidation은 전달 오류였으므로 그 오류를 이유로 권한을 늘리지 않는다.
 
-A가 지금 독립적으로 확인할 것은 Foundation 보호 Backend 입력/실행 tfvars, 기존 Data age 암호문에 필요한 입력이 있는지와 공급 가능 범위, B 호출 수요표에 따른 서비스 권한 보완 범위다. 비밀값을 새 공개 양식으로 제출하도록 요구하지 않는다. **항목의 존재/채택 개정/보호 인계 가능 여부**와 미제공 항목·다음 가능한 시점을 먼저 요청한다.
+A의 추가 회신으로 Foundation Backend 초기화와 지정 State 경로·공통 역할4/정책10/VPC/MariaDB/Valkey 조회를 마쳤다는 보고를 수신했다. 지정 State 객체와 조회 자원이 없었다는 결과는 해당 인증/Workspace/key/조회 범위의 결과로 기록한다. 계정 전체가 비어 있거나 새 State/Workspace를 만들어도 된다는 근거로 쓰지 않는다. **이제 남은 것은** 보호 Backend/Workspace/State 경로의 승인 자료 대조, 실행 tfvars와 기존 Data age 암호문의 입력 포함/누락·공급 가능 범위, B 호출 수요표에 따른 서비스 권한 보완이다. 완료한 초기화/조회는 다시 요청하지 않는다. 비밀값 대신 항목의 존재·채택 개정·보호 인계 가능 여부와 다음 가능한 시점을 먼저 확인한다.
 
 공개 Foundation Source `bbd1d5793fe32e79e02aab2833852c656933b758`의 Backend는 S3이며 key=`phase2/foundation/terraform.tfstate`, workspace_key_prefix=`phase2/foundation/env`, region=`ap-northeast-2`, encrypt/use_lockfile=true다. 따라서 '로컬 Backend 초기화 정보 없음'은 초기화용 보호 입력이 없다는 보고로 기록하며 Backend 종류가 local이라는 뜻으로 바꾸지 않는다. State Bucket·실제 Workspace·기존 초기화/State 존재·실행 인증과 접근 경로는 보호 자료에서 확인한다. 기존 State 위치를 확인하기 전 재초기화/Workspace 생성/State 이전을 시키지 않는다.
+
+### A 추가 문의 — OpenShift 계열과 NAT 비용 비교
+
+**OpenShift 4.20은 기존 승인 설계의 후보이며 공개 Classic 지원 근거가 있다. 프로젝트 지원 확인은 아직 완료되지 않았다.** 03 §3-F.14는 실제 계정/서울에서 제공되는 GA patch를 확인한 후 정확한 조합을 고정하도록 한다. [Red Hat Classic 릴리스 노트 Q4 2025](https://docs.redhat.com/en/documentation/red_hat_openshift_service_on_aws_classic_architecture/4/html/whats_new/rosa-whats-new)는 신규 Classic Cluster에 4.20을 제공한다고 명시한다. 이 공개 근거는 프로젝트 Red Hat 조직/AWS 연결/구독에서 서울 Classic·STS와 정확한 `4.20.z`를 사용할 수 있다는 실제 조회 결과를 대신하지 않는다.
+
+공통 IAM의 `rosa_iam_openshift_minor_version` 후보는 `4.20`, ROSA Root의 `openshift_version`은 실제 지원되는 정확한 `4.20.z`로 구분한다. IAM 태그를 확인된 실행값으로 확정하거나 Apply하기 전 프로젝트 제공/STS 조건과 공식 정책 묶음의 생성 버전·개정·17개 파일 해시 정합을 확인한다. 해시 검사가 성공하거나 태그를 4.20으로 적는 것만으로 해당 정책의 4.20 호환이 입증되지 않는다. 실제 지원 확인을 요구하는 기존 절차를 생략하지 않으며, 확인 전에는 비교 후보 상태를 유지한다. A는 기존 승인된 인증 경로/Console에서 확인 가능한 제공 버전·서울 Classic/STS 조건·정책 묶음 정합 판정과 미확인 범위를 회신한다. 새 로그인/Token 발급이나 실제 생성은 이 문서로 지시하지 않는다.
+
+**첫 Foundation 전체 Plan의 운영 구성 비용 비교에는 Zonal Public NAT Gateway 3개를 포함한다.** 근거는 승인 설계 [03 §3-B.8.4](../design/03_DETAILED_DESIGN.md#3-b84-egress--az별-zonal-public-nat-gateway-3개-작업-전제)다. Public A/B/C의 NAT를 같은 AZ ROSA Private 기본 경로와 대조하고 Data Private에는 RDS/Valkey 배치만을 이유로 NAT 경로를 추가하지 않는다. `enable_nat_gateways=false` 기본값으로 운영 필수 NAT 비용을 누락하지 않는다. 후보 Plan 입력과 실제 tfvars 확정/Apply 승인은 분리한다.
+
+비용에는 실제 생성~삭제 과금시간 × NAT3, 처리량/전송·Public IPv4·EIP 유지/반납과 삭제 후 의존성을 포함한다. Window A/B 각각24시간·Worker Disk 두 안은 비교 후보이며 실제 시작/종료/비용 승인이 아니다. $450 계획/$500 상한 안에서 검토하고 초과하면 Window/구성 대안의 영향을 비교한다. Cluster 삭제만으로 NAT 자동 삭제나 과금 중단을 가정하지 않는다.
 
 | 공개 변수 계약에서 확인할 영역 | A 보호 입력 확인에서 필요한 판정 | B가 지금 임의로 정하지 않을 값 |
 |---|---|---|
@@ -33,7 +44,9 @@ A가 지금 독립적으로 확인할 것은 Foundation 보호 Backend 입력/�
 
 ## 독립 Source 검사 범위
 
-Cloud 플랫폼 신규6개 시험 그룹, 관리 인증 신규5개를 포함한 Docs 준비 도구20개 시험은 Windows 격리 사본에서 통과했다. Recovery 인벤토리7개 시험 그룹은 로컬에서 통과했고 POSIX 소유/권한·실제 Symlink 검사는 별도 Linux CI에 포함했다. 기존 GitOps 전체 시험은 Windows에서 CRLF ConfigMap과 Linux 실행 Fixture 차이로 실패한 범위를 확인했으며 그 결과를 전체 Source PASS로 기록하지 않는다. 각 신규 GitOps PR의 Linux Source CI에서 기존 선언과 신규 도구를 함께 확인한다. Docs 검사 자료 한 파일은 미수정 상태·원문 해시 확인 뒤 줄바꿈만 Git 원문으로 맞춰 기존 Fixture 해시 검사를 통과했다. 보호 자료·실행 환경 변경은 없었다.
+Cloud 플랫폼 신규6개 시험 그룹과 Recovery 인벤토리7개 시험 그룹을 로컬에서 통과했다. 최종 공개 GitOps Source CI는 [Cloud #34 Linux82개](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37935608762), [Recovery #35 Linux84개](https://github.com/seokpan/seokpan-hybrid-gitops/actions/runs/37935617855)를 통과했으며 skip/failure가 없었다. Recovery POSIX 소유/권한·실제 Symlink 검사도 Linux에서 실행됐다. Docs 준비 도구는 [PR #99 Linux20개](https://github.com/seokpan/seokpan-hybrid-docs/actions/runs/37935938260)와 Windows 격리 사본20개를 통과했다. 이 링크는 해당 Run의 Source SHA에 대한 결과다. 후속 문서 수정의 최신 HEAD도 PR checks에서 따로 확인한다.
+
+Windows GitOps 전체 시험에서 나타난 CRLF ConfigMap/Linux Fixture 차이를 Linux 최종 CI로 확인했다. Docs 검사 자료 한 파일은 미수정 상태·원문 해시 확인 뒤 줄바꿈만 Git 원문으로 맞춰 기존 Fixture 해시 검사를 통과했다. 개인 운영 clone·보호 자료·실행 환경은 변경하지 않았다. Source/합성 시험 통과는 실제 Cloud/Recovery/인증 수락 결과가 아니다.
 
 ## 실행 분기와 직접 조건
 

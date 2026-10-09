@@ -2,10 +2,10 @@ name: B offline preflight source checks
 on:
   pull_request:
     branches: [main]
-    paths: ['tools/b_preflight/**', '.github/workflows/b-offline-preflight.yml']
+    paths: ['tools/b_preflight/**', 'execution/B_*20261009.md', 'execution/TJUNG03_EXECUTION_BOARD.md', '.github/workflows/b-offline-preflight.yml']
   push:
     branches: [main]
-    paths: ['tools/b_preflight/**', '.github/workflows/b-offline-preflight.yml']
+    paths: ['tools/b_preflight/**', 'execution/B_*20261009.md', 'execution/TJUNG03_EXECUTION_BOARD.md', '.github/workflows/b-offline-preflight.yml']
 permissions:
   contents: read
 concurrency:

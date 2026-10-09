@@ -6,7 +6,8 @@
 - [x] EC2 JSON 전달 오류 해결·제한 읽기 성공. 해당 오류에 대한 IAM 확대/반복 진단 불필요.
 - [x] Controller 파일3건·SG/Plan10·OCP계산5 오프라인 시험 PASS 수신.
 - [x] A bootstrap 실제 Apply·동일 입력 재-Plan 변경 없음·정책/연결 확인 보고 수신.
-- [x] Cloud 플랫폼/조회 권한·Recovery Bundle·관리 인증 수락 Source와 거부 사례 보완.
+- [x] A Foundation Backend 초기화·지정 State/선택 자원 조회 보고 수신. 전체 Plan/Apply·ROSA 서비스 권한·실제 출력은 대기.
+- [x] Cloud 플랫폼/조회 권한·Recovery Bundle·관리 인증 수락 Source와 거부 사례 보완. GitOps #34 Linux82·#35 Linux84, Docs #99 도구20개 PASS; 신규 PR은 리뷰/병합 대기.
 - [x] C SG 대조/Pool 결정 시점/이관 순서 합의 수신; 새 Source·현장 실행 기여 근거 분리.
 - [ ] 신규 B Source 리뷰/병합, D 실제 공급·OCP 시험, A Foundation/ROSA 권한·출력과 전체 Plan, C 실측/이관/Recovery, 최종 발표/정리.
 
