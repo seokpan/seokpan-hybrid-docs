@@ -635,7 +635,7 @@ printf '\n로컬 Source/도구 확인 종료. Caller/Backend/Plan/Apply는 실�
 | [ ] 병렬 Pool | C RDS 실제 연결 상한·예약 연결과 B/C 프로세스/Replica/롤링 예산 합의 | Pool 구현·시험 → 새 Build/Digest 공급 → Cloud App 연결·부하·롤링 검증. 첫 ROSA Plan과 분리 |
 | [ ] 병렬 이관 | B/C 이관 날짜·1차 클러스터 접근 계정/위치·실행자/창 확정 | 신규 데이터 입력·변경 차단 및 Backend 중지·재기동 제어 → 최종 덤프/이관/비교 → ROSA Migration current·App/대표 업무 확인. 실제 전환·1차 재개 별도 판단 |
 | [ ] 병렬 Recovery | B/C/D 대상 Namespace·CA·나머지 보호 입력·Controller 외 독립 사본/복원 담당 | 공급 대조 → 독립 사본 접근·복원 Identity·연결·실제 복원 시험 |
-| [ ] 후속 통합 | 실제 실행 환경과 앞 단계 결과/시험창 | 정량 부하·장애·DR·CleanRecreate/Window B 비교 검증 → 실환경 증거 확보 |
+| [ ] 후속 통합 | 실제 실행 환경과 앞 단계 결과/시험창 | IAM 권한·CI/ECR 실제 Run·Promotion 검증과 정량 부하·장애·DR·CleanRecreate/Window B 비교 → 실환경 증거 확보 |
 | [ ] 최종 마감 | D Evidence Index 수신 확인·정량 결과·보존/종료 조건 | T22/T23 비교·문서/발표 → 데이터/자원 보존·정리·잔존 과금 확인 |
 | [ ] 보류 | 멘토링/OADP 보류 해제 | 해제 전 유지 |
 
