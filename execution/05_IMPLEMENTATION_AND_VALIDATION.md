@@ -103,7 +103,7 @@ PR #12의 Metadata 병합 시각은 2026-10-01T11:02:14Z이다. 이번 점검은
 
 Window는 ROSA를 필요한 기간에 생성·사용·삭제하는 가동 구간이다. 최신03의 기본 계획은 정상 통합 A와 최종 검증 B다. 두 Window의 실제 시작/종료·가동시간은 팀 시간과 비용 입력을 받아 채운다. 02의 추가 Demo Window 예시를 필수 C로 늘리지 않는다. 살아 있는 서비스를 보여줘야 하는 요구가 있으면 영상/증거로 충족 가능한지 먼저 확인하고 추가 가동이 필요한 경우 남은 비용·일정에 반영한다.
 
-새 관측마다 01~04 기준과 대조해 이미 정합한 구현, 승인 기준에 맞출 구현 보완, 아직 착수하지 않은 항목, 실제 결과를 기다리는 항목으로 구분한다. 단순 미확인 입력 때문에 모든 작업을 중단하지 않는다. 현재 제약이 승인 구조·범위·권한·성공 기준·기간/비용을 실질적으로 바꾸면 원인·기존/새 상태·직접/후속 영향·대안·결정을 기록하고 필요한 선택을 묶어 사용자에게 제시한다. 평상시 코드/실측 기록은 05에 누적하고 닫힌03/04를 매번 재개하지 않는다. 승인 기준 자체가 변경되면 관련 기준도 결정 후 함께 현행화한다.
+새 관측마다 01~04 기준과 대조해 이미 정합한 구현, 승인 기준에 맞출 구현 보완, 아직 착수하지 않은 항목, 실제 결과를 기다리는 항목으로 구분한다. 단순 미확인 입력 때문에 모든 작업을 중단하지 않는다. 현재 제약이 승인 구조·범위·권한·성공 기준·기간/비용을 실질적으로 바꾸면 원인·기존/새 상태·직접/후속 영향·대안·결정을 기록하고 필요한 선택과 판단 근거를 함께 검토한다. 평상시 코드/실측 기록은 05에 누적하고 닫힌03/04를 매번 재개하지 않는다. 승인 기준 자체가 변경되면 관련 기준도 결정 후 함께 현행화한다.
 
 ### 0.5 OCP 사전 검증과 ROSA 최종 검증
 
@@ -1259,7 +1259,7 @@ Provider Schema는 별도 임시 디렉터리에 전체 `*.tf`와 같은 Lock을
 
 기존 후보 Branch의 push와 pull_request가 동시에 실행돼 이전 Commit의 중복 push Run이 취소된 이력을 보존한다. 이번 Workflow Blob `e7165cc2306a09255cdd691f25f83fca8b175ae7`은 트리거·concurrency만 바꾸고 jobs 본문은 바이트 그대로 유지했다. 후보 Branch push는 제거하고 main push와 main/Stack pull_request 검사를 유지하며 `ready_for_review`·`edited` 이벤트를 추가했다. concurrency는 이벤트·PR/ref·SHA로 구분해 push와 PR 검사를 서로 취소시키지 않는다. #9의 선언 17개·#11의 선언 26개 Blob은 모두 유지됐고 #11은 이전 `44d5ec0f6652110d8b5cece852dcc1f250918b04`과 새 #9를 부모로 통합했다. base는 #9 Branch이고 Cloud 추가분 13파일 diff는 유지된다.
 
-읽기로 확인한 main Ruleset `24282770`의 승인 1명·오래된 승인 해제·squash only·bypass never를 변경하지 않았다. 해당 읽기 결과에는 필수 status 검사 규칙이 없었지만 실제 사람 리뷰·Draft 직접 조건을 CI 성공으로 생략하지 않는다. 사용자에게 관측된 cancelled 중복 Run은 삭제하거나 PASS로 바꾸지 않으며 이전 Source 검사 결과와 함께 당시 이력으로 남긴다.
+읽기로 확인한 main Ruleset `24282770`의 승인 1명·오래된 승인 해제·squash only·bypass never를 변경하지 않았다. 해당 읽기 결과에는 필수 status 검사 규칙이 없었지만 실제 사람 리뷰·Draft 직접 조건을 CI 성공으로 생략하지 않는다. 관측된 cancelled 중복 Run은 삭제하거나 PASS로 바꾸지 않으며 이전 Source 검사 결과와 함께 당시 이력으로 남긴다.
 
 **2026-10-04 최초 Source CI 이력 — 트리거 중복 취소 정리 전:**
 
@@ -1273,7 +1273,7 @@ Provider Schema는 별도 임시 디렉터리에 전체 `*.tf`와 같은 Lock을
 
 #9의 직접 미충족 조건은 D 새 Image/Build·Scan·Digest, C/D 실제 DB·새 Redis·TLS/CA/Secret·접속/lab·Recovery 입력과 D의 [h-gitops Issue #5](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5)·[h-gitops Issue #6](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6) 같은 조합 검증·수신/승인이다. Source CI 성공만으로 Ready·Merge·업무/DR PASS를 판정하지 않는다. #11은 #9 위의 별도 Draft Stack으로 유지하고 #9 병합 후 main으로 retarget할 때 Cloud diff 보존을 다시 확인한다. Cloud 전체·최종 Offline T18 완료를 #9의 추가 Draft 조건으로 붙이지 않는다.
 
-이번 GitHub 실행은 Source CI 증거이며 새 Runtime T01~T23 Run/Run Index·Shared Execution 행·TH 전체 완료를 만들지 않았다. 이번 DR 피드백은 [03 §3-I.14](../design/03_DETAILED_DESIGN.md#recovery-design-review-20261003)의 최소 예행으로 이어간다. C의 백업 Data 시각/로컬 확보 지연·Dump·격리 Import 부분 측정은 각 단계의 직접 입력으로 시작하며 새 Image나 전체 ROSA 생성을 선행조건으로 요구하지 않는다. App을 포함한 전체 RTO는 D 새 Image·새 Recovery Redis·지정 클라이언트 접속 경로 준비 후 실제 업무 재개까지 측정한다. 기존 00–04 정합 보완 완료와 RTO 30분·영속 DB RPO 90분·운영 중 1시간 백업·Backup/Restore 구조는 유지하며 새 목표/주기/구조의 최종 선택은 실제 시간·손실·접속·작업량/비용 근거 대기다. 복구 목표 재검토·선택까지 최종 완료되면 유지/강화/구조 조정의 선택과 근거, 채택 내용의 관련 설계·코드·SVG/PNG 정합 반영 및 검증 결과를 확인해 사용자에게 완료 여부와 변경/유지 위치를 알린다. 현재는 그 최종 완료 전이다.
+이번 GitHub 실행은 Source CI 증거이며 새 Runtime T01~T23 Run/Run Index·Shared Execution 행·TH 전체 완료를 만들지 않았다. 이번 DR 피드백은 [03 §3-I.14](../design/03_DETAILED_DESIGN.md#recovery-design-review-20261003)의 최소 예행으로 이어간다. C의 백업 Data 시각/로컬 확보 지연·Dump·격리 Import 부분 측정은 각 단계의 직접 입력으로 시작하며 새 Image나 전체 ROSA 생성을 선행조건으로 요구하지 않는다. App을 포함한 전체 RTO는 D 새 Image·새 Recovery Redis·지정 클라이언트 접속 경로 준비 후 실제 업무 재개까지 측정한다. 기존 00–04 정합 보완 완료와 RTO 30분·영속 DB RPO 90분·운영 중 1시간 백업·Backup/Restore 구조는 유지하며 새 목표/주기/구조의 최종 선택은 실제 시간·손실·접속·작업량/비용 근거 대기다. 복구 목표 재검토·선택까지 최종 완료되면 유지/강화/구조 조정의 선택과 근거, 채택 내용의 관련 설계·코드·SVG/PNG 정합 반영 및 검증 결과를 확인해 최종 판정과 변경/유지 위치를 작업 기록과 팀 인계에 반영한다. 현재는 그 최종 완료 전이다.
 
 <a id="recovery-source-role-followup-20261004"></a>
 ### 9.19 Recovery Source 직접 후속과 역할·Draft 조건 정정 — 2026-10-04
@@ -1292,7 +1292,7 @@ Provider Schema는 별도 임시 디렉터리에 전체 `*.tf`와 같은 Lock을
 | C의 격리 Import/Data 확인 | 보호 백업·격리 DB/공간·직접 TLS/계정과 A Host 기반 | B Source 준비·D 새 Image 인계와 병행. 실제 기존 Data를 보호하고 새 DB에서 검증 |
 | B Recovery 선언/사전 Render·D Image 준비 | B는 승인 설계/계약으로 입력 대기 Source를 준비. 실제 Render에는 C 비민감 Runtime 계약·D 병합 App Source Build/Scan·Digest/Platform·A 플랫폼/Host 입력 | C Dump/Import 측정 완료를 기다리며 미구현 Source 준비를 중단하지 않음. 입력 대기 Source는 배포 가능 Bundle이 아님 |
 | B/C/D 같은 조합의 App·새 Redis·DB 업무 재개 | 검토된 Source/Image/설정·Secret 개정·새 Redis·클라이언트 경로와 수신 | incident 시작부터 탐지/판단·복원·기동·접속/대표 업무/Data 확인까지 실제 시간·손실을 측정 |
-| 원래 DR 목표/주기/구조 선택 | 위 근거와 사용자 영향·편의·기간·작업량/비용을 비교 | 유지/강화/구조 조정 판단 후 채택한 관련 설계·코드·SVG/PNG의 정합 반영/검증을 확인해 사용자에게 완료와 변경/유지 위치 보고 |
+| 원래 DR 목표/주기/구조 선택 | 위 근거와 사용자 영향·편의·기간·작업량/비용을 비교 | 유지/강화/구조 조정 판단 후 채택한 관련 설계·코드·SVG/PNG의 정합 반영/검증을 확인해 최종 판정과 변경/유지 위치 기록·인계 |
 
 **C의 Dump·격리 Import 실측과 최종 DR 목표 선택은 h-gitops PR #9에 추가하는 Draft 해제 조건이 아니다.** #9의 직접 조건은 B의 필요한 선언/계약 준비·Source 사람 리뷰와 D 새 Image·C/D 실제 lab/Recovery 입력을 같은 조합으로 검증·수신하는 것이다. C Data 입력이 필요한 실제 통합과 C 부분 측정의 독립 시작을 구분한다. #11은 #9 위의 별도 Stack으로 유지하고 #9 병합 뒤 main retarget 때 Cloud diff를 다시 확인한다. 전체 ROSA·최종 T18·Warm Standby 도입을 #9 또는 최소 예행의 선행조건으로 붙이지 않는다.
 

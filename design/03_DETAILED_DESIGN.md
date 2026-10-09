@@ -187,7 +187,7 @@ Bootstrap 실행 코드가 동일 Manifest를 별도로 복사하여 계속 관�
 
 ### 3-A.11. Source 계보 및 검증 상태
 
-`00_PROJECT_STARTING_POINT.md`는 역사적 출발점으로 보존한다. `01_PROJECT_CHARTER.md`와 `02_TARGET_ARCHITECTURE.md`는 현재 승인된 상위 프로젝트/Architecture 기준이다. 상위 문서 작성 당시 미확정이었던 Repository topology는 이후 사용자에게 승인받은 이 문서의 3-A 작업 전제를 따른다. 지침 개정본에도 이 상태를 반영했다. 전체03의 최종 컨펌과 프로젝트 소스 등록 완료는 2026-10-01 전달 확인에 따라 반영했다(§3-I.12.4). GitOps 내부 구조는 B04 작업 전제로 승인되었으며, Release Metadata의 실제 저장 형식·대용량 Evidence 위치는 구현 입력으로 확인한다.
+`00_PROJECT_STARTING_POINT.md`는 역사적 출발점으로 보존한다. `01_PROJECT_CHARTER.md`와 `02_TARGET_ARCHITECTURE.md`는 현재 승인된 상위 프로젝트/Architecture 기준이다. 상위 문서 작성 당시 미확정이었던 Repository topology는 이후 승인된 이 문서의 3-A 작업 전제를 따른다. 지침 개정본에도 이 상태를 반영했다. 전체03의 최종 컨펌과 프로젝트 소스 등록 완료는 2026-10-01 전달 확인에 따라 반영했다(§3-I.12.4). GitOps 내부 구조는 B04 작업 전제로 승인되었으며, Release Metadata의 실제 저장 형식·대용량 Evidence 위치는 구현 입력으로 확인한다.
 
 관련 근거는 3-A 비교 제안 및 2026-10-01 KST의 명시적 승인다. 3-A 설계 작성 당시에는 GitHub 저장소 상태를 조회하거나 생성하지 않았다. 이후 이번 구현 준비에서 수행한 읽기 전용 Repo/Issue/지정 Commit 조회는 §3-I.13에 따로 기록한다. Runtime을 직접 조회하거나 Repo를 변경한 것은 아니다.
 
@@ -2248,7 +2248,7 @@ IF-01~18은 3-G의 시험 입력이며 현재 모두 미실행이다. 3-H는 실
 | 2 | State 사이의 입력은 담당자가 필요한 비밀값 아닌 Output만 추출한 제한된 입력 파일로 전달 | ROSA 실행자가 foundation State 전체를 읽는 기본 구조를 피함. Account/Region·생성 조합·입력 개정·실제 자원 존재를 확인해 오래된 값을 차단 |
 | 3 | GitOps 최초 설치는 Infra의 작은 Ansible 진입점으로 수행하고, Root Application 초기 등록 이후 내부 배포 선언은 GitOps로 관리 | TF의 Kubernetes Resource 중복 관리와 Bootstrap의 상시 App 적용을 피함. 프로젝트 Secret은 기존 별도 공급, App Sync는 공급·연결 확인까지 보류 |
 
-이 세 가지는 사용자에게 승인받은 프로젝트 선택이며 공식 제품 문서가 전체 구조를 강제한 것이 아니다. Bootstrap 최초 실행 방법·파일 배치·Output 전달·GitOps 설치 수단을 고르되 정확한 버전·Provider Resource·IAM 정책·기능별 Manifest는 §3-F.13~19의 후속 통합안과 실제 지원 조합으로 연결한다.
+이 세 가지는 승인된 프로젝트 선택이며 공식 제품 문서가 전체 구조를 강제한 것이 아니다. Bootstrap 최초 실행 방법·파일 배치·Output 전달·GitOps 설치 수단을 고르되 정확한 버전·Provider Resource·IAM 정책·기능별 Manifest는 §3-F.13~19의 후속 통합안과 실제 지원 조합으로 연결한다.
 
 ### 3-F.3. 저장소와 디렉터리 대응
 
