@@ -1,0 +1,39 @@
+name: B offline preflight source checks
+on:
+  pull_request:
+    branches: [main]
+    paths: ['tools/b_preflight/**', 'execution/B_*20261009.md', 'execution/TJUNG03_EXECUTION_BOARD.md', '.github/workflows/b-offline-preflight.yml']
+  push:
+    branches: [main]
+    paths: ['tools/b_preflight/**', 'execution/B_*20261009.md', 'execution/TJUNG03_EXECUTION_BOARD.md', '.github/workflows/b-offline-preflight.yml']
+permissions:
+  contents: read
+concurrency:
+  group: b-preflight-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  validate:
+    if: ${{ github.event.repository.private == false }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      AWS_EC2_METADATA_DISABLED: 'true'
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Prepare isolated test dependency
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m venv "${RUNNER_TEMP}/b-preflight-venv"
+          "${RUNNER_TEMP}/b-preflight-venv/bin/python" -m pip install --disable-pip-version-check --no-cache-dir --only-binary=:all: PyYAML==6.0.2
+      - name: Offline contract and negative cases
+        shell: bash
+        run: |
+          set -euo pipefail
+          "${RUNNER_TEMP}/b-preflight-venv/bin/python" -m unittest discover -s tools/b_preflight -p 'test_*.py' -v
+          test -z "$(git status --porcelain)"

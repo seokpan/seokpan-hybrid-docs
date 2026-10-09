@@ -414,3 +414,5 @@ Issue에는 원본 수치·로그를 복사하지 않고 다음만 관리한다.
 
 최종 Outline, Demo Scenario, Q&A 문서는 Actual이 충분히 확보된 뒤 `presentation/` 아래에 별도로 추가한다.
 
+
+[2026-10-09 B 기여·근거 후보](B_CONTRIBUTION_EVIDENCE_20261009.md): 직접 작성·리뷰·현장 실행과 타 담당 공급을 구분한 현재 후보. 최종 Runtime 성과나 발표 완성본이 아니다.
