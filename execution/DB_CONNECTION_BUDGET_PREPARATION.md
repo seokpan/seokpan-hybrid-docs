@@ -24,6 +24,15 @@
 App 리뷰로 입력 계약이 바뀌면 설명과 시험을 재대조한 뒤 Docs를 병합한다.
 App 후보가 미병합 상태라면 그대로 명시하고 검사기만 독립적으로 병합할 수 있다.
 
+### 최신 Docs main 결합 확인 — 2026-10-11
+
+Docs #101 병합 main `f7ac674f5192d2951b27e37a81f27011a9cc6913`을 이 PR에
+결합했다. 충돌 없이 기존 연결 예산 4파일 범위를 유지하며, OCP 비교 시험을
+포함한 로컬 전체 37개가 통과했다. Windows checkout의 기존 fixture는 변경 없는
+Git blob 바이트로 맞춰 확인했으며 내용/기대 해시를 수정하지 않았다.
+이번 PR은 App #43의 최종 리뷰·병합 Commit과 검증 결과를 반영한 뒤 마무리한다.
+이후 main 또는 App 입력 계약이 바뀌면 영향받는 설명과 결합 시험을 다시 확인한다.
+
 값을 채우지 않은 [입력 예시](../tools/b_preflight/db-connection-budget-input.example.json)를
 개인 보호 경로에 복사한 뒤 수신한 상한·예약·Process·Pod·Engine별 값을 연결한다.
 Linux에서는 입력을 본인 소유의 일반 파일600으로 공급한다. Windows ACL 검증은
