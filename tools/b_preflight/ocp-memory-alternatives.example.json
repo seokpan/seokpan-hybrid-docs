@@ -1,0 +1,30 @@
+{
+  "basis": "Historical D 2026-10-10 01:05 KST worker1 / 00:14 KST worker2; rounded headroom, not one synchronized current snapshot. Reserve256 comparison only while Pruner is absent from requests. Hypotheses, no adopted change.",
+  "nodes": {
+    "worker-1": {"headroom_mib": "14.5", "reserve_mib": null},
+    "worker-2": {"headroom_mib": "272.5", "reserve_mib": 256}
+  },
+  "alternatives": [
+    {"name": "unchanged", "released_requests_mib": {"worker-1": 0, "worker-2": 0}, "steps": [
+      {"name": "single-pull-worker1", "additional_requests_mib": {"worker-1": 32, "worker-2": 0}},
+      {"name": "be-surge-worker1-after-fe-old-gone", "additional_requests_mib": {"worker-1": 128, "worker-2": 0}},
+      {"name": "gitops-change-new64Mi-pod-worker1-before-release", "additional_requests_mib": {"worker-1": 64, "worker-2": 0}},
+      {"name": "gitops-change-new64Mi-pod-worker2-before-release", "additional_requests_mib": {"worker-1": 0, "worker-2": 64}}
+    ]},
+    {"name": "pause-fe-hypothesis", "released_requests_mib": {"worker-1": 32, "worker-2": 0}, "steps": [
+      {"name": "single-pull-while-fe-down", "additional_requests_mib": {"worker-1": 32, "worker-2": 0}},
+      {"name": "fe-restored-on-worker2-before-pruner", "additional_requests_mib": {"worker-1": 0, "worker-2": 32}}
+    ]},
+    {"name": "release-one-64Mi-hypothesis", "released_requests_mib": {"worker-1": 64, "worker-2": 0}, "steps": [
+      {"name": "single-pull-worker1", "additional_requests_mib": {"worker-1": 32, "worker-2": 0}},
+      {"name": "be-surge-worker1-after-fe-old-gone", "additional_requests_mib": {"worker-1": 128, "worker-2": 0}}
+    ]},
+    {"name": "release-two-64Mi-hypothesis", "released_requests_mib": {"worker-1": 128, "worker-2": 0}, "steps": [
+      {"name": "single-pull-worker1", "additional_requests_mib": {"worker-1": 32, "worker-2": 0}},
+      {"name": "be-surge-worker1-after-fe-old-gone", "additional_requests_mib": {"worker-1": 128, "worker-2": 0}}
+    ]},
+    {"name": "move-128Mi-to-worker2-hypothesis", "released_requests_mib": {"worker-1": 128, "worker-2": -128}, "steps": [
+      {"name": "single-pull-worker1-before-pruner", "additional_requests_mib": {"worker-1": 32, "worker-2": 0}}
+    ]}
+  ]
+}
