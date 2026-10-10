@@ -10,7 +10,8 @@
 ### App 후보와 병합 기록
 
 현재 후보는 App main `b8cab6caa348f2e89a7ad08594becf203ddbf67d`를 기준으로 한
-`feat/runtime-pool-inputs-20261011`의 로컬 변경이며 아직 게시·병합하지 않았다.
+[App PR #43](https://github.com/seokpan/seokpan-hybrid-app/pull/43)이다.
+게시 HEAD는 `8c06e7868d0854337bc01bfffd53b6df751e0051`이며 Source 리뷰·병합 대기다.
 `SEOKPAN_DATABASE_POOL_SIZE`·`SEOKPAN_DATABASE_MAX_OVERFLOW`·
 `SEOKPAN_DATABASE_POOL_TIMEOUT_SECONDS`를 모두 공급하면 Identity/Game 각각에
 같은 Pool 값을 적용하고, 모두 미지정이면 기존 생성 옵션을 유지한다.
