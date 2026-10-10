@@ -136,7 +136,7 @@ TH17은 App4의 App/Pool, GitOps10의 선언/관측, Infra25의 ROSA/SG/재생�
 | 병행 A | OCP 결과와 Cloud/Recovery 차이·Secret/관리/Bundle·다중 Pod/업무 Case 준비 | Owner/보호 공급/환경 차이·수락/재시험 범위 | 실제 적용만 해당 입력 대기. OCP/ROSA 전체 종료 대기 없음 | GitOps10·App4, TH09/11/15 |
 | 병행 B | ROSA 로컬 안내로 본인 clone/Lock·도구·Caller/Backend·서비스 권한/지원·A/C 출력 대응 확인 | Infra25↔A Infra23/20·C Infra19·D Infra18의 실제 입력/준비 수락표 | 안내 문서 검토와 실제 Plan은 별도. 실제 보호 출력/목적 권한·지원/예비 비용 수락 후 첫 Plan | Infra25, TH10~12 |
 
-전체 Cloud Root/NP/UWM/완성 Recovery Bundle를 모두 끝내야 첫 OCP Sync를 할 수 있다는 일괄 조건은 만들지 않는다. 기존 OCP의 승인 Project/Application을 쓸 수 있으면 그 시험의 직접 Source·Owner·권한·입력을 확인해 최소 조합부터 검증한다. 공통/Cloud 전체 선언의 남은 범위는 병행해 완료한다. 공유 환경 소유/권한 가능 여부는 실제 Owner 확인이 필요하다.
+전체 Cloud Root/NP/UWM/완성 Recovery Bundle를 모두 끝내야 첫 OCP Sync를 할 수 있다는 일괄 조건은 만들지 않는다. 기존 OCP의 승인 Project/Application을 쓸 수 있으면 그 시험의 직접 Source·실행 담당·권한·입력을 확인해 최소 조합부터 검증한다. 공통/Cloud 전체 선언의 남은 범위는 병행해 완료한다. 현재 OCP 운영·변경은 우리 팀에서 관리한다. B/D가 변경·복구안, 서비스 영향·전환 자원과 실행 시각을 정하며 외부 팀의 별도 변경 승인을 선행조건으로 두지 않는다. [현재 사용처·자원 확보 비교](OCP_CAPACITY_ALTERNATIVES_20261011.md)를 적용하고 변경/시험 직전 현재 상태를 재측정한다.
 
 ## 3 B를 막는 입력은 실행별로 다르다
 
