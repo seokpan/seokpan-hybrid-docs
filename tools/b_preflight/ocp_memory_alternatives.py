@@ -101,7 +101,7 @@ def analyze(data):
                            "CPU/pod slots/placement/taints/affinity and admitted requests",
                            "actual memory/peaks/pressure and operator reconciliation",
                            "change rollout surge/terminating Pods and other concurrent jobs",
-                           "consumers, authorized shared-cluster maintainer and operation window"]}
+                           "consumers, service impact/restoration and execution window"]}
 
 
 def serial(value):

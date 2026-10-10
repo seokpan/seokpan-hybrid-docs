@@ -1,7 +1,7 @@
 # 승인 요구사항부터 다시 대조한 B 준비 범위 — 2026-10-11
 
 - [x] Charter Must/성공축, 03 T·IF·IM·Network 조건, 04 역할, 05 측정·증거 규칙에서 출발해 네 저장소를 대조
-- [x] OCP의 기존 bastion 조사와 공유 환경 담당 근거를 재사용하고 자원 확보 후보를 계산
+- [x] OCP의 기존 bastion 조사·관리 객체 연결을 재사용하고 자원 확보 후보를 계산
 - [x] 입력 없이 가능한 자원 비교·시험별 측정/증거 준비를 보완
 - [ ] 실제 Cloud/OCP/Recovery 시험, 권한/창·자원 변경, 최종 비용·시연/종료
 
@@ -54,7 +54,7 @@ Charter Must의 서비스/Data/State 배치는 T01·T05·T18·T19, CI/CD 경계�
 | T20 Window 종료·잔존 자원·Cost | [cost](https://github.com/seokpan/seokpan-hybrid-docs/blob/a380b0f727b934548cefd34fe85bea2508d6226b/execution/05_IMPLEMENTATION_AND_VALIDATION.md) | A/B/C/D | 삭제 대상/잔존 NAT·IPv4·EBS·DB·Backup·과금/재시작 확인 |
 | T21 CI Build/Test/Scan·Push vs Runtime Pull·Release 보존 | [release](https://github.com/seokpan/seokpan-hybrid-app/blob/b8cab6caa348f2e89a7ad08594becf203ddbf67d/scripts/test_release_candidate.py) | D/A→B | 실제 Build/Scan/Push·새 Worker/12시간 후/재생성 후 Pull |
 | T22 1차/2차 운영책임·Platform 비교 | [presentation](https://github.com/seokpan/seokpan-hybrid-docs/blob/a380b0f727b934548cefd34fe85bea2508d6226b/presentation/PRESENTATION_BASELINE.md) | B/D | 같은 기능의 실측·관리 책임·서로 다른 조건/미측정 구분 |
-| T23 재현 문서·시연·Evidence 완결 | [evidence](https://github.com/seokpan/seokpan-hybrid-docs/blob/a380b0f727b934548cefd34fe85bea2508d6226b/evidence/README.md) | 全員→B/D | 같은 Release/개정의 원본·실패·영상·Hash·비밀정보 제외 |
+| T23 재현 문서·시연·Evidence 완결 | [evidence](https://github.com/seokpan/seokpan-hybrid-docs/blob/a380b0f727b934548cefd34fe85bea2508d6226b/evidence/README.md) | A/B/C/D→B/D | 같은 Release/개정의 원본·실패·영상·Hash·비밀정보 제외 |
 
 ## 세부 조건을 생략하지 않는 대응
 
@@ -131,7 +131,7 @@ IF·IM·NET은 위 T 행의 세부 조건이다. 위 T의 일부 성공을 아�
 
 - [ ] App43 리뷰·병합 → Docs100 최종 App Commit 반영 → 새 Image/실제 Pool·Cloud 검증
 - [ ] GitOps38 리뷰·병합; GitOps37의 Source 승인과 Draft 해제/교체 조건을 구분
-- [ ] OCP 공유 환경 관리 담당/실제 소비자·변경 범위/창 → 안전한 자원 확보 → 재측정 → worker-1 FE/BE Pull → FE/BE 순차 교체/업무·보호 시험
+- [ ] OCP 우리 팀 관리 범위에서 B/D 변경·복구안과 실행 시각 정리 → 변경 직전 재측정 → 안전한 자원 확보/복구 확인 → worker-1 FE/BE Pull → FE/BE 순차 교체/업무·보호 시험
 - [ ] A의 실행 입력·B 서비스 권한·지원/기반 인계 → B 목적 인증/Backend·전체 ROSA Plan/수량/삭제/비용 검토 → 검토된 단계별 생성
 - [ ] C SG/실제 RDS 연결 상한·예약 → B/C Process·롤링·Pool 예산 → Cloud App 검증
 - [ ] C와 이관일/1차 관리·접근 경로 → 1차 서비스의 DB 변경 요청 차단 확인 → 최종 덤프/이관/비교 → Migration current·App 검증
