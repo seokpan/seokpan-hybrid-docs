@@ -29,7 +29,7 @@ B가 추가 준비한 Application·ArgoCD·Service 대상·NetworkPolicy 목록 
 - 기본 `ArgoCD/openshift-gitops`의 ownerReferences도 `GitopsService/cluster`다. controller 요청1Gi, Dex SSO, Server Route 활성화가 확인됐다. 이 ArgoCD와 연결된 application-controller/dex를 미사용으로 보고 중단하거나 `GitopsService/cluster`를 통째로 삭제하는 안은 제외한다. sourceNamespaces:null은 받은 필드 값이며 클러스터 접근 범위/다른 소비자 부재 판정으로 확대하지 않는다.
 - `cluster`와 `gitops-plugin` Service에는 각각 Ready Pod1개, NotReady0이 있다. Ready Endpoint는 실제 접속/트래픽의 증거가 아니다. GitOps 구성요소용 NetworkPolicy7개 이름을 받았으나 정책 규칙/로그인 허용·거부를 검사한 것은 아니다.
 
-남은 확인은 우리 서비스의 구성요소 사용처·중단 영향·복구 범위, Peak와 변경 과정의 자원 여유, B/D 실행 시각과 동시 작업이다. 이미 받은 이 목록이나 앞선 Pod/requests 읽기를 자동 반복하지 않는다. 현재 여유의 재측정은 실제 변경/시험 직전에 수행한다.
+남은 확인은 우리 서비스의 구성요소 사용처·중단 영향·복구 범위, Peak와 변경 과정의 자원 여유, B/D 실행 시각과 동시 작업이다. 이미 받은 사용처 목록은 재사용한다. B가 기존 bastion 인증서 Context로 보존 메트릭·설치 플랫폼·현재 상위 설정 등 미확인 항목을 직접 조회한다. 실제 변경/시험 직전에는 현재 여유를 별도로 재측정한다.
 
 ## 과거 requests를 이용한 후보 비교
 
@@ -59,11 +59,50 @@ python3 -m unittest discover -s tools/b_preflight -p 'test_ocp_memory_alternativ
 
 `MEMORY_DEFICIT`는 입력 기준 메모리 부족, `RESERVE_UNCONFIRMED`는 안전 여유 미확인, `MEMORY_ONLY_PENDING_REVIEW`는 입력한 메모리/예약 산술 이내다. 세 판정 모두 `runtime_approval=false`다. 입력은 필터된 공개 수량·논리 참조만 사용하며 Credential/원문 응답을 넣지 않는다. 이 도구는 실제 Pod 유효 requests 집계기·스케줄러·트래픽/승인 검사기가 아니다.
 
-## D 인계와 실행 준비
+## 변경·원복·시험 순서
 
-[D 미완료 인계 통합 요청](D_PENDING_HANDOFF_20261011.md)을 현재 전달문으로 사용한다.
-OCP·기존 증거·Source 리뷰·CI/Release·계측·비용·Recovery 자산을 한 목록으로 확인한다.
-완료 결과를 반복 요청하지 않으며 [변경·복구 실행 준비](OCP_CAPACITY_EXECUTION_PREPARATION_20261011.md)의
-전환/원복 자원·VM 재시작·시험 순서를 적용한다.
+현재 requests 여유 H, 변경 완료 후 확인된 회수량/allocatable 증가 Δ, 별도 동시
+작업 요청 J, 안전 여유 R, 해당 단계의 새 Pod 유효 요청 A에 대해 노드별
+`H + Δ - J - A - R >= 0`을 대조한다. R 미확인은0이 아니며 실행 중 Pruner를
+J에 중복 산입하지 않는다. CPU·슬롯·배치·실사용/Pressure·Admission도 별도 확인한다.
+과거 worker-1의 Pull32Mi/BE surge128Mi 추가 하한은 각각17.5Mi/113.5Mi+J+R다.
+순차 단계의32+128을 동시에 더하지 않으며 전환 중 아직 회수되지 않은 Δ는0이다.
 
-실제 서비스 영향·Peak·전환 자원 때문에 감축이 적절하지 않으면 용량 확보 쪽으로 전환한다. B가 조사·계산·변경/복구안 검토를 진행하고 D가 현장 실행과 관측을 연결하므로 자원 확보 전체를 외부 승인 대기로 표시하지 않는다. 요청한 실행안이 나온 뒤 해당 변경에 필요한 현재 상태만 재측정한다.
+| 단계 | B가 직접 확인·판단할 내용 | 협의 또는 실제 환경 입력 | 다음 조건 |
+|---|---|---|---|
+| 조사·비교 | 상위 CR/Deployment·기존 메트릭·사용처와 감축/용량 후보 | 관측에 없는 사용 이력, 실제 호스트/노드 관리 경로 | 관측 범위와 미확인 구분 |
+| 변경안 고정 | 전후 값·전환/원복 자원·원래 필드 부재 | Operator가 지원하는 변경 방법·서비스 영향 | 한 후보의 전환/원복 가능 |
+| 실행 시각 | 필요한 시간·순서·중단/복구 범위 | B/D 실제 수행자·시작/종료·Pruner/배포/Backup 충돌 | 같은 대상 중복 변경 없음 |
+| 직전 재측정 | 양 Worker admitted requests·CPU/슬롯·Pressure·Pending/종료·배치 | 기존 접근 경로의 현재 조회 결과 | 과거값을 현재값으로 승계하지 않음 |
+| 변경·확인 | 실제 반환/증가량·Ready/Restart/OOM·App/Argo 기능 | 합의한 수행자의 변경 결과 | 확보량·기능·상태 모두 확인 |
+| worker-1 Pull | 기존 SA·server dry-run·전체 Pod priority·Index/child 대조 | FE 회수 후 BE, 동시 시험 Pod 최대1 | 생성 전 재확인·Succeeded/exit0/imageID·정리 |
+| 교체·업무 | Release/Config/DB·SHA/targetRevision·Gate/live Diff·복귀/보호 Case | 실행 경로·DB current/Secret/CA·실제 업무 결과 | #37 조건 확인, 병합 SHA 소비·Sync 별도 수락 |
+
+변경/원복은 상위 GitopsService의 해당 필드만 검토한다. 원래 필드가 없으면
+임의128Mi를 넣는 대신 원래 필드 부재/설정을 복원하고 실제 결과를 대조한다.
+하위 Deployment 변경의 지속성이나 대체 전환 전략은 Operator 동작 확인 전
+확정하지 않는다. 원복에서도 새 Pod와 종료 중 Pod의 자원을 따로 계산한다.
+
+## 용량 조정 경로와 중단·복구
+
+본인 Windows PC에서 원격 접속하는 OCP이며 본인 PC의 VMware 환경은 아니다.
+설치 플랫폼·실제 노드/호스트 관리 경로부터 확인한다. VM 기반인지, Hot-add가
+가능한지 또는 재시작이 필요한지 조회 전에는 채택하지 않는다. 용량 조정 시
+호스트/플랫폼 가용 RAM·CPU, 실제 적용 방법과 게스트 인식 여부를 확인한다.
+재시작이 필요하면 Pod 이동·PDB·로컬 데이터와 반대편 Worker 수용 여유를
+먼저 대조한다. worker-2가 worker-1 Pod를 수용한다고 가정하거나 force drain·
+PDB 우회·강제 종료로 진행하지 않는다. 실제 allocatable·Ready·기능 확인 뒤
+Δ를 반영하며 RAM 증가분을 그대로 Δ로 쓰지 않는다.
+
+입력/상태가 계획과 다르거나 전체 조회가 불완전하면 시작하지 않는다.
+Pending/InsufficientMemory·Pressure·OOM·예상 밖 Operator 조정·서비스 장애가
+나타나면 다음 생성/교체를 중단하고 증거를 보존한다. 자동 우회/다른 후보로
+전환하지 않는다. 원복 자원이 부족하면 확보/배치 순서를 먼저 판단한다.
+종료 시 CR/Pod·App/Argo·Replica/Digest·시험 Pod 정리를 확인한다. 용량 원복도
+즉시 RAM 축소를 가정하지 않고 실제 사용량·Pod·재시작 영향을 먼저 확인한다.
+
+worker-2 성공과 원본 증거는 유지한다. 당시 사용창·실행 직전/FE→BE 사이
+requests/Pressure 기록의 존재 여부는 실제 수행 기록으로 확인하며 현재
+측정으로 소급 채우지 않는다. 보완 재시험 여부는 증거 대조 후 판단한다.
+진행·미완료 입력·수신 결과는 기존 GitOps #32/#6과 실행판에서 이어 기록하며
+팀원에게 보낼 전달문을 별도 Docs 정본으로 복제하지 않는다.

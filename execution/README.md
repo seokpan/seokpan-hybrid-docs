@@ -8,8 +8,6 @@
 
 [승인 요구사항 기준 B 준비 대조](B_ACCEPTANCE_PREPARATION_AUDIT_20261011.md)에서 Charter 성공축·T/IF/IM/Network 세부 조건의 구현/부분 시험과 실제 실행 증거를 구분합니다. [OCP 사용처·자원 확보안 비교](OCP_CAPACITY_ALTERNATIVES_20261011.md)는 B의 선행 조사·계산과 공유 환경 변경 확인을 연결합니다.
 
-[OCP 변경·복구 실행 준비](OCP_CAPACITY_EXECUTION_PREPARATION_20261011.md)와 [D 미완료 인계 통합 요청](D_PENDING_HANDOFF_20261011.md)은 준비 순서와 현장 입력을 구분합니다. 이전 미완료 요청은 통합 목록으로 확인하고 완료 증거는 유지합니다.
-
 **정태훈의 지금 작업부터 확인:** [개인 실행판 — 지금할일·막힌입력·OCP/ROSA시작과종료·타임라인](TJUNG03_EXECUTION_BOARD.md). A전체를기다리지않고가능한준비를시작하며각실제실행의직접입력과팀인계를구분합니다.
 
 [저장소·담당별 전체 실행 순서와 현행화 점검](TEAM_EXECUTION_SEQUENCE.md)에서 현재 전체 진행, A/B/C/D의 병행 준비·실제 선행조건·W01~W10/T01~T23·최종 보존/삭제/종료를 확인합니다. PR32 병합 이후의 현행 순서를 연결하며 TH 개인 범위와 팀 전체 범위를 구분합니다.

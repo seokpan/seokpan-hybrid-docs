@@ -11,10 +11,10 @@
 - [x] C SG 대조/Pool 결정 시점/이관 순서 합의 수신; 새 Source·현장 실행 기여 근거 분리.
 - [x] App41 Jenkins 연결 Source 병합·Run5 내부 공급·worker-2 FE/BE 실행 성공 보고 수신. 당시 사용창/자원 재확인 누락과 worker-1·실제 교체는 미완료.
 - [x] Docs100에 Docs101 main을 결합해 로컬 전체37개 PASS, App43 최종 병합 기록은 대기.
-- [x] [OCP 변경/복구 실행 준비](OCP_CAPACITY_EXECUTION_PREPARATION_20261011.md)와 [D 인계 통합 요청](D_PENDING_HANDOFF_20261011.md)의 입력 없는 준비 완료.
+- [x] [기존 OCP 조사·비교](OCP_CAPACITY_ALTERNATIVES_20261011.md)에 전환·원복·용량 조정·시험 순서 통합. 실제 메트릭/플랫폼 조회는 B가 기존 접근 경로로 진행하며 실행 시각·운영 이력은 별도 협의.
 - [ ] App43·GitOps38 리뷰/병합과 GitOps37 Draft 조건, D 현장 자원/계측·실제 Jenkins/검증기·비용/보존, A Foundation/ROSA 권한·출력·Plan, C 실측/이관/Recovery, 최종 발표/정리.
 
-현재 판단과 순서는 [B 독립 보완·실제 인계](B_SOURCE_BATCH_AND_HANDOFF_20261009.md)를 따른다. [관리 인증 수락 절차](B_MANAGEMENT_AUTH_ACCEPTANCE_20261009.md)에서 Role/Secret·기존 Token·Bootstrap 정리 조건을 확인한다. Source 검사 결과와 실환경 완료를 구분하며 아래 과거 시점의 병합 대기/진단 명령은 당시 이력이다. App41은 PLAN 원격 clone 경계의 보완 요청 상태로, 과거 B 승인 문구를 현재 병합 권고로 쓰지 않는다.
+현재 판단과 순서는 [B 독립 보완·실제 인계](B_SOURCE_BATCH_AND_HANDOFF_20261009.md)를 따른다. [관리 인증 수락 절차](B_MANAGEMENT_AUTH_ACCEPTANCE_20261009.md)에서 Role/Secret·기존 Token·Bootstrap 정리 조건을 확인한다. Source 검사 결과와 실환경 완료를 구분하며 아래 과거 시점의 병합 대기/진단 명령은 당시 이력이다. App41의 PLAN 원격 clone 경계 보완·병합은 완료했고 실제 Controlled Run은 별도다.
 
 ## 현재 실행 기준 — 2026-10-07 원격 변경 대조·구현 인계
 
