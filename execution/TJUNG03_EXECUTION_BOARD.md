@@ -1,15 +1,18 @@
 # 정태훈 실행판 — 지금 할 일·입력 대기·OCP와 ROSA 수명
 
-## 전체 진행 현황 — 2026-10-09 KST
+## 전체 진행 현황 — 2026-10-11 KST
 
-- [x] Docs #97/#98 병합·브랜치 삭제 및 공개 기록 표현 보완 완료.
+- [x] Docs #97/#98/#99/#101 병합·브랜치 삭제, 공개 표현·승인 조건 대조·OCP 팀 운영 기준 반영 완료.
 - [x] EC2 JSON 전달 오류 해결·제한 읽기 성공. 해당 오류에 대한 IAM 확대/반복 진단 불필요.
 - [x] Controller 파일3건·SG/Plan10·OCP계산5 오프라인 시험 PASS 수신.
 - [x] A bootstrap 실제 Apply·동일 입력 재-Plan 변경 없음·정책/연결 확인 보고 수신.
 - [x] A Foundation Backend 초기화·지정 State/선택 자원 조회 보고 수신. 전체 Plan/Apply·ROSA 서비스 권한·실제 출력은 대기.
-- [x] Cloud 플랫폼/조회 권한·Recovery Bundle·관리 인증 수락 Source와 거부 사례 보완. GitOps #34 Linux82·#35 Linux84, Docs #99 도구20개 PASS; 신규 PR은 리뷰/병합 대기.
+- [x] Cloud 플랫폼/조회 권한·Recovery Bundle·관리 인증 수락 Source와 거부 사례 보완. GitOps #34/#35/#36와 Docs #99는 병합 완료. Source와 실제 Cloud/Recovery 검증은 구분.
 - [x] C SG 대조/Pool 결정 시점/이관 순서 합의 수신; 새 Source·현장 실행 기여 근거 분리.
-- [ ] 신규 B Source 리뷰/병합, D 실제 공급·OCP 시험, A Foundation/ROSA 권한·출력과 전체 Plan, C 실측/이관/Recovery, 최종 발표/정리.
+- [x] App41 Jenkins 연결 Source 병합·Run5 내부 공급·worker-2 FE/BE 실행 성공 보고 수신. 당시 사용창/자원 재확인 누락과 worker-1·실제 교체는 미완료.
+- [x] Docs100에 Docs101 main을 결합해 로컬 전체37개 PASS, App43 최종 병합 기록은 대기.
+- [x] [OCP 변경/복구 실행 준비](OCP_CAPACITY_EXECUTION_PREPARATION_20261011.md)와 [D 인계 통합 요청](D_PENDING_HANDOFF_20261011.md)의 입력 없는 준비 완료.
+- [ ] App43·GitOps38 리뷰/병합과 GitOps37 Draft 조건, D 현장 자원/계측·실제 Jenkins/검증기·비용/보존, A Foundation/ROSA 권한·출력·Plan, C 실측/이관/Recovery, 최종 발표/정리.
 
 현재 판단과 순서는 [B 독립 보완·실제 인계](B_SOURCE_BATCH_AND_HANDOFF_20261009.md)를 따른다. [관리 인증 수락 절차](B_MANAGEMENT_AUTH_ACCEPTANCE_20261009.md)에서 Role/Secret·기존 Token·Bootstrap 정리 조건을 확인한다. Source 검사 결과와 실환경 완료를 구분하며 아래 과거 시점의 병합 대기/진단 명령은 당시 이력이다. App41은 PLAN 원격 clone 경계의 보완 요청 상태로, 과거 B 승인 문구를 현재 병합 권고로 쓰지 않는다.
 

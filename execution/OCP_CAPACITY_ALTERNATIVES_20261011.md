@@ -59,34 +59,11 @@ python3 -m unittest discover -s tools/b_preflight -p 'test_ocp_memory_alternativ
 
 `MEMORY_DEFICIT`는 입력 기준 메모리 부족, `RESERVE_UNCONFIRMED`는 안전 여유 미확인, `MEMORY_ONLY_PENDING_REVIEW`는 입력한 메모리/예약 산술 이내다. 세 판정 모두 `runtime_approval=false`다. 입력은 필터된 공개 수량·논리 참조만 사용하며 Credential/원문 응답을 넣지 않는다. 이 도구는 실제 Pod 유효 requests 집계기·스케줄러·트래픽/승인 검사기가 아니다.
 
-## D에게 전달할 변경/복구안과 계측 준비 요청
+## D 인계와 실행 준비
 
-아래는 기존 인계에 추가할 전달용 문안이며 자동 발송 기록이 아니다. 완료된 Node/Pod 조사·Registry 공급·worker-2 Pull 성공은 유지한다.
-
-```text
-OCP 운영·변경은 우리 팀에서 관리하는 것으로 정리했습니다. B/D가 변경안과
-실행 시각을 정해 worker-1 자원 확보를 이어가겠습니다.
-
-1. cluster/gitops-plugin 자원 조정과 Worker 용량 확보를 비교해 실행안을
-   정리 부탁드립니다. 사용할 상위 CR/설정, 변경 전후 값, 설정 변경 중
-   새 Pod/종료 Pod의 자원, 우리 서비스 영향, 원복 값·순서·완료 확인,
-   Pruner를 포함한 동시 작업과 날짜·시작/종료 시각을 알려 주세요.
-   VM 증설 후보는 호스트 가용량과 실제 새 allocatable 확인까지 포함해 주세요.
-   사용 중인 기본 ArgoCD/controller/dex와 GitopsService 전체 중단·삭제는
-   확보안에서 제외합니다. 64Mi 감축과 FE 중단은 아직 채택하지 않았습니다.
-   순간 사용량만으로 감축하지 않고, 부하/Peak 근거와 전환 자원을 확인하겠습니다.
-
-2. 부하·관측 도구의 준비 상태도 함께 알려 주세요. 이미 있는 스크립트/PR의
-   개정과 비밀정보를 제외한 출력 예시로 Client HTTP 및 업무 WS p95,
-   초회 시도 수·실패/불명 결과·재시도, 동시 인원/Room·실행 시간,
-   장애 시작→의존성 복구→Client 업무 수렴을 기록할 수 있는지 확인하겠습니다.
-   서버 HTTP Histogram이나 WS Ping으로 업무 WS 지연을 대신하지 않습니다.
-   미구현 항목은 미구현으로 구분해 주시면 B가 필요한 연결 부분을 보완하겠습니다.
-
-실행안이 정리되면 B가 비교·복구 범위를 검토하고 B/D 실행 순서를 확정하겠습니다.
-그 후 변경 직전 양 Worker 재측정→자원 확보/복구 확인→worker-1 FE/BE Pull→
-FE/BE 순차 교체·업무/보호 시험으로 진행합니다. 기존 조사와 worker-2 성공
-시험을 이번 요청으로 반복할 필요는 없습니다.
-```
+[D 미완료 인계 통합 요청](D_PENDING_HANDOFF_20261011.md)을 현재 전달문으로 사용한다.
+OCP·기존 증거·Source 리뷰·CI/Release·계측·비용·Recovery 자산을 한 목록으로 확인한다.
+완료 결과를 반복 요청하지 않으며 [변경·복구 실행 준비](OCP_CAPACITY_EXECUTION_PREPARATION_20261011.md)의
+전환/원복 자원·VM 재시작·시험 순서를 적용한다.
 
 실제 서비스 영향·Peak·전환 자원 때문에 감축이 적절하지 않으면 용량 확보 쪽으로 전환한다. B가 조사·계산·변경/복구안 검토를 진행하고 D가 현장 실행과 관측을 연결하므로 자원 확보 전체를 외부 승인 대기로 표시하지 않는다. 요청한 실행안이 나온 뒤 해당 변경에 필요한 현재 상태만 재측정한다.
