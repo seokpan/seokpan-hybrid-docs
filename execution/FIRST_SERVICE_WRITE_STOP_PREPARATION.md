@@ -2,7 +2,7 @@
 
 상태: Source 검토와 준비 절차 작성. 실제 1차 Context/Caller·제어 Owner·사용창·상위 Argo 관리·HPA/다른 쓰기 주체 확인 대기. 이 문서는 중지·복귀·DB 변경을 실행한 근거가 아님.
 
-원본: [Infra17 B 분담 확인](https://github.com/seokpan/seokpan-hybrid-infra/issues/17#issuecomment-6053814538), [C 최신 답변](https://github.com/seokpan/seokpan-hybrid-infra/issues/17#issuecomment-6054742252), [Infra44 v1.5](https://github.com/seokpan/seokpan-hybrid-infra/issues/44). 1차 공식 종료 Baseline은 2026-09-23 유지. 이번 범위는 합의된 이관 쓰기 중지·복귀의 제한된 운영 준비.
+원본: [Infra17 B 분담 확인](https://github.com/seokpan/seokpan-hybrid-infra/issues/17#issuecomment-6053814538), [C 최신 답변](https://github.com/seokpan/seokpan-hybrid-infra/issues/17#issuecomment-6054742252), [Infra44 v2.0](https://github.com/seokpan/seokpan-hybrid-infra/issues/44). 1차 공식 종료 Baseline은 2026-09-23 유지. 이번 범위는 합의된 이관 쓰기 중지·복귀의 제한된 운영 준비.
 
 ## Source와 실제 상태
 
@@ -22,7 +22,7 @@
 | 단계 | 담당 | 다음에 넘길 결과 |
 |---|---|---|
 | 중지 준비·제어 경로·중지/복귀 조율 | B | 읽기 확인·원래 제한 설정·수락한 제어 경로·실행자/창·중지 판정 |
-| 복제·최종 Dump·RDS Import/비교 | C | v1.5의 도메인별 GTID/복제/테이블·Schema·Revision·Dump/Import 판정 |
+| 복제·최종 Dump·RDS Import/비교 | C | v2.0의 도메인별 GTID/복제/테이블·Schema·Revision·Dump/Import 판정 |
 | VPN/RDS 경로 | A | 목적 연결·실제 Endpoint/CA/네트워크 공급 |
 | 시간선·증거 | D | 구간별 시각·실행 조합·논리 참조·한계 |
 
@@ -54,16 +54,27 @@ kubectl --context "$SRC_CONTEXT" -n application get jobs,cronjobs
 
 두 경로를 동시에 실행하거나 수락하지 않은 우회 경로를 사용하지 않음. Application 삭제/finalizer 제거·Namespace 삭제·DB read_only/계정·GRANT·MaxScale·Storage 변경을 중지 수단으로 사용하지 않음. [Argo 자동 동기화 안내](https://argo-cd.readthedocs.io/en/stable/user-guide/auto_sync/)의 SelfHeal과 Parent 관리 조건 대조.
 
-## 3. 이관 당일 중지·C 인계
+## 3. 최종 전환의 시작 조건과 중지·C 인계
+
+Foundation Apply 완료 뒤에는 C의 중지 전 준비만 진행한다. ROSA 클러스터 Ready, 검토한 App Source/Image·배포 입력·CA/네트워크와 C 준비 판정이 갖춰져야 B가 최종 쓰기 중지를 시작한다. Import 전 Backend의 업무 Ready를 선행조건으로 요구하지 않는다. 실제 DB 연결과 App 업무 검증은 Import·C 계정 준비 뒤 단계9에서 수행한다.
+
+이번 채택안은 최종 전환을 한 번 수행하는 순서다. 원본을 재개한 복사 예행의 덤프를 이후 최종 전환 자료로 승계하지 않는다.
 
 1. B/C/A/D: 작업 시간·연락·중단·실제 수행자·복귀 기준 확인, D 시간선 시작.
 2. B: 승인한 유입 제어로 신규 쓰기/새 연결 차단, 기존 요청·WS 연결의 종료/유예 처리. 유입 차단만으로 기존 연결의 쓰기 중단을 판정하지 않음.
 3. B: 재기동 제어가 수락 경로대로 유지되는지 확인, Backend 중지.
 4. B: desired/actual Replica0, Backend Pod 종료·Service Endpoint 제거 및 HPA/Job/Parent가 재기동하지 않음을 반복 읽기 확인. 남은 쓰기 주체가 있으면 C 최종 Dump 시작 불가.
-5. C: Primary 마지막 쓰기의 Replica 반영·도메인별 GTID/복제 상태·Data 비교를 v1.5대로 판정. DB는 읽기 확인만 하며 값이 달라지면 Dump/이관 중단.
-6. C: 최종 Dump 직전~RDS Import/비교 완료 구간 동안 B가 중지 유지. 실제 이벤트 시각·논리 Dump 참조·실행자와 실패/대기 기록.
+5. C: Primary 마지막 쓰기의 Replica 반영·도메인별 GTID/복제 상태·Data 비교를 v2.0대로 판정. DB는 읽기 확인만 하며 값이 달라지면 Dump/이관 중단.
+6. C: Infra44의 최종 Dump·RDS Import/비교(1-1~6)를 수행한다. B는 원본 중지를 계속 유지하고, 단계6 비교 완료만으로 원본 쓰기를 재개하지 않는다.
+7. C: 런타임 계정·권한/거부 시험(7/8)을 완료하고 연결 입력 및 판정을 B에게 인계한다.
+8. B: 동일 승인 Image의 Migration current, Backend 기동·TLS/Ready·대표 업무 검증(9)을 수행한 뒤 전환/복귀를 판단한다. Cloud의 로그인·게임 등 시험 쓰기도 새 쓰기로 취급하며, 새 쓰기가 발생한 뒤에는 원본 단순 재개를 복귀로 인정하지 않는다.
+9. D: 전체 구간의 실제 이벤트 시각·논리 Dump 참조·실행자와 실패/대기 기록을 연결한다. C는 자기 Infra44 실행 절차의 쓰기 중지 끝점을 이 순서와 대조해 반영한다.
 
-[Infra44 v1.5](https://github.com/seokpan/seokpan-hybrid-infra/issues/44)의 비교 기준은 당일 최종 Dump의 행 수·해시·Schema·Alembic Revision. 10/02 값은 이력. Replica의 과거 추가 도메인 때문에 GTID 전체 문자열 일치로 되돌리지 않음.
+[Infra44 v2.0](https://github.com/seokpan/seokpan-hybrid-infra/issues/44)의 비교 기준은 당일 최종 Dump의 행 수·해시·Schema·Alembic Revision. 10/02 값은 이력. Replica의 과거 추가 도메인 때문에 GTID 전체 문자열 일치로 되돌리지 않음.
+
+### 초기 시간 예산 — 실측 전
+
+중지 전 C 준비30분, B 중지/확인10분 + C 복사/비교30분 + C 계정/권한15분 + B current/App15분 + 전환 판단5분으로 중지75분, 종료 여유15분을 더한 공동120분을 초기 예산으로 채택한다. ROSA 설치 시간은 포함하지 않는다. 판단5분은 실제 복귀 시간의 측정값이 아니며, 실제 실행/실패 복귀 시간과 운영 Gate로 사용창을 확정한다. 날짜·사용창 또는 실제 중지의 실행 승인은 별도로 확인한다.
 
 ## 4. 이관 후 2차 ROSA 확인
 
@@ -81,7 +92,9 @@ kubectl --context "$SRC_CONTEXT" -n application get jobs,cronjobs
 
 ## 준비 종료와 실제 실행의 구분
 
-- [x] 원 분담·C v1.5·1차 Source·중지/복귀 순서 정리
+- [x] 원 분담·C v2.0 참조·1차 Source·중지/복귀 준비 순서 정리
+- [x] B의 최종 전환 시작 조건·단계9까지 중지 유지·시험 쓰기 포함 복귀 경계와 초기 시간 예산 반영
+- [ ] C의 Infra44 실제 실행 절차에 채택한 최종 중지 끝점 반영
 - [ ] 실제 1차 Context/Caller·Parent/HPA/다른 쓰기 주체 읽기 확인
 - [ ] 실행 제어 경로·실제 수행자·사용창·복귀 설정 수락
 - [ ] 이관 당일 중지 유지·C 최종 Dump/Import/비교·2차 current/App/첫 백업
