@@ -895,6 +895,23 @@ foundation Apply 날짜가 잡히지 않은 동안, Apply 당일 Data 작업을 
 - Recovery Bundle([GitOps PR #35](https://github.com/seokpan/seokpan-hybrid-gitops/pull/35)) · 인계 순서([Docs PR #99](https://github.com/seokpan/seokpan-hybrid-docs/pull/99))의 Data 관점 검토를 [Infra #19](https://github.com/seokpan/seokpan-hybrid-infra/issues/19)에 남겼다. 바로 채울 값(DB 이름 `stone_game`, Recovery Redis 저장 끔 · PVC 대신 `emptyDir`, `redis-runtime.conf`), 형식 차이 2건(보호 입력은 SOPS 파일이라 age 봉투 헤더 검사에 걸림, Bundle의 고정 덤프로는 RPO 30분 불가), Recovery Redis 인증서는 Namespace 확정 뒤 Recovery CA로 발급하는 안을 제안했다. 정태훈 확인 대기.
 - 한계: 재전송과 Gate의 S3 · RDS 경로는 가짜 응답 시험이며 실제 S3 체크섬 저장 · 응답은 미검증. GitHub CI 없이 수동 시험 보고다.
 
+
+### 8.23 이관 시간 예산 · 이관 Runbook v2.0 · Recovery Bundle 계약 검토 (infra #44, GitOps PR #41)
+
+팀의 이관 사용창 요청에 김상희 작업 시간 · 시작 조건 · 사용 도구를 답하고, 그 결과로 이관 Runbook을 v2.0으로 고쳤다. 같은 날 Recovery Bundle 검사기 보완([GitOps PR #41](https://github.com/seokpan/seokpan-hybrid-gitops/pull/41))을 Data 계약 기준으로 검토했다. 모두 문서 · 검토 작업이며 실제 이관 · 복원은 하지 않았다.
+
+| 항목 | 내용 | 확인 |
+|---|---|---|
+| 이관 시간 예산 ([Infra #44 코멘트](https://github.com/seokpan/seokpan-hybrid-infra/issues/44#issuecomment-6123743914)) | 김상희 작업 약 75분 = 쓰기 중지 전 준비 30분 + 쓰기 중지 구간 30분 + 해제 뒤 15분. 시작은 foundation Apply 완료 직후(완료일 오후 또는 다음 날 오전, 평일) | 덤프 · 가져오기 · 비교는 10-08 예행 실측(덤프 약 20KB, 가져오기 1초) 기반. VPN · RDS 구간과 1-1 · 3 · 4단계는 추정 |
+| 이관 Runbook [Infra #44](https://github.com/seokpan/seokpan-hybrid-infra/issues/44) v2.0 | 실행 순서 0 → 1 → 3 → 4 → (쓰기 중지) 1-1 → 2 → 5 → 6 → (해제) 7 → 8 → 9 → 10. RDS 마스터 접속과 DB 단위 계정(3 · 4단계)은 1차 데이터와 무관해 중지 전으로 옮겼다 | 1차 쓰기 중지 구간이 1-1 ~ 6(약 30분)으로 줄었다. 단계 번호는 그대로 |
+| 이관 비교 도구 | 1-1 · 6단계를 Issue 본문 함수 대신 저장소 `ansible/data/controller/table_hashes.sh`(`5beac6da6e9c`)로 controller에서 실행한다. 본문 함수는 조회가 실패해도 종료 코드 0이었다(8.21절에서 저장소판만 고친 결함) | 도구 해시 확인(0-11)과 "덤프 뒤 Replica 변경 없음" 비교를 추가. 실제 실행은 10-13 예행 |
+| GitOps PR #41 Data 검토 | 보호 입력 SOPS+age YAML 허용, Bundle v2는 고정 덤프 대신 `database_restore`(Infra #48 · `restore.sh` · periodic 최신 · SHA-256 · RPO 1800초), DB 이름 `stone_game`, Recovery Redis 저장 끔(`emptyDir` · `save ""` · `appendonly no`) — 8.22절에서 남긴 형식 차이 2건이 해결됐다 | 실제 Data SOPS 파일 3개의 메타데이터 키가 검사기 허용 목록 안에 있음을 확인(값 출력 없음). 검토 승인 |
+
+- RPO: 지금 `restore.sh`는 30분이 넘은 사본을 실행 전에 거부하지 않는다. 출력되는 RPO(선택 사본 시각 ~ 복구 시작)를 수행자가 확인해 30분 이하일 때만 수락한다(Infra #48, GitOps PR #41 README와 같은 기준).
+- 준비 중: `restore.sh`에 해독 키 지정(`--key`)과 controller 없이 복구 DB VM에서 실행(`--local`)을 추가하는 변경을 가짜 환경에서 10가지 경우로 시험했다. 지금은 키 경로가 김상희 키로 고정돼 있어 이유빈 키로는 복원할 수 없다. 별도 Issue · PR로 진행하며, Bundle v2 계약의 스크립트 경로는 바뀌지 않는다.
+- 남은 것: 1차 쓰기 중지 실제 경로(정태훈), foundation Apply 날짜(이유빈). Recovery Namespace · `maxmemory` 수치 · 복구 App Pod 출발지 IP는 GitOps PR #41 범위 밖으로 계속 열려 있다.
+- 한계: 시간 예산 일부는 추정이다. 10-13 예행(1차 조회만, 쓰기 중지 없음)으로 1-1 · 2단계를 실측해 Infra #44를 갱신한다.
+
 ## 9 복구 예행과 목표 재검토 — 2026-10-02
 
 **2026-10-03 설계 우선순위 정정:** 이번 피드백의 목적과 대안 비교·수정 범위는 [03 §3-I.14](../design/03_DETAILED_DESIGN.md#recovery-design-review-20261003)를 기준으로 읽는다. 이 절은 최소 예행의 기존 입력·측정·부담 비교를 지원한다. 02의 기존 1차 Redis 재사용 설명과 03의 좁게 읽힐 수 있는 RTO 경계는 설계 문서에서 바로잡는다. 아래 코드·검사·Cloud/ROSA 후속은 각 시점/범위의 기록이며 설계 재검토보다 우선하는 전체 구현 요구가 아니다.
