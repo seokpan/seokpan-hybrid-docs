@@ -876,6 +876,25 @@ State Lineage·Serial 차이의 원인과 내용 동일성은 [첫 코멘트](ht
 - 함께 정리한 것(정태훈 메신저 요청): 첫 ROSA Plan에 넣을 Data SG 2개의 대응 — `mariadb` = foundation 출력 `rds_security_group_id`, `redis` = `redis_security_group_id`. 두 ID가 서로 바뀌어도 rosa 검사로는 걸리지 않으므로 인계할 때 이름까지 대조하고, Apply 직후 김상희가 읽기 전용으로 확인한다.
 - 한계: 10-08 예행(23초 → 2초)은 이전 판으로 잰 값이고 모의 시험은 통합 검증이 아니다. GitHub CI 없이 수동 시험 보고다.
 
+### 8.22 Apply 당일 확인 스크립트 · S3 실패 사본 재전송 · 종료 시 삭제 절차 (infra #55 / PR #56 · #59, #44 · #57)
+
+foundation Apply 날짜가 잡히지 않은 동안, Apply 당일 Data 작업을 바로 이어 갈 수 있도록 혼자 할 수 있는 준비를 끝냈다. 실제 AWS 자원 없이 할 수 있는 범위(코드 · 가짜 환경 시험 · 실제 VM 도구 확인 · 절차)만 했고, 실제 S3 · RDS 동작은 Apply 뒤 확인한다.
+
+| 산출물 | 하는 일 | 확인 |
+|---|---|---|
+| `check_data_apply.sh` | Apply 직후 Data 자원을 이름으로 찾아 코드 값과 대조(SG 2개 규칙 · rosa 인계 ID 대응, RDS · Valkey · Backup S3 · Backup User). 조회만, ID · 계정 번호 출력 없음 | 가짜 응답: 정상 NG 0 · 결함 13가지 검출 · ID 뒤바뀜 검출. 실제 AWS(자원 없음, 10-08): 조회 7가지가 오류 없이 "찾지 못함" |
+| `check_backup_gate.sh` | RDS 원본 첫 OK 회차 운영 Gate — 사본 이름 시각 = `T_DUMP` = `last-success`, history · S3 객체 · 복구 DB VM 사본의 SHA-256, 15분 간격, 로컬 확보 지연, 데이터 나이 30분. 종료 0 / 1 / 2 | 가짜 응답: 결함 7가지 각각 검출. 실제 VM(10-12): Timer 꺼짐 NG 1개 · 판정 불가 → 종료 1(예상대로) |
+| S3 실패 사본 재전송 | S3 실패 회차의 사본을, 이후 OK 회차가 자기 기록을 마친 뒤 같은 Backup ID로 다시 올림(회당 4개 · 300초, `put-object` + SHA-256 체크섬, 결과 `s3-resend.tsv`) | 가짜 S3로 10가지 경우와 재전송 중 강제 종료 재현. 실제 VM 도구(openssl 해시 · AWS CLI 2.37.5 체크섬 옵션) 확인 |
+| 이관 Runbook Infra #44 v1.7 ~ v1.9 | 0-1행에 Data 자원 확인, 10장을 10-1 ~ 10-8(키 발급 · 접속 파일 · 버킷 · 손 실행 · Timer · Gate · 연결 수 전달)로 구체화 | 정리 중 백업 작업 VM의 `ID_PREFIX=rehearsal`(10-08 예행 값)을 발견 — 그대로 Timer를 켜면 복원 · Gate가 사본을 무시하므로 10-4에 `periodic` 변경 추가 |
+| 백업 용량 재계산 | 03 문서 3-D.10.5절(로컬 작업 · 보관 · 복원 Storage 산정) 식에 실측 사본 크기(20,423바이트)와 실제 잔존(최대 8일) 적용 | N = 793 → 복구 DB VM 약 24MiB(5GiB의 0.5% 미만) · 백업 작업 VM 약 20MiB · S3 약 15MiB. 디스크 변경 불필요, Cost 입력 갱신(Docs #43) |
+| 종료 시 삭제 Runbook Infra #57 | 실사용자 데이터가 남는 8곳(RDS · 최종 스냅샷 · 자동 백업 · Backup S3 · 백업 작업 VM · 복구 DB VM 사본 · 복구 DB 평문 · 키)의 삭제 순서와 확인 방법 | 실행은 프로젝트 종료 때. 담당 · 날짜 · Destroy 범위는 팀 합의 |
+
+- 리뷰: PR #56은 리뷰에서 Blocker 1건(로컬 해시를 못 구하면 빈 값끼리 같다고 판정해 S3에 없는 사본을 "올라감"으로 기록)과 보완 6건을 고쳤다. 재리뷰 제안은 PR #59(최유준 승인)로 반영해, 재전송을 이번 회차 기록 뒤로 옮겼다 — 재전송 중 서비스가 강제 종료돼도 그 회차의 기록과 `last-success`가 남는다.
+- 저장소 = 설치본(main `b2b24f1`): 백업 `1d99cc303d90` · `check_data_apply.sh` `359e779d0e33` · `check_backup_gate.sh` `9d21774a4255`. 백업 Timer는 Apply 전까지 꺼 둔 상태 그대로.
+- 8.21절 열린 항목 "S3 실패 사본 재전송" — 코드 완료, 실제 S3 확인(Infra #55의 V4)만 남음.
+- Recovery Bundle([GitOps PR #35](https://github.com/seokpan/seokpan-hybrid-gitops/pull/35)) · 인계 순서([Docs PR #99](https://github.com/seokpan/seokpan-hybrid-docs/pull/99))의 Data 관점 검토를 [Infra #19](https://github.com/seokpan/seokpan-hybrid-infra/issues/19)에 남겼다. 바로 채울 값(DB 이름 `stone_game`, Recovery Redis 저장 끔 · PVC 대신 `emptyDir`, `redis-runtime.conf`), 형식 차이 2건(보호 입력은 SOPS 파일이라 age 봉투 헤더 검사에 걸림, Bundle의 고정 덤프로는 RPO 30분 불가), Recovery Redis 인증서는 Namespace 확정 뒤 Recovery CA로 발급하는 안을 제안했다. 정태훈 확인 대기.
+- 한계: 재전송과 Gate의 S3 · RDS 경로는 가짜 응답 시험이며 실제 S3 체크섬 저장 · 응답은 미검증. GitHub CI 없이 수동 시험 보고다.
+
 ## 9 복구 예행과 목표 재검토 — 2026-10-02
 
 **2026-10-03 설계 우선순위 정정:** 이번 피드백의 목적과 대안 비교·수정 범위는 [03 §3-I.14](../design/03_DETAILED_DESIGN.md#recovery-design-review-20261003)를 기준으로 읽는다. 이 절은 최소 예행의 기존 입력·측정·부담 비교를 지원한다. 02의 기존 1차 Redis 재사용 설명과 03의 좁게 읽힐 수 있는 RTO 경계는 설계 문서에서 바로잡는다. 아래 코드·검사·Cloud/ROSA 후속은 각 시점/범위의 기록이며 설계 재검토보다 우선하는 전체 구현 요구가 아니다.
