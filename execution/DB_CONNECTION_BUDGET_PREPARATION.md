@@ -4,34 +4,38 @@
 
 기존 예산식을 [오프라인 검사기](../tools/b_preflight/db_connection_budget.py)로
 구체화했다. 실제 RDS 조회·인증·App 설정 변경·Cloud 활성화는 수행하지 않는다.
-아래 과거 Source 기준의 "Pool 입력 필드 없음"은 당시 상태이며, 이번 App 후보는
+아래 과거 Source 기준의 "Pool 입력 필드 없음"은 당시 상태이며, 병합된 App 구현은
 명시적 입력 경로만 준비한다. 운영값·timeout·부하 기준 채택과 실제 시험은 별도다.
 
-### App 후보와 병합 기록
+### App 최종 Source와 병합 기록 — 2026-10-12
 
-현재 후보는 App main `b8cab6caa348f2e89a7ad08594becf203ddbf67d`를 기준으로 한
-[App PR #43](https://github.com/seokpan/seokpan-hybrid-app/pull/43)이다.
-게시 HEAD는 `8c06e7868d0854337bc01bfffd53b6df751e0051`이며 Source 리뷰·병합 대기다.
+[App PR #43](https://github.com/seokpan/seokpan-hybrid-app/pull/43)은
+D가 승인한 HEAD `8c06e7868d0854337bc01bfffd53b6df751e0051`의
+[Linux verify](https://github.com/seokpan/seokpan-hybrid-app/actions/runs/38086792458)
+성공 후 병합됐다. 실제 병합 Commit은
+`8526fb8ba2965afb5e04c6322bb64b35dbbbcd45`이다.
+
 `SEOKPAN_DATABASE_POOL_SIZE`·`SEOKPAN_DATABASE_MAX_OVERFLOW`·
 `SEOKPAN_DATABASE_POOL_TIMEOUT_SECONDS`를 모두 공급하면 Identity/Game 각각에
-같은 Pool 값을 적용하고, 모두 미지정이면 기존 생성 옵션을 유지한다.
-최종 입력 이름과 구현은 App 리뷰 결과로 확정한다. 예산 검사기는 Engine별 값을
-표현할 수 있지만 이번 App 후보가 Engine마다 다른 값을 받는다는 뜻은 아니다.
+같은 Pool 값을 적용하고, 모두 미지정이면 세 env 키를 생략해 기존 생성 옵션을 유지한다.
+미지정 기본값은 Engine당 5+10·timeout 30초이며 Engine 2개의 Process 연결 상한은 30이다.
+이는 실제 열린 연결 수나 승인된 RDS 운영값이 아니다. 큰 양수와 유한 timeout에
+별도의 운영 상한을 강제하지 않으며 이 예산 검사기가 실제 입력으로 선언 상한을 대조한다.
+예산 검사기는 Engine별 값을 표현할 수 있지만 App이 Engine마다 다른 값을 받지는 않는다.
 
-이 오프라인 검사기의 병합에 App 병합이 기술적으로 필요한 것은 아니다.
-두 PR을 함께 진행할 경우 App 리뷰·Linux CI·병합 후 이 문서에 App PR 링크,
-병합 Commit, 검증 결과와 실제 RDS/Cloud 시험의 미확인 범위를 기록한다.
-App 리뷰로 입력 계약이 바뀌면 설명과 시험을 재대조한 뒤 Docs를 병합한다.
-App 후보가 미병합 상태라면 그대로 명시하고 검사기만 독립적으로 병합할 수 있다.
+최종 입력 계약은 게시된 승인 Source와 같다. App Source 구현·검사는 완료됐으며
+실제 RDS 상한·예약·Process/Pod 관측과 운영 Pool/timeout 값 채택은 아직 남았다.
+새 Image의 Build/Scan/Smoke·Digest와 GitOps 소비·실제 배포도 이 병합 결과에 포함하지 않는다.
 
-### 최신 Docs main 결합 확인 — 2026-10-11
+### 최신 Docs main 결합 확인 — 2026-10-12
 
-Docs #101 병합 main `f7ac674f5192d2951b27e37a81f27011a9cc6913`을 이 PR에
-결합했다. 충돌 없이 기존 연결 예산 4파일 범위를 유지하며, OCP 비교 시험을
-포함한 로컬 전체 37개가 통과했다. Windows checkout의 기존 fixture는 변경 없는
-Git blob 바이트로 맞춰 확인했으며 내용/기대 해시를 수정하지 않았다.
-이번 PR은 App #43의 최종 리뷰·병합 Commit과 검증 결과를 반영한 뒤 마무리한다.
-이후 main 또는 App 입력 계약이 바뀌면 영향받는 설명과 결합 시험을 다시 확인한다.
+Docs main `c46abd1c88c20bb1ce2a0e4370bacb1860f16e60`과 이 PR의 기존 HEAD
+`532f6478d12a35a34535719758388d45deb48d41`를 충돌 없이 결합했다.
+App #43 실제 병합 기록과 최종 입력 계약을 반영한 사본에서 OCP 비교를 포함한
+오프라인 전체 37개 검사와 상대 링크 확인을 통과했다. 고정 fixture 원문 해시는 유지했다.
+PR의 연결 예산 4파일 범위를 유지하며 실제 RDS·Cloud 검증은 포함하지 않는다.
+새 HEAD의 Linux CI와 필요한 Source 승인을 확인한 뒤 Docs를 병합한다.
+이후 main 또는 App 입력 계약이 바뀌면 영향받는 설명과 결합 검사를 다시 확인한다.
 
 값을 채우지 않은 [입력 예시](../tools/b_preflight/db-connection-budget-input.example.json)를
 개인 보호 경로에 복사한 뒤 수신한 상한·예약·Process·Pod·Engine별 값을 연결한다.
@@ -67,7 +71,7 @@ Identity/Game 각각의 pool_size와 max_overflow를 명시한다. 종료 중 Po
 운영값으로 채택하지 않았다. 기존 역할별 Engine2·Migration NullPool·Cloud0/hold·
 첫 ROSA Plan과 Cloud App 활성화 조건의 분리는 유지한다.
 
-## Source 기준과 실제 미확인
+## 과거 Source 기준과 당시 미확인 — 2026-10-08
 
 App main5df2ce280188a7e3874fa370ec8116d50ca34af3·GitOps main9d108349146f7a4734b2da1ea0fa9d56dae971ee 기준. Runtime Engine은 Process마다 Identity/Game2개, Migration은 NullPool. Pool 설정 필드/환경변수는 아직 없음. Cloud 기본은0/hold, 별도 승인 목표 Preview는Backend 3개·maxSurge 1개/maxUnavailable0. 3이 현재 실제 가동수라는 뜻 아님.
 
@@ -91,7 +95,7 @@ C의 예약 10개을 함께 쓰면 네 번째 행은130+30×T와 실제 상한�
 1. B/D: 실제 승인 Image 명령·WEB_CONCURRENCY/Process·Replica/Rolling·종료 중 Pod/연결 확인.
 2. C: RDS 생성 뒤 실제 @@max_connections·예약 구성/여유·계정별 연결 기준 공급.
 3. B/C: 상한과 timeout/정리/재접속·부하 기준 합의. 기존3+2/합계60은 미채택 후보 유지, 이 식의 확정값으로 사용하지 않음.
-4. B: 합의 후 App 설정 필드/환경변수·범위/거부 검사/회귀 구현, D새Build/Scan/Digest→GitOps소비 연결. 현재 임의값/미구현 환경변수 추가 없음.
+4. B: 명시적 Pool 입력·거부 검사·회귀 Source 구현은 App #43으로 병합 완료했다. 운영값 합의 뒤 실제 설정을 공급하고 D의 새 Build/Scan/Digest를 거쳐 GitOps 소비로 연결한다. 임의 운영값을 채택하지 않는다.
 5. 실제 시험: Max_used_connections·계정/전체동시연결·대기/연결오류·Rolling/종료·재접속·예약여유 확인. Source계산을 RDS/성능 PASS로 사용하지 않음.
 
 원 [C v2.3 개정 예정](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6051212790)·[App4](https://github.com/seokpan/seokpan-hybrid-app/issues/4). 이 준비는 ROSA Root 첫 Plan의 전체 선행조건이 아니며 Cloud App 활성화 전에 실제 입력을 대조. 설계 수치·DB사양·Pool 값 채택/DDL/실제 접속 변경 없음.

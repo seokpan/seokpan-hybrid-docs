@@ -1,0 +1,2 @@
+# Preserve pinned fixture bytes in Windows and Linux checkouts.
+tools/b_preflight/lab-requests-fixture.json text eol=lf
