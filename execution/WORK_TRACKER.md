@@ -1,6 +1,18 @@
 # Work and Input Tracker
 
-> **현재 확인 — 2026-10-08 Docs #95 병합 후:** [병합·Controller 인증·실행 대기](MERGED_SOURCE_PLAN_READINESS_20261008.md). App30/34·GitOps33 승인·병합·PR 브랜치 삭제 완료. App18819963의 D Run5 성공 보고·FE/BE Harbor 공급 후보 수락, B/jth의 Source/Lock·기본 Caller/MFA·서울 사양/Quota 부분 결과 유지. EC2 진단v1/v2는 코드 비식별·사용량 미확보·원인 미확정으로 자동 API 재시도 종료, B 현장/A 계정 Owner 비공개 확인 입력 대기. 실제 역할/SG2·목적 세션/Backend·프로젝트 조직/지원·EBS 기준/비용 입력·전체 Plan, 내부 공급/Pull·Runtime은 별도 미완료. 아래 날짜별 기록은 당시 이력.
+## 정태훈 구현·실행·체크 현황 — 2026-10-13 KST
+
+원 작업 체크는 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의81개 항목에서 **36개 완료·45개 미완료**로 갱신했다. [B 실행 보드](TJUNG03_EXECUTION_BOARD.md), [B 인계 Docs #8](https://github.com/seokpan/seokpan-hybrid-docs/issues/8), [발표 후보 Docs #6](https://github.com/seokpan/seokpan-hybrid-docs/issues/6)와 연결한다.
+
+- [ROSA/Plan Infra25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25#issuecomment-6145405350): Controller jth 목적 조회13 PASS·OCM 최소 Role/정책 연결·서울 Multi-AZ 확인·init/validate·전체 저장 Plan 생성 완료(추가16/검사17 PASS). Plan 세부·A 리뷰/비용·별도 Apply 승인은 남고 **ROSA Apply는 미실행**이다. OCM IAM2개 실제 생성은 별도이며 종료 시 정리 대상이다.
+- [App/OCP App4](https://github.com/seokpan/seokpan-hybrid-app/issues/4#issuecomment-6145407122): Run7 FE→BE 선택 교체·Ready/이전 Pod 종료·Synced/Healthy 및3클라이언트 외부 기능/WS/reload PASS(87.797초·재시도0). 실제 다중 Pod/부하·장시간/장애·Cloud/정량 DR은 별도 미완료다.
+- [Recovery GitOps10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10#issuecomment-6145408408): B jth 보호 입력5필드·AUTH/CA/hash/5객체 매핑과 분리 공급 Source는 완료. 실제 독립 대상/Engine·객체 공급/TLS·C 복원/전체 시간선 수락은 남는다.
+- [App1](https://github.com/seokpan/seokpan-hybrid-app/issues/1)의 원 Source/Client·lab 기준4개는 완료해 종료했다. 운영 Pool 값·Cloud 연결/다중 Pod·장애는 App4/Infra19에서 계속한다. App21은 실제 결과 모달/Rating/대기방 복귀만 추가 체크하며 지정 해상도·스크롤/오류 배치 검증은 남긴다.
+
+이 절은 B의 원 실행·PR/검사 결과를 연결한다. 다른 담당자의 완료 체크·실제 실행을 변경하지 않으며 과거 날짜의 상태를 현재 미실행으로 읽지 않는다. 03/04 종료·DR10분/DB RPO30분/Backup15분·CP3/Infra3/Worker3·Cost PARTIAL/$450 계획/$500 한도 및 최종 미완료 판정을 유지한다. 완료한 실행·시험·인증/해독은 반복하지 않았다.
+
+
+> **2026-10-08 당시 확인 — B의 최신 단계는 위10/13 절 참조:** [병합·Controller 인증·실행 대기](MERGED_SOURCE_PLAN_READINESS_20261008.md). App30/34·GitOps33 승인·병합·PR 브랜치 삭제 완료. App18819963의 D Run5 성공 보고·FE/BE Harbor 공급 후보 수락, B/jth의 Source/Lock·기본 Caller/MFA·서울 사양/Quota 부분 결과 유지. EC2 진단v1/v2는 코드 비식별·사용량 미확보·원인 미확정으로 자동 API 재시도 종료, B 현장/A 계정 Owner 비공개 확인 입력 대기. 실제 역할/SG2·목적 세션/Backend·프로젝트 조직/지원·EBS 기준/비용 입력·전체 Plan, 내부 공급/Pull·Runtime은 별도 미완료. 아래 날짜별 기록은 당시 이력.
 
 ### 조사 중 추가된 실행 보고·수정 PR — 2026-10-07 후속 조회
 
