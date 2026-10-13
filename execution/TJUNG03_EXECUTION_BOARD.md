@@ -1,5 +1,33 @@
 # 정태훈 실행판 — 지금 할 일·입력 대기·OCP와 ROSA 수명
 
+<!-- B_CURRENT_STATUS_20261013 -->
+## tjung03 현재 진행 — 2026-10-13 KST
+
+**현재 단계: ROSA 전체 저장 Plan 생성 완료 → 저장 Plan 실제 내용·비용 검토. ROSA Apply는 NOT_RUN이며 실행 승인은 없습니다.**
+
+B 정태훈(tjung03)의 오늘 사용자 실행 출력·로컬 수신 기록과 GitHub 병합 상태를 대조했습니다. Codex는 검토·기록을 수행했고 이번 현행화에서 실환경 실행/시험·인증·생성/해독을 반복하지 않았습니다. 아래 이전 날짜의 대기/미실행 표현은 해당 시점 이력이며 이 절과 연결된 원 이슈의 오늘 결과가 우선합니다.
+
+| B 담당 범위 | 완료·수신한 실제 결과 | B의 남은 조건 |
+|---|---|---|
+| ROSA 준비·Plan | 목적 조회13개 PASS, OCM 최소 Role1/정책1 생성·조직 연결, Installer 서울 Multi-AZ 확인·init/validate/전체 Plan 완료. **추가16·수정/삭제/교체0·출력 변경1·검사17 PASS**, exit2 정상 | 보호 저장 Plan의 실제 설정·IAM/OIDC/출력·비용/시간 검토 → A NAT 준비 확인 → B 본인의 별도 ROSA Apply 승인. **ROSA Apply·클러스터/NAT 생성 NOT_RUN** |
+| OCP lab Run7 교체 | 고정 targetRevision `e3b315d1f7d802b027bef535e2d930a3b18bcc42`로 FE→BE 선택 Sync·새 Ready/이전 Pod 종료·ImageID 대응 및 Synced/Healthy PASS 수신 | 동일 교체/Pull/Sync 반복 없음. D 관측 증거 수락과 별도 실환경 부하·장시간·장애/rollback 시험 |
+| OCP 외부 Browser | 실제3클라이언트 업무·WS·reload/재연결·방장 승계·권한 거부 기능 PASS 수신. 87.797초·재시도0·Room WS 프레임64/65/62·임시 추가 CA 제거 PASS | Provider 자체 독립 검증, 부하/정량 지연·장시간/peak·Alert 전달·Cloud/Recovery 전체 판정은 미완료 |
+| Pool·실행 도구 Source | App #43/#46, Docs #100 및 GitOps #43 병합 확인. Pool 입력/예산 검사·외부 시험·Recovery 분리 공급 준비 완료 | 실제 운영 Pool 값·Cloud Data 연결/다중 Replica·Recovery 대상 공급/기동 수락은 별도 |
+| Recovery 보호 입력 | B jth SOPS 해독5필드·AUTH/CA/hash 및 Secret3/ConfigMap2 매핑 확인 수신 | 실제 대상 객체 공급·Engine·체인/SAN/키쌍·Runtime TLS/AUTH·독립 복원/RTO/RPO 대기 |
+| 이관 준비 | Docs #107 병합 확인. Foundation 뒤 준비만 진행하고 ROSA/배포 입력 준비 후 최종 쓰기 중지, C6 비교→C7/8 계정→B9 App 확인까지 중지 유지 | 실제 중지·덤프/Import/최종 전환·Cloud 시험은 NOT_RUN. 사용창/시간 예산·비용 정합 검토 |
+
+**원 기록:** [ROSA/Plan Infra #25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25#issuecomment-6145405350) · [App/기능 시험 App #4](https://github.com/seokpan/seokpan-hybrid-app/issues/4#issuecomment-6145407122) · [선언·OCP/Recovery GitOps #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10#issuecomment-6145408408) · [B 보호 입력 수신 Infra #19](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6145409526) · [B 비용 검토 입력 Docs #43](https://github.com/seokpan/seokpan-hybrid-docs/issues/43#issuecomment-6145410624).
+
+Plan Source `a93baf5f066f7bd5c31ee3ed4b1996fe28e58b05`를 기록하며, 저장 Plan 원문 세부 검토 완료로 표시하지 않습니다. **OCM IAM2개는 실제 생성된 Terraform 밖 B 자산**이므로 종료 시 연결 해제·Role/정책 정리 확인 대상입니다. ROSA/NAT 미생성과 구분합니다. A Foundation Apply·변경0 및 조회 권한 적용은 **B가 받은 A 보고**이며 A 담당 실행·체크는 변경하지 않습니다.
+
+03/04 설계 종료·DR10분/DB RPO30분/운영 Backup15분·CP3/Infra3/Worker3·**Cost PARTIAL/$450 계획/$500 한도** 유지. Terraform 계획 자원16개를 Node16개나 전체 비용 확정으로 해석하지 않습니다. TH81/기존 실제 완료2와 Q 원 체크를 변경하지 않으며 Source·부분 기능 PASS를 최종 검증/종료 PASS로 승계하지 않습니다. Cloud/Data·Recovery·정량 성능/장애·최종 증거/발표·보존 후 삭제/잔존 과금 확인은 남습니다.
+
+[개인 상위 Docs #21의 오늘 현황](https://github.com/seokpan/seokpan-hybrid-docs/issues/21#issuecomment-6145434794)에서 같은 원 기록으로 이어갑니다.
+
+<details>
+<summary>10/13 현행화 이전 실행판 — 날짜별 기록과 기존 담당 범위 보존</summary>
+
+
 ## 전체 진행 현황 — 2026-10-11 KST
 
 - [x] Docs #97/#98/#99/#101 병합·브랜치 삭제, 공개 표현·승인 조건 대조·OCP 팀 운영 기준 반영 완료.
@@ -558,3 +586,5 @@ OCP의 사전검증 업무 완료와 정리 날짜는 별개다. 추천 운영 �
 - [ ] 1차 서비스 Writer 중단/최종 이관·비교/current/App/전환.
 - [ ] Recovery 나머지 입력·독립 사본/복원 Identity/복호화·실제 Restore와 RTO/RPO.
 - [ ] 재생성/비용·보존/삭제 보호·Evidence/발표/최종 정리.
+
+</details>
