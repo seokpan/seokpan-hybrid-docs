@@ -1,6 +1,6 @@
 {
   "received_at_utc": "2026-10-09T10:25:29.236802+00:00",
-  "execution_report_source": "user supplied existing jth@ansible output; long invocation excluded",
+  "execution_report_source": "existing jth@ansible execution output; long invocation excluded",
   "execution_observed_at_utc": null,
   "source_docs_commit": "1de473540e627de6bb88409e5fdf114f0094f55b",
   "helper_sha256": "4e9e0b2e4f53146e2f0fabc5ada9617a676d77d4c3a1e379df61a2f5c387b948",

@@ -2,7 +2,7 @@
 
 > **목적:** 05 구현·통합·검증에서 발생하는 실제 결과를 최종 발표 관점에서 놓치지 않고 선별하기 위한 기준
 > **기준일:** 2026-10-02 KST
-> **상태:** USER-CONFIRMED PRESENTATION BASELINE — 05 Actual/Evidence 연동 대기
+> **상태:** APPROVED PRESENTATION BASELINE — 05 Actual/Evidence 연동 대기
 > **적용 범위:** 최종 발표 Narrative, 정량 Evidence, 1차↔2차 비교, Troubleshooting, Demo 후보 선별
 > **중요:** 이 문서는 03의 Test/Acceptance 기준이나 05의 실행 결과를 대체하지 않는다.
 

@@ -155,4 +155,4 @@ python3 tools/recovery_metrics.py evidence/<test-id>/<run-id>/release.json --con
 
 ## B 도구 Controller 오프라인 판정 추가 — 2026-10-09
 
-- [T03 Controller B 도구 오프라인 실행](T03/controller-b-offline-tools-20261009-01/summary.md): 실제 Linux 파일3건·SG/Plan10·OCP계산5 시험 PASS, 전체 환경 판정은 PARTIAL. 운영 clone 변경·설치·Cloud/Cluster/State/Plan 호출 없음. 사용자 판정 수신과 새 현장 실행을 구분하며 D Index 수신 확인은 별도.
+- [T03 Controller B 도구 오프라인 실행](T03/controller-b-offline-tools-20261009-01/summary.md): 실제 Linux 파일3건·SG/Plan10·OCP계산5 시험 PASS, 전체 환경 판정은 PARTIAL. 운영 clone 변경·설치·Cloud/Cluster/State/Plan 호출 없음. 기존 판정 기록과 새 현장 실행을 구분하며 D Index 수신 확인은 별도.
