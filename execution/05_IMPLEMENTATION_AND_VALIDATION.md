@@ -908,7 +908,7 @@ foundation Apply 날짜가 잡히지 않은 동안, Apply 당일 Data 작업을 
 | GitOps PR #41 Data 검토 | 보호 입력 SOPS+age YAML 허용, Bundle v2는 고정 덤프 대신 `database_restore`(Infra #48 · `restore.sh` · periodic 최신 · SHA-256 · RPO 1800초), DB 이름 `stone_game`, Recovery Redis 저장 끔(`emptyDir` · `save ""` · `appendonly no`) — 8.22절에서 남긴 형식 차이 2건이 해결됐다 | 실제 Data SOPS 파일 3개의 메타데이터 키가 검사기 허용 목록 안에 있음을 확인(값 출력 없음). 검토 승인 |
 
 - RPO: 지금 `restore.sh`는 30분이 넘은 사본을 실행 전에 거부하지 않는다. 출력되는 RPO(선택 사본 시각 ~ 복구 시작)를 수행자가 확인해 30분 이하일 때만 수락한다(Infra #48, GitOps PR #41 README와 같은 기준).
-- 준비 중: `restore.sh`에 해독 키 지정(`--key`)과 controller 없이 복구 DB VM에서 실행(`--local`)을 추가하는 변경을 가짜 환경에서 10가지 경우로 시험했다. 지금은 키 경로가 김상희 키로 고정돼 있어 이유빈 키로는 복원할 수 없다. 별도 Issue · PR로 진행하며, Bundle v2 계약의 스크립트 경로는 바뀌지 않는다.
+- 준비 중: `restore.sh`에 해독 키 지정(`--key`)과 controller 없이 복구 DB VM에서 실행(`--local`)을 추가하는 변경을 가짜 환경에서 10가지 경우로 시험했다. 지금은 키 경로가 김상희 키로 고정돼 있어 이유빈 키로는 복원할 수 없다. 별도 Issue · PR로 진행하며, Bundle v2 계약의 스크립트 경로는 바뀌지 않는다. → 10-13 완료(8.26절).
 - 남은 것: 1차 쓰기 중지 실제 경로(정태훈), foundation Apply 날짜(이유빈). Recovery Namespace · `maxmemory` 수치 · 복구 App Pod 출발지 IP는 GitOps PR #41 범위 밖으로 계속 열려 있다.
 - 한계: 시간 예산 일부는 추정이다. 10-13 예행(1차 조회만, 쓰기 중지 없음)으로 1-1 · 2단계를 실측해 Infra #44를 갱신한다.
 
@@ -944,6 +944,24 @@ foundation Apply 날짜가 잡히지 않은 동안, Apply 당일 Data 작업을 
 
 - 기록: [Infra #44 예행 결과 코멘트](https://github.com/seokpan/seokpan-hybrid-infra/issues/44#issuecomment-6137234409).
 - 한계: 1차 쪽 절반만 확인했다. RDS 가져오기 · 비교 · 계정 생성(3 ~ 8단계), 실제 쓰기 중지 상태에서의 판정, 정태훈의 Migration · Backend 기동은 Apply · ROSA Ready 뒤에 확인한다.
+
+### 8.26 controller 없는 복원 (infra #60 · PR #61)
+
+복원 스크립트 `restore.sh`는 해독 키 경로가 김상희 키로 고정돼 있었고, 모든 단계가 controller에서 복구 DB VM으로 SSH를 거쳐 실행됐다. 그래서 controller를 쓸 수 없으면 복원할 수 없었고, 두 번째 키 보유자인 이유빈은 controller가 있어도 복원할 수 없었다. 백업 사본은 controller가 아니라 복구 DB VM · 백업 작업 VM · S3에 있으므로, 키만 옮기면 복구 DB VM 안에서 복원을 끝낼 수 있다.
+
+| 항목 | 내용 | 확인 |
+|---|---|---|
+| 코드 | `--key <경로>`(해독 키 지정, 권한 600/400 · age 개인키 형식 검사, 기록에 키 파일 해시 12자리), `--local`(복구 DB VM root에서 SSH 없이 같은 단계 실행, 호스트 이름 검사, 원본 비교 옵션과 함께 쓸 수 없음). 기본 동작(controller 방식)은 그대로 | [Infra PR #61](https://github.com/seokpan/seokpan-hybrid-infra/pull/61) merge `57029ff`(정태훈 승인), `restore.sh` `0440f66554ab` |
+| 설치 | controller `~/recovery/`와 복구 DB VM `/usr/local/lib/seokpan-hybrid-recovery/`(root 700)에 같은 판 | 두 곳 해시 = 저장소 README |
+| 키 이동 | 김상희 · 이유빈이 각자 키를 암호 문구(`age -p`)로 잠근 파일을 USB 하나에 보관하고, 쓸 때 복구 DB VM에 연결해 메모리(`/dev/shm`)에만 풀었다가 끝나면 지운다. 암호 문구는 키 주인만 안다 | 키를 다른 사람에게 넘기지 않는다는 기존 규칙(04 문서 5.3절)을 유지 |
+| 예행 | 같은 예행 사본으로 ① controller 방식(원본 비교 포함) ② 복구 DB VM 콘솔에서 이유빈이 이유빈 키로 `--local` 복원 | 두 결과의 행 수 · 행 해시 · Schema 해시 8줄이 같음, 기록의 키 해시가 김상희 키와 다름(이유빈 키) |
+| 시간 | 키 해독 1분 30초 → 선택 · 복원 · 검증 3분 13초(스크립트 자체 1초, 나머지는 콘솔 입력). 키 해독 시작 → 검증 끝 4분 43초 | USB를 VM에 연결하는 시간과 복구 App 연결은 빠진 값이다 |
+| 발견 | VMware의 VM USB 호환성 2.0에서는 USB가 인식되지 않아 3.x로 바꿨다. 콘솔은 붙여넣기 · 한글 입력이 안 되므로 절차를 짧은 명령으로 나눴다 | 복구 DB VM 구성 기록 [Infra #46](https://github.com/seokpan/seokpan-hybrid-infra/issues/46) v1.4 |
+| 정리 | 복원한 `stone_game` · 예행 사본 · 원본 접속 파일 · 메모리 키를 지웠다. 복구 계정 6개는 그대로 둔다 | 복구 DB VM `copies/` 비어 있음, 백업 Timer는 꺼진 상태 유지 |
+
+- 절차: 복원 Runbook [Infra #48](https://github.com/seokpan/seokpan-hybrid-infra/issues/48) v1.5 C장. 판정 기록은 [Infra #60 판정 코멘트](https://github.com/seokpan/seokpan-hybrid-infra/issues/60#issuecomment-6139644737).
+- [GitOps PR #41](https://github.com/seokpan/seokpan-hybrid-gitops/pull/41)의 Recovery Bundle v2는 이 스크립트를 경로로만 가리키므로 계약 변경은 없다.
+- 한계: 예행 사본(1차 Replica 원본, S3 생략)으로 확인했다. 김상희 키로 복구 DB VM에서 직접 해독하는 시험은 남아 있고(잠금 파일이 원본 키로 풀리는 것은 확인), RTO 10분 판정은 복구 App 연결을 포함한 본 검증(10/19~21)에서 한다. 복구 DB VM이 있는 Server-04 자체 장애는 범위 밖이다.
 
 ## 9 복구 예행과 목표 재검토 — 2026-10-02
 
