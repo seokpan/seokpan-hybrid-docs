@@ -4,11 +4,11 @@
 
 [B 전체 상태 대조](TJUNG03_STATUS_AUDIT_20261013.md): 상위·원 이슈 체크와 Plan/Apply·실행·미시험의 대응을 확인한다.
 
-ROSA는 준비되는 즉시 시작해 10/16(금)까지 검증하고 주말 전에 ROSA/NAT 삭제를 완료하는 일정이다. 비용 기록은 실행 준비와 병행하며 전체 원장 완성을 대기조건으로 두지 않는다. $450 계획/$500 한도는 유지한다. 기존 저장 Plan 생성은 완료, 수정 검사기의 상세/IAM/OIDC·NAT/생성 권한 검토는 미완료이며 ROSA Apply/클러스터 생성은 NOT_RUN이다.
+ROSA는 준비되는 즉시 시작해 10/16(금)까지 검증하고 주말 전에 ROSA/NAT 삭제를 완료하는 일정이다. 비용 기록은 실행 준비와 병행하며 전체 원장 완성을 대기조건으로 두지 않는다. $450 계획/$500 한도는 유지한다. 기존 저장 Plan 생성·내용검토22항목과 binary–JSON 일치 PASS, 수정/재생성은 불필요하다. A의 NAT3/EIP3/private 기본 경로3 후속 Plan과 bootstrap 실행 정책 보완 Plan 검토·적용이 남아 있으며 ROSA Apply/클러스터 생성은 NOT_RUN이다.
 
 원 작업 체크는 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의81개 항목에서 **36개 완료·45개 미완료**로 갱신했다. [B 실행 보드](TJUNG03_EXECUTION_BOARD.md), [B 인계 Docs #8](https://github.com/seokpan/seokpan-hybrid-docs/issues/8), [발표 후보 Docs #6](https://github.com/seokpan/seokpan-hybrid-docs/issues/6)와 연결한다.
 
-- [ROSA/Plan Infra25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25#issuecomment-6145405350): Controller jth 목적 조회13 PASS·OCM 최소 Role/정책 연결·서울 Multi-AZ 확인·init/validate·전체 저장 Plan 생성 완료(추가16/검사17 PASS). Plan 세부·A 리뷰·NAT/생성 권한 확인은 남고 **ROSA Apply는 미실행**이다. OCM IAM2개 실제 생성은 별도이며 종료 시 정리 대상이다.
+- [ROSA/Plan Infra25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25#issuecomment-6145405350): Controller jth 목적 조회13 PASS·OCM 최소 Role/정책 연결·서울 Multi-AZ 확인·init/validate·전체 저장 Plan 생성 완료(추가16/검사17 PASS). B 내용22항목 검토 PASS, A 동일 개정 리뷰·NAT/생성 권한 보완은 남고 **ROSA Apply는 미실행**이다. OCM IAM2개 실제 생성은 별도이며 종료 시 정리 대상이다.
 - [App/OCP App4](https://github.com/seokpan/seokpan-hybrid-app/issues/4#issuecomment-6145407122): Run7 FE→BE 선택 교체·Ready/이전 Pod 종료·Synced/Healthy 및3클라이언트 외부 기능/WS/reload PASS(87.797초·재시도0). 실제 다중 Pod/부하·장시간/장애·Cloud/정량 DR은 별도 미완료다.
 - [Recovery GitOps10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10#issuecomment-6145408408): B jth 보호 입력5필드·AUTH/CA/hash/5객체 매핑과 분리 공급 Source는 완료. 실제 독립 대상/Engine·객체 공급/TLS·C 복원/전체 시간선 수락은 남는다.
 - [App1](https://github.com/seokpan/seokpan-hybrid-app/issues/1)의 원 Source/Client·lab 기준4개는 완료해 종료했다. 운영 Pool 값·Cloud 연결/다중 Pod·장애는 App4/Infra19에서 계속한다. App21은 실제 결과 모달/Rating/대기방 복귀만 추가 체크하며 지정 해상도·스크롤/오류 배치 검증은 남긴다.

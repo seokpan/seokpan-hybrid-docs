@@ -16,7 +16,7 @@ App·Infra·GitOps·Docs의 열린/닫힌 이슈93개와 댓글387개를 조회�
 | [App21](https://github.com/seokpan/seokpan-hybrid-app/issues/21) | OPEN | 실제 결과/Rating·모달·대기방 복귀 완료. 지정1299×864/1440×900·스크롤/오류 배치는 미검증; 1280×900 기능 시험으로 대체하지 않음 |
 | [App33](https://github.com/seokpan/seokpan-hybrid-app/issues/33) | CLOSED / Source 기준4개 완료 | PR34의 Full2회/재시도0·UI36·Source 검사와 최종 Build 입력 인계. 실제 새 Image 교체와 구분 |
 | [GitOps10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10) | OPEN | TH08 선언/Render·Sync/삭제 보호 **검토** 완료. 제한 실험 범위 외 Namespace/Argo 외 삭제 NOT_TESTED. Cloud/독립 Recovery 실제 조합은 미완료 |
-| [Infra25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25) | OPEN / Plan 완료·Apply NOT_RUN | jth 목적 조회13 PASS, OCM Role1/정책1 실제 생성/연결, init/validate·전체 저장 Plan 추가16/검사17 PASS. 세부/IAM/OIDC·NAT/생성 권한 확인·A 리뷰/Cloud 실행은 미완료 |
+| [Infra25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25) | OPEN / Plan 완료·Apply NOT_RUN | jth 목적 조회13 PASS, OCM Role1/정책1 실제 생성/연결, init/validate·전체 저장 Plan 추가16/검사17 PASS. B 내용22항목·binary–JSON 일치 PASS. NAT0/private 기본 경로0/3·생성 허용 정책 부족, A 후속 Plan/리뷰·Apply/Cloud 실행은 미완료 |
 | [Infra26](https://github.com/seokpan/seokpan-hybrid-infra/issues/26) | CLOSED / DUPLICATE | 구현·실행 정본은 Infra25. 등록 당시 빈 체크를 별도 작업 완료/새 실행 요청으로 소비하지 않음 |
 | [Docs2](https://github.com/seokpan/seokpan-hybrid-docs/issues/2) | CLOSED / 5개 완료 | PR3 병합071cc65·원문5·원격52Blob·링크110·그림12쌍 기존 검사로 체크 정정 |
 | [Docs4](https://github.com/seokpan/seokpan-hybrid-docs/issues/4) | CLOSED / 3개 완료 | PR5 공유 Source/링크·main 게시 기준. 개인별 Runtime 완료를 의미하지 않음 |
@@ -36,9 +36,9 @@ App·Infra·GitOps·Docs의 열린/닫힌 이슈93개와 댓글387개를 조회�
 
 ## ROSA 일정·비용
 
-ROSA는 준비되는 즉시 시작해 10/16(금)까지 검증하고 주말 전에 ROSA/NAT 삭제를 완료하는 일정이다. 비용 기록은 실행 준비와 병행하며 전체 원장 완성을 대기조건으로 두지 않는다. $450 계획/$500 한도는 유지한다. 현재 저장 Plan 생성은 완료, 수정 검사기의 상세/IAM/OIDC·NAT/생성 권한 검토는 미완료이며 ROSA Apply/클러스터 생성은 NOT_RUN이다.
+ROSA는 준비되는 즉시 시작해 10/16(금)까지 검증하고 주말 전에 ROSA/NAT 삭제를 완료하는 일정이다. 비용 기록은 실행 준비와 병행하며 전체 원장 완성을 대기조건으로 두지 않는다. $450 계획/$500 한도는 유지한다. 기존 저장 Plan 생성·내용검토22항목과 binary–JSON 일치 PASS, 수정/재생성은 불필요하다. A의 NAT3/EIP3/private 기본 경로3 후속 Plan과 bootstrap 실행 정책 보완 Plan 검토·적용이 남아 있으며 ROSA Apply/클러스터 생성은 NOT_RUN이다.
 
-A/D 준비 문안은 전달 완료이며 NAT Plan·권한의 실제 결과/수락과 구분한다. 24시간 가동 제한은 두지 않는다. Foundation 전체 Destroy까지 승인한 것으로 확대하지 않는다. 03/04 종료·DR10분/DB RPO30분/Backup15분·CP3/Infra3/Worker3·Cost PARTIAL 및 최종 Q 미완료는 유지한다.
+기존 A NAT/D 비용 준비 문안은 전달 완료이며 새 ROSA 생성·정리 권한 보완 문안의 전달/수신은 미확인이다. NAT EIP3과 별도 VPN EIP1을 합친 계획상 전체4개를 구분한다. A NAT/bootstrap 후속 Plan 적용과 B ROSA Apply는 미실행이다. 24시간 가동 제한은 두지 않는다. Foundation 전체 Destroy까지 승인한 것으로 확대하지 않는다. 03/04 종료·DR10분/DB RPO30분/Backup15분·CP3/Infra3/Worker3·Cost PARTIAL 및 최종 Q 미완료는 유지한다.
 
 ## TH 묶음별 체크
 

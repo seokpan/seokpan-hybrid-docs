@@ -4,9 +4,9 @@
 
 [B 전체 상태 대조](TJUNG03_STATUS_AUDIT_20261013.md): 상위·원 이슈 체크와 Plan/Apply·실행·미시험의 대응을 확인한다.
 
-ROSA는 준비되는 즉시 시작해 10/16(금)까지 검증하고 주말 전에 ROSA/NAT 삭제를 완료하는 일정이다. 비용 기록은 실행 준비와 병행하며 전체 원장 완성을 대기조건으로 두지 않는다. $450 계획/$500 한도는 유지한다. 기존 저장 Plan 생성은 완료, 수정 검사기의 상세/IAM/OIDC·NAT/생성 권한 검토는 미완료이며 ROSA Apply/클러스터 생성은 NOT_RUN이다.
+ROSA는 준비되는 즉시 시작해 10/16(금)까지 검증하고 주말 전에 ROSA/NAT 삭제를 완료하는 일정이다. 비용 기록은 실행 준비와 병행하며 전체 원장 완성을 대기조건으로 두지 않는다. $450 계획/$500 한도는 유지한다. 기존 저장 Plan 생성·내용검토22항목과 binary–JSON 일치 PASS, 수정/재생성은 불필요하다. A의 NAT3/EIP3/private 기본 경로3 후속 Plan과 bootstrap 실행 정책 보완 Plan 검토·적용이 남아 있으며 ROSA Apply/클러스터 생성은 NOT_RUN이다.
 
-**담당: 정태훈(tjung03). 현재 단계: ROSA 전체 저장 Plan 생성 완료 → 기존 Plan 세부·NAT/생성 권한 검토. 비용 기록 병행. ROSA Apply는 미실행이다.**
+**담당: 정태훈(tjung03). 현재 단계: ROSA 전체 저장 Plan 생성 완료 → 저장 Plan 내용 검토 완료 → A NAT/생성 권한 보완. 비용 기록 병행. ROSA Apply는 미실행이다.**
 
 - Controller jth의 목적 조회13개 PASS, OCM 최소 Role1·정책1 생성/조직 연결, Installer 서울 Multi-AZ 확인·init/validate·전체 Plan 생성 완료. **추가16·수정/삭제/교체0·검사17 PASS**, 출력 변경1, exit2 정상이다.
 - OCM IAM2개는 실제 생성된 Terraform 밖 B 자산이다. ROSA 클러스터/NAT는 생성하지 않았으며 종료 때 OCM 연결/Role/정책 정리도 확인한다.

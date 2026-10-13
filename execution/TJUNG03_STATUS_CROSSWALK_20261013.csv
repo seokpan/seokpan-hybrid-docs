@@ -1,4 +1,4 @@
-id,status,original_condition_and_evidence
+"id","status","original_condition_and_evidence"
 "TH-01.1","COMPLETE","TH-01.1 실제 PC/Controller·clone·Branch·전체 HEAD·도구·Reviewer 확인 — 완료 근거: [환경·도구/Source 확인](https://github.com/seokpan/seokpan-hybrid-docs/pull/97) · [Seed·78개 이력·로컬 대조·병합](https://github.com/seokpan/seokpan-hybrid-app/pull/5)."
 "TH-01.2","COMPLETE","TH-01.2 미커밋/미추적/ignored 입력·개인 변경과 기존 ZIP을 보존해 비교 — 완료 근거: [환경·도구/Source 확인](https://github.com/seokpan/seokpan-hybrid-docs/pull/97) · [Seed·78개 이력·로컬 대조·병합](https://github.com/seokpan/seokpan-hybrid-app/pull/5)."
 "TH-01.3","COMPLETE","TH-01.3 사용할 Source·보호 자료 논리 참조·변경 범위·남은 입력 기록 — 완료 근거: [환경·도구/Source 확인](https://github.com/seokpan/seokpan-hybrid-docs/pull/97) · [Seed·78개 이력·로컬 대조·병합](https://github.com/seokpan/seokpan-hybrid-app/pull/5)."
@@ -43,7 +43,7 @@ id,status,original_condition_and_evidence
 "TH-11.3","INCOMPLETE","TH-11.3 정상 관리 경로 검증 뒤 초기 인증·높은 Binding·기존 Token/Argo Session 회수와 잔존 확인 — 남은 조건: 정상 관리 경로 검증 뒤 초기 인증·높은 Binding·기존 Token/Session 회수와 잔존 확인이 남는다."
 "TH-11.4","INCOMPLETE","TH-11.4 실제 공급/복호화/접근·재주입·회수 결과와 보관 책임 인계 — 남은 조건: B Recovery SOPS 해독/5객체 매핑은 완료됐다. 실제 대상 공급·재주입·회수 및 독립 보관 책임 인계가 남는다."
 "TH-12.1","COMPLETE","TH-12.1 실제 도구·지원/Quota·Role·Caller/Backend·foundation 입력을 확인 — 완료 근거: [ROSA Root·Schema/Lock·A/C 리뷰](https://github.com/seokpan/seokpan-hybrid-infra/pull/28) · [실제 목적 조회·전체 Plan](https://github.com/seokpan/seokpan-hybrid-infra/issues/25#issuecomment-6145405350)."
-"TH-12.2","INCOMPLETE","TH-12.2 Root 전체 Plan을 보호 자료로 보관하고 A의 사용할 개정/범위 리뷰 수신 — 남은 조건: 추가16·검사17 PASS의 전체 저장 Plan 생성·보관은 완료됐다. 저장 Plan 세부·IAM/OIDC 범위 검토와 A의 같은 개정/범위 리뷰가 남는다. ROSA Apply는 미실행이다."
+"TH-12.2","INCOMPLETE","TH-12.2 Root 전체 Plan을 보호 자료로 보관하고 A의 사용할 개정/범위 리뷰 수신 — 남은 조건: 추가16·검사17 PASS의 전체 저장 Plan 생성·보관과 B 내용검토22항목/binary–JSON 일치 PASS는 완료됐다. A의 같은 개정/범위 리뷰와 NAT/생성 권한 후속 Plan 적용은 남는다. 기존 Plan 수정·재생성은 불필요하며 ROSA Apply는 미실행이다."
 "TH-12.3","COMPLETE","TH-12.3 D에게 수량·생성/가동/삭제/재시험 시간과 부속/잔존 자원 비용 입력 제공 — 완료 근거: [B 수량·시간·비용 입력](https://github.com/seokpan/seokpan-hybrid-docs/issues/43#issuecomment-6145410624) · [D 비용 검토](https://github.com/seokpan/seokpan-hybrid-docs/issues/43#issuecomment-6139848440)."
 "TH-12.4","INCOMPLETE","TH-12.4 첫 Full Apply 전 전체 Cost Gate와 가용 실행 창 확인. $450 계획선 초과 시 보류·조정, 총 $500 한도 유지 — 남은 조건: Foundation69의 제한 승인은 별도 완료다. ROSA/NAT의 전체 비용 검토·작업 시작/종료 시각·별도 Apply 승인은 남는다."
 "TH-13.1","INCOMPLETE","TH-13.1 지정 실행자·입력·리뷰·비용/시간·공유 실행 조건 재확인 후 rosa 생성 — 남은 조건: ROSA Apply·Ready 뒤 실제 Cloud 정상 통합과 같은 조합의 업무/보존 시험이 남는다."
