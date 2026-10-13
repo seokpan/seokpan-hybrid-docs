@@ -912,6 +912,22 @@ foundation Apply 날짜가 잡히지 않은 동안, Apply 당일 Data 작업을 
 - 남은 것: 1차 쓰기 중지 실제 경로(정태훈), foundation Apply 날짜(이유빈). Recovery Namespace · `maxmemory` 수치 · 복구 App Pod 출발지 IP는 GitOps PR #41 범위 밖으로 계속 열려 있다.
 - 한계: 시간 예산 일부는 추정이다. 10-13 예행(1차 조회만, 쓰기 중지 없음)으로 1-1 · 2단계를 실측해 Infra #44를 갱신한다.
 
+### 8.24 이관 쓰기 중지 끝점 · Recovery Redis 보호 입력 (infra #44 · #19, Docs PR #107)
+
+정태훈의 요청 두 가지를 반영했다. 하나는 최종 이관에서 원본 쓰기 중지를 언제 끝낼지이고, 다른 하나는 확정된 Recovery Redis 값에 맞춘 보호 입력 공급이다. 실제 이관 · 클러스터 공급 · Redis 기동은 하지 않았다.
+
+| 항목 | 내용 | 확인 |
+|---|---|---|
+| 이관 Runbook [Infra #44](https://github.com/seokpan/seokpan-hybrid-infra/issues/44) v2.1 | 원본 쓰기 중지를 1-1단계부터 9단계(Migration `current` · Backend 기동 · 업무 확인) 뒤 정태훈의 전환/복귀 판단까지 유지한다. 6단계 비교가 일치해도 원본을 다시 열지 않고, 7 · 8단계(계정 · 권한)도 중지 구간에 넣었다. 첫 백업(10단계)은 전환 결정 뒤에 시작한다 | 근거는 [Docs PR #107](https://github.com/seokpan/seokpan-hybrid-docs/pull/107)(`execution/FIRST_SERVICE_WRITE_STOP_PREPARATION.md` 3절). 6단계 뒤에 원본을 열면 전환 때 그 사이 쓰기를 잃고, Cloud 시험 쓰기와 겹치면 두 DB가 갈라진다 |
+| 시작 조건 · 시간 | 준비(0 · 1 · 3 · 4단계)는 foundation Apply 뒤, 최종 쓰기 중지는 ROSA 클러스터 Ready와 배포 입력 준비 뒤. 김상희 몫 중지 구간 45분(1-1 ~ 6단계 30분 + 7 · 8단계 15분), 전체 중지 예산 75분 | 8.23절의 "Apply 완료일 오후 또는 다음 날 오전"을 대체한다. 시간은 실측 전 초기값 |
+| Cloud 시험 쓰기 | 9단계의 로그인 · 게임 시험도 새 쓰기로 본다. 시험 쓰기 뒤 복귀하면 이번 RDS 데이터는 이관 결과로 쓰지 않고, 다음 시도는 1-1단계부터 새 덤프로 한다 | 복귀 때 RDS `stone_game`을 바로 지울지는 정태훈 확인 대기 |
+| Recovery Redis 값 | Namespace `seokpan-recovery`, Valkey 7.2.14, 메모리 requests · limits 512Mi. runtime 설정 `dir /data` · `maxmemory 384mb`(limit의 75%) · `maxmemory-policy noeviction` · `save ""` · `appendonly no`, `runtime-data`는 `emptyDir` | 저장을 끈 이유: Recovery Redis는 빈 상태로 시작하고, RDB/AOF fork가 512Mi 안에서 OOM을 일으킬 수 있다 |
+| Recovery Redis 보호 입력 ([Infra #19 코멘트](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6135730167)) | controller에 기존 Redis 입력이 없어 새로 만들었다. Recovery DB CA와 분리한 전용 CA(SHA-256 `9c3e26bd…2efc`, ~2027-10-13), 서버 인증서(SAN `recovery-redis.seokpan-recovery.svc` · `.svc.cluster.local`, ~2027-04-11), Cloud와 다른 AUTH Token. SOPS 파일 하나에 선언 이름별 키 5개 | 체인 검증 · 인증서와 개인키 짝 · 파일 안 CA 지문 · 서버 `requirepass`와 Backend Token 일치를 값 출력 없이 확인 |
+
+- CA를 나눈 이유: 같은 CA를 쓰면 이름 검증으로 기존 DB 인증서 도용은 막히지만, CA 개인키 하나가 새면 DB와 Redis를 함께 가장할 수 있고 CA 교체도 함께 묶인다. App 선언은 이미 `backend-database-ca`와 `backend-redis-ca`를 따로 받는다. 8.23절 무렵의 "Recovery DB CA로 Redis 인증서도 발급" 제안은 이것으로 대체한다.
+- 남은 것: Secret 3개 · ConfigMap 2개를 `seokpan-recovery`에 넣는 경로(사전 Render Bundle 또는 Ansible 적용 — 정태훈 결정), Valkey 7.2.14 Image의 `redis-server` 실행 파일 유무, SOPS 파일의 이유빈 · 정태훈 계정 해독 확인, Redis CA 개인키 오프라인 사본.
+- 한계: 이번 공급은 controller의 SOPS 파일 준비까지다. 클러스터 Secret 생성 · Redis 기동 · TLS/AUTH 접속 시험은 하지 않았다.
+
 ## 9 복구 예행과 목표 재검토 — 2026-10-02
 
 **2026-10-03 설계 우선순위 정정:** 이번 피드백의 목적과 대안 비교·수정 범위는 [03 §3-I.14](../design/03_DETAILED_DESIGN.md#recovery-design-review-20261003)를 기준으로 읽는다. 이 절은 최소 예행의 기존 입력·측정·부담 비교를 지원한다. 02의 기존 1차 Redis 재사용 설명과 03의 좁게 읽힐 수 있는 RTO 경계는 설계 문서에서 바로잡는다. 아래 코드·검사·Cloud/ROSA 후속은 각 시점/범위의 기록이며 설계 재검토보다 우선하는 전체 구현 요구가 아니다.
