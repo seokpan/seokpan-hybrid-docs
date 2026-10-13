@@ -229,7 +229,7 @@ MaxScale의 Listener는 Service로 연결 요청을 전달하고 Router가 Backe
 | 만료 기준 | 무기한이 실제 허용되면 무기한. 제한이 있으면 제품과 조직 정책 안에서 허용되는 최대 수명. 실제 만료 설정/일자는 확인 후 기록 |
 | 권한 | seokpan의 seokpan-hybrid-gitops 한 개, Contents write·Pull requests write·기본 Metadata read. Administration/Workflows/Org 권한을 추가하지 않음 |
 | 실행 흐름 | CI 검증 후 Release Branch Push와 PR 생성. 사람 Review/Merge와 기존 main 보호 유지 |
-| 근거 | 최소 초기 통합, 같은 Token으로 Git/PR 처리, 프로젝트 중 불필요한 만료 교체를 줄이려는 사용자 선택 |
+| 근거 | 최소 초기 통합, 같은 Token으로 Git/PR 처리, 프로젝트 중 불필요한 만료 교체를 줄이려는 승인 선택 |
 | 관리 책임 | 최유준이 CI Credential 등록/검증/회수를 조율하고 정태훈이 배포/PR 경계를 리뷰. 실제 발급자는 Org membership·Repo 권한·정책을 확인해 연결 |
 | 미확인 | 조직 PAT 허용/승인/최대 수명, 실제 발급자 권한, Token/Credential ID, Jenkins Job/Plugin, Branch Rule/Bypass |
 | 기준 연결 | 03 §3-C.12.4의 제한 PAT 후보를 실제 Writer 방식으로 채택. 당시 유한 만료 후보보다 이번 사용자 결정의 무기한 우선/최대 수명 기준을 우선 적용. 완료된 03 원문은 보존 |
@@ -733,7 +733,7 @@ Host명/실제 용량, Credential ID, Org 정책, 실제 단가/Plan이나 후�
 
 ### 11.1 범위와 방법
 
-역사적 00·승인된 01/02/03·등록 지침, 사용자 결정 전체, 현재 04 전체, 추가 팀 보고, 이미 조회한 지정 Repo/PR/Issue 및 공식 문서 범위를 대조한다. 결정→책임→입력→코드/실행 Owner→Secret/Release→시험/실패 처리→일정/비용→후속 인계를 추적하고, 수정 후 직접 영향과 후속 범위를 다시 읽는다. Runtime·보호 원본·미제공 입력은 확인 가능한 문서/Source와 구분한다. 닫힌 03과 팀 보고 원본은 수정하지 않는다.
+역사적 00·승인된 01/02/03·등록 지침, 승인된 프로젝트 결정 전체, 현재 04 전체, 추가 팀 보고, 이미 조회한 지정 Repo/PR/Issue 및 공식 문서 범위를 대조한다. 결정→책임→입력→코드/실행 Owner→Secret/Release→시험/실패 처리→일정/비용→후속 인계를 추적하고, 수정 후 직접 영향과 후속 범위를 다시 읽는다. Runtime·보호 원본·미제공 입력은 확인 가능한 문서/Source와 구분한다. 닫힌 03과 팀 보고 원본은 수정하지 않는다.
 
 ### 11.2 보완과 재검증 기록
 

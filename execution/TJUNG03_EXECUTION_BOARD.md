@@ -2,7 +2,11 @@
 
 ## tjung03 현재 작업 — 2026-10-13 KST
 
-**담당: 정태훈(tjung03). 현재 단계: ROSA 전체 저장 Plan 생성 완료 → Plan 세부·권한·비용 검토. ROSA Apply는 미실행이다.**
+[B 전체 상태 대조](TJUNG03_STATUS_AUDIT_20261013.md): 상위·원 이슈 체크와 Plan/Apply·실행·미시험의 대응을 확인한다.
+
+ROSA는 준비되는 즉시 시작해 10/16(금)까지 검증하고 주말 전에 ROSA/NAT 삭제를 완료하는 일정이다. 비용 기록은 실행 준비와 병행하며 전체 원장 완성을 대기조건으로 두지 않는다. $450 계획/$500 한도는 유지한다. 기존 저장 Plan 생성은 완료, 수정 검사기의 상세/IAM/OIDC·NAT/생성 권한 검토는 미완료이며 ROSA Apply/클러스터 생성은 NOT_RUN이다.
+
+**담당: 정태훈(tjung03). 현재 단계: ROSA 전체 저장 Plan 생성 완료 → 기존 Plan 세부·NAT/생성 권한 검토. 비용 기록 병행. ROSA Apply는 미실행이다.**
 
 - Controller jth의 목적 조회13개 PASS, OCM 최소 Role1·정책1 생성/조직 연결, Installer 서울 Multi-AZ 확인·init/validate·전체 Plan 생성 완료. **추가16·수정/삭제/교체0·검사17 PASS**, 출력 변경1, exit2 정상이다.
 - OCM IAM2개는 실제 생성된 Terraform 밖 B 자산이다. ROSA 클러스터/NAT는 생성하지 않았으며 종료 때 OCM 연결/Role/정책 정리도 확인한다.
@@ -59,7 +63,7 @@ Stage-1 작성/리뷰는 끝난 Source를 재사용한다. SHA A의 lab 선언�
 
 ## 먼저 열 이슈와 기록 순서
 
-**개인 출발점은 [h-docs Issue #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)입니다.** TH01~19의 81개 체크와 완료 2개를 유지하며, 상단 현재 안내 → 저장소별 실행 카드 → 원 PR/Run → 제출/수신 → 상위 TH 확인 순으로 읽습니다. 이전 본문은 접어 보존하고 체크 정본을 복제하지 않습니다. Native Sub-issues는 등록되지 않았으며 기존 본문 양방향 링크 구조입니다.
+**개인 출발점은 [h-docs Issue #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)입니다.** 당시 TH01~19의 81개 체크와 완료 2개를 기준으로 안내했으며, 상단 현재 안내 → 저장소별 실행 카드 → 원 PR/Run → 제출/수신 → 상위 TH 확인 순으로 읽습니다. 이전 본문은 접어 보존하고 체크 정본을 복제하지 않습니다. Native Sub-issues는 등록되지 않았으며 기존 본문 양방향 링크 구조입니다.
 
 | 찾을 일 | 주 기록 위치 |
 | --- | --- |
