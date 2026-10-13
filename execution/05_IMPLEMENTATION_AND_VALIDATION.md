@@ -980,6 +980,24 @@ foundation Apply 날짜가 잡히지 않은 동안, Apply 당일 Data 작업을 
 - 비용: RDS Multi-AZ와 Valkey 2노드가 Apply 시각부터 과금된다. Valkey는 중지 기능이 없고, RDS는 삭제 보호가 켜져 있어 종료 때 해제 Apply가 먼저 필요하다(삭제 Runbook [Infra #57](https://github.com/seokpan/seokpan-hybrid-infra/issues/57)).
 - 한계: 이번 확인은 설정값과 출력의 일치까지다. TLS 실제 접속 · 평문 거부 · 출발지 IP는 VPN 뒤(#44 3단계), Valkey CA 체인과 Runtime 계정 출발지 IP는 ROSA 뒤에 확인한다.
 
+### 8.28 RDS 마스터 Secret 확인 · 확인 스크립트 저장소 · 값 전달 경로 · Data 계약 v2.3 (infra #19 · #44 · #65, PR #66)
+
+foundation Apply 뒤 VPN 연결 전에 할 수 있는 Data 준비를 마쳤다. ① 이관 때 계정을 만드는 RDS 마스터 비밀번호가 실제로 읽히는지 ② 이관 Runbook이 실제 값을 안전하게 읽는지 ③ 확인 도구를 저장소 기준본으로 ④ 정태훈에게 연결 값과 CA를 넘기는 길 ⑤ Data 계약을 오늘 상태로 맞추는 순서로 진행했다. 실제 주소 · ARN · ID는 공개 기록에 남기지 않았다.
+
+| 항목 | 내용 | 확인 |
+|---|---|---|
+| 마스터 Secret 확인 | RDS가 관리하는 마스터 비밀번호(Secrets Manager)를 김상희 personal 세션으로 조회했다. 값은 화면에 내지 않고 형식만 판정했다 | NG 0 · 판정불가 0, 인계 파일의 ARN = 실제 ([Infra #19 기록](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6142977494)) |
+| 7일 자동 회전 | 비밀번호가 7일마다 바뀐다. 일 단위 회전은 UTC 하루(KST 09:00 ~ 다음 날 08:59) 안 어느 때나 일어나므로, 다음 창은 10/20 09:00 ~ 10/21 08:59 KST다 | 회전 설정은 바꾸지 않고, 마스터를 쓰는 이관 3 · 4 · 7 · 8단계를 이 창에 시작하지 않기로 했다 |
+| 이관 Runbook v2.5 | [Infra #44](https://github.com/seokpan/seokpan-hybrid-infra/issues/44)에 0-A(인계 파일에서 값 읽기 · 회전 창 확인)와 0-12(회전 창 조건)를 넣고, 마스터 접속 파일은 4단계 끝에 지우고 7단계 직전에 다시 만들게 했다. 값이 비었거나 회전 창이면 접속 파일을 만들지 않는다 | 문법 검사와 가짜 응답 시험(정상 · 회전 창 · 빈 값) |
+| 확인 스크립트 저장소 | 출력 인계 확인과 마스터 Secret 확인 스크립트를 infra `ansible/data/controller/`에 기준본으로 넣었다. 리뷰에서 "manifest 해시를 아무 위치에서나 찾음"과 "조회 전용인데 인계 폴더에 시험 파일을 만듦" 두 가지가 지적돼 고쳤고, 회귀 시험 11가지를 함께 넣었다 | [Infra #65](https://github.com/seokpan/seokpan-hybrid-infra/issues/65) · [PR #66](https://github.com/seokpan/seokpan-hybrid-infra/pull/66) 승인 · 병합, 실제 인계 파일 재실행 NG 0 |
+| RDS CA | AWS 공식 주소의 서울 번들을 받아 10-07 사본과 같고, RDS가 쓰는 `rds-ca-rsa2048-g1`의 루트가 들어 있는 것을 확인했다. 파일은 옮기지 않고 주소와 SHA-256 전체를 넘겼다 | 정태훈 확인. 실제 TLS 접속은 VPN 뒤 |
+| 연결 값 전달 | RDS · Valkey 주소 · 포트는 이유빈 인계 파일 `c-data-outputs.json`에만 있다. 같은 폴더의 `backend-reference.json`은 Terraform State 참조라 해당이 없었다. 값을 복사하지 않고 같은 파일을 정태훈도 읽게 하는 권한 추가를 이유빈에게 요청했다 | 권한 추가 뒤 정태훈이 받은 값과 해시로 대조 (대기) |
+| GitOps | 정태훈이 실제 주소를 Public GitOps 저장소에 커밋하지 않고 보호된 배포 입력으로 관리하기로 했다 | 정태훈 결정 |
+| Data 계약 v2.3 | v2.2 이후 바뀐 내용(실제 자원 · 값 전달 경로 · CA · 마스터 회전 · 백업 구현 · 연결 수 결정 순서 · Recovery 전체)을 반영해 전체 다시 썼다. v2.2는 이력으로 표시했다 | [v2.3](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6143942560) · [정정 기록](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6144346476) |
+
+- 이번 확인은 값 · 권한 · 문서의 정합까지다. TLS 실제 접속 · 평문 거부 · 백업 작업 VM 출발지 IP는 VPN 뒤(이관 Runbook 0-2 · 0-3 · 3단계), Valkey CA 체인과 Runtime 계정 출발지 IP는 ROSA 뒤에 확인한다.
+- 회전 창(10/20 09:00 ~ 10/21 08:59 KST)은 검증 목표 창(10/19 ~ 21)과 일부 겹치므로, 이관 쓰기 중지 날짜를 정할 때 함께 본다.
+
 ## 9 복구 예행과 목표 재검토 — 2026-10-02
 
 **2026-10-03 설계 우선순위 정정:** 이번 피드백의 목적과 대안 비교·수정 범위는 [03 §3-I.14](../design/03_DETAILED_DESIGN.md#recovery-design-review-20261003)를 기준으로 읽는다. 이 절은 최소 예행의 기존 입력·측정·부담 비교를 지원한다. 02의 기존 1차 Redis 재사용 설명과 03의 좁게 읽힐 수 있는 RTO 경계는 설계 문서에서 바로잡는다. 아래 코드·검사·Cloud/ROSA 후속은 각 시점/범위의 기록이며 설계 재검토보다 우선하는 전체 구현 요구가 아니다.
