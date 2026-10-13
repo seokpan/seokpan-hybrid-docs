@@ -998,6 +998,20 @@ foundation Apply 뒤 VPN 연결 전에 할 수 있는 Data 준비를 마쳤다. 
 - 이번 확인은 값 · 권한 · 문서의 정합까지다. TLS 실제 접속 · 평문 거부 · 백업 작업 VM 출발지 IP는 VPN 뒤(이관 Runbook 0-2 · 0-3 · 3단계), Valkey CA 체인과 Runtime 계정 출발지 IP는 ROSA 뒤에 확인한다.
 - 회전 창(10/20 09:00 ~ 10/21 08:59 KST)은 검증 목표 창(10/19 ~ 21)과 일부 겹치므로, 이관 쓰기 중지 날짜를 정할 때 함께 본다.
 
+### 8.29 이관 전 RDS Stop 분기 · Data 계약 v2.4 (infra #45 · #19)
+
+foundation Apply로 RDS가 과금되기 시작했지만 VPN과 이관은 아직이다. RDS Stop/Start Runbook은 Stop 전에 마지막 백업 사본이 온프렘에 도착했는지 확인하는데, 이관 전에는 백업이 한 번도 없어서 그대로 실행하면 "Stop 중단"에서 멈춘다. 보호할 데이터가 아직 없다는 것을 다른 근거로 확인하는 분기를 넣었다. 같은 날 Data 계약에 복원 RPO 판정 기준을 한 줄 더했다.
+
+| 항목 | 내용 | 확인 |
+|---|---|---|
+| 사전 조회 (10-13 20:54 KST, 조회만) | RDS `available` · Multi-AZ · 삭제 보호 켜짐 · 대기 중인 변경 없음. 자동 백업 · 유지보수 시간이 Runbook의 KST 표기와 같다. 생성 이후 최대 DB 연결 수 0, 백업 작업 VM의 백업 Timer 꺼짐 · 기록 파일 없음 | 김상희 personal 세션. Endpoint는 값 대신 해시로 Data 계약 2.1절과 대조(일치) |
+| RDS Stop/Start Runbook v1.4 | 이관 Runbook 5단계(가져오기) 전이면 사본 대조를 건너뛰고, 근거 4가지(5단계 미실행 · 생성 이후 최대 연결 0 · 백업 Timer 꺼짐 · ROSA 없음)를 기록한 뒤 Stop한다. Start 뒤에는 `available`과 Endpoint 해시만 보고, 접속 확인은 VPN 뒤 이관 Runbook으로 넘긴다. 근거가 하나라도 다르면 분기를 쓰지 않고 Stop을 보류한다 | [Infra #45](https://github.com/seokpan/seokpan-hybrid-infra/issues/45) 본문 v1.4 · [변경 이력](https://github.com/seokpan/seokpan-hybrid-infra/issues/45#issuecomment-6145017264) |
+| 기록 방식 | Runbook에서도 Endpoint는 값 대신 해시로 남기고, 마스터 Secret ARN은 이관 Runbook 0-A처럼 인계 파일에서 읽는다. 계획대로 10/19 아침에 켜면 마스터 비밀번호 회전 창(10/20 09:00 ~ 10/21 08:59 KST)은 가동 중에 온다 | 자리표시 입력이 없어짐 |
+| Data 계약 v2.4 | 4.2절에 RPO 판정 행을 추가했다. 복원 스크립트는 30분 넘은 사본도 실행 전에 막지 않으므로, 복원 뒤 선택된 Backup ID 시각과 복원 Runbook의 T0를 수행자가 대조해 판정한다([GitOps PR #41](https://github.com/seokpan/seokpan-hybrid-gitops/pull/41) 검토 후속) | v2.3 코멘트를 같은 자리에서 고쳐 기존 링크 유지 · [변경 기록](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6144927357) |
+
+- 10/15 저녁 Stop 여부는 VPN · 이관 진행에 따라 팀이 정한다. 이관 전이면 새 분기, 이관 뒤면 기존 순서(마지막 사본 확인 → Stop)로 진행한다.
+- 한계: Stop · Start는 아직 실행하지 않았다. 최대 연결 0은 CloudWatch 1시간 단위 최댓값이다. 실제 Stop · Start 소요 시간과 정지 중 마스터 비밀번호 동작은 첫 Stop에서 잰다.
+
 ## 9 복구 예행과 목표 재검토 — 2026-10-02
 
 **2026-10-03 설계 우선순위 정정:** 이번 피드백의 목적과 대안 비교·수정 범위는 [03 §3-I.14](../design/03_DETAILED_DESIGN.md#recovery-design-review-20261003)를 기준으로 읽는다. 이 절은 최소 예행의 기존 입력·측정·부담 비교를 지원한다. 02의 기존 1차 Redis 재사용 설명과 03의 좁게 읽힐 수 있는 RTO 경계는 설계 문서에서 바로잡는다. 아래 코드·검사·Cloud/ROSA 후속은 각 시점/범위의 기록이며 설계 재검토보다 우선하는 전체 구현 요구가 아니다.
