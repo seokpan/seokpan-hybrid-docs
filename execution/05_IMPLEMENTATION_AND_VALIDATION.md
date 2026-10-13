@@ -963,6 +963,23 @@ foundation Apply 날짜가 잡히지 않은 동안, Apply 당일 Data 작업을 
 - [GitOps PR #41](https://github.com/seokpan/seokpan-hybrid-gitops/pull/41)의 Recovery Bundle v2는 이 스크립트를 경로로만 가리키므로 계약 변경은 없다.
 - 한계: 예행 사본(1차 Replica 원본, S3 생략)으로 확인했다. 김상희 키로 복구 DB VM에서 직접 해독하는 시험은 남아 있고(잠금 파일이 원본 키로 풀리는 것은 확인), RTO 10분 판정은 복구 App 연결을 포함한 본 검증(10/19~21)에서 한다. 복구 DB VM이 있는 Server-04 자체 장애는 범위 밖이다.
 
+### 8.27 foundation Apply 뒤 Data 확인 · 출력 인계 (infra #19 · #23 · #44, PR #62 · #63 · #64)
+
+이유빈이 2026-10-13 16:12에 foundation을 Apply했다. Data 쪽은 ① 만들어진 자원이 코드 값과 같은지 ② Terraform이 다시 봐도 바꿀 것이 없는지 ③ 넘겨받은 출력이 실제 자원과 맞는지를 차례로 확인했다. 모두 조회만 했고, 실제 주소 · ARN · ID는 공개 기록에 남기지 않았다.
+
+| 항목 | 내용 | 확인 |
+|---|---|---|
+| Apply 확인 | CloudTrail 이벤트 기록에서 실행 주체(`seokpan-tf-foundation` Role)와 생성 자원(VPC · 서브넷 9 · Data SG 2 · RDS · Valkey · Backup S3 · ECR 2 등)을 확인했다. NAT Gateway는 Apply 입력에서 제외됐다 | 에러 4건(S3 태그 권한, API 한도 등)은 모두 Terraform이 다시 시도해 성공했다 |
+| Data 자원 확인 | `check_data_apply.sh`로 VPC · Data SG · RDS · Valkey · Backup S3 · Backup User 54개 항목을 코드 값과 대조했다 | NG 0 ([Infra #19 기록](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6141889915)) |
+| 처음 NG 1개 | "사용자 지정 파라미터"에서 `require_secure_transport`가 빠졌다. MariaDB 11.8은 이 값의 기본값이 이미 `1`이라, 같은 값을 넣어도 AWS가 출처를 `engine-default`로 표시해 사용자 지정 목록에 나오지 않는다. 실제 값은 `1`이었다 | 스크립트가 출처와 상관없이 값으로 판정하게 고쳤다([Infra PR #62](https://github.com/seokpan/seokpan-hybrid-infra/pull/62), `check_data_apply.sh` `fe3d3c3dd03f`) |
+| 재-Plan 차이 | 같은 이유로 Terraform 재-Plan에 파라미터 그룹 수정 1개가 계속 남았다. Terraform은 파라미터를 이름 · 값 · 적용 방식으로 비교하는데, AWS 조회 결과는 `pending-reboot`, 코드 기본값은 `immediate`였다 | 해당 파라미터만 `apply_method = "pending-reboot"`로 맞추고 이유를 주석에 남겼다([PR #63](https://github.com/seokpan/seokpan-hybrid-infra/pull/63) · [PR #64](https://github.com/seokpan/seokpan-hybrid-infra/pull/64)). 이유빈 재-Plan 추가 · 수정 · 삭제 · 교체 0 |
+| 출력 인계 | 이유빈이 controller의 보호 폴더(김상희 읽기만)에 Data 출력 묶음과 manifest를 두었다. Data 출력 9개와 Network 출력 2개(`vpc_id` · `network_subnets`)를 AWS 실제 값과 대조했다 | RDS · Valkey 주소와 포트, 마스터 Secret, 버킷 · Backup User 이름, SG 2개(이름 · 실제 연결 · 서로 다름) 모두 일치. Data 서브넷 3개 = RDS 서브넷 그룹 ([Infra #23 회신](https://github.com/seokpan/seokpan-hybrid-infra/issues/23#issuecomment-6142071240)) |
+| 이관 Runbook | [Infra #44](https://github.com/seokpan/seokpan-hybrid-infra/issues/44) v2.4 — 0-1(Apply · 출력 수신 · 자원 확인) 완료 | 0-2(백업 작업 VM → RDS 3306 경로) · 0-3(TLS 실제 접속)은 VPN 연결 뒤 |
+
+- 주소는 모두 AWS가 준 원래 이름(`*.rds.amazonaws.com` · `*.cache.amazonaws.com`)이고 CNAME이 아니다(Data 계약 v2.2 2.1절).
+- 비용: RDS Multi-AZ와 Valkey 2노드가 Apply 시각부터 과금된다. Valkey는 중지 기능이 없고, RDS는 삭제 보호가 켜져 있어 종료 때 해제 Apply가 먼저 필요하다(삭제 Runbook [Infra #57](https://github.com/seokpan/seokpan-hybrid-infra/issues/57)).
+- 한계: 이번 확인은 설정값과 출력의 일치까지다. TLS 실제 접속 · 평문 거부 · 출발지 IP는 VPN 뒤(#44 3단계), Valkey CA 체인과 Runtime 계정 출발지 IP는 ROSA 뒤에 확인한다.
+
 ## 9 복구 예행과 목표 재검토 — 2026-10-02
 
 **2026-10-03 설계 우선순위 정정:** 이번 피드백의 목적과 대안 비교·수정 범위는 [03 §3-I.14](../design/03_DETAILED_DESIGN.md#recovery-design-review-20261003)를 기준으로 읽는다. 이 절은 최소 예행의 기존 입력·측정·부담 비교를 지원한다. 02의 기존 1차 Redis 재사용 설명과 03의 좁게 읽힐 수 있는 RTO 경계는 설계 문서에서 바로잡는다. 아래 코드·검사·Cloud/ROSA 후속은 각 시점/범위의 기록이며 설계 재검토보다 우선하는 전체 구현 요구가 아니다.
