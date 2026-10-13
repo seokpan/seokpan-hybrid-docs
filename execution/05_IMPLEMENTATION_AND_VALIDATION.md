@@ -929,6 +929,22 @@ foundation Apply 날짜가 잡히지 않은 동안, Apply 당일 Data 작업을 
 - 남은 것: Secret 3개 · ConfigMap 2개를 `seokpan-recovery`에 넣는 경로(사전 Render Bundle 또는 Ansible 적용 — 정태훈 결정), Valkey 7.2.14 Image의 `redis-server` 실행 파일 유무.
 - 한계: 이번 공급은 controller의 SOPS 파일 준비와 받는 사람 해독 확인까지다. 클러스터 Secret 생성 · Redis 기동 · TLS/AUTH 접속 시험은 하지 않았다.
 
+### 8.25 이관 전 예행 — 1차 조회만 (infra #44)
+
+이관 Runbook [Infra #44](https://github.com/seokpan/seokpan-hybrid-infra/issues/44)에서 쓰기 중지 구간 안에 있는 1-1 · 2단계를, 서비스를 멈추지 않고 미리 실행했다. 1차 DB는 조회와 덤프만 했고 설정 · 계정은 바꾸지 않았다. RDS가 필요한 3 · 4단계와 5단계 이후는 foundation Apply 전이라 하지 않았다.
+
+| 항목 | 내용 | 확인 |
+|---|---|---|
+| 실행 방식 | 본문 명령을 그대로 쓰고 덤프 ID만 `rehearsal-mig-…`로 바꿔 실제 이관 사본과 구분했다. 쓰기 중지를 요청하지 않았으므로 판정이 달라도 실패가 아니라 기록으로 처리하기로 했다 | 측정 뒤 암호문 · 접속 파일 · 복제 상태 파일을 백업 작업 VM에서 `shred -u`로 지우고, controller 해시 결과도 지웠다 |
+| 1단계 | 백업 작업 VM → 1차 Replica(`192.168.52.40:3306`) 접속, `db_admin@%` · `read_only 1` · TLS 1.3. 프로시저 · 이벤트 · 트리거 · 뷰 모두 0개, Alembic Revision `20260902_0002` | 트리거가 0개라 2단계의 `--skip-triggers`를 그대로 쓴다 |
+| 1-1단계 | Primary `gtid_binlog_pos` `1-2-27396`가 Replica에 모두 반영됨(Replica에만 있는 `2-2-43`은 10-08에 확인한 과거 도메인 그대로). 복제 IO · SQL 스레드 Yes, 지연 0, 오류 0. 저장소 `table_hashes.sh`(`5beac6da6e9c`)로 계산한 Primary · Replica `stone_game` 해시가 테이블 8개 모두 같음 | PR #53에서 고친 비교 스크립트가 실제 1차를 상대로 끝까지 동작함을 처음 확인했다 |
+| 2단계 | 덤프 → gzip → age 종료 코드 `0 0 0`, 덤프 전후 복제 상태 같음 | 평문은 파이프로만 흐르고 디스크에는 암호문만 남았다 |
+| 실측 | 1단계 26초, 1-1단계 약 11초(해시 계산만은 각 1초 미만), 2단계 1초 미만. 암호문 20,423바이트(압축 전 107,140바이트, 약 19%) | 시간 대부분은 비밀번호 입력과 결과 확인이다. 암호문 크기가 10-08 예행 사본과 바이트까지 같아, 그 뒤 1차에 쓰기가 없었고 백업 용량 계산(8.22절)도 그대로다 |
+| Runbook 반영 | #44 v2.2: 1-1 · 2단계 예상 시간을 각 5분에서 2분으로, 김상희 쓰기 중지 몫을 45분에서 39분으로 줄였다 | 전체 중지 예산 75분([Docs PR #107](https://github.com/seokpan/seokpan-hybrid-docs/pull/107))은 5 · 6단계(RDS)와 정태훈 몫이 실측 전이라 그대로 둔다 |
+
+- 기록: [Infra #44 예행 결과 코멘트](https://github.com/seokpan/seokpan-hybrid-infra/issues/44#issuecomment-6137234409).
+- 한계: 1차 쪽 절반만 확인했다. RDS 가져오기 · 비교 · 계정 생성(3 ~ 8단계), 실제 쓰기 중지 상태에서의 판정, 정태훈의 Migration · Backend 기동은 Apply · ROSA Ready 뒤에 확인한다.
+
 ## 9 복구 예행과 목표 재검토 — 2026-10-02
 
 **2026-10-03 설계 우선순위 정정:** 이번 피드백의 목적과 대안 비교·수정 범위는 [03 §3-I.14](../design/03_DETAILED_DESIGN.md#recovery-design-review-20261003)를 기준으로 읽는다. 이 절은 최소 예행의 기존 입력·측정·부담 비교를 지원한다. 02의 기존 1차 Redis 재사용 설명과 03의 좁게 읽힐 수 있는 RTO 경계는 설계 문서에서 바로잡는다. 아래 코드·검사·Cloud/ROSA 후속은 각 시점/범위의 기록이며 설계 재검토보다 우선하는 전체 구현 요구가 아니다.
