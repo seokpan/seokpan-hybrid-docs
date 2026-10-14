@@ -17,23 +17,26 @@
 ## 한눈에 보는 구조
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{"fontSize":"16px","primaryColor":"#ffffff","primaryTextColor":"#1f2328","primaryBorderColor":"#57606a","lineColor":"#8c959f","secondaryColor":"#f6f8fa","tertiaryColor":"#f6f8fa","clusterBkg":"#f6f8fa","clusterBorder":"#d0d7de","edgeLabelBackground":"#ffffff","titleColor":"#1f2328"},"flowchart":{"wrappingWidth":420}}}%%
 flowchart TB
   subgraph TF["Terraform"]
     direction LR
-    BS["bootstrap/iam.tf<br/>tf_foundation_data 권한<br/>seokpan-fnd-backup-boundary<br/>Boundary 관리 한 줄"]
-    FD["terraform/foundation · data_*.tf 7개<br/>data_variables.tf · 변수<br/>data_security_groups.tf · SG 2개<br/>data_rds.tf · RDS MariaDB<br/>data_redis.tf · Valkey<br/>data_backup_s3.tf · 백업 버킷<br/>data_backup_user.tf · 백업 계정<br/>data_outputs.tf · 출력 9개"]
+    BS["<b>bootstrap/iam.tf</b><br/>tf_foundation_data 권한<br/>seokpan-fnd-backup-boundary<br/>Boundary 관리 한 줄"]
+    FD["<b>terraform/foundation · data_*.tf 7개</b><br/>data_variables.tf · 변수<br/>data_security_groups.tf · SG 2개<br/>data_rds.tf · RDS MariaDB<br/>data_redis.tf · Valkey<br/>data_backup_s3.tf · 백업 버킷<br/>data_backup_user.tf · 백업 계정<br/>data_outputs.tf · 출력 9개"]
     BS -- "권한" --> FD
   end
   subgraph AD["ansible/data"]
-    BV["backup-vm → hybrid-backup-01<br/>seokpan-hybrid-backup · 15분 백업 본체<br/>.service · .timer · backup.env 견본"]
-    CT["controller → ksh ~/recovery/<br/>restore.sh · table_hashes.sh (복원)<br/>check_*.sh 4개 (Apply · 인계 · Secret · Gate)"]
-    RV["recovery-db-vm → hybrid-recovery-db-01<br/>seokpan-recv-copy · 사본 받기 (sp-copy)<br/>복원 대상 DB · restore.sh --local 사본"]
-    TS["tests<br/>check_data_handoff<br/>회귀 시험 11 Case"]
+    BV["<b>backup-vm → hybrid-backup-01</b><br/>seokpan-hybrid-backup · 15분 백업 본체<br/>.service · .timer · backup.env 견본"]
+    CT["<b>controller → ksh ~/recovery/</b><br/>restore.sh · table_hashes.sh (복원)<br/>check_*.sh 4개 (Apply · 인계 · Secret · Gate)"]
+    RV["<b>recovery-db-vm → hybrid-recovery-db-01</b><br/>seokpan-recv-copy · 사본 받기 (sp-copy)<br/>복원 대상 DB · restore.sh --local 사본"]
+    TS["<b>tests</b><br/>check_data_handoff<br/>회귀 시험 11 Case"]
   end
   FD -- "백업 버킷 · 백업 계정을 씀" --> BV
   FD -- "출력 9개를 인계 확인" --> CT
   BV -- "sp-copy로 사본 전송" --> RV
   CT -- "restore.sh로 복원" --> RV
+  classDef box fill:#ffffff,stroke:#57606a,stroke-width:1.5px,color:#1f2328;
+  class BS,FD,BV,CT,RV,TS box;
 ```
 
 위쪽 Terraform은 AWS에 "자리"만 만들고 데이터나 비밀번호는 보지 못합니다. 아래쪽 `ansible/data`는 그 자리를 실제로 쓰는 스크립트이고, 각 폴더 이름이 곧 설치될 서버 이름입니다. 같은 foundation 폴더에 있어도 `network*.tf`(이유빈), registry · CI IAM(최유준), `rosa_iam_*`는 제 파일이 아닙니다.
@@ -100,17 +103,29 @@ Terraform 폴더는 `bootstrap` → `foundation` → `rosa` 순서로 Apply합�
 ## 3. 파일끼리 어떻게 이어지나
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{"fontSize":"16px","primaryColor":"#ffffff","primaryTextColor":"#1f2328","primaryBorderColor":"#57606a","lineColor":"#8c959f","secondaryColor":"#f6f8fa","tertiaryColor":"#f6f8fa","clusterBkg":"#f6f8fa","clusterBorder":"#d0d7de","edgeLabelBackground":"#ffffff","titleColor":"#1f2328"},"flowchart":{"wrappingWidth":420}}}%%
 flowchart LR
   subgraph BK["백업 한 회차 · seokpan-hybrid-backup"]
-    direction LR
-    B1["① 15분 Timer<br/>*:00/15 (systemd)<br/>.timer → .service"] --> B2["② 사전 검사<br/>paused 있으면 SKIP<br/>시계 · 디스크 · routines"] --> B3["③ 덤프 · 암호화<br/>mariadb-dump · gzip · age<br/>Backup ID = T_DUMP"] --> B4["④ 두 곳에 저장<br/>S3 periodic/<br/>복구 DB VM copies/"] --> B5["⑤ 기록<br/>history.tsv에 OK · PARTIAL · SKIP · FAIL<br/>S3와 사본 둘 다 성공한 회차만 last-success 갱신<br/>S3 실패분은 s3-pending → 다음 성공 회차에 재전송"]
+    direction TB
+    B1["<b>① 15분 Timer</b><br/>*:00/15 (systemd)<br/>.timer → .service"]
+    B2["<b>② 사전 검사</b><br/>paused 있으면 SKIP<br/>시계 · 디스크 · routines"]
+    B3["<b>③ 덤프 · 암호화</b><br/>mariadb-dump · gzip · age<br/>Backup ID = T_DUMP"]
+    B4["<b>④ 두 곳에 저장</b><br/>S3 periodic/<br/>복구 DB VM copies/"]
+    B5["<b>⑤ 기록</b><br/>history.tsv에 OK · PARTIAL · SKIP · FAIL<br/>둘 다 성공한 회차만 last-success 갱신<br/>S3 실패분은 s3-pending → 다음 회차에 재전송"]
+    B1 --> B2 --> B3 --> B4 --> B5
   end
-  subgraph RS["복원 · restore.sh (Runbook #48 0~4단계) — ④의 복구 DB VM 사본을 씀"]
-    direction LR
-    R1["① 사본 고르기<br/>최신 periodic부터<br/>SHA-256 틀리면 이전 것"] --> R2["② 해독<br/>controller에서 age<br/>평문을 디스크에 안 남김"] --> R3["③ 가져오기<br/>stone_game에 넣기<br/>--replace 없으면 안 덮음"] --> R4["④ 확인<br/>Revision · 테이블 8개<br/>복구 계정 6개 · 해시"]
+  subgraph RS["복원 · restore.sh (Runbook #48 0~4단계)"]
+    direction TB
+    R1["<b>① 사본 고르기</b><br/>최신 periodic부터<br/>SHA-256 틀리면 이전 것"]
+    R2["<b>② 해독</b><br/>controller에서 age<br/>평문을 디스크에 안 남김"]
+    R3["<b>③ 가져오기</b><br/>stone_game에 넣기<br/>--replace 없으면 안 덮음"]
+    R4["<b>④ 확인</b><br/>Revision · 테이블 8개<br/>복구 계정 6개 · 해시"]
+    R1 --> R2 --> R3 --> R4
   end
-  B4 -.-> R1
-  classDef key fill:#e3f2fd,stroke:#1565c0,stroke-width:2px;
+  BK -. "④에서 복구 DB VM에 둔 사본을 씀" .-> RS
+  classDef step fill:#ffffff,stroke:#57606a,stroke-width:1.5px,color:#1f2328;
+  classDef key fill:#dbeafe,stroke:#1d4ed8,stroke-width:2.5px,color:#1e3a8a;
+  class B1,B2,B3,B5,R1,R2,R3,R4 step;
   class B4 key;
 ```
 

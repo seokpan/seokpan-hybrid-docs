@@ -26,21 +26,22 @@
 | 전체 | 약 86% | Data 7개 영역 × 4단계 = 28칸 중 24칸 |
 
 ```mermaid
-flowchart LR
-  A["1차 MariaDB (Replica)<br/>이관 원본 · 읽기만 허용<br/>이관 예행 OK (10/13)"]
-  B["백업 작업 VM<br/>hybrid-backup-01<br/>설치 끝 · Timer 꺼둠"]
-  C["RDS for MariaDB<br/>Cloud 정상 DB · Multi-AZ<br/>생성 · 확인 OK · 데이터 없음"]
-  D["Backup S3<br/>periodic/ · 7일 보관<br/>생성 OK · 아직 비어 있음"]
-  E["복구 DB VM<br/>hybrid-recovery-db-01<br/>복원 예행 OK · 2초"]
-  F["복구 App (정태훈)<br/>장애 때 복구 DB에 연결<br/>ROSA · 입력 공급 대기"]
+%%{init: {"theme":"base","themeVariables":{"fontSize":"16px","primaryColor":"#ffffff","primaryTextColor":"#1f2328","primaryBorderColor":"#57606a","lineColor":"#8c959f","secondaryColor":"#f6f8fa","tertiaryColor":"#f6f8fa","clusterBkg":"#f6f8fa","clusterBorder":"#d0d7de","edgeLabelBackground":"#ffffff","titleColor":"#1f2328"},"flowchart":{"wrappingWidth":420}}}%%
+flowchart TB
+  A["<b>1차 MariaDB (Replica)</b><br/>이관 원본 · 읽기만 허용<br/>이관 예행 OK (10/13)"]
+  B["<b>백업 작업 VM</b><br/>hybrid-backup-01<br/>설치 끝 · Timer 꺼둠"]
+  C["<b>RDS for MariaDB</b><br/>Cloud 정상 DB · Multi-AZ<br/>생성 · 확인 OK · 데이터 없음"]
+  D["<b>Backup S3</b><br/>periodic/ · 7일 보관<br/>생성 OK · 아직 비어 있음"]
+  E["<b>복구 DB VM</b><br/>hybrid-recovery-db-01<br/>복원 예행 OK · 2초"]
+  F["<b>복구 App (정태훈)</b><br/>장애 때 복구 DB에 연결<br/>ROSA · 입력 공급 대기"]
   A -- "① 최종 이관 덤프" --> B
   B -- "② RDS로 가져오기 (VPN 필요)" --> C
   C -- "③ 15분마다 백업 덤프" --> B
   B -- "④ 암호화 사본을 S3로" --> D
   D -- "⑤ 사본 내려받아 보관" --> E
   E -- "⑥ 장애 때 이 DB로 연결" --> F
-  classDef ready fill:#e8f5e9,stroke:#2e7d32;
-  classDef wait fill:#fff8e1,stroke:#f9a825;
+  classDef ready fill:#dcfce7,stroke:#15803d,stroke-width:2px,color:#14532d;
+  classDef wait fill:#fef3c7,stroke:#b45309,stroke-width:2px,color:#78350f;
   class A,B,C,D,E ready;
   class F wait;
 ```
@@ -216,16 +217,19 @@ NAT · VPN · ROSA는 아직 없습니다. Data 출력값 11개는 이유빈 con
 남은 일은 6단계이고, 1단계만 지금 바로 할 수 있습니다. 2단계부터는 VPN(이유빈) → ROSA(정태훈) 순서로 앞 작업이 열려야 시작됩니다.
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{"fontSize":"16px","primaryColor":"#ffffff","primaryTextColor":"#1f2328","primaryBorderColor":"#57606a","lineColor":"#8c959f","secondaryColor":"#f6f8fa","tertiaryColor":"#f6f8fa","clusterBkg":"#f6f8fa","clusterBorder":"#d0d7de","edgeLabelBackground":"#ffffff","titleColor":"#1f2328"},"flowchart":{"wrappingWidth":420}}}%%
 flowchart TB
-  S1["1. 지금 바로 (선행 조건 없음)<br/>10/15 저녁 RDS Stop 여부 결정 · Windows 오프라인 사본 전달(7장)<br/>Backup User 키 발급 · S3 권한 시험 · 정태훈 주소 해시 대조"]
-  S2["2. VPN 연결 뒤 (이유빈, Infra #16)<br/>이관 Runbook #44 0-2 경로 · 0-3 TLS 실제 접속 확인<br/>1 · 3 · 4단계 쓰기 중지 전 준비 · max_connections 실측"]
-  S3["3. ROSA Ready · 배포 입력 준비 뒤 (정태훈)<br/>1차 쓰기 중지 → 1-1 ~ 8단계 이관 → 9단계 Cloud 시험 쓰기<br/>정태훈이 전환 또는 복귀 판단 · Valkey CA · Recovery Redis 공급"]
-  S4["4. 전환 결정 뒤<br/>#44 10장: source.cnf · S3_BUCKET · ID_PREFIX=periodic 설정<br/>손 실행 1회 → 15분 Timer 켜기 → check_backup_gate.sh 판정"]
-  S5["5. 본 검증 10/19 ~ 10/21<br/>restore.sh 복원 → 복구 App 연결(정태훈) → RTO · RPO 측정<br/>RDS 비밀번호 회전 창 10/20 09:00 ~ 10/21 08:59에는 #44 3 · 4 · 7 · 8단계 금지"]
-  S6["6. 프로젝트 종료<br/>삭제 Runbook #57 순서대로 실데이터 삭제 (RDS · 스냅샷 · S3 · VM 사본 · 키)<br/>담당 · 날짜 · 삭제 범위는 팀 합의"]
+  S1["<b>1. 지금 바로 (선행 조건 없음)</b><br/>10/15 저녁 RDS Stop 여부 결정 · Windows 오프라인 사본 전달(7장)<br/>Backup User 키 발급 · S3 권한 시험 · 정태훈 주소 해시 대조"]
+  S2["<b>2. VPN 연결 뒤 (이유빈, Infra #16)</b><br/>이관 Runbook #44 0-2 경로 · 0-3 TLS 실제 접속 확인<br/>1 · 3 · 4단계 쓰기 중지 전 준비 · max_connections 실측"]
+  S3["<b>3. ROSA Ready · 배포 입력 준비 뒤 (정태훈)</b><br/>1차 쓰기 중지 → 1-1 ~ 8단계 이관 → 9단계 Cloud 시험 쓰기<br/>정태훈이 전환 또는 복귀 판단 · Valkey CA · Recovery Redis 공급"]
+  S4["<b>4. 전환 결정 뒤</b><br/>#44 10장: source.cnf · S3_BUCKET · ID_PREFIX=periodic 설정<br/>손 실행 1회 → 15분 Timer 켜기 → check_backup_gate.sh 판정"]
+  S5["<b>5. 본 검증 10/19 ~ 10/21</b><br/>restore.sh 복원 → 복구 App 연결(정태훈) → RTO · RPO 측정<br/>RDS 비밀번호 회전 창 10/20 09:00 ~ 10/21 08:59에는 #44 3 · 4 · 7 · 8단계 금지"]
+  S6["<b>6. 프로젝트 종료</b><br/>삭제 Runbook #57 순서대로 실데이터 삭제 (RDS · 스냅샷 · S3 · VM 사본 · 키)<br/>담당 · 날짜 · 삭제 범위는 팀 합의"]
   S1 --> S2 --> S3 --> S4 --> S5 --> S6
-  classDef now fill:#e3f2fd,stroke:#1565c0,stroke-width:2px;
+  classDef now fill:#dbeafe,stroke:#1d4ed8,stroke-width:2.5px,color:#1e3a8a;
   class S1 now;
+  classDef box fill:#ffffff,stroke:#57606a,stroke-width:1.5px,color:#1f2328;
+  class S2,S3,S4,S5,S6 box;
 ```
 
 > 위에서 아래로 진행. 파란 칸만 지금 바로 할 수 있음.
