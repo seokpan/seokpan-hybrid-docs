@@ -1,0 +1,11 @@
+event_id,timestamp_utc,timestamp_kst,actor_ref,event,result,evidence_ref
+E01,2026-10-14T03:39:31Z,2026-10-14T12:39:31+09:00,jenkins:hybrid/image-pipeline/main#13,"Build 시작 (ENABLE_ECR=true, PROMOTION_MODE=WRITE)",STARTED,Jenkins Build #13
+E02,,,jenkins:hybrid/image-pipeline/main#13,Stage Branch Guard & Prepare 소요 6.3초,SUCCESS,Jenkins Build #13 Pipeline Steps
+E03,,,jenkins:hybrid/image-pipeline/main#13,"Stage P1 Revalidation (App CI Check on main) 소요 6분 10초 (Backend verify, OpenAPI export, Frontend verify, Browser UI/Full)",SUCCESS,Jenkins Build #13 Pipeline Steps
+E04,,,jenkins:hybrid/image-pipeline/main#13,"Stage Image Build & Registry Operations 소요 34초 (기존 Final 재사용: Build·Scan·Smoke·Promote 생략, SKIPPED_EXISTING_FINAL)",SUCCESS,Jenkins Build #13 Pipeline Steps; image-metadata.json
+E05,,,jenkins:hybrid/image-pipeline/main#13,"Stage Promote GitOps 소요 37초 (Recovery·Cloud --remote-check 후 --write, GitOps 기준 SHA 707474cd 고정)",SUCCESS,Jenkins Build #13 Pipeline Steps
+E06,2026-10-14T03:46:45Z,2026-10-14T12:46:45+09:00,jenkins:hybrid/image-pipeline/main#13,"Cloud 점검 release-id 타임스탬프 (rel-cloud-20261014T034645Z-c2dad254cc40-f683cc1a, DRY_RUN, 시각은 id에서 추출)",DRY_RUN,Jenkins Build #13 Pipeline Steps
+E07,2026-10-14T03:46:48Z,2026-10-14T12:46:48+09:00,jenkins:hybrid/image-pipeline/main#13,"Recovery Promotion release-id 타임스탬프 (rel-recovery-20261014T034648Z-c2dad254cc40-4809c8fc, PR 생성 id, 시각은 id에서 추출)",WRITE,seokpan/seokpan-hybrid-gitops#48
+E08,2026-10-14T03:46:54Z,2026-10-14T12:46:54+09:00,jenkins:hybrid/image-pipeline/main#13,"Cloud Promotion release-id 타임스탬프 (rel-cloud-20261014T034654Z-c2dad254cc40-55ad5f3b, PR 생성 id, 시각은 id에서 추출)",WRITE,seokpan/seokpan-hybrid-gitops#49
+E09,,,jenkins:hybrid/image-pipeline/main#13,"gitops#48 병합 0aec2bb, #49 병합 19d3387 (정태훈 승인, 병합 시각 미기록)",MERGED,"seokpan/seokpan-hybrid-gitops#48, #49"
+E10,2026-10-14T03:47:02Z,2026-10-14T12:47:02+09:00,jenkins:hybrid/image-pipeline/main#13,Build 종료 (시작+소요 451초 계산값),SUCCESS,Jenkins Build #13

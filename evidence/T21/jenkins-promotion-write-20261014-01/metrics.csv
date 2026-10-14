@@ -1,0 +1,5 @@
+metric_id,baseline,target,actual,unit,aggregation,sample_count,condition_ref,raw_artifact_ref
+jenkins_build_duration_seconds,,,451,seconds,single_run,1,timeline.csv,Jenkins Build #13 Pipeline Steps
+p1_revalidation_stage_seconds,,,370,seconds,single_run,1,timeline.csv,Jenkins Build #13 Pipeline Steps
+image_build_registry_ops_stage_seconds,,,34,seconds,single_run,1,timeline.csv,Jenkins Build #13 Pipeline Steps
+promote_gitops_stage_seconds,,,37,seconds,single_run,1,timeline.csv,Jenkins Build #13 Pipeline Steps
