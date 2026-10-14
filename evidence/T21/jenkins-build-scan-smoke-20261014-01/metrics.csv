@@ -1,0 +1,12 @@
+metric_id,baseline,target,actual,unit,aggregation,sample_count,condition_ref,raw_artifact_ref
+jenkins_build_duration_seconds,,,517,seconds,single_run,1,timeline.csv,Jenkins Build #11 Pipeline Steps
+p1_revalidation_stage_seconds,,,372,seconds,single_run,1,timeline.csv,Jenkins Build #11 Pipeline Steps
+image_build_registry_ops_stage_seconds,,,133,seconds,single_run,1,timeline.csv,Jenkins Build #11 Pipeline Steps
+candidate_build_push_stage_seconds,,,49,seconds,single_run,1,timeline.csv,Jenkins Build #11 Pipeline Steps
+scan_harbor_candidate_stage_seconds,,,25,seconds,single_run,1,timeline.csv,Jenkins Build #11 Pipeline Steps
+candidate_health_smoke_stage_seconds,,,15,seconds,single_run,1,timeline.csv,Jenkins Build #11 Pipeline Steps
+promote_gitops_stage_seconds,,,0.83,seconds,single_run,1,timeline.csv,Jenkins Build #11 Pipeline Steps
+scan_critical_count_backend,,,0,count,single_run,1,image-metadata.json,image-metadata.json
+scan_high_fixable_count_backend,,,0,count,single_run,1,image-metadata.json,image-metadata.json
+scan_critical_count_frontend,,,0,count,single_run,1,image-metadata.json,image-metadata.json
+scan_high_fixable_count_frontend,,,0,count,single_run,1,image-metadata.json,image-metadata.json

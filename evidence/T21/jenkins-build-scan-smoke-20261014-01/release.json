@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "record_kind": "run",
+  "completeness": "INCOMPLETE",
+  "release_id": null,
+  "source": {
+    "app_sha": "c2dad254cc407431092691f9ea5892f8324f1520",
+    "infra_sha": null,
+    "gitops_sha": null
+  },
+  "images": {
+    "frontend": {
+      "ecr_digest": "sha256:7068a36f55427639b7b7bf8a9c5795689b891e7ec334bfd306d8cd03c5f049ff",
+      "harbor_digest": "sha256:7068a36f55427639b7b7bf8a9c5795689b891e7ec334bfd306d8cd03c5f049ff",
+      "platform": "linux/amd64"
+    },
+    "backend": {
+      "ecr_digest": "sha256:733f52a6f5a53c31e792cbe1d254221ff8ff86828e8c3afdc65d207e2e5fb18d",
+      "harbor_digest": "sha256:733f52a6f5a53c31e792cbe1d254221ff8ff86828e8c3afdc65d207e2e5fb18d",
+      "platform": "linux/amd64"
+    }
+  },
+  "revisions": {
+    "schema": null,
+    "config": null,
+    "secret": null,
+    "tool_manifest": null,
+    "recovery_bundle": null
+  },
+  "review_refs": [],
+  "verification": {
+    "render": "NOT RUN",
+    "deployment": "NOT RUN",
+    "acceptance": "NOT RUN"
+  },
+  "missing_inputs": [
+    "SOURCE_COMMITS",
+    "CONFIGURATION_REVISIONS",
+    "RENDER_AND_REVIEW"
+  ],
+  "run_id": "jenkins-build-scan-smoke-20261014-01",
+  "test_id": "T21",
+  "case_ids": [],
+  "requirement_ids": [],
+  "environment": "Jenkins hybrid/image-pipeline/main Build #11, Kubernetes agent Pod, Harbor project seokpan-hybrid, ECR prefix seokpan-fnd- (ap-northeast-2)",
+  "scope": "Jenkins image-pipeline Build #11 (ENABLE_ECR=true, PROMOTION_MODE=OFF): P1 재검증, 신규 Image Build, Harbor Candidate Scan, Candidate Health Process Smoke, Harbor/ECR Final Promote·Digest 검증. GitOps 변경 없음. Runtime·배포 수락 아님.",
+  "previous_run_ref": null,
+  "next_run_ref": "T21/jenkins-promotion-remote-check-20261014-01",
+  "render_ref": null,
+  "assigned_execution_owner": null,
+  "actual_operator": null,
+  "reviewer": null,
+  "collaborators": [],
+  "observed_principal_ref": null,
+  "account_management_owner_ref": null,
+  "borrowing_handover_ref": null,
+  "started_at_utc": "2026-10-14T02:59:20Z",
+  "finished_at_utc": "2026-10-14T03:07:57Z",
+  "started_at_kst": "2026-10-14T11:59:20+09:00",
+  "finished_at_kst": "2026-10-14T12:07:57+09:00",
+  "conditions_ref": "summary.md#identity-and-scope",
+  "measurements_ref": "metrics.csv",
+  "timeline_ref": "timeline.csv",
+  "recovery": {
+    "backup_id": null,
+    "encrypted_backup_sha256": null,
+    "data_reference_time_utc": null,
+    "data_reference_level": null,
+    "incident_at_utc": null,
+    "dump_started_at_utc": null,
+    "dump_finished_at_utc": null,
+    "import_started_at_utc": null,
+    "import_finished_at_utc": null,
+    "business_resumed_at_utc": null,
+    "rto_seconds": null,
+    "rpo_seconds": null,
+    "persistent_data_losses": null,
+    "redis_runtime_losses": null
+  },
+  "raw_artifact_ref": "image-metadata.json (이 폴더, Jenkins Build #11 아카이브 artifact 사본); Jenkins Build #11 console log·Pipeline Steps는 Git 미포함(논리 참조: http://jenkins-controller.cicd.svc.cluster.local:8080/job/hybrid/job/image-pipeline/job/main/11/)",
+  "custodian_ref": null,
+  "access_policy_ref": null,
+  "retention_ref": null,
+  "availability_integrity": null
+}

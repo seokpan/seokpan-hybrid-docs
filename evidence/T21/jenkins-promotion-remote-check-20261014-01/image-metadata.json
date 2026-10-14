@@ -1,0 +1,80 @@
+{
+  "ecr_enabled": true,
+  "release_json_images": {
+    "backend": {
+      "ecr_digest": "sha256:733f52a6f5a53c31e792cbe1d254221ff8ff86828e8c3afdc65d207e2e5fb18d",
+      "harbor_digest": "sha256:733f52a6f5a53c31e792cbe1d254221ff8ff86828e8c3afdc65d207e2e5fb18d",
+      "platform": "linux/amd64"
+    },
+    "frontend": {
+      "ecr_digest": "sha256:7068a36f55427639b7b7bf8a9c5795689b891e7ec334bfd306d8cd03c5f049ff",
+      "harbor_digest": "sha256:7068a36f55427639b7b7bf8a9c5795689b891e7ec334bfd306d8cd03c5f049ff",
+      "platform": "linux/amd64"
+    }
+  },
+  "commit_sha_full": "c2dad254cc407431092691f9ea5892f8324f1520",
+  "commit_sha_12": "c2dad254cc40",
+  "jenkins_build_url": "http://jenkins-controller.cicd.svc.cluster.local:8080/job/hybrid/job/image-pipeline/job/main/12/",
+  "jenkins_build_number": "12",
+  "run_id": "a09-12-c2dad254cc40",
+  "harbor_project": "seokpan-hybrid",
+  "ecr_repository_prefix": "seokpan-fnd-",
+  "components": {
+    "backend": {
+      "candidate_tag": null,
+      "final_tag": "git-c2dad254cc40",
+      "reused_existing_final": true,
+      "build_digest": null,
+      "ecr": {
+        "repository": "seokpan-fnd-backend",
+        "candidate_digest": null,
+        "final_digest": "sha256:733f52a6f5a53c31e792cbe1d254221ff8ff86828e8c3afdc65d207e2e5fb18d",
+        "platforms": [
+          "linux/amd64"
+        ],
+        "candidate_tag_retained": false
+      },
+      "harbor": {
+        "repository": "seokpan-hybrid/backend",
+        "candidate_digest": null,
+        "final_digest": "sha256:733f52a6f5a53c31e792cbe1d254221ff8ff86828e8c3afdc65d207e2e5fb18d",
+        "platforms": [
+          "linux/amd64"
+        ],
+        "candidate_tag_cleanup": "NOT_APPLICABLE"
+      },
+      "registry_digests_equal": true,
+      "scan": "SKIPPED_EXISTING_FINAL",
+      "health_smoke": "SKIPPED_EXISTING_FINAL"
+    },
+    "frontend": {
+      "candidate_tag": null,
+      "final_tag": "git-c2dad254cc40",
+      "reused_existing_final": true,
+      "build_digest": null,
+      "ecr": {
+        "repository": "seokpan-fnd-frontend",
+        "candidate_digest": null,
+        "final_digest": "sha256:7068a36f55427639b7b7bf8a9c5795689b891e7ec334bfd306d8cd03c5f049ff",
+        "platforms": [
+          "linux/amd64"
+        ],
+        "candidate_tag_retained": false
+      },
+      "harbor": {
+        "repository": "seokpan-hybrid/frontend",
+        "candidate_digest": null,
+        "final_digest": "sha256:7068a36f55427639b7b7bf8a9c5795689b891e7ec334bfd306d8cd03c5f049ff",
+        "platforms": [
+          "linux/amd64"
+        ],
+        "candidate_tag_cleanup": "NOT_APPLICABLE"
+      },
+      "registry_digests_equal": true,
+      "scan": "SKIPPED_EXISTING_FINAL",
+      "health_smoke": "SKIPPED_EXISTING_FINAL"
+    }
+  },
+  "gitops_change": "NONE",
+  "note": "hybrid-gitops Promotion\uc740 \ubcc4\ub3c4 \uc791\uc5c5. Cloud\ub294 ecr.final_digest, Recovery\ub294 harbor.final_digest\ub97c \uc0ac\uc6a9\ud55c\ub2e4. Registry Digest\ub294 \ub3d9\uc77c\ud558\ub2e4\uace0 \uac00\uc815\ud558\uc9c0 \uc54a\ub294\ub2e4."
+}
