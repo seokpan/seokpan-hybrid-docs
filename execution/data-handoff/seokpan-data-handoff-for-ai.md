@@ -9,6 +9,41 @@ secrets_included: none (비밀번호 · Token · 개인키 · AWS 계정 번호 
 
 # 석판 2차 프로젝트 — Data 영역 인수인계 (AI 학습용)
 
+## 2026-10-14 보완 — Data 인계 형식과 수신 확인
+
+이 절은 아래 2026-10-13 기록 중 인계 파일 형식과 수신 상태를 갱신합니다.
+Data 후속 작업은 이유빈이 이어서 진행하며, 실제 실행 조건은 기존 Runbook을 따릅니다.
+
+- 기존 `c-data-outputs.json`과 `handoff-manifest.json`을 유지합니다.
+- `jth` 계정의 Data 인계 파일 읽기 가능·쓰기 불가를 확인했습니다.
+- 정태훈은 Data 인계 파일·manifest 결속과 연결 값 네 개의 해시 대조가
+  모두 통과했다고 회신했습니다.
+- 10/13 기록의 Data 인계 읽기·Endpoint 해시 대조 대기는 해소됐습니다.
+- 실제 DB·Valkey 접속, TLS·평문 거부 시험은 이 수신 확인과 별도입니다.
+- PR #68의 검토 Plan JSON 접근·Apply 승인은 이 인계 확인과 구분합니다.
+- 실제 주소·ID·ARN은 공개 문서나 Git에 추가하지 않습니다.
+
+### 인계 파일을 읽는 형식
+
+`c-data-outputs.json`은 각 항목에 값을 직접 담습니다.
+
+| 항목 | 인계 파일 조회 표현 |
+| --- | --- |
+| RDS 주소 | `.rds_address` |
+| RDS 포트 | `.rds_port` |
+| Valkey Primary Endpoint | `.redis_primary_endpoint` |
+| Valkey 포트 | `.redis_port` |
+| RDS 보안 그룹 | `.rds_security_group_id` |
+| Valkey 보안 그룹 | `.redis_security_group_id` |
+
+이 인계 파일에는 `.rds_address.value` 같은 중첩 조회 표현을 사용하지 않습니다.
+`terraform output -json` 원본 출력의 `.value` 구조와 구분합니다.
+AWS 응답 처리와 두 형식을 지원하는 기존 검사 코드의 `.value`는 삭제하지 않습니다.
+
+Data 계약의 관련 대기 상태 정정과 결과 기록은 기존 Infra #19·#23에서 이어갑니다.
+- [Data 계약 기준본](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6143942560)
+- [Data 인계 접근 기록](https://github.com/seokpan/seokpan-hybrid-infra/issues/23#issuecomment-6159843548)
+
 ## 0. AI에게 — 이 문서를 읽는 방법
 
 너는 석판 2차 프로젝트에서 **Data · Storage · Recovery 영역**(1차 데이터 이관, 15분 백업, 온프렘 복원)을 이어받은 팀원을 돕는다. 이전 담당자 김상희는 2026-10-13에 하차했다. 이 문서는 그 시점의 전체 상태를 담은 스냅샷이다.
@@ -305,7 +340,7 @@ docs 진행 기록: `execution/05_IMPLEMENTATION_AND_VALIDATION.md` 8장(Data는
 - [ ] 10/15 저녁 RDS Stop 여부 팀 결정 → Stop하면 #45 3-0 → 걸린 시간 실측 → #45 v1.5
 - [ ] Windows 오프라인 사본 전달(6-3절)
 - [ ] (팀 확인 후) Backup User Access Key 발급 · S3 권한 시험(#44 10-2를 앞당김) → V4 실제 S3 재전송 확인(#55)
-- [ ] 이유빈이 `c-data-outputs.json`에 `jth` 읽기 ACL 추가 → 정태훈 해시 4개 대조 → Data 계약 v2.4의 2.1 · 5 · 6절 ⏳를 ✅로(같은 판 안 정정) → #19에 한 줄
+- [x] Data 인계의 `jth` 읽기 접근·파일/manifest 결속·연결 값 네 개 해시 대조 완료(10/14 정태훈 회신). 계약 상태 정정·#19 기록은 후속.
 - [ ] (선택) 회귀 시험 자동 CI(PR #66 리뷰 의견)
 
 ### 단계 2 — VPN 뒤 (이유빈, Infra #16)
@@ -334,8 +369,8 @@ docs 진행 기록: `execution/05_IMPLEMENTATION_AND_VALIDATION.md` 8장(Data는
 
 | 답할 사람 | 질문 |
 |---|---|
-| 이유빈 | VPN 경로 · 출발지 IP 보존(#16), `c-data-outputs.json` `jth` 읽기 ACL |
-| 정태훈 | Endpoint 해시 4개 대조, 1차 쓰기 중지 실제 경로 · 계정(Docs PR #91 · #107), 복귀 때 RDS `stone_game` 처리, Recovery Secret · ConfigMap 공급 경로, Valkey 7.2.14 Image에 `redis-server` 실행 파일 유무, DB Pool 상한(App이 Pool 환경변수를 읽는지), 복구 App Pod 출발지 IP, rosa Data SG 입력(`mariadb` ← `rds_security_group_id`, `redis` ← `redis_security_group_id` — rosa 검사로는 두 ID가 바뀐 것을 못 잡으므로 Apply 직후 이름 대조) |
+| 이유빈 | VPN 경로 · 출발지 IP 보존(#16). Data 인계의 `jth` 읽기 ACL은 10/14 완료 |
+| 정태훈 | Endpoint 해시 네 개 대조는 10/14 통과 회신 완료. 1차 쓰기 중지 실제 경로 · 계정(Docs PR #91 · #107), 복귀 때 RDS `stone_game` 처리, Recovery Secret · ConfigMap 공급 경로, Valkey 7.2.14 Image에 `redis-server` 실행 파일 유무, DB Pool 상한(App이 Pool 환경변수를 읽는지), 복구 App Pod 출발지 IP, rosa Data SG 입력(`mariadb` ← `rds_security_group_id`, `redis` ← `redis_security_group_id` — rosa 검사로는 두 ID가 바뀐 것을 못 잡으므로 Apply 직후 이름 대조) |
 | 최유준 | Valkey 단가 반영 Cost Gate(Docs #43), 10/22 이후 RDS(#45 — 이유빈 "시연 구간만", 정태훈 "10/21 후 Stop", 최유준 "10/22 삭제"로 의견이 갈림) |
 
 ---
