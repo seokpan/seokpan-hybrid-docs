@@ -1,0 +1,11 @@
+# smoke PrometheusRule 적용 (실행 환경: oc 로그인 세션, 2026-10-16 12:04 KST)
+$ oc whoami; date; TZ=UTC date
+$ oc apply -f platform/rosa-monitoring/smoke/prometheusrule-smoke.yaml
+$ oc get prometheusrule seokpan-monitoring-smoke -n seokpan-cloud
+
+cyj200115-prog
+2026. 10. 16. (금) 12:04:26 KST
+2026. 10. 16. (금) 03:04:26 UTC
+prometheusrule.monitoring.coreos.com/seokpan-monitoring-smoke created
+NAME                       AGE
+seokpan-monitoring-smoke   1s

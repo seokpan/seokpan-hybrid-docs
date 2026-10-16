@@ -1,0 +1,3 @@
+metric_id,baseline,target,actual,unit,aggregation,sample_count,condition_ref,raw_artifact_ref
+managed_objects_created,,,3,count,final,1,Sync 후 seokpan-cloud 조회(ServiceMonitor·PrometheusRule·NetworkPolicy),artifacts/05-objects-and-revision-1226.txt
+alert_rules_loaded,,,3,count,final,1,알림 규칙 화면 소스 사용자(SeokpanReplicasUnavailable·SeokpanContainerRestarting·SeokpanHttp5xxRatioHigh),artifacts/07-alert-rules-loaded-1259.png

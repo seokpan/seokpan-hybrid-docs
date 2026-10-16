@@ -1,0 +1,10 @@
+# Argo Application 마지막 Sync 결과
+# 조회 시각은 12:48 KST경이며, Sync 완료 시각은 finishedAt 값(03:26:04Z = 12:26:04 KST)이다.
+$ oc get application.argoproj.io seokpan-cloud-monitoring -n openshift-gitops \
+  -o jsonpath='{.status.operationState.operation.initiatedBy}{"\n"}{.status.operationState.phase}{"\n"}{.status.operationState.finishedAt}{"\n"}{.status.operationState.syncResult.revision}{"\n"}{.status.operationState.operation.sync}{"\n"}'
+
+{"username":"cyj200115-prog"}
+Succeeded
+2026-10-16T03:26:04Z
+16fd14cd1c085a8314a5e2e18b89e2cd3b051626
+{"revision":"16fd14cd1c085a8314a5e2e18b89e2cd3b051626","source":{"path":"platform/rosa-monitoring/app","repoURL":"https://github.com/seokpan/seokpan-hybrid-gitops.git","targetRevision":"16fd14cd1c085a8314a5e2e18b89e2cd3b051626"},"syncOptions":["FailOnSharedResource=true","Prune=false","Delete=false"],"syncStrategy":{"hook":{}}}
