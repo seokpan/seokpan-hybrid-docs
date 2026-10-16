@@ -1,0 +1,12 @@
+# UWM 평가 환경과 smoke 규칙 로드 확인
+# 시각은 기록되지 않았다. smoke 적용(12:04:26 KST) + AGE 5m13s로 보아 12:09:39 KST경이다. (이 시각은 계산값)
+$ oc get pods -n openshift-user-workload-monitoring
+$ oc get prometheusrule -n seokpan-cloud
+NAME                                   READY   STATUS    RESTARTS   AGE
+prometheus-operator-5d4ff97ff4-fsmcm   2/2     Running   0          36h
+prometheus-user-workload-0             6/6     Running   0          36h
+prometheus-user-workload-1             6/6     Running   0          36h
+thanos-ruler-user-workload-0           4/4     Running   0          36h
+thanos-ruler-user-workload-1           4/4     Running   0          36h
+NAME                       AGE
+seokpan-monitoring-smoke   5m13s

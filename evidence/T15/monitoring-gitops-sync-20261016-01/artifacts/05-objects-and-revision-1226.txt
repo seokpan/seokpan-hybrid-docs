@@ -1,0 +1,38 @@
+# [A] Sync 직전 Application 상태 (정확한 시각 미기록, 12:23~12:26 KST 사이)
+$ oc get application.argoproj.io seokpan-cloud-monitoring -n openshift-gitops
+$ oc get appproject seokpan-cloud-monitoring -n openshift-gitops
+NAME                       SYNC STATUS   HEALTH STATUS
+seokpan-cloud-monitoring   OutOfSync     Missing
+NAME                       AGE
+seokpan-cloud-monitoring   11m
+
+# [B] Sync 직후 객체 생성 확인 (2026-10-16 12:26 KST)
+$ oc get servicemonitor,prometheusrule,networkpolicy -n seokpan-cloud
+$ oc get application.argoproj.io seokpan-cloud-monitoring -n openshift-gitops
+NAME                                                   AGE
+servicemonitor.monitoring.coreos.com/seokpan-backend   7s
+
+NAME                                                            AGE
+prometheusrule.monitoring.coreos.com/seokpan-app-availability   7s
+
+NAME                                                          POD-SELECTOR                      AGE
+networkpolicy.networking.k8s.io/seokpan-deny-ingress          <none>                            20h
+networkpolicy.networking.k8s.io/seokpan-frontend-to-backend   app.kubernetes.io/name=backend    20h
+networkpolicy.networking.k8s.io/seokpan-router-to-backend     app.kubernetes.io/name=backend    20h
+networkpolicy.networking.k8s.io/seokpan-router-to-frontend    app.kubernetes.io/name=frontend   20h
+networkpolicy.networking.k8s.io/seokpan-uwm-to-backend        app.kubernetes.io/name=backend    8s
+NAME                       SYNC STATUS   HEALTH STATUS
+seokpan-cloud-monitoring   Synced        Healthy
+
+# [C] 고정 개정과 규칙 그룹 확인 (2026-10-16 12:26:33 KST)
+$ oc get application.argoproj.io seokpan-cloud-monitoring -n openshift-gitops \
+  -o jsonpath='{.status.sync.revision}{"\n"}{.status.sync.status}{"\n"}{.status.health.status}{"\n"}'
+$ oc get prometheusrule seokpan-app-availability -n seokpan-cloud -o jsonpath='{range .spec.groups[*]}{.name}{"\n"}{end}'
+$ date; TZ=UTC date
+16fd14cd1c085a8314a5e2e18b89e2cd3b051626
+Synced
+Healthy
+seokpan.app.availability
+seokpan.app.http
+2026. 10. 16. (금) 12:26:33 KST
+2026. 10. 16. (금) 03:26:33 UTC

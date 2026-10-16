@@ -1,0 +1,15 @@
+# smoke PrometheusRule 삭제 (2026-10-16 12:14 KST)
+$ oc get prometheusrule seokpan-monitoring-smoke -n seokpan-cloud
+$ date; TZ=UTC date
+NAME                       AGE
+seokpan-monitoring-smoke   10m
+2026. 10. 16. (금) 12:14:32 KST
+2026. 10. 16. (금) 03:14:32 UTC
+
+$ oc delete -f platform/rosa-monitoring/smoke/prometheusrule-smoke.yaml
+$ oc get prometheusrule -n seokpan-cloud
+$ date; TZ=UTC date
+prometheusrule.monitoring.coreos.com "seokpan-monitoring-smoke" deleted from seokpan-cloud namespace
+No resources found in seokpan-cloud namespace.
+2026. 10. 16. (금) 12:14:40 KST
+2026. 10. 16. (금) 03:14:40 UTC

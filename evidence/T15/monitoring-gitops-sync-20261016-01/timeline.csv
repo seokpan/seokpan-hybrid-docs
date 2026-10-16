@@ -1,0 +1,9 @@
+event_id,timestamp_utc,timestamp_kst,actor_ref,event,result,evidence_ref
+E01,2026-10-16T03:04:26Z,2026-10-16T12:04:26+09:00,최유준,smoke PrometheusRule 적용,created,artifacts/01-smoke-apply-1204.txt
+E02,2026-10-16T03:05:00Z,2026-10-16T12:05:00+09:00,시스템,smoke 알림 활성 시작,근사값(12:12 화면의 7분 전에서 환산),artifacts/02-smoke-firing-1212.png
+E03,2026-10-16T03:12:00Z,2026-10-16T12:12:00+09:00,최유준,활성 알림 목록에서 SeokpanMonitoringSmoke 확인,firing 확인(분 단위),artifacts/02-smoke-firing-1212.png
+E04,2026-10-16T03:14:40Z,2026-10-16T12:14:40+09:00,최유준,smoke PrometheusRule 삭제,deleted·목록에서 제거 확인,artifacts/03-smoke-delete-1214.txt
+E05,2026-10-16T03:26:04Z,2026-10-16T12:26:04+09:00,최유준(cyj200115-prog),seokpan-cloud-monitoring 수동 Sync,Succeeded (Prune/Force 미사용),artifacts/04-argo-operationstate-1226.txt
+E06,2026-10-16T03:26:33Z,2026-10-16T12:26:33+09:00,최유준,ServiceMonitor·PrometheusRule·NetworkPolicy 생성과 고정 개정 확인,3종 생성·revision 16fd14cd 일치,artifacts/05-objects-and-revision-1226.txt
+E07,2026-10-16T03:27:00Z,2026-10-16T12:27:00+09:00,최유준,Argo UI 리소스 트리 캡처,Synced·Healthy·Sync OK,artifacts/06-argo-app-synced-1227.png
+E08,2026-10-16T03:59:00Z,2026-10-16T12:59:00+09:00,최유준,알림 규칙 3종 로드와 smoke 부재 확인,규칙 3개 소스 사용자·smoke 없음(분 단위),artifacts/07-alert-rules-loaded-1259.png
