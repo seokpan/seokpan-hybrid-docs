@@ -6,6 +6,10 @@
 > **적용 범위:** 최종 발표 Narrative, 정량 Evidence, 1차↔2차 비교, Troubleshooting, Demo 후보 선별
 > **중요:** 이 문서는 03의 Test/Acceptance 기준이나 05의 실행 결과를 대체하지 않는다.
 
+## 10/16 수락된 완료 근거 연결
+
+[완결 작업 결과](../execution/TJUNG03_COMPLETED_RESULTS_20261016.md)를 실제 발표 근거로 연결한다. 기존 App 기동/구독 취소 정리, OCP 기능과 B03 UI, ROSA 설치/태그 보존, Cloud Route 권한 보완은 확인된 범위에서 사용할 수 있다. 비교는 DESCRIPTIVE/CONDITIONAL로 분류하고, 공식 성능·Cloud 업무/HA·전체 DR·비용/최종 발표 완료로 확대하지 않는다. 후보 선별과 최종 영상·슬라이드/리허설의 완료를 구분한다.
+
 현재 진행 현황:
 
 - [x] 발표 기본 Narrative 정리
