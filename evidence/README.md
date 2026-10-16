@@ -4,6 +4,8 @@
 
 [B06-VALKEY-01 / b06-valkey-20261016-01](B06-VALKEY-01/b06-valkey-20261016-01/summary.md): 기존 Kubernetes의 Valkey 단독 Ready·UID999/파일·API port-forward TLS/AUTH PASS. NP4·CM1·Service1·StatefulSet1 생성, Valkey1·재시작0. Cloud앱·SQL·DB복원0이며 CNI·새 Registry/노드CA 인과·전체업무/RTO/RPO는 미검증이다. 기존 실제 기동의 증거 등록이며 새 실행을 추가하지 않았다. 시각·소요시간은 미기록, header-only timeline은 미측정으로 보존한다.
 
+후속 [D의 Valkey TCP6379 정책 대조](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10#issuecomment-6213554272)는 허용6/6·차단6/6·임시 객체 정리 완료다. B06-VALKEY-01의 port-forward 검사와 별도 Run이며 다른 통신/전체 복구 판정은 포함하지 않는다.
+
 ## 10/16 완결된 기존 실행 결과 연결
 
 [정태훈 완결 결과](../execution/TJUNG03_COMPLETED_RESULTS_20261016.md)에 실제 설치/준비/검사의 수락 범위와 원 Issue/PR·보호 결과 결속을 연결했다. B03 두 해상도27/27·PNG12장 수락을 포함한다. 기존 실행 결과의 문서 등록이며 새 시험 Run이나 T/TH 전체 PASS를 추가한 것이 아니다. 진행 중인 작업은 신규 완료 기록에 포함하지 않는다.

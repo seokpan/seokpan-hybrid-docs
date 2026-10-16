@@ -20,6 +20,8 @@ Recovery 보호 입력 Secret3·ConfigMap2와 별도 Harbor Secret의 최초 공
 
 [Valkey 실행 증거](../evidence/B06-VALKEY-01/b06-valkey-20261016-01/summary.md).
 
+후속 [D의 B06-NP-01 결과](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10#issuecomment-6213554272)에서 같은 노드·다른 노드의 backend 라벨 Pod→Valkey TCP6379 허용6/6, 비허용 주체 차단6/6 및 임시 객체 정리를 확인했다. 비허용 주체의 제한 egress 정책과 허용 대조군으로 ingress 차단을 구분했으며 패킷 카운터/플로우 로그 증거는 아니다. worker-01의 Valkey 새 Pull 이벤트도 관측됐다. Backend/Frontend Pull·DB3306·DNS53·FE→BE8000·다른 비허용 주체·전체 복구는 별도다.
+
 CI/Promotion 개정 정합은 [App #47](https://github.com/seokpan/seokpan-hybrid-app/issues/47#issuecomment-6158883408)·[GitOps #45](https://github.com/seokpan/seokpan-hybrid-gitops/issues/45#issuecomment-6160603523)의 완료 근거와 병합 Source를 연결해 확인했다. 이미지 App Source `c2dad254cc407431092691f9ea5892f8324f1520`과 이후 출처 도구 `d037a55f234a8720e6db9b01b8f31d08a3a16af9`을 구분한다. [Writer PAT 발급·등록·기존 실행/거부 결과](https://github.com/seokpan/seokpan-hybrid-app/issues/14#issuecomment-6139234475)는 완료로 유지하며 Lifecycle·추가 권한 Case·비상/독립 보관·최종 회수는 별도다.
 
 | 역할 | 채택 개정 |
