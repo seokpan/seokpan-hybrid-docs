@@ -1,5 +1,9 @@
 # Evidence Index and Run Guide
 
+## 10/16 완결된 기존 실행 결과 연결
+
+[정태훈 완결 결과](../execution/TJUNG03_COMPLETED_RESULTS_20261016.md)에 실제 설치/준비/검사의 수락 범위와 원 Issue/PR·보호 결과 결속을 연결했다. B03 두 해상도27/27·PNG12장 수락을 포함한다. 기존 실행 결과의 문서 등록이며 새 시험 Run이나 T/TH 전체 PASS를 추가한 것이 아니다. 진행 중인 작업은 신규 완료 기록에 포함하지 않는다.
+
 실행 담당자가 새 Run을 작성하고 최유준이 Index/형식 수신을 확인한다. 아래 목록은 시점별 추가 기록이며 초기 합성 예행2개가 전체 Run 개수라는 뜻이 아니다. 이번 [EC2 입력 교정 부분 Run](T03/controller-seoul-ec2-input-corrected-20261009-01/summary.md)은 기존 성공 판정의 수신 기록이며 새 API 실행·전체 T03 수락이 아니다. Index 제출과 D의 각 Run 수신을 구분한다.
 
 <details>

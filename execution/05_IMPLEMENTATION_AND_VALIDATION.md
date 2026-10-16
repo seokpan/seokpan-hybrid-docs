@@ -1,5 +1,18 @@
 # 石나가는 판단 2차 프로젝트 05 구현·통합·검증 진행 기록
 
+## 정태훈 완료 결과·체크 현황 — 2026-10-16 KST
+
+[완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)에 근거와 수락 범위를 연결했다. ROSA는 10/14 Apply 종료0, 이후 노드9/9 Ready·Operator34 안정·보호 관리 인계까지 완료했다. Worker/Data 규칙2개·승인 FE/BE×Compute3 실행6/6, Cloud 보호 입력/TLS·거부 검사, 정상 관리·모니터링 등록/한정 smoke 수락도 완료다. B03은 두 해상도27/27과 PNG12장 시각 수락으로 종료했다. Recovery Secret3/ConfigMap2의 최초 create5·내용/UID 대조도 완료했다. Engine·복원·업무/RTO/RPO 완료와 구분한다.
+
+원 TH 체크는 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의 **36/81 완료·45개 미완료**다. 설치/검사 성공을 미충족한 복합 기준의 완료로 올리지 않았다. [App #21](https://github.com/seokpan/seokpan-hybrid-app/issues/21)의 실제 UI 기준8개와 [Infra #80](https://github.com/seokpan/seokpan-hybrid-infra/issues/80)의 최초 모니터링 등록 기준은 완료 근거를 연결한다.
+
+Cloud 업무·운영 Pool·공식 다중 Pod/장애·전체 복구/RTO/RPO·자격 회수·재생성·최종 보존/비용/발표는 미완료다. 신규 기록은 완결된 사항만 다루며 해당 잔여는 원 체크로 유지한다. 기존 ROSA/NAT는 검증 완료까지 유지하며 과거 금요일/주말 전 삭제 목표는 적용하지 않는다. 삭제 실행/예약은 없고 $450 계획/$500 한도는 유지한다.
+
+완료한 실행·시험은 재사용했다. 아래 날짜별 기록은 당시 상태이며 최신 완료 판정은 이 절과 원 Issue를 따른다.
+
+<details>
+<summary>10/13 당시 B 상태 — 과거 기록</summary>
+
 ## 정태훈 구현·실행·체크 현황 — 2026-10-13 KST
 
 [B 전체 상태 대조](TJUNG03_STATUS_AUDIT_20261013.md): 상위·원 이슈 체크와 Plan/Apply·실행·미시험의 대응을 확인한다.
@@ -15,8 +28,9 @@ ROSA는 준비되는 즉시 시작해 10/16(금)까지 검증하고 주말 전�
 
 이 절은 B의 원 실행·PR/검사 결과를 연결한다. 다른 담당자의 완료 체크·실제 실행을 변경하지 않으며 과거 날짜의 상태를 현재 미실행으로 읽지 않는다. 03/04 종료·DR10분/DB RPO30분/Backup15분·CP3/Infra3/Worker3·Cost PARTIAL/$450 계획/$500 한도 및 최종 미완료 판정을 유지한다. 완료한 실행·시험·인증/해독은 반복하지 않았다.
 
+</details>
 
-> **2026-10-08 당시 확인 — B의 최신 단계는 위10/13 절 참조:** [병합·Controller 인증·실행 대기](MERGED_SOURCE_PLAN_READINESS_20261008.md). App30/34·GitOps33 승인·병합·PR 브랜치 삭제 완료. App18819963의 D Run5 성공 보고·FE/BE Harbor 공급 후보 수락, B/jth의 Source/Lock·기본 Caller/MFA·서울 사양/Quota 부분 결과 유지. EC2 진단v1/v2는 코드 비식별·사용량 미확보·원인 미확정으로 자동 API 재시도 종료, B 현장/A 계정 Owner 비공개 확인 입력 대기. 실제 역할/SG2·목적 세션/Backend·프로젝트 조직/지원·EBS 기준/비용 입력·전체 Plan, 내부 공급/Pull·Runtime은 별도 미완료. 아래 날짜별 기록은 당시 이력.
+> **2026-10-08 당시 확인 — B의 최신 단계는 위10/16 절 참조:** [병합·Controller 인증·실행 대기](MERGED_SOURCE_PLAN_READINESS_20261008.md). App30/34·GitOps33 승인·병합·PR 브랜치 삭제 완료. App18819963의 D Run5 성공 보고·FE/BE Harbor 공급 후보 수락, B/jth의 Source/Lock·기본 Caller/MFA·서울 사양/Quota 부분 결과 유지. EC2 진단v1/v2는 코드 비식별·사용량 미확보·원인 미확정으로 자동 API 재시도 종료, B 현장/A 계정 Owner 비공개 확인 입력 대기. 실제 역할/SG2·목적 세션/Backend·프로젝트 조직/지원·EBS 기준/비용 입력·전체 Plan, 내부 공급/Pull·Runtime은 별도 미완료. 아래 날짜별 기록은 당시 이력.
 
 ### 조사 중 추가된 실행 보고·수정 PR — 2026-10-07 후속 조회
 

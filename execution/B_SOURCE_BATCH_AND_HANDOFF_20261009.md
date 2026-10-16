@@ -1,5 +1,7 @@
 # B 독립 Source 보완과 실제 인계 순서 — 2026-10-09
 
+> **기록 시점과 현재 완료 근거:** 아래 상태·체크·명령은 각 작성일의 조사/인계 기록이다. B의10/16 완료 판정은 [완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)와 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)을 따른다. 완료된 설치·Plan·OCP 교체/기능·B03 화면·정상 관리 검사를 다시 대기로 해석하거나 재실행하지 않는다.
+
 현재 전체 진행:
 
 - [x] Docs #97/#98 병합·브랜치 삭제 보고 수신, EC2 입력 오류 교정/제한 조회 및 Controller 오프라인 시험 완료.

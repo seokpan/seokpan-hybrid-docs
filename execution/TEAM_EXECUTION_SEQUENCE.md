@@ -1,10 +1,12 @@
 # 石나가는 판단 2차 — 저장소·담당별 전체 실행 순서와 현행화 점검
 
+> **B 완료 근거 — 2026-10-16:** [완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)·[실행 보드](TJUNG03_EXECUTION_BOARD.md)·[Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)을 연결한다. ROSA 설치/관리·수락된 플랫폼/검사·B03은 완료다. 아래 공통 역할/절차와 날짜별 관측은 각 원 범위를 유지하며 다른 담당자의 현재 완료를 판정하지 않는다.
+
 > 기준: 승인 01~04·현재 프로젝트 지침·개인 계획, 네 저장소 Source/Issue/PR/댓글/리뷰/Branch/검사 조회. 관측은 저장소별 조회 시각이며 동일 순간의 Runtime Snapshot이 아니다. 문서 담당 정태훈. 작성 기준 2026-10-05 14:27 KST.
 
-**최신 실행 해석 — 2026-10-05 15:40 KST:** [h-docs PR #33](https://github.com/seokpan/seokpan-hybrid-docs/pull/33) main b45ea2d 병합·작업 Branch 삭제를 확인했다. [정태훈 실행판](TJUNG03_EXECUTION_BOARD.md)에서 지금할일·직접입력대기·OCP사전검증/정리·ROSA준비/생성/중간/최종종료·승인목표일을 작은 실행별로 확인한다. 아래 담당별 큰 묶음은 A전체→B전체의 선행관계가 아니다.
+**10/05 당시 실행 해석 — 2026-10-05 15:40 KST:** [h-docs PR #33](https://github.com/seokpan/seokpan-hybrid-docs/pull/33) main b45ea2d 병합·작업 Branch 삭제를 확인했다. [정태훈 실행판](TJUNG03_EXECUTION_BOARD.md)에서 지금할일·직접입력대기·OCP사전검증/정리·ROSA준비/생성/중간/최종종료·승인목표일을 작은 실행별로 확인한다. 아래 담당별 큰 묶음은 A전체→B전체의 선행관계가 아니다.
 
-## 1 현재 전체 작업 진행 현황
+## 1 10/05 당시 전체 작업 기록
 
 - [x] 00 역사 원본·승인 설계 01~04 및 03/04 종료·현재 역할/Root 책임 확정 유지
 - [x] DR 설계10분/30분/15분·Backup/Restore 유지와 관련 설계·그림·출처 정합 반영

@@ -1,5 +1,7 @@
 # ROSA Plan·OCP 후속 실행 준비 — 2026-10-08
 
+> **기록 시점과 현재 완료 근거:** 아래 상태·체크·명령은 각 작성일의 조사/인계 기록이다. B의10/16 완료 판정은 [완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)와 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)을 따른다. 완료된 설치·Plan·OCP 교체/기능·B03 화면·정상 관리 검사를 다시 대기로 해석하거나 재실행하지 않는다.
+
 * 정책 조회 후 현재 상태
 
 - [원 Infra25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25#issuecomment-6053637165)·[T03 부분 Run](../evidence/T03/redhat-policy-read-20261008-01/summary.md): Controller 인증·필수5/5·Operator7/8·OCM 참조4/4 조회, 보호 사본 생성 완료. Token 재발급/성공 조회 반복 없음. Token 자체의 읽기 전용 권한 판정은 아님.

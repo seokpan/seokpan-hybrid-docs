@@ -1,5 +1,18 @@
 # 정태훈 실행판 — 지금 할 일·입력 대기·OCP와 ROSA 수명
 
+## 정태훈 완료 결과·체크 현황 — 2026-10-16 KST
+
+[완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)에 근거와 수락 범위를 연결했다. ROSA는 10/14 Apply 종료0, 이후 노드9/9 Ready·Operator34 안정·보호 관리 인계까지 완료했다. Worker/Data 규칙2개·승인 FE/BE×Compute3 실행6/6, Cloud 보호 입력/TLS·거부 검사, 정상 관리·모니터링 등록/한정 smoke 수락도 완료다. B03은 두 해상도27/27과 PNG12장 시각 수락으로 종료했다. Recovery Secret3/ConfigMap2의 최초 create5·내용/UID 대조도 완료했다. Engine·복원·업무/RTO/RPO 완료와 구분한다.
+
+원 TH 체크는 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의 **36/81 완료·45개 미완료**다. 설치/검사 성공을 미충족한 복합 기준의 완료로 올리지 않았다. [App #21](https://github.com/seokpan/seokpan-hybrid-app/issues/21)의 실제 UI 기준8개와 [Infra #80](https://github.com/seokpan/seokpan-hybrid-infra/issues/80)의 최초 모니터링 등록 기준은 완료 근거를 연결한다.
+
+Cloud 업무·운영 Pool·공식 다중 Pod/장애·전체 복구/RTO/RPO·자격 회수·재생성·최종 보존/비용/발표는 미완료다. 신규 기록은 완결된 사항만 다루며 해당 잔여는 원 체크로 유지한다. 기존 ROSA/NAT는 검증 완료까지 유지하며 과거 금요일/주말 전 삭제 목표는 적용하지 않는다. 삭제 실행/예약은 없고 $450 계획/$500 한도는 유지한다.
+
+완료한 실행·시험은 재사용했다. 아래 날짜별 기록은 당시 상태이며 최신 완료 판정은 이 절과 원 Issue를 따른다.
+
+<details>
+<summary>10/13 당시 실행판 — 과거 기록</summary>
+
 ## tjung03 현재 작업 — 2026-10-13 KST
 
 [B 전체 상태 대조](TJUNG03_STATUS_AUDIT_20261013.md): 상위·원 이슈 체크와 Plan/Apply·실행·미시험의 대응을 확인한다.
@@ -20,6 +33,8 @@ ROSA는 준비되는 즉시 시작해 10/16(금)까지 검증하고 주말 전�
 원 결과: [ROSA/Plan Infra #25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25#issuecomment-6145405350) · [App/기능 App #4](https://github.com/seokpan/seokpan-hybrid-app/issues/4#issuecomment-6145407122) · [선언/OCP/Recovery GitOps #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10#issuecomment-6145408408) · [보호 입력 Infra #19](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6145409526) · [비용 입력 Docs #43](https://github.com/seokpan/seokpan-hybrid-docs/issues/43#issuecomment-6145410624). 실제 실행은 반복하지 않고 기존 결과로 체크를 갱신한다.
 
 현재 작업 체크는 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의81개 원 항목에서 관리한다. [App #1](https://github.com/seokpan/seokpan-hybrid-app/issues/1)은 원 Source/Client·lab 완료 기준4개 충족으로 종료했다. 실제 Cloud/다중 Pod/장애·독립 Recovery는 App4/GitOps10/Infra25의 열린 기준을 따른다.
+
+</details>
 
 <details>
 <summary>이전 실행판 — 날짜별 진행과 작업 범위</summary>
@@ -350,7 +365,7 @@ OCP의 사전검증 업무 완료와 정리 날짜는 별개다. 추천 운영 �
 | TH-19.9 | 후속실측: T20/T23·Cost/Index/Tracker/05/Docs8정합 | 실제삭제/확인시각·원본링크 | [h-infra Issue #25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25) 실제 삭제/잔존 |
 | TH-19.10 | 후속실측: B완료/수신/제외/보존/정리·상위종료 | 필수미완료해결 또는승인범위재결정·후속책임수신 | [h-docs Issue #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21) B 개인 종료 |
 
-## 10 전체 남은 작업 현황
+## 10 작성 당시 남은 작업 — 과거 기록
 
 **현재 구분:** 기존 복합 체크를 보존하며 새 완료 체크는 추가하지 않는다. Image 제공·B 수락과 실제 Namespace Secret 공급·OCP Workload Pull/Ready/업무는 구분한다. D 공급·C/D Data 입력과 B 활성화, A/C 기반·목적 Role/Backend·지원/비용 준비를 병행한다. 비용1~5·예상/실제 기록·본인 가용성TBD·기존 목표 창·보존/종료 조건은 유지한다.
 
@@ -551,7 +566,7 @@ OCP의 사전검증 업무 완료와 정리 날짜는 별개다. 추천 운영 �
 
 [연결](CONTROLLER_SOURCE_CATALOG_FOLLOWUP_20261008.md). 기존독립작업의잔여와멘토링보류 유지.
 
-## 전체 남은 작업 — 2026-10-09 KST
+## 10/09 당시 남은 작업 — 과거 기록
 
 | 경로·순서 | 누구의 무엇을 기다리는가 | B가 받은 뒤 할 일과 결과 |
 |---|---|---|
