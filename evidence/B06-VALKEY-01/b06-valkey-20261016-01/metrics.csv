@@ -1,0 +1,8 @@
+metric,value,unit,aggregation,scope
+objects_created,7,count,total,engine_subset
+engine_replicas,1,count,observed,valkey_only
+container_restarts,0,count,observed,valkey_pod
+sops_decrypt_invocations,0,count,total,this_execution
+application_deployments_started,0,count,total,this_execution
+sql_calls,0,count,total,this_execution
+
