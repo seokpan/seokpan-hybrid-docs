@@ -60,6 +60,25 @@ B03은 10/15 10:17:08~10:17:56 KST의 기존 실제 실행이다. 두 해상도�
 - **지정 Route host 권한:** Cloud Namespace Role의 `routes/custom-host / create` 규칙1개 보완과 실제 허용 확인을 완료했다. 기존45개 검사/Ingress 적용을 반복하거나 전체 Controller 권한 축소 완료로 기록하지 않았다. [GitOps #53](https://github.com/seokpan/seokpan-hybrid-gitops/pull/53).
 - **보류 Application source 비교:** 관측된 차이는 빈 `target.group` 3개의 상태 직렬화 생략뿐이었다. 그 차이만 정규화한 비교에서 잔여 차이0·오류 조건0을 확인했다. Application을 수정하거나 Sync해서 비교를 통과시킨 결과가 아니다. 고정 개정은 `5294e77af873ec5318bbb7f1a1097d68208d03fa`다.
 
+## Recovery Valkey·CI 개정 정합 — 2026-10-16
+
+Recovery 보호 입력 Secret3·ConfigMap2와 별도 Harbor Secret의 최초 공급·내용/UID 대조를 완료했다. [GitOps #57](https://github.com/seokpan/seokpan-hybrid-gitops/pull/57)의 병합 Source `c75a4b5e3b3b9bae4ea7d8a431962cb9ca7308d7`에서 Valkey만 수동 1개로 기동해 Ready·재시작0·UID999·파일 접근·TLS/AUTH PASS를 확인했다. Source의 전체 Replica0과 실제 Valkey1을 구분한다. TLS/AUTH는 API port-forward 경로이며 CNI 허용/거부·새 Registry 연결/노드 CA 인과·FE/BE·DB 복원·전체 업무/RTO/RPO는 미검증이다. Cloud 앱·SQL·Migration 실행은 포함하지 않는다.
+
+[Valkey 실행 증거](../evidence/B06-VALKEY-01/b06-valkey-20261016-01/summary.md).
+
+후속 [D의 B06-NP-01 결과](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10#issuecomment-6213554272)에서 같은 노드·다른 노드의 backend 라벨 Pod→Valkey TCP6379 허용6/6, 비허용 주체 차단6/6 및 임시 객체 정리를 확인했다. 비허용 주체의 제한 egress 정책과 허용 대조군으로 ingress 차단을 구분했으며 패킷 카운터/플로우 로그 증거는 아니다. worker-01의 Valkey 새 Pull 이벤트도 관측됐다. Backend/Frontend Pull·DB3306·DNS53·FE→BE8000·다른 비허용 주체·전체 복구는 별도다.
+
+CI/Promotion 개정 정합은 [App #47](https://github.com/seokpan/seokpan-hybrid-app/issues/47#issuecomment-6158883408)·[GitOps #45](https://github.com/seokpan/seokpan-hybrid-gitops/issues/45#issuecomment-6160603523)의 완료 근거와 병합 Source를 연결해 확인했다. 이미지 App Source `c2dad254cc407431092691f9ea5892f8324f1520`과 이후 출처 도구 `d037a55f234a8720e6db9b01b8f31d08a3a16af9`을 구분한다. [Writer PAT 발급·등록·기존 실행/거부 결과](https://github.com/seokpan/seokpan-hybrid-app/issues/14#issuecomment-6139234475)는 완료로 유지하며 Lifecycle·추가 권한 Case·비상/독립 보관·최종 회수는 별도다.
+
+| 역할 | 채택 개정 |
+| --- | --- |
+| FE/BE 이미지 App Source | `c2dad254cc407431092691f9ea5892f8324f1520` |
+| 출처 기록 도구 | `d037a55f234a8720e6db9b01b8f31d08a3a16af9` |
+| Cloud 보류 GitOps Source | `5294e77af873ec5318bbb7f1a1097d68208d03fa` |
+| Recovery Valkey GitOps Source | `c75a4b5e3b3b9bae4ea7d8a431962cb9ca7308d7` |
+
+TH-03.3의 개정 정합은 완료다. TH-03.4의 잔여와 Cloud/Recovery의 전체 Runtime 수락을 이 결과로 완료 처리하지 않는다.
+
 ## 기록의 경계
 
 원 조건 전체가 충족되지 않은 TH는 체크하지 않는다. ROSA 실행은 완료됐지만 TH-12.2의 실제 사용 개정 리뷰 기록·TH-12.4의 비용 조건 등 복합 기준은 별도다. Cloud 업무/운영 Pool·다중 Pod/장애·독립 Recovery/RTO/RPO·비상/자격 회수·중간 재생성·최종 보존/비용/발표는 이 완료 기록으로 닫지 않는다. 그 진행 상세는 신규 완료 문서화 대상에서 제외하고 원 Issue의 미완료 체크로 유지한다.

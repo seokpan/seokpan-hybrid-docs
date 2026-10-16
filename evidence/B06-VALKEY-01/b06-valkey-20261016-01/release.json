@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "record_kind": "run",
+  "completeness": "INCOMPLETE",
+  "release_id": null,
+  "source": {
+    "app_sha": null,
+    "infra_sha": null,
+    "gitops_sha": "c75a4b5e3b3b9bae4ea7d8a431962cb9ca7308d7"
+  },
+  "images": {
+    "frontend": {
+      "ecr_digest": null,
+      "harbor_digest": null,
+      "platform": null
+    },
+    "backend": {
+      "ecr_digest": null,
+      "harbor_digest": null,
+      "platform": null
+    },
+    "valkey": {
+      "harbor_digest": "sha256:ef0f9fb533b1f06fb7aba6478d758ca1c077d49e2bcb2b4365a4ea7f50b6d42e",
+      "platform": "linux/amd64",
+      "image_pull_policy": "IfNotPresent"
+    }
+  },
+  "revisions": {
+    "schema": null,
+    "config": "c75a4b5e3b3b9bae4ea7d8a431962cb9ca7308d7",
+    "secret": null,
+    "tool_manifest": null,
+    "recovery_bundle": null
+  },
+  "review_refs": [],
+  "verification": {
+    "render": "PASS",
+    "deployment": "PASS",
+    "acceptance": "PARTIAL"
+  },
+  "missing_inputs": [
+    "TIMELINE_NOT_RECORDED",
+    "CNI_TRAFFIC_NOT_TESTED",
+    "FRESH_REGISTRY_AND_NODE_CA_CAUSAL_TRACE_NOT_OBSERVED",
+    "DB_RESTORE_AND_APP_BUSINESS_NOT_RUN",
+    "RTO_RPO_NOT_RUN"
+  ],
+  "run_id": "b06-valkey-20261016-01",
+  "test_id": "B06-VALKEY-01",
+  "case_ids": [
+    "VALKEY_READY",
+    "UID999_FILES",
+    "PORT_FORWARD_TLS_AUTH"
+  ],
+  "requirement_ids": [
+    "TH-09.2",
+    "TH-15.1"
+  ],
+  "environment": "recovery",
+  "scope": "VALKEY_ONLY_NO_DB_RESTORE_OR_APPLICATION",
+  "previous_run_ref": null,
+  "next_run_ref": null,
+  "render_ref": null,
+  "assigned_execution_owner": "tjung03",
+  "actual_operator": "tjung03",
+  "reviewer": null,
+  "collaborators": [],
+  "observed_principal_ref": "kubernetes-admin",
+  "account_management_owner_ref": null,
+  "borrowing_handover_ref": null,
+  "started_at_utc": null,
+  "finished_at_utc": null,
+  "started_at_kst": null,
+  "finished_at_kst": null,
+  "conditions_ref": "summary.md",
+  "measurements_ref": "metrics.csv",
+  "timeline_ref": "timeline.csv",
+  "recovery": {
+    "backup_id": null,
+    "encrypted_backup_sha256": null,
+    "data_reference_time_utc": null,
+    "data_reference_level": null,
+    "incident_at_utc": null,
+    "dump_started_at_utc": null,
+    "dump_finished_at_utc": null,
+    "import_started_at_utc": null,
+    "import_finished_at_utc": null,
+    "business_resumed_at_utc": null,
+    "rto_seconds": null,
+    "rpo_seconds": null,
+    "persistent_data_losses": null,
+    "redis_runtime_losses": null
+  },
+  "raw_artifact_ref": "PROTECTED_EXECUTION_RECEIPT_B06_VALKEY_20261016",
+  "custodian_ref": null,
+  "access_policy_ref": null,
+  "retention_ref": null,
+  "availability_integrity": null
+}
+

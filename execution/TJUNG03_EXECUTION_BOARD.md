@@ -2,9 +2,9 @@
 
 ## 정태훈 완료 결과·체크 현황 — 2026-10-16 KST
 
-[완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)에 근거와 수락 범위를 연결했다. ROSA는 10/14 Apply 종료0, 이후 노드9/9 Ready·Operator34 안정·보호 관리 인계까지 완료했다. Worker/Data 규칙2개·승인 FE/BE×Compute3 실행6/6, Cloud 보호 입력/TLS·거부 검사, 정상 관리·모니터링 등록/한정 smoke 수락도 완료다. B03은 두 해상도27/27과 PNG12장 시각 수락으로 종료했다. Recovery Secret3/ConfigMap2의 최초 create5·내용/UID 대조도 완료했다. Engine·복원·업무/RTO/RPO 완료와 구분한다.
+[완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)에 근거와 수락 범위를 연결했다. ROSA는 10/14 Apply 종료0, 이후 노드9/9 Ready·Operator34 안정·보호 관리 인계까지 완료했다. Worker/Data 규칙2개·승인 FE/BE×Compute3 실행6/6, Cloud 보호 입력/TLS·거부 검사, 정상 관리·모니터링 등록/한정 smoke 수락도 완료다. B03은 두 해상도27/27과 PNG12장 시각 수락으로 종료했다. Recovery Secret3/ConfigMap2의 최초 create5·내용/UID 대조도 완료했다. Harbor Secret 공급과 Valkey 단독 Ready·UID999/파일·port-forward TLS/AUTH도 완료했다. 전체 복원·업무/RTO/RPO는 미완료다.
 
-원 TH 체크는 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의 **36/81 완료·45개 미완료**다. 설치/검사 성공을 미충족한 복합 기준의 완료로 올리지 않았다. [App #21](https://github.com/seokpan/seokpan-hybrid-app/issues/21)의 실제 UI 기준8개와 [Infra #80](https://github.com/seokpan/seokpan-hybrid-infra/issues/80)의 최초 모니터링 등록 기준은 완료 근거를 연결한다.
+원 TH 체크는 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의 **37/81 완료·44개 미완료**다. 설치/검사 성공을 미충족한 복합 기준의 완료로 올리지 않았다. [App #21](https://github.com/seokpan/seokpan-hybrid-app/issues/21)의 실제 UI 기준8개와 [Infra #80](https://github.com/seokpan/seokpan-hybrid-infra/issues/80)의 최초 모니터링 등록 기준은 완료 근거를 연결한다.
 
 Cloud 업무·운영 Pool·공식 다중 Pod/장애·전체 복구/RTO/RPO·자격 회수·재생성·최종 보존/비용/발표는 미완료다. 신규 기록은 완결된 사항만 다루며 해당 잔여는 원 체크로 유지한다. 기존 ROSA/NAT는 검증 완료까지 유지하며 과거 금요일/주말 전 삭제 목표는 적용하지 않는다. 삭제 실행/예약은 없고 $450 계획/$500 한도는 유지한다.
 
@@ -12,6 +12,27 @@ Cloud 업무·운영 Pool·공식 다중 Pod/장애·전체 복구/RTO/RPO·자�
 
 <details>
 <summary>10/13 당시 실행판 — 과거 기록</summary>
+
+
+## Recovery Valkey·CI 개정 정합 — 2026-10-16
+
+Recovery 보호 입력 Secret3·ConfigMap2와 별도 Harbor Secret의 최초 공급·내용/UID 대조를 완료했다. [GitOps #57](https://github.com/seokpan/seokpan-hybrid-gitops/pull/57)의 병합 Source `c75a4b5e3b3b9bae4ea7d8a431962cb9ca7308d7`에서 Valkey만 수동 1개로 기동해 Ready·재시작0·UID999·파일 접근·TLS/AUTH PASS를 확인했다. Source의 전체 Replica0과 실제 Valkey1을 구분한다. TLS/AUTH는 API port-forward 경로이며 CNI 허용/거부·새 Registry 연결/노드 CA 인과·FE/BE·DB 복원·전체 업무/RTO/RPO는 미검증이다. Cloud 앱·SQL·Migration 실행은 포함하지 않는다.
+
+[Valkey 실행 증거](../evidence/B06-VALKEY-01/b06-valkey-20261016-01/summary.md).
+
+후속 [D의 B06-NP-01 결과](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10#issuecomment-6213554272)에서 같은 노드·다른 노드의 backend 라벨 Pod→Valkey TCP6379 허용6/6, 비허용 주체 차단6/6 및 임시 객체 정리를 확인했다. 비허용 주체의 제한 egress 정책과 허용 대조군으로 ingress 차단을 구분했으며 패킷 카운터/플로우 로그 증거는 아니다. worker-01의 Valkey 새 Pull 이벤트도 관측됐다. Backend/Frontend Pull·DB3306·DNS53·FE→BE8000·다른 비허용 주체·전체 복구는 별도다.
+
+CI/Promotion 개정 정합은 [App #47](https://github.com/seokpan/seokpan-hybrid-app/issues/47#issuecomment-6158883408)·[GitOps #45](https://github.com/seokpan/seokpan-hybrid-gitops/issues/45#issuecomment-6160603523)의 완료 근거와 병합 Source를 연결해 확인했다. 이미지 App Source `c2dad254cc407431092691f9ea5892f8324f1520`과 이후 출처 도구 `d037a55f234a8720e6db9b01b8f31d08a3a16af9`을 구분한다. [Writer PAT 발급·등록·기존 실행/거부 결과](https://github.com/seokpan/seokpan-hybrid-app/issues/14#issuecomment-6139234475)는 완료로 유지하며 Lifecycle·추가 권한 Case·비상/독립 보관·최종 회수는 별도다.
+
+| 역할 | 채택 개정 |
+| --- | --- |
+| FE/BE 이미지 App Source | `c2dad254cc407431092691f9ea5892f8324f1520` |
+| 출처 기록 도구 | `d037a55f234a8720e6db9b01b8f31d08a3a16af9` |
+| Cloud 보류 GitOps Source | `5294e77af873ec5318bbb7f1a1097d68208d03fa` |
+| Recovery Valkey GitOps Source | `c75a4b5e3b3b9bae4ea7d8a431962cb9ca7308d7` |
+
+TH-03.3의 개정 정합은 완료다. TH-03.4의 잔여와 Cloud/Recovery의 전체 Runtime 수락을 이 결과로 완료 처리하지 않는다.
+
 
 ## tjung03 현재 작업 — 2026-10-13 KST
 
