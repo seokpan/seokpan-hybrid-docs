@@ -14,7 +14,8 @@
 | 정상 관리·모니터링 인계 수락 | B 정상 GitHub/OpenShift·Argo 정책7개, 모니터링 등록·Controller 권한18개 수락. D 보고의 고정16fd14cd 수동 Sync/Synced/Healthy·3객체·smoke firing/삭제·Argo 거부6개를 B 인계에서 수락 | [Infra #75](https://github.com/seokpan/seokpan-hybrid-infra/pull/75)·[#81](https://github.com/seokpan/seokpan-hybrid-infra/pull/81). D 실행을 B 직접 실행으로 기록하지 않는다. 앱 target/운영 알림의 성공 주장은 포함하지 않는다 |
 | 기존 Data 작업 Pod의 제한 접속 갱신 | 같은 Pod UID를 유지한 bound 토큰 갱신·지정 범위 허용/거부·무해한 exec 확인 PASS. Workload/RBAC 변경0·Pull 변경0·SQL0 | [Infra #73](https://github.com/seokpan/seokpan-hybrid-infra/pull/73)의 제한 접속과 기존 검증 함수를 재사용한 10/16 결과. Controller 권한 축소나 최종 자격 회수 완료를 뜻하지 않는다 |
 | 데스크톱 UI 수락 | 1299×864·1440×900 실제27/27 PASS·오류0, 48.418초. 원 결과 JSON과 PNG12장 시각 수락 완료·추가 수정/재시험 항목0 | [App #21](https://github.com/seokpan/seokpan-hybrid-app/issues/21). 10/15 B03 실제 실행. 기존1280×900 경기/Rating·재접속·방장 승계 결과는 재사용 |
-| Cloud 보류 Application·Recovery Namespace 준비 | 고정5294e77의 Application 실제 등록·객체 목록8/8·source 정규화 차이0/오류 조건0. Recovery Namespace 생성·Active·UID 대응·기존 관리 Context 공급 권한8개 확인 | [GitOps #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10) · [Cloud 등록 #52](https://github.com/seokpan/seokpan-hybrid-gitops/pull/52). Replica0·수동 보류를 유지한 등록/준비 완료 범위. 서버 manifest 전체 독립 대조·실제 Sync·Recovery 보호 객체 공급/기동을 포함하지 않는다 |
+| Cloud 보류 Application·Recovery Namespace 준비 | 고정5294e77의 Application 실제 등록·객체 목록8/8·source 정규화 차이0/오류 조건0. Recovery Namespace 생성·Active·UID 대응·기존 관리 Context 공급 권한8개 확인 | [GitOps #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10) · [Cloud 등록 #52](https://github.com/seokpan/seokpan-hybrid-gitops/pull/52). Replica0·수동 보류를 유지한 등록/준비 완료 범위. 서버 manifest 전체 독립 대조·실제 Sync·Engine 기동을 포함하지 않는다 |
+| Recovery 보호 입력 최초 공급 | cp-01의 지정 Recovery Namespace에 Secret3·ConfigMap2를 create5로 최초 생성. 생성 응답의 객체 UID·내용 대조 PASS, Namespace/RBAC 변경0·SQL0 | [GitOps #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10) · [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21). 기존 보호 공급 receipt의 완료 수락. Engine·Runtime TLS/AUTH·실제 복원·오프라인 망 독립/RTO/RPO는 포함하지 않는다 |
 | 비용 입력용 실물 규격 조회·전달 | 인스턴스9개, 부착 EBS13개/3070GiB(루트2850+추가220), NLB3개(외부2/내부1), CLB0. B 규격 입력 전달 완료 | [비용 입력 Docs #43](https://github.com/seokpan/seokpan-hybrid-docs/issues/43#issuecomment-6145410624). 10/15 09:27:37 KST 조회 범위이며 단가·총비용·청구 확정이 아니다 |
 
 ## UI 검증의 완결 근거
@@ -53,6 +54,8 @@ B03은 10/15 10:17:08~10:17:56 KST의 기존 실제 실행이다. 두 해상도�
 
 ## 완료된 정합 보완
 
+- **Recovery 최초 공급:** 고정 `5294e77af873ec5318bbb7f1a1097d68208d03fa`에 대응한 암호화 Bundle 전달·확인, 별도 보호 키 권한600, SOPS3.13.3 해독1회와 Secret3/ConfigMap2 최초 생성·내용/UID 대조를 수락했다. 보호 receipt는 `RECOVERY_PROTECTED_SUPPLY_20261016` 논리 참조로 보관한다. `apply` 명령 미사용은 `create`5개 성공과 다른 필드이며 공급 미실행을 뜻하지 않는다. 별도 verify 모드나 해독/생성을 반복하지 않았다. Harbor/DB의 추가 보호 입력과 Engine·복원/업무의 전체 수락으로 확대하지 않는다.
+
 - **ROSA 태그 보존:** 초기 Foundation 계획의 클러스터 태그 제거8개를 Apply하지 않고 중단했다. 기본 Provider는 Data 설치 제외 태그를 관리하고, ROSA 공유 자원만 클러스터 태그 접두사를 별도로 처리하도록 수정했다. A 전체 계획 종료0·자원/출력 변경0·태그 변경0과 B의78 no-op/검사14 PASS를 연결했다. 재설치는 하지 않았다. [Infra #70](https://github.com/seokpan/seokpan-hybrid-infra/pull/70)·[#78](https://github.com/seokpan/seokpan-hybrid-infra/pull/78).
 - **지정 Route host 권한:** Cloud Namespace Role의 `routes/custom-host / create` 규칙1개 보완과 실제 허용 확인을 완료했다. 기존45개 검사/Ingress 적용을 반복하거나 전체 Controller 권한 축소 완료로 기록하지 않았다. [GitOps #53](https://github.com/seokpan/seokpan-hybrid-gitops/pull/53).
 - **보류 Application source 비교:** 관측된 차이는 빈 `target.group` 3개의 상태 직렬화 생략뿐이었다. 그 차이만 정규화한 비교에서 잔여 차이0·오류 조건0을 확인했다. Application을 수정하거나 Sync해서 비교를 통과시킨 결과가 아니다. 고정 개정은 `5294e77af873ec5318bbb7f1a1097d68208d03fa`다.
@@ -70,8 +73,8 @@ B03은 10/15 10:17:08~10:17:56 KST의 기존 실제 실행이다. 두 해상도�
 | 저장소 | 조회한 main |
 | --- | --- |
 | app | `d037a55f234a8720e6db9b01b8f31d08a3a16af9` |
-| infra | `1114b8108900225578aaa6c4b4f36df8fd0e4652` |
+| infra | `f23b29b63a509f2e182016fc7af13386fde7f766` |
 | gitops | `16fd14cd1c085a8314a5e2e18b89e2cd3b051626` |
 | docs | `c46ad369e33059864719d3ff55217f73c6e98a15` |
 
-GitHub의 이슈99개·댓글407개와 B 작성 PR117개의 설명/Conversation/리뷰, 추적 파일895개 중 UTF-8 파일880개를 검색했다. 작성/배정 이슈13개·B 댓글120개 및 다른 담당 이슈의 B 기록을 대조했다. 과거 Run·수치·실제 수행자·다른 담당의 체크는 보존했다. 문서 변경의 검사 결과와 게시 여부는 해당 PR에서 확인한다.
+조사 시작점의 GitHub 이슈100개·댓글408개, B 작성 PR118개의 설명과 B가 작성/참여한 PR156개의 Conversation/리뷰299건을 대조했다. 네 main의 추적 파일926개 중 UTF-8 파일911개와 이번 문서 변경본을 검색했다. 작성/배정 이슈13개·B 댓글120개 및 다른 담당 이슈의 B 기록을 대조했다. 기존 실행 진입/학습 안내와 과거 조사 문서는 현재 완료 근거로 연결했고, 당시 체크·절차·Source/측정값은 보존했다. 원 저장소 문서의 보완은 [Infra #83](https://github.com/seokpan/seokpan-hybrid-infra/pull/83)·[GitOps #58](https://github.com/seokpan/seokpan-hybrid-gitops/pull/58)에 별도로 게시해 대조한다. Infra의 새 VPN Source와 GitOps의 미병합 Recovery 후보를 B 실행/복구 완료로 올리지 않았다. 과거 Run·수치·실제 수행자·다른 담당의 체크는 보존했다. 문서 변경의 검사 결과와 게시 여부는 해당 PR에서 확인한다.

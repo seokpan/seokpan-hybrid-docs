@@ -1,5 +1,7 @@
 # 새 Image·이관 준비·ROSA 사전검증 연결
 
+> **기록 시점과 현재 완료 근거:** 아래 상태·체크·명령은 각 작성일의 조사/인계 기록이다. B의10/16 완료 판정은 [완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)와 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)을 따른다. 완료된 설치·Plan·OCP 교체/기능·B03 화면·정상 관리 검사를 다시 대기로 해석하거나 재실행하지 않는다.
+
 ## 현재 기준 — 2026-10-09
 
 - 새 공급 대상은 App `188199630ceb5fd67d8fe57d4d5650694e2e00e3`, D `a09-5-188199630ceb` Run #5다. Backend/Frontend Build·Scan·Smoke·Evidence 성공과 [GitOps #32의 B 공급 수락](https://github.com/seokpan/seokpan-hybrid-gitops/issues/32#issuecomment-6060263976)을 연결한다. 실패한 Run #4의 `5df2ce28`을 재빌드 대상으로 사용하지 않는다.

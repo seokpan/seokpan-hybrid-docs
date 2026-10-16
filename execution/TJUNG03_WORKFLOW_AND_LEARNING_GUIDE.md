@@ -1,6 +1,10 @@
 # 정태훈 작업·흐름·학습 안내
 
-## 전체 진행 현황 — 2026-10-09 KST
+## 완료 결과 연결 — 2026-10-16 KST
+
+[완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)에서 ROSA Apply/Ready·Worker/Data 규칙·승인 이미지 실행·보호 공급/TLS·정상 관리/모니터링·B03·Recovery 보호5객체 최초 공급 수락과 원 근거를 확인한다. Docs97/98의 병합과 기존 OCP 기능도 완료된 이력이며 다시 수행하지 않는다. 현재 체크 정본은 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의36/81이다. 아래 과거 준비 체크와 명령은 현재 실행 요청이 아니다.
+
+## 10/09 당시 진행 현황 — 과거 기록
 
 - [x] App #30/#34·GitOps #33·Docs #95/#96 병합 및 마무리 기록 완료.
 - [x] EC2 로컬 JSON 전달 오류 해결·제한 조회 성공 기록 수신. 같은 진단 반복 불필요.
@@ -11,7 +15,7 @@
 - [x] [B 선행 도구·증거](B_OFFLINE_PREPARATION_REVIEW_20261009.md)와 [Run #5 공급 후속](OCP_RUN5_SUPPLY_FOLLOWUP_20261009.md)을 Docs PR #97에 반영·게시 검증.
 - [ ] Docs PR #97 검토·병합 후속, A 실제 기반/권한 인계 및 아래 실환경 검증.
 
-현재 판단은 이 상단과 문서 끝의 **전체 남은 작업**을 기준으로 한다. 아래 시점별 기록·명령은 작성 당시의 이력/절차이며, 완료한 Controller 조회·오프라인 시험의 재실행 지시가 아니다.
+현재 완료 판정은 위10/16 절과 원 Issue를 따른다. 문서 끝의10/09 표는 당시 남은 작업 기록이다. 아래 시점별 기록·명령은 작성 당시의 이력/절차이며, 완료한 Controller 조회·오프라인 시험의 재실행 지시가 아니다.
 
 현재 추가 수신: D의 Run #5 OCI 복사·bastion 반입/Registry·Worker requests 보고, A PR #54 B 승인·병합 대기를 [새 공급 후속](OCP_RUN5_SUPPLY_FOLLOWUP_20261009.md)에 연결했다. 실제 push·내부 mapping·Pull·교체나 ARN/SG 인계 완료를 뜻하지 않는다. Controller의 격리 오프라인 시험은 Linux 파일3건·SG/Plan10·OCP계산5 PASS를 수신했고 임시 사본 제거·설치 없음으로 마쳤다.
 
@@ -622,7 +626,7 @@ printf '\n로컬 Source/도구 확인 종료. Caller/Backend/Plan/Apply는 실�
 
 **회신:** HEAD/origin-main, 개인 변경 유무, Local/Origin Lock 식별값, 도구 MISSING 목록과 TF/AWS 버전, 작업 가능한 일시. 자격증명·환경변수 전체·State·tfvars 내용은 보내지 않는다. 이 단계에는 tf-session source/init/plan/apply·oc apply·AWS/RHCS 서비스 호출을 추가하지 않는다.
 
-## 전체 남은 작업 — 2026-10-09 KST
+## 10/09 당시 남은 작업 — 과거 기록
 
 | 경로·순서 | 누구의 무엇을 기다리는가 | B가 받은 뒤 할 일과 결과 |
 |---|---|---|

@@ -1,5 +1,7 @@
 # Controller Source·정책 인계·지원 입력 후속 — 2026-10-08
 
+> **기록 시점과 현재 완료 근거:** 아래 상태·체크·명령은 각 작성일의 조사/인계 기록이다. B의10/16 완료 판정은 [완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)와 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)을 따른다. 완료된 설치·Plan·OCP 교체/기능·B03 화면·정상 관리 검사를 다시 대기로 해석하거나 재실행하지 않는다.
+
 ## 현재 확인
 
 [최신 후속](MERGED_SOURCE_PLAN_READINESS_20261008.md): Docs95·App30/34·GitOps33 병합/PR 브랜치 삭제, ef424 Source/Lock 보존·기본 Caller/본인 MFA 장치1개 읽기 PASS. 목적 Role/Backend/계정 지원/비용/Cloud Plan은 미완료. 아래21커밋 지연·원 블록 준비·최초Source 검사 결과는 당시 이력으로 보존.

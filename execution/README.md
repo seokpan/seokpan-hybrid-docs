@@ -1,5 +1,7 @@
 # Implementation and Validation
 
+> **B 완료 근거 — 2026-10-16:** [완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)·[실행 보드](TJUNG03_EXECUTION_BOARD.md)·[Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)을 연결한다. ROSA 설치/관리·수락된 플랫폼/검사·B03은 완료다. 아래 공통 역할/절차와 날짜별 관측은 각 원 범위를 유지하며 다른 담당자의 현재 완료를 판정하지 않는다.
+
 이 폴더는 석판 2차 프로젝트의 **지금 공유해서 쓰는 작업 안내와 공동 진행 기록**입니다. 05 최종 완료를 기다리지 않고 각자 준비·구현·인계를 진행합니다. 각 담당자가 원 Issue·PR·Run에 결과를 기록하고 수신자가 인계를 확인합니다.
 
 > PR #3·#5·#7의 설계·실행·발표 문서는 main에 반영됐습니다. 변경은 Branch/PR로 검토합니다. 네 사람의 계정 매핑과 네 저장소 Repo 권한 확인은 완료됐고, 개인 본인환경의 실제 사용·현재 작업·입력 인계는 [진행표](WORK_TRACKER.md)와 [Issue #8](https://github.com/seokpan/seokpan-hybrid-docs/issues/8)에서 이어갑니다. 담당자는 자기 근거와 확인 시각을 직접 연결합니다.

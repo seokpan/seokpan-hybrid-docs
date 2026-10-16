@@ -2,7 +2,7 @@
 
 ## 정태훈 완료 결과·체크 현황 — 2026-10-16 KST
 
-[완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)에 근거와 수락 범위를 연결했다. ROSA는 10/14 Apply 종료0, 이후 노드9/9 Ready·Operator34 안정·보호 관리 인계까지 완료했다. Worker/Data 규칙2개·승인 FE/BE×Compute3 실행6/6, Cloud 보호 입력/TLS·거부 검사, 정상 관리·모니터링 등록/한정 smoke 수락도 완료다. B03은 두 해상도27/27과 PNG12장 시각 수락으로 종료했다.
+[완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)에 근거와 수락 범위를 연결했다. ROSA는 10/14 Apply 종료0, 이후 노드9/9 Ready·Operator34 안정·보호 관리 인계까지 완료했다. Worker/Data 규칙2개·승인 FE/BE×Compute3 실행6/6, Cloud 보호 입력/TLS·거부 검사, 정상 관리·모니터링 등록/한정 smoke 수락도 완료다. B03은 두 해상도27/27과 PNG12장 시각 수락으로 종료했다. Recovery Secret3/ConfigMap2의 최초 create5·내용/UID 대조도 완료했다. Engine·복원·업무/RTO/RPO 완료와 구분한다.
 
 원 TH 체크는 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의 **36/81 완료·45개 미완료**다. 설치/검사 성공을 미충족한 복합 기준의 완료로 올리지 않았다. [App #21](https://github.com/seokpan/seokpan-hybrid-app/issues/21)의 실제 UI 기준8개와 [Infra #80](https://github.com/seokpan/seokpan-hybrid-infra/issues/80)의 최초 모니터링 등록 기준은 완료 근거를 연결한다.
 
@@ -365,7 +365,7 @@ OCP의 사전검증 업무 완료와 정리 날짜는 별개다. 추천 운영 �
 | TH-19.9 | 후속실측: T20/T23·Cost/Index/Tracker/05/Docs8정합 | 실제삭제/확인시각·원본링크 | [h-infra Issue #25](https://github.com/seokpan/seokpan-hybrid-infra/issues/25) 실제 삭제/잔존 |
 | TH-19.10 | 후속실측: B완료/수신/제외/보존/정리·상위종료 | 필수미완료해결 또는승인범위재결정·후속책임수신 | [h-docs Issue #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21) B 개인 종료 |
 
-## 10 전체 남은 작업 현황
+## 10 작성 당시 남은 작업 — 과거 기록
 
 **현재 구분:** 기존 복합 체크를 보존하며 새 완료 체크는 추가하지 않는다. Image 제공·B 수락과 실제 Namespace Secret 공급·OCP Workload Pull/Ready/업무는 구분한다. D 공급·C/D Data 입력과 B 활성화, A/C 기반·목적 Role/Backend·지원/비용 준비를 병행한다. 비용1~5·예상/실제 기록·본인 가용성TBD·기존 목표 창·보존/종료 조건은 유지한다.
 
@@ -566,7 +566,7 @@ OCP의 사전검증 업무 완료와 정리 날짜는 별개다. 추천 운영 �
 
 [연결](CONTROLLER_SOURCE_CATALOG_FOLLOWUP_20261008.md). 기존독립작업의잔여와멘토링보류 유지.
 
-## 전체 남은 작업 — 2026-10-09 KST
+## 10/09 당시 남은 작업 — 과거 기록
 
 | 경로·순서 | 누구의 무엇을 기다리는가 | B가 받은 뒤 할 일과 결과 |
 |---|---|---|

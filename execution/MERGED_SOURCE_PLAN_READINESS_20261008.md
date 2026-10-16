@@ -1,5 +1,7 @@
 > **현재 후속 — 2026-10-09:** A bootstrap Apply·재-Plan 변경 없음 보고 수신. Foundation 전체 Plan/Apply·B ROSA 서비스 권한은 대기다. [현재 인계 순서](B_SOURCE_BATCH_AND_HANDOFF_20261009.md)를 따른다. 아래 이전 실패/진단은 당시 기록이다.
 
+> **기록 시점과 현재 완료 근거:** 아래 상태·체크·명령은 각 작성일의 조사/인계 기록이다. B의10/16 완료 판정은 [완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)와 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)을 따른다. 완료된 설치·Plan·OCP 교체/기능·B03 화면·정상 관리 검사를 다시 대기로 해석하거나 재실행하지 않는다.
+
 # 병합 후속·Controller 인증·실행 대기 — 2026-10-08
 
 현재 추가 수신: D의 Run #5 OCI 복사·bastion 반입/Registry·Worker requests 보고, A PR #54 B 승인·병합 대기를 [새 공급 후속](OCP_RUN5_SUPPLY_FOLLOWUP_20261009.md)에 연결했다. 실제 push·내부 mapping·Pull·교체나 ARN/SG 인계 완료를 뜻하지 않는다. Controller의 격리 오프라인 시험은 Linux 파일3건·SG/Plan10·OCP계산5 PASS를 수신했고 임시 사본 제거·설치 없음으로 마쳤다.

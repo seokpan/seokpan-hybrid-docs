@@ -1,5 +1,7 @@
 # 石나가는 판단 2차 프로젝트 — 팀 작업·환경 전환·입력 인계 안내
 
+> **B 완료 근거 — 2026-10-16:** [완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)·[실행 보드](TJUNG03_EXECUTION_BOARD.md)·[Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)을 연결한다. ROSA 설치/관리·수락된 플랫폼/검사·B03은 완료다. 아래 공통 역할/절차와 날짜별 관측은 각 원 범위를 유지하며 다른 담당자의 현재 완료를 판정하지 않는다.
+
 | 항목 | 내용 |
 | --- | --- |
 | 프로젝트 | 석판팀(石나가는 판단) 2차 프로젝트 — AWS Hybrid Cloud 마이그레이션 및 운영 검증 |
