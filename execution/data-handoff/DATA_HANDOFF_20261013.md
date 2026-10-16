@@ -9,6 +9,41 @@
 - **비밀값:** 이 문서에는 비밀번호 · Token · 개인키 · AWS 계정 번호가 없습니다. 비밀값은 "어디에 있고 누가 열 수 있는지"만 적었습니다.
 - **AI에게 이어서 시킬 때:** 같은 폴더의 [`seokpan-data-handoff-for-ai.md`](seokpan-data-handoff-for-ai.md) 파일을 AI에게 먼저 읽히세요. 내용은 이 문서와 같고, AI가 읽기 쉬운 구조로 되어 있습니다.
 
+## 2026-10-14 보완 — Data 인계 형식과 수신 확인
+
+이 절은 아래 2026-10-13 기록 중 인계 파일 형식과 수신 상태를 갱신합니다.
+Data 후속 작업은 이유빈이 이어서 진행하며, 실제 실행 조건은 기존 Runbook을 따릅니다.
+
+- 기존 `c-data-outputs.json`과 `handoff-manifest.json`을 유지합니다.
+- `jth` 계정의 Data 인계 파일 읽기 가능·쓰기 불가를 확인했습니다.
+- 정태훈은 Data 인계 파일·manifest 결속과 연결 값 네 개의 해시 대조가
+  모두 통과했다고 회신했습니다.
+- 10/13 기록의 Data 인계 읽기·Endpoint 해시 대조 대기는 해소됐습니다.
+- 실제 DB·Valkey 접속, TLS·평문 거부 시험은 이 수신 확인과 별도입니다.
+- PR #68의 검토 Plan JSON 접근·Apply 승인은 이 인계 확인과 구분합니다.
+- 실제 주소·ID·ARN은 공개 문서나 Git에 추가하지 않습니다.
+
+### 인계 파일을 읽는 형식
+
+`c-data-outputs.json`은 각 항목에 값을 직접 담습니다.
+
+| 항목 | 인계 파일 조회 표현 |
+| --- | --- |
+| RDS 주소 | `.rds_address` |
+| RDS 포트 | `.rds_port` |
+| Valkey Primary Endpoint | `.redis_primary_endpoint` |
+| Valkey 포트 | `.redis_port` |
+| RDS 보안 그룹 | `.rds_security_group_id` |
+| Valkey 보안 그룹 | `.redis_security_group_id` |
+
+이 인계 파일에는 `.rds_address.value` 같은 중첩 조회 표현을 사용하지 않습니다.
+`terraform output -json` 원본 출력의 `.value` 구조와 구분합니다.
+AWS 응답 처리와 두 형식을 지원하는 기존 검사 코드의 `.value`는 삭제하지 않습니다.
+
+Data 계약의 관련 대기 상태 정정과 결과 기록은 기존 Infra #19·#23에서 이어갑니다.
+- [Data 계약 기준본](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#issuecomment-6143942560)
+- [Data 인계 접근 기록](https://github.com/seokpan/seokpan-hybrid-infra/issues/23#issuecomment-6159843548)
+
 ## 0. 한눈에 보는 현재 상태
 
 준비는 거의 끝났고, 실제 데이터는 아직 RDS에 들어가지 않았습니다. 남은 일 대부분은 VPN과 ROSA가 열려야 시작할 수 있습니다.
@@ -241,7 +276,7 @@ flowchart TB
 - [ ] **10/15 저녁 RDS Stop 여부 팀 결정** — 이관 전이면 #45 v1.4의 3-0 분기(근거 4가지 확인)로 Stop. 다시 켜서 `available` · 주소 해시만 확인. 걸린 시간을 재서 #45 v1.5로 기록
 - [ ] **7장의 하차 정리**(Windows 오프라인 사본 전달)
 - [ ] **Backup User Access Key 발급 + S3 권한 시험**(#44 10-2단계를 앞당김, 팀 확인 후) → 실제 S3 재전송 확인(V4, [Infra #55](https://github.com/seokpan/seokpan-hybrid-infra/issues/55))
-- [ ] **정태훈 해시 대조 확인** — 이유빈이 `c-data-outputs.json`에 `jth` 읽기 권한을 주면, 정태훈이 RDS · Valkey 주소 해시 4개를 대조 → Data 계약 v2.4의 ⏳ 표시를 ✅로 고치고 #19에 한 줄
+- [x] **정태훈 해시 대조 확인** — 10/14 회신으로 Data 인계 파일·manifest 결속 및 연결 값 네 개 해시 대조 통과 확인. 계약 상태 정정·#19 기록은 후속.
 - [ ] (선택) 회귀 시험 자동 CI(PR #66 리뷰 의견)
 
 ### 5-2. 앞 작업이 열려야 하는 일
@@ -267,8 +302,8 @@ flowchart TB
 | 답할 사람 | 질문 | 답이 오면 할 일 |
 | --- | --- | --- |
 | 이유빈 | VPN 경로와 출발지 IP 보존(백업 작업 VM `.52.50`이 RDS에 그대로 보이는지) | #44 0-2 · 0-3 확인 ([Infra #16](https://github.com/seokpan/seokpan-hybrid-infra/issues/16)) |
-| 이유빈 | `c-data-outputs.json`에 정태훈 `jth` 읽기 권한 추가 | 정태훈 해시 대조 → 계약 ⏳ 정리 |
-| 정태훈 | 받은 RDS · Valkey 주소 해시 4개 대조 결과 | Data 계약 v2.4 2.1 · 5 · 6절 ✅ |
+| 이유빈 | Data 인계 파일의 `jth` 읽기 접근 완료(10/14) | 계약 상태 정정·#19 결과 기록 |
+| 정태훈 | 연결 값 네 개 해시 대조 통과 회신 완료(10/14) | 수신 대기 해소; 실제 접속 검증은 별도 |
 | 정태훈 | 1차 쓰기 중지 실제 경로 · 계정(Argo CD 자동 Sync 때문에 `scale`만으로는 안 멈출 수 있음) | #44 1-1단계 실행 계획 (docs PR #91 · #107) |
 | 정태훈 | 9단계 뒤 "복귀"로 결정하면 RDS `stone_game`을 어떻게 처리할지 | #44 9단계 문구 확정 |
 | 정태훈 | Recovery Redis Secret · ConfigMap을 `seokpan-recovery`에 넣는 경로(사전 Render Bundle / Ansible) | 5-2의 Recovery Redis 공급 |
