@@ -14,7 +14,7 @@
 | 정상 관리·모니터링 인계 수락 | B 정상 GitHub/OpenShift·Argo 정책7개, 모니터링 등록·Controller 권한18개 수락. D 보고의 고정16fd14cd 수동 Sync/Synced/Healthy·3객체·smoke firing/삭제·Argo 거부6개를 B 인계에서 수락 | [Infra #75](https://github.com/seokpan/seokpan-hybrid-infra/pull/75)·[#81](https://github.com/seokpan/seokpan-hybrid-infra/pull/81). D 실행을 B 직접 실행으로 기록하지 않는다. 앱 target/운영 알림의 성공 주장은 포함하지 않는다 |
 | 기존 Data 작업 Pod의 제한 접속 갱신 | 같은 Pod UID를 유지한 bound 토큰 갱신·지정 범위 허용/거부·무해한 exec 확인 PASS. Workload/RBAC 변경0·Pull 변경0·SQL0 | [Infra #73](https://github.com/seokpan/seokpan-hybrid-infra/pull/73)의 제한 접속과 기존 검증 함수를 재사용한 10/16 결과. Controller 권한 축소나 최종 자격 회수 완료를 뜻하지 않는다 |
 | 데스크톱 UI 수락 | 1299×864·1440×900 실제27/27 PASS·오류0, 48.418초. 원 결과 JSON과 PNG12장 시각 수락 완료·추가 수정/재시험 항목0 | [App #21](https://github.com/seokpan/seokpan-hybrid-app/issues/21). 10/15 B03 실제 실행. 기존1280×900 경기/Rating·재접속·방장 승계 결과는 재사용 |
-| Cloud 보류 Application·Recovery Namespace 준비 | 고정5294e77의 Application 실제 등록·객체 목록8/8·source 정규화 차이0/오류 조건0. Recovery Namespace 생성·Active·UID 대응·기존 관리 Context 공급 권한8개 확인 | [GitOps #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10) · [Cloud 등록 #52](https://github.com/seokpan/seokpan-hybrid-gitops/pull/52). Replica0·수동 보류를 유지한 등록/준비 완료 범위 |
+| Cloud 보류 Application·Recovery Namespace 준비 | 고정5294e77의 Application 실제 등록·객체 목록8/8·source 정규화 차이0/오류 조건0. Recovery Namespace 생성·Active·UID 대응·기존 관리 Context 공급 권한8개 확인 | [GitOps #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10) · [Cloud 등록 #52](https://github.com/seokpan/seokpan-hybrid-gitops/pull/52). Replica0·수동 보류를 유지한 등록/준비 완료 범위. 서버 manifest 전체 독립 대조·실제 Sync·Recovery 보호 객체 공급/기동을 포함하지 않는다 |
 | 비용 입력용 실물 규격 조회·전달 | 인스턴스9개, 부착 EBS13개/3070GiB(루트2850+추가220), NLB3개(외부2/내부1), CLB0. B 규격 입력 전달 완료 | [비용 입력 Docs #43](https://github.com/seokpan/seokpan-hybrid-docs/issues/43#issuecomment-6145410624). 10/15 09:27:37 KST 조회 범위이며 단가·총비용·청구 확정이 아니다 |
 
 ## UI 검증의 완결 근거
@@ -22,6 +22,34 @@
 B03은 10/15 10:17:08~10:17:56 KST의 기존 실제 실행이다. 두 해상도의 대기/진행 보드 경계·스크롤/휠 안정, 상세 패널의 마우스/키보드 조작과 고정 요약, 실제8인 목록의 단일 스크롤, 채팅 입력 고정, 로그인/회원가입의 클라이언트·서버 오류 전후 카드 크기와 세션/방 WebSocket을 수락했다. 시험방 종료·임시 CA 제거도 완료했다. 48.418초는 기능 검사 소요 시간이며 성능 지연이나 RTO가 아니다.
 
 원 묶음은 result.json과 PNG12장이다. 수락한 아카이브는 836828바이트, SHA-256 `4ed555679ced2757f76c6d9c4c06be1fdf38de79056c2471cc3dddd502391154`다. 원 결과와 이미지의 결속/개별 해시는 보호 증거 대장에 보존한다. 가림 표시 뒤의 입력 텍스트·픽셀을 확인했다고 주장하지 않는다. 이번 기록 등록에서 새 브라우저 실행이나 화면 재시험은 하지 않았다.
+
+## 원 이슈 완료 기준의 근거 대응
+
+### App #21 UI 기준
+
+원 기준의 순서·의미를 유지한다. B03의27개 검사만으로8개 기준을 모두 충족했다고 판정하지 않고, 원 Source·기존 실제 기능·추가 화면 수락을 합쳐 대조한다.
+
+| 원 기준 | 충족 근거와 수락 범위 |
+| --- | --- |
+| 1. 실제 서비스의 UI 반영·기존 계약 유지 | [App #22](https://github.com/seokpan/seokpan-hybrid-app/pull/22)의 Backend/API/게임 모델·배포 선언 불변, [#34](https://github.com/seokpan/seokpan-hybrid-app/pull/34)의 UI 흐름 회귀, [기존 실제 Run7](https://github.com/seokpan/seokpan-hybrid-app/issues/4#issuecomment-6145407122)의 Image/서비스 기능을 연결한다. B03은 같은 서비스의 세션·HTTP/방 WS를 확인했고 Backend/배포 변경0이다 |
+| 2. 두 해상도의 보드·페이지 스크롤 | B03의 각 해상도 waiting/active board/page fits 및 기존 휠/위치 측정·PNG 수락 |
+| 3. 요약 위치·마우스/키보드·긴 목록 단일 스크롤 | 각 해상도 panel keyboard/summary·roster pointer/keyboard·실제8인 long list one scroll area 및 PNG 수락 |
+| 4. 채팅 목록 스크롤·입력 고정 | 각 해상도 waiting/active chat scroll/input fixed 및 PNG 수락 |
+| 5. 로그인/회원가입 오류 전후 카드 크기 | 각 해상도 client-error와 자기 시험계정 server-login/duplicate-registration 오류의 실제 크기 측정·PNG 외곽 확인. 가림 뒤 입력 텍스트의 시각 확인과 구분 |
+| 6. 결과/Rating·모달·대기방 복귀 | 기존10/13 실제1280×900 기능의 정상5목·9착수·Rating 방향·모달 닫기/재열기·대기방 복귀 PASS. B03에서 반복하지 않음 |
+| 7. 고정 도구 Source 검사 연결 | [App #22 고정 개정의 Source Run](https://github.com/seokpan/seokpan-hybrid-docs/blob/312db8c099ba5c9f67362f12b9df27be8653e7a3/evidence/T09/source-audit-20261007-01/summary.md)과 App #34의 Node24.19.0/npm12.0.2·도구81/unit278/build·모의 UI36/Full2 결과. 실제 서비스 결과와 구분 |
+| 8. 코드 검사·리뷰·병합 | App #22의 검증 개정 `abb648350084c9ebe6c63ee7668921de66f5b03f`·문구 보완 HEAD `663b52278afd020dceb46d8dab1a2ebdfe6e7557`의 [승인 리뷰](https://github.com/seokpan/seokpan-hybrid-app/pull/22#pullrequestreview-5449755134)·병합 확인, 후속 App #34 연결 |
+
+### Infra #80 최초 모니터링 등록 기준
+
+| 원 수락 조건 | 충족 근거와 수락 범위 |
+| --- | --- |
+| 원본 확인값·범위/소유·서버 dry-run | [Infra #81](https://github.com/seokpan/seokpan-hybrid-infra/pull/81)의 고정 GitOps `16fd14cd1c085a8314a5e2e18b89e2cd3b051626` 등록과 기존 실제 등록 수락. 지정 AppProject/Application·Namespace 객체의 소유/선언 차이를 덮어쓰지 않음 |
+| Controller18권한·Argo 정책 반영 | 기존 Namespace LocalSubjectAccessReview18개와 정상 운영자 get/sync 수락. 계정 대행 없음. D의 Sync·한정 smoke/거부6개 보고 수락은 B 직접 실행과 구분 |
+| 실패·부분 생성 기록 | #81의 보호 receipt·자동 삭제/롤백 금지·읽기 중단 후 조회만 재개 경계 구현과 오프라인 거부 사례로 확인. 실제 장애 주입·일반 부분 실패 복구 성공으로 확대하지 않음 |
+| 오프라인 검사 | #81 최종 HEAD `4a0e017a80e23239c3a73eeebc5cb4b13c63cc24`의22개 PASS·[CI 성공](https://github.com/seokpan/seokpan-hybrid-infra/actions/runs/38859439817), 병합 main `1114b8108900225578aaa6c4b4f36df8fd0e4652` 연결 |
+
+최초 등록 기준4개는 충족했다. 앱 target UP·운영 규칙 평가·알림 수신은 이 원 이슈의 종료 기준에 포함되지 않는다. 두 원 이슈의 종료로 상위 App #4·GitOps #10·Infra #25 또는 Docs #21의 미충족 복합 체크를 완료 처리하지 않는다.
 
 ## 완료된 정합 보완
 
