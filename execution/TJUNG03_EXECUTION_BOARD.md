@@ -1,12 +1,14 @@
 # 정태훈 실행판 — 지금 할 일·입력 대기·OCP와 ROSA 수명
 
-## 정태훈 완료 결과·체크 현황 — 2026-10-16 KST
+## 정태훈 완료 결과·체크 현황 — 2026-10-21 KST
 
 [완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)에 근거와 수락 범위를 연결했다. ROSA는 10/14 Apply 종료0, 이후 노드9/9 Ready·Operator34 안정·보호 관리 인계까지 완료했다. Worker/Data 규칙2개·승인 FE/BE×Compute3 실행6/6, Cloud 보호 입력/TLS·거부 검사, 정상 관리·모니터링 등록/한정 smoke 수락도 완료다. B03은 두 해상도27/27과 PNG12장 시각 수락으로 종료했다. Recovery Secret3/ConfigMap2의 최초 create5·내용/UID 대조도 완료했다. Harbor Secret 공급과 Valkey 단독 Ready·UID999/파일·port-forward TLS/AUTH도 완료했다. 전체 복원·업무/RTO/RPO는 미완료다.
 
 원 TH 체크는 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의 **37/81 완료·44개 미완료**다. 설치/검사 성공을 미충족한 복합 기준의 완료로 올리지 않았다. [App #21](https://github.com/seokpan/seokpan-hybrid-app/issues/21)의 실제 UI 기준8개와 [Infra #80](https://github.com/seokpan/seokpan-hybrid-infra/issues/80)의 최초 모니터링 등록 기준은 완료 근거를 연결한다.
 
-Cloud 업무·운영 Pool·공식 다중 Pod/장애·전체 복구/RTO/RPO·자격 회수·재생성·최종 보존/비용/발표는 미완료다. 신규 기록은 완결된 사항만 다루며 해당 잔여는 원 체크로 유지한다. 기존 ROSA/NAT는 검증 완료까지 유지하며 과거 금요일/주말 전 삭제 목표는 적용하지 않는다. 삭제 실행/예약은 없고 $450 계획/$500 한도는 유지한다.
+10/20 새 ROSA·최소 플랫폼·목적계정/TLS/Schema·Cloud 앱 FE3/BE3·현재 모니터링과 정상 Baseline 업무24/24는 [실제 결과](B_RUNTIME_AND_PROJECT_CLOSEOUT_20261020.md)로 연결한다. [HPA 반환 분석](HPA_ATTEMPT04_VERIFIED_RESULTS_20261021.md)은 두 압축파일·내부6파일/5해시·요청47,138건 대조를 완료했다. 10/50/100 VU 계획 구간 완료, 100 VU 30,084건 HTTP200·내용 검증 성공/p95 90.031ms다. 200 VU는2.197초·응답 미확인16/200으로 중단했고 전체 HPA 성공·게임/WSS 최대 수용량은 미수락이다.
+
+운영 최종 Pool·Cloud 전체 업무/Recovery/RTO/RPO·비상/회수·독립 보관·최종 비용/발표의 원 조건은 남는다. B 관측 시계열과 D 결과 결합·최종 증거·새 B 삭제 Plan/실제 삭제·잔존 확인은 [Infra109](https://github.com/seokpan/seokpan-hybrid-infra/pull/109)의 별도 잔여다. 최종 폐기에서 원래 배포 설정 복원을 생략한 결정은 복원 성공이 아니다. B 종료 범위는 ROSA·전용 IAM/OIDC/바인딩·B Snapshot·ROSA 소유 잔존 자원이며 A Foundation/Data/VPN/NAT/EIP/공통 S3/Bootstrap·다른 담당 ECR은 제외한다. 다음 ROSA 재생성은 예정하지 않으며 $450 계획/$500 한도와 실제 청구 미확인을 유지한다.
 
 완료한 실행·시험은 재사용했다. 아래 날짜별 기록은 당시 상태이며 최신 완료 판정은 이 절과 원 Issue를 따른다.
 
