@@ -56,3 +56,5 @@ B Controller의 관측 수집·종료와 삭제 Plan 준비를 [원 결과](http
 전체 관측 최댓값24를 D 부하 구간의 최댓값23으로 혼용하지 않는다. Replica6 관측은 확대 관측 근거이며 전체 확장/축소 성공·무중단·원래 배포 설정 복원 성공 판정은 아니다. 원래 설정 복원은 최종 폐기 경로에서 생략했고 `restoration_verified=false`다.
 
 종료 영수증에 기록된 공개 증거 ZIP SHA256은 `46dc17c8b92a711fca8f57ad9486a070e18558067b6411e16314a36d3796d055`다. 영수증 수집 시점의 기록은 `github_evidence_published=false`·`project_deletion_started=false`이며, 이 집계 문서 게시를 증거 ZIP의 GitHub 보존이나 실제 삭제 완료로 취급하지 않는다.
+
+후속 [GitHub 실제 게시·보존 참조 등록 결과](https://github.com/seokpan/seokpan-hybrid-infra/pull/109#issuecomment-6295212752)에서 공개 증거 ZIP 게시와 `PASS_PUBLICATION_REFERENCE_RECORDED`를 확인했다. [고정 개정의 공개 ZIP](https://github.com/seokpan/seokpan-hybrid-docs/blob/668622438460ace1eed396b492855cf5d27d07ab/execution/evidence/hpa-attempt04-20261020/B-D-public-evidence.zip)은 위 SHA256과 대응한다. 앞선 영수증의 미게시 값은 수집 당시 기록이며 실제 삭제는 여전히 미실행이다.
