@@ -1,5 +1,7 @@
 # Run #5 OCP 공급 후속 수신·push 판단 — 2026-10-09
 
+> **B 전수 대조 후속 — 2026-10-21:** 이 문서의 조사·준비·현재/대기 표기는 제목 날짜의 이력이다. 이후 B 앱·정상 시험·HPA 한계·최종 종료는 [최신 종료 기록](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/B_ROSA_FINAL_CLOSEOUT_20261021.md)과 [전수 대조](TJUNG03_FULL_REPOSITORY_AUDIT_20261021.md)를 따른다. 성공한 실행을 다시 대기시키거나 미수행 시험을 성공으로 바꾸지 않는다.
+
 > **기록 시점과 현재 완료 근거:** 아래 상태·체크·명령은 각 작성일의 조사/인계 기록이다. B의10/16 완료 판정은 [완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)와 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)을 따른다. 완료된 설치·Plan·OCP 교체/기능·B03 화면·정상 관리 검사를 다시 대기로 해석하거나 재실행하지 않는다.
 
 D에게 받은 공급 보고를 기존 공개 기록과 대조했다. B의 Harbor/bastion/Cluster 직접 실행·검증 결과가 아니다. 실제 공급 이슈는 [GitOps #32](https://github.com/seokpan/seokpan-hybrid-gitops/issues/32)이며 Infra #32는 다른 작업이다.

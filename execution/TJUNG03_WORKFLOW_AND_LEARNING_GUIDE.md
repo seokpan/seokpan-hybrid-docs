@@ -1,8 +1,10 @@
 # 정태훈 작업·흐름·학습 안내
 
+> **B 전수 대조 후속 — 2026-10-21:** [최종 종료](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/B_ROSA_FINAL_CLOSEOUT_20261021.md)와 [실제 시험 결과](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/HPA_ATTEMPT04_VERIFIED_RESULTS_20261021.md)를 우선한다. B ROSA·정확한 소유 범위 잔존 자원·Snapshot4개 정리는 완료다. 아래 절차·입력 대기·명령은 작성 당시 기록 또는 재사용 계약이며 현재 재실행 요청이 아니다. A 자원과 다른 담당의 종료는 판정하지 않는다. [전체 대조](TJUNG03_FULL_REPOSITORY_AUDIT_20261021.md).
+
 ## 완료 결과 연결 — 2026-10-16 KST
 
-[완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)에서 ROSA Apply/Ready·Worker/Data 규칙·승인 이미지 실행·보호 공급/TLS·정상 관리/모니터링·B03·Recovery 보호5객체 최초 공급 수락과 원 근거를 확인한다. Docs97/98의 병합과 기존 OCP 기능도 완료된 이력이며 다시 수행하지 않는다. 현재 체크 정본은 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의36/81이다. 아래 과거 준비 체크와 명령은 현재 실행 요청이 아니다.
+[완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)에서 ROSA Apply/Ready·Worker/Data 규칙·승인 이미지 실행·보호 공급/TLS·정상 관리/모니터링·B03·Recovery 보호5객체 최초 공급 수락과 원 근거를 확인한다. Docs97/98의 병합과 기존 OCP 기능도 완료된 이력이며 다시 수행하지 않는다. 10/21 현재 원 기준 체크 정본은 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의37/81 완료·44개 미수락이다. 미수락 항목을 B 종료의 새 실행 요청으로 해석하지 않는다. 아래 과거 준비 체크와 명령은 현재 실행 요청이 아니다.
 
 ## 10/09 당시 진행 현황 — 과거 기록
 

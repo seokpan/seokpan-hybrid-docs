@@ -1,5 +1,7 @@
 # GitOps Writer Credential 운영 기록 (`hybrid-gitops-writer`)
 
+> **B 전수 대조 후속 — 2026-10-21:** 이 문서의 조사·준비·현재/대기 표기는 제목 날짜의 이력이다. 이후 B 앱·정상 시험·HPA 한계·최종 종료는 [최신 종료 기록](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/B_ROSA_FINAL_CLOSEOUT_20261021.md)과 [전수 대조](TJUNG03_FULL_REPOSITORY_AUDIT_20261021.md)를 따른다. 성공한 실행을 다시 대기시키거나 미수행 시험을 성공으로 바꾸지 않는다.
+
 작성: 최유준 / 작성 날짜: 2026-10-13 / 대표 Issue: [h-app #14](https://github.com/seokpan/seokpan-hybrid-app/issues/14), 사용처 [h-app #15](https://github.com/seokpan/seokpan-hybrid-app/issues/15)
 
 이 문서는 공개 저장소용 **논리 참조 기록**이다. Token 값·접두어·일부 문자열, 발급 계정명, 계정 번호, 보호 보관 파일의 실제 경로·Key는 쓰지 않는다(§6 점검 대상). 값이 필요한 항목은 `[보호 기록: <논리 참조>]`로만 연결한다. 이 기록은 Credential 경로의 검증이며 이미지 공급·OCP/Cloud 배포·업무 수락을 뜻하지 않는다.

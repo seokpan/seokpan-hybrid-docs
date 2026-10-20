@@ -1,5 +1,7 @@
 # 石나가는 판단 2차 프로젝트 — Presentation Baseline
 
+> **B 전수 대조 후속 — 2026-10-21:** [최종 종료](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/B_ROSA_FINAL_CLOSEOUT_20261021.md)와 [실제 시험 결과](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/HPA_ATTEMPT04_VERIFIED_RESULTS_20261021.md)를 우선한다. B ROSA·정확한 소유 범위 잔존 자원·Snapshot4개 정리는 완료다. 아래 절차·입력 대기·명령은 작성 당시 기록 또는 재사용 계약이며 현재 재실행 요청이 아니다. A 자원과 다른 담당의 종료는 판정하지 않는다. [전체 대조](../execution/TJUNG03_FULL_REPOSITORY_AUDIT_20261021.md).
+
 > **목적:** 05 구현·통합·검증에서 발생하는 실제 결과를 최종 발표 관점에서 놓치지 않고 선별하기 위한 기준
 > **기준일:** 2026-10-02 KST
 > **상태:** APPROVED PRESENTATION BASELINE — B 완료 근거·후보 연결, 전체 공식 시험·최종 발표 준비 미완료

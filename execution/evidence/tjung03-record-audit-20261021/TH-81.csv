@@ -1,0 +1,82 @@
+id,original_acceptance,criterion,source
+TH-01.1,ACCEPTED,실제 PC/Controller·clone·Branch·전체 HEAD·도구·Reviewer 확인,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-01.2,ACCEPTED,미커밋/미추적/ignored 입력·개인 변경과 기존 ZIP을 보존해 비교,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-01.3,ACCEPTED,사용할 Source·보호 자료 논리 참조·변경 범위·남은 입력 기록,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-02.1,ACCEPTED,1차 공식 종료 경계·최신 검증 상태·실제 Seed 후보를 구분,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-02.2,ACCEPTED,Source 검사·성공 이미지·전체 Digest·미반영 Maintenance를 확인하고 Seed 수락,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-02.3,ACCEPTED,1차 부모 이력과 2차 초기 이력을 보존해 이관하고 Source 출처/전체 SHA 기록,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-02.4,ACCEPTED,D Build·C 계약·GitOps 소비 범위를 인계하고 수신 확인,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-03.1,ACCEPTED,[App #2](https://github.com/seokpan/seokpan-hybrid-app/issues/2) A~F 본인 리뷰 게시,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-03.2,ACCEPTED,최유준의 방향 수신 답변 확인,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-03.3,ACCEPTED,"[App #2](https://github.com/seokpan/seokpan-hybrid-app/issues/2)·[Infra #18](https://github.com/seokpan/seokpan-hybrid-infra/issues/18)의 최종 사용할 개정 정합 확인. A의 Registry/CI 작성·통합 수신은 [Infra #23](https://github.com/seokpan/seokpan-hybrid-infra/issues/23) 최신 답변에 확인되며, PAT/CI·Lifecycle 실측은 별도",https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-03.4,NOT_FULLY_ACCEPTED,보류된 Lifecycle N·Credential 재현 등록·PAT 정책/범위·Harbor 승인 Release 구분 등 후속 검증 담당/시점 연결,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-04.1,ACCEPTED,DB Runtime/Migration·Redis 대상·User·TLS/CA/Hostname·별도 AUTH 소비 계약 확인,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-04.2,NOT_FULLY_ACCEPTED,Engine별 Pool 합계·Pod 수명·KST/UTC 생성·기존 DATETIME·Schema/이관 계약과 C의 [Infra #17](https://github.com/seokpan/seokpan-hybrid-infra/issues/17) 실사용자 데이터 반출 안내/동의·가명화 전환 조건 확인,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-04.3,ACCEPTED,상태 공유·동시 확정·WS Generation/Snapshot·DB/Redis/통지 부분 실패의 코드 충족/gap을 조기에 조사,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-04.4,ACCEPTED,C/D에게 수정 범위·Case·필요 입력을 인계하고 수락/보완 기록,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-05.1,ACCEPTED,환경별 대상 허용 검사와 DB Runtime/Migration의 일관된 검사 구현,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-05.2,ACCEPTED,Redis URL 인증정보 거부·별도 AUTH와 TLS/CA/Hostname 계약 구현,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-05.3,ACCEPTED,파서·Settings·Client·Helper 시험·GitOps Secret 참조를 함께 정합화,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-05.4,ACCEPTED,잘못된 환경/Host/DB/User/CA/암호 거부·비밀값 없는 오류 기록 검증,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-06.1,ACCEPTED,FE/API/WSS·Proxy/Origin·인증·오류 응답 경로 점검 및 수정,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-06.2,ACCEPTED,startup/live/ready Probe·임의 UID/쓰기 경로·SIGTERM/Drain 조건 연결,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-06.3,ACCEPTED,시간 생성·재접속·Generation/Snapshot·상태 공유의 필요한 수정을 조기에 수행,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-06.4,ACCEPTED,Pod 내부/Service Ready와 실제 업무/종료 Case를 각각 확인,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-07.1,ACCEPTED,실제 Runtime/Lock의 의미 있는 정적·기능·회귀 검사 및 Nginx/Driver 검사,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-07.2,NOT_FULLY_ACCEPTED,TLS/AUTH Client 생성·실제 연결·취소/종료와 실패/제외 범위 기록,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-07.3,ACCEPTED,수정 Source 전체 SHA·검사 결과를 D에게 Build/Scan 입력으로 인계,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-07.4,ACCEPTED,D의 실제 이미지/Registry별 Digest·플랫폼·Scan 결과를 수신하고 [GitOps #6](https://github.com/seokpan/seokpan-hybrid-gitops/issues/6) 후속 결과 연결,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-08.1,ACCEPTED,제공된 원 lab Manifest를 읽고 받은 개정·사용/제외 범위와 회신 질문 처리,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-08.2,ACCEPTED,공통 Resource/Patch·Root/AppProject·SCC·Route/Probe·Secret 참조·NetworkPolicy·Migration one-shot 경계 작성,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-08.3,ACCEPTED,실제 Kustomize Build·객체 Owner·Sync/Prune/삭제 보호와 lab 조건 검토,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-08.4,ACCEPTED,D에게 전체 Commit·Image/Secret/Context 조건을 인계하고 [GitOps #5](https://github.com/seokpan/seokpan-hybrid-gitops/issues/5)의 실제 lab 결과 수신,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-09.1,NOT_FULLY_ACCEPTED,Cloud ECR·승인 Replica/PDB/Rolling/AZ와 환경별 연결/정책 선언 완성,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-09.2,NOT_FULLY_ACCEPTED,Recovery Harbor·초기 Replica·새 Redis·직접 DB TLS와 사전 Render 조합 완성,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-09.3,ACCEPTED,Cloud/lab 배포 참조·Secret 별도 공급·원본 Owner·변경 조율 검토,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-09.4,NOT_FULLY_ACCEPTED,환경별 Render·Source/Image/설정 개정을 고정하고 C/D 검토 수신,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-10.1,NOT_FULLY_ACCEPTED,A/C/D의 실제 기반 입력 Schema·Account/Region·개정·Worker Pull Role·SG Binding Owner 리뷰,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-10.2,ACCEPTED,rosa Root·Provider/Lock·Backend·Cluster/Pool/OIDC/Role와 Worker SG 연결 코드 작성,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-10.3,ACCEPTED,제한 출력 소비·누락/오래된/다른 환경 입력 오류 차단·수명 경계 검사,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-10.4,ACCEPTED,A 리뷰·입력 수신 및 README/실제 Source 정합 확인,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-11.1,NOT_FULLY_ACCEPTED,Cloud SOPS+age 주 보관/공급·예비/독립 사본·CI Secret 예비 책임 확인,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-11.2,NOT_FULLY_ACCEPTED,정상 IDP/RBAC·Argo SSO/별도 RBAC·유지 비상 경로 구현·검증,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-11.3,NOT_FULLY_ACCEPTED,정상 관리 경로 검증 뒤 초기 인증·높은 Binding·기존 Token/Argo Session 회수와 잔존 확인,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-11.4,NOT_FULLY_ACCEPTED,실제 공급/복호화/접근·재주입·회수 결과와 보관 책임 인계,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-12.1,ACCEPTED,실제 도구·지원/Quota·Role·Caller/Backend·foundation 입력을 확인,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-12.2,NOT_FULLY_ACCEPTED,Root 전체 Plan을 보호 자료로 보관하고 A의 사용할 개정/범위 리뷰 수신,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-12.3,ACCEPTED,D에게 수량·생성/가동/삭제/재시험 시간과 부속/잔존 자원 비용 입력 제공,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-12.4,NOT_FULLY_ACCEPTED,"첫 Full Apply 전 전체 Cost Gate와 가용 실행 창 확인. $450 계획선 초과 시 보류·조정, 총 $500 한도 유지",https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-13.1,NOT_FULLY_ACCEPTED,지정 실행자·입력·리뷰·비용/시간·공유 실행 조건 재확인 후 rosa 생성,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-13.2,NOT_FULLY_ACCEPTED,"Secret/Pull·최초 GitOps·Route/업무를 통합하고, C가 인계한 데이터 이전 조건·개정 확인 후 App/Data·Schema/Migration 통합",https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-13.3,NOT_FULLY_ACCEPTED,로그인/입장/관전/투표/종료/전적·TLS·시간·Digest·정상 Baseline 검증,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-13.4,NOT_FULLY_ACCEPTED,검증 Release·Backup 업무 계약·Recovery 자료를 보존하고 실제 Run/인계 연결,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-14.1,ACCEPTED,TH-04/06에서 코드 위험 조사·필요 수정·Case 준비를 앞당김,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-14.2,NOT_FULLY_ACCEPTED,실제 환경에서 인증/만료·중복/경쟁·Commit 불명·다른 Pod 재접속·WS 상태 수렴 시험,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-14.3,NOT_FULLY_ACCEPTED,DB/Redis/통지 부분 실패·최종 영속/Runtime 상태와 실제 시도수 검증,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-14.4,NOT_FULLY_ACCEPTED,T07~T13의 본인 범위 결과·실패·수정·새 Run 재시험·한계 인계,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-15.1,NOT_FULLY_ACCEPTED,검증 Image/Registry Mapping·Render·설정/CA·Secret 논리 참조·도구·업무 조건 묶음 확보,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-15.2,NOT_FULLY_ACCEPTED,장애 전에 독립 사본·Harbor/로컬 자료·복호화·공급/접근 가능성 확인,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-15.3,NOT_FULLY_ACCEPTED,C에게 새 Redis·완료 기록 보존·상태 초기화/신규 게임·클라이언트 접속 계약 인계하고 수신 확인,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-15.4,NOT_FULLY_ACCEPTED,지정 격리 환경의 실제 업무 재개·Data 확인·전체 시간선을 C/D Run에 연결,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-16.1,NOT_FULLY_ACCEPTED,"삭제 전 foundation 재실행 전후 기존 rosa Binding 유지·Rule 덮어쓰기/영구 Diff 없음, 보존/Binding 해제·중간 삭제/재생성 계획·비용/공유 실행 조건 확인",https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-16.2,NOT_FULLY_ACCEPTED,삭제 전 App 쓰기 제한·진행 상태·최신 Backup 로컬 확보·남은 Data/Network 의존성을 확인하고 승인된 rosa 범위를 삭제. foundation의 기반 Rule/Data/Network와 bootstrap 소유 Backend 등 보존 확인,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-16.3,NOT_FULLY_ACCEPTED,새 rosa·Worker SG/Host/Context·Pull/Secret/GitOps를 재현하고 이전 Worker SG 참조 잔존 없음 확인,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-16.4,NOT_FULLY_ACCEPTED,정상 E2E와 foundation/rosa 양쪽 Plan·T19 실제 결과 확인,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-17.1,NOT_FULLY_ACCEPTED,정상 Baseline 뒤 D 조율로 충돌 없는 시험 순서·주입자·중단/되돌림 조건 확인,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-17.2,NOT_FULLY_ACCEPTED,Pod/Worker·Data 장애·Hybrid/CI 단절·Pull·관측·부하 등 공식 Case의 본인 범위 수행/지원,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-17.3,NOT_FULLY_ACCEPTED,App Resource/Pool·업무 정확성·성능·시간선·실패/재시험·환경 차이 기록,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-17.4,NOT_FULLY_ACCEPTED,아래 공식 시험의 본인 참여 결과와 실제 Run을 Index·D 집계에 연결,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-18.1,ACCEPTED,직접 구현·검증·설계 판단·Troubleshooting·제품 기본기능 사용을 구분해 [Docs #6](https://github.com/seokpan/seokpan-hybrid-docs/issues/6)에 후보 연결,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-18.2,ACCEPTED,실제 조건/수치/한계·1차 비교 분류·본인 기여와 팀 연결 정리,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-18.3,NOT_FULLY_ACCEPTED,시연·예비 영상·대본·Q&A·자료 접근을 확인하고 Demo Freeze/Presentation Ready·리허설 연결,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-18.4,NOT_FULLY_ACCEPTED,최종 발표 결과와 배포 Source/Release·영상/Run의 동일 개정 및 보존 확인,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-19.1,NOT_FULLY_ACCEPTED,최종 Source/Release/Digest/Schema/Config/Secret 개정·시험 판정·남은 한계 고정,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-19.2,NOT_FULLY_ACCEPTED,검증 Backup·Harbor 이미지·Bundle·Render/도구·Runbook·Evidence·영상·독립 사본 보존,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-19.3,NOT_FULLY_ACCEPTED,보존 자료 실제 접근/무결성·복원 가능성과 필요한 복호화 수단 확인,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-19.4,NOT_FULLY_ACCEPTED,자원별 삭제/보존 대상·Owner·순서·기간·유지 비용·후속 책임 기록,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-19.5,NOT_FULLY_ACCEPTED,삭제 전 App 쓰기 제한·진행 상태·최신 Backup 로컬 확보·남은 Data/Network 의존성과 선택한 C의 중지/재개 조건을 확인한 뒤 rosa Binding 해제와 승인된 최종 삭제 실행. 삭제 요청과 실제 완료를 따로 기록,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-19.6,NOT_FULLY_ACCEPTED,해당 State/Owner로 실제 잔존·종속 자원·부분 실패/Orphan 확인. 기반 자원까지 임의 삭제하지 않음,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-19.7,NOT_FULLY_ACCEPTED,남아 있는 Data/Network/Storage/Backup 등의 비용·보관 기간과 후속 청구 확인 담당/시점 인계,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-19.8,NOT_FULLY_ACCEPTED,불필요 Credential/Token/시험 Secret·임시 파일·실데이터를 해당 Owner 범위로 정리. 보존 자료 해독 Key 유지,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-19.9,NOT_FULLY_ACCEPTED,실제 삭제/잔존 확인 시각·Cost Ledger·T20/T23·Index·WORK_TRACKER·05·[Docs #8](https://github.com/seokpan/seokpan-hybrid-docs/issues/8)·발표 자료 링크 정합화,https://github.com/seokpan/seokpan-hybrid-docs/issues/21
+TH-19.10,NOT_FULLY_ACCEPTED,"본인 산출물·수신·시험/제외·최종 보존/정리와 수신된 후속 책임을 점검. 본인 필수 미완료는 해결 또는 승인된 범위 재결정 근거를 확인하고, 팀 Must 최종 판정 원본과 구분해 상위 Issue 종료 판정",https://github.com/seokpan/seokpan-hybrid-docs/issues/21
