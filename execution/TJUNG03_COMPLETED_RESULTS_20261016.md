@@ -2,6 +2,16 @@
 
 이 문서는 이미 실행·검토·수락이 끝난 범위만 기록한다. 기준 자료는 기존 원 Issue/PR와 보호 결과물이다. 문서 작성 과정에서 설치·Plan·Sync·시험·해독을 재실행하지 않았다. 전체 작업 체크 정본은 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)이다.
 
+## 10/18~10/20 완료 결과 추가
+
+- [ROSA 중간 삭제/보존](https://github.com/seokpan/seokpan-hybrid-infra/issues/25#issuecomment-6236061743): Root State 자원 제거·옛 소유 태그 잔존0/read_errors0,Snapshot4·독립 해독6 보존. 청구0·전체 shared 부재·새 재생성/E2E·최종 종료는 미판정이다.
+- [NAT 재생성](https://github.com/seokpan/seokpan-hybrid-infra/issues/23#issuecomment-6281612432): A(이유빈), Source81c6482의 전체 저장 Plan add9/change0/delete0/replace0·Apply10:56:44~10:58:32 exit0,11:02:11 KST NAT3 available/EIP3 연결/동일AZ 경로3 active·Public IGW 확인. 새 ROSA 통신 결과와 구분한다.
+- [RDS Start](https://github.com/seokpan/seokpan-hybrid-infra/issues/45#issuecomment-6281899697): A(이유빈),10/20 11:10:56 요청·11:21:02 available 확인·Endpoint 동일. 로그인/TLS·데이터·백업 재개·앱 결과는 포함하지 않는다.
+- [Infra90](https://github.com/seokpan/seokpan-hybrid-infra/pull/90)·[Infra91](https://github.com/seokpan/seokpan-hybrid-infra/pull/91): 병합 ace9511/041d01a, Controller 실행 도구 반영·보호 입력 처리·제한 결과 전달·기존 발생기 연결 완료. 승인91 head c5c880e·[기존 CI](https://github.com/seokpan/seokpan-hybrid-infra/actions/runs/39348811154) 성공과 실제 DB/Cloud/측정은 구분한다.
+- [Recovery C04](https://github.com/seokpan/seokpan-hybrid-infra/issues/48#issuecomment-6261703688):6계정/REQUIRE SSL·업무 권한·최소 컬럼 SELECT/UPDATE6행 확인. DB/table GrantOption·실제 Job/TLS/current·전체 복구 수락은 별도다.
+
+기존37완료/44미완료·TH원조건은 유지한다. 추가된 결과는 각 실행 범위만 의미하며 새 앱 경로 구현/실행이나 전체 Recovery·최종 보존/정리 완료를 포함하지 않는다.
+
 ## 확정된 완료 범위
 
 | 완료 범위 | 실제 결과 | 원 근거·작성/실행 범위 |
@@ -15,7 +25,7 @@
 | 기존 Data 작업 Pod의 제한 접속 갱신 | 같은 Pod UID를 유지한 bound 토큰 갱신·지정 범위 허용/거부·무해한 exec 확인 PASS. Workload/RBAC 변경0·Pull 변경0·SQL0 | [Infra #73](https://github.com/seokpan/seokpan-hybrid-infra/pull/73)의 제한 접속과 기존 검증 함수를 재사용한 10/16 결과. Controller 권한 축소나 최종 자격 회수 완료를 뜻하지 않는다 |
 | 데스크톱 UI 수락 | 1299×864·1440×900 실제27/27 PASS·오류0, 48.418초. 원 결과 JSON과 PNG12장 시각 수락 완료·추가 수정/재시험 항목0 | [App #21](https://github.com/seokpan/seokpan-hybrid-app/issues/21). 10/15 B03 실제 실행. 기존1280×900 경기/Rating·재접속·방장 승계 결과는 재사용 |
 | Cloud 보류 Application·Recovery Namespace 준비 | 고정5294e77의 Application 실제 등록·객체 목록8/8·source 정규화 차이0/오류 조건0. Recovery Namespace 생성·Active·UID 대응·기존 관리 Context 공급 권한8개 확인 | [GitOps #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10) · [Cloud 등록 #52](https://github.com/seokpan/seokpan-hybrid-gitops/pull/52). Replica0·수동 보류를 유지한 등록/준비 완료 범위. 서버 manifest 전체 독립 대조·실제 Sync·Engine 기동을 포함하지 않는다 |
-| Recovery 보호 입력 최초 공급 | cp-01의 지정 Recovery Namespace에 Secret3·ConfigMap2를 create5로 최초 생성. 생성 응답의 객체 UID·내용 대조 PASS, Namespace/RBAC 변경0·SQL0 | [GitOps #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10) · [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21). 기존 보호 공급 receipt의 완료 수락. Engine·Runtime TLS/AUTH·실제 복원·오프라인 망 독립/RTO/RPO는 포함하지 않는다 |
+| Recovery 보호 입력 최초 공급 | Recovery 제어 노드의 지정 Recovery Namespace에 Secret3·ConfigMap2를 create5로 최초 생성. 생성 응답의 객체 UID·내용 대조 PASS, Namespace/RBAC 변경0·SQL0 | [GitOps #10](https://github.com/seokpan/seokpan-hybrid-gitops/issues/10) · [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21). 기존 보호 공급 receipt의 완료 수락. Engine·Runtime TLS/AUTH·실제 복원·오프라인 망 독립/RTO/RPO는 포함하지 않는다 |
 | 비용 입력용 실물 규격 조회·전달 | 인스턴스9개, 부착 EBS13개/3070GiB(루트2850+추가220), NLB3개(외부2/내부1), CLB0. B 규격 입력 전달 완료 | [비용 입력 Docs #43](https://github.com/seokpan/seokpan-hybrid-docs/issues/43#issuecomment-6145410624). 10/15 09:27:37 KST 조회 범위이며 단가·총비용·청구 확정이 아니다 |
 
 ## UI 검증의 완결 근거
@@ -83,7 +93,7 @@ TH-03.3의 개정 정합은 완료다. TH-03.4의 잔여와 Cloud/Recovery의 �
 
 원 조건 전체가 충족되지 않은 TH는 체크하지 않는다. ROSA 실행은 완료됐지만 TH-12.2의 실제 사용 개정 리뷰 기록·TH-12.4의 비용 조건 등 복합 기준은 별도다. Cloud 업무/운영 Pool·다중 Pod/장애·독립 Recovery/RTO/RPO·비상/자격 회수·중간 재생성·최종 보존/비용/발표는 이 완료 기록으로 닫지 않는다. 그 진행 상세는 신규 완료 문서화 대상에서 제외하고 원 Issue의 미완료 체크로 유지한다.
 
-운영 일정은 **검증 완료까지 기존 ROSA/NAT 유지**로 정정됐다. 과거10/16 금요일/주말 전 삭제 목표는 현재 삭제 지시가 아니다. 삭제 실행·예약은 없으며 기존 $450 계획/$500 한도와 실제 청구/잔여 예산 확인을 유지한다.
+10/16의 ROSA/NAT 유지 안내 이후 ROSA 중간 삭제와 NAT/EIP 정리,10/20 NAT 재생성·RDS Start가 각각 실행됐다. 각 자원의 실행 시점과 Owner를 구분한다. 새 ROSA 재생성/업무·최종 종료는 미완료이며 $450 계획/$500 한도와 실제 청구/잔여예산 확인을 유지한다. 현재 단계는 [실행판](TJUNG03_EXECUTION_BOARD.md)·[Docs21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의 원 미완료 조건으로 연결한다.
 
 ## 조사 기준
 
