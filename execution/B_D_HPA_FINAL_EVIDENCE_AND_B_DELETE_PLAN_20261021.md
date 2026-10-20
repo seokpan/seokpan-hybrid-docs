@@ -1,6 +1,6 @@
 # B/D HPA 종료 증거 결합과 B 삭제 준비 — 2026-10-21
 
-D 원본 인수와 B Controller 기록 결합을 완료했다. 실제 삭제는 아직 시작하지 않았다. 기존 HPA·앱·DB·부하 시험은 재실행하지 않았다.
+D 원본 인수와 B Controller 기록 결합을 완료했다. 이 Plan 검토 기록 당시 실제 삭제는 미시작이었다. 후속 [B 실제 삭제 결과](B_ROSA_DELETE_EXECUTED_20261021.md)는 Apply·State0·원격 부재·현행 owned 잔존0과 Snapshot4개 삭제 요청까지 완료했으며 [Snapshot4개 삭제 후 ABSENT](B_ROSA_FINAL_CLOSEOUT_20261021.md)도 후속 확인됐다. 기존 HPA·앱·DB·부하 시험은 재실행하지 않았다.
 
 ## 보존과 관측 결과
 
@@ -39,6 +39,6 @@ Plan SHA256:
 
 A Foundation/RDS/Redis/VPN/NAT/EIP/공통S3/Bootstrap과 다른 담당 ECR은 제외한다. B Snapshot4개는 이 Terraform Plan 밖이며 별도 대조·확인 후 삭제한다.
 
-남은 실행은 사용자 삭제 확인, 같은 Plan Apply, 원격 ROSA 부재 및 정확한 ROSA 소유 EC2/LB/EBS/ENI 확인, B Snapshot 정리, 최종 결과 추가 기록이다. B 삭제와 계정 전체 과금0은 구분한다.
+저장 Plan 검토 당시 남은 실행은 같은 Plan Apply, 원격 ROSA 부재 및 정확한 ROSA 소유 EC2/LB/EBS/ENI 확인, B Snapshot 정리와 최종 결과 기록이었다. 위 후속 실제 결과를 적용하며 완료한 삭제/조회를 반복하지 않는다. B 삭제와 계정 전체 과금0은 구분한다.
 
 실제 앱·웹콘솔 캡처는 확보했으나 시연 영상 촬영 완료는 확인되지 않았다. 부하 재실행이나 영상 때문에 삭제를 자동 지연하지 않는다.
