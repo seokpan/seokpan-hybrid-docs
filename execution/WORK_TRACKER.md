@@ -1,12 +1,14 @@
 # Work and Input Tracker
 
-## 정태훈 완료 결과·체크 현황 — 2026-10-16 KST
+## 정태훈 완료 결과·체크 현황 — 2026-10-21 KST
 
 [완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)에 근거와 수락 범위를 연결했다. ROSA는 10/14 Apply 종료0, 이후 노드9/9 Ready·Operator34 안정·보호 관리 인계까지 완료했다. Worker/Data 규칙2개·승인 FE/BE×Compute3 실행6/6, Cloud 보호 입력/TLS·거부 검사, 정상 관리·모니터링 등록/한정 smoke 수락도 완료다. B03은 두 해상도27/27과 PNG12장 시각 수락으로 종료했다. Recovery Secret3/ConfigMap2의 최초 create5·내용/UID 대조도 완료했다. Harbor Secret 공급과 Valkey 단독 Ready·UID999/파일·port-forward TLS/AUTH도 완료했다. 전체 복원·업무/RTO/RPO는 미완료다.
 
 원 TH 체크는 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의 **37/81 완료·44개 미완료**다. 설치/검사 성공을 미충족한 복합 기준의 완료로 올리지 않았다. [App #21](https://github.com/seokpan/seokpan-hybrid-app/issues/21)의 실제 UI 기준8개와 [Infra #80](https://github.com/seokpan/seokpan-hybrid-infra/issues/80)의 최초 모니터링 등록 기준은 완료 근거를 연결한다.
 
-Cloud 업무·운영 Pool·공식 다중 Pod/장애·전체 복구/RTO/RPO·자격 회수·재생성·최종 보존/비용/발표는 미완료다. 신규 기록은 완결된 사항만 다루며 해당 잔여는 원 체크로 유지한다. 기존 ROSA/NAT는 검증 완료까지 유지하며 과거 금요일/주말 전 삭제 목표는 적용하지 않는다. 삭제 실행/예약은 없고 $450 계획/$500 한도는 유지한다.
+10/20 새 ROSA·최소 플랫폼·목적계정/TLS/Schema·Cloud 앱 FE3/BE3·현재 모니터링과 정상 Baseline 업무24/24는 [실제 결과](B_RUNTIME_AND_PROJECT_CLOSEOUT_20261020.md)로 연결한다. [HPA 반환 분석](HPA_ATTEMPT04_VERIFIED_RESULTS_20261021.md)은 두 압축파일·내부6파일/5해시·요청47,138건 대조를 완료했다. 10/50/100 VU 계획 구간 완료, 100 VU 30,084건 HTTP200·내용 검증 성공/p95 90.031ms다. 200 VU는2.197초·응답 미확인16/200으로 중단했고 전체 HPA 성공·게임/WSS 최대 수용량은 미수락이다.
+
+운영 최종 Pool·Cloud 전체 업무/Recovery/RTO/RPO·비상/회수·독립 보관·최종 비용/발표의 원 조건은 남는다. [B425표본 수집·관측 종료·D 결합 증거 영수증·삭제 Plan 준비](https://github.com/seokpan/seokpan-hybrid-infra/pull/109#issuecomment-6295077112)는 완료했다. [B 삭제 Plan delete18 검토](B_D_HPA_FINAL_EVIDENCE_AND_B_DELETE_PLAN_20261021.md)도 완료했다. [공개 증거 ZIP](https://github.com/seokpan/seokpan-hybrid-docs/blob/668622438460ace1eed396b492855cf5d27d07ab/execution/evidence/hpa-attempt04-20261020/B-D-public-evidence.zip) 게시·Controller 보존 참조 등록도 완료했다. [B 실제 삭제 결과](B_ROSA_DELETE_EXECUTED_20261021.md): 저장 Plan Apply·B 루트 managed instance0·원격 ROSA 부재·현행 owned 태그 EC2/EBS/ENI/LB 각각0을 확인했다. B Snapshot4개 삭제 요청도 성공했고 삭제 후 부재 재조회만 남는다. 계정 전체 과금0과 태그 없는/공유 자원 부재는 미확인이다. 최종 폐기에서 원래 배포 설정 복원을 생략한 결정은 복원 성공이 아니다. B 종료 범위는 ROSA·전용 IAM/OIDC/바인딩·B Snapshot·ROSA 소유 잔존 자원이며 A Foundation/Data/VPN/NAT/EIP/공통 S3/Bootstrap·다른 담당 ECR은 제외한다. 다음 ROSA 재생성은 예정하지 않으며 $450 계획/$500 한도와 실제 청구 미확인을 유지한다.
 
 완료한 실행·시험은 재사용했다. 아래 날짜별 기록은 당시 상태이며 최신 완료 판정은 이 절과 원 Issue를 따른다.
 
@@ -215,7 +217,7 @@ I02의 PR #12 보고는 Bootstrap Apply 및 foundation/rosa 접두사의 **임�
 
 ## 2026-10-02 후속 — App/Manifest Source 구현과 인계
 
-PR #19 병합·브랜치 삭제를 확인했다. 직전 구현·인계 전체의 [재귀 검토 §9.10](05_IMPLEMENTATION_AND_VALIDATION.md#recursive-source-review-20261002)에서 App Fragment/인증서 문구·이관 명령/보호 규칙·GitOps 설정 반영·계측 경계/누락 순서를 보완했다. 계산 도구 최종16 검사이며 PR #20의 Source/기록 후보로 제공한다. 실제 실행 성공은 아니다. 이번 목적은 계측 도구 준비 뒤 실제 예행을 막는 App/Image/Manifest 입력을 해소해 시간·손실·접속·팀 부담의 근거를 얻는 것이다. [05 §9.9](05_IMPLEMENTATION_AND_VALIDATION.md#recovery-app-source-20261002)에 코드·검사/제한을 연결한다.
+PR #19 병합·브랜치 삭제를 확인했다. 구현·인계의 [Source 검토 §9.10](05_IMPLEMENTATION_AND_VALIDATION.md#recursive-source-review-20261002)에서 App Fragment/인증서 문구·이관 명령/보호 규칙·GitOps 설정 반영·계측 경계/누락 순서를 보완했다. 계산 도구 최종16 검사이며 PR #20의 Source/기록 후보로 제공한다. 실제 실행 성공은 아니다. 이번 목적은 계측 도구 준비 뒤 실제 예행을 막는 App/Image/Manifest 입력을 해소해 시간·손실·접속·팀 부담의 근거를 얻는 것이다. [05 §9.9](05_IMPLEMENTATION_AND_VALIDATION.md#recovery-app-source-20261002)에 코드·검사/제한을 연결한다.
 
 | 결과 / 원본 기록 | 현재 범위 | 다음 실행 / 수신 |
 | --- | --- | --- |
@@ -274,7 +276,7 @@ Cloud PR #11 HEAD `ce0ce5af9866428d7734db0bb8cce1d425ec20a2`는 #9 위의 별도
 
 App 최신 전달 Source는 `c837120c25c34b88bf6c6ee8e122ff50cbff062d`이며 고정 Seed 대비 39 수정파일·초기 hybrid main 대비 390 전체 이관파일·78개 이력을 보존한 새 `seokpan-hybrid-app-source-final-20261002.zip`을 준비했다. 최종 기본 전체 1,752 PASS·JUnit fail/error/skip 0·strict report PASS, 독립 관련 193·신규 순수 21/SQL Guard 3·별도 실제 Lua 3 PASS, Ruff 250·mypy 119 PASS다. opt-in 전체의 과거 1,754 PASS/기존 timeout 1 FAIL과 Controller 반복 종료 판별 제한은 05 §9.13의 검사 범위에 보존했다. 원격 전체 이력 Push 인증·개인 미반영 변경 대조·새 Image·실제 대상/CA/AUTH·1/3 Pod/DB·부분 실패와 실제 Bundle 수신은 남는다. GitOps #9 Draft의 직접 조건은 이 PR의 App/Image·lab/Recovery 조합·#5/#6 검증이며 Cloud 전체·최종 T18 완료까지 넓히지 않는다. Source Review/Ready/Merge와 실제 운영·Recovery Acceptance는 구분한다.
 
-현재 Source 범위의 재귀 검토는 필수 추가 보완 0건에서 멈췄다. TH-01~19·81개 식별자·공식 시험·RTO 30분/RPO 90분/운영 중 1시간 백업·$450/$500·Freeze/Owner는 유지한다. Source 검사만으로 새 실제 Run/Run Index·Shared Execution 행·팀 수신/전체 TH 완료를 만들지 않았다.
+해당 시점 Source 범위의 필수 보완을 마쳤다. TH-01~19·81개 식별자·공식 시험·RTO 30분/RPO 90분/운영 중 1시간 백업·$450/$500·Freeze/Owner는 유지한다. Source 검사만으로 새 실제 Run/Run Index·Shared Execution 행·팀 수신/전체 TH 완료를 만들지 않았다.
 
 ## Shared Execution
 
