@@ -1,12 +1,14 @@
 # 石나가는 판단 2차 프로젝트 05 구현·통합·검증 진행 기록
 
-## 정태훈 완료 결과·체크 현황 — 2026-10-16 KST
+## 정태훈 완료 결과·체크 현황 — 2026-10-21 KST
 
 [완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)에 근거와 수락 범위를 연결했다. ROSA는 10/14 Apply 종료0, 이후 노드9/9 Ready·Operator34 안정·보호 관리 인계까지 완료했다. Worker/Data 규칙2개·승인 FE/BE×Compute3 실행6/6, Cloud 보호 입력/TLS·거부 검사, 정상 관리·모니터링 등록/한정 smoke 수락도 완료다. B03은 두 해상도27/27과 PNG12장 시각 수락으로 종료했다. Recovery Secret3/ConfigMap2의 최초 create5·내용/UID 대조도 완료했다. Harbor Secret 공급과 Valkey 단독 Ready·UID999/파일·port-forward TLS/AUTH도 완료했다. 전체 복원·업무/RTO/RPO는 미완료다.
 
 원 TH 체크는 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의 **37/81 완료·44개 미완료**다. 설치/검사 성공을 미충족한 복합 기준의 완료로 올리지 않았다. [App #21](https://github.com/seokpan/seokpan-hybrid-app/issues/21)의 실제 UI 기준8개와 [Infra #80](https://github.com/seokpan/seokpan-hybrid-infra/issues/80)의 최초 모니터링 등록 기준은 완료 근거를 연결한다.
 
-Cloud 업무·운영 Pool·공식 다중 Pod/장애·전체 복구/RTO/RPO·자격 회수·재생성·최종 보존/비용/발표는 미완료다. 신규 기록은 완결된 사항만 다루며 해당 잔여는 원 체크로 유지한다. 기존 ROSA/NAT는 검증 완료까지 유지하며 과거 금요일/주말 전 삭제 목표는 적용하지 않는다. 삭제 실행/예약은 없고 $450 계획/$500 한도는 유지한다.
+10/20 새 ROSA·최소 플랫폼·목적계정/TLS/Schema·Cloud 앱 FE3/BE3·현재 모니터링과 정상 Baseline 업무24/24는 [실제 결과](B_RUNTIME_AND_PROJECT_CLOSEOUT_20261020.md)로 연결한다. [HPA 반환 분석](HPA_ATTEMPT04_VERIFIED_RESULTS_20261021.md)은 두 압축파일·내부6파일/5해시·요청47,138건 대조를 완료했다. 10/50/100 VU 계획 구간 완료, 100 VU 30,084건 HTTP200·내용 검증 성공/p95 90.031ms다. 200 VU는2.197초·응답 미확인16/200으로 중단했고 전체 HPA 성공·게임/WSS 최대 수용량은 미수락이다.
+
+운영 최종 Pool·Cloud 전체 업무/Recovery/RTO/RPO·비상/회수·독립 보관·최종 비용/발표의 원 조건은 남는다. B 관측 시계열과 D 결과 결합·최종 증거·새 B 삭제 Plan/실제 삭제·잔존 확인은 [Infra109](https://github.com/seokpan/seokpan-hybrid-infra/pull/109)의 별도 잔여다. 최종 폐기에서 원래 배포 설정 복원을 생략한 결정은 복원 성공이 아니다. B 종료 범위는 ROSA·전용 IAM/OIDC/바인딩·B Snapshot·ROSA 소유 잔존 자원이며 A Foundation/Data/VPN/NAT/EIP/공통 S3/Bootstrap·다른 담당 ECR은 제외한다. 다음 ROSA 재생성은 예정하지 않으며 $450 계획/$500 한도와 실제 청구 미확인을 유지한다.
 
 완료한 실행·시험은 재사용했다. 아래 날짜별 기록은 당시 상태이며 최신 완료 판정은 이 절과 원 Issue를 따른다.
 
@@ -407,7 +409,7 @@ ROSA Window 진입/추가·재시험은 최신 전체 비용·남은 시험·정
 | CA/Schema/Digest 변경 뒤 기존 Run 사용 | 소비 입력·Plan/Release/Backup/Bundle·영향 시험을 확인하고 새 개정 재검증 |
 | B 또는 지정 Reviewer가 부재 | 해당 리뷰/공유 실행만 대기, 직접 인계와 독립 준비 지속. 책임/리뷰를 임의 우회하지 않음 |
 
-**최종 판단:** 확인 가능한 승인 문서·기존 Source 관측·협업 안내의 범위에서 연쇄 추적→보완→재검증을 마쳤고 추가 보완 0건으로 재귀 검토를 종료했다. 위 시나리오는 문서 규칙 검토이며 실제 환경 시험 PASS가 아니다. 협업 안내는 공유할 수 있지만 실제 팀 도입/접근·입력·Plan/비용·Runtime·05 최종 결과 종료는 해당 증거를 받아 갱신한다.
+**최종 판단:** 확인 가능한 승인 문서·기존 Source 관측·협업 안내의 범위에서 문서 규칙과 원 근거의 대응 검토를 마쳤다. 위 시나리오는 문서 규칙 검토이며 실제 환경 시험 PASS가 아니다. 협업 안내는 공유할 수 있지만 실제 팀 도입/접근·입력·Plan/비용·Runtime·05 최종 결과 종료는 해당 증거를 받아 갱신한다.
 
 새 협업 표현은 기존 역할·서비스·State·권한·시험 목표를 바꾸지 않는다. 세부 작업/시간/접근과 팀 도입은 실제 입력/인계이며 문서 검토만으로 완료시키지 않는다.
 
@@ -1371,7 +1373,7 @@ Lua Source는 기존 v8에서 v9로 바뀌므로 같은 환경에 구/신 Image�
 
 현재 연결은 전체 Git 이력 Push 인증을 제공하지 않아 원격 App main은 `cef46c4e7b0cbd0cf6ebab487ee92c32d800ccdc`이며 새 Branch/PR 반영은 미완료다. 승인된 이력을 잃는 Snapshot 등록으로 대체하지 않는다. 인증된 개인 작업환경에서 기존 미반영 코드와 대조하고 Bundle의 기존 main ancestry를 확인한 뒤 작업 Branch를 Push/별도 PR로 인계한다. 1차 저장소와 2차 main의 직접 Push·사람 Merge는 수행하지 않았다.
 
-Source·테스트·문서와 기존 기록의 연결을 다시 검토해 **현재 확인한 Source 범위의 필수 추가 보완 0건**에서 재귀 검토를 멈췄다. 실제 Cloud/lab/Recovery 생성·Apply/Sync·3 Pod·영속 DB 경합·Backup/Offline Acceptance는 미실시다. Source 후보·로컬 회귀로 새 실제 Run·빈 Evidence·Run Index·Shared Execution 행이나 TH 전체 완료를 만들지 않았다. 다음은 인증된 App Source → D 새 Image와 정확한 환경 입력 → lab/Recovery 자산·Bundle 수신 → 기존 Run 양식의 탐지~업무 재개/Backup Data 최신성·손실/팀 부담 → 필요 변경·최종 검증이다. 현재 연결은 [WORK_TRACKER 후속](WORK_TRACKER.md#cloud-rosa-app-progress-20261002)을 따른다.
+Source·테스트·문서와 기존 기록의 연결을 다시 검토해 **해당 시점 Source 범위의 필수 보완을 완료**했다. 실제 Cloud/lab/Recovery 생성·Apply/Sync·3 Pod·영속 DB 경합·Backup/Offline Acceptance는 미실시다. Source 후보·로컬 회귀로 새 실제 Run·빈 Evidence·Run Index·Shared Execution 행이나 TH 전체 완료를 만들지 않았다. 다음은 인증된 App Source → D 새 Image와 정확한 환경 입력 → lab/Recovery 자산·Bundle 수신 → 기존 Run 양식의 탐지~업무 재개/Backup Data 최신성·손실/팀 부담 → 필요 변경·최종 검증이다. 현재 연결은 [WORK_TRACKER 후속](WORK_TRACKER.md#cloud-rosa-app-progress-20261002)을 따른다.
 
 <a id="recovery-timezone-handoff-20261003"></a>
 ### 9.14 최소 Recovery 예행의 App 시각 확인·기록 인계 — 2026-10-03
