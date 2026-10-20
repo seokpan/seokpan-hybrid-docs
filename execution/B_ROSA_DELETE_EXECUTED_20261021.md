@@ -1,5 +1,7 @@
 # B ROSA 실제 삭제 및 잔존 자원 확인 — 2026-10-21
 
+> 최종 후속: B Snapshot4개는 삭제 후 모두 ABSENT로 확인했다. [B 담당 AWS 자원 종료 기록](B_ROSA_FINAL_CLOSEOUT_20261021.md)을 최종 판정으로 따른다. 아래의 재조회 대기는 삭제 직후 당시 상태로 보존한다.
+
 ## 인수한 실제 실행 결과
 
 Controller에서 사용자 확인 문구 입력 후 검토한 저장 Plan을 적용했다. 결과는 PASS_B_ROSA_DESTROY_APPLY_AND_ROOT_STATE_EMPTY이며 B ROSA Terraform 루트의 managed instance는0이다. 새 Plan·앱 Sync·부하·Schema 변경은 반복하지 않았다.
