@@ -1,6 +1,6 @@
 # seokpan-hybrid-docs
 
-> **정태훈 완료 결과 — 2026-10-16:** [완결 작업 결과](execution/TJUNG03_COMPLETED_RESULTS_20261016.md)에 설치·관리·수락된 검사·B03과 원 근거를 연결했다. [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의36/81 완료와 전체 공식 시험/최종 구축 결과판의 종료를 구분한다.
+> **B 실행·종료 결과 — 2026-10-21:** [앱·현재 모니터링·정상 Baseline](execution/B_RUNTIME_AND_PROJECT_CLOSEOUT_20261020.md), [HPA 요청 분석](execution/HPA_ATTEMPT04_VERIFIED_RESULTS_20261021.md), [B AWS 자원 최종 종료](execution/B_ROSA_FINAL_CLOSEOUT_20261021.md)를 정본으로 따른다. B 담당 자원 정리는 완료했으며 A 자원은 제외한다. [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의 원 기준은 **37/81 완료·44개 미완료**로 유지하며, B 자원 종료를 전체 시험·발표 완료로 확대하지 않는다. [GitHub 최종 기록 대조](execution/B_GITHUB_FINAL_RECORD_AUDIT_20261021.md).
 
 Seokpan 2차 - 하이브리드 클라우드 기획·아키텍처·검증 문서
 
