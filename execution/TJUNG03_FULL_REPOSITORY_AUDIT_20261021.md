@@ -112,3 +112,15 @@ A의 VPN/Data/Foundation 문서와 다른 담당의 완료 판정은 변경하�
 [Docs #140](https://github.com/seokpan/seokpan-hybrid-docs/pull/140)·[Infra #112](https://github.com/seokpan/seokpan-hybrid-infra/pull/112)·[GitOps #68](https://github.com/seokpan/seokpan-hybrid-gitops/pull/68)·[App #52](https://github.com/seokpan/seokpan-hybrid-app/pull/52)에 후속 보완을 게시했다. 상기 원 조사 집계는 이4개 새 PR을 포함하지 않는 기준 목록이다. 관련 원 이슈6개에는 B 종료/기존 마감 완료와 원 기준 미수락을 구분한 최신 안내를 추가했고 게시 본문을 다시 읽어 일치를 확인했다.
 
 최종 문서/기록 대조는 신규 보완0건으로 수렴했다. 실제 main 반영은 각 후속 PR의 병합을 따라 별도로 확정한다. 리뷰나 main 반영 대기를 B AWS 종료의 미완료로 바꾸지 않는다.
+
+
+## 직전 결과의 재귀 검토 후속 — 2026-10-21
+
+사용자 재검토 요청으로 조사 목록의 중복·작성자 집계·현재 PR head/리뷰/CI와 새로 작성한 도구 설명을 실제 구현까지 추적했다.
+
+| 후속 회차 | 결과와 처리 |
+|---|---|
+| 1 | Infra cloud-launch README의 stage 기본 호출을 “로컬 근거와 선언 대조”로 설명한1건을 발견했다. 실제 --execute 생략 분기는 package()만 호출하고 evidence/kubeconfig는 읽지 않는다 |
+| 2 | “로컬 패키지 무결성 확인”으로 수정하고 Data/목적 계정/TLS/Schema·현재 대상 대조는 --execute 분기에서 수행됨을 명시했다. 수정 문장과 해당 분기를 다시 대조해 추가 보완0건 |
+
+원 조사 이슈/PR·댓글·리뷰 목록의 ID 중복0을 확인했고, PR별 리뷰 최대6건으로 수집 상한100에 미달해 리뷰 페이지 누락은 없었다. 새4개 PR은 모두 미병합·리뷰 미등록 상태이며 당시 최종 head의 CI14개 성공을 확인했다. 새 설명 보완 후의 정확한 head/CI는 각 PR 후속 확인 댓글을 따른다. 실행 코드·Runtime·원 실측값·원 TH 체크는 변경하지 않았으며 완료한 검사는 재실행하지 않았다.
