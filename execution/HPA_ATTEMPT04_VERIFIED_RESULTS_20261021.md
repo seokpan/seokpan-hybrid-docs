@@ -39,7 +39,7 @@ D의 tar.gz와 ZIP 각각 외부 SHA256이 일치했다. 두 묶음의 내부 6�
 - 지연 백분위는 기록된 요청 소요시간을 nearest-rank 방식으로 계산했다. phase4에는 응답 미확인 요청도 포함되며 짧은 중단 구간이다.
 - B Controller 관측425표본과 D 결과의 결합 영수증을 후속 인수했다. 전체 관측 창과 D 부하 구간 집계를 아래에서 구분한다. 200 VU 구간의 B표본은0이므로 해당 구간의 DB 피크나 중단 원인을 확정하지 않는다.
 - 원래 설정 복원은 최종 프로젝트 폐기 선택으로 생략한다. D의 3/3 확인을 원래 설정 복원 성공으로 기록하지 않는다.
-- B 삭제 Plan 준비는 완료했다. Plan 검토·실제 삭제·잔존 확인은 미완료다. A 담당 자원은 제외한다.
+- [B 삭제 Plan 준비·delete18 검토](B_D_HPA_FINAL_EVIDENCE_AND_B_DELETE_PLAN_20261021.md)는 완료했다. 실제 삭제·잔존 확인은 미완료다. A 담당 자원은 제외한다.
 
 원본 압축파일, 실행 로그와 상세 오프라인 분석은 보호된 로컬 증거로 보존했다. 이 문서는 공개용 집계만 담는다.
 
@@ -55,4 +55,4 @@ B Controller의 관측 수집·종료와 삭제 Plan 준비를 [원 결과](http
 
 전체 관측 최댓값24를 D 부하 구간의 최댓값23으로 혼용하지 않는다. Replica6 관측은 확대 관측 근거이며 전체 확장/축소 성공·무중단·원래 배포 설정 복원 성공 판정은 아니다. 원래 설정 복원은 최종 폐기 경로에서 생략했고 `restoration_verified=false`다.
 
-종료 영수증에 기록된 공개 증거 ZIP SHA256은 `46dc17c8b92a711fca8f57ad9486a070e18558067b6411e16314a36d3796d055`다. 해당 영수증의 `github_evidence_published=false`·`project_deletion_started=false`를 유지하며, 이 집계 문서 게시를 증거 ZIP의 GitHub 보존이나 실제 삭제 완료로 취급하지 않는다.
+종료 영수증에 기록된 공개 증거 ZIP SHA256은 `46dc17c8b92a711fca8f57ad9486a070e18558067b6411e16314a36d3796d055`다. 영수증 수집 시점의 기록은 `github_evidence_published=false`·`project_deletion_started=false`이며, 이 집계 문서 게시를 증거 ZIP의 GitHub 보존이나 실제 삭제 완료로 취급하지 않는다.
