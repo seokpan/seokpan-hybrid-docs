@@ -1,8 +1,10 @@
 # seokpan-hybrid-docs
 
+> **체크박스 후속 — 2026-10-21:** 상위/닫힌 이슈·PR·댓글까지 [체크 단위로 대조](execution/TJUNG03_CHECKBOX_RECONCILIATION_20261021.md)해 원 TH4개를 추가 수락했다. 현재41/81·40개 원 기준 미수락이며 과거37/81은 당시 집계다. B 운영 종료는 완료했다.
+
 > **B 전수 대조 후속 — 2026-10-21:** [최종 종료](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/B_ROSA_FINAL_CLOSEOUT_20261021.md)와 [실제 시험 결과](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/HPA_ATTEMPT04_VERIFIED_RESULTS_20261021.md)를 우선한다. B ROSA·정확한 소유 범위 잔존 자원·Snapshot4개 정리는 완료다. 아래 절차·입력 대기·명령은 작성 당시 기록 또는 재사용 계약이며 현재 재실행 요청이 아니다. A 자원과 다른 담당의 종료는 판정하지 않는다. [전체 대조](execution/TJUNG03_FULL_REPOSITORY_AUDIT_20261021.md).
 
-> **B 실행·종료 결과 — 2026-10-21:** [앱·현재 모니터링·정상 Baseline](execution/B_RUNTIME_AND_PROJECT_CLOSEOUT_20261020.md), [HPA 요청 분석](execution/HPA_ATTEMPT04_VERIFIED_RESULTS_20261021.md), [B AWS 자원 최종 종료](execution/B_ROSA_FINAL_CLOSEOUT_20261021.md)를 정본으로 따른다. B 담당 자원 정리는 완료했으며 A 자원은 제외한다. [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의 원 기준은 **37/81 완료·44개 미완료**로 유지하며, B 자원 종료를 전체 시험·발표 완료로 확대하지 않는다. [GitHub 최종 기록 대조](execution/B_GITHUB_FINAL_RECORD_AUDIT_20261021.md).
+> **B 실행·종료 결과 — 2026-10-21:** [앱·현재 모니터링·정상 Baseline](execution/B_RUNTIME_AND_PROJECT_CLOSEOUT_20261020.md), [HPA 요청 분석](execution/HPA_ATTEMPT04_VERIFIED_RESULTS_20261021.md), [B AWS 자원 최종 종료](execution/B_ROSA_FINAL_CLOSEOUT_20261021.md)를 정본으로 따른다. B 담당 자원 정리는 완료했으며 A 자원은 제외한다. [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의 원 기준은 **41/81 완료·40개 미완료**로 유지하며, B 자원 종료를 전체 시험·발표 완료로 확대하지 않는다. [GitHub 최종 기록 대조](execution/B_GITHUB_FINAL_RECORD_AUDIT_20261021.md).
 
 Seokpan 2차 - 하이브리드 클라우드 기획·아키텍처·검증 문서
 

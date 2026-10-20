@@ -1,10 +1,12 @@
 # 정태훈 실행판 — 지금 할 일·입력 대기·OCP와 ROSA 수명
 
+> **체크박스 후속 — 2026-10-21:** 상위/닫힌 이슈·PR·댓글까지 [체크 단위로 대조](TJUNG03_CHECKBOX_RECONCILIATION_20261021.md)해 원 TH4개를 추가 수락했다. 현재41/81·40개 원 기준 미수락이며 과거37/81은 당시 집계다. B 운영 종료는 완료했다.
+
 ## 정태훈 완료 결과·체크 현황 — 2026-10-21 KST
 
 [완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)에 근거와 수락 범위를 연결했다. ROSA는 10/14 Apply 종료0, 이후 노드9/9 Ready·Operator34 안정·보호 관리 인계까지 완료했다. Worker/Data 규칙2개·승인 FE/BE×Compute3 실행6/6, Cloud 보호 입력/TLS·거부 검사, 정상 관리·모니터링 등록/한정 smoke 수락도 완료다. B03은 두 해상도27/27과 PNG12장 시각 수락으로 종료했다. Recovery Secret3/ConfigMap2의 최초 create5·내용/UID 대조도 완료했다. Harbor Secret 공급과 Valkey 단독 Ready·UID999/파일·port-forward TLS/AUTH도 완료했다. 전체 복원·업무/RTO/RPO는 미완료다.
 
-원 TH 체크는 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의 **37/81 완료·44개 미완료**다. 설치/검사 성공을 미충족한 복합 기준의 완료로 올리지 않았다. [App #21](https://github.com/seokpan/seokpan-hybrid-app/issues/21)의 실제 UI 기준8개와 [Infra #80](https://github.com/seokpan/seokpan-hybrid-infra/issues/80)의 최초 모니터링 등록 기준은 완료 근거를 연결한다.
+원 TH 체크는 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의 **41/81 완료·40개 미완료**다. 설치/검사 성공을 미충족한 복합 기준의 완료로 올리지 않았다. [App #21](https://github.com/seokpan/seokpan-hybrid-app/issues/21)의 실제 UI 기준8개와 [Infra #80](https://github.com/seokpan/seokpan-hybrid-infra/issues/80)의 최초 모니터링 등록 기준은 완료 근거를 연결한다.
 
 10/20 새 ROSA·최소 플랫폼·목적계정/TLS/Schema·Cloud 앱 FE3/BE3·현재 모니터링과 정상 Baseline 업무24/24는 [실제 결과](B_RUNTIME_AND_PROJECT_CLOSEOUT_20261020.md)로 연결한다. [HPA 반환 분석](HPA_ATTEMPT04_VERIFIED_RESULTS_20261021.md)은 두 압축파일·내부6파일/5해시·요청47,138건 대조를 완료했다. 10/50/100 VU 계획 구간 완료, 100 VU 30,084건 HTTP200·내용 검증 성공/p95 90.031ms다. 200 VU는2.197초·응답 미확인16/200으로 중단했고 전체 HPA 성공·게임/WSS 최대 수용량은 미수락이다.
 
