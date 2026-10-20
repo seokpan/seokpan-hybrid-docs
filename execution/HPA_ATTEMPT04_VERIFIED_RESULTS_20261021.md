@@ -24,7 +24,7 @@ D의 tar.gz와 ZIP 각각 외부 SHA256이 일치했다. 두 묶음의 내부 6�
 
 10/50/100 VU 구간은 계획 시간이 완료됐고 모든 요청에서 HTTP 200과 응답 내용 검증이 성공했다. 100 VU에서 기록된 완료 요청률은 약 99.951건/초다. 이는 지정된 Guest 로비·랭킹 GET 읽기 조건의 결과다.
 
-200 VU 구간은 300초 계획 중 2.197초만 진행했고 요청 200건 중 16건이 HTTP 응답 미확인(status null)이었다. 해당 구간 전체의 응답 미확인 비율은 8%다. 랭킹 요청으로 넘어가기 전에 로비 GET 200건만 기록됐다. HTTP 5xx 0건을 전체 성공으로 해석하지 않는다.
+200 VU 구간은 300초 계획 중 2.197초만 진행했고 요청 200건 중 16건이 HTTP 응답 미확인(status null)이었다. 해당 구간 전체의 응답 미확인 비율은 8%다. 랭킹 요청으로 넘어가기 전에 로비 GET 200건만 기록됐다. HTTP 5xx 0건을 전체 성공으로 해석하지 않는다. 결합 공개 증거 ZIP의 `summary.json`에 있는 phase4 `phase_acceptance.status=PASS`도 HTTP5xx 비율 조건만의 결과이며, 계획 시간 완료·응답 미확인/내용 검증·전체 시나리오 통과를 뜻하지 않는다. 같은 summary의 후속 phase는 `MISSING_PHASE`이고 전체 조건은 false다.
 
 기록 순서에서 재구성한 최초 중단 기준 초과는 같은 phase의 첫 20건 중 응답 미확인 16건이다. 실제 보호 기준은 최근 전역 100기록 중 같은 phase가 20건 이상일 때 내용 검증 실패 비율이 5%를 넘는 경우다. 구간 전체 8%와 보호 기준 계산 창의 값은 다르다.
 
@@ -39,7 +39,7 @@ D의 tar.gz와 ZIP 각각 외부 SHA256이 일치했다. 두 묶음의 내부 6�
 - 지연 백분위는 기록된 요청 소요시간을 nearest-rank 방식으로 계산했다. phase4에는 응답 미확인 요청도 포함되며 짧은 중단 구간이다.
 - B Controller 관측425표본과 D 결과의 결합 영수증을 후속 인수했다. 전체 관측 창과 D 부하 구간 집계를 아래에서 구분한다. 200 VU 구간의 B표본은0이므로 해당 구간의 DB 피크나 중단 원인을 확정하지 않는다.
 - 원래 설정 복원은 최종 프로젝트 폐기 선택으로 생략한다. D의 3/3 확인을 원래 설정 복원 성공으로 기록하지 않는다.
-- [B 삭제 Plan 준비·delete18 검토](B_D_HPA_FINAL_EVIDENCE_AND_B_DELETE_PLAN_20261021.md)는 완료했다. 실제 삭제·잔존 확인은 미완료다. A 담당 자원은 제외한다.
+- [B 삭제 Plan 준비·delete18 검토](B_D_HPA_FINAL_EVIDENCE_AND_B_DELETE_PLAN_20261021.md)는 완료했다. 후속 [B 실제 삭제](B_ROSA_DELETE_EXECUTED_20261021.md)는 Apply·State0·원격 ROSA 부재·현행 owned 태그 잔존0까지 완료했다. [Snapshot4개 삭제 후 ABSENT](B_ROSA_FINAL_CLOSEOUT_20261021.md)도 완료됐으며 후속 청구는 미확인이다. A 담당 자원은 제외한다.
 
 원본 압축파일, 실행 로그와 상세 오프라인 분석은 보호된 로컬 증거로 보존했다. 이 문서는 공개용 집계만 담는다.
 
@@ -57,4 +57,4 @@ B Controller의 관측 수집·종료와 삭제 Plan 준비를 [원 결과](http
 
 종료 영수증에 기록된 공개 증거 ZIP SHA256은 `46dc17c8b92a711fca8f57ad9486a070e18558067b6411e16314a36d3796d055`다. 영수증 수집 시점의 기록은 `github_evidence_published=false`·`project_deletion_started=false`이며, 이 집계 문서 게시를 증거 ZIP의 GitHub 보존이나 실제 삭제 완료로 취급하지 않는다.
 
-후속 [GitHub 실제 게시·보존 참조 등록 결과](https://github.com/seokpan/seokpan-hybrid-infra/pull/109#issuecomment-6295212752)에서 공개 증거 ZIP 게시와 `PASS_PUBLICATION_REFERENCE_RECORDED`를 확인했다. [고정 개정의 공개 ZIP](https://github.com/seokpan/seokpan-hybrid-docs/blob/668622438460ace1eed396b492855cf5d27d07ab/execution/evidence/hpa-attempt04-20261020/B-D-public-evidence.zip)은 위 SHA256과 대응한다. 앞선 영수증의 미게시 값은 수집 당시 기록이며 실제 삭제는 여전히 미실행이다.
+후속 [GitHub 실제 게시·보존 참조 등록 결과](https://github.com/seokpan/seokpan-hybrid-infra/pull/109#issuecomment-6295212752)에서 공개 증거 ZIP 게시와 `PASS_PUBLICATION_REFERENCE_RECORDED`를 확인했다. [고정 개정의 공개 ZIP](https://github.com/seokpan/seokpan-hybrid-docs/blob/668622438460ace1eed396b492855cf5d27d07ab/execution/evidence/hpa-attempt04-20261020/B-D-public-evidence.zip)은 위 SHA256과 대응한다. 앞선 영수증의 미게시·미삭제 값은 수집 당시 기록이다. 이후 [B 실제 삭제 결과](B_ROSA_DELETE_EXECUTED_20261021.md)가 수락됐으며 [Snapshot4개 삭제 후 ABSENT](B_ROSA_FINAL_CLOSEOUT_20261021.md)도 후속 확인됐으며 청구 범위는 별도다.

@@ -4,7 +4,7 @@
 
 ## 확정된 완료 범위
 
-후속 완결 범위: [10/20 새 ROSA·Cloud 앱3/3·정상 Baseline](B_RUNTIME_AND_PROJECT_CLOSEOUT_20261020.md), [10/21 HPA 반환 자료 무결성·요청 분석](HPA_ATTEMPT04_VERIFIED_RESULTS_20261021.md). HPA10/50/100 VU 구간 완료와200 VU 중단을 구분하며 전체 HPA·게임/WSS·Recovery·최종 삭제 완료를 뜻하지 않는다. 후속으로 [B ROSA 삭제 Apply·State0·원격 부재와 owned 잔존0](B_ROSA_DELETE_EXECUTED_20261021.md)을 확인했다. B Snapshot4개는 삭제 요청 성공이며 삭제 후 부재 재조회는 아직이다. 다른 담당 범위나 계정 전체 과금0을 완료 처리하지 않는다.
+후속 완결 범위: [10/20 새 ROSA·Cloud 앱3/3·정상 Baseline](B_RUNTIME_AND_PROJECT_CLOSEOUT_20261020.md), [10/21 HPA 반환 자료 무결성·요청 분석](HPA_ATTEMPT04_VERIFIED_RESULTS_20261021.md). HPA10/50/100 VU 구간 완료와200 VU 중단을 구분하며 전체 HPA·게임/WSS·Recovery·최종 삭제 완료를 뜻하지 않는다. 후속으로 [B ROSA 삭제 Apply·State0·원격 부재와 owned 잔존0](B_ROSA_DELETE_EXECUTED_20261021.md)을 확인했다. B Snapshot4개는 삭제 후 모두 ABSENT로 확인했으며 [확인 범위 내 B AWS 자원 정리는 완료](B_ROSA_FINAL_CLOSEOUT_20261021.md)다. 다른 담당 범위나 계정 전체 과금0을 완료 처리하지 않는다.
 
 
 | 완료 범위 | 실제 결과 | 원 근거·작성/실행 범위 |
