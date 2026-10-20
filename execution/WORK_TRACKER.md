@@ -8,7 +8,7 @@
 
 10/20 새 ROSA·최소 플랫폼·목적계정/TLS/Schema·Cloud 앱 FE3/BE3·현재 모니터링과 정상 Baseline 업무24/24는 [실제 결과](B_RUNTIME_AND_PROJECT_CLOSEOUT_20261020.md)로 연결한다. [HPA 반환 분석](HPA_ATTEMPT04_VERIFIED_RESULTS_20261021.md)은 두 압축파일·내부6파일/5해시·요청47,138건 대조를 완료했다. 10/50/100 VU 계획 구간 완료, 100 VU 30,084건 HTTP200·내용 검증 성공/p95 90.031ms다. 200 VU는2.197초·응답 미확인16/200으로 중단했고 전체 HPA 성공·게임/WSS 최대 수용량은 미수락이다.
 
-운영 최종 Pool·Cloud 전체 업무/Recovery/RTO/RPO·비상/회수·독립 보관·최종 비용/발표의 원 조건은 남는다. B 관측 시계열과 D 결과 결합·최종 증거·새 B 삭제 Plan/실제 삭제·잔존 확인은 [Infra109](https://github.com/seokpan/seokpan-hybrid-infra/pull/109)의 별도 잔여다. 최종 폐기에서 원래 배포 설정 복원을 생략한 결정은 복원 성공이 아니다. B 종료 범위는 ROSA·전용 IAM/OIDC/바인딩·B Snapshot·ROSA 소유 잔존 자원이며 A Foundation/Data/VPN/NAT/EIP/공통 S3/Bootstrap·다른 담당 ECR은 제외한다. 다음 ROSA 재생성은 예정하지 않으며 $450 계획/$500 한도와 실제 청구 미확인을 유지한다.
+운영 최종 Pool·Cloud 전체 업무/Recovery/RTO/RPO·비상/회수·독립 보관·최종 비용/발표의 원 조건은 남는다. [B425표본 수집·관측 종료·D 결합 증거 영수증·삭제 Plan 준비](https://github.com/seokpan/seokpan-hybrid-infra/pull/109#issuecomment-6295077112)는 완료했다. GitHub 증거 묶음 보존·삭제 Plan 검토/실제 삭제·잔존 확인은 [Infra109](https://github.com/seokpan/seokpan-hybrid-infra/pull/109)의 별도 잔여다. 최종 폐기에서 원래 배포 설정 복원을 생략한 결정은 복원 성공이 아니다. B 종료 범위는 ROSA·전용 IAM/OIDC/바인딩·B Snapshot·ROSA 소유 잔존 자원이며 A Foundation/Data/VPN/NAT/EIP/공통 S3/Bootstrap·다른 담당 ECR은 제외한다. 다음 ROSA 재생성은 예정하지 않으며 $450 계획/$500 한도와 실제 청구 미확인을 유지한다.
 
 완료한 실행·시험은 재사용했다. 아래 날짜별 기록은 당시 상태이며 최신 완료 판정은 이 절과 원 Issue를 따른다.
 
