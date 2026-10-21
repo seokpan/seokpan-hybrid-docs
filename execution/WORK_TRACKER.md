@@ -1,5 +1,7 @@
 # Work and Input Tracker
 
+> **잔여 체크 표현 정리 — 2026-10-21:** 미체크 문구는 실제 수행/미수행 사실을 바꾸지 않고 일반 기록 또는 재사용 조건으로 표시했다. [변경 전 체크 원문](https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/execution/WORK_TRACKER.md)은 해당 고정 커밋에 보존한다. 현재 실행 대기나 전체 목표 달성률이 아니며 [원 계획별 변경·최종 판정·영향](https://github.com/seokpan/seokpan-hybrid-docs/pull/140)을 따른다.
+
 > **최종 종료 범위 — 2026-10-21:** B 운영/증거 보존은 완료했다. 원 미수락40개는 미수행 종료13·종료 범위 제외18·다른 담당9로 [처분](B_FINAL_SCOPE_DISPOSITION_20261021.md)했으며 B 추가 가동/입력/준비는0개다. 실제 잔여는 후속4개 PR의 리뷰·사용자 병합이다. 원래 계획 전체의 성공이나 팀 전체 종료를 주장하지 않는다.
 
 > **체크박스 후속 — 2026-10-21:** 상위/닫힌 이슈·PR·댓글까지 [체크 단위로 대조](TJUNG03_CHECKBOX_RECONCILIATION_20261021.md)해 원 TH4개를 추가 수락했다. 현재41/81·40개 원 기준 미수락이며 과거37/81은 당시 집계다. B 운영 종료는 완료했다.
@@ -389,10 +391,10 @@ C Dump/Import 실측·최종 DR 목표 선택은 #9의 추가 Draft 해제 조�
 - [x] 격리 로컬 합성 시험 실행·기록 / C Data 배정 책임 구분
 - [x] 새 임시 DB·합성 Fixture의 부분 실행과 새 다섯 파일 Run, Index 임시 연결
 - [x] 새 TLS/AUTH Redis·Production Backend HTTPS 업무 연결을 별도 다섯 파일 Run으로 실행·Index 연결
-- [ ] C Data 리뷰와 D Index 형식 검토·수신 — 이번 기록으로 팀원 수신/실행을 확정하지 않음
-- [ ] 실제 운영 버전/계정·Backup 경로와 Host/Redis/Image/클라이언트 차이, 전체 업무 재개·손실·부담/비용 근거 비교
+- C Data 리뷰와 D Index 형식 검토·수신 — 이번 기록으로 팀원 수신/실행을 확정하지 않음
+- 실제 운영 버전/계정·Backup 경로와 Host/Redis/Image/클라이언트 차이, 전체 업무 재개·손실·부담/비용 근거 비교
 - [x] 새 DR10분/30분/15분·Backup/Restore 유지 설계 변경안 선택과 관련 계약 반영 —03 §3-I.14.5
-- [ ] Source/문서·SVG/PNG/출처 최종 검증·PR 리뷰/병합, 실제 전체 목표 달성은 별도
+- Source/문서·SVG/PNG/출처 최종 검증·PR 리뷰/병합, 실제 전체 목표 달성은 별도
 
 MariaDB 10.11.14·동시 쓰기 없는 합성 데이터·동일 Host 복사로 한정한다. 실제 사전 점검11.8.9·RDS/S3/VPN·운영 부하는 검증하지 않았다. Data Run의 TLS/목적 계정·App/Redis 제외와 후속 Backend Run의 폐기 가능한 목적 SSL 계정·새 TLS/AUTH Redis·HTTPS Backend 검증을 구분한다. FE/browser/WSS·승인 Image/Release·OCP/Host·사고 탐지/판단/안내는 미측정이다. 두 부분 실행 PASS, Render/Deployment/Acceptance NOT RUN, 전체 RTO/RPO null이며 스크립트 부분 시간을 서비스 RTO로 쓰지 않는다. 공유 실행·C Branch/main·실제 프로젝트 Data/Backup/Key와 A/B/D 기존 기록은 변경하지 않았다. 최유준의 증거 책임은 유지하며 Index는 임시 연결 상태이므로 D 검토/수신을 별도로 남긴다.
 

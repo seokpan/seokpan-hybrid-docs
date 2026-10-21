@@ -1,5 +1,7 @@
 # seokpan-hybrid-docs
 
+> **잔여 체크 표현 정리 — 2026-10-21:** 미체크 문구는 실제 수행/미수행 사실을 바꾸지 않고 일반 기록 또는 재사용 조건으로 표시했다. [변경 전 체크 원문](https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/README.md)은 해당 고정 커밋에 보존한다. 현재 실행 대기나 전체 목표 달성률이 아니며 [원 계획별 변경·최종 판정·영향](https://github.com/seokpan/seokpan-hybrid-docs/pull/140)을 따른다.
+
 > **최종 종료 범위 — 2026-10-21:** B 운영/증거 보존은 완료했다. 원 미수락40개는 미수행 종료13·종료 범위 제외18·다른 담당9로 [처분](execution/B_FINAL_SCOPE_DISPOSITION_20261021.md)했으며 B 추가 가동/입력/준비는0개다. 실제 잔여는 후속4개 PR의 리뷰·사용자 병합이다. 원래 계획 전체의 성공이나 팀 전체 종료를 주장하지 않는다.
 
 > **체크박스 후속 — 2026-10-21:** 상위/닫힌 이슈·PR·댓글까지 [체크 단위로 대조](execution/TJUNG03_CHECKBOX_RECONCILIATION_20261021.md)해 원 TH4개를 추가 수락했다. 현재41/81·40개 원 기준 미수락이며 과거37/81은 당시 집계다. B 운영 종료는 완료했다.
@@ -20,8 +22,8 @@ Seokpan 2차 - 하이브리드 클라우드 기획·아키텍처·검증 문서
 - [x] 설계 그림 12장 제작 및 자체 검증
 - [x] SVG/PNG·목차·제작 검토 기록 연결
 - [x] 발표 준비 Baseline·Evidence 선별 기준 및 Tracking Issue 연결
-- [ ] 사용자 그림 검토 의견 반영
-- [ ] 실제 구현 증거로 구축 결과판 작성
+- 사용자 그림 검토 의견 반영
+- 실제 구현 증거로 구축 결과판 작성
 
 설계·그림 등록과 병합 이력은 [PR #3](https://github.com/seokpan/seokpan-hybrid-docs/pull/3), 실행·Evidence 공유 이력은 [PR #5](https://github.com/seokpan/seokpan-hybrid-docs/pull/5), 발표 준비 기준 등록 이력은 [PR #7](https://github.com/seokpan/seokpan-hybrid-docs/pull/7)에서 확인합니다.
 

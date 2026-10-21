@@ -1,5 +1,7 @@
 # 1차 쓰기 중지·이관 후 App 확인 준비
 
+> **잔여 체크 표현 정리 — 2026-10-21:** 미체크 문구는 실제 수행/미수행 사실을 바꾸지 않고 일반 기록 또는 재사용 조건으로 표시했다. [변경 전 체크 원문](https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/execution/FIRST_SERVICE_WRITE_STOP_PREPARATION.md)은 해당 고정 커밋에 보존한다. 현재 실행 대기나 전체 목표 달성률이 아니며 [원 계획별 변경·최종 판정·영향](https://github.com/seokpan/seokpan-hybrid-docs/pull/140)을 따른다.
+
 > **B 전수 대조 후속 — 2026-10-21:** [최종 종료](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/B_ROSA_FINAL_CLOSEOUT_20261021.md)와 [실제 시험 결과](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/HPA_ATTEMPT04_VERIFIED_RESULTS_20261021.md)를 우선한다. B ROSA·정확한 소유 범위 잔존 자원·Snapshot4개 정리는 완료다. 아래 절차·입력 대기·명령은 작성 당시 기록 또는 재사용 계약이며 현재 재실행 요청이 아니다. A 자원과 다른 담당의 종료는 판정하지 않는다. [전체 대조](TJUNG03_FULL_REPOSITORY_AUDIT_20261021.md).
 
 상태: Source 검토와 준비 절차 작성. 실제 1차 Context/Caller·제어 Owner·사용창·상위 Argo 관리·HPA/다른 쓰기 주체 확인 대기. 이 문서는 중지·복귀·DB 변경을 실행한 근거가 아님.
@@ -96,9 +98,9 @@ Foundation Apply 완료 뒤에는 C의 중지 전 준비만 진행한다. ROSA �
 
 - [x] 원 분담·C v2.0 참조·1차 Source·중지/복귀 준비 순서 정리
 - [x] B의 최종 전환 시작 조건·단계9까지 중지 유지·시험 쓰기 포함 복귀 경계와 초기 시간 예산 반영
-- [ ] C의 Infra44 실제 실행 절차에 채택한 최종 중지 끝점 반영
-- [ ] 실제 1차 Context/Caller·Parent/HPA/다른 쓰기 주체 읽기 확인
-- [ ] 실행 제어 경로·실제 수행자·사용창·복귀 설정 수락
-- [ ] 이관 당일 중지 유지·C 최종 Dump/Import/비교·2차 current/App/첫 백업
+- C의 Infra44 실제 실행 절차에 채택한 최종 중지 끝점 반영
+- 실제 1차 Context/Caller·Parent/HPA/다른 쓰기 주체 읽기 확인
+- 실행 제어 경로·실제 수행자·사용창·복귀 설정 수락
+- 이관 당일 중지 유지·C 최종 Dump/Import/비교·2차 current/App/첫 백업
 
 이 준비와 OCP 새 Image 공급은 ROSA 첫 Plan의 일괄 선행조건이 아님. ROSA Root 입력/권한/지원/비용/창 사전검증을 병행. T05/전체 서비스 전환·DR 수치 달성·TH/Q 완료는 별도 실제 Run으로 판정.

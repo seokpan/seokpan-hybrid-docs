@@ -1,0 +1,123 @@
+{
+  "type": "rendering retirement only; not completion",
+  "changed_documents": [
+    {
+      "repo": "seokpan-hybrid-docs",
+      "path": "README.md",
+      "source_ref": "https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/README.md",
+      "retired_checkboxes": 2
+    },
+    {
+      "repo": "seokpan-hybrid-docs",
+      "path": "execution/05_IMPLEMENTATION_AND_VALIDATION.md",
+      "source_ref": "https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/execution/05_IMPLEMENTATION_AND_VALIDATION.md",
+      "retired_checkboxes": 39
+    },
+    {
+      "repo": "seokpan-hybrid-docs",
+      "path": "execution/B_ACCEPTANCE_PREPARATION_AUDIT_20261011.md",
+      "source_ref": "https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/execution/B_ACCEPTANCE_PREPARATION_AUDIT_20261011.md",
+      "retired_checkboxes": 9
+    },
+    {
+      "repo": "seokpan-hybrid-docs",
+      "path": "execution/B_MANAGEMENT_AUTH_ACCEPTANCE_20261009.md",
+      "source_ref": "https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/execution/B_MANAGEMENT_AUTH_ACCEPTANCE_20261009.md",
+      "retired_checkboxes": 5
+    },
+    {
+      "repo": "seokpan-hybrid-docs",
+      "path": "execution/B_SOURCE_BATCH_AND_HANDOFF_20261009.md",
+      "source_ref": "https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/execution/B_SOURCE_BATCH_AND_HANDOFF_20261009.md",
+      "retired_checkboxes": 12
+    },
+    {
+      "repo": "seokpan-hybrid-docs",
+      "path": "execution/EXECUTION_ENTRYPOINT_20261007.md",
+      "source_ref": "https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/execution/EXECUTION_ENTRYPOINT_20261007.md",
+      "retired_checkboxes": 8
+    },
+    {
+      "repo": "seokpan-hybrid-docs",
+      "path": "execution/FIRST_SERVICE_WRITE_STOP_PREPARATION.md",
+      "source_ref": "https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/execution/FIRST_SERVICE_WRITE_STOP_PREPARATION.md",
+      "retired_checkboxes": 4
+    },
+    {
+      "repo": "seokpan-hybrid-docs",
+      "path": "execution/GITOPS_WRITER_CREDENTIAL_RECORD_20261013.md",
+      "source_ref": "https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/execution/GITOPS_WRITER_CREDENTIAL_RECORD_20261013.md",
+      "retired_checkboxes": 5
+    },
+    {
+      "repo": "seokpan-hybrid-docs",
+      "path": "execution/MERGED_SOURCE_PLAN_READINESS_20261008.md",
+      "source_ref": "https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/execution/MERGED_SOURCE_PLAN_READINESS_20261008.md",
+      "retired_checkboxes": 14
+    },
+    {
+      "repo": "seokpan-hybrid-docs",
+      "path": "execution/REPOSITORY_CONSISTENCY_AUDIT.md",
+      "source_ref": "https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/execution/REPOSITORY_CONSISTENCY_AUDIT.md",
+      "retired_checkboxes": 5
+    },
+    {
+      "repo": "seokpan-hybrid-docs",
+      "path": "execution/TEAM_EXECUTION_SEQUENCE.md",
+      "source_ref": "https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/execution/TEAM_EXECUTION_SEQUENCE.md",
+      "retired_checkboxes": 11
+    },
+    {
+      "repo": "seokpan-hybrid-docs",
+      "path": "execution/TJUNG03_EXECUTION_BOARD.md",
+      "source_ref": "https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/execution/TJUNG03_EXECUTION_BOARD.md",
+      "retired_checkboxes": 39
+    },
+    {
+      "repo": "seokpan-hybrid-docs",
+      "path": "execution/TJUNG03_WORKFLOW_AND_LEARNING_GUIDE.md",
+      "source_ref": "https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/execution/TJUNG03_WORKFLOW_AND_LEARNING_GUIDE.md",
+      "retired_checkboxes": 1
+    },
+    {
+      "repo": "seokpan-hybrid-docs",
+      "path": "execution/WORK_HANDOFF_20261007.md",
+      "source_ref": "https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/execution/WORK_HANDOFF_20261007.md",
+      "retired_checkboxes": 5
+    },
+    {
+      "repo": "seokpan-hybrid-docs",
+      "path": "execution/WORK_TRACKER.md",
+      "source_ref": "https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/execution/WORK_TRACKER.md",
+      "retired_checkboxes": 3
+    },
+    {
+      "repo": "seokpan-hybrid-docs",
+      "path": "presentation/B_CONTRIBUTION_EVIDENCE_20261009.md",
+      "source_ref": "https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/presentation/B_CONTRIBUTION_EVIDENCE_20261009.md",
+      "retired_checkboxes": 3
+    },
+    {
+      "repo": "seokpan-hybrid-docs",
+      "path": "presentation/PRESENTATION_BASELINE.md",
+      "source_ref": "https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/presentation/PRESENTATION_BASELINE.md",
+      "retired_checkboxes": 4
+    },
+    {
+      "repo": "seokpan-hybrid-infra",
+      "path": "README.md",
+      "source_ref": "https://github.com/seokpan/seokpan-hybrid-infra/blob/12b1425b9fe02e2e05824a1c92fb3fdf62e5a3a6/README.md",
+      "retired_checkboxes": 1
+    },
+    {
+      "repo": "seokpan-hybrid-infra",
+      "path": "terraform/rosa/INPUT_CONTRACT.md",
+      "source_ref": "https://github.com/seokpan/seokpan-hybrid-infra/blob/12b1425b9fe02e2e05824a1c92fb3fdf62e5a3a6/terraform/rosa/INPUT_CONTRACT.md",
+      "retired_checkboxes": 6
+    }
+  ],
+  "count": 176,
+  "old_checkbox_history": "immutable public source commits linked per file",
+  "completed_checks_changed": 0,
+  "runtime_rechecks": 0
+}
