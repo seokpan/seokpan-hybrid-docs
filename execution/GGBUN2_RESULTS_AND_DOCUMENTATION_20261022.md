@@ -13,7 +13,7 @@ Foundation 구축·재검사·출력 인계, NAT 생성·중간 정리·재생�
 | A 이유빈(`ggbun2`) | Foundation 공통 실행 틀·Network·통합 실행, 관련 IAM 보완, Hybrid VPN 구성·실행 기록 |
 | B 정태훈 | ROSA·App·GitOps의 원 담당. A의 기반 출력 소비·검토와 B 직접 실행을 구분 |
 | C 김상희 | Data 코드·계약·백업/복원 절차의 원 작성·검증 담당. A의 통합 Apply·인수 후 실행과 구분 |
-| D 최유준 | Registry/CI·관측·시험·비용 집계의 원 담당. A의 Foundation 통합 실행을 D 코드 작성으로 기록하지 않음 |
+| D 최유준 | Registry/CI·관측·시험·비용 집계 담당. Registry/CI 코드 작성과 이유빈의 Foundation 통합·실행을 구분한다. |
 
 원 작업 Issue/PR·결과 댓글은 상세 근거, 이 문서는 범위별 현재 요약, `WORK_TRACKER.md`는 바로가기다. 실제 수치·파일·시간선의 새 공개 증거 묶음은 기존 원본을 확보하고 민감정보를 확인한 뒤 `evidence/` 안내에 따라 별도로 등록한다.
 
