@@ -119,5 +119,16 @@
   "count": 176,
   "old_checkbox_history": "immutable public source commits linked per file",
   "completed_checks_changed": 0,
-  "runtime_rechecks": 0
+  "runtime_rechecks": 0,
+  "issue_and_pr_bodies": {
+    "count": 13,
+    "removed_unchecked": 144,
+    "other_owner_rows_unchanged": true
+  },
+  "B_authored_comments": {
+    "count": 3,
+    "removed_unchecked": 18
+  },
+  "newly_checked_unperformed_items": 0,
+  "issue_and_comment_content_readback_matched": true
 }
