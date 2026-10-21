@@ -1,0 +1,69 @@
+{
+  "status": "PASS_PUBLICATION_BOUNDARY",
+  "parent_public_commit": "ff65ff7f3f500408ccb062cf4977953a9530174a",
+  "excluded_individual_ledger": true,
+  "private_issue_bodies_reposted": false,
+  "new_B_execution": 0,
+  "unchanged_public_guide_bodies": 8,
+  "file_checks": [
+    {
+      "path": "execution/evidence/tjung03-record-audit-20261021/TH-40-terminal-dispositions.csv",
+      "type": "new public scope table or aggregate; no private IP, host file path, key/token signature"
+    },
+    {
+      "path": "execution/evidence/tjung03-record-audit-20261021/TH-81.csv",
+      "type": "existing public TH81 original fields unchanged; public scope columns added",
+      "rows": 81
+    },
+    {
+      "path": "execution/B_FINAL_SCOPE_DISPOSITION_20261021.md",
+      "type": "new public scope table or aggregate; no private IP, host file path, key/token signature"
+    },
+    {
+      "path": "README.md",
+      "type": "public scope notice added; all prior content identical",
+      "existing_public_blob": "c33f59170240e84c951c86fad582c81c8717c665"
+    },
+    {
+      "path": "execution/05_IMPLEMENTATION_AND_VALIDATION.md",
+      "type": "public scope notice added; all prior content identical",
+      "existing_public_blob": "de6e1574ab115cbf0e18ff24ecb37aa135e25f3d"
+    },
+    {
+      "path": "execution/WORK_TRACKER.md",
+      "type": "public scope notice added; all prior content identical",
+      "existing_public_blob": "42b6d924942871ee2006ad011291c8937f8447f5"
+    },
+    {
+      "path": "execution/TJUNG03_EXECUTION_BOARD.md",
+      "type": "public scope notice added; all prior content identical",
+      "existing_public_blob": "a2d3623a4b949df31337c7067c293ffa18fc414f"
+    },
+    {
+      "path": "execution/TJUNG03_WORKFLOW_AND_LEARNING_GUIDE.md",
+      "type": "public scope notice added; all prior content identical",
+      "existing_public_blob": "5535ba84cf111aec60296c342e43477185c58e74"
+    },
+    {
+      "path": "execution/TJUNG03_FULL_REPOSITORY_AUDIT_20261021.md",
+      "type": "public scope notice added; all prior content identical",
+      "existing_public_blob": "ff1ea5af269a5da897f196a066f47888b406f05a"
+    },
+    {
+      "path": "execution/B_GITHUB_FINAL_RECORD_AUDIT_20261021.md",
+      "type": "public scope notice added; all prior content identical",
+      "existing_public_blob": "112e26b87b340977a42358e29c772e7a95b9f6c0"
+    },
+    {
+      "path": "execution/TJUNG03_CHECKBOX_RECONCILIATION_20261021.md",
+      "type": "public scope notice added; all prior content identical",
+      "existing_public_blob": "e4db741f32041f62de227fbcba8e8098828603e3"
+    },
+    {
+      "path": "execution/evidence/tjung03-record-audit-20261021/checkbox-terminal-summary.json",
+      "type": "new public scope table or aggregate; no private IP, host file path, key/token signature"
+    }
+  ],
+  "new_data_scan": "no private IP / absolute host path / private key or token signature",
+  "runtime_rechecks": 0
+}
