@@ -2,7 +2,7 @@
 
 > **잔여 체크 표현 정리 — 2026-10-21:** 미체크 문구는 실제 수행/미수행 사실을 바꾸지 않고 일반 기록 또는 재사용 조건으로 표시했다. [변경 전 체크 원문](https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/execution/TJUNG03_WORKFLOW_AND_LEARNING_GUIDE.md)은 해당 고정 커밋에 보존한다. 현재 실행 대기나 전체 목표 달성률이 아니며 [원 계획별 변경·최종 판정·영향](https://github.com/seokpan/seokpan-hybrid-docs/pull/140)을 따른다.
 
-> **최종 종료 범위 — 2026-10-21:** B 운영/증거 보존은 완료했다. 원 미수락40개는 미수행 종료13·종료 범위 제외18·다른 담당9로 [처분](B_FINAL_SCOPE_DISPOSITION_20261021.md)했으며 B 추가 가동/입력/준비는0개다. 실제 잔여는 후속4개 PR의 리뷰·사용자 병합이다. 원래 계획 전체의 성공이나 팀 전체 종료를 주장하지 않는다.
+> **최종 종료 범위 — 2026-10-21:** B 운영/증거 보존은 완료했다. 원 미수락40개는 미수행 종료13·종료 범위 제외18·다른 담당9로 [처분](B_FINAL_SCOPE_DISPOSITION_20261021.md)했으며 B 추가 가동/입력/준비는0개다. Infra112·GitOps68·App52의 main 반영은 완료했다. Docs140이 병합되면 B 기록 마감도 완료되며 추가 B 작업은 없다. [병합 근거와 최종 반영](https://github.com/seokpan/seokpan-hybrid-docs/pull/140)을 따른다. 원래 계획 전체의 성공이나 팀 전체 종료를 주장하지 않는다.
 
 > **체크박스 후속 — 2026-10-21:** 상위/닫힌 이슈·PR·댓글까지 [체크 단위로 대조](TJUNG03_CHECKBOX_RECONCILIATION_20261021.md)해 원 TH4개를 추가 수락했다. 현재41/81·40개 원 기준 미수락이며 과거37/81은 당시 집계다. B 운영 종료는 완료했다.
 

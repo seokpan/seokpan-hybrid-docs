@@ -12,7 +12,7 @@ B ROSA·정확한 owned 인벤토리·Snapshot4개 삭제/부재와 GitHub 증�
 | 종료 범위 제외 | 18 | fresh_test·최종 폐기/VM 폐기·추가 가동 중단에 따라 추가 조건에서 제외 |
 | 다른 담당 범위 | 9 | A/Data·D 집계·발표·비용 정산의 원 범위. 완료/인수 확약을 대신 주장하지 않음 |
 | B 추가 생성/준비/시험 | 0 | 새 실제 입력·유료 환경·검사·권한/자격 작업을 요구하지 않음 |
-| 기록 반영의 실제 잔여 | 4개 PR | Docs140·Infra112·GitOps68·App52의 최종 리뷰/병합. 이 작업은 사용자 병합 전에 최신화함 |
+| 기록 main 반영 | 타 저장소3개 완료 | Infra112·GitOps68·App52는 병합 완료. Docs140은 최종 문서 반영 PR이며 병합 시 B 기록 마감 완료 |
 
 원 체크는 **41/81 수락·40개 원 기준 미수락**으로 보존한다. 40개는 앞으로 할 B 작업 수가 아니다. 미수행/제외 항목을 성공 체크로 바꾸지 않고 아래 항목별 처분과 [TH81 원장](evidence/tjung03-record-audit-20261021/TH-81.csv)으로 종료한다.
 
@@ -71,12 +71,22 @@ B ROSA·정확한 owned 인벤토리·Snapshot4개 삭제/부재와 GitHub 증�
 - 병합된 Docs101·App43의 미수락 조건도 추가 실행 대기가 아닌 미수행/제외 종료로 정리한다. 닫힌 이슈/PR을 재개하지 않는다.
 - VM 자체 폐기 방침에 따라 VM 내부 키/보호 파일 개별 폐기를 B 종료 조건에 추가하지 않는다. 외부 계정 자격·DB/SMTP/실데이터와 최종 청구의 다른 Owner 완료는 미확인으로 유지한다.
 
-## 실제 남은 순서
+## 최종 main 반영과 마감 순서
 
-1. 최종 종료 처분 문서/현재 안내를 네 기존 PR에 반영한다. Source·실제 결과·원본은 보존한다.
-2. 각 최종 head의 CI와 리뷰 요청 상태만 확인하고 필요한 리뷰 요청을 전달한다. 완료 런타임 검사는 다시 실행하지 않는다.
-3. 사용자가 네 PR을 검토·병합한다. 병합 전에는 main 반영 완료라고 표시하지 않는다.
-4. 미수행 시험·영상·Recovery·전체 정산을 이유로 B 자원 생성이나 시험을 다시 시작하지 않는다.
+GitHub의 실제 병합 결과와 각 main을 대조했다. 다음 세 저장소는 병합 커밋과 현재 main이 일치한다. 브랜치 삭제는 사용자가 완료했다고 전달했다.
+
+| 저장소·PR | main 병합 커밋 | 병합 시각 KST |
+|---|---|---|
+| [infra #112](https://github.com/seokpan/seokpan-hybrid-infra/pull/112) | [`1d4d5f68a979f5ac5ba7b361626a69b30c7595bb`](https://github.com/seokpan/seokpan-hybrid-infra/commit/1d4d5f68a979f5ac5ba7b361626a69b30c7595bb) | 2026-10-21T11:11:04+09:00 |
+| [gitops #68](https://github.com/seokpan/seokpan-hybrid-gitops/pull/68) | [`e5c6fe0be4fab0cb4814bac3e6058f08c56275bc`](https://github.com/seokpan/seokpan-hybrid-gitops/commit/e5c6fe0be4fab0cb4814bac3e6058f08c56275bc) | 2026-10-21T11:21:04+09:00 |
+| [app #52](https://github.com/seokpan/seokpan-hybrid-app/pull/52) | [`6e019cc4e27d01ec46e8254a4cc2ce037781fa33`](https://github.com/seokpan/seokpan-hybrid-app/commit/6e019cc4e27d01ec46e8254a4cc2ce037781fa33) | 2026-10-21T11:26:47+09:00 |
+
+1. 타 저장소 세 PR의 리뷰·병합 대기는 해소됐다. 기존 Source·실제 결과·원본은 보존한다.
+2. Docs140에 실제 병합 결과와 현재 안내를 반영했다. 변경된 문서와 해당 head의 CI만 확인한다.
+3. 사용자가 Docs140을 병합하면 네 저장소의 이번 B 기록 마감 반영이 완료된다. Docs140의 실제 병합 여부·커밋은 해당 PR을 정본으로 삼으며, 자기 병합 SHA를 쓰기 위한 추가 PR은 요구하지 않는다.
+4. 미수행 시험·영상·Recovery·전체 정산을 이유로 B 자원 생성이나 시험을 다시 시작하지 않는다. B 추가 준비/실행은0개다.
+
+[기계 판독용 병합 근거](evidence/tjung03-record-audit-20261021/final-main-integration.json)를 함께 보존한다.
 
 ## 근거
 
