@@ -1,0 +1,21 @@
+{
+  "scope": "existing public checkbox ledger referenced without copying record bodies",
+  "existing_public_source": "https://github.com/seokpan/seokpan-hybrid-docs/blob/ff65ff7f3f500408ccb062cf4977953a9530174a/execution/evidence/tjung03-record-audit-20261021/checkbox-ledger.csv",
+  "existing_rows": 728,
+  "terminal_disposition_counts": {
+    "완료 이력": 390,
+    "다른 담당 범위": 103,
+    "미수행 종료": 55,
+    "당시 기록 보존": 162,
+    "종료 범위 제외": 18
+  },
+  "new_B_execution_required": 0,
+  "rules": {
+    "accepted": "preserve accepted historical result",
+    "TH_40": "use explicit forty-row terminal disposition table",
+    "dated_snapshot": "preserve snapshot; no current B execution request",
+    "other_owner": "owner scope; do not claim completion or receipt",
+    "remaining_B_unaccepted": "not performed and closed under final project scope"
+  },
+  "public_record_bodies_copied": false
+}

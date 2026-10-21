@@ -1,5 +1,7 @@
 # Full e2e·Controller 후속 — 2026-10-08
 
+> **B 전수 대조 후속 — 2026-10-21:** 이 문서의 조사·준비·현재/대기 표기는 제목 날짜의 이력이다. 이후 B 앱·정상 시험·HPA 한계·최종 종료는 [최신 종료 기록](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/B_ROSA_FINAL_CLOSEOUT_20261021.md)과 [전수 대조](TJUNG03_FULL_REPOSITORY_AUDIT_20261021.md)를 따른다. 성공한 실행을 다시 대기시키거나 미수행 시험을 성공으로 바꾸지 않는다.
+
 > **기록 시점과 현재 완료 근거:** 아래 상태·체크·명령은 각 작성일의 조사/인계 기록이다. B의10/16 완료 판정은 [완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)와 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)을 따른다. 완료된 설치·Plan·OCP 교체/기능·B03 화면·정상 관리 검사를 다시 대기로 해석하거나 재실행하지 않는다.
 
 > **현재 후속:** [병합·Controller 인증·실행 대기](MERGED_SOURCE_PLAN_READINESS_20261008.md). Docs95·App30/34·GitOps33 병합 완료. 아래 최초 Run·20:26 조회는 당시 이력.

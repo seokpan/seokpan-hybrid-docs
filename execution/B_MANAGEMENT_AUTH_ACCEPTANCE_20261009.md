@@ -1,5 +1,9 @@
 # B 관리 인증·조회 권한·Secret 공급 수락 절차
 
+> **잔여 체크 표현 정리 — 2026-10-21:** 미체크 문구는 실제 수행/미수행 사실을 바꾸지 않고 일반 기록 또는 재사용 조건으로 표시했다. [변경 전 체크 원문](https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/execution/B_MANAGEMENT_AUTH_ACCEPTANCE_20261009.md)은 해당 고정 커밋에 보존한다. 현재 실행 대기나 전체 목표 달성률이 아니며 [원 계획별 변경·최종 판정·영향](https://github.com/seokpan/seokpan-hybrid-docs/pull/140)을 따른다.
+
+> **B 전수 대조 후속 — 2026-10-21:** 이 문서의 조사·준비·현재/대기 표기는 제목 날짜의 이력이다. 이후 B 앱·정상 시험·HPA 한계·최종 종료는 [최신 종료 기록](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/B_ROSA_FINAL_CLOSEOUT_20261021.md)과 [전수 대조](TJUNG03_FULL_REPOSITORY_AUDIT_20261021.md)를 따른다. 성공한 실행을 다시 대기시키거나 미수행 시험을 성공으로 바꾸지 않는다.
+
 > **기록 시점과 현재 완료 근거:** 아래 상태·체크·명령은 각 작성일의 조사/인계 기록이다. B의10/16 완료 판정은 [완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)와 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)을 따른다. 완료된 설치·Plan·OCP 교체/기능·B03 화면·정상 관리 검사를 다시 대기로 해석하거나 재실행하지 않는다.
 
 현재 진행:
@@ -7,7 +11,7 @@
 - [x] 사람 GitHub IdP와 AWS Operator OIDC의 역할 분리.
 - [x] Cloud 조회 Role/수동 Argo/Ingress 후보 및 입력 거부 시험 준비.
 - [x] 관리 인증 수락 양식 검사와 권한 제거 후 기존/새 Session 검사 항목 준비.
-- [ ] 실제 ROSA·GitHub Team/IdP·관리자/관측 Subject 및 실효 권한 수락.
+- 실제 ROSA·GitHub Team/IdP·관리자/관측 Subject 및 실효 권한 수락.
 
 승인03 §3-C의 Team 제한·목적 권한·Bootstrap 정리 조건을 실행 단계로 연결한다. Kubernetes Role은 **권한**, GitHub Team은 로그인 허용 대상, OpenShift User/Group은 실제 RoleBinding Subject다. Team 이름을 Group에 그대로 넣거나 AWS OIDC 준비를 사람 로그인 완료로 표시하지 않는다.
 
@@ -35,9 +39,9 @@ App Secret은 사람 IdP와 별도다. 환경별 Namespace의 DB Runtime·Migrat
 
 남은 작업:
 
-- [ ] A의 실제 Cluster/지원·담당/Team/OAuth Owner 입력 수신.
-- [ ] 정상/차단 로그인·Subject·조회/거부·기존 Token·관리/비상 경로 검증.
-- [ ] 별도 승인에 따른 Bootstrap 정리와 재시험.
-- [ ] 환경별 Secret/CA 개정 공급·교체/업무 재접속 검증.
+- A의 실제 Cluster/지원·담당/Team/OAuth Owner 입력 수신.
+- 정상/차단 로그인·Subject·조회/거부·기존 Token·관리/비상 경로 검증.
+- 별도 승인에 따른 Bootstrap 정리와 재시험.
+- 환경별 Secret/CA 개정 공급·교체/업무 재접속 검증.
 
 근거: [Kubernetes RBAC](https://kubernetes.io/docs/reference/access-authn-authz/rbac/), [권한의 간접 효과](https://kubernetes.io/docs/concepts/security/rbac-good-practices/), [ROSA Classic 설치의 IdP 설정](https://docs.redhat.com/en/documentation/red_hat_openshift_service_on_aws_classic_architecture/4/html-single/install_rosa_classic_clusters/).

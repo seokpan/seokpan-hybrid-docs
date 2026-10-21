@@ -1,5 +1,11 @@
 # Evidence Index and Run Guide
 
+> **B 전수 대조 후속 — 2026-10-21:** [최종 종료](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/B_ROSA_FINAL_CLOSEOUT_20261021.md)와 [실제 시험 결과](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/HPA_ATTEMPT04_VERIFIED_RESULTS_20261021.md)를 우선한다. B ROSA·정확한 소유 범위 잔존 자원·Snapshot4개 정리는 완료다. 아래 절차·입력 대기·명령은 작성 당시 기록 또는 재사용 계약이며 현재 재실행 요청이 아니다. A 자원과 다른 담당의 종료는 판정하지 않는다. [전체 대조](../execution/TJUNG03_FULL_REPOSITORY_AUDIT_20261021.md).
+
+## 10/20~21 B 실행·부하 분석·종료 결과
+
+[앱·현재 모니터링·정상 Baseline](../execution/B_RUNTIME_AND_PROJECT_CLOSEOUT_20261020.md), [HPA 요청 분석과 한계](../execution/HPA_ATTEMPT04_VERIFIED_RESULTS_20261021.md), [공개 증거 ZIP](../execution/evidence/hpa-attempt04-20261020/B-D-public-evidence.zip), [B 자원 최종 종료](../execution/B_ROSA_FINAL_CLOSEOUT_20261021.md)를 연결한다. 요청47,138건·100 VU30,084건 성공과200 VU 중단을 구분한다. B 전체425표본/DB최대24와 실제 부하 구간70표본/DB최대23은 다른 집계다. 기존 원본 분석을 연결했으며 새 시험 Run이나 전체 HPA·롤링·DR 성공을 추가하지 않았다.
+
 ## Recovery Valkey 단독 기동 — 2026-10-16
 
 [B06-VALKEY-01 / b06-valkey-20261016-01](B06-VALKEY-01/b06-valkey-20261016-01/summary.md): 기존 Kubernetes의 Valkey 단독 Ready·UID999/파일·API port-forward TLS/AUTH PASS. NP4·CM1·Service1·StatefulSet1 생성, Valkey1·재시작0. Cloud앱·SQL·DB복원0이며 CNI·새 Registry/노드CA 인과·전체업무/RTO/RPO는 미검증이다. 기존 실제 기동의 증거 등록이며 새 실행을 추가하지 않았다. 시각·소요시간은 미기록, header-only timeline은 미측정으로 보존한다.

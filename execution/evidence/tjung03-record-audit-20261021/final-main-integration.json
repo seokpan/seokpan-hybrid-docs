@@ -1,0 +1,47 @@
+{
+  "type": "final B documentation main integration",
+  "verified_date_kst": "2026-10-21",
+  "merged_repositories": [
+    {
+      "repo": "seokpan-hybrid-infra",
+      "pr": 112,
+      "merge_sha": "1d4d5f68a979f5ac5ba7b361626a69b30c7595bb",
+      "merged_at": "2026-10-21T02:11:04Z",
+      "head": "2189174303a35f89234b733a782bcf9762c98b70",
+      "main_contains_merge": true
+    },
+    {
+      "repo": "seokpan-hybrid-gitops",
+      "pr": 68,
+      "merge_sha": "e5c6fe0be4fab0cb4814bac3e6058f08c56275bc",
+      "merged_at": "2026-10-21T02:21:04Z",
+      "head": "99a56827790fa2413c5135e783a95962424e7ec8",
+      "main_contains_merge": true
+    },
+    {
+      "repo": "seokpan-hybrid-app",
+      "pr": 52,
+      "merge_sha": "6e019cc4e27d01ec46e8254a4cc2ce037781fa33",
+      "merged_at": "2026-10-21T02:26:47Z",
+      "head": "3e9fcfe23420d829c32a5987a1cdc379cc2669e9",
+      "main_contains_merge": true
+    }
+  ],
+  "docs_final_pr": {
+    "url": "https://github.com/seokpan/seokpan-hybrid-docs/pull/140",
+    "role": "final documentation integration; completes on merge",
+    "merge_status_authority": "GitHub pull request merged and merge_commit_sha fields",
+    "extra_pr_for_self_merge_sha_required": false
+  },
+  "original_acceptance": "41/81",
+  "unaccepted_original_plans": 40,
+  "final_dispositions": {
+    "not_performed_closed": 13,
+    "excluded": 18,
+    "other_owner": 9
+  },
+  "additional_B_preparation_or_execution": 0,
+  "runtime_checks_repeated": 0,
+  "A_resources_changed": false,
+  "account_wide_zero_billing_claimed": false
+}

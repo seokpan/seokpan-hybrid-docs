@@ -1,10 +1,16 @@
 # 정태훈 실행판 — 지금 할 일·입력 대기·OCP와 ROSA 수명
 
+> **잔여 체크 표현 정리 — 2026-10-21:** 미체크 문구는 실제 수행/미수행 사실을 바꾸지 않고 일반 기록 또는 재사용 조건으로 표시했다. [변경 전 체크 원문](https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/execution/TJUNG03_EXECUTION_BOARD.md)은 해당 고정 커밋에 보존한다. 현재 실행 대기나 전체 목표 달성률이 아니며 [원 계획별 변경·최종 판정·영향](https://github.com/seokpan/seokpan-hybrid-docs/pull/140)을 따른다.
+
+> **최종 종료 범위 — 2026-10-21:** B 운영/증거 보존은 완료했다. 원 미수락40개는 미수행 종료13·종료 범위 제외18·다른 담당9로 [처분](B_FINAL_SCOPE_DISPOSITION_20261021.md)했으며 B 추가 가동/입력/준비는0개다. Infra112·GitOps68·App52의 main 반영은 완료했다. Docs140이 병합되면 B 기록 마감도 완료되며 추가 B 작업은 없다. [병합 근거와 최종 반영](https://github.com/seokpan/seokpan-hybrid-docs/pull/140)을 따른다. 원래 계획 전체의 성공이나 팀 전체 종료를 주장하지 않는다.
+
+> **체크박스 후속 — 2026-10-21:** 상위/닫힌 이슈·PR·댓글까지 [체크 단위로 대조](TJUNG03_CHECKBOX_RECONCILIATION_20261021.md)해 원 TH4개를 추가 수락했다. 현재41/81·40개 원 기준 미수락이며 과거37/81은 당시 집계다. B 운영 종료는 완료했다.
+
 ## 정태훈 완료 결과·체크 현황 — 2026-10-21 KST
 
 [완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)에 근거와 수락 범위를 연결했다. ROSA는 10/14 Apply 종료0, 이후 노드9/9 Ready·Operator34 안정·보호 관리 인계까지 완료했다. Worker/Data 규칙2개·승인 FE/BE×Compute3 실행6/6, Cloud 보호 입력/TLS·거부 검사, 정상 관리·모니터링 등록/한정 smoke 수락도 완료다. B03은 두 해상도27/27과 PNG12장 시각 수락으로 종료했다. Recovery Secret3/ConfigMap2의 최초 create5·내용/UID 대조도 완료했다. Harbor Secret 공급과 Valkey 단독 Ready·UID999/파일·port-forward TLS/AUTH도 완료했다. 전체 복원·업무/RTO/RPO는 미완료다.
 
-원 TH 체크는 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의 **37/81 완료·44개 미완료**다. 설치/검사 성공을 미충족한 복합 기준의 완료로 올리지 않았다. [App #21](https://github.com/seokpan/seokpan-hybrid-app/issues/21)의 실제 UI 기준8개와 [Infra #80](https://github.com/seokpan/seokpan-hybrid-infra/issues/80)의 최초 모니터링 등록 기준은 완료 근거를 연결한다.
+원 TH 체크는 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의 **41/81 완료·40개 미완료**다. 설치/검사 성공을 미충족한 복합 기준의 완료로 올리지 않았다. [App #21](https://github.com/seokpan/seokpan-hybrid-app/issues/21)의 실제 UI 기준8개와 [Infra #80](https://github.com/seokpan/seokpan-hybrid-infra/issues/80)의 최초 모니터링 등록 기준은 완료 근거를 연결한다.
 
 10/20 새 ROSA·최소 플랫폼·목적계정/TLS/Schema·Cloud 앱 FE3/BE3·현재 모니터링과 정상 Baseline 업무24/24는 [실제 결과](B_RUNTIME_AND_PROJECT_CLOSEOUT_20261020.md)로 연결한다. [HPA 반환 분석](HPA_ATTEMPT04_VERIFIED_RESULTS_20261021.md)은 두 압축파일·내부6파일/5해시·요청47,138건 대조를 완료했다. 10/50/100 VU 계획 구간 완료, 100 VU 30,084건 HTTP200·내용 검증 성공/p95 90.031ms다. 200 VU는2.197초·응답 미확인16/200으로 중단했고 전체 HPA 성공·게임/WSS 최대 수용량은 미수락이다.
 
@@ -75,7 +81,7 @@ ROSA는 준비되는 즉시 시작해 10/16(금)까지 검증하고 주말 전�
 - [x] App41 Jenkins 연결 Source 병합·Run5 내부 공급·worker-2 FE/BE 실행 성공 보고 수신. 당시 사용창/자원 재확인 누락과 worker-1·실제 교체는 미완료.
 - [x] Docs100에 Docs101 main을 결합해 로컬 전체37개 PASS, App43 최종 병합 기록은 대기.
 - [x] [기존 OCP 조사·비교](OCP_CAPACITY_ALTERNATIVES_20261011.md)에 전환·원복·용량 조정·시험 순서 통합. 실제 메트릭/플랫폼 조회는 B가 기존 접근 경로로 진행하며 실행 시각·운영 이력은 별도 협의.
-- [ ] App43·GitOps38 리뷰/병합과 GitOps37 Draft 조건, D 현장 자원/계측·실제 Jenkins/검증기·비용/보존, A Foundation/ROSA 권한·출력·Plan, C 실측/이관/Recovery, 최종 발표/정리.
+- App43·GitOps38 리뷰/병합과 GitOps37 Draft 조건, D 현장 자원/계측·실제 Jenkins/검증기·비용/보존, A Foundation/ROSA 권한·출력·Plan, C 실측/이관/Recovery, 최종 발표/정리.
 
 현재 판단과 순서는 [B 독립 보완·실제 인계](B_SOURCE_BATCH_AND_HANDOFF_20261009.md)를 따른다. [관리 인증 수락 절차](B_MANAGEMENT_AUTH_ACCEPTANCE_20261009.md)에서 Role/Secret·기존 Token·Bootstrap 정리 조건을 확인한다. Source 검사 결과와 실환경 완료를 구분하며 아래 과거 시점의 병합 대기/진단 명령은 당시 이력이다. App41의 PLAN 원격 clone 경계 보완·병합은 완료했고 실제 Controlled Run은 별도다.
 
@@ -131,9 +137,9 @@ TH17은 App4의 App/Pool, GitOps10의 선언/관측, Infra25의 ROSA/SG/재생�
 - [x] [h-docs PR #35](https://github.com/seokpan/seokpan-hybrid-docs/pull/35) 병합·해당 브랜치 삭제 확인, OCP 최초 제어·인계 Source와 ROSA 리뷰/실행 안내 게시
 - [x] [h-docs PR #36](https://github.com/seokpan/seokpan-hybrid-docs/pull/36) main `d5ead4600c7e819141c1d8213c760cc693f3c238` 병합·해당 브랜치 삭제 확인, D의 이전 HEAD Source 승인·비차단 제안 접수
 - [x] [h-docs PR #37](https://github.com/seokpan/seokpan-hybrid-docs/pull/37) main `198996c32b02985578e339b514d38155ec17cff8` 병합·해당 브랜치 삭제 확인, GitOps #9 최신 HEAD에 대한 C Source 승인 수신
-- [ ] B 남은 선언/검사·실제 Image/입력·OCP 새 조합 수락
-- [ ] A/C/D 실제 기반·Data·CI/Pull/비용과 B ROSA 실제 실행/통합
-- [ ] 최종 시험·발표·삭제/잔존/보관·팀 종료
+- B 남은 선언/검사·실제 Image/입력·OCP 새 조합 수락
+- A/C/D 실제 기반·Data·CI/Pull/비용과 B ROSA 실제 실행/통합
+- 최종 시험·발표·삭제/잔존/보관·팀 종료
 
 <details>
 <summary>2026-10-05~06의 Source·비용·인계 관측 이력 — 현재 지시는 상단·§2~10</summary>
@@ -392,23 +398,23 @@ OCP의 사전검증 업무 완료와 정리 날짜는 별개다. 추천 운영 �
 
 **현재 구분:** 기존 복합 체크를 보존하며 새 완료 체크는 추가하지 않는다. Image 제공·B 수락과 실제 Namespace Secret 공급·OCP Workload Pull/Ready/업무는 구분한다. D 공급·C/D Data 입력과 B 활성화, A/C 기반·목적 Role/Backend·지원/비용 준비를 병행한다. 비용1~5·예상/실제 기록·본인 가용성TBD·기존 목표 창·보존/종료 조건은 유지한다.
 
-- [ ] **B 지금:** 본인 Source/개인 변경 대조 → 병합 OCP Source와 새 인계 PR의 입력/Case·진단 Render 보존·검사 → 제출·사람 수신/보완 → 최소 lab 입력 수신 → D와 새 조합 검증. TH01/03~08/14.1
-- [ ] **B 병행Source:** Cloud/Recovery차이·Root/AppProject/NP/UWM·단일Migration·Secret/관리/Bundle·rosa계약/Controller·비용/창입력. TH09~12/15/17.1/18/19계획
-- [ ] **A 기반:** foundation공통틀/Network·Data/Registry/공통ROSA prerequisite·권한코드통합, 보호Plan/비용/실행·필수제한Output수신. VPN/Host후속과구분
-- [ ] **A Host/VPN:** 실제종단/Route·허용거부·재부팅/재구축·격리Host/공간/통신. 실제이전/Backup/Recovery의직접조건
-- [ ] **C DataSource/입력:** Root전환/SG·목적GRANT/TLS/CA/AUTH/Schema·lab/Cloud/복구구분·실제이전/반출조건·인계수신
-- [ ] **C Backup/Restore:** 운영중15분적용·성공Data간격/로컬완성지연/시각여유·실패/부하/공간·보호사본/Key·실제전체복원/수신
-- [ ] **D Image/OCP:** 승인 원본·내부 Registry 사본/Scan/Digest/Platform·labContext/권한/Owner·같은조합Sync/Client/업무/삭제보호·Run/수신·실습정리
-- [ ] **D CI/Pull:** 2차PAT/Job/등록재현/계정/권한·ECR/Harbor실제 Mapping·Push/거부·LifecyclePreview/최종N·HarborRelease보존·WorkerPull/12시간/재생성
-- [ ] **공동Plan/유료실행:** B실제입력/Caller/Backend/지원·전체Plan/리뷰·D총Cost/가용창·구체적유료범위/기간/삭제/재시험·Shared Execution
-- [ ] **ROSA Window A:** 생성/Stage2Binding/Pull·최초GitOps/관리Secret·C이전/Schema·App대표업무/정상Baseline·Backup/Release·Must결함/새Run. TH13/14
-- [ ] **ROSA 중간/Window B:** 자산/접근·쓰기/Backup·Binding·범위/비용 확인 후 조건부 중간 삭제(유지 시 시간/비용 기록) → T19 재생성 → 정상 Baseline → 분리 장애/관측 → 부하·비교/실패/재시험. TH16/17
-- [ ] **격리 전체T18:** 실제Backup/Release/독립사본/Key/Host·새DB직접 TLS/새Redis·FE/API/WSS/업무·RTO10/DBRPO30 실제판정. ROSA창밖가능, TH15
-- [ ] **공식T01~T23/기록:** 환경/Case별최종판정·Must결함/범위·원Issue/새Run·C검토/DIndex수신·Tracker/05·개인 기여 범위를정합. Source/lab을Cloud최종PASS로승계금지
-- [ ] **OCP 업무/정리:** 승격조합/차이/결함인계·공유사용종료·승인실습대상/시험Secret정리. 공유OCP전체/1차자산삭제로확대금지
-- [ ] **최종ROSA/비용:** 영상/Backup/Harbor/Bundle/Key접근·복원확인→승인rosa삭제·실제부속/잔존·후속청구/Owner. foundation/bootstrap전체Destroy별도승인
-- [ ] **발표·전체종료:** 비교/한계/기여·시연/예비영상/대본·자료/해독Key보존·불필요Credential/실데이터정리·보관/후속책임수신·T20/T23/Cost정합. TH18/19, W09~10
-- [ ] **메타데이터/후속:** GitHub Freeze milestone은 현재10/18이며 승인 Technical Freeze10/16으로 정정 미완료. 원본/제출/사람 수신/실입력/Runtime 정합과 새 OCP 인계 PR 검사·Render artifact/Hash 수신·학습 안내 유지. Infra28/GitOps11 Source 승인·main 병합과 GitOps9/11 작업 브랜치 삭제·Docs40 병합 확인 완료
+- **B 지금:** 본인 Source/개인 변경 대조 → 병합 OCP Source와 새 인계 PR의 입력/Case·진단 Render 보존·검사 → 제출·사람 수신/보완 → 최소 lab 입력 수신 → D와 새 조합 검증. TH01/03~08/14.1
+- **B 병행Source:** Cloud/Recovery차이·Root/AppProject/NP/UWM·단일Migration·Secret/관리/Bundle·rosa계약/Controller·비용/창입력. TH09~12/15/17.1/18/19계획
+- **A 기반:** foundation공통틀/Network·Data/Registry/공통ROSA prerequisite·권한코드통합, 보호Plan/비용/실행·필수제한Output수신. VPN/Host후속과구분
+- **A Host/VPN:** 실제종단/Route·허용거부·재부팅/재구축·격리Host/공간/통신. 실제이전/Backup/Recovery의직접조건
+- **C DataSource/입력:** Root전환/SG·목적GRANT/TLS/CA/AUTH/Schema·lab/Cloud/복구구분·실제이전/반출조건·인계수신
+- **C Backup/Restore:** 운영중15분적용·성공Data간격/로컬완성지연/시각여유·실패/부하/공간·보호사본/Key·실제전체복원/수신
+- **D Image/OCP:** 승인 원본·내부 Registry 사본/Scan/Digest/Platform·labContext/권한/Owner·같은조합Sync/Client/업무/삭제보호·Run/수신·실습정리
+- **D CI/Pull:** 2차PAT/Job/등록재현/계정/권한·ECR/Harbor실제 Mapping·Push/거부·LifecyclePreview/최종N·HarborRelease보존·WorkerPull/12시간/재생성
+- **공동Plan/유료실행:** B실제입력/Caller/Backend/지원·전체Plan/리뷰·D총Cost/가용창·구체적유료범위/기간/삭제/재시험·Shared Execution
+- **ROSA Window A:** 생성/Stage2Binding/Pull·최초GitOps/관리Secret·C이전/Schema·App대표업무/정상Baseline·Backup/Release·Must결함/새Run. TH13/14
+- **ROSA 중간/Window B:** 자산/접근·쓰기/Backup·Binding·범위/비용 확인 후 조건부 중간 삭제(유지 시 시간/비용 기록) → T19 재생성 → 정상 Baseline → 분리 장애/관측 → 부하·비교/실패/재시험. TH16/17
+- **격리 전체T18:** 실제Backup/Release/독립사본/Key/Host·새DB직접 TLS/새Redis·FE/API/WSS/업무·RTO10/DBRPO30 실제판정. ROSA창밖가능, TH15
+- **공식T01~T23/기록:** 환경/Case별최종판정·Must결함/범위·원Issue/새Run·C검토/DIndex수신·Tracker/05·개인 기여 범위를정합. Source/lab을Cloud최종PASS로승계금지
+- **OCP 업무/정리:** 승격조합/차이/결함인계·공유사용종료·승인실습대상/시험Secret정리. 공유OCP전체/1차자산삭제로확대금지
+- **최종ROSA/비용:** 영상/Backup/Harbor/Bundle/Key접근·복원확인→승인rosa삭제·실제부속/잔존·후속청구/Owner. foundation/bootstrap전체Destroy별도승인
+- **발표·전체종료:** 비교/한계/기여·시연/예비영상/대본·자료/해독Key보존·불필요Credential/실데이터정리·보관/후속책임수신·T20/T23/Cost정합. TH18/19, W09~10
+- **메타데이터/후속:** GitHub Freeze milestone은 현재10/18이며 승인 Technical Freeze10/16으로 정정 미완료. 원본/제출/사람 수신/실입력/Runtime 정합과 새 OCP 인계 PR 검사·Render artifact/Hash 수신·학습 안내 유지. Infra28/GitOps11 Source 승인·main 병합과 GitOps9/11 작업 브랜치 삭제·Docs40 병합 확인 완료
 
 근거: 승인03 §3-C.4/3-F/3-G/3-H·3-I.14.5, 04 §2.2~2.3/3.1~3.2/4/9~10, 개인계획 §6/7/9/11/12/18, 지침 §37, 최신 원 Issue/PR/Tree/체크. 현재기록은원격Source/보고범위이며본인PC·OCP/AWS/Registry실제입력수신/서버상태는해당Owner/새Run으로확인한다.
 
@@ -567,11 +573,11 @@ OCP의 사전검증 업무 완료와 정리 날짜는 별개다. 추천 운영 �
 - [x] 정책 사본 권한·17개 파일 해시 수신, Docs #88 병합·브랜치 삭제 확인
 - [x] [새 Image Source·스키마·ZIP·ROSA 준비 연결](IMAGE_MIGRATION_ROSA_PREFLIGHT_20261008.md)
 - [x] [1차 쓰기 중지·복귀 준비 절차](FIRST_SERVICE_WRITE_STOP_PREPARATION.md)
-- [ ] D 새 공급 Issue·Build/Scan/Digest·내부 Registry mapping·신규 Pull/교체 창 수신
-- [ ] B 실제 1차 Context·Parent/HPA/쓰기 주체 확인 → 제어 경로·실행자/창 수락
-- [ ] B/C 이관 당일 쓰기 중지 유지·최종 Dump/Import/비교 → ROSA current/App 검증
-- [ ] B Controller clone/Lock·Operator/정책 대조 → A 보호 수신·실제 기반/권한·C/A SG2
-- [ ] B/A/D 목적 Caller/Backend·지원/구독/Quota/disk·예비 비용/창 → 첫 전체 Plan
+- D 새 공급 Issue·Build/Scan/Digest·내부 Registry mapping·신규 Pull/교체 창 수신
+- B 실제 1차 Context·Parent/HPA/쓰기 주체 확인 → 제어 경로·실행자/창 수락
+- B/C 이관 당일 쓰기 중지 유지·최종 Dump/Import/비교 → ROSA current/App 검증
+- B Controller clone/Lock·Operator/정책 대조 → A 보호 수신·실제 기반/권한·C/A SG2
+- B/A/D 목적 Caller/Backend·지원/구독/Quota/disk·예비 비용/창 → 첫 전체 Plan
 
 실제 수행/수신은 원 Issue/Run에서 판정. 다중 투표·WS 유지/재접속·Rolling/장애·Prune/Delete, Recovery·금고 독립 사본 및 보존 중인 개인 변경은 기존 후속 범위 유지. 멘토링/OADP는 보류.
 
@@ -583,9 +589,9 @@ OCP의 사전검증 업무 완료와 정리 날짜는 별개다. 추천 운영 �
 - [x] Controller Source/Lock·격리 validate/교정 mock·지원후보 목록 및 A 정책 사본 수신 보고 확인
 - [x] App30/34·GitOps33 승인/병합·PR 브랜치 삭제, 기본 IAM User 인증·본인 MFA 장치1개 읽기 확인
 - [x] B 개인 Caller 서울 사양/Quota 부분 읽기·D32 새 Source18819963 Run5 보고 수신 및 공급 후보 수락
-- [ ] 당시 대기 항목(현재 EC2 진단은 해결·종료): D 보존 참조/내부 공급·mapping 준비와 Owner 사용창 조율
-- [ ] 선행 입력 대기: A 실제 역할/권한/제한 기반/Backend·C/A SG2·프로젝트 계정/지원/Quota/disk·예비 비용/Owner/창 → 첫 Cloud Plan
-- [ ] 실행 조건 수락 후: 새 Image 수락·OCP 최신 자원/Owner 창·실제 교체/시험
+- 당시 대기 항목(현재 EC2 진단은 해결·종료): D 보존 참조/내부 공급·mapping 준비와 Owner 사용창 조율
+- 선행 입력 대기: A 실제 역할/권한/제한 기반/Backend·C/A SG2·프로젝트 계정/지원/Quota/disk·예비 비용/Owner/창 → 첫 Cloud Plan
+- 실행 조건 수락 후: 새 Image 수락·OCP 최신 자원/Owner 창·실제 교체/시험
 
 [연결](CONTROLLER_SOURCE_CATALOG_FOLLOWUP_20261008.md). 기존독립작업의잔여와멘토링보류 유지.
 
@@ -611,15 +617,15 @@ OCP의 사전검증 업무 완료와 정리 날짜는 별개다. 추천 운영 �
 ## 전체 남은 작업 — 현재 후속
 
 
-- [ ] 신규 B Source PR 리뷰/CI·병합 및 승인 개정 보존.
-- [ ] D App41 PLAN 계약 수정/재리뷰·Jenkins/검증기 Source와 실제 CI 연결.
-- [ ] D 새 공급의 실제 내부 mapping·Pull·Owner창/자원→OCP 조합 시험.
-- [ ] A Foundation 보호 입력/서비스 권한/지원·비용·실행창→실제 Foundation 출력·ARN/Map/SG2 인계.
-- [ ] B 목적 인증/Backend→첫 ROSA 전체 Plan·수량/삭제/비용→별도 실행·Cluster 인계.
-- [ ] IdP/RBAC/Secret·Cloud 플랫폼/NetworkPolicy 실효 검증·캐시 없는 ECR Pull.
-- [ ] C RDS 실측→Pool 합의/구현→Cloud App·3Replica/롤링/장애 검증.
-- [ ] 1차 서비스 Writer 중단/최종 이관·비교/current/App/전환.
-- [ ] Recovery 나머지 입력·독립 사본/복원 Identity/복호화·실제 Restore와 RTO/RPO.
-- [ ] 재생성/비용·보존/삭제 보호·Evidence/발표/최종 정리.
+- 신규 B Source PR 리뷰/CI·병합 및 승인 개정 보존.
+- D App41 PLAN 계약 수정/재리뷰·Jenkins/검증기 Source와 실제 CI 연결.
+- D 새 공급의 실제 내부 mapping·Pull·Owner창/자원→OCP 조합 시험.
+- A Foundation 보호 입력/서비스 권한/지원·비용·실행창→실제 Foundation 출력·ARN/Map/SG2 인계.
+- B 목적 인증/Backend→첫 ROSA 전체 Plan·수량/삭제/비용→별도 실행·Cluster 인계.
+- IdP/RBAC/Secret·Cloud 플랫폼/NetworkPolicy 실효 검증·캐시 없는 ECR Pull.
+- C RDS 실측→Pool 합의/구현→Cloud App·3Replica/롤링/장애 검증.
+- 1차 서비스 Writer 중단/최종 이관·비교/current/App/전환.
+- Recovery 나머지 입력·독립 사본/복원 Identity/복호화·실제 Restore와 RTO/RPO.
+- 재생성/비용·보존/삭제 보호·Evidence/발표/최종 정리.
 
 </details>

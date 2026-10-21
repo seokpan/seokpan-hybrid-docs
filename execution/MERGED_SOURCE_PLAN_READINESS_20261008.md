@@ -1,3 +1,7 @@
+> **B 전수 대조 후속 — 2026-10-21:** 이 문서의 조사·준비·현재/대기 표기는 제목 날짜의 이력이다. 이후 B 앱·정상 시험·HPA 한계·최종 종료는 [최신 종료 기록](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/B_ROSA_FINAL_CLOSEOUT_20261021.md)과 [전수 대조](TJUNG03_FULL_REPOSITORY_AUDIT_20261021.md)를 따른다. 성공한 실행을 다시 대기시키거나 미수행 시험을 성공으로 바꾸지 않는다.
+
+> **잔여 체크 표현 정리 — 2026-10-21:** 미체크 문구는 실제 수행/미수행 사실을 바꾸지 않고 일반 기록 또는 재사용 조건으로 표시했다. [변경 전 체크 원문](https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/execution/MERGED_SOURCE_PLAN_READINESS_20261008.md)은 해당 고정 커밋에 보존한다. 현재 실행 대기나 전체 목표 달성률이 아니며 [원 계획별 변경·최종 판정·영향](https://github.com/seokpan/seokpan-hybrid-docs/pull/140)을 따른다.
+
 > **현재 후속 — 2026-10-09:** A bootstrap Apply·재-Plan 변경 없음 보고 수신. Foundation 전체 Plan/Apply·B ROSA 서비스 권한은 대기다. [현재 인계 순서](B_SOURCE_BATCH_AND_HANDOFF_20261009.md)를 따른다. 아래 이전 실패/진단은 당시 기록이다.
 
 > **기록 시점과 현재 완료 근거:** 아래 상태·체크·명령은 각 작성일의 조사/인계 기록이다. B의10/16 완료 판정은 [완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)와 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)을 따른다. 완료된 설치·Plan·OCP 교체/기능·B03 화면·정상 관리 검사를 다시 대기로 해석하거나 재실행하지 않는다.
@@ -17,8 +21,8 @@
 - [x] EC2 진단v1/v2 결과 수신·추가 자동 API 재시도 종료
 - [x] EC2 원인 로컬 ParamValidation 확인·교정 조회 완료. 전체 Quota 잔여량은 미확인
 - [x] 새 Image 출처·FE/BE Index Digest의 Harbor 공급 후보 수락
-- [ ] 보호 보존 근거·내부 mapping/Child Digest·OCP 공급/교체 조건 대조
-- [ ] EBS 할당량 기준 차이·기존 사용량·목적 세션/Backend·지원/비용/전체 Plan 수락
+- 보호 보존 근거·내부 mapping/Child Digest·OCP 공급/교체 조건 대조
+- EBS 할당량 기준 차이·기존 사용량·목적 세션/Backend·지원/비용/전체 Plan 수락
 
 | 작업 | 확인 결과 | 실제 다음 단계 |
 |---|---|---|
@@ -101,21 +105,21 @@ C의 [Infra19 합의](https://github.com/seokpan/seokpan-hybrid-infra/issues/19#
 
 ### 지금 가능한 작업
 
-- [ ] B 현장/A 계정 Owner: 비공개 오류 분류·실행/계정 범위 확인 입력, 안전한 판정 인계. 같은 API 자동 재시도 없음
-- [ ] B/A: 준비표·실제 보호 입력 수신 뒤 목적 세션 사전검증 연결. 성공한 Caller/MFA/용량 목록 반복 없음
-- [ ] B/A: 공식 EBS300 TiB와 CLI Source50 TiB의 기준 차이·적용 CLI/지원 개정 확인, CP/Infra/Worker별 machine·disk 소요 초안
-- [ ] B/D: 수락한 Run5의 보존 논리 참조·해시·내부 mapping/전체 Child Digest 대조, 현재 OCP 자원·Pruner/Quota·Owner 창 조율
-- [ ] B/Docs21·D: 새 증거 Run6개·원 Issue·Tracker/05/Index 연결과 Index 수신 확인
+- B 현장/A 계정 Owner: 비공개 오류 분류·실행/계정 범위 확인 입력, 안전한 판정 인계. 같은 API 자동 재시도 없음
+- B/A: 준비표·실제 보호 입력 수신 뒤 목적 세션 사전검증 연결. 성공한 Caller/MFA/용량 목록 반복 없음
+- B/A: 공식 EBS300 TiB와 CLI Source50 TiB의 기준 차이·적용 CLI/지원 개정 확인, CP/Infra/Worker별 machine·disk 소요 초안
+- B/D: 수락한 Run5의 보존 논리 참조·해시·내부 mapping/전체 Child Digest 대조, 현재 OCP 자원·Pruner/Quota·Owner 창 조율
+- B/Docs21·D: 새 증거 Run6개·원 Issue·Tracker/05/Index 연결과 Index 수신 확인
 
 ### 선행 입력 대기
 
-- [ ] A: 실제 역할4개·Policy Map/ARN·목적 권한·기반/Backend 제한 출력, A/C: 실제 SG2 판정·보호 인계
-- [ ] A/B·계정 Owner: EBS 기준 수락 또는 증설, 기존 사용량·실제 배치/계정·목적 세션/Backend·조직/구독·STS·지원 patch/machine/disk
-- [ ] B/A/D: 실제 소요·예비 비용·Owner/사용창 수락 → 첫 전체 ROSA Plan
-- [ ] B/C: 실제 RDS 연결 상한·예약/Process 예산 합의 → Pool 구현·Cloud App 활성화. 첫 ROSA Plan과 분리
+- A: 실제 역할4개·Policy Map/ARN·목적 권한·기반/Backend 제한 출력, A/C: 실제 SG2 판정·보호 인계
+- A/B·계정 Owner: EBS 기준 수락 또는 증설, 기존 사용량·실제 배치/계정·목적 세션/Backend·조직/구독·STS·지원 patch/machine/disk
+- B/A/D: 실제 소요·예비 비용·Owner/사용창 수락 → 첫 전체 ROSA Plan
+- B/C: 실제 RDS 연결 상한·예약/Process 예산 합의 → Pool 구현·Cloud App 활성화. 첫 ROSA Plan과 분리
 
 ### 일정·실행 대상 확정 후
 
-- [ ] B/C: 1차 접근 계정·위치/이관일 확정 → 쓰기 중지·C 최종 이관/비교 → ROSA current·App 검증
-- [ ] B/D·OCP Owner: 수락한 새 Image의 Registry 공급 Gate→push→mapping/Pull 및 추가 Worker 자원/창 뒤 FE→BE 교체·업무/장애/Prune/Delete 시험
-- [ ] Recovery·금고 Owner: 대상 Namespace·입력·독립 사본·복원 Identity 확인
+- B/C: 1차 접근 계정·위치/이관일 확정 → 쓰기 중지·C 최종 이관/비교 → ROSA current·App 검증
+- B/D·OCP Owner: 수락한 새 Image의 Registry 공급 Gate→push→mapping/Pull 및 추가 Worker 자원/창 뒤 FE→BE 교체·업무/장애/Prune/Delete 시험
+- Recovery·금고 Owner: 대상 Namespace·입력·독립 사본·복원 Identity 확인

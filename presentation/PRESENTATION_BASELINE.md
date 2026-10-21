@@ -1,5 +1,9 @@
 # 石나가는 판단 2차 프로젝트 — Presentation Baseline
 
+> **잔여 체크 표현 정리 — 2026-10-21:** 미체크 문구는 실제 수행/미수행 사실을 바꾸지 않고 일반 기록 또는 재사용 조건으로 표시했다. [변경 전 체크 원문](https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/presentation/PRESENTATION_BASELINE.md)은 해당 고정 커밋에 보존한다. 현재 실행 대기나 전체 목표 달성률이 아니며 [원 계획별 변경·최종 판정·영향](https://github.com/seokpan/seokpan-hybrid-docs/pull/140)을 따른다.
+
+> **B 전수 대조 후속 — 2026-10-21:** [최종 종료](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/B_ROSA_FINAL_CLOSEOUT_20261021.md)와 [실제 시험 결과](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/HPA_ATTEMPT04_VERIFIED_RESULTS_20261021.md)를 우선한다. B ROSA·정확한 소유 범위 잔존 자원·Snapshot4개 정리는 완료다. 아래 절차·입력 대기·명령은 작성 당시 기록 또는 재사용 계약이며 현재 재실행 요청이 아니다. A 자원과 다른 담당의 종료는 판정하지 않는다. [전체 대조](../execution/TJUNG03_FULL_REPOSITORY_AUDIT_20261021.md).
+
 > **목적:** 05 구현·통합·검증에서 발생하는 실제 결과를 최종 발표 관점에서 놓치지 않고 선별하기 위한 기준
 > **기준일:** 2026-10-02 KST
 > **상태:** APPROVED PRESENTATION BASELINE — B 완료 근거·후보 연결, 전체 공식 시험·최종 발표 준비 미완료
@@ -26,10 +30,10 @@
 - [x] 1차↔2차 비교 분류 기준 정리
 - [x] Troubleshooting 선별 기준 정리
 - [x] 05 Evidence → 발표 후보 선별 흐름 정리
-- [ ] 05 공식 시험·성능/장애·전체 DR·비용 등 최종 발표에 필요한 Actual 전체 확보
-- [ ] 필요한 1차 비교 Baseline 재측정
-- [ ] 전체 결과에 따른 최종 Troubleshooting 채택·발표 구성 확정
-- [ ] 최종 발표 목차·슬라이드·Demo·대본·Q&A 확정
+- 05 공식 시험·성능/장애·전체 DR·비용 등 최종 발표에 필요한 Actual 전체 확보
+- 필요한 1차 비교 Baseline 재측정
+- 전체 결과에 따른 최종 Troubleshooting 채택·발표 구성 확정
+- 최종 발표 목차·슬라이드·Demo·대본·Q&A 확정
 
 ## 1. 문서의 역할과 기준
 

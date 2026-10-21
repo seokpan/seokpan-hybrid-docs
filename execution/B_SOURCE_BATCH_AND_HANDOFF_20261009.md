@@ -1,5 +1,9 @@
 # B 독립 Source 보완과 실제 인계 순서 — 2026-10-09
 
+> **잔여 체크 표현 정리 — 2026-10-21:** 미체크 문구는 실제 수행/미수행 사실을 바꾸지 않고 일반 기록 또는 재사용 조건으로 표시했다. [변경 전 체크 원문](https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/execution/B_SOURCE_BATCH_AND_HANDOFF_20261009.md)은 해당 고정 커밋에 보존한다. 현재 실행 대기나 전체 목표 달성률이 아니며 [원 계획별 변경·최종 판정·영향](https://github.com/seokpan/seokpan-hybrid-docs/pull/140)을 따른다.
+
+> **B 전수 대조 후속 — 2026-10-21:** 이 문서의 조사·준비·현재/대기 표기는 제목 날짜의 이력이다. 이후 B 앱·정상 시험·HPA 한계·최종 종료는 [최신 종료 기록](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/B_ROSA_FINAL_CLOSEOUT_20261021.md)과 [전수 대조](TJUNG03_FULL_REPOSITORY_AUDIT_20261021.md)를 따른다. 성공한 실행을 다시 대기시키거나 미수행 시험을 성공으로 바꾸지 않는다.
+
 > **기록 시점과 현재 완료 근거:** 아래 상태·체크·명령은 각 작성일의 조사/인계 기록이다. B의10/16 완료 판정은 [완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)와 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)을 따른다. 완료된 설치·Plan·OCP 교체/기능·B03 화면·정상 관리 검사를 다시 대기로 해석하거나 재실행하지 않는다.
 
 현재 전체 진행:
@@ -8,8 +12,8 @@
 - [x] A bootstrap 실제 Apply·동일 입력 재-Plan 변경 없음·AWS 정책/연결 확인 보고 수신.
 - [x] A Foundation Backend 초기화·지정 State/선택 자원 부재 조회 보고 수신. 조회 대상 밖의 부재나 새 State 생성 승인으로 확대하지 않음.
 - [x] B Cloud 플랫폼/조회 권한·Recovery Bundle·관리 인증 수락의 오프라인 Source 보완.
-- [ ] 신규 Source 리뷰·병합 및 환경별 실제 공급/실행 수락.
-- [ ] Foundation 전체 Plan/비용/Apply와 B ROSA 서비스 권한·목적 인증/Backend·첫 전체 Plan.
+- 신규 Source 리뷰·병합 및 환경별 실제 공급/실행 수락.
+- Foundation 전체 Plan/비용/Apply와 B ROSA 서비스 권한·목적 인증/Backend·첫 전체 Plan.
 
 B05/B06/B08은 별도 현황 HTML이 만든 작업 그룹 이름이다. 원 승인 설계의 B 항목이나 TH 체크 번호를 재번호화하지 않는다. 여기서는 Cloud 플랫폼, Recovery Bundle, 관리 인증·Secret 경계로 명시한다. Source 후보/오프라인 시험 완료와 실제 인프라·업무 시험 완료는 별개다.
 
@@ -67,13 +71,13 @@ Windows GitOps 전체 시험에서 나타난 CRLF ConfigMap/Linux Fixture 차이
 
 전체 남은 작업:
 
-- [ ] 신규 B Source PR 리뷰/CI·병합 및 승인 개정 보존.
-- [ ] D App41 PLAN 계약 수정/재리뷰·Jenkins/검증기 Source와 실제 CI 연결.
-- [ ] D 새 공급의 실제 내부 mapping·Pull·Owner창/자원→OCP 조합 시험.
-- [ ] A Foundation 보호 입력/서비스 권한/지원·비용·실행창→실제 Foundation 출력·ARN/Map/SG2 인계.
-- [ ] B 목적 인증/Backend→첫 ROSA 전체 Plan·수량/삭제/비용→별도 실행·Cluster 인계.
-- [ ] IdP/RBAC/Secret·Cloud 플랫폼/NetworkPolicy 실효 검증·캐시 없는 ECR Pull.
-- [ ] C RDS 실측→Pool 합의/구현→Cloud App·3Replica/롤링/장애 검증.
-- [ ] 1차 서비스 Writer 중단/최종 이관·비교/current/App/전환.
-- [ ] Recovery 나머지 입력·독립 사본/복원 Identity/복호화·실제 Restore와 RTO/RPO.
-- [ ] 재생성/비용·보존/삭제 보호·Evidence/발표/최종 정리.
+- 신규 B Source PR 리뷰/CI·병합 및 승인 개정 보존.
+- D App41 PLAN 계약 수정/재리뷰·Jenkins/검증기 Source와 실제 CI 연결.
+- D 새 공급의 실제 내부 mapping·Pull·Owner창/자원→OCP 조합 시험.
+- A Foundation 보호 입력/서비스 권한/지원·비용·실행창→실제 Foundation 출력·ARN/Map/SG2 인계.
+- B 목적 인증/Backend→첫 ROSA 전체 Plan·수량/삭제/비용→별도 실행·Cluster 인계.
+- IdP/RBAC/Secret·Cloud 플랫폼/NetworkPolicy 실효 검증·캐시 없는 ECR Pull.
+- C RDS 실측→Pool 합의/구현→Cloud App·3Replica/롤링/장애 검증.
+- 1차 서비스 Writer 중단/최종 이관·비교/current/App/전환.
+- Recovery 나머지 입력·독립 사본/복원 Identity/복호화·실제 Restore와 RTO/RPO.
+- 재생성/비용·보존/삭제 보호·Evidence/발표/최종 정리.

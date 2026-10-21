@@ -1,11 +1,15 @@
 # 승인 요구사항부터 다시 대조한 B 준비 범위 — 2026-10-11
 
+> **잔여 체크 표현 정리 — 2026-10-21:** 미체크 문구는 실제 수행/미수행 사실을 바꾸지 않고 일반 기록 또는 재사용 조건으로 표시했다. [변경 전 체크 원문](https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/execution/B_ACCEPTANCE_PREPARATION_AUDIT_20261011.md)은 해당 고정 커밋에 보존한다. 현재 실행 대기나 전체 목표 달성률이 아니며 [원 계획별 변경·최종 판정·영향](https://github.com/seokpan/seokpan-hybrid-docs/pull/140)을 따른다.
+
+> **B 전수 대조 후속 — 2026-10-21:** 이 문서의 조사·준비·현재/대기 표기는 제목 날짜의 이력이다. 이후 B 앱·정상 시험·HPA 한계·최종 종료는 [최신 종료 기록](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/B_ROSA_FINAL_CLOSEOUT_20261021.md)과 [전수 대조](TJUNG03_FULL_REPOSITORY_AUDIT_20261021.md)를 따른다. 성공한 실행을 다시 대기시키거나 미수행 시험을 성공으로 바꾸지 않는다.
+
 > **기록 시점과 현재 완료 근거:** 아래 상태·체크·명령은 각 작성일의 조사/인계 기록이다. B의10/16 완료 판정은 [완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)와 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)을 따른다. 완료된 설치·Plan·OCP 교체/기능·B03 화면·정상 관리 검사를 다시 대기로 해석하거나 재실행하지 않는다.
 
 - [x] Charter Must/성공축, 03 T·IF·IM·Network 조건, 04 역할, 05 측정·증거 규칙에서 출발해 네 저장소를 대조
 - [x] OCP의 기존 bastion 조사·관리 객체 연결을 재사용하고 자원 확보 후보를 계산
 - [x] 입력 없이 가능한 자원 비교·시험별 측정/증거 준비를 보완
-- [ ] 실제 Cloud/OCP/Recovery 시험, 권한/창·자원 변경, 최종 비용·시연/종료
+- 실제 Cloud/OCP/Recovery 시험, 권한/창·자원 변경, 최종 비용·시연/종료
 
 81개 TH 목록과 준비 자료 25개는 참조 목록이다. 이 문서는 그 목록 밖의 승인 세부 조건까지 대조한다. 아래 파일은 **관련 구현/절차/부분 Source 시험의 근거**이며 행 전체의 자동 시험 Coverage나 실환경 PASS를 뜻하지 않는다. 실환경 결과가 필요한 모든 행은 부분 증거를 보존하고 최종 수락을 미완료로 둔다. 새 시험 ID·운영 구조·수치 목표를 추가하지 않는다.
 
@@ -131,13 +135,13 @@ IF·IM·NET은 위 T 행의 세부 조건이다. 위 T의 일부 성공을 아�
 
 ## 다음 처리와 남은 범위
 
-- [ ] App43 리뷰·병합 → Docs100 최종 App Commit 반영 → 새 Image/실제 Pool·Cloud 검증
-- [ ] GitOps38 리뷰·병합; GitOps37의 Source 승인과 Draft 해제/교체 조건을 구분
-- [ ] OCP 우리 팀 관리 범위에서 B/D 변경·복구안과 실행 시각 정리 → 변경 직전 재측정 → 안전한 자원 확보/복구 확인 → worker-1 FE/BE Pull → FE/BE 순차 교체/업무·보호 시험
-- [ ] A의 실행 입력·B 서비스 권한·지원/기반 인계 → B 목적 인증/Backend·전체 ROSA Plan/수량/삭제/비용 검토 → 검토된 단계별 생성
-- [ ] C SG/실제 RDS 연결 상한·예약 → B/C Process·롤링·Pool 예산 → Cloud App 검증
-- [ ] C와 이관일/1차 관리·접근 경로 → 1차 서비스의 DB 변경 요청 차단 확인 → 최종 덤프/이관/비교 → Migration current·App 검증
-- [ ] Recovery Namespace/Engine/Storage·독립 사본/복원 계정 → 새 Redis·App/Client까지 전체 오프라인 복구
-- [ ] 정상 Baseline → 승인 장애/재생성·부하·관측·장시간 Pull → 실비·동일 조건 비교·영상/기여 → 보존/삭제/잔존 비용·회수 → 종료
+- App43 리뷰·병합 → Docs100 최종 App Commit 반영 → 새 Image/실제 Pool·Cloud 검증
+- GitOps38 리뷰·병합; GitOps37의 Source 승인과 Draft 해제/교체 조건을 구분
+- OCP 우리 팀 관리 범위에서 B/D 변경·복구안과 실행 시각 정리 → 변경 직전 재측정 → 안전한 자원 확보/복구 확인 → worker-1 FE/BE Pull → FE/BE 순차 교체/업무·보호 시험
+- A의 실행 입력·B 서비스 권한·지원/기반 인계 → B 목적 인증/Backend·전체 ROSA Plan/수량/삭제/비용 검토 → 검토된 단계별 생성
+- C SG/실제 RDS 연결 상한·예약 → B/C Process·롤링·Pool 예산 → Cloud App 검증
+- C와 이관일/1차 관리·접근 경로 → 1차 서비스의 DB 변경 요청 차단 확인 → 최종 덤프/이관/비교 → Migration current·App 검증
+- Recovery Namespace/Engine/Storage·독립 사본/복원 계정 → 새 Redis·App/Client까지 전체 오프라인 복구
+- 정상 Baseline → 승인 장애/재생성·부하·관측·장시간 Pull → 실비·동일 조건 비교·영상/기여 → 보존/삭제/잔존 비용·회수 → 종료
 
 각 단계의 부분 인계는 먼저 확인한다. 이 대조가 모든 미래 환경/분기/제약을 완전히 검증했다는 의미는 아니다. 실제 개정·운영 입력·시험 결과가 오면 영향받는 조건만 다시 검토한다.

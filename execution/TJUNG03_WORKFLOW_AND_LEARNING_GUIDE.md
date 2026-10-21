@@ -1,8 +1,16 @@
 # 정태훈 작업·흐름·학습 안내
 
+> **잔여 체크 표현 정리 — 2026-10-21:** 미체크 문구는 실제 수행/미수행 사실을 바꾸지 않고 일반 기록 또는 재사용 조건으로 표시했다. [변경 전 체크 원문](https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/execution/TJUNG03_WORKFLOW_AND_LEARNING_GUIDE.md)은 해당 고정 커밋에 보존한다. 현재 실행 대기나 전체 목표 달성률이 아니며 [원 계획별 변경·최종 판정·영향](https://github.com/seokpan/seokpan-hybrid-docs/pull/140)을 따른다.
+
+> **최종 종료 범위 — 2026-10-21:** B 운영/증거 보존은 완료했다. 원 미수락40개는 미수행 종료13·종료 범위 제외18·다른 담당9로 [처분](B_FINAL_SCOPE_DISPOSITION_20261021.md)했으며 B 추가 가동/입력/준비는0개다. Infra112·GitOps68·App52의 main 반영은 완료했다. Docs140이 병합되면 B 기록 마감도 완료되며 추가 B 작업은 없다. [병합 근거와 최종 반영](https://github.com/seokpan/seokpan-hybrid-docs/pull/140)을 따른다. 원래 계획 전체의 성공이나 팀 전체 종료를 주장하지 않는다.
+
+> **체크박스 후속 — 2026-10-21:** 상위/닫힌 이슈·PR·댓글까지 [체크 단위로 대조](TJUNG03_CHECKBOX_RECONCILIATION_20261021.md)해 원 TH4개를 추가 수락했다. 현재41/81·40개 원 기준 미수락이며 과거37/81은 당시 집계다. B 운영 종료는 완료했다.
+
+> **B 전수 대조 후속 — 2026-10-21:** [최종 종료](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/B_ROSA_FINAL_CLOSEOUT_20261021.md)와 [실제 시험 결과](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/HPA_ATTEMPT04_VERIFIED_RESULTS_20261021.md)를 우선한다. B ROSA·정확한 소유 범위 잔존 자원·Snapshot4개 정리는 완료다. 아래 절차·입력 대기·명령은 작성 당시 기록 또는 재사용 계약이며 현재 재실행 요청이 아니다. A 자원과 다른 담당의 종료는 판정하지 않는다. [전체 대조](TJUNG03_FULL_REPOSITORY_AUDIT_20261021.md).
+
 ## 완료 결과 연결 — 2026-10-16 KST
 
-[완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)에서 ROSA Apply/Ready·Worker/Data 규칙·승인 이미지 실행·보호 공급/TLS·정상 관리/모니터링·B03·Recovery 보호5객체 최초 공급 수락과 원 근거를 확인한다. Docs97/98의 병합과 기존 OCP 기능도 완료된 이력이며 다시 수행하지 않는다. 현재 체크 정본은 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의36/81이다. 아래 과거 준비 체크와 명령은 현재 실행 요청이 아니다.
+[완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)에서 ROSA Apply/Ready·Worker/Data 규칙·승인 이미지 실행·보호 공급/TLS·정상 관리/모니터링·B03·Recovery 보호5객체 최초 공급 수락과 원 근거를 확인한다. Docs97/98의 병합과 기존 OCP 기능도 완료된 이력이며 다시 수행하지 않는다. 10/21 현재 원 기준 체크 정본은 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의41/81 완료·40개 미수락이다. 미수락 항목을 B 종료의 새 실행 요청으로 해석하지 않는다. 아래 과거 준비 체크와 명령은 현재 실행 요청이 아니다.
 
 ## 10/09 당시 진행 현황 — 과거 기록
 
@@ -13,7 +21,7 @@
 - [x] A PR #54 최신 B 승인 완료. B 구현 보완 또는 재리뷰 대기 항목 아님.
 - [x] C의 SG 대조 방식·Pool 결정 시점·이관 순서 합의 확인. 실제 SG/RDS 결과와 1차 접근 확정은 별도.
 - [x] [B 선행 도구·증거](B_OFFLINE_PREPARATION_REVIEW_20261009.md)와 [Run #5 공급 후속](OCP_RUN5_SUPPLY_FOLLOWUP_20261009.md)을 Docs PR #97에 반영·게시 검증.
-- [ ] Docs PR #97 검토·병합 후속, A 실제 기반/권한 인계 및 아래 실환경 검증.
+- Docs PR #97 검토·병합 후속, A 실제 기반/권한 인계 및 아래 실환경 검증.
 
 현재 완료 판정은 위10/16 절과 원 Issue를 따른다. 문서 끝의10/09 표는 당시 남은 작업 기록이다. 아래 시점별 기록·명령은 작성 당시의 이력/절차이며, 완료한 Controller 조회·오프라인 시험의 재실행 지시가 아니다.
 
