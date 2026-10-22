@@ -1,6 +1,6 @@
 # 石나가는 판단 2차 프로젝트 05 구현·통합·검증 진행 기록
 
-> **이유빈 실행 결과·종료 보고 연결 — 2026-10-22 KST:** [A 결과와 문서 대조](GGBUN2_RESULTS_AND_DOCUMENTATION_20261022.md)에 Foundation 최초 Apply·재-Plan 변경0·Data 출력 수신, NAT 복구/중간 정리/재생성, 10/21 VPN 경유 RDS TLS·원본 IP 보존, AWS 측 원복·Foundation 최종 종료의 원 근거를 연결했다. Infra #16 본문의 과거 미완료 표시와 [최신 접속·종료 댓글](https://github.com/seokpan/seokpan-hybrid-infra/issues/16#issuecomment-6309539081)을 구분한다.
+> **Foundation·Hybrid VPN 실행 결과 — 2026-10-22 KST:** [실행·검증 및 종료 기록](FOUNDATION_HYBRID_EXECUTION_RESULTS_20261022.md)에 Foundation 최초 Apply·재-Plan 변경0·Data 출력 수신, NAT 복구/중간 정리/재생성, 10/21 VPN 경유 RDS TLS·원본 IP 보존, AWS 측 원복·Foundation 최종 종료의 원 근거를 연결했다. Infra #16 본문의 과거 미완료 표시와 [최신 접속·종료 댓글](https://github.com/seokpan/seokpan-hybrid-infra/issues/16#issuecomment-6309539081)을 구분한다.
 >
 > 이번 변경은 기존 실행 보고와 병합 Source의 문서 대조이며 AWS·Controller 시험 재실행이나 보호 원본 독립 검증이 아니다. 전체 VPN 시험·DR·온프렘 최종 원복·최종 비용은 미확인 범위를 유지한다. Foundation 종료에서 원격 Backend 폐기가 보고됐으므로 아래 과거 Terraform 명령을 현재 운영 지시로 실행하지 않는다. 기존 날짜별 결과·다른 담당 기록·체크는 보존한다.
 
