@@ -89,7 +89,7 @@ Data 담당의 PR #63 반영 후 다음 조건으로 전체 재-Plan을 수행�
 
 정태훈 계정에는 기존 Data 인계 파일과 manifest의 읽기 접근을 연결하고, 읽기 가능·쓰기 불가·JSON 읽기를 확인했다.
 
-[Docs PR #128](https://github.com/seokpan/seokpan-hybrid-docs/pull/128)에는 이후 파일·manifest 결속과 연결 값 네 개의 해시 대조 통과 회신을 반영했다고 기록돼 있다. 기준일 현재 해당 PR은 미병합이며, 이번 대조에서는 수신자의 원 회신을 직접 연결하는 근거까지 확보하지 못했다.
+[Docs PR #128](https://github.com/seokpan/seokpan-hybrid-docs/pull/128)은 인계 파일 접근 확인과 수신자의 manifest·해시 대조를 구분한다. 수신자의 원 회신 근거를 직접 대조하지 못한 항목은 완료로 확정하지 않으며, 실제 미수행으로 단정하지 않는다.
 
 근거: [Data 자료 접근 연결](https://github.com/seokpan/seokpan-hybrid-infra/issues/23#issuecomment-6159843548)
 

@@ -9,6 +9,41 @@ secrets_included: none (비밀번호 · Token · 개인키 · AWS 계정 번호 
 
 # 석판 2차 프로젝트 — Data 영역 인수인계 (AI 학습용)
 
+## 2026-10-22 보완 — Data 인계 형식과 접근 확인
+
+아래 본문은 2026-10-13 당시의 인수인계 기록입니다. 당시 상태·담당·대기 항목은 이력으로 보존하며, 이후 결과는 이 절의 근거와 후속 기록을 함께 읽습니다.
+
+### 접근 확인 범위
+
+[10/14 접근 확인 기록](https://github.com/seokpan/seokpan-hybrid-infra/issues/23#issuecomment-6159843548)에서 Controller의 `jth` 계정으로 다음을 확인했습니다.
+
+- `c-data-outputs.json`과 `handoff-manifest.json`의 읽기 가능·쓰기 불가.
+- 두 파일의 JSON 읽기 성공과 필요한 상위 디렉터리 통과 권한.
+- 기존 파일 내용·확인값과 다른 사용자의 유효 권한 유지.
+
+이 기록은 파일 접근 확인입니다. 정태훈의 manifest 결속·연결 값 네 개의 해시 대조 완료는 수신자 원 회신을 직접 대조하지 못했으므로 확정하지 않습니다. 이는 해당 대조가 미수행이었다는 판정과 구분합니다.
+
+김상희의 10/13 Data 출력·실제 자원 대조 결과는 [별도 수신 확인 기록](https://github.com/seokpan/seokpan-hybrid-infra/issues/23#issuecomment-6142071240)을 따릅니다. 두 수신자의 확인 결과를 서로 대신하는 근거로 사용하지 않습니다.
+
+### JSON 조회 형식
+
+조회 표현은 실제 파일 구조에 맞춰 사용합니다. 아래 값은 형식을 설명하는 예시이며 실제 주소가 아닙니다.
+
+| 구조 | JSON 예시 | 조회 표현 |
+| --- | --- | --- |
+| 직접값 | `{"rds_address":"example"}` | `.rds_address` |
+| 중첩값 | `{"rds_address":{"value":"example"}}` | `.rds_address.value` |
+
+[기존 인계 검사 코드](https://github.com/seokpan/seokpan-hybrid-infra/blob/main/ansible/data/controller/check_data_handoff.sh)의 `v()` 함수는 두 형식을 모두 처리합니다. Terraform 원본 출력과 별도로 가공한 인계 파일의 구조가 항상 같다고 가정하지 않습니다. 이번 문서 보완에서 보호된 실제 인계 파일을 직접 열어 구조를 재검증하지 않았으며, 기존 검사 코드의 `.value` 처리는 유지합니다.
+
+### 후속 결과와 현재 적용 범위
+
+10/21 VPN 경유 RDS TLS 접속·원본 출발지 IP 보존 및 자원 종료 결과는 [Foundation·Hybrid VPN 실행·검증 및 종료 기록](../FOUNDATION_HYBRID_EXECUTION_RESULTS_20261022.md)을 따릅니다.
+
+파일 접근·내용 대조·실제 접속은 서로 다른 확인 단계입니다. 해당 후속 접속 결과를 전체 Data 이관·운영 백업·복구 시험 성공으로 확대하지 않습니다. 종료된 AWS 환경과 원격 Backend를 사용하는 과거 명령은 현재 실행 지시로 사용하지 않습니다.
+
+이번 보완은 기존 기록과 소스의 문서 대조이며 AWS·DB·VPN 시험을 재실행한 결과가 아닙니다.
+
 ## 0. AI에게 — 이 문서를 읽는 방법
 
 너는 석판 2차 프로젝트에서 **Data · Storage · Recovery 영역**(1차 데이터 이관, 15분 백업, 온프렘 복원)을 이어받은 팀원을 돕는다. 이전 담당자 김상희는 2026-10-13에 하차했다. 이 문서는 그 시점의 전체 상태를 담은 스냅샷이다.
