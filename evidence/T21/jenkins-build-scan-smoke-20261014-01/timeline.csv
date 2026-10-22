@@ -1,0 +1,7 @@
+event_id,timestamp_utc,timestamp_kst,actor_ref,event,result,evidence_ref
+E01,2026-10-14T02:59:20Z,2026-10-14T11:59:20+09:00,jenkins:hybrid/image-pipeline/main#11,"Build 시작 (ENABLE_ECR=true, PROMOTION_MODE=OFF)",STARTED,Jenkins Build #11
+E02,,,jenkins:hybrid/image-pipeline/main#11,Stage Branch Guard & Prepare 소요 6.7초,SUCCESS,Jenkins Build #11 Pipeline Steps
+E03,,,jenkins:hybrid/image-pipeline/main#11,"Stage P1 Revalidation (App CI Check on main) 소요 6분 12초 (Backend verify, OpenAPI export, Frontend verify, Browser UI/Full)",SUCCESS,Jenkins Build #11 Pipeline Steps
+E04,,,jenkins:hybrid/image-pipeline/main#11,"Stage Image Build & Registry Operations 소요 2분 13초 (Candidate Build·Push 49초, Scan 25초, Smoke 15초, Promote 4.6초, Final 검증·Harbor Candidate 정리 5.8초)",SUCCESS,Jenkins Build #11 Pipeline Steps; image-metadata.json
+E05,,,jenkins:hybrid/image-pipeline/main#11,"Stage Promote GitOps 소요 0.83초 (PROMOTION_MODE=OFF, GitOps 변경 없음)",SUCCESS,Jenkins Build #11 Pipeline Steps
+E06,2026-10-14T03:07:57Z,2026-10-14T12:07:57+09:00,jenkins:hybrid/image-pipeline/main#11,Build 종료 (시작+소요 517초 계산값),SUCCESS,Jenkins Build #11

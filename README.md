@@ -1,4 +1,15 @@
 # seokpan-hybrid-docs
+
+> **잔여 체크 표현 정리 — 2026-10-21:** 미체크 문구는 실제 수행/미수행 사실을 바꾸지 않고 일반 기록 또는 재사용 조건으로 표시했다. [변경 전 체크 원문](https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/README.md)은 해당 고정 커밋에 보존한다. 현재 실행 대기나 전체 목표 달성률이 아니며 [원 계획별 변경·최종 판정·영향](https://github.com/seokpan/seokpan-hybrid-docs/pull/140)을 따른다.
+
+> **최종 종료 범위 — 2026-10-21:** B 운영/증거 보존은 완료했다. 원 미수락40개는 미수행 종료13·종료 범위 제외18·다른 담당9로 [처분](execution/B_FINAL_SCOPE_DISPOSITION_20261021.md)했으며 B 추가 가동/입력/준비는0개다. Infra112·GitOps68·App52의 main 반영은 완료했다. Docs140이 병합되면 B 기록 마감도 완료되며 추가 B 작업은 없다. [병합 근거와 최종 반영](https://github.com/seokpan/seokpan-hybrid-docs/pull/140)을 따른다. 원래 계획 전체의 성공이나 팀 전체 종료를 주장하지 않는다.
+
+> **체크박스 후속 — 2026-10-21:** 상위/닫힌 이슈·PR·댓글까지 [체크 단위로 대조](execution/TJUNG03_CHECKBOX_RECONCILIATION_20261021.md)해 원 TH4개를 추가 수락했다. 현재41/81·40개 원 기준 미수락이며 과거37/81은 당시 집계다. B 운영 종료는 완료했다.
+
+> **B 전수 대조 후속 — 2026-10-21:** [최종 종료](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/B_ROSA_FINAL_CLOSEOUT_20261021.md)와 [실제 시험 결과](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/HPA_ATTEMPT04_VERIFIED_RESULTS_20261021.md)를 우선한다. B ROSA·정확한 소유 범위 잔존 자원·Snapshot4개 정리는 완료다. 아래 절차·입력 대기·명령은 작성 당시 기록 또는 재사용 계약이며 현재 재실행 요청이 아니다. A 자원과 다른 담당의 종료는 판정하지 않는다. [전체 대조](execution/TJUNG03_FULL_REPOSITORY_AUDIT_20261021.md).
+
+> **B 실행·종료 결과 — 2026-10-21:** [앱·현재 모니터링·정상 Baseline](execution/B_RUNTIME_AND_PROJECT_CLOSEOUT_20261020.md), [HPA 요청 분석](execution/HPA_ATTEMPT04_VERIFIED_RESULTS_20261021.md), [B AWS 자원 최종 종료](execution/B_ROSA_FINAL_CLOSEOUT_20261021.md)를 정본으로 따른다. B 담당 자원 정리는 완료했으며 A 자원은 제외한다. [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)의 원 기준은 **41/81 완료·40개 미완료**로 유지하며, B 자원 종료를 전체 시험·발표 완료로 확대하지 않는다. [GitHub 최종 기록 대조](execution/B_GITHUB_FINAL_RECORD_AUDIT_20261021.md).
+
 Seokpan 2차 - 하이브리드 클라우드 기획·아키텍처·검증 문서
 
 1차 온프레미스 프로젝트를 기반으로 AWS 하이브리드 환경으로 이전하는 2차 프로젝트의 문서 저장소입니다. 승인된 목표는 **Cloud Primary + On-Prem Restore-based Recovery**입니다. 설계 승인과 실제 구축·시험 결과를 구분합니다.
@@ -11,8 +22,8 @@ Seokpan 2차 - 하이브리드 클라우드 기획·아키텍처·검증 문서
 - [x] 설계 그림 12장 제작 및 자체 검증
 - [x] SVG/PNG·목차·제작 검토 기록 연결
 - [x] 발표 준비 Baseline·Evidence 선별 기준 및 Tracking Issue 연결
-- [ ] 사용자 그림 검토 의견 반영
-- [ ] 실제 구현 증거로 구축 결과판 작성
+- 사용자 그림 검토 의견 반영
+- 실제 구현 증거로 구축 결과판 작성
 
 설계·그림 등록과 병합 이력은 [PR #3](https://github.com/seokpan/seokpan-hybrid-docs/pull/3), 실행·Evidence 공유 이력은 [PR #5](https://github.com/seokpan/seokpan-hybrid-docs/pull/5), 발표 준비 기준 등록 이력은 [PR #7](https://github.com/seokpan/seokpan-hybrid-docs/pull/7)에서 확인합니다.
 

@@ -1,0 +1,8 @@
+event_id,timestamp_utc,timestamp_kst,actor_ref,event,result,evidence_ref
+E01,2026-10-14T03:11:20Z,2026-10-14T12:11:20+09:00,jenkins:hybrid/image-pipeline/main#12,"Build 시작 (ENABLE_ECR=true, PROMOTION_MODE=REMOTE_CHECK)",STARTED,Jenkins Build #12
+E02,,,jenkins:hybrid/image-pipeline/main#12,Stage Branch Guard & Prepare 소요 6.5초,SUCCESS,Jenkins Build #12 Pipeline Steps
+E03,,,jenkins:hybrid/image-pipeline/main#12,"Stage P1 Revalidation (App CI Check on main) 소요 6분 9초 (Backend verify, OpenAPI export, Frontend verify, Browser UI/Full)",SUCCESS,Jenkins Build #12 Pipeline Steps
+E04,,,jenkins:hybrid/image-pipeline/main#12,"Stage Image Build & Registry Operations 소요 34초 (기존 Final 재사용: Build·Scan·Smoke·Promote 생략, SKIPPED_EXISTING_FINAL)",SUCCESS,Jenkins Build #12 Pipeline Steps; image-metadata.json
+E05,,,jenkins:hybrid/image-pipeline/main#12,"Stage Promote GitOps 소요 16초 (Recovery·Cloud --remote-check, DRY_RUN, GitOps 기준 SHA 707474cd 고정)",SUCCESS,Jenkins Build #12 Pipeline Steps
+E06,2026-10-14T03:18:26Z,2026-10-14T12:18:26+09:00,jenkins:hybrid/image-pipeline/main#12,"Cloud 점검 release-id 타임스탬프 (rel-cloud-20261014T031826Z-c2dad254cc40-f309d1cb, DRY_RUN, 시각은 id에서 추출)",DRY_RUN,Jenkins Build #12 Pipeline Steps
+E07,2026-10-14T03:18:30Z,2026-10-14T12:18:30+09:00,jenkins:hybrid/image-pipeline/main#12,Build 종료 (시작+소요 430초 계산값),SUCCESS,Jenkins Build #12

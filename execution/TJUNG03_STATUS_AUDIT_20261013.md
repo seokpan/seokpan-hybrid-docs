@@ -1,5 +1,9 @@
 # 정태훈 상태·근거 대조 — 2026-10-13 KST
 
+> **B 전수 대조 후속 — 2026-10-21:** 이 문서의 조사·준비·현재/대기 표기는 제목 날짜의 이력이다. 이후 B 앱·정상 시험·HPA 한계·최종 종료는 [최신 종료 기록](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/B_ROSA_FINAL_CLOSEOUT_20261021.md)과 [전수 대조](TJUNG03_FULL_REPOSITORY_AUDIT_20261021.md)를 따른다. 성공한 실행을 다시 대기시키거나 미수행 시험을 성공으로 바꾸지 않는다.
+
+> **기록 시점과 현재 완료 근거:** 아래 상태·체크·명령은 각 작성일의 조사/인계 기록이다. B의10/16 완료 판정은 [완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)와 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)을 따른다. 완료된 설치·Plan·OCP 교체/기능·B03 화면·정상 관리 검사를 다시 대기로 해석하거나 재실행하지 않는다.
+
 ## 범위와 판정
 
 App·Infra·GitOps·Docs의 열린/닫힌 이슈93개와 댓글387개를 조회했다. tjung03 작성/배정 이슈12개, 작성 댓글120개와 다른 담당 이슈에 추가한 B 본문을 대조했다. tjung03 PR106개 설명과 Conversation 댓글도 확인했다. 네 main의 추적 파일801개 중 UTF-8 파일789개를 검색하고 후보 문장의 Git 작성 이력을 확인했다. 변경은 B 작성 내용과 파생 체크섬에 한정한다.

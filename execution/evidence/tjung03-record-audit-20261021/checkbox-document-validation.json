@@ -1,0 +1,15 @@
+{
+  "status": "PASS_CHECKBOX_CURRENTIZATION_DOCUMENTS",
+  "changed_files": 11,
+  "relevant_checkbox_rows": 728,
+  "existing_boxes_updated": 14,
+  "TH_total": 81,
+  "TH_accepted": 41,
+  "TH_unaccepted": 40,
+  "added_relative_links": 16,
+  "historical_details_preserved": true,
+  "runtime_rechecks": 0,
+  "resource_calls": 0,
+  "new_corrections_remaining": 0,
+  "additional_report_receipt_link_exists": true
+}

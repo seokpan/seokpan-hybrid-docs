@@ -1,5 +1,9 @@
 # B 기여·발표 근거 후보 — 2026-10-09
 
+> **잔여 체크 표현 정리 — 2026-10-21:** 미체크 문구는 실제 수행/미수행 사실을 바꾸지 않고 일반 기록 또는 재사용 조건으로 표시했다. [변경 전 체크 원문](https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/presentation/B_CONTRIBUTION_EVIDENCE_20261009.md)은 해당 고정 커밋에 보존한다. 현재 실행 대기나 전체 목표 달성률이 아니며 [원 계획별 변경·최종 판정·영향](https://github.com/seokpan/seokpan-hybrid-docs/pull/140)을 따른다.
+
+> **B 전수 대조 후속 — 2026-10-21:** [최종 종료](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/B_ROSA_FINAL_CLOSEOUT_20261021.md)와 [실제 시험 결과](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/HPA_ATTEMPT04_VERIFIED_RESULTS_20261021.md)를 우선한다. B ROSA·정확한 소유 범위 잔존 자원·Snapshot4개 정리는 완료다. 아래 절차·입력 대기·명령은 작성 당시 기록 또는 재사용 계약이며 현재 재실행 요청이 아니다. A 자원과 다른 담당의 종료는 판정하지 않는다. [전체 대조](../execution/TJUNG03_FULL_REPOSITORY_AUDIT_20261021.md).
+
 정태훈 기여·발표 근거 후보 — 실제 PR 작성자/병합 대조
 발표 Baseline의 기여/증거 분리 기준을 적용. 최종 Runtime 성과나 발표 완성본이 아님.
 
@@ -39,6 +43,6 @@ docs #97 / docs: B 선행 검증 도구·EC2 교정 증거와 Run5 공급 후속
 
 이번 독립 보완은 Cloud 플랫폼 계약, Recovery Bundle 인벤토리, 관리 인증 수락 절차의 Source/시험 작성이다. PR 병합·Source CI와 실제 Cluster/업무 수락을 따로 기록한다. A의 bootstrap Apply와 D/C의 공급/실행은 원 담당 기여로 연결한다. 본인 명령 전달 오류의 재현·교정은 문제 해결 근거이며 AWS 장애나 ROSA 성공 사례로 발표하지 않는다.
 
-- [ ] 새 Image 조합의 OCP/Cloud 업무·WS/투표·장애 결과
-- [ ] 이관/Recovery 실제 Data·RTO/RPO·비용 결과
-- [ ] 실행 역할/시각/비교 수치 연결 후 슬라이드·시연·Q&A 확정
+- 새 Image 조합의 OCP/Cloud 업무·WS/투표·장애 결과
+- 이관/Recovery 실제 Data·RTO/RPO·비용 결과
+- 실행 역할/시각/비교 수치 연결 후 슬라이드·시연·Q&A 확정

@@ -1,0 +1,21 @@
+{
+  "pass": 4,
+  "scope": "DOCUMENT_AND_RECORD_ONLY",
+  "new_required_corrections": 0,
+  "errors": [],
+  "relative_file_links_checked": 917,
+  "baseline_files_unchanged": 1141,
+  "current_guide_pointers": 72,
+  "ledger_counts": {
+    "entities.csv": 367,
+    "interactions.csv": 973,
+    "main-files.csv": 1217,
+    "TH-81.csv": 81
+  },
+  "failed_source_pin_test_only": "PASS_1",
+  "derived_readme_manifest": "ALL_MATCH",
+  "production_code_and_deployment_changes": 0,
+  "cloud_calls": 0,
+  "sql_calls": 0,
+  "completed_runtime_tests_repeated": 0
+}

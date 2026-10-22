@@ -1,5 +1,7 @@
 # Presentation
 
+> **B 전수 대조 후속 — 2026-10-21:** [최종 종료](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/B_ROSA_FINAL_CLOSEOUT_20261021.md)와 [실제 시험 결과](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/HPA_ATTEMPT04_VERIFIED_RESULTS_20261021.md)를 우선한다. B ROSA·정확한 소유 범위 잔존 자원·Snapshot4개 정리는 완료다. 아래 절차·입력 대기·명령은 작성 당시 기록 또는 재사용 계약이며 현재 재실행 요청이 아니다. A 자원과 다른 담당의 종료는 판정하지 않는다. [전체 대조](../execution/TJUNG03_FULL_REPOSITORY_AUDIT_20261021.md).
+
 이 폴더는 석판 2차 프로젝트의 **최종 발표 준비 기준과 후속 발표 산출물**을 관리합니다.
 
 현재는 실제 05 결과가 충분히 나오기 전이므로 발표 슬라이드나 Demo 대본을 먼저 확정하지 않습니다. 프로젝트의 공식 Test/Acceptance와 실제 Evidence를 우선하고, 발표는 그 결과를 선별해 설명합니다.

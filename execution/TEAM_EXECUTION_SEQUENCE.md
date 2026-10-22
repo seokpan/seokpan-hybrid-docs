@@ -1,10 +1,16 @@
 # 石나가는 판단 2차 — 저장소·담당별 전체 실행 순서와 현행화 점검
 
+> **잔여 체크 표현 정리 — 2026-10-21:** 미체크 문구는 실제 수행/미수행 사실을 바꾸지 않고 일반 기록 또는 재사용 조건으로 표시했다. [변경 전 체크 원문](https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/execution/TEAM_EXECUTION_SEQUENCE.md)은 해당 고정 커밋에 보존한다. 현재 실행 대기나 전체 목표 달성률이 아니며 [원 계획별 변경·최종 판정·영향](https://github.com/seokpan/seokpan-hybrid-docs/pull/140)을 따른다.
+
+> **B 전수 대조 후속 — 2026-10-21:** [최종 종료](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/B_ROSA_FINAL_CLOSEOUT_20261021.md)와 [실제 시험 결과](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/HPA_ATTEMPT04_VERIFIED_RESULTS_20261021.md)를 우선한다. B ROSA·정확한 소유 범위 잔존 자원·Snapshot4개 정리는 완료다. 아래 절차·입력 대기·명령은 작성 당시 기록 또는 재사용 계약이며 현재 재실행 요청이 아니다. A 자원과 다른 담당의 종료는 판정하지 않는다. [전체 대조](TJUNG03_FULL_REPOSITORY_AUDIT_20261021.md).
+
+> **B 완료 근거 — 2026-10-16:** [완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)·[실행 보드](TJUNG03_EXECUTION_BOARD.md)·[Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)을 연결한다. ROSA 설치/관리·수락된 플랫폼/검사·B03은 완료다. 아래 공통 역할/절차와 날짜별 관측은 각 원 범위를 유지하며 다른 담당자의 현재 완료를 판정하지 않는다.
+
 > 기준: 승인 01~04·현재 프로젝트 지침·개인 계획, 네 저장소 Source/Issue/PR/댓글/리뷰/Branch/검사 조회. 관측은 저장소별 조회 시각이며 동일 순간의 Runtime Snapshot이 아니다. 문서 담당 정태훈. 작성 기준 2026-10-05 14:27 KST.
 
-**최신 실행 해석 — 2026-10-05 15:40 KST:** [h-docs PR #33](https://github.com/seokpan/seokpan-hybrid-docs/pull/33) main b45ea2d 병합·작업 Branch 삭제를 확인했다. [정태훈 실행판](TJUNG03_EXECUTION_BOARD.md)에서 지금할일·직접입력대기·OCP사전검증/정리·ROSA준비/생성/중간/최종종료·승인목표일을 작은 실행별로 확인한다. 아래 담당별 큰 묶음은 A전체→B전체의 선행관계가 아니다.
+**10/05 당시 실행 해석 — 2026-10-05 15:40 KST:** [h-docs PR #33](https://github.com/seokpan/seokpan-hybrid-docs/pull/33) main b45ea2d 병합·작업 Branch 삭제를 확인했다. [정태훈 실행판](TJUNG03_EXECUTION_BOARD.md)에서 지금할일·직접입력대기·OCP사전검증/정리·ROSA준비/생성/중간/최종종료·승인목표일을 작은 실행별로 확인한다. 아래 담당별 큰 묶음은 A전체→B전체의 선행관계가 아니다.
 
-## 1 현재 전체 작업 진행 현황
+## 1 10/05 당시 전체 작업 기록
 
 - [x] 00 역사 원본·승인 설계 01~04 및 03/04 종료·현재 역할/Root 책임 확정 유지
 - [x] DR 설계10분/30분/15분·Backup/Restore 유지와 관련 설계·그림·출처 정합 반영
@@ -14,8 +20,8 @@
 - [x] App 원본 이력 보존·2차 Source 이관/수정 main 병합, ROSA/GitOps Source 검사 근거 확보
 - [x] 두 독립 합성 부분 예행·Run 기록과 승인된 도구 [h-infra PR #29](https://github.com/seokpan/seokpan-hybrid-infra/pull/29) squash 병합
 - [x] 네 저장소 Issue/관련 PR의 현재 상태·기록 연결·담당/선행/병행 경계 점검
-- [ ] 남은 Source·실제 입력·승인 Image·인계 수락·Plan/전체 비용/실행 창
-- [ ] Cloud 통합·백업 최신성·최종 T01~T23 판정·발표·자료 보존/삭제/잔존 비용·팀 종료
+- 남은 Source·실제 입력·승인 Image·인계 수락·Plan/전체 비용/실행 창
+- Cloud 통합·백업 최신성·최종 T01~T23 판정·발표·자료 보존/삭제/잔존 비용·팀 종료
 
 **이번 설계 변경 반영은 완료된 기준으로 사용한다.** 현재 구조나 목표를 다시 후보로 돌리지 않는다. 실제 미달/새 제약이 확인되면 근거·영향을 기록하고 필요한 변경을 검토한다. 설계 완료는 실제 전체 운영 T18 PASS가 아니다. RTO10분/DB RPO30분/DB 운영 중 Backup15분은 요구사항이며 전체 Actual은 null/미판정이다. 15분 Timer만으로 RPO를 보장하지 않는다.
 
@@ -145,15 +151,15 @@ PR29 승인 리뷰의 비차단 후속은 [h-infra Issue #25](https://github.com
 
 다음은 W/담당별 요약이다. 실제 착수/대기는 [실행판 §2~4](TJUNG03_EXECUTION_BOARD.md), OCP/ROSA 종료와 목표 창은 §5~7, 작은 팀 의존과 전체잔여는 §8~10을 우선 확인한다. A의 이 요약 전체 완료를 B 착수의 조건으로 읽지 않는다.
 
-- [ ] W02~W03 / A: foundation 공통 틀·Network/Data/Registry/VPN 통합, 실제 서비스 권한·제한 Output/Host·Plan/Cost·인계
-- [ ] W02~W03 / B: 개인 환경/계약 후속, 남은 Root/AppProject/NP/UWM/Migration/Bundle, rosa/관리/Secret·실제 Controller/입력·리뷰
-- [ ] W02~W04 / C: Data Root 전환/리뷰, DB/Redis/TLS/GRANT/시각·반출·Key/사본, 15분 Backup/실패/최신성/Restore와 수신
-- [ ] W02~W04 / D: 2차 CI/PAT/Job/Plugin·새 Build/Scan/Digest/Platform, 같은조합 lab·UWM/알림/Harness·Index수신/비용
-- [ ] W05: 실제 지원/권한/Caller/Backend/Plan/비용·가동/삭제/재시험/잔존·팀 가용시간/실행 창
-- [ ] W06~W07: 정상 Cloud/App/Data/Secret/GitOps 통합·대표 업무/Backup/Release, Must 결함 수정/새 Run
-- [ ] W08: 재생성→정상 Baseline→분리 장애/부하, 실제 Backup 최신성·격리 Offline 전체 업무/DB·T01~T23 최종 판정
-- [ ] W09~W10: 비교/해석·실제Troubleshooting·시연/영상/발표·자료/Key보존, 승인rosa삭제·부속/잔존/후속청구·Credential/실데이터·보관책임/종료
-- [ ] 원본 기록/제출·수신/Index/Shared Execution/보호대장·일정/비용 현행화와 새 Source PR 리뷰/병합 지속
+- W02~W03 / A: foundation 공통 틀·Network/Data/Registry/VPN 통합, 실제 서비스 권한·제한 Output/Host·Plan/Cost·인계
+- W02~W03 / B: 개인 환경/계약 후속, 남은 Root/AppProject/NP/UWM/Migration/Bundle, rosa/관리/Secret·실제 Controller/입력·리뷰
+- W02~W04 / C: Data Root 전환/리뷰, DB/Redis/TLS/GRANT/시각·반출·Key/사본, 15분 Backup/실패/최신성/Restore와 수신
+- W02~W04 / D: 2차 CI/PAT/Job/Plugin·새 Build/Scan/Digest/Platform, 같은조합 lab·UWM/알림/Harness·Index수신/비용
+- W05: 실제 지원/권한/Caller/Backend/Plan/비용·가동/삭제/재시험/잔존·팀 가용시간/실행 창
+- W06~W07: 정상 Cloud/App/Data/Secret/GitOps 통합·대표 업무/Backup/Release, Must 결함 수정/새 Run
+- W08: 재생성→정상 Baseline→분리 장애/부하, 실제 Backup 최신성·격리 Offline 전체 업무/DB·T01~T23 최종 판정
+- W09~W10: 비교/해석·실제Troubleshooting·시연/영상/발표·자료/Key보존, 승인rosa삭제·부속/잔존/후속청구·Credential/실데이터·보관책임/종료
+- 원본 기록/제출·수신/Index/Shared Execution/보호대장·일정/비용 현행화와 새 Source PR 리뷰/병합 지속
 
 정태훈 개인 잔여: TH01~04 환경/계약·인계, TH05~07 실제App/Image/업무, TH08~09 선언/동일조합 수락, TH10~12 실제rosa/권한/Plan/비용, TH13~17 통합/업무안전/복구/재생성/장애·부하, TH18~19 발표/보존/최종삭제/잔존/인계/종료. 이미 완료한 Source 이관·검사를 다시 수행할 조건으로 만들지 않는다.
 

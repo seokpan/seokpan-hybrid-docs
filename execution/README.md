@@ -1,5 +1,11 @@
 # Implementation and Validation
 
+> **Foundation·Hybrid VPN 결과 기록 — 2026-10-22:** [실행·검증 및 종료 기록](FOUNDATION_HYBRID_EXECUTION_RESULTS_20261022.md)에 기존 Apply·재검사·인계, 10/21 VPN 경유 RDS TLS·원본 IP 보존 및 Foundation 종료 보고를 연결했다. 원 실행 보고와 이번 문서 대조를 구분하며 전체 VPN/DR·온프렘 최종 원복·최종 청구는 완료 판정하지 않는다. 원격 Backend 폐기 보고 이후의 과거 명령은 현재 운영 지시가 아니다.
+
+> **B 전수 대조 후속 — 2026-10-21:** [최종 종료](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/B_ROSA_FINAL_CLOSEOUT_20261021.md)와 [실제 시험 결과](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/HPA_ATTEMPT04_VERIFIED_RESULTS_20261021.md)를 우선한다. B ROSA·정확한 소유 범위 잔존 자원·Snapshot4개 정리는 완료다. 아래 절차·입력 대기·명령은 작성 당시 기록 또는 재사용 계약이며 현재 재실행 요청이 아니다. A 자원과 다른 담당의 종료는 판정하지 않는다. [전체 대조](TJUNG03_FULL_REPOSITORY_AUDIT_20261021.md).
+
+> **B 완료 근거 — 2026-10-16:** [완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)·[실행 보드](TJUNG03_EXECUTION_BOARD.md)·[Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)을 연결한다. ROSA 설치/관리·수락된 플랫폼/검사·B03은 완료다. 아래 공통 역할/절차와 날짜별 관측은 각 원 범위를 유지하며 다른 담당자의 현재 완료를 판정하지 않는다.
+
 이 폴더는 석판 2차 프로젝트의 **지금 공유해서 쓰는 작업 안내와 공동 진행 기록**입니다. 05 최종 완료를 기다리지 않고 각자 준비·구현·인계를 진행합니다. 각 담당자가 원 Issue·PR·Run에 결과를 기록하고 수신자가 인계를 확인합니다.
 
 > PR #3·#5·#7의 설계·실행·발표 문서는 main에 반영됐습니다. 변경은 Branch/PR로 검토합니다. 네 사람의 계정 매핑과 네 저장소 Repo 권한 확인은 완료됐고, 개인 본인환경의 실제 사용·현재 작업·입력 인계는 [진행표](WORK_TRACKER.md)와 [Issue #8](https://github.com/seokpan/seokpan-hybrid-docs/issues/8)에서 이어갑니다. 담당자는 자기 근거와 확인 시각을 직접 연결합니다.

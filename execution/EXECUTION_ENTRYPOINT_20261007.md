@@ -1,5 +1,11 @@
 # 구현·검증 실행 인계 — 2026-10-07
 
+> **잔여 체크 표현 정리 — 2026-10-21:** 미체크 문구는 실제 수행/미수행 사실을 바꾸지 않고 일반 기록 또는 재사용 조건으로 표시했다. [변경 전 체크 원문](https://github.com/seokpan/seokpan-hybrid-docs/blob/2de414c618a465f0d94860f4b92f4fb7ac777b7a/execution/EXECUTION_ENTRYPOINT_20261007.md)은 해당 고정 커밋에 보존한다. 현재 실행 대기나 전체 목표 달성률이 아니며 [원 계획별 변경·최종 판정·영향](https://github.com/seokpan/seokpan-hybrid-docs/pull/140)을 따른다.
+
+> **B 전수 대조 후속 — 2026-10-21:** 이 문서의 조사·준비·현재/대기 표기는 제목 날짜의 이력이다. 이후 B 앱·정상 시험·HPA 한계·최종 종료는 [최신 종료 기록](https://github.com/seokpan/seokpan-hybrid-docs/blob/main/execution/B_ROSA_FINAL_CLOSEOUT_20261021.md)과 [전수 대조](TJUNG03_FULL_REPOSITORY_AUDIT_20261021.md)를 따른다. 성공한 실행을 다시 대기시키거나 미수행 시험을 성공으로 바꾸지 않는다.
+
+> **기록 시점과 현재 완료 근거:** 아래 상태·체크·명령은 각 작성일의 조사/인계 기록이다. B의10/16 완료 판정은 [완결 작업 결과](TJUNG03_COMPLETED_RESULTS_20261016.md)와 [Docs #21](https://github.com/seokpan/seokpan-hybrid-docs/issues/21)을 따른다. 완료된 설치·Plan·OCP 교체/기능·B03 화면·정상 관리 검사를 다시 대기로 해석하거나 재실행하지 않는다.
+
 > **현재 상태 — 2026-10-08:** App20/22·Infra43·GitOps25 병합·원격 PR 브랜치 삭제와 마무리 기록 확인. [ROSA Plan/OCP 후속](ROSA_OCP_NEXT_ACTIONS_20261008.md)·[05 §9.50](05_IMPLEMENTATION_AND_VALIDATION.md#merged-pr-plan-readiness-20261008) 우선. D #26의 부분 업무/ERR·Vote 보고 수신, 실제 Controller/Cloud Plan은 NOT RUN. 아래 날짜별 근거·당시 상태 보존.
 
 > **최신 조사 후속 — 2026-10-07:** [전수 조사](REPOSITORY_AUDIT_20261007.md)·[05§9.47](05_IMPLEMENTATION_AND_VALIDATION.md#repository-full-audit-20261007) 참조. GitOps main의 Root SHA B/FE·BE1은 소스 병합 상태이며, 마지막 수신 Runtime은 SHA A/FE·BE0이다. 성공한 등록/선택Sync·금고 본체 확인을 반복하지 않는다. C의 GitOps26/6038214247 DB 형식·GRANT·TLS 접속·합성 출처 수락 보고는 수신했고 실제 Stage2 적용·Route/업무는 원 #26에서 후속 확인한다. 아래 시점별 인계 보존.
@@ -11,8 +17,8 @@
 - [x] 첨부 NextInputs ZIP 무결성 확인: CRC 정상, SHA256 항목12개 일치
 - [x] 2차 저장소4개와 현재 Source·Issue/PR·댓글·리뷰·Branch·Commit·Run 대조
 - [x] 첨부 이후 병합된 App·GitOps·Infra 변경과 현재/과거 지시 구분
-- [ ] 이 PR 최신 변경의 팀 검토·병합과 다음 실행자의 인계 수신
-- [ ] 본인 보호 환경·독립 키 사본·직접 입력·실제 실행 및 시험
+- 이 PR 최신 변경의 팀 검토·병합과 다음 실행자의 인계 수신
+- 본인 보호 환경·독립 키 사본·직접 입력·실제 실행 및 시험
 
 ## 1. 첫 작업에서 읽을 순서
 
@@ -93,9 +99,9 @@ Project 파일·개인 Key·VPN·kubeconfig·실제 보호 입력이 다른 작�
 
 남은 작업:
 
-- [ ] 최신 PR 검토/병합 및 인계 수신 범위 확인
-- [ ] B 독립 키 사본·본인 clone/도구/목적 Caller/Backend·가용 시간
-- [ ] D/B Stage1 보고 근거·Valkey 전체 시험·보호 동작 수락, C/D/B 새 Image/Data/Route 기반 Stage2
-- [ ] A/C 제한 실제 입력·B ROSA Plan·D 전체 Cost Gate와 팀 실행창
-- [ ] Pool/Recovery/CI 후속·Cloud 정상 업무·재생성/장애/부하·전체 Offline T18
-- [ ] Evidence/발표·독립 자산 보존·인증 회수·승인 삭제·잔존 비용·10/26 종료 목표
+- 최신 PR 검토/병합 및 인계 수신 범위 확인
+- B 독립 키 사본·본인 clone/도구/목적 Caller/Backend·가용 시간
+- D/B Stage1 보고 근거·Valkey 전체 시험·보호 동작 수락, C/D/B 새 Image/Data/Route 기반 Stage2
+- A/C 제한 실제 입력·B ROSA Plan·D 전체 Cost Gate와 팀 실행창
+- Pool/Recovery/CI 후속·Cloud 정상 업무·재생성/장애/부하·전체 Offline T18
+- Evidence/발표·독립 자산 보존·인증 회수·승인 삭제·잔존 비용·10/26 종료 목표

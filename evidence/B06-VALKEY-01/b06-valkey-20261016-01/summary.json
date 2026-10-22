@@ -1,0 +1,36 @@
+{
+  "test_id": "B06-VALKEY-01",
+  "run_id": "b06-valkey-20261016-01",
+  "recorded_on": "2026-10-16",
+  "status": "PASS_RECOVERY_VALKEY_READY_UID_TLS_AUTH",
+  "source_revision": "c75a4b5e3b3b9bae4ea7d8a431962cb9ca7308d7",
+  "evidence_origin": "ACCEPTED_STRUCTURED_EXECUTION_OUTPUT",
+  "namespace": "seokpan-recovery",
+  "create_attempts": 7,
+  "confirmed_object_counts": {
+    "NetworkPolicy": 4,
+    "ConfigMap": 1,
+    "Service": 1,
+    "StatefulSet": 1
+  },
+  "engine_ready": true,
+  "engine_replicas": 1,
+  "node": "worker-02",
+  "container_restarts": 0,
+  "UID999_and_mounted_files": "PASS",
+  "runtime_tls_auth": "PASS",
+  "tls_path": "LOCAL_API_PORT_FORWARD_NOT_CNI_TRAFFIC_PROOF",
+  "image_id": "harbor.seokpan.soldesk.store/seokpan-hybrid/valkey@sha256:ef0f9fb533b1f06fb7aba6478d758ca1c077d49e2bcb2b4365a4ea7f50b6d42e",
+  "image_pull_policy": "IfNotPresent",
+  "protected_supply_repeated": false,
+  "sops_decrypt_invocations": 0,
+  "application_deployments_started": 0,
+  "cloud_application_started": false,
+  "sql_calls": 0,
+  "migration_run": false,
+  "CNI_allow_deny_traffic": "NOT_TESTED",
+  "fresh_registry_network_and_worker_CA_trace": "NOT_INDEPENDENTLY_OBSERVED",
+  "restore_RTO_RPO": "NOT_RUN",
+  "duration_measurement": "NOT_RECORDED"
+}
+
