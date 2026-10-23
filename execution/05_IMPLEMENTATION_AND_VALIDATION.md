@@ -1075,6 +1075,28 @@ foundation Apply로 RDS가 과금되기 시작했지만 VPN과 이관은 아직�
 - 10/15 저녁 Stop 여부는 VPN · 이관 진행에 따라 팀이 정한다. 이관 전이면 새 분기, 이관 뒤면 기존 순서(마지막 사본 확인 → Stop)로 진행한다.
 - 한계: Stop · Start는 아직 실행하지 않았다. 최대 연결 0은 CloudWatch 1시간 단위 최댓값이다. 실제 Stop · Start 소요 시간과 정지 중 마스터 비밀번호 동작은 첫 Stop에서 잰다.
 
+<a id="data-handover-followup-20261023"></a>
+
+### 8.30 Data 인수 후 실행 준비·계정 권한 점검 (2026-10-15·19 실행, 10-23 기록 보완)
+
+김상희가 준비한 Data 코드·계약·Runbook을 인수한 뒤 이유빈이 수행한 준비·점검 결과를 연결한다. 기존 코드 작성·초기 구축과 인수 후 수행을 구분하며, 아래 결과는 해당 시점의 실행 보고 기준이다. 이번 문서 보완에서 서버·DB·AWS 작업을 재실행하지 않았다.
+
+| 항목 | 당시 결과 | 근거·확인 범위 |
+|---|---|---|
+| S01 인수 범위·실행 접근 (10/19) | Controller `ksh` 도구 4종 기준본 일치, 보호 파일 접근, 백업·복구 VM SSH 성공으로 인수·접근 완료 보고. Data 후속은 이유빈, 앱·쓰기 통제는 정태훈, 측정·비용은 최유준과 협업 | [Infra #44 S01 기록](https://github.com/seokpan/seokpan-hybrid-infra/issues/44#issuecomment-6354431076). 당시 완료 보고를 연결하며, 이번 문서 검토에서 터미널 원본 전체를 독립적으로 재검증한 결과는 아님 |
+| 백업 VM 인수 상태 (10/19) | 운영 `periodic-*` 사본 0개, `last-success` 없음, Timer disabled/inactive. 로컬 `RESEND_MAX=4`·`RESEND_BUDGET=300` 설정 | [GitOps #60 인수 회신 C4](https://github.com/seokpan/seokpan-hybrid-gitops/issues/60#issuecomment-6261376429). 운영 백업·실제 S3 재전송 성공이 아님 |
+| C03 도구·본인 키 준비 (10/19) | `table_hashes.sh=5beac6da6e9c`, `check_backup_gate.sh=9d21774a4255` 기준 SHA-256 앞 12자리 일치 후 `ansible` 계정에 설치. 본인 키 소유·보호 권한·형식 확인. `C03_LOCAL_TOOL_PREP=PASS`, `C03_PREP_EXIT=0` | [Infra #44 C03 기록](https://github.com/seokpan/seokpan-hybrid-infra/issues/44#issuecomment-6354431076). S01의 `ksh` 계정 점검과 다른 범위이며, 실제 백업 사본 복호화 성공을 뜻하지 않음 |
+| C03 SQL 보호 입력 (10/19) | `data-sql-accounts.sops.yaml`의 `sops decrypt` 성공. 민감값 화면·파일 출력 없음. `C03_SOPS_DECRYPT=PASS`, `C03_SOPS_EXIT=0` | [Infra #44 C03 기록](https://github.com/seokpan/seokpan-hybrid-infra/issues/44#issuecomment-6354431076). 초기 상태 판정 문자열 오류와 후속 실제 해독 성공을 구분 |
+| RDS 관리·백업 계정 준비 (10/15) | `db_admin` Host 항목 2개·`backup_dump` Host 항목 1개 생성, 지정 권한·REQUIRE SSL 확인. ROSA 임시 작업 Pod의 `db_admin` TLS 로그인 성공 | [Infra #44 계정 준비 결과](https://github.com/seokpan/seokpan-hybrid-infra/issues/44#issuecomment-6184192929). 백업 VM에서 두 목적 계정이 각각 로그인한 결과와 구분 |
+| C04-1·2 복구 계정·권한 (10/19) | 계정 6개·REQUIRE SSL·전역 GRANT OPTION 부재 및 기대 업무 권한 확인. 두 Worker의 `game_svc.member` 컬럼 권한 6행 대조. 조회 종료값 각각 0 | [Infra #48 C04-1·2](https://github.com/seokpan/seokpan-hybrid-infra/issues/48#issuecomment-6261703688). 기존 계정 재생성·권한 변경 없이 읽기 점검 |
+| C04-3 DB·테이블 GRANT OPTION (10/19) | `DB_GRANT_OPTION 2 0`, `TABLE_GRANT_OPTION 16 0`, `C04_3_SSH_EXIT=0` | [Infra #48 C04-3 후속](https://github.com/seokpan/seokpan-hybrid-infra/issues/48#issuecomment-6354777086). `stone_game`·대상 3종 계정·두 Worker Host 범위에서 DB 2행과 테이블 16행 모두 GRANT OPTION 0건 확인 |
+
+C04-3은 첫 SSH 인증 실패로 SQL이 실행되지 않은 시도와 후속 대화형 인증·조회 성공을 구분한다. 중단된 시도 코드의 잘못된 `mysql.db.Db_priv` 참조는 폐기하고, 후속 `Grant_priv`·`Table_priv` 조회 결과로 기존 C04-1·2 댓글의 DB·테이블 범위 미확정 항목을 해소했다.
+
+- **판정:** 위 범위의 인수·실행 준비와 복구 DB 권한 사전 점검 결과를 기록한다. 실제 Migration Job/Pod 출발지·매칭 계정·TLS 접속·DDL·`current`·앱 업무 검증은 별도다. [GitOps #60 후속 연결](https://github.com/seokpan/seokpan-hybrid-gitops/issues/60#issuecomment-6354435680).
+- **기존 기록 연결:** [Docs PR #128](https://github.com/seokpan/seokpan-hybrid-docs/pull/128)의 인계 형식·접근 확인과 [Foundation·Hybrid VPN 실행·종료 기록](FOUNDATION_HYBRID_EXECUTION_RESULTS_20261022.md)을 유지한다. 10/21 백업 VM → RDS TLS·원본 IP 확인은 후자의 실제 접속 결과를 따른다.
+- **한계:** 최종 덤프·RDS Import·운영 백업·S3 재전송·Recovery 앱·전체 RTO/RPO 성공을 이번 준비·권한 점검으로 추가하지 않는다. 과거 미검증 항목의 기재는 추가 가동·재시험 요청이 아니다.
+
 ## 9 복구 예행과 목표 재검토 — 2026-10-02
 
 **2026-10-03 설계 우선순위 정정:** 이번 피드백의 목적과 대안 비교·수정 범위는 [03 §3-I.14](../design/03_DETAILED_DESIGN.md#recovery-design-review-20261003)를 기준으로 읽는다. 이 절은 최소 예행의 기존 입력·측정·부담 비교를 지원한다. 02의 기존 1차 Redis 재사용 설명과 03의 좁게 읽힐 수 있는 RTO 경계는 설계 문서에서 바로잡는다. 아래 코드·검사·Cloud/ROSA 후속은 각 시점/범위의 기록이며 설계 재검토보다 우선하는 전체 구현 요구가 아니다.
