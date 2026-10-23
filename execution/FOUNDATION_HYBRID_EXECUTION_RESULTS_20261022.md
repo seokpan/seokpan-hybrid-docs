@@ -306,7 +306,7 @@ ROSA State 0 조회는 ROSA 담당자의 기존 종료 결과와 연결한 확�
 
 Infra #16 본문과 일부 인수인계 문서에는 작성 당시의 터널·TLS 미완료 표시가 남아 있다. 해당 기록은 당시 이력으로 보존하며, 선택한 VPN 경로의 접속 결과는 10/21 후속 댓글을 함께 읽는다.
 
-Data 자료의 접근 확인, 수신자의 내용 검증, 실제 DB 접속은 서로 다른 확인 단계다. Docs PR #128의 미병합 상태를 실제 수신 미완료와 동일하게 해석하지 않는다.
+Data 자료의 접근 확인, 수신자의 내용 검증, 실제 DB 접속은 서로 다른 확인 단계다. Docs PR #128은 병합됐다. PR 병합 여부와 수신자의 실제 인계·검증 여부는 별개이며, 실제 확인 범위는 [김상희의 출력 수신·실제 자원 대조 회신](https://github.com/seokpan/seokpan-hybrid-infra/issues/23#issuecomment-6142071240)과 [정태훈 계정의 자료 읽기 접근 확인 보고](https://github.com/seokpan/seokpan-hybrid-infra/issues/23#issuecomment-6159843548)를 각각 따른다.
 
 실제 수치·파일·시간선의 원본은 관련 작업 기록과 기존 Evidence를 따른다. 이 문서는 새로운 시험 Run이나 전체 시험 수락을 추가하지 않는다.
 
